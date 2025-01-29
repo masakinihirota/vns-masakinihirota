@@ -36,6 +36,7 @@
     "@stripe/stripe-js": "2.4.0",
     "@supabase/ssr": "^0.1.0",
     "@supabase/supabase-js": "^2.43.4",
+    "@tailwindcss/postcss": "^4.0.0",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
