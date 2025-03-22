@@ -30,6 +30,7 @@
 git clone https://github.com/nextjs/saas-starter
 cd saas-starter
 pnpm install
+
 ```
 
 ## ローカルでの実行
@@ -38,6 +39,7 @@ pnpm install
 
 ```bash
 pnpm db:setup
+
 ```
 
 次に、データベースのマイグレーションを実行し、デフォルトのユーザーとチームを作成してデータベースを初期化します:
@@ -45,6 +47,7 @@ pnpm db:setup
 ```bash
 pnpm db:migrate
 pnpm db:seed
+
 ```
 
 これにより、以下のユーザーとチームが作成されます:
@@ -58,6 +61,7 @@ pnpm db:seed
 
 ```bash
 pnpm dev
+
 ```
 
 ブラウザで [http://localhost:3000](http://localhost:3000) を開いて、アプリを確認してください。
@@ -66,6 +70,7 @@ pnpm dev
 
 ```bash
 stripe listen --forward-to localhost:3000/api/stripe/webhook
+
 ```
 
 ## 支払いのテスト
