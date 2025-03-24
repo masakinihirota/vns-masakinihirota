@@ -23,13 +23,13 @@ export default function RootLayout({
   let userPromise = getUser();
 
   return (
-    <html
-      lang="en"
-      className={`bg-white dark:bg-gray-950 text-black dark:text-white ${manrope.className}`}
-    >
-      <body className="min-h-[100dvh] bg-gray-50">
-        <UserProvider userPromise={userPromise}>{children}</UserProvider>
-      </body>
-    </html
-  );
+			<html
+				lang="en"
+				className={`bg-white dark:bg-gray-950 text-black dark:text-white ${manrope.className}`}
+			>
+				<body className="min-h-[100dvh] bg-gray-50">
+					<UserProvider userPromise={userPromise}>{children}</UserProvider>
+				</body>
+			</html>
+		);
 }
