@@ -1,8 +1,8 @@
 import './globals.css';
-import type { Metadata, Viewport } from 'next';
-import { Manrope } from 'next/font/google';
 import { UserProvider } from '@/lib/auth';
 import { getUser } from '@/lib/db/queries';
+import type { Metadata, Viewport } from 'next';
+import { Manrope } from 'next/font/google';
 
 export const metadata: Metadata = {
   title: 'Next.js SaaS Starter',
@@ -30,6 +30,6 @@ export default function RootLayout({
       <body className="min-h-[100dvh] bg-gray-50">
         <UserProvider userPromise={userPromise}>{children}</UserProvider>
       </body>
-    </html>
+    </html
   );
 }
