@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button } from "../button/Button";
 
 export default function Home() {
 	return (
@@ -7,6 +8,7 @@ export default function Home() {
 			<br />
 			<Link href="./ModeTogglePage">ModeTogglePage</Link>
 			<br />
+			<Button label="Storybook Test Button" />
 			フッター
 		</main>
 	);
