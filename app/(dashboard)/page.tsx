@@ -3,10 +3,11 @@ import Link from "next/link";
 export default function Home() {
 	return (
 		<main>
-			<h1>VNS.BLUE</h1>
-			<Link href="./ButtonTestPage">ButtonTestPage</Link>
+			メインページ
 			<br />
 			<Link href="./ModeTogglePage">ModeTogglePage</Link>
+			<br />
+			フッター
 		</main>
 	);
 }
