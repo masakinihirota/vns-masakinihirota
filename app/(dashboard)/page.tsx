@@ -5,6 +5,7 @@ export default function Home() {
 		<main>
 			<h1>VNS.BLUE</h1>
 			<Link href="./ButtonTestPage">ButtonTestPage</Link>
+			<br />
 			<Link href="./ModeTogglePage">ModeTogglePage</Link>
 		</main>
 	);
