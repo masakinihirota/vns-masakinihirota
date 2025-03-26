@@ -9,6 +9,10 @@ export default function Home() {
 			<Link href="./ModeTogglePage">ModeTogglePage</Link>
 			<br />
 			<Button label="Storybook Test Button" />
+			<br />
+			{/* 見本: Honoページへのリンク */}
+			<Link href="./hono">hono</Link>
+			<br />
 			フッター
 		</main>
 	);

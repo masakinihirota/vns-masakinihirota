@@ -33,6 +33,7 @@
     "clsx": "^2.1.1",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.40.0",
+    "hono": "^4.7.5",
     "jose": "^6.0.8",
     "lucide-react": "^0.479.0",
     "next": "15.2.2-canary.3",
