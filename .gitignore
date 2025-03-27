@@ -43,3 +43,7 @@ postgres_data/
 .env*.local
 
 *storybook.log
+
+# GitHub Copilot
+*.github
+*.github/*

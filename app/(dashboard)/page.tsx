@@ -10,7 +10,7 @@ export default function Home() {
 			<br />
 			<Button label="Storybook Test Button" />
 			<br />
-			{/* 見本: Honoページへのリンク */}
+			{/* Honoのサンプル APIとして利用 */}
 			<Link href="./hono">hono</Link>
 			<br />
 			フッター

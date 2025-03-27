@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 
 export default function Home() {
+  // データの取得
+  // データの加工
   const [message, setMessage] = useState()
 
   useEffect(() => {
