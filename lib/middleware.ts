@@ -1,5 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
-import { NextResponse, type NextRequest } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({
@@ -30,8 +30,10 @@ export async function updateSession(request: NextRequest) {
   // Do not run code between createServerClient and
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
+  // ja: createServerClientとsupabase.auth.getUser()の間でコードを実行しないでください。単純なミスが原因で、ユーザーがランダムにログアウトされる問題をデバッグするのが非常に難しくなる可能性があります。
 
   // IMPORTANT: DO NOT REMOVE auth.getUser()
+  // ja: auth.getUser()を削除しないでください
 
   const {
     data: { user },
@@ -39,10 +41,12 @@ export async function updateSession(request: NextRequest) {
 
   if (
     !user &&
+    !request.nextUrl.pathname.startsWith('/') &&
     !request.nextUrl.pathname.startsWith('/login') &&
     !request.nextUrl.pathname.startsWith('/auth')
   ) {
     // no user, potentially respond by redirecting the user to the login page
+    // ja: ユーザーがログインしていない場合、ログインページにリダイレクトします。
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
     return NextResponse.redirect(url)
@@ -60,6 +64,17 @@ export async function updateSession(request: NextRequest) {
   //    return myNewResponse
   // If this is not done, you may be causing the browser and server to go out
   // of sync and terminate the user's session prematurely!
+  // ja: supabaseResponseオブジェクトをそのまま返す必要があります。
+  // 新しいレスポンスオブジェクトをNextResponse.next()で作成する場合は、次のことを確認してください。
+  // 1. リクエストを渡します。次のように:
+  //    const myNewResponse = NextResponse.next({ request })
+  // 2. クッキーをコピーします。次のように:
+  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
+  // 3. myNewResponseオブジェクトをニーズに合わせて変更しますが、クッキーは変更しないでください!
+  // 4. 最後に:
+  //    return myNewResponse
+  // これを行わないと、ブラウザとサーバーの同期が外れ、ユーザーのセッションが早期に終了する可能性があります!
+  // supabaseResponse.cookies.setAll(supabaseResponse.cookies.getAll())
 
   return supabaseResponse
 }
