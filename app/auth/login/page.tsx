@@ -1,4 +1,4 @@
-import { LoginForm } from '@/components/login-form'
+import { LoginForm } from '@/components/oauth/oauth-github/login-form'
 
 export default function Page() {
   return (

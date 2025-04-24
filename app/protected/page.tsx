@@ -1,12 +1,14 @@
 import { redirect } from 'next/navigation'
 
-import { LogoutButton } from '@/components/logout-button'
+import { LogoutButton } from '@/components/oauth/logout-button'
 import { createClient } from '@/lib/server'
 
 export default async function ProtectedPage() {
   const supabase = await createClient()
 
   const { data, error } = await supabase.auth.getUser()
+
+  // ユーザーが存在しない場合は、ログインページにリダイレクト
   if (error || !data?.user) {
     redirect('/auth/login')
   }
