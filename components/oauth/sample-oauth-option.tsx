@@ -1,17 +1,25 @@
-import Link from "next/link"
-import type React from "react"
-import { FaGithub } from "react-icons/fa"
-import { FcGoogle } from "react-icons/fc"
-import { TbUserQuestion } from "react-icons/tb"
+import Link from "next/link";
+import type React from "react";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import { TbUserQuestion } from "react-icons/tb";
 
 // Correct the import path or create the missing 'badge' component if it doesn't exist
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function AuthOptions() {
   return (
     <div className="container mx-auto py-8">
-      <h2 className="text-2xl font-bold mb-6 text-center">ユーザーの認証方法を選択してください</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        ユーザーの認証方法を選択してください
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* 匿名認証 */}
@@ -75,20 +83,20 @@ export default function AuthOptions() {
         />
       </div>
     </div>
-  )
+  );
 }
 
 interface FeatureItem {
-  label: string
-  value: string
-  isNegative?: boolean
+  label: string;
+  value: string;
+  isNegative?: boolean;
 }
 
 interface AuthOptionCardProps {
-  title: string
-  icon: React.ReactNode
-  href: string
-  features: FeatureItem[]
+  title: string;
+  icon: React.ReactNode;
+  href: string;
+  features: FeatureItem[];
 }
 
 function AuthOptionCard({ title, icon, href, features }: AuthOptionCardProps) {
@@ -99,14 +107,19 @@ function AuthOptionCard({ title, icon, href, features }: AuthOptionCardProps) {
           {icon}
           {title}
         </CardTitle>
-
       </CardHeader>
       <CardContent className="pb-4">
         <ul className="space-y-1 text-sm">
           {features.map((feature, index) => (
             <li key={index} className="flex justify-between">
               <span className="font-medium">{feature.label}:</span>
-              <span className={feature.isNegative ? "text-red-500" : "text-green-600"}>{feature.value}</span>
+              <span
+                className={
+                  feature.isNegative ? "text-red-500" : "text-green-600"
+                }
+              >
+                {feature.value}
+              </span>
             </li>
           ))}
         </ul>
@@ -117,9 +130,11 @@ function AuthOptionCard({ title, icon, href, features }: AuthOptionCardProps) {
           variant="default"
           className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 font-medium transition-colors"
         >
-          <Link href={href} className="text-white dark:text-white px-6">サインイン</Link>
+          <Link href={href} className="text-white dark:text-white px-6">
+            サインイン
+          </Link>
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

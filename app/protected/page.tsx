@@ -1,30 +1,33 @@
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
-import { LogoutButton } from '@/components/oauth/logout-button'
-import { createClient } from '@/lib/supabase/server'
-import Link from 'next/link'
+import { LogoutButton } from "@/components/oauth/logout-button";
+import { createClient } from "@/lib/supabase/server";
+import Link from "next/link";
 
 export default async function ProtectedPage() {
-  const supabase = await createClient()
+  const supabase = await createClient();
 
-  const { data, error } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUser();
 
   // ユーザーが存在しない場合は、ログインページにリダイレクト
   if (error || !data?.user) {
-    redirect('/auth/login')
+    redirect("/auth/login");
   }
 
   return (
     <div className="flex h-svh w-full items-center justify-center gap-2">
       {/* TOP ページへのリンク */}
-      <Link href="/" className="text-sm text-blue-500">TOPページ</Link>
+      <Link href="/" className="text-sm text-blue-500">
+        TOPページ
+      </Link>
       <p>
-        Protected ページ<br />
+        Protected ページ
+        <br />
         <span className="text-sm text-muted-foreground">
-        Hello <span>{data.user.email}</span>
+          Hello <span>{data.user.email}</span>
         </span>
       </p>
       <LogoutButton />
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,45 +8,52 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
-import { createClient } from '@/lib/supabase/client'
-import { cn } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { TbUserQuestion } from 'react-icons/tb'
+} from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { TbUserQuestion } from "react-icons/tb";
 
 /**
  * 匿名ログインフォームコンポーネント
  * ユーザー情報なしで一時的なアクセスを提供します
  */
-export function AnonymousLoginForm({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
-  const [error, setError] = useState<string | null>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
+export function AnonymousLoginForm({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleAnonymousLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const supabase = createClient()
-    setIsLoading(true)
-    setError(null)
+    e.preventDefault();
+    const supabase = createClient();
+    setIsLoading(true);
+    setError(null);
 
     try {
       console.log("匿名サインインを試行中...");
-      const { data, error } = await supabase.auth.signInAnonymously()
+      const { data, error } = await supabase.auth.signInAnonymously();
 
-      if (error) throw error
+      if (error) throw error;
 
-      console.log("匿名サインイン成功:", data)
+      console.log("匿名サインイン成功:", data);
 
       // ログイン成功後にリダイレクト（保護されたルートへ）
-      router.push('/protected')
+      router.push("/protected");
     } catch (error: unknown) {
-      console.error("匿名サインインエラー:", error)
-      setError(error instanceof Error ? error.message : 'ログイン中にエラーが発生しました')
+      console.error("匿名サインインエラー:", error);
+      setError(
+        error instanceof Error
+          ? error.message
+          : "ログイン中にエラーが発生しました",
+      );
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   // 匿名認証の機能リスト
   const features = [
@@ -61,24 +68,32 @@ export function AnonymousLoginForm({ className, ...props }: React.ComponentProps
     { label: "データ削除", value: "NG", isNegative: true },
     { label: "広告", value: "あり強制", isNegative: true },
     { label: "オアシス宣言", value: "なし", isNegative: true },
-  ]
+  ];
 
   return (
-    <div className={cn('flex flex-col gap-6 w-full', className)} {...props}>
+    <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>
       <Card className="border border-green-600 bg-black text-white h-full hover:shadow-md transition-all">
         <CardHeader>
           <CardTitle className="text-2xl flex items-center gap-2 text-white">
             <TbUserQuestion className="h-6 w-6" />
             匿名認証
           </CardTitle>
-          <CardDescription className="text-gray-300">匿名でサービスを体験できます</CardDescription>
+          <CardDescription className="text-gray-300">
+            匿名でサービスを体験できます
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <ul className="space-y-1 text-sm">
             {features.map((feature, index) => (
               <li key={index} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
-                <span className={feature.isNegative ? "text-red-500" : "text-green-500"}>{feature.value}</span>
+                <span
+                  className={
+                    feature.isNegative ? "text-red-500" : "text-green-500"
+                  }
+                >
+                  {feature.value}
+                </span>
               </li>
             ))}
           </ul>
@@ -94,7 +109,7 @@ export function AnonymousLoginForm({ className, ...props }: React.ComponentProps
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white"
                 disabled={isLoading}
               >
-                {isLoading ? 'ログイン中...' : 'サインイン'}
+                {isLoading ? "ログイン中..." : "サインイン"}
               </Button>
               <p className="text-xs text-gray-400 text-center">
                 匿名ログインではデータが永続化されない場合があります
@@ -109,5 +124,5 @@ export function AnonymousLoginForm({ className, ...props }: React.ComponentProps
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }
