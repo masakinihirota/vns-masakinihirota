@@ -14,6 +14,8 @@ export default function Home() {
           {/* ログアウト */}
           <Link href="/logout">ログアウト</Link>
         </div>
+        {/* Hono */}
+        <Link href="/hono">Hono</Link>
       </div>
 
       <footer className=""></footer>
