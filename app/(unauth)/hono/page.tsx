@@ -16,5 +16,11 @@ export default function Home() {
 
   if (!message) return <p>Loading...</p>;
 
-  return <p>{message}</p>;
+  return (
+    <p>
+      Hono
+      <br />
+      {message}
+    </p>
+  );
 }
