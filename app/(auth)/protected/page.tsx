@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { LogoutButton } from "@/components/oauth/logout-button";
+import { LogoutButton } from "@/components/oauth/logout-button-auth";
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 
@@ -11,7 +11,7 @@ export default async function ProtectedPage() {
 
   // ユーザーが存在しない場合は、ログインページにリダイレクト
   if (error || !data?.user) {
-    redirect("/auth/login");
+    redirect("/login");
   }
 
   return (

@@ -9,7 +9,10 @@ export default function Home() {
         <div className="w-full max-w-sm">
           <h1>TOPページ</h1>
           <p>認証ページへ</p>
-          <Link href="/auth/login">ログイン</Link>
+          <Link href="/login">ログイン</Link>
+          <div />
+          {/* ログアウト */}
+          <Link href="/logout">ログアウト</Link>
         </div>
       </div>
 
