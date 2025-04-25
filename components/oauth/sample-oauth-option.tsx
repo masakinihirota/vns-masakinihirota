@@ -111,7 +111,10 @@ function AuthOptionCard({ title, icon, href, features }: AuthOptionCardProps) {
       <CardContent className="pb-4">
         <ul className="space-y-1 text-sm">
           {features.map((feature, index) => (
-            <li key={index} className="flex justify-between">
+            <li
+              key={index}
+              className="flex justify-between"
+            >
               <span className="font-medium">{feature.label}:</span>
               <span
                 className={
@@ -130,7 +133,10 @@ function AuthOptionCard({ title, icon, href, features }: AuthOptionCardProps) {
           variant="default"
           className="w-full bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 font-medium transition-colors"
         >
-          <Link href={href} className="text-white dark:text-white px-6">
+          <Link
+            href={href}
+            className="text-white dark:text-white px-6"
+          >
             サインイン
           </Link>
         </Button>
