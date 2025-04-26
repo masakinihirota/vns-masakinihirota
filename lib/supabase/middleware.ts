@@ -32,10 +32,10 @@ export async function updateSession(request: NextRequest) {
   // Do not run code between createServerClient and
   // supabase.auth.getUser(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
-  // ja: createServerClientとsupabase.auth.getUser()の間でコードを実行しないでください。単純なミスが原因で、ユーザーがランダムにログアウトされる問題をデバッグするのが非常に難しくなる可能性があります。
+  // createServerClientとsupabase.auth.getUser()の間でコードを実行しないでください。単純なミスが原因で、ユーザーがランダムにログアウトされる問題をデバッグするのが非常に難しくなる可能性があります。
 
   // IMPORTANT: DO NOT REMOVE auth.getUser()
-  // ja: auth.getUser()を削除しないでください
+  // 重要: auth.getUser()を削除しないでください
 
   const {
     data: { user },
@@ -51,7 +51,7 @@ export async function updateSession(request: NextRequest) {
     !request.nextUrl.pathname.startsWith("/auth")
   ) {
     // no user, potentially respond by redirecting the user to the login page
-    // ja: ユーザーがログインしていない場合、ログインページにリダイレクトします。
+    // ユーザーがログインしていない場合、ログインページにリダイレクトします。
     const url = request.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);
