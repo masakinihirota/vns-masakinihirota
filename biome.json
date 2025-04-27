@@ -13,6 +13,7 @@
     "enabled": true,
     "formatWithErrors": false,
     "ignore": [],
+    "attributePosition": "multiline",
     "indentStyle": "space"
   },
   "organizeImports": {
