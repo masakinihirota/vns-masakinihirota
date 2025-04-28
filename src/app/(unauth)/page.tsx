@@ -13,6 +13,7 @@ export default function Home() {
         <div className="w-full max-w-sm">
           <h1>TOPページ</h1>
           {/* TODO 未実装 言語スイッチ */}
+          {/* https://next-intl.dev/examples#app-router-without-i18n-routing */}
           <div className="mb-4">{/* <LocaleSwitcher /> */}</div>
           {/* 挨拶文(言語変更の確認) */}
           <h2>{t("title")}</h2>
