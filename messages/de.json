@@ -1,11 +1,11 @@
 {
   "AppLayout": {
-    "home": "Start",
+    "home": "Start VNS",
     "logout": "Abmelden",
     "profile": "Profil"
   },
   "HomePage": {
-    "title": "Start"
+    "title": "Start VNS masakinihirota!"
   },
   "LocaleSwitcher": {
     "de": "Deutsch",
