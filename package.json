@@ -12,9 +12,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "prepare": "husky",
-    "lint": "biome lint --write app lib components schema",
-    "format": "biome format --write app lib components schema",
-    "check": "biome check --write app lib components schema"
+    "lint": "biome lint --write src schema",
+    "format": "biome format --write src schema",
+    "check": "biome check --write src schema"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.0",

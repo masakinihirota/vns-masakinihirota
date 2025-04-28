@@ -78,7 +78,9 @@ export function AnonymousLoginForm({
             匿名認証
           </CardTitle>
           <CardDescription className="text-gray-300">
-            匿名でサービスを体験できます
+            必要なもの: 無し
+            <br />
+            匿名でサービスを体験
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -124,7 +126,7 @@ export function AnonymousLoginForm({
         </CardContent>
         <CardFooter>
           <p className="text-sm text-gray-400 text-center">
-            匿名認証では、基本的な機能のみが利用可能です。データ保存や価値観登録などの一部機能は制限されています。
+            匿名認証では、基本的な機能(データの読み込み、マッチング)のみが利用可能です。データ保存などの一部機能は制限されます。
           </p>
         </CardFooter>
       </Card>

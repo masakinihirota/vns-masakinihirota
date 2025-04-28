@@ -67,7 +67,7 @@ export function GoogleLoginForm({
             Google認証
           </CardTitle>
           <CardDescription className="text-gray-300">
-            Googleアカウントでログイン
+            必要なもの: Googleアカウント
           </CardDescription>
         </CardHeader>
         <CardContent>
