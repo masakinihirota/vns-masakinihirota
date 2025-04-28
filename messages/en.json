@@ -1,5 +1,12 @@
 {
   "HomePage": {
-    "title": "Hello world!"
+    "title": "Hello VNS masakinihirota!"
+  },
+  "LocaleSwitcher": {
+    "toggle": "Switch Language",
+    "en": "English",
+    "de": "German",
+    "ja": "Japanese",
+    "label": "Language"
   }
 }

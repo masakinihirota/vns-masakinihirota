@@ -17,7 +17,7 @@
     "indentStyle": "space"
   },
   "organizeImports": {
-    "enabled": true
+    "enabled": false
   },
   "javascript": {
     "formatter": {
