@@ -11,6 +11,8 @@ export default function Home() {
       <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
         <div className="w-full max-w-sm">
           <h1>TOPページ</h1>
+          {/* 言語スイッチ */}
+          {/* 挨拶文(言語変更の確認) */}
           <h2>{t("title")}</h2>
 
           <p>認証ページへ</p>
