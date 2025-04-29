@@ -6,6 +6,7 @@ import Link from "next/link";
 export default function Home() {
   // 翻訳
   const t = useTranslations("HomePage");
+  const t2 = useTranslations("AppLayout");
 
   return (
     <div className="">
@@ -20,6 +21,7 @@ export default function Home() {
           </div>
           {/* 挨拶文(言語変更の確認) */}
           <h2>{t("title")}</h2>
+          <h2>{t2("home")}</h2>
           <p>認証 ログインページへ</p>
           <Link href="/login">ログインページへ</Link>
           <div />

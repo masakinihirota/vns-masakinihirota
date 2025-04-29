@@ -8,7 +8,12 @@ export default function LocaleSwitcher() {
   return (
     <LocaleSwitcherSelect
       defaultValue={locale}
+      // 表示の順番
       items={[
+        {
+          value: "ja",
+          label: t("ja"),
+        },
         {
           value: "en",
           label: t("en"),
@@ -16,10 +21,6 @@ export default function LocaleSwitcher() {
         {
           value: "de",
           label: t("de"),
-        },
-        {
-          value: "ja",
-          label: t("ja"),
         },
       ]}
       label={t("label")}

@@ -1,16 +1,7 @@
 {
   "AppLayout": {
-    "home": "Start",
+    "home": "AppLayout Start",
     "logout": "Abmelden",
     "profile": "Profil"
-  },
-  "HomePage": {
-    "title": "Start"
-  },
-  "LocaleSwitcher": {
-    "de": "Deutsch",
-    "en": "Englisch",
-    "ja": "Japanisch",
-    "label": "Sprache"
   }
 }
