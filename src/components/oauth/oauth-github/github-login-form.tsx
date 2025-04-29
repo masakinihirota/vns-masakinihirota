@@ -68,7 +68,7 @@ export function GitHubLoginForm({
             GitHub認証
           </CardTitle>
           <CardDescription className="text-gray-300">
-            GitHubアカウントでログイン
+            必要なもの: GitHubアカウント
           </CardDescription>
         </CardHeader>
         <CardContent>

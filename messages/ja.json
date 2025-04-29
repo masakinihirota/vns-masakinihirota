@@ -1,0 +1,16 @@
+{
+  "AppLayout": {
+    "home": "Home",
+    "logout": "Logout",
+    "profile": "Profile"
+  },
+  "HomePage": {
+    "title": "ホーム"
+  },
+  "LocaleSwitcher": {
+    "de": "ドイツ語",
+    "en": "英語",
+    "ja": "日本語",
+    "label": "言語"
+  }
+}
