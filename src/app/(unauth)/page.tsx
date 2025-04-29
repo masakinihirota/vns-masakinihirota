@@ -2,6 +2,7 @@
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
 
 export default function Home() {
   // 翻訳
@@ -22,6 +23,11 @@ export default function Home() {
           {/* 挨拶文(言語変更の確認) */}
           <h2>{t("title")}</h2>
           <h2>{t2("home")}</h2>
+          {/* ダークモードボタン */}
+          <Link href="./ModeTogglePage">ModeTogglePage</Link>
+          <div />
+          {/* ToggleButton */}
+          <ModeToggle />
           <p>認証 ログインページへ</p>
           <Link href="/login">ログインページへ</Link>
           <div />
