@@ -4,8 +4,8 @@ import { ListCheck, BookA } from "lucide-react";
 import * as Select from "@radix-ui/react-select";
 import clsx from "clsx";
 import { useTransition } from "react";
-import { Locale } from "@/i18n/config";
-import { setUserLocale } from "@/services/locale";
+import { Locale } from "@/components/i18n/config";
+import { setUserLocale } from "@/components/i18n/locale";
 
 type Props = {
   defaultValue: string;
