@@ -1,3 +1,4 @@
+// import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -21,6 +22,9 @@ export default function Home() {
           <div />
           {/* ログアウト */}
           <Link href="/logout">ログアウト</Link>
+          <div />
+          {/* 言語ページ */}
+          <Link href="/lang">言語ページ</Link>
         </div>
         {/* Hono */}
         <Link href="/hono">Hono</Link>

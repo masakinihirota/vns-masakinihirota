@@ -1,12 +1,16 @@
 {
+  "AppLayout": {
+    "home": "Home",
+    "logout": "Logout",
+    "profile": "Profile"
+  },
   "HomePage": {
-    "title": "Hello VNS masakinihirota!"
+    "title": "Home"
   },
   "LocaleSwitcher": {
-    "toggle": "Switch Language",
+    "de": "Deutsch",
     "en": "English",
-    "de": "German",
-    "ja": "Japanese",
+    "ja": "日本語",
     "label": "Language"
   }
 }
