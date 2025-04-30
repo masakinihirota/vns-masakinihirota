@@ -1,14 +1,5 @@
-import Contact01Page from "@/components/shadcnui-blocks/contact-01/contact-01";
-import FAQ03 from "@/components/shadcnui-blocks/faq-03";
-import Features01Page from "@/components/shadcnui-blocks/features-01";
-import Footer05Page from "@/components/shadcnui-blocks/footer-05";
-import Hero01 from "@/components/shadcnui-blocks/hero-01";
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
-import Logos02Page from "@/components/shadcnui-blocks/logos-02/logos-02";
 import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03";
-import Stats01Page from "@/components/shadcnui-blocks/stats-01/stats-01";
-import Testimonial05 from "@/components/shadcnui-blocks/testimonial-05";
-import Timeline from "@/components/shadcnui-blocks/timeline-03";
 import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
 
 import { useTranslations } from "next-intl";
@@ -22,20 +13,6 @@ export default function Home() {
   return (
     <>
       <Navbar03Page />
-      {/* <div className="border-2 border-dashed border-green-500 my-4">
-        <Hero01 />
-      </div>
-      <Features01Page />
-
-      <Timeline />
-      <Testimonial05 />
-      <FAQ03 /> */}
-      {/* <Team03Page /> */}
-      {/* <Logos02Page />
-      <Contact01Page />
-      <Stats01Page />
-
-      <Footer05Page /> */}
       {/* 価格のページ */}
       <Link href="/pricing">価格のページへ</Link>
       {/* 認証のページ */}
