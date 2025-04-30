@@ -3,6 +3,7 @@ import { Logo } from "./logo";
 import { NavMenu } from "./nav-menu";
 import { NavigationSheet } from "./navigation-sheet";
 import { ArrowUpRight } from "lucide-react";
+import ThemeToggle from "./theme-toggle";
 
 const Navbar03Page = () => {
   return (
@@ -17,6 +18,7 @@ const Navbar03Page = () => {
           </div>
 
           <div className="flex items-center gap-3">
+          <ThemeToggle />
             <Button>
               Get Started <ArrowUpRight />
             </Button>

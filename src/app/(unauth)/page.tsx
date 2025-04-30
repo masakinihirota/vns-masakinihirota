@@ -3,6 +3,7 @@ import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
+import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03";
 
 export default function Home() {
   // 翻訳
@@ -10,10 +11,10 @@ export default function Home() {
   const t2 = useTranslations("AppLayout");
 
   return (
-    <div className="">
-      <main className=""></main>
-      {/* 認証ページへ */}
-      <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <>
+      <Navbar03Page />
+      <main className="">
+        {/* 認証ページへ */}
         <div className="w-full max-w-sm">
           <h1>TOPページ</h1>
           {/* 言語スイッチ */}
@@ -39,9 +40,8 @@ export default function Home() {
         </div>
         {/* Hono */}
         <Link href="/hono">Honoページへ </Link>
-      </div>
-
+      </main>
       <footer className=""></footer>
-    </div>
+    </>
   );
 }
