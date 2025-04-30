@@ -8,16 +8,16 @@
   "files": {
     "ignoreUnknown": false,
     "ignore": [
-      "**/node_modules/**",
-      "**/dist/**",
-      "**/build/**",
       "**/.next/**",
-      "**/.turbo/**",
-      "**/coverage/**",
-      "**/public/**",
-      "**/out/**",
-      "**/.vercel/**",
       "**/.output/**",
+      "**/.turbo/**",
+      "**/.vercel/**",
+      "**/build/**",
+      "**/coverage/**",
+      "**/dist/**",
+      "**/node_modules/**",
+      "**/out/**",
+      "**/public/**",
       "**/shadcnui-blocks/**"
     ]
   },
