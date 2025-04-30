@@ -1,16 +1,16 @@
-// import Hero01 from "@/components/shadcnui-blocks/hero-01";
-// import Footer05Page from "@/components/shadcnui-blocks/footer-05";
-// import Features01Page from "@/components/shadcnui-blocks/features-01";
-// import Timeline from "@/components/shadcnui-blocks/timeline-03";
-// import Testimonial05 from "@/components/shadcnui-blocks/testimonial-05";
-// import FAQ03 from "@/components/shadcnui-blocks/faq-03";
-// import Logos02Page from "@/components/shadcnui-blocks/logos-02/logos-02";
-// import Contact01Page from "@/components/shadcnui-blocks/contact-01/contact-01";
-// import Stats01Page from "@/components/shadcnui-blocks/stats-01/stats-01";
-// import { Navbar } from "@/components/shadcnui-blocks/navbar-01";
-import { useTranslations } from "next-intl";
 import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
+import Contact01Page from "@/components/shadcnui-blocks/contact-01/contact-01";
+import FAQ03 from "@/components/shadcnui-blocks/faq-03";
+import Features01Page from "@/components/shadcnui-blocks/features-01";
+import Footer05Page from "@/components/shadcnui-blocks/footer-05";
+import Hero01 from "@/components/shadcnui-blocks/hero-01";
+import Logos02Page from "@/components/shadcnui-blocks/logos-02/logos-02";
+import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03";
+import Stats01Page from "@/components/shadcnui-blocks/stats-01/stats-01";
+import Testimonial05 from "@/components/shadcnui-blocks/testimonial-05";
+import Timeline from "@/components/shadcnui-blocks/timeline-03";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function Home() {
@@ -20,7 +20,24 @@ export default function Home() {
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar03Page />
+      <div className="border-2 border-dashed border-green-500 my-4">
+        <Hero01 />
+      </div>
+      <Features01Page />
+
+      <Timeline />
+      <Testimonial05 />
+      <FAQ03 />
+      {/* <Team03Page /> */}
+      <Logos02Page />
+      <Contact01Page />
+      <Stats01Page />
+
+      <Footer05Page />
+      {/* 価格のページ */}
+      <Link href="/pricing">価格のページへ</Link>
+      {/* 認証のページ */}
       <main className="">
         {/* 認証ページへ */}
         <div className="w-full max-w-sm">
@@ -52,16 +69,7 @@ export default function Home() {
         {/* Team */}
         <Link href="/team-03">Teamページへ</Link>
       </main>
-      {/* <Navbar03Page /> */}
-      {/* <Hero01 />
-      <Features01Page />
-      <Timeline />
-      <Testimonial05 />
-      <FAQ03 />
-      <Logos02Page />
-      <Contact01Page />
-      <Stats01Page />
-      <Footer05Page /> */}
+      <footer className="">footer</footer>
     </>
   );
 }
