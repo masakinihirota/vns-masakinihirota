@@ -7,7 +7,19 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "ignore": []
+    "ignore": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/.next/**",
+      "**/.turbo/**",
+      "**/coverage/**",
+      "**/public/**",
+      "**/out/**",
+      "**/.vercel/**",
+      "**/.output/**",
+      "**/shadcnui-blocks/**"
+    ]
   },
   "formatter": {
     "enabled": true,
