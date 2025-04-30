@@ -1,4 +1,3 @@
-import { useTranslations } from "next-intl";
 import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03";
 import Hero01 from "@/components/shadcnui-blocks/hero-01";
 import Footer05Page from "@/components/shadcnui-blocks/footer-05";
