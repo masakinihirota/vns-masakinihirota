@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
 import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03";
+import Hero01 from "@/components/shadcnui-blocks/hero-01";
 
 export default function Home() {
   // 翻訳
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <>
       <Navbar03Page />
+      <Hero01 />
       <main className="">
         {/* 認証ページへ */}
         <div className="w-full max-w-sm">
