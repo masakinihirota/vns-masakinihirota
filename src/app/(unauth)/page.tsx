@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
 import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03";
 import Hero01 from "@/components/shadcnui-blocks/hero-01";
+import Footer05Page from "@/components/shadcnui-blocks/footer-05";
 
 export default function Home() {
   // 翻訳
@@ -15,6 +16,8 @@ export default function Home() {
     <>
       <Navbar03Page />
       <Hero01 />
+
+      <Footer05Page />
       <main className="">
         {/* 認証ページへ */}
         <div className="w-full max-w-sm">
