@@ -27,6 +27,7 @@ export default async function ProtectedPage() {
         Protected ページ
         <br />
         <span className="text-sm text-muted-foreground">
+          {/* TODO 修正 */}
           Hello <span>{data.user.email}</span>
         </span>
       </p>
