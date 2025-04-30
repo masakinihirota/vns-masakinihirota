@@ -11,10 +11,6 @@ import Contact01Page from "@/components/shadcnui-blocks/contact-01/contact-01";
 import Stats01Page from "@/components/shadcnui-blocks/stats-01/stats-01";
 
 export default function Home() {
-  // 翻訳
-  const t = useTranslations("HomePage");
-  const t2 = useTranslations("AppLayout");
-
   return (
     <>
       <Navbar03Page />
