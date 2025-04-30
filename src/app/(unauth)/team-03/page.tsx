@@ -1,11 +1,11 @@
+"use client";
+
 import Team03Page from "@/components/shadcnui-blocks/team-03/team-03";
 
-export const Page = () => {
+export default function Home() {
   return (
-    <div>
+    <p>
       <Team03Page />
-    </div>
+    </p>
   );
-};
-
-export default Page;
+}
