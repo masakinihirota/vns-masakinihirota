@@ -1,5 +1,4 @@
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
-import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03";
 import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
 
 import { useTranslations } from "next-intl";
