@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import "@/styles/globals.css";
+import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { ThemeProvider } from "@/components/theme-provider";
+import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03";
 
 export const metadata: Metadata = {
   title: "masakinihirota",
@@ -102,7 +103,10 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider>{children}</NextIntlClientProvider>
+          <NextIntlClientProvider>
+            <Navbar03Page />
+            {children}
+          </NextIntlClientProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -18,7 +18,8 @@
       "**/node_modules/**",
       "**/out/**",
       "**/public/**",
-      "**/shadcnui-blocks/**"
+      "**/shadcnui-blocks/**",
+      "**/ui/**"
     ]
   },
   "formatter": {

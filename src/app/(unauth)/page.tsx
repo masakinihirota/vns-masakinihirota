@@ -12,9 +12,10 @@ export default function Home() {
 
   return (
     <>
-      <Navbar03Page />
+      <Link href="/main-pages">メインページへのリンク</Link>
+      <br />
       {/* 価格のページ */}
-      <Link href="/pricing">価格のページへ</Link>
+      <Link href="/pricing">価格のページ</Link>
       {/* 認証のページ */}
       <main className="">
         {/* 認証ページへ */}
