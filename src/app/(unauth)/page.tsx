@@ -33,10 +33,10 @@ export default function Home() {
           {/* ToggleButton */}
           <ModeToggle />
           <p>認証 ログインページへ</p>
-          <Link href="/auth-page/login">ログインページへ</Link>
+          <Link href="/login">ログインページへ</Link>
           <div />
           {/* ログアウト */}
-          <Link href="/auth-page/logout">ログアウトページへ</Link>
+          <Link href="/logout">ログアウトページへ</Link>
           <div />
           {/* 言語ページ */}
           <Link href="/lang">言語ページ</Link>
