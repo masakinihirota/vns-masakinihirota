@@ -13,6 +13,6 @@ create table "root_account" (
   "name" text,
   "avatar_url" text,
   "created_at" timestamptz default now() not null,
-  "updated_at" timestamptz,
-  "age" smallint not null
+  "updated_at" timestamptz
 );
+

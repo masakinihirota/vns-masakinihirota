@@ -48,7 +48,13 @@ max_client_conn = 100
 [db.migrations]
 # Specifies an ordered list of schema files that describe your database.
 # Supports glob patterns relative to supabase directory: "./schemas/*.sql"
-schema_paths = []
+schema_paths = [
+    # "./schemas/common.sql",
+    # "./schemas/production/*.sql",
+    # "./schemas/root_account/*.sql",
+    # "./schemas/user/*.sql",
+    # "./schemas/*.sql",
+]
 
 [db.seed]
 # If enabled, seeds the database after migrations during a db reset.
@@ -127,7 +133,6 @@ enable_refresh_token_rotation = true
 refresh_token_reuse_interval = 10
 # Allow/disallow new user signups to your project.
 enable_signup = true
-
 
 
 # 匿名認証の有効化
@@ -275,14 +280,12 @@ url = ""
 skip_nonce_check = false
 
 
-
 [auth.external.google]
 enabled = true
 client_id = "env(GOOGLE_CLIENT_ID)"
 secret = "env(GOOGLE_SECRET)"
 # Overrides the default auth redirectUrl.
 redirect_uri = "http://localhost:54321/auth/v1/callback"
-
 
 
 [auth.external.github]
@@ -298,16 +301,6 @@ redirect_uri = "http://localhost:54321/auth/v1/callback"
 # client_id = "【ここにキー】"
 # secret = "【ここにシークレットキー】"
 # redirect_uri = "http://localhost:54321/auth/v1/callback"
-
-
-
-
-
-
-
-
-
-
 
 
 # Use Firebase Auth as a third-party provider alongside Supabase Auth.
