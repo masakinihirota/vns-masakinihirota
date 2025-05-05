@@ -1,28 +1,34 @@
-create table public.profiles (
-  id uuid not null references auth.users on delete cascade,
-  first_name text,
-  last_name text,
+-- profiles テーブルの作成
+-- CREATE TABLE IF NOT EXISTS public.profiles (
+--   id UUID PRIMARY KEY,
+--   aud TEXT,
+--   role TEXT
+-- );
 
-  primary key (id)
+CREATE TABLE IF NOT EXISTS public.root_account (
+  id UUID PRIMARY KEY,
+  aud TEXT,
+  role TEXT,
+  email TEXT UNIQUE,
+  email_confirmed_at TIMESTAMPTZ,
+  last_sign_in_at TIMESTAMPTZ,
+  raw_app_meta_data JSONB,
+  raw_user_meta_data JSONB,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- alter table public.profiles enable row level security;
-
-
--- inserts a row into public.profiles
-create function public.handle_new_user()
-returns trigger
-language plpgsql
-security definer set search_path = ''
-as $$
-begin
-  insert into public.profiles (id, first_name, last_name)
-  values (new.id, new.raw_user_meta_data ->> 'first_name', new.raw_user_meta_data ->> 'last_name');
-  return new;
-end;
+-- トリガー関数の作成
+CREATE OR REPLACE FUNCTION public.handle_new_user()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = ''
+AS $$
+BEGIN
+  INSERT INTO public.root_account (id, aud, role, email, email_confirmed_at, last_sign_in_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
+  VALUES (NEW.id, NEW.aud, NEW.role, NEW.email, NEW.email_confirmed_at, NEW.last_sign_in_at, NEW.created_at, NEW.updated_at, NEW.raw_app_meta_data, NEW.raw_user_meta_data);
+  RETURN NEW;
+END;
 $$;
 
--- trigger the function every time a user is created
-create trigger on_auth_user_created
-  after insert on auth.users
-  for each row execute procedure public.handle_new_user();
