@@ -12,9 +12,9 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "prepare": "husky",
-    "lint": "biome lint --write src schema",
-    "format": "biome format --write src schema",
-    "check": "biome check --write src schema"
+    "lint": "biome lint --write src drizzle_schemas supabase/schemas",
+    "format": "biome format --write src drizzle_schemas supabase/schemas",
+    "check": "biome check --write src drizzle_schemas supabase/schemas"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.8",
