@@ -11,6 +11,10 @@ export default function Home() {
 
   return (
     <>
+      {/* ランディングページへのリンク */}
+      <Link href="/landing">ランディングページ</Link>
+      <br />
+      {/* メインページへのリンク */}
       <Link href="/main-pages">メインページへのリンク</Link>
       <br />
       {/* 価格のページ */}
