@@ -1,6 +1,7 @@
 "use client"; // This is a Client Component
 
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 // Define the main Landing Page component
 export default function Home() {
@@ -79,16 +80,16 @@ export default function Home() {
       {/* 背景グラデーションと文字色をTailwindで指定 */}
       <section className="px-6 py-20 text-center text-white bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-800 dark:to-indigo-900">
         <div className="container mx-auto">
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl">VNS</h1>
+          <h1 className="mb-4 text-4xl font-bold md:text-5xl">
+            昨日僕が感動した作品を、今日の君はまだ知らない。
+          </h1>
           {/* Catchphrase */}
           {/* Text color is white, which should be visible on dark background */}
-          <p className="mb-8 text-2xl font-semibold md:text-3xl opacity-95">
-            昨日僕が感動した作品を、今日の君はまだ知らない。
-          </p>
-          {/* Text color is white, which should be visible on dark background */}
-          <p className="mb-8 text-xl md:text-2xl opacity-90">
+          <p className="mb-8 text-1xl font-semibold md:text-1xl opacity-95">
             インターネットという情報の洪水の中からまっさきに価値ある情報を拾い上げるサービスです。
           </p>
+          {/* Text color is white, which should be visible on dark background */}
+          <p className="mb-8 text-xl md:text-2xl opacity-90">VNS</p>
           {/* Call to Action Button */}
           {/* ボタンの色とテキスト色をTailwindで指定 */}
           <a
@@ -142,7 +143,7 @@ export default function Home() {
           {/* 段落テキストの色をTailwindで指定 */}
           <div className="max-w-3xl mx-auto mb-12 text-lg leading-relaxed text-center text-gray-700 dark:text-gray-200">
             <p className="mb-4">
-              masakinihirotaは、インターネットという情報の洪水の中から、あなたの心に「まっさきに」響く価値ある作品を見つけ出し、そしてその作品を通じて「価値観」で繋がる新しいコミュニティスペースです。
+              masakinihirotaは、インターネットという情報の洪水の中から、まっさきに価値ある情報を拾い上げ紹介するサービスです。名刺、履歴書のように自己紹介をして自分の価値観に合う人を探します。
             </p>
             {/* 名前の由来タイトルの色をTailwindで指定 */}
             <h3 className="mb-4 text-2xl font-semibold text-blue-800 dark:text-teal-400">
@@ -152,11 +153,11 @@ export default function Home() {
               インターネットという情報の洪水の中から、まっさきに価値ある情報を拾い上げるサービスであることに由来しています。
             </p>
             {/* Image placeholder for "洪水から物を拾い上げる画像" */}
-            {/* Replace src with actual image URL */}
-            {/* Image might need specific dark mode handling depending on the image */}
-            <img
+            <Image
               src="https://placehold.co/500x300/bae6fd/1e3a8a?text=洪水から物を拾い上げるイメージ"
               alt="洪水から物を拾い上げるイメージ画像"
+              width={500}
+              height={300}
               className="concept-image"
             />
             <p className="mb-4">

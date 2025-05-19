@@ -4,7 +4,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["images.pexels.com"], // ここにホスト名を追加
+    domains: ["images.pexels.com", "placehold.co"], // ここにホスト名を追加
   },
 };
 
