@@ -44,6 +44,9 @@ export default function Home() {
           <div />
           {/* 言語ページ */}
           <Link href="/lang">言語ページ</Link>
+          <div />
+          {/* プロテクトページへ */}
+          <Link href="/protected">プロテクトページへ</Link>
         </div>
         {/* Hono */}
         <Link href="/hono">Honoページへ </Link>
