@@ -22,7 +22,7 @@ CREATE POLICY "Users can insert only their own root_account row" ON public.root_
   WITH CHECK (auth.uid() = id);
 
 
-
+-- ALL
 -- -- Row Level Security（RLS）有効化
 -- ALTER TABLE public.root_account ENABLE ROW LEVEL SECURITY;
 
