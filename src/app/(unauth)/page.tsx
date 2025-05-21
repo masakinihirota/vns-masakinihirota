@@ -1,8 +1,8 @@
-// import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher";
+import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
+
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
 
 export default function Home() {
   // 翻訳
@@ -10,10 +10,18 @@ export default function Home() {
   const t2 = useTranslations("AppLayout");
 
   return (
-    <div className="">
-      <main className=""></main>
-      {/* 認証ページへ */}
-      <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+    <>
+      {/* ランディングページへのリンク */}
+      <Link href="/landing">ランディングページ</Link>
+      <br />
+      {/* メインページへのリンク */}
+      <Link href="/main-pages">メインページへのリンク</Link>
+      <br />
+      {/* 価格のページ */}
+      <Link href="/pricing">価格のページ</Link>
+      {/* 認証のページ */}
+      <main className="">
+        {/* 認証ページへ */}
         <div className="w-full max-w-sm">
           <h1>TOPページ</h1>
           {/* 言語スイッチ */}
@@ -36,12 +44,17 @@ export default function Home() {
           <div />
           {/* 言語ページ */}
           <Link href="/lang">言語ページ</Link>
+          <div />
+          {/* プロテクトページへ */}
+          <Link href="/protected">プロテクトページへ</Link>
         </div>
         {/* Hono */}
         <Link href="/hono">Honoページへ </Link>
-      </div>
-
-      <footer className=""></footer>
-    </div>
+        <br />
+        {/* Team */}
+        <Link href="/team-03">Teamページへ</Link>
+      </main>
+      <footer className="">footer</footer>
+    </>
   );
 }
