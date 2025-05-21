@@ -1,5 +1,5 @@
 -- Row Level Security（RLS）有効化
-ALTER TABLE public.root_account ENABLE ROW LEVEL SECURITY;
+-- ALTER TABLE public.root_account ENABLE ROW LEVEL SECURITY;
 
 -- 自分自身のデータだけを取得できるRLSポリシー
 CREATE POLICY "Users can select only their own root_account row" ON public.root_account
@@ -20,6 +20,7 @@ CREATE POLICY "Users can delete only their own root_account row" ON public.root_
 CREATE POLICY "Users can insert only their own root_account row" ON public.root_account
   FOR INSERT
   WITH CHECK (auth.uid() = id);
+
 
 
 -- ALL
