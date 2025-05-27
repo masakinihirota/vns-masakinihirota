@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS public.root_account (
+CREATE TABLE public.root_account (
   id UUID PRIMARY KEY,
   aud TEXT,
   role TEXT,
