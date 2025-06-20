@@ -49,11 +49,16 @@ max_client_conn = 100
 [db.migrations]
 # Specifies an ordered list of schema files that describe your database.
 # Supports glob patterns relative to supabase directory: "./schemas/*.sql"
+# ja: データベースを記述するスキーマファイルの順序付きリストを指定します。
+# ja: supabaseディレクトリに対するグロブパターンをサポートします: "./schemas/*.sql"
 schema_paths = [
     # "./schemas/common.sql",
     # "./schemas/production/*.sql",
     # "./schemas/root_account/*.sql",
-    # "./schemas/user/*.sql",
+    "./schemas/01-enum.sql",
+    "./schemas/02-base.sql",
+    "./schemas/01-users/**/*.sql",
+    "./schemas/table.sql",
     # "./schemas/*.sql",
 ]
 
