@@ -49,6 +49,7 @@ export function AnonymousLoginForm({
       );
       setIsLoading(false);
     }
+    console.log("🚀 ~ handleAnonymousLogin ~ error:", error);
   };
 
   // 匿名認証の機能リスト
@@ -71,10 +72,10 @@ export function AnonymousLoginForm({
       className={cn("flex flex-col gap-6 w-full", className)}
       {...props}
     >
-      <Card className="border border-green-600 bg-black text-white h-full hover:shadow-md transition-all">
+      <Card className="h-full text-white transition-all bg-black border border-green-600 hover:shadow-md">
         <CardHeader>
-          <CardTitle className="text-2xl flex items-center gap-2 text-white">
-            <TbUserQuestion className="h-6 w-6" />
+          <CardTitle className="flex items-center gap-2 text-2xl text-white">
+            <TbUserQuestion className="w-6 h-6" />
             匿名認証
           </CardTitle>
           <CardDescription className="text-gray-300">
@@ -107,25 +108,25 @@ export function AnonymousLoginForm({
           >
             <div className="flex flex-col gap-6">
               {error && (
-                <p className="text-sm text-red-400 font-medium bg-red-900/30 p-3 rounded-md">
+                <p className="p-3 text-sm font-medium text-red-400 rounded-md bg-red-900/30">
                   {error}
                 </p>
               )}
               <Button
                 type="submit"
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                className="w-full text-white bg-blue-600 hover:bg-blue-700"
                 disabled={isLoading}
               >
                 {isLoading ? "ログイン中..." : "サインイン"}
               </Button>
-              <p className="text-xs text-gray-400 text-center">
+              <p className="text-xs text-center text-gray-400">
                 匿名ログインではデータが永続化されない場合があります
               </p>
             </div>
           </form>
         </CardContent>
         <CardFooter>
-          <p className="text-sm text-gray-400 text-center">
+          <p className="text-sm text-center text-gray-400">
             匿名認証では、基本的な機能(データの読み込み、マッチング)のみが利用可能です。データ保存などの一部機能は制限されます。
           </p>
         </CardFooter>

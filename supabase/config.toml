@@ -54,7 +54,7 @@ max_client_conn = 100
 schema_paths = [
     # "./schemas/common.sql",
     # "./schemas/production/*.sql",
-    # "./schemas/root_account/*.sql",
+    # "./schemas/root_accounts/*.sql",
     "./schemas/01-enum.sql",
     "./schemas/02-base.sql",
     "./schemas/01-users/**/*.sql",

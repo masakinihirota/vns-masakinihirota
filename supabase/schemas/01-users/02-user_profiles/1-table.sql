@@ -6,7 +6,7 @@
 
 CREATE TABLE IF NOT EXISTS public.user_profiles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    route_account_id UUID NOT NULL REFERENCES route_accounts(id) ON DELETE CASCADE,
+    root_account_id UUID NOT NULL REFERENCES root_accounts(id) ON DELETE CASCADE,
     profile_name TEXT NOT NULL,
     profile_type profile_type NOT NULL DEFAULT 'self',
     status profile_status NOT NULL DEFAULT 'other',

@@ -300,15 +300,15 @@ CREATE TABLE mandala_sheet_cells (
 -- ポイント取引履歴
 CREATE TABLE point_transactions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    route_account_id UUID REFERENCES route_accounts(id),
+    root_account_id UUID REFERENCES root_accounts(id),
     user_profile_id UUID REFERENCES user_profiles(id),
     transaction_type transaction_type NOT NULL,
     points_amount INTEGER NOT NULL,
     description TEXT,
     transaction_date TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     CHECK (
-        (route_account_id IS NOT NULL AND user_profile_id IS NULL) OR
-        (route_account_id IS NULL AND user_profile_id IS NOT NULL)
+        (root_account_id IS NOT NULL AND user_profile_id IS NULL) OR
+        (root_account_id IS NULL AND user_profile_id IS NOT NULL)
     )
 );
 
@@ -327,7 +327,7 @@ CREATE TABLE notifications (
 -- ペナルティ
 CREATE TABLE penalties (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    target_route_account_id UUID REFERENCES route_accounts(id),
+    target_root_account_id UUID REFERENCES root_accounts(id),
     target_user_profile_id UUID REFERENCES user_profiles(id),
     penalty_type penalty_type NOT NULL,
     reason TEXT,
@@ -337,8 +337,8 @@ CREATE TABLE penalties (
     last_warning_at TIMESTAMP WITH TIME ZONE,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
     CHECK (
-        (target_route_account_id IS NOT NULL AND target_user_profile_id IS NULL) OR
-        (target_route_account_id IS NULL AND target_user_profile_id IS NOT NULL)
+        (target_root_account_id IS NOT NULL AND target_user_profile_id IS NULL) OR
+        (target_root_account_id IS NULL AND target_user_profile_id IS NOT NULL)
     )
 );
 
@@ -468,12 +468,12 @@ CREATE TABLE security_incidents (
 -- ====================================
 
 -- 基本テーブルのインデックス
-CREATE INDEX idx_route_accounts_email ON route_accounts(email);
-CREATE INDEX idx_route_accounts_last_login ON route_accounts(last_login_at);
-CREATE INDEX idx_route_accounts_mother_tongue ON route_accounts(mother_tongue_code);
-CREATE INDEX idx_route_accounts_site_language ON route_accounts(site_language_code);
+CREATE INDEX idx_root_accounts_email ON root_accounts(email);
+CREATE INDEX idx_root_accounts_last_login ON root_accounts(last_login_at);
+CREATE INDEX idx_root_accounts_mother_tongue ON root_accounts(mother_tongue_code);
+CREATE INDEX idx_root_accounts_site_language ON root_accounts(site_language_code);
 
-CREATE INDEX idx_user_profiles_route_account_id ON user_profiles(route_account_id);
+CREATE INDEX idx_user_profiles_root_account_id ON user_profiles(root_account_id);
 CREATE INDEX idx_user_profiles_profile_type ON user_profiles(profile_type);
 CREATE INDEX idx_user_profiles_status ON user_profiles(status);
 
@@ -548,7 +548,7 @@ CREATE INDEX idx_mandala_sheet_cells_mandala_sheet_id ON mandala_sheet_cells(man
 CREATE INDEX idx_mandala_sheet_cells_content_skill_id ON mandala_sheet_cells(content_skill_id);
 
 -- システムテーブルのインデックス
-CREATE INDEX idx_point_transactions_route_account_id ON point_transactions(route_account_id);
+CREATE INDEX idx_point_transactions_root_account_id ON point_transactions(root_account_id);
 CREATE INDEX idx_point_transactions_user_profile_id ON point_transactions(user_profile_id);
 CREATE INDEX idx_point_transactions_transaction_date ON point_transactions(transaction_date);
 CREATE INDEX idx_point_transactions_transaction_type ON point_transactions(transaction_type);
@@ -557,7 +557,7 @@ CREATE INDEX idx_notifications_recipient_user_profile_id ON notifications(recipi
 CREATE INDEX idx_notifications_is_read ON notifications(is_read);
 CREATE INDEX idx_notifications_created_at ON notifications(created_at);
 
-CREATE INDEX idx_penalties_target_route_account_id ON penalties(target_route_account_id);
+CREATE INDEX idx_penalties_target_root_account_id ON penalties(target_root_account_id);
 CREATE INDEX idx_penalties_target_user_profile_id ON penalties(target_user_profile_id);
 CREATE INDEX idx_penalties_penalty_type ON penalties(penalty_type);
 
@@ -627,8 +627,8 @@ CREATE TRIGGER update_genres_updated_at
     BEFORE UPDATE ON genres
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_route_accounts_updated_at
-    BEFORE UPDATE ON route_accounts
+CREATE TRIGGER update_root_accounts_updated_at
+    BEFORE UPDATE ON root_accounts
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 CREATE TRIGGER update_user_profiles_updated_at
