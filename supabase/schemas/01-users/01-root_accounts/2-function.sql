@@ -7,8 +7,32 @@ SECURITY DEFINER
 SET search_path = ''
 AS $$
 BEGIN
-  INSERT INTO public.root_accounts (id, aud, role, email, email_confirmed_at, last_sign_in_at, created_at, updated_at, raw_app_meta_data, raw_user_meta_data)
-  VALUES (NEW.id, NEW.aud, NEW.role, NEW.email, NEW.email_confirmed_at, NEW.last_sign_in_at, NEW.created_at, NEW.updated_at, NEW.raw_app_meta_data, NEW.raw_user_meta_data);
+  INSERT INTO public.root_accounts (
+    id,
+    aud,
+    role,
+    email,
+    email_confirmed_at,
+    last_sign_in_at,
+    created_at,
+    updated_at,
+    raw_app_meta_data,
+    raw_user_meta_data,
+    is_anonymous_initial_auth
+  )
+  VALUES (
+    NEW.id,
+    NEW.aud,
+    NEW.role,
+    NEW.email,
+    NEW.email_confirmed_at,
+    NEW.last_sign_in_at,
+    NEW.created_at,
+    NEW.updated_at,
+    NEW.raw_app_meta_data,
+    NEW.raw_user_meta_data,
+    is_anonymous_initial_auth
+  );
   RETURN NEW;
 END;
 $$;

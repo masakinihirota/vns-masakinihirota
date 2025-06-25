@@ -55,6 +55,7 @@ CREATE TABLE public.root_accounts (
   last_login_at        TIMESTAMPTZ,
   warning_count        INTEGER DEFAULT 0 NOT NULL CHECK (warning_count >= 0),
   last_warning_at      TIMESTAMPTZ,
+  is_anonymous_initial_auth BOOLEAN DEFAULT FALSE NOT NULL,
   created_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at           TIMESTAMPTZ NOT NULL DEFAULT now()
 );
