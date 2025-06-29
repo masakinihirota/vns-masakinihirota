@@ -1,31 +1,23 @@
-import Contact01Page from "@/components/shadcnui-blocks/contact-01/contact-01";
-import FAQ03 from "@/components/shadcnui-blocks/faq-03";
-import Features01Page from "@/components/shadcnui-blocks/features-01";
-import Footer05Page from "@/components/shadcnui-blocks/footer-05";
-import Hero01 from "@/components/shadcnui-blocks/hero-01";
+## Workspace Structure
 
-import Logos02Page from "@/components/shadcnui-blocks/logos-02/logos-02";
-import Stats01Page from "@/components/shadcnui-blocks/stats-01/stats-01";
-import Testimonial05 from "@/components/shadcnui-blocks/testimonial-05";
-import Timeline from "@/components/shadcnui-blocks/timeline-03";
+このプロジェクトは、`masakinihirota` Webアプリケーション開発のための大規模なWorkspaceの一部です。以下にWorkspaceの構成とその役割を示します：
 
-   {/* <div className="border-2 border-dashed border-green-500 my-4">
-        <Hero01 />
-      </div>
-      <Features01Page />
-
-      <Timeline />
-      <Testimonial05 />
-      <FAQ03 /> */}
-      {/* <Team03Page /> */}
-      {/* <Logos02Page />
-      <Contact01Page />
-      <Stats01Page />
-
-      <Footer05Page /> */}
+- **vns-masakinihirota**: コアアプリケーションコードを含むメインプロジェクトディレクトリ。
+- **vns-masakinihirota-custom-instructions**: コーディング、デザイン、ワークフローに関するカスタム指示書を格納。
+- **vns-masakinihirota-design**: アプリケーションの設計書、ワイヤーフレーム、UI/UXガイドラインを含むディレクトリ。
+- **vns-masakinihirota-doc**: 用語集、APIリファレンス、プロジェクト固有のガイドなどのドキュメントを格納。
 
 
+各ディレクトリは、構造化された効率的な開発プロセスを確保するために重要な役割を果たしています。詳細な情報やリソースについては、それぞれのディレクトリを参照してください。
 
+## Related Repositories
+
+このプロジェクトは以下のリポジトリで構成されています:
+
+- **[vns-masakinihirota](https://github.com/masakinihirota/vns-masakinihirota)**: コアアプリケーションコードを含むメインリポジトリ。
+- **[vns-masakinihirota-custom-instructions](https://github.com/masakinihirota/vns-masakinihirota-custom-instructions)**: コーディングやデザインに関するカスタム指示書。
+- **[vns-masakinihirota-design](https://github.com/masakinihirota/vns-masakinihirota-design)**: 設計書やUI/UXガイドライン。
+- **[vns-masakinihirota-doc](https://github.com/masakinihirota/vns-masakinihirota-doc)**: 用語集やAPIリファレンスなどのドキュメント。
 
 
 
