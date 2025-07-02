@@ -1,3 +1,6 @@
+-- authスキーマ関連の場合
+-- Supabaseで利用するときはダッシュボードのSQL EDITORからトリガーのSQL文を実行してtriggerを登録すること、それ以外の方法では受け付けてもらえない。
+-- Drizzleのトリガーとトリガー関数はSLQ文で直接SupabaseのGUI SQL Editor に貼り付けます。
 
 -- トリガー関数の作成
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -17,8 +20,7 @@ BEGIN
     created_at,
     updated_at,
     raw_app_meta_data,
-    raw_user_meta_data,
-    is_anonymous_initial_auth
+    raw_user_meta_data
   )
   VALUES (
     NEW.id,
@@ -30,14 +32,13 @@ BEGIN
     NEW.created_at,
     NEW.updated_at,
     NEW.raw_app_meta_data,
-    NEW.raw_user_meta_data,
-    is_anonymous_initial_auth
+    NEW.raw_user_meta_data
   );
   RETURN NEW;
 END;
 $$;
 
--- Supabaseで利用するときはダッシュボードのSQL EDITORからトリガーのSQL文を実行してtriggerを登録すること、それ以外の方法では受け付けてもらえない。
+
 -- トリガーの作成
 CREATE TRIGGER on_auth_user_created
 AFTER INSERT ON auth.users
