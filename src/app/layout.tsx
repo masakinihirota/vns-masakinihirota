@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     "Landing Page Template",
     "Landing Page Design",
   ],
+  metadataBase: new URL("https://masakinihirota.com"),
   openGraph: {
     type: "website",
     siteName: "masakinihirota@gmail.com",
@@ -29,7 +30,6 @@ export const metadata: Metadata = {
     description: "VNS",
     images: [
       {
-        // TODO
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
