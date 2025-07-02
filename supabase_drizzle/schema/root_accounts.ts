@@ -72,6 +72,12 @@ export const rootAccounts = pgTable(
     isAnonymousInitialAuth: boolean("is_anonymous_initial_auth")
       .notNull()
       .default(false),
+    invitedAt: timestamp("invited_at", { withTimezone: true }),
+    confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
+    bannedUntil: timestamp("banned_until", { withTimezone: true }),
+    isSuperAdmin: boolean("is_super_admin").default(false),
+    isSsoUser: boolean("is_sso_user").notNull().default(false),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
