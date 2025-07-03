@@ -53,6 +53,8 @@ export default function Home() {
         <br />
         {/* Team */}
         <Link href="/team-03">Teamページへ</Link>
+        {/* conformライブラリを利用した、DBへのデータ入力ページ */}
+        <Link href="/conform">conformページへ</Link>
       </main>
       <footer className="">footer</footer>
     </>
