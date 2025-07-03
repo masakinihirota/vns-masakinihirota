@@ -2,23 +2,38 @@ import {
   pgTable,
   uuid,
   text,
-  timestamp,
   boolean,
+  timestamp,
   pgEnum,
 } from "drizzle-orm/pg-core";
 import { rootAccounts } from "./root_accounts";
 
-// ENUM定義
-export const profileTypeEnum = pgEnum("profile_type", ["personal", "business"]);
-export const statusEnum = pgEnum("status", ["active", "inactive"]);
+// プロフィールタイプのEnum定義
+export const profileTypeEnum = pgEnum("profile_type", [
+  "main",
+  "sub",
+  "anonymous",
+]);
 
-// user_profilesテーブル定義
+// ステータスのEnum定義
+export const profileStatusEnum = pgEnum("profile_status", [
+  "active",
+  "inactive",
+  "suspended",
+]);
+
+/**
+ * ユーザープロフィールテーブル
+ * ユーザーの公開プロフィール情報を管理
+ */
 export const userProfiles = pgTable("user_profiles", {
-  id: uuid("id").primaryKey(),
-  rootAccountId: uuid("root_account_id").references(() => rootAccounts.id),
-  profileName: text("profile_name"),
-  profileType: profileTypeEnum("profile_type"),
-  status: statusEnum("status"),
+  id: uuid("id").primaryKey().defaultRandom(),
+  rootAccountId: uuid("root_account_id")
+    .references(() => rootAccounts.id)
+    .notNull(),
+  profileName: text("profile_name").notNull(),
+  profileType: profileTypeEnum("profile_type").notNull().default("main"),
+  status: profileStatusEnum("status").notNull().default("active"),
   purpose: text("purpose"),
   isAnonymous: boolean("is_anonymous").notNull().default(false),
   isVerified: boolean("is_verified").notNull().default(false),

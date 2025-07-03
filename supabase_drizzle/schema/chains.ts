@@ -1,26 +1,11 @@
-import {
-  pgTable,
-  uuid,
-  text,
-  boolean,
-  timestamp,
-  pgEnum,
-} from "drizzle-orm/pg-core";
+import { pgTable, uuid, text, boolean, timestamp } from "drizzle-orm/pg-core";
 import { userProfiles } from "./user_profiles";
 
-// リストタイプのEnum定義
-export const listTypeEnum = pgEnum("list_type", [
-  "favorite",
-  "watchlist",
-  "completed",
-  "custom",
-]);
-
 /**
- * リストテーブル
- * ユーザーが作成する作品リストを管理
+ * チェーンテーブル
+ * 関連作品を繋げたチェーンを管理
  */
-export const lists = pgTable("lists", {
+export const chains = pgTable("chains", {
   id: uuid("id").primaryKey().defaultRandom(),
   title: text("title").notNull(),
   description: text("description"),
@@ -29,7 +14,6 @@ export const lists = pgTable("lists", {
     .references(() => userProfiles.id)
     .notNull(),
   isPublic: boolean("is_public").notNull().default(false),
-  listType: listTypeEnum("list_type").notNull().default("custom"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

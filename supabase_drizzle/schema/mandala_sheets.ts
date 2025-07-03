@@ -1,12 +1,12 @@
 import { pgTable, uuid, text, timestamp } from "drizzle-orm/pg-core";
+import { userProfiles } from "./user_profiles";
 
-/**
- * カテゴリテーブル
- * 作品やコンテンツの大分類を管理
- */
-export const categories = pgTable("categories", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  name: text("name").notNull(),
+export const mandalaSheets = pgTable("mandala_sheets", {
+  id: uuid("id").primaryKey().notNull(),
+  userProfileId: uuid("user_profile_id")
+    .references(() => userProfiles.id)
+    .notNull(),
+  title: text("title").notNull(),
   description: text("description"),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
