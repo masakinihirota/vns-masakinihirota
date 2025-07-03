@@ -1,10 +1,10 @@
 "use client";
 
-export default function Home() {
+export default function Page() {
   return (
-    <p>
-      Conformライブラリを使ったサンプルの入力ページ
-      <br />
-    </p>
+    <main>
+      <h1>Welcome to [page-name]</h1>
+      <p>This is a template page. Customize it as needed.</p>
+    </main>
   );
 }

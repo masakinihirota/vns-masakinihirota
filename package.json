@@ -17,6 +17,8 @@
     "check": "biome check --write src supabase/schemas"
   },
   "dependencies": {
+    "@conform-to/react": "^1.8.0",
+    "@conform-to/zod": "^1.8.0",
     "@radix-ui/react-accordion": "^1.2.8",
     "@radix-ui/react-avatar": "^1.1.7",
     "@radix-ui/react-dialog": "^1.1.11",
@@ -43,7 +45,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "tailwind-merge": "^3.2.0"
+    "tailwind-merge": "^3.2.0",
+    "zod": "^3.25.71"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
