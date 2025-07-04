@@ -13,6 +13,7 @@ export const profileTypeEnum = pgEnum("profile_type", [
   "main",
   "sub",
   "anonymous",
+  "self",
 ]);
 
 // ステータスのEnum定義

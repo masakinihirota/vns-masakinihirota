@@ -1,6 +1,10 @@
 import { pgTable, uuid, text, boolean, timestamp } from "drizzle-orm/pg-core";
 import { userProfiles } from "./user_profiles";
 
+// 足りないカラム？
+// ユーザーへの通知を管理するテーブル。
+// カラム例: user_id, type, message
+
 export const notifications = pgTable("notifications", {
   id: uuid("id").primaryKey().notNull(),
   recipientUserProfileId: uuid("recipient_user_profile_id")

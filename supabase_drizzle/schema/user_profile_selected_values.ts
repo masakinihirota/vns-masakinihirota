@@ -7,8 +7,8 @@ import { valueChoices } from "./value_choices";
  * ユーザープロフィール_選択した価値観テーブル
  * ユーザーが選択した価値観の回答を管理
  */
-export const userProfileSelectedValues = pgTable(
-  "user_profile_selected_values",
+export const userSelectedValues = pgTable(
+  "user_selected_values",
   {
     userProfileId: uuid("user_profile_id")
       .references(() => userProfiles.id)
@@ -29,6 +29,7 @@ export const userProfileSelectedValues = pgTable(
   (t) => ({
     pk: primaryKey({
       columns: [t.userProfileId, t.valueThemeId, t.valueChoiceId],
+      name: "user_values_pk", // 主キー名を短縮
     }),
   }),
 );
