@@ -1,4 +1,4 @@
---ユーザープロファイル
+--ユーザープロフィール
 -- UserProfile_FavoriteWorks
 INSERT INTO public.user_profile_favorite_works (user_profile_id, work_id, evaluation_tier, time_segment) VALUES
 ('c0000008-0000-0000-0000-000000000002', 'c0000004-0000-0000-0000-000000000001', 'S', 'life'),
