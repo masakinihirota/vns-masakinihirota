@@ -1,0 +1,1 @@
+ALTER TYPE "public"."profile_type" ADD VALUE 'self';

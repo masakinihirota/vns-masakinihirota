@@ -18,6 +18,12 @@
 //   warning_count        INTEGER DEFAULT 0 NOT NULL CHECK (warning_count >= 0),
 //   last_warning_at      TIMESTAMPTZ,
 //   is_anonymous_initial_auth BOOLEAN DEFAULT FALSE NOT NULL,
+//   invited_at           TIMESTAMPTZ,
+//   confirmed_at         TIMESTAMPTZ,
+//   banned_until         TIMESTAMPTZ,
+//   is_super_admin       BOOLEAN DEFAULT FALSE,
+//   is_sso_user          BOOLEAN NOT NULL DEFAULT FALSE,
+//   deleted_at           TIMESTAMPTZ,
 //   created_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
 //   updated_at           TIMESTAMPTZ NOT NULL DEFAULT now()
 // );
