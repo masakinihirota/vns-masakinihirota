@@ -1,0 +1,26 @@
+{
+  "projectName": "masakinihirota",
+  "description": "インターネットの情報洪水の中から価値あるものを拾い上げるサービス",
+  "features": [
+    {
+      "name": "価値観マッチング",
+      "description": "同じ価値観を持つ人々をつなげる"
+    },
+    {
+      "name": "グループ作成",
+      "description": "マッチングした人々でグループを作り、一緒に活動する"
+    }
+  ],
+  "philosophy": {
+    "snsComparison": {
+      "sns": "表現の自由か？ヘイト社会か？",
+      "vns": "安心安全か？管理社会か？"
+    },
+    "roles": {
+      "sns": "剣",
+      "vns": "盾"
+    },
+    "oasisDeclaration": "他者を不当に批判せず、建設的な議論を提供する"
+  },
+  "approach": "ボトムアップ方式で問題を短時間で解決"
+}
