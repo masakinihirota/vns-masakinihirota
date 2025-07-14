@@ -8,6 +8,7 @@ import {
   varchar,
   integer,
   unique,
+  primaryKey,
 } from "drizzle-orm/pg-core";
 import { rootAccounts } from "./root_accounts";
 
@@ -239,9 +240,9 @@ export const tierRatingEnum = pgEnum("tier_rating", [
 ]);
 
 /**
- * ユーザープロフィール 好きな作品テーブル
+ * ユーザープロフィール 好きな作品テーブル（旧バージョン、今後は userProfileFavoriteWorksV2 を使用）
  */
-export const userProfileFavoriteWorks = pgTable(
+export const userProfileFavoriteWorksOld = pgTable(
   "user_profile_favorite_works",
   {
     id: uuid("id").primaryKey().defaultRandom(),
@@ -270,7 +271,150 @@ export const userProfileFavoriteWorks = pgTable(
 );
 
 /**
- * ユーザープロフィール 価値観選択テーブル
+ * 価値観質問テーブル
+ * ER図の ValueQuestions に対応
+ */
+export const valueQuestions = pgTable("value_questions", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  questionText: text("question_text").notNull(),
+  category: varchar("category", { length: 50 }).notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/**
+ * 価値観選択肢テーブル
+ * ER図の ValueChoices に対応
+ */
+export const valueChoices = pgTable("value_choices", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  questionId: uuid("question_id")
+    .references(() => valueQuestions.id, { onDelete: "cascade" })
+    .notNull(),
+  choiceText: varchar("choice_text", { length: 200 }).notNull(),
+  choiceOrder: integer("choice_order").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/**
+ * スキルテーブル
+ * ER図の Skills に対応
+ */
+export const skills = pgTable("skills", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull(),
+  description: text("description"),
+  creatorType: text("creator_type").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/**
+ * カテゴリテーブル
+ * ER図の Categories に対応
+ */
+export const categories = pgTable("categories", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: text("name").notNull(),
+  description: text("description"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/**
+ * ジャンルテーブル
+ * ER図の Genres に対応
+ */
+export const genres = pgTable("genres", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  categoryId: uuid("category_id")
+    .references(() => categories.id, { onDelete: "cascade" })
+    .notNull(),
+  name: text("name").notNull(),
+  description: text("description"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+// 作品サイズのEnum定義
+export const workSizeEnum = pgEnum("work_size", [
+  "small",
+  "medium",
+  "large",
+  "extra_large",
+]);
+
+/**
+ * 作品テーブル
+ * ER図の Works に対応
+ */
+export const works = pgTable("works", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  title: text("title").notNull(),
+  categoryId: uuid("category_id")
+    .references(() => categories.id)
+    .notNull(),
+  genreId: uuid("genre_id").references(() => genres.id),
+  officialUrl: text("official_url"),
+  creatorType: text("creator_type").notNull(),
+  userProfileId: uuid("user_profile_id").references(() => userProfiles.id),
+  size: workSizeEnum("size"),
+  releaseYear: integer("release_year"),
+  aiCommentScore: integer("ai_comment_score"),
+  callCount: integer("call_count").default(0),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+// リストタイプEnum定義
+export const listTypeEnum = pgEnum("list_type", [
+  "公式リスト",
+  "ユーザーリスト",
+]);
+
+/**
+ * リストテーブル
+ * ER図の Lists に対応
+ */
+export const lists = pgTable("lists", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  title: text("title").notNull(),
+  description: text("description"),
+  creatorType: text("creator_type").notNull(),
+  userProfileId: uuid("user_profile_id").references(() => userProfiles.id),
+  isPublic: boolean("is_public").notNull().default(true),
+  listType: listTypeEnum("list_type").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/**
+ * ユーザープロフィール 価値観選択テーブル（修正版）
+ * ER図の UserProfile_SelectedValues に完全対応
  */
 export const userProfileValues = pgTable(
   "user_profile_values",
@@ -279,8 +423,12 @@ export const userProfileValues = pgTable(
     userProfileId: uuid("user_profile_id")
       .references(() => userProfiles.id, { onDelete: "cascade" })
       .notNull(),
-    valueQuestionId: uuid("value_question_id").notNull(), // value_questions テーブルへの参照
-    selectedChoiceId: uuid("selected_choice_id").notNull(), // value_choices テーブルへの参照
+    valueQuestionId: uuid("value_question_id")
+      .references(() => valueQuestions.id, { onDelete: "cascade" })
+      .notNull(),
+    selectedChoiceId: uuid("selected_choice_id")
+      .references(() => valueChoices.id, { onDelete: "cascade" })
+      .notNull(),
     valueCategory: varchar("value_category", { length: 50 }).notNull(),
     evaluatorProfileId: uuid("evaluator_profile_id").references(
       () => userProfiles.id,
@@ -302,11 +450,12 @@ export const userProfileValues = pgTable(
   }),
 );
 
-// 表示タイプEnum定義
+// displayType のEnum定義（スキル表示方法用）
 export const displayTypeEnum = pgEnum("display_type", ["list", "mandala"]);
 
 /**
- * ユーザープロフィール スキルテーブル
+ * ユーザープロフィール スキルテーブル（修正版）
+ * ER図の UserProfile_Skills に完全対応
  */
 export const userProfileSkills = pgTable(
   "user_profile_skills",
@@ -315,8 +464,10 @@ export const userProfileSkills = pgTable(
     userProfileId: uuid("user_profile_id")
       .references(() => userProfiles.id, { onDelete: "cascade" })
       .notNull(),
-    skillId: uuid("skill_id").notNull(), // skills テーブルへの参照
-    selfLevel: integer("self_level"), // 0-5の自己評価
+    skillId: uuid("skill_id")
+      .references(() => skills.id, { onDelete: "cascade" })
+      .notNull(),
+    skillLevel: integer("skill_level"), // ER図に合わせて修正
     collaborationDesire: integer("collaboration_desire"), // 0-5の一緒に仕事をしたい度
     displayType: displayTypeEnum("display_type").notNull().default("list"),
     mandalaPosition: integer("mandala_position"), // 1-9のマンダラチャートでの位置
@@ -333,7 +484,46 @@ export const userProfileSkills = pgTable(
 );
 
 /**
- * ユーザープロフィール スキル評価テーブル
+ * ユーザープロフィール 好きな作品テーブル（修正版）
+ * ER図の UserProfile_FavoriteWorks に完全対応
+ */
+export const userProfileFavoriteWorks = pgTable(
+  "user_profile_favorite_works",
+  {
+    userProfileId: uuid("user_profile_id")
+      .references(() => userProfiles.id, { onDelete: "cascade" })
+      .notNull(),
+    workId: uuid("work_id")
+      .references(() => works.id, { onDelete: "cascade" })
+      .notNull(),
+    category: favoriteWorkCategoryEnum("category").notNull(),
+    evaluationTier: text("evaluation_tier"), // ER図のフィールド
+    tierRating: tierRatingEnum("tier_rating"),
+    myEvaluation: integer("my_evaluation"), // 0-5の評価
+    timeSegment: text("time_segment"), // ER図のフィールド
+    reactionType: text("reaction_type"), // ER図のフィールド
+    personalNote: text("personal_note"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => ({
+    // 複合主キー（ER図に合わせて）
+    pk: primaryKey({ columns: [table.userProfileId, table.workId] }),
+    uniqueUserProfileFavoriteWork: unique().on(
+      table.userProfileId,
+      table.workId,
+      table.category,
+    ),
+  }),
+);
+
+/**
+ * ユーザープロフィール スキル評価テーブル（修正版）
+ * ER図の UserProfile_SkillEvaluations に完全対応
  */
 export const userProfileSkillEvaluations = pgTable(
   "user_profile_skill_evaluations",
@@ -345,7 +535,9 @@ export const userProfileSkillEvaluations = pgTable(
     evaluatorProfileId: uuid("evaluator_profile_id")
       .references(() => userProfiles.id, { onDelete: "cascade" })
       .notNull(),
-    skillId: uuid("skill_id").notNull(), // skills テーブルへの参照
+    skillId: uuid("skill_id")
+      .references(() => skills.id, { onDelete: "cascade" })
+      .notNull(),
     levelEvaluation: integer("level_evaluation").notNull(), // 0-5の評価
     collaborationDesire: integer("collaboration_desire").notNull(), // 0-5の一緒に仕事をしたい度
     evaluationComment: text("evaluation_comment"),
@@ -391,12 +583,6 @@ export const userProfileMandalaCharts = pgTable("user_profile_mandala_charts", {
     .defaultNow(),
 });
 
-// リストタイプEnum定義
-export const listTypeEnum = pgEnum("list_type", [
-  "公式リスト",
-  "ユーザーリスト",
-]);
-
 /**
  * ユーザープロフィール リスト選択テーブル
  */
@@ -441,6 +627,40 @@ export const mutualFollows = pgTable(
     uniqueMutualFollow: unique().on(
       table.followerRootAccountId,
       table.followingRootAccountId,
+    ),
+  }),
+);
+
+/**
+ * ユーザープロフィール 価値観評価テーブル
+ * 他人による価値観評価を管理
+ */
+export const userProfileValueEvaluations = pgTable(
+  "user_profile_value_evaluations",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    evaluatedProfileId: uuid("evaluated_profile_id")
+      .references(() => userProfiles.id, { onDelete: "cascade" })
+      .notNull(),
+    evaluatorProfileId: uuid("evaluator_profile_id")
+      .references(() => userProfiles.id, { onDelete: "cascade" })
+      .notNull(),
+    valueQuestionId: uuid("value_question_id")
+      .references(() => valueQuestions.id, { onDelete: "cascade" })
+      .notNull(),
+    selectedChoiceId: uuid("selected_choice_id")
+      .references(() => valueChoices.id, { onDelete: "cascade" })
+      .notNull(),
+    evaluationComment: text("evaluation_comment"), // 評価コメント
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => ({
+    uniqueValueEvaluation: unique().on(
+      table.evaluatedProfileId,
+      table.evaluatorProfileId,
+      table.valueQuestionId,
     ),
   }),
 );
