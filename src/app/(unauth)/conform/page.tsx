@@ -5,6 +5,7 @@ export default function Page() {
     <main>
       <h1>Welcome to [page-name]</h1>
       <p>This is a template page. Customize it as needed.</p>
+      conformを使ってフォームを作ります。
     </main>
   );
 }
