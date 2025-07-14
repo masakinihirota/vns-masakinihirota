@@ -114,19 +114,14 @@ try {
     exit 1
 }
 
-# 6. VS Codeで開くことを提案＆自動で立ち上げ
-Write-Host "`n--- セットアップが完了しました！ ---" -ForegroundColor Green
-Write-Host "新しいWorktreeをVS Codeで開き、ターミナルで自動的に 'pnpm run dev' を実行します。" -ForegroundColor Yellow
-
+# 6. VS Codeで新しいWorktreeを開く
+Write-Host "`n--- 新しいWorktreeをVS Codeで開きます ---" -ForegroundColor Yellow
 try {
-    # VSCodeを新しいウィンドウで開き、ターミナルでpnpm run devを自動実行
-    Start-Process code -ArgumentList "`"$WorktreePath`"", "--new-window", "--command", "workbench.action.terminal.new", "--command", "workbench.action.terminal.sendSequence", "--args", "{`"text`":`"pnpm run dev`"}"
-    Write-Host "VSCodeが新しいWorktreeで起動し、ターミナルで 'pnpm run dev' を自動実行します。" -ForegroundColor Green
+    # 新しいVSCodeウィンドウでWorktreeを開く
+    Start-Process code -ArgumentList "`"$WorktreePath`"", "--new-window"
+    Write-Host "VSCodeが新しいWorktreeで起動しました。" -ForegroundColor Green
 } catch {
-    Write-Warning "VSCodeの自動起動またはターミナルコマンド送信に失敗しました。手動で 'code $WorktreePath' を実行し、ターミナルで 'pnpm run dev' を実行してください。"
+    Write-Warning "VSCodeの自動起動に失敗しました。手動で 'code $WorktreePath --new-window' を実行してください。"
 }
 
-Write-Host "`nスクリプトが終了しました。" -ForegroundColor Green
-Write-Host "`nスクリプトが終了しました。" -ForegroundColor Green
-Write-Host "`nスクリプトが終了しました。" -ForegroundColor Green
 Write-Host "`nスクリプトが終了しました。" -ForegroundColor Green
