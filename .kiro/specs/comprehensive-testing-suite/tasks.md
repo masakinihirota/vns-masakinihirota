@@ -51,7 +51,12 @@
   - スクリーンショット比較とビジュアルテストの設定を追加
   - _要件: 3.1, 3.3_
 
-- [ ] 1.5 package.json にテストスクリプトを追加
+- [x] 1.5 package.json にテストスクリプトを追加
+
+
+
+
+
   - test、test:watch、test:coverage、test:ui スクリプトを追加
   - test:e2e、test:e2e:ui スクリプトを追加
   - build:test でテスト環境用ビルドスクリプトを追加

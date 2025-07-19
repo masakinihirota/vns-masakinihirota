@@ -64,6 +64,10 @@ export default defineConfig({
       ".kiro/",
       "supabase/",
       "utils/",
+      "e2e/**",
+      "playwright/**",
+      "test-results/**",
+      "playwright-report/**",
     ],
 
     // テストタイムアウト
