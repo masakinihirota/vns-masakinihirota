@@ -1,11 +1,11 @@
-<testsuites id="" name="" tests="76" failures="0" skipped="76" errors="0" time="0.11681200000000035">
-<testsuite name="auth.setup.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="setup" tests="1" failures="0" skipped="1" time="0" errors="0">
+<testsuites id="" name="" tests="76" failures="0" skipped="76" errors="0" time="0.12776699999999983">
+<testsuite name="auth.setup.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="setup" tests="1" failures="0" skipped="1" time="0" errors="0">
 <testcase name="authenticate" classname="auth.setup.ts" time="0">
 <skipped>
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="chromium" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="chromium" tests="7" failures="0" skipped="7" time="0" errors="0">
 <testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
 <skipped>
 </skipped>
@@ -35,7 +35,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="chromium" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="chromium" tests="8" failures="0" skipped="8" time="0" errors="0">
 <testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
 <skipped>
 </skipped>
@@ -69,7 +69,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="firefox" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="firefox" tests="7" failures="0" skipped="7" time="0" errors="0">
 <testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
 <skipped>
 </skipped>
@@ -99,7 +99,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="firefox" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="firefox" tests="8" failures="0" skipped="8" time="0" errors="0">
 <testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
 <skipped>
 </skipped>
@@ -133,7 +133,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="webkit" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="webkit" tests="7" failures="0" skipped="7" time="0" errors="0">
 <testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
 <skipped>
 </skipped>
@@ -163,7 +163,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="webkit" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="webkit" tests="8" failures="0" skipped="8" time="0" errors="0">
 <testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
 <skipped>
 </skipped>
@@ -197,7 +197,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="Mobile Chrome" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="Mobile Chrome" tests="7" failures="0" skipped="7" time="0" errors="0">
 <testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
 <skipped>
 </skipped>
@@ -227,7 +227,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="Mobile Chrome" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="Mobile Chrome" tests="8" failures="0" skipped="8" time="0" errors="0">
 <testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
 <skipped>
 </skipped>
@@ -261,7 +261,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="Mobile Safari" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="Mobile Safari" tests="7" failures="0" skipped="7" time="0" errors="0">
 <testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
 <skipped>
 </skipped>
@@ -291,7 +291,7 @@
 </skipped>
 </testcase>
 </testsuite>
-<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:42:41.594Z" hostname="Mobile Safari" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:47:05.695Z" hostname="Mobile Safari" tests="8" failures="0" skipped="8" time="0" errors="0">
 <testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
 <skipped>
 </skipped>

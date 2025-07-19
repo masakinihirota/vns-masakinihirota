@@ -141,12 +141,10 @@ export default defineConfig({
     // アサーションタイムアウト
     timeout: 5000,
 
-    // ビジュアル比較の閾値
-    threshold: 0.2,
-
     // スクリーンショット比較の設定
     toHaveScreenshot: {
       animations: "disabled",
+      threshold: 0.2,
     },
 
     // テキスト比較の設定
