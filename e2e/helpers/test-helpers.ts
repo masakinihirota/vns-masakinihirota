@@ -17,7 +17,7 @@ export async function waitForPageReady(page: Page): Promise<void> {
   await page.waitForLoadState("networkidle");
 
   // 基本的なHTML要素の存在確認
-  await expect(page.locator("html")).toBeVise();
+  await expect(page.locator("html")).toBeVisible();
   await expect(page.locator("body")).toBeVisible();
 }
 
