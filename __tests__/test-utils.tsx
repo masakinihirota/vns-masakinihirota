@@ -1,5 +1,6 @@
 import React, { ReactElement } from "react";
 import { render, RenderOptions } from "@testing-library/react";
+import { vi, beforeAll, afterAll } from "vitest";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NextIntlClientProvider } from "next-intl";
 
@@ -104,11 +105,14 @@ export const suppressConsoleError = () => {
 // ユーザーイベントのヘルパー
 export const userEvent = {
   click: async (element: Element) => {
-    const clickEvent = new MouseEvent("click", {
-      bubbles: true,
-      cancelable: true,
+    const { act } = await import("@testing-library/react");
+    await act(async () => {
+      const clickEvent = new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+      });
+      element.dispatchEvent(clickEvent);
     });
-    element.dispatchEvent(clickEvent);
     await waitForLoadingToFinish();
   },
 
@@ -117,10 +121,15 @@ export const userEvent = {
       element instanceof HTMLInputElement ||
       element instanceof HTMLTextAreaElement
     ) {
-      element.focus();
-      element.value = text;
-      const inputEvent = new Event("input", { bubbles: true });
-      element.dispatchEvent(inputEvent);
+      const { act } = await import("@testing-library/react");
+      await act(async () => {
+        element.focus();
+        element.value = text;
+        const inputEvent = new Event("input", { bubbles: true });
+        const changeEvent = new Event("change", { bubbles: true });
+        element.dispatchEvent(inputEvent);
+        element.dispatchEvent(changeEvent);
+      });
       await waitForLoadingToFinish();
     }
   },
@@ -130,10 +139,15 @@ export const userEvent = {
       element instanceof HTMLInputElement ||
       element instanceof HTMLTextAreaElement
     ) {
-      element.focus();
-      element.value = "";
-      const inputEvent = new Event("input", { bubbles: true });
-      element.dispatchEvent(inputEvent);
+      const { act } = await import("@testing-library/react");
+      await act(async () => {
+        element.focus();
+        element.value = "";
+        const inputEvent = new Event("input", { bubbles: true });
+        const changeEvent = new Event("change", { bubbles: true });
+        element.dispatchEvent(inputEvent);
+        element.dispatchEvent(changeEvent);
+      });
       await waitForLoadingToFinish();
     }
   },

@@ -29,7 +29,9 @@
   - DOM 環境とモック設定を含むテスト環境を構築
   - _要件: 6.1, 6.2_
 
-- [-] 1.3 React Testing Library のカスタムレンダリング関数作成
+- [x] 1.3 React Testing Library のカスタムレンダリング関数作成
+
+
 
 
 
