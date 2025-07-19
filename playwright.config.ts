@@ -146,7 +146,6 @@ export default defineConfig({
 
     // スクリーンショット比較の設定
     toHaveScreenshot: {
-      mode: "css",
       animations: "disabled",
     },
 
