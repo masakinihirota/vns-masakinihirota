@@ -1,0 +1,84 @@
+/* デジタル庁デザインシステムのデザイントークン */
+
+:root {
+  /* カラーパレット - デジタル庁準拠 */
+  --da-color-primary-50: #f0f9ff;
+  --da-color-primary-100: #e0f2fe;
+  --da-color-primary-200: #bae6fd;
+  --da-color-primary-300: #7dd3fc;
+  --da-color-primary-400: #38bdf8;
+  --da-color-primary-500: #0ea5e9;
+  --da-color-primary-600: #0284c7;
+  --da-color-primary-700: #0369a1;
+  --da-color-primary-800: #075985;
+  --da-color-primary-900: #0c4a6e;
+
+  /* グレースケール */
+  --da-color-gray-50: #f9fafb;
+  --da-color-gray-100: #f3f4f6;
+  --da-color-gray-200: #e5e7eb;
+  --da-color-gray-300: #d1d5db;
+  --da-color-gray-400: #9ca3af;
+  --da-color-gray-500: #6b7280;
+  --da-color-gray-600: #4b5563;
+  --da-color-gray-700: #374151;
+  --da-color-gray-800: #1f2937;
+  --da-color-gray-900: #111827;
+
+  /* セマンティックカラー */
+  --da-color-success: #10b981;
+  --da-color-warning: #f59e0b;
+  --da-color-error: #ef4444;
+  --da-color-info: #3b82f6;
+
+  /* タイポグラフィ */
+  --da-font-family-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
+  --da-font-family-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo,
+    monospace;
+
+  /* フォントサイズ */
+  --da-font-size-xs: 0.75rem; /* 12px */
+  --da-font-size-sm: 0.875rem; /* 14px */
+  --da-font-size-base: 1rem; /* 16px */
+  --da-font-size-lg: 1.125rem; /* 18px */
+  --da-font-size-xl: 1.25rem; /* 20px */
+  --da-font-size-2xl: 1.5rem; /* 24px */
+  --da-font-size-3xl: 1.875rem; /* 30px */
+  --da-font-size-4xl: 2.25rem; /* 36px */
+
+  /* スペーシング */
+  --da-spacing-xs: 0.25rem; /* 4px */
+  --da-spacing-sm: 0.5rem; /* 8px */
+  --da-spacing-md: 1rem; /* 16px */
+  --da-spacing-lg: 1.5rem; /* 24px */
+  --da-spacing-xl: 2rem; /* 32px */
+  --da-spacing-2xl: 3rem; /* 48px */
+
+  /* ボーダー半径 */
+  --da-radius-sm: 0.125rem; /* 2px */
+  --da-radius-md: 0.25rem; /* 4px */
+  --da-radius-lg: 0.5rem; /* 8px */
+  --da-radius-xl: 0.75rem; /* 12px */
+
+  /* シャドウ */
+  --da-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --da-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px
+    rgb(0 0 0 / 0.1);
+  --da-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px
+    rgb(0 0 0 / 0.1);
+}
+
+/* ダークモード対応 */
+.dark {
+  --da-color-primary-50: #0c4a6e;
+  --da-color-primary-100: #075985;
+  --da-color-primary-200: #0369a1;
+  --da-color-primary-300: #0284c7;
+  --da-color-primary-400: #0ea5e9;
+  --da-color-primary-500: #38bdf8;
+  --da-color-primary-600: #7dd3fc;
+  --da-color-primary-700: #bae6fd;
+  --da-color-primary-800: #e0f2fe;
+  --da-color-primary-900: #f0f9ff;
+}
