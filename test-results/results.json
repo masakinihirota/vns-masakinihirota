@@ -1,0 +1,1723 @@
+{
+  "config": {
+    "configFile": "U:\\2025src\\___masakinihirota\\vns-masakinihirota\\playwright.config.ts",
+    "rootDir": "U:/2025src/___masakinihirota/vns-masakinihirota/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": "U:\\2025src\\___masakinihirota\\vns-masakinihirota\\e2e\\global-setup.ts",
+    "globalTeardown": "U:\\2025src\\___masakinihirota\\vns-masakinihirota\\e2e\\global-teardown.ts",
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/results.xml"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "U:/2025src/___masakinihirota/vns-masakinihirota/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "setup",
+        "name": "setup",
+        "testDir": "U:/2025src/___masakinihirota/vns-masakinihirota/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/.*\\.setup\\.ts/"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "U:/2025src/___masakinihirota/vns-masakinihirota/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "U:/2025src/___masakinihirota/vns-masakinihirota/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "U:/2025src/___masakinihirota/vns-masakinihirota/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "U:/2025src/___masakinihirota/vns-masakinihirota/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "U:/2025src/___masakinihirota/vns-masakinihirota/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "U:/2025src/___masakinihirota/vns-masakinihirota/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "U:/2025src/___masakinihirota/vns-masakinihirota/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "U:/2025src/___masakinihirota/vns-masakinihirota/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "U:/2025src/___masakinihirota/vns-masakinihirota/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "U:/2025src/___masakinihirota/vns-masakinihirota/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "U:/2025src/___masakinihirota/vns-masakinihirota/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium-unauthenticated",
+        "name": "chromium-unauthenticated",
+        "testDir": "U:/2025src/___masakinihirota/vns-masakinihirota/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "/.*\\.unauth\\.spec\\.ts/"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.54.1",
+    "workers": 6,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://127.0.0.1:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "auth.setup.ts",
+      "file": "auth.setup.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "authenticate",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 30000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "setup",
+              "projectName": "setup",
+              "results": [],
+              "status": "skipped"
+            }
+          ],
+          "id": "17e3fe6f4d9d8bd79c6b-60f085b113a677673906",
+          "file": "auth.setup.ts",
+          "line": 13,
+          "column": 6
+        }
+      ]
+    },
+    {
+      "title": "basic-functionality.spec.ts",
+      "file": "basic-functionality.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "基本機能テスト",
+          "file": "basic-functionality.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "ホームページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-5ef4c5babbac087a609a",
+              "file": "basic-functionality.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-3a8fa6d34203777ef4fb",
+              "file": "basic-functionality.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "テーマ切り替えが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-78f0afdd51afd4b98ee9",
+              "file": "basic-functionality.spec.ts",
+              "line": 58,
+              "column": 7
+            },
+            {
+              "title": "ページナビゲーションが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-99645e670894747d23bb",
+              "file": "basic-functionality.spec.ts",
+              "line": 74,
+              "column": 7
+            },
+            {
+              "title": "国際化機能が正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-f781366ef68d566b6696",
+              "file": "basic-functionality.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "エラーページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-7dac8fe27460d58a618b",
+              "file": "basic-functionality.spec.ts",
+              "line": 111,
+              "column": 7
+            },
+            {
+              "title": "パフォーマンスが許容範囲内である",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-64644e9e4d1a34a3b76c",
+              "file": "basic-functionality.spec.ts",
+              "line": 131,
+              "column": 7
+            },
+            {
+              "title": "ホームページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-7e4525e35d15b81cea7e",
+              "file": "basic-functionality.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-6843477ad6bbafdb1af5",
+              "file": "basic-functionality.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "テーマ切り替えが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-56cfa06e798311731763",
+              "file": "basic-functionality.spec.ts",
+              "line": 58,
+              "column": 7
+            },
+            {
+              "title": "ページナビゲーションが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-882ca4bb357cbde2eaf1",
+              "file": "basic-functionality.spec.ts",
+              "line": 74,
+              "column": 7
+            },
+            {
+              "title": "国際化機能が正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-14fd85ae811fc52b22aa",
+              "file": "basic-functionality.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "エラーページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-82d4645f757f88166f2b",
+              "file": "basic-functionality.spec.ts",
+              "line": 111,
+              "column": 7
+            },
+            {
+              "title": "パフォーマンスが許容範囲内である",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-b69979c3c647a92028a7",
+              "file": "basic-functionality.spec.ts",
+              "line": 131,
+              "column": 7
+            },
+            {
+              "title": "ホームページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-25a90365113ebad7d7b4",
+              "file": "basic-functionality.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-7290177aaad4cc2fadbd",
+              "file": "basic-functionality.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "テーマ切り替えが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-e2debfd7c582754761f0",
+              "file": "basic-functionality.spec.ts",
+              "line": 58,
+              "column": 7
+            },
+            {
+              "title": "ページナビゲーションが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-6c00e6252528071cab83",
+              "file": "basic-functionality.spec.ts",
+              "line": 74,
+              "column": 7
+            },
+            {
+              "title": "国際化機能が正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-b145ac94835c94039c0d",
+              "file": "basic-functionality.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "エラーページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-6bf37445b68c5d6cc5a3",
+              "file": "basic-functionality.spec.ts",
+              "line": 111,
+              "column": 7
+            },
+            {
+              "title": "パフォーマンスが許容範囲内である",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-8ea9d1eee2303fd1e180",
+              "file": "basic-functionality.spec.ts",
+              "line": 131,
+              "column": 7
+            },
+            {
+              "title": "ホームページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-0d842e657d2c3b2a7b72",
+              "file": "basic-functionality.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-705a89939e1eea2ce803",
+              "file": "basic-functionality.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "テーマ切り替えが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-0e92bc023b1812df07c9",
+              "file": "basic-functionality.spec.ts",
+              "line": 58,
+              "column": 7
+            },
+            {
+              "title": "ページナビゲーションが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-cf442ceed5e507543348",
+              "file": "basic-functionality.spec.ts",
+              "line": 74,
+              "column": 7
+            },
+            {
+              "title": "国際化機能が正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-34c8f2e65456be0067b7",
+              "file": "basic-functionality.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "エラーページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-cb471847f3b68e547dd4",
+              "file": "basic-functionality.spec.ts",
+              "line": 111,
+              "column": 7
+            },
+            {
+              "title": "パフォーマンスが許容範囲内である",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-0ecd401bace89874c74c",
+              "file": "basic-functionality.spec.ts",
+              "line": 131,
+              "column": 7
+            },
+            {
+              "title": "ホームページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-0cab7db17a5e7d02e879",
+              "file": "basic-functionality.spec.ts",
+              "line": 20,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-826a91bef00687217ca8",
+              "file": "basic-functionality.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "テーマ切り替えが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-bb0015b9fc0586772945",
+              "file": "basic-functionality.spec.ts",
+              "line": 58,
+              "column": 7
+            },
+            {
+              "title": "ページナビゲーションが正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-28c679b5159181ac0473",
+              "file": "basic-functionality.spec.ts",
+              "line": 74,
+              "column": 7
+            },
+            {
+              "title": "国際化機能が正常に動作する",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-4facc3d38a3c8db3d3b0",
+              "file": "basic-functionality.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "エラーページが正常に表示される",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-06c0fcf1e2860b918a03",
+              "file": "basic-functionality.spec.ts",
+              "line": 111,
+              "column": 7
+            },
+            {
+              "title": "パフォーマンスが許容範囲内である",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "3e1fed252e99486c803c-072cb4668cc488414bf9",
+              "file": "basic-functionality.spec.ts",
+              "line": 131,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "visual-tests\\visual-regression.spec.ts",
+      "file": "visual-tests/visual-regression.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "ビジュアルリグレッションテスト",
+          "file": "visual-tests/visual-regression.spec.ts",
+          "line": 11,
+          "column": 6,
+          "specs": [
+            {
+              "title": "ホームページのビジュアル比較 - デスクトップ",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-79f82a4a99d3c23caf67",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 18,
+              "column": 7
+            },
+            {
+              "title": "ホームページのビジュアル比較 - モバイル",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-0fcede36cc23e2cfde46",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "ダークモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-4316d052b9194290f546",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 52,
+              "column": 7
+            },
+            {
+              "title": "ライトモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-68ffa2bee9a1b07f57eb",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 69,
+              "column": 7
+            },
+            {
+              "title": "コンポーネント単位のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-38f9baaedb5696f17b14",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-28583f951e17b82ce1f7",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 107,
+              "column": 7
+            },
+            {
+              "title": "インタラクション状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-f21f71489a334d62c9ea",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 133,
+              "column": 7
+            },
+            {
+              "title": "エラー状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-16da73802c7ad8e3ed67",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 164,
+              "column": 7
+            },
+            {
+              "title": "ホームページのビジュアル比較 - デスクトップ",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-0ebe681a09c67008821d",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 18,
+              "column": 7
+            },
+            {
+              "title": "ホームページのビジュアル比較 - モバイル",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-1f8bb3ad0929797a45c5",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "ダークモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-87b337b61469b90d93bf",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 52,
+              "column": 7
+            },
+            {
+              "title": "ライトモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-f646525fdca7ff2c576d",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 69,
+              "column": 7
+            },
+            {
+              "title": "コンポーネント単位のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-d05726f7119a7955c831",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-8dc325ef28e05325f36e",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 107,
+              "column": 7
+            },
+            {
+              "title": "インタラクション状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-4cb15ec4008b170efd69",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 133,
+              "column": 7
+            },
+            {
+              "title": "エラー状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-6608e4fff441e4f1008d",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 164,
+              "column": 7
+            },
+            {
+              "title": "ホームページのビジュアル比較 - デスクトップ",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-046c56828e66ddcbf6ca",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 18,
+              "column": 7
+            },
+            {
+              "title": "ホームページのビジュアル比較 - モバイル",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-3eba229c5a1c4e6aeae1",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "ダークモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-925602c70b3c06e93d14",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 52,
+              "column": 7
+            },
+            {
+              "title": "ライトモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-a8327ad134ffe3aa719f",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 69,
+              "column": 7
+            },
+            {
+              "title": "コンポーネント単位のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-4e51db86227fe448b8dc",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-02f9e992d99319bbde10",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 107,
+              "column": 7
+            },
+            {
+              "title": "インタラクション状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-7286e9c652b85cd8b139",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 133,
+              "column": 7
+            },
+            {
+              "title": "エラー状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-a975ef17081b002a3a71",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 164,
+              "column": 7
+            },
+            {
+              "title": "ホームページのビジュアル比較 - デスクトップ",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-84ec80a32041b7792c96",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 18,
+              "column": 7
+            },
+            {
+              "title": "ホームページのビジュアル比較 - モバイル",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-6fe836f34e03a4cbd011",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "ダークモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-50b98139c3e460263719",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 52,
+              "column": 7
+            },
+            {
+              "title": "ライトモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-71d7883f53ce20706a39",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 69,
+              "column": 7
+            },
+            {
+              "title": "コンポーネント単位のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-bf10c849016b7aa14354",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-4c0a8ef0d3b32ec135f0",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 107,
+              "column": 7
+            },
+            {
+              "title": "インタラクション状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-c5414be03e381e679608",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 133,
+              "column": 7
+            },
+            {
+              "title": "エラー状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-c8f7d3732b78eb87a630",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 164,
+              "column": 7
+            },
+            {
+              "title": "ホームページのビジュアル比較 - デスクトップ",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-e7a43b319d820e98db86",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 18,
+              "column": 7
+            },
+            {
+              "title": "ホームページのビジュアル比較 - モバイル",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-e976c0b81d61e7925fb8",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 35,
+              "column": 7
+            },
+            {
+              "title": "ダークモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-93c43beaccf72b4b9fae",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 52,
+              "column": 7
+            },
+            {
+              "title": "ライトモードのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-4b885a21ffd645783fe3",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 69,
+              "column": 7
+            },
+            {
+              "title": "コンポーネント単位のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-1093c6444860147ece80",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 86,
+              "column": 7
+            },
+            {
+              "title": "レスポンシブデザインのビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-612593e0a7e55a8dd35e",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 107,
+              "column": 7
+            },
+            {
+              "title": "インタラクション状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-4488ee7c06cfb71dcde9",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 133,
+              "column": 7
+            },
+            {
+              "title": "エラー状態のビジュアル比較",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "1cf8b0de3f4ed6a439b0-05b2c6b44dd793a632b4",
+              "file": "visual-tests/visual-regression.spec.ts",
+              "line": 164,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-07-19T16:30:32.151Z",
+    "duration": 367.1790000000001,
+    "expected": 0,
+    "skipped": 76,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,328 @@
+<testsuites id="" name="" tests="76" failures="0" skipped="76" errors="0" time="0.3671790000000001">
+<testsuite name="auth.setup.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="setup" tests="1" failures="0" skipped="1" time="0" errors="0">
+<testcase name="authenticate" classname="auth.setup.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="chromium" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › レスポンシブデザインが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › テーマ切り替えが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › ページナビゲーションが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › 国際化機能が正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › エラーページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › パフォーマンスが許容範囲内である" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="chromium" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - モバイル" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ダークモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ライトモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › コンポーネント単位のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › レスポンシブデザインのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › インタラクション状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › エラー状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="firefox" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › レスポンシブデザインが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › テーマ切り替えが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › ページナビゲーションが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › 国際化機能が正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › エラーページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › パフォーマンスが許容範囲内である" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="firefox" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - モバイル" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ダークモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ライトモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › コンポーネント単位のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › レスポンシブデザインのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › インタラクション状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › エラー状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="webkit" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › レスポンシブデザインが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › テーマ切り替えが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › ページナビゲーションが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › 国際化機能が正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › エラーページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › パフォーマンスが許容範囲内である" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="webkit" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - モバイル" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ダークモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ライトモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › コンポーネント単位のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › レスポンシブデザインのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › インタラクション状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › エラー状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="Mobile Chrome" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › レスポンシブデザインが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › テーマ切り替えが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › ページナビゲーションが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › 国際化機能が正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › エラーページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › パフォーマンスが許容範囲内である" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="Mobile Chrome" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - モバイル" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ダークモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ライトモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › コンポーネント単位のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › レスポンシブデザインのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › インタラクション状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › エラー状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="basic-functionality.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="Mobile Safari" tests="7" failures="0" skipped="7" time="0" errors="0">
+<testcase name="基本機能テスト › ホームページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › レスポンシブデザインが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › テーマ切り替えが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › ページナビゲーションが正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › 国際化機能が正常に動作する" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › エラーページが正常に表示される" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="基本機能テスト › パフォーマンスが許容範囲内である" classname="basic-functionality.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="visual-tests\visual-regression.spec.ts" timestamp="2025-07-19T16:30:32.515Z" hostname="Mobile Safari" tests="8" failures="0" skipped="8" time="0" errors="0">
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - デスクトップ" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ホームページのビジュアル比較 - モバイル" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ダークモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › ライトモードのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › コンポーネント単位のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › レスポンシブデザインのビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › インタラクション状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="ビジュアルリグレッションテスト › エラー状態のビジュアル比較" classname="visual-tests\visual-regression.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>
