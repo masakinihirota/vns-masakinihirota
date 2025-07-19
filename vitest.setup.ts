@@ -114,12 +114,10 @@ vi.mock("next/image", () => ({
 
 // Next.js の Link コンポーネントのモック
 vi.mock("next/link", () => ({
-  default: vi
-    .fn()
-    .mockImplementation(({ children, ...props }: any) => ({
-      children,
-      ...props,
-    })),
+  default: vi.fn().mockImplementation(({ children, ...props }: any) => ({
+    children,
+    ...props,
+  })),
 }));
 
 // next-intl のモック
@@ -127,6 +125,13 @@ vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
   useLocale: () => "ja",
   useMessages: () => ({}),
+  NextIntlClientProvider: vi
+    .fn()
+    .mockImplementation(
+      ({ children }: { children: React.ReactNode }) => children,
+    ),
+  getTranslations: vi.fn(() => (key: string) => key),
+  getLocale: vi.fn(() => Promise.resolve("ja")),
 }));
 
 // next-themes のモック
