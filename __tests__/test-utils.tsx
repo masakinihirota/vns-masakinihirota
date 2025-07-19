@@ -75,7 +75,9 @@ export const createTestUser = () => ({
   name: "テストユーザー",
 });
 
-export const createTestMessages = (overrides: Record<string, any> = {}) => ({
+export const createTestMessages = (
+  overrides: Record<string, any> = {},
+): Record<string, any> => ({
   ...testMessages,
   ...overrides,
 });
