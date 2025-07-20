@@ -1,14 +1,19 @@
 import "@testing-library/jest-dom";
 import { beforeAll, afterEach, afterAll, vi } from "vitest";
 import { cleanup } from "@testing-library/react";
+import { mswServer } from "./__tests__/mocks/server";
 
 // React Testing Library のクリーンアップ
 afterEach(() => {
   cleanup();
+  // MSW ハンドラーをリセット
+  mswServer.reset();
 });
 
 // DOM 環境のセットアップ
 beforeAll(() => {
+  // MSW サーバーを開始
+  mswServer.start();
   // ResizeObserver のモック（Radix UI コンポーネントで必要）
   global.ResizeObserver = vi.fn().mockImplementation(() => ({
     observe: vi.fn(),
@@ -56,8 +61,8 @@ beforeAll(() => {
   };
   vi.stubGlobal("sessionStorage", sessionStorageMock);
 
-  // fetch のモック（MSW を使用する場合は不要だが、フォールバック用）
-  global.fetch = vi.fn();
+  // fetch のモック（MSWが処理するため削除）
+  // global.fetch = vi.fn();
 
   // URL のモック
   global.URL.createObjectURL = vi.fn();
@@ -79,6 +84,8 @@ beforeAll(() => {
 
 // テスト終了時のクリーンアップ
 afterAll(() => {
+  // MSW サーバーを停止
+  mswServer.stop();
   vi.clearAllMocks();
   vi.resetAllMocks();
   vi.restoreAllMocks();
@@ -150,23 +157,27 @@ vi.mock("next-themes", () => ({
     ),
 }));
 
-// Supabase のモック（基本的なモック、詳細は個別テストで設定）
-vi.mock("@supabase/supabase-js", () => ({
-  createClient: vi.fn(() => ({
-    auth: {
-      getSession: vi.fn(),
-      getUser: vi.fn(),
-      signIn: vi.fn(),
-      signOut: vi.fn(),
-      onAuthStateChange: vi.fn(),
-    },
-    from: vi.fn(() => ({
-      select: vi.fn(),
-      insert: vi.fn(),
-      update: vi.fn(),
-      delete: vi.fn(),
-    })),
-  })),
+// Supabase クライアントのモック
+vi.mock("@/lib/supabase/client", async () => {
+  const { createClient } = await import("./__tests__/mocks/supabase-client");
+  return { createClient };
+});
+
+vi.mock("@/lib/supabase/server", async () => {
+  const { createClient } = await import("./__tests__/mocks/supabase-server");
+  return { createClient };
+});
+
+// @supabase/ssr のモック
+vi.mock("@supabase/ssr", () => ({
+  createBrowserClient: vi.fn(() => {
+    const { mockBrowserClient } = require("./__tests__/mocks/supabase");
+    return mockBrowserClient;
+  }),
+  createServerClient: vi.fn(() => {
+    const { mockServerClient } = require("./__tests__/mocks/supabase");
+    return mockServerClient;
+  }),
 }));
 
 // 環境変数のモック
