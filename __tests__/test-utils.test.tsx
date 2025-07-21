@@ -1,151 +1,178 @@
+/**
+ * テストユーティリティのテスト
+ *
+ * このファイルは、テストユーティリティ自体のテストを行います。
+ * テストユーティリティが正しく動作することを確認します。
+ */
+
+import { describe, it, expect, vi } from "vitest";
 import React from "react";
-import { describe, it, expect } from "vitest";
 import {
   render,
-  screen,
-  createTestUser,
-  createTestMessages,
-  waitForLoadingToFinish,
-  userEvent,
   renderWithTheme,
   renderWithLocale,
   renderWithProviders,
-} from "./test-utils";
+  screen,
+} from "./utils";
+import { userEvent } from "./utils";
+import {
+  createTestUser,
+  createTestProfile,
+  createTestWork,
+  createTestSkill,
+  createTestGroup,
+  createTestDataArray,
+} from "./utils";
+import {
+  suppressConsoleError,
+  suppressConsoleWarning,
+  setTestWindowSize,
+  setTestMediaQuery,
+} from "./utils";
 
-// テスト用の簡単なコンポーネント
-const TestComponent = () => {
-  return (
-    <div>
-      <h1>テストコンポーネント</h1>
-      <p data-testid="test-content">これはテスト用のコンテンツです</p>
-    </div>
-  );
+// テスト用のシンプルなコンポーネント
+const TestComponent = ({
+  text = "テストコンポーネント",
+  onClick = () => {},
+}: {
+  text?: string;
+  onClick?: () => void;
+}) => {
+  return <button onClick={onClick}>{text}</button>;
 };
 
-describe("test-utils", () => {
-  it("カスタムレンダー関数が正常に動作する", () => {
+describe("レンダリングヘルパー", () => {
+  it("render関数が正しく動作すること", () => {
     render(<TestComponent />);
-
-    expect(screen.getByText("テストコンポーネント")).toBeInTheDocument();
-    expect(screen.getByTestId("test-content")).toBeInTheDocument();
-  });
-
-  it("カスタムロケールでレンダリングできる", () => {
-    render(<TestComponent />, { locale: "en" });
-
     expect(screen.getByText("テストコンポーネント")).toBeInTheDocument();
   });
 
-  it("カスタムテーマでレンダリングできる", () => {
-    render(<TestComponent />, { theme: "dark" });
-
-    expect(screen.getByText("テストコンポーネント")).toBeInTheDocument();
-  });
-
-  it("カスタムメッセージでレンダリングできる", () => {
-    const customMessages = {
-      test: {
-        message: "カスタムメッセージ",
-      },
-    };
-
-    render(<TestComponent />, { messages: customMessages });
-
-    expect(screen.getByText("テストコンポーネント")).toBeInTheDocument();
-  });
-});
-describe("テストヘルパー関数", () => {
-  it("createTestUser が正しいユーザーオブジェクトを作成する", () => {
-    const user = createTestUser();
-
-    expect(user).toEqual({
-      id: "test-user-id",
-      email: "test@example.com",
-      name: "テストユーザー",
-    });
-  });
-
-  it("createTestMessages が正しいメッセージオブジェクトを作成する", () => {
-    const messages = createTestMessages();
-
-    expect(messages).toHaveProperty("AppLayout");
-    expect(messages.AppLayout).toHaveProperty("home", "ホーム");
-  });
-
-  it("createTestMessages がオーバーライドを適用する", () => {
-    const overrides = {
-      custom: {
-        message: "カスタムメッセージ",
-      },
-    };
-
-    const messages = createTestMessages(overrides);
-
-    expect(messages).toHaveProperty("custom");
-    expect(messages.custom.message).toBe("カスタムメッセージ");
-  });
-
-  it("waitForLoadingToFinish が非同期処理を待機する", async () => {
-    const startTime = Date.now();
-    await waitForLoadingToFinish();
-    const endTime = Date.now();
-
-    // 最低限の時間が経過していることを確認
-    expect(endTime - startTime).toBeGreaterThanOrEqual(0);
-  });
-});
-describe("追加のヘルパー関数", () => {
-  it("renderWithTheme がテーマ付きでレンダリングできる", () => {
+  it("renderWithTheme関数が正しく動作すること", () => {
     renderWithTheme(<TestComponent />, "dark");
-
     expect(screen.getByText("テストコンポーネント")).toBeInTheDocument();
+    // テーマの検証は実装に依存するため、ここでは基本的な動作のみ確認
   });
 
-  it("renderWithLocale がロケール付きでレンダリングできる", () => {
+  it("renderWithLocale関数が正しく動作すること", () => {
     renderWithLocale(<TestComponent />, "en");
-
     expect(screen.getByText("テストコンポーネント")).toBeInTheDocument();
+    // ロケールの検証は実装に依存するため、ここでは基本的な動作のみ確認
   });
 
-  it("renderWithProviders が複数のオプションでレンダリングできる", () => {
+  it("renderWithProviders関数が正しく動作すること", () => {
     renderWithProviders(<TestComponent />, {
       theme: "dark",
       locale: "en",
-      messages: { test: { message: "Test message" } },
     });
-
     expect(screen.getByText("テストコンポーネント")).toBeInTheDocument();
   });
+});
 
-  it("userEvent.click がクリックイベントを発火する", async () => {
-    const TestClickComponent = () => {
-      const [clicked, setClicked] = React.useState(false);
-      return (
-        <div>
-          <button
-            onClick={() => setClicked(true)}
-            data-testid="test-button"
-          >
-            クリック
-          </button>
-          {clicked && <p data-testid="clicked-text">クリックされました</p>}
-        </div>
-      );
-    };
-
-    render(<TestClickComponent />);
-    const button = screen.getByTestId("test-button");
+describe("ユーザーイベントヘルパー", () => {
+  it("userEvent.click関数が正しく動作すること", async () => {
+    const handleClick = vi.fn();
+    render(<TestComponent onClick={handleClick} />);
+    const button = screen.getByText("テストコンポーネント");
 
     await userEvent.click(button);
 
-    expect(screen.getByTestId("clicked-text")).toBeInTheDocument();
+    expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  it("userEvent.type ヘルパーが存在する", () => {
-    expect(typeof userEvent.type).toBe("function");
+  it("userEvent.type関数が正しく動作すること", async () => {
+    render(<input data-testid="test-input" />);
+    const input = screen.getByTestId("test-input") as HTMLInputElement;
+
+    await userEvent.type(input, "テストテキスト");
+
+    expect(input.value).toBe("テストテキスト");
   });
 
-  it("userEvent.clear ヘルパーが存在する", () => {
-    expect(typeof userEvent.clear).toBe("function");
+  it("userEvent.clear関数が正しく動作すること", async () => {
+    render(
+      <input
+        data-testid="test-input"
+        defaultValue="初期値"
+      />,
+    );
+    const input = screen.getByTestId("test-input") as HTMLInputElement;
+
+    expect(input.value).toBe("初期値");
+    await userEvent.clear(input);
+
+    expect(input.value).toBe("");
+  });
+});
+
+describe("テストデータヘルパー", () => {
+  it("createTestUser関数が正しく動作すること", () => {
+    const user = createTestUser();
+
+    expect(user).toHaveProperty("id");
+    expect(user).toHaveProperty("email");
+    expect(user).toHaveProperty("name");
+  });
+
+  it("createTestProfile関数が正しく動作すること", () => {
+    const profile = createTestProfile();
+
+    expect(profile).toHaveProperty("id");
+    expect(profile).toHaveProperty("userId");
+    expect(profile).toHaveProperty("displayName");
+  });
+
+  it("createTestWork関数が正しく動作すること", () => {
+    const work = createTestWork();
+
+    expect(work).toHaveProperty("id");
+    expect(work).toHaveProperty("profileId");
+    expect(work).toHaveProperty("title");
+  });
+
+  it("createTestSkill関数が正しく動作すること", () => {
+    const skill = createTestSkill();
+
+    expect(skill).toHaveProperty("id");
+    expect(skill).toHaveProperty("profileId");
+    expect(skill).toHaveProperty("name");
+  });
+
+  it("createTestGroup関数が正しく動作すること", () => {
+    const group = createTestGroup();
+
+    expect(group).toHaveProperty("id");
+    expect(group).toHaveProperty("name");
+    expect(group).toHaveProperty("description");
+  });
+
+  it("createTestDataArray関数が正しく動作すること", () => {
+    const users = createTestDataArray(3, createTestUser);
+
+    expect(users).toHaveLength(3);
+    expect(users[0]).toHaveProperty("id", "test-0");
+    expect(users[1]).toHaveProperty("id", "test-1");
+    expect(users[2]).toHaveProperty("id", "test-2");
+  });
+});
+
+describe("テスト環境ヘルパー", () => {
+  it("suppressConsoleError関数が存在すること", () => {
+    expect(suppressConsoleError).toBeDefined();
+    expect(typeof suppressConsoleError).toBe("function");
+  });
+
+  it("suppressConsoleWarning関数が存在すること", () => {
+    expect(suppressConsoleWarning).toBeDefined();
+    expect(typeof suppressConsoleWarning).toBe("function");
+  });
+
+  it("setTestWindowSize関数が存在すること", () => {
+    expect(setTestWindowSize).toBeDefined();
+    expect(typeof setTestWindowSize).toBe("function");
+  });
+
+  it("setTestMediaQuery関数が存在すること", () => {
+    expect(setTestMediaQuery).toBeDefined();
+    expect(typeof setTestMediaQuery).toBe("function");
   });
 });
