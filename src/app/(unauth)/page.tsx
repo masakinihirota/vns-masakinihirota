@@ -3,6 +3,7 @@ import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
 
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03";
 
 export default function Home() {
   // 翻訳
@@ -11,6 +12,7 @@ export default function Home() {
 
   return (
     <>
+      <Navbar03Page />
       {/* ランディングページへのリンク */}
       <Link href="/landing">ランディングページ</Link>
       <br />
