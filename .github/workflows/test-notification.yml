@@ -1,0 +1,119 @@
+name: テスト失敗通知
+
+# トリガー設定
+on:
+  workflow_run:
+    workflows: ["テストとカバレッジチェック", "プルリクエストチェック"]
+    types:
+      - completed
+
+# ジョブ定義
+jobs:
+  # テスト失敗時の通知
+  notify:
+    name: テスト失敗通知
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+
+    steps:
+      # リポジトリのチェックアウト
+      - name: リポジトリのチェックアウト
+        uses: actions/checkout@v4
+
+      # ワークフロー実行情報の取得
+      - name: ワークフロー実行情報の取得
+        id: workflow-info
+        run: |
+          echo "workflow-name=${{ github.event.workflow_run.name }}" >> $GITHUB_OUTPUT
+          echo "workflow-url=${{ github.event.workflow_run.html_url }}" >> $GITHUB_OUTPUT
+          echo "repo-name=${{ github.repository }}" >> $GITHUB_OUTPUT
+          echo "run-id=${{ github.event.workflow_run.id }}" >> $GITHUB_OUTPUT
+          echo "run-number=${{ github.event.workflow_run.run_number }}" >> $GITHUB_OUTPUT
+          echo "actor=${{ github.event.workflow_run.actor.login }}" >> $GITHUB_OUTPUT
+
+      # Slackへの通知（Slack Webhookが設定されている場合）
+      - name: Slackへの通知
+        if: ${{ secrets.SLACK_WEBHOOK_URL != '' }}
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "⚠️ テスト失敗通知",
+                    "emoji": true
+                  }
+                },
+                {
+                  "type": "section",
+                  "fields": [
+                    {
+                      "type": "mrkdwn",
+                      "text": "*リポジトリ:*\n${{ steps.workflow-info.outputs.repo-name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*ワークフロー:*\n${{ steps.workflow-info.outputs.workflow-name }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*実行者:*\n${{ steps.workflow-info.outputs.actor }}"
+                    },
+                    {
+                      "type": "mrkdwn",
+                      "text": "*実行番号:*\n#${{ steps.workflow-info.outputs.run-number }}"
+                    }
+                  ]
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "テストが失敗しました。詳細は以下のリンクから確認してください。"
+                  }
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": "詳細を確認",
+                        "emoji": true
+                      },
+                      "url": "${{ steps.workflow-info.outputs.workflow-url }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+
+      # メール通知（オプション）
+      - name: メール通知
+        if: ${{ secrets.NOTIFICATION_EMAIL != '' }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER }}
+          server_port: ${{ secrets.MAIL_PORT }}
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "⚠️ テスト失敗通知: ${{ steps.workflow-info.outputs.repo-name }}"
+          body: |
+            テストが失敗しました。
+
+            リポジトリ: ${{ steps.workflow-info.outputs.repo-name }}
+            ワークフロー: ${{ steps.workflow-info.outputs.workflow-name }}
+            実行者: ${{ steps.workflow-info.outputs.actor }}
+            実行番号: #${{ steps.workflow-info.outputs.run-number }}
+
+            詳細は以下のリンクから確認してください：
+            ${{ steps.workflow-info.outputs.workflow-url }}
+          to: ${{ secrets.NOTIFICATION_EMAIL }}
+          from: GitHub Actions

@@ -101,6 +101,52 @@ export async function setTestAuthState(page: Page): Promise<void> {
       JSON.stringify(mockAuthData),
     );
   });
+
+  // ページをリロードして認証状態を反映
+  await page.reload();
+  await page.waitForLoadState("networkidle");
+}
+
+/**
+ * 特定のユーザーロールの認証状態を設定
+ */
+export async function setRoleAuthState(
+  page: Page,
+  role: string,
+): Promise<void> {
+  await page.evaluate((userRole) => {
+    const mockAuthData = {
+      access_token: `test-access-token-${userRole}`,
+      refresh_token: `test-refresh-token-${userRole}`,
+      user: {
+        id: `test-user-id-${userRole}`,
+        email: `test-${userRole}@example.com`,
+        user_metadata: {
+          name: `Test ${userRole} User`,
+          role: userRole,
+        },
+      },
+    };
+
+    localStorage.setItem(
+      "sb-127.0.0.1:54321-auth-token",
+      JSON.stringify(mockAuthData),
+    );
+  }, role);
+
+  // ページをリロードして認証状態を反映
+  await page.reload();
+  await page.waitForLoadState("networkidle");
+}
+
+/**
+ * 認証状態を確認
+ */
+export async function checkAuthState(page: Page): Promise<boolean> {
+  return await page.evaluate(() => {
+    const authToken = localStorage.getItem("sb-127.0.0.1:54321-auth-token");
+    return !!authToken;
+  });
 }
 
 /**
