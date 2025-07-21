@@ -24,7 +24,7 @@
   },
   "formatter": {
     "enabled": true,
-    "formatWithErrors": false,
+    "formatWithErrors": true,
     "ignore": [],
     "attributePosition": "multiline",
     "indentStyle": "space"
@@ -46,7 +46,7 @@
     }
   },
   "linter": {
-    "ignore": [],
+    "ignore": ["**/__tests__/**", "**/__mocks__/**"],
     "rules": {
       "recommended": true,
       "suspicious": {
