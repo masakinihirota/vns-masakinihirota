@@ -51,6 +51,29 @@ describe("Hono API Routes", () => {
       );
       expect(response.ok).toBe(true);
     });
+
+    it("レスポンスボディの構造が正しいこと", async () => {
+      const response = await fetch("http://localhost:3000/api/hello");
+      const data = await response.json();
+
+      expect(data).toHaveProperty("message");
+      expect(typeof data.message).toBe("string");
+      expect(data.message).toBe("Hello from Hono!");
+    });
+
+    it("複数回のリクエストで一貫したレスポンスを返すこと", async () => {
+      const responses = await Promise.all([
+        fetch("http://localhost:3000/api/hello"),
+        fetch("http://localhost:3000/api/hello"),
+        fetch("http://localhost:3000/api/hello"),
+      ]);
+
+      for (const response of responses) {
+        expect(response.status).toBe(200);
+        const data = await response.json();
+        expect(data).toEqual({ message: "Hello from Hono!" });
+      }
+    });
   });
 
   describe("GET /api/user/:id", () => {
@@ -144,11 +167,56 @@ describe("Hono API Routes", () => {
       const data = await response.json();
 
       expect(response.status).toBe(200);
+      expect(response.headers.get("content-type")).toContain(
+        "application/json",
+      );
       expect(data).toEqual({
         slug: "test-post",
         title: "Post test-post",
         content: "Content for test-post",
       });
+    });
+
+    it("日本語スラッグで正常なレスポンスを返すこと", async () => {
+      const response = await fetch(
+        "http://localhost:3000/api/posts/テスト投稿",
+      );
+      const data = await response.json();
+
+      expect(response.status).toBe(200);
+      expect(data).toEqual({
+        slug: "テスト投稿",
+        title: "Post テスト投稿",
+        content: "Content for テスト投稿",
+      });
+    });
+
+    it("特殊文字を含むスラッグで正常なレスポンスを返すこと", async () => {
+      const response = await fetch(
+        "http://localhost:3000/api/posts/post-with-123_special-chars",
+      );
+      const data = await response.json();
+
+      expect(response.status).toBe(200);
+      expect(data).toEqual({
+        slug: "post-with-123_special-chars",
+        title: "Post post-with-123_special-chars",
+        content: "Content for post-with-123_special-chars",
+      });
+    });
+
+    it("レスポンスボディの構造が正しいこと", async () => {
+      const response = await fetch(
+        "http://localhost:3000/api/posts/structure-test",
+      );
+      const data = await response.json();
+
+      expect(data).toHaveProperty("slug");
+      expect(data).toHaveProperty("title");
+      expect(data).toHaveProperty("content");
+      expect(typeof data.slug).toBe("string");
+      expect(typeof data.title).toBe("string");
+      expect(typeof data.content).toBe("string");
     });
   });
 
@@ -183,12 +251,26 @@ describe("Hono API Routes", () => {
         http.get("http://localhost:3000/api/test-methods", () => {
           return HttpResponse.json({ method: "GET" });
         }),
-        http.post("http://localhost:3000/api/test-methods", () => {
-          return HttpResponse.json({ method: "POST" });
-        }),
-        http.put("http://localhost:3000/api/test-methods", () => {
-          return HttpResponse.json({ method: "PUT" });
-        }),
+        http.post(
+          "http://localhost:3000/api/test-methods",
+          async ({ request }) => {
+            const body = await request.json();
+            return HttpResponse.json({
+              method: "POST",
+              receivedData: body,
+            });
+          },
+        ),
+        http.put(
+          "http://localhost:3000/api/test-methods",
+          async ({ request }) => {
+            const body = await request.json();
+            return HttpResponse.json({
+              method: "PUT",
+              receivedData: body,
+            });
+          },
+        ),
         http.delete("http://localhost:3000/api/test-methods", () => {
           return HttpResponse.json({ method: "DELETE" });
         }),
@@ -202,35 +284,52 @@ describe("Hono API Routes", () => {
       const data = await response.json();
 
       expect(response.status).toBe(200);
+      expect(response.headers.get("content-type")).toContain(
+        "application/json",
+      );
       expect(data).toEqual({ method: "GET" });
     });
 
-    it("POSTメソッドが正常に動作すること", async () => {
+    it("POSTメソッドでデータを正常に受信すること", async () => {
+      const testData = { name: "テストユーザー", email: "test@example.com" };
       const response = await fetch("http://localhost:3000/api/test-methods", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ test: "data" }),
+        body: JSON.stringify(testData),
       });
       const data = await response.json();
 
       expect(response.status).toBe(200);
-      expect(data).toEqual({ method: "POST" });
+      expect(response.headers.get("content-type")).toContain(
+        "application/json",
+      );
+      expect(data).toEqual({
+        method: "POST",
+        receivedData: testData,
+      });
     });
 
-    it("PUTメソッドが正常に動作すること", async () => {
+    it("PUTメソッドでデータを正常に受信すること", async () => {
+      const testData = { id: 1, name: "更新されたユーザー" };
       const response = await fetch("http://localhost:3000/api/test-methods", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ test: "data" }),
+        body: JSON.stringify(testData),
       });
       const data = await response.json();
 
       expect(response.status).toBe(200);
-      expect(data).toEqual({ method: "PUT" });
+      expect(response.headers.get("content-type")).toContain(
+        "application/json",
+      );
+      expect(data).toEqual({
+        method: "PUT",
+        receivedData: testData,
+      });
     });
 
     it("DELETEメソッドが正常に動作すること", async () => {
@@ -240,7 +339,29 @@ describe("Hono API Routes", () => {
       const data = await response.json();
 
       expect(response.status).toBe(200);
+      expect(response.headers.get("content-type")).toContain(
+        "application/json",
+      );
       expect(data).toEqual({ method: "DELETE" });
+    });
+
+    it("サポートされていないメソッドで405エラーを返すこと", async () => {
+      server.use(
+        http.patch("http://localhost:3000/api/test-methods", () => {
+          return HttpResponse.json(
+            { error: "Method Not Allowed" },
+            { status: 405 },
+          );
+        }),
+      );
+
+      const response = await fetch("http://localhost:3000/api/test-methods", {
+        method: "PATCH",
+      });
+      const data = await response.json();
+
+      expect(response.status).toBe(405);
+      expect(data).toEqual({ error: "Method Not Allowed" });
     });
   });
 
