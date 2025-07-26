@@ -1,3 +1,5 @@
+新しくリポジトリの変更
+
 ## Workspace Structure
 
 このプロジェクトは、`masakinihirota` Webアプリケーション開発のための大規模なWorkspaceの一部です。以下にWorkspaceの構成とその役割を示します：
