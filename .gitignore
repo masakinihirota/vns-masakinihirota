@@ -40,3 +40,8 @@ yarn-error.log*
 .env*
 .env*.local
 .vercel
+
+# Serena関連ファイル
+.serena/cache/
+.serena/memories/
+.serena/logs/
