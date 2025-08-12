@@ -4,8 +4,7 @@
 
 このプロジェクトは、`masakinihirota` Webアプリケーション開発のための大規模なWorkspaceの一部です。以下にWorkspaceの構成とその役割を示します：
 
-- **vns-masakinihirota**: コアアプリケーションコードを含むメインプロジェクトディレクトリ。
-- **vns-masakinihirota-custom-instructions**: コーディング、デザイン、ワークフローに関するカスタム指示書を格納。
+- **vns-masakinihirota**: コアアプリケーションコードを含むメインプロジェクトディレクトリ。、コーディング、デザイン、ワークフローに関するカスタム指示書を格納。
 - **vns-masakinihirota-design**: アプリケーションの設計書、ワイヤーフレーム、UI/UXガイドラインを含むディレクトリ。
 - **vns-masakinihirota-doc**: 用語集、APIリファレンス、プロジェクト固有のガイドなどのドキュメントを格納。
 
@@ -16,8 +15,7 @@
 
 このプロジェクトは以下のリポジトリで構成されています:
 
-- **[vns-masakinihirota](https://github.com/masakinihirota/vns-masakinihirota)**: コアアプリケーションコードを含むメインリポジトリ。
-- **[vns-masakinihirota-custom-instructions](https://github.com/masakinihirota/vns-masakinihirota-custom-instructions)**: コーディングやデザインに関するカスタム指示書。
+- **[vns-masakinihirota](https://github.com/masakinihirota/vns-masakinihirota)**: コアアプリケーションコードを含むメインリポジトリ。コーディングやデザインに関するカスタム指示書。
 - **[vns-masakinihirota-design](https://github.com/masakinihirota/vns-masakinihirota-design)**: 設計書やUI/UXガイドライン。
 - **[vns-masakinihirota-doc](https://github.com/masakinihirota/vns-masakinihirota-doc)**: 用語集やAPIリファレンスなどのドキュメント。
 
