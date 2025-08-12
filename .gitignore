@@ -42,6 +42,6 @@ yarn-error.log*
 .vercel
 
 # Serena関連ファイル
-.serena/cache/
-.serena/memories/
-.serena/logs/
+# .serena/cache/
+# .serena/memories/
+# .serena/logs/
