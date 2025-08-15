@@ -1,3 +1,4 @@
+// この設定ファイルから相対パスで指定します。
 {
   "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
   "vcs": {
@@ -6,7 +7,21 @@
     "useIgnoreFile": false
   },
   "files": {
-    "ignoreUnknown": false
+    "includes": [
+      // フォルダ以下を指定
+      "src/app/**/*.{ts,tsx,js,jsx,json,jsonc,md,mdx}",
+      "src/components/**/*.{ts,tsx,js,jsx,json,jsonc,md,mdx}",
+      "src/hooks/**/*.{ts,tsx,js,jsx,json,jsonc,md,mdx}",
+      // フォルダ以下を除外
+      "!src/components/ui/**/*",
+      "!src/components/shadcnui-blocks/**/*",
+      "!src/components/oauth/**/*",
+      // 特定ファイルを除外
+      // "!globals.css",
+      "!src/components/app-sidebar.tsx",
+      "!src/components/theme-provider.tsx",
+      "!src/components/search-form.tsx"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -21,17 +36,6 @@
         "noNonNullAssertion": "off"
       }
     },
-    "includes": [
-      // フォルダ以下を指定
-      "./src/app/*",
-      "./src/components/*",
-      "./src/hooks/*",
-      // フォルダ以下を除外
-      "!./src/components/ui/*",
-      "!./src/components/shadcnui-blocks/*",
-      // 特定ファイルを除外
-      "!./src/app/globals.css"
-    ]
   },
   "javascript": {
     "formatter": {
