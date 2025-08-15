@@ -1,10 +1,10 @@
-import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle";
+import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle"
 
 export default function Home() {
-  return (
-    <div>
-      {/* ToggleButton */}
-      <ModeToggle />
-    </div>
-  );
+	return (
+		<div>
+			{/* ToggleButton */}
+			<ModeToggle />
+		</div>
+	)
 }
