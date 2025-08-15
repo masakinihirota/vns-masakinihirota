@@ -5,10 +5,10 @@
 - **技術スタック**: **TypeScript、Node.js、Next.js (App Router)、React、Shadcn/UI、Radix UI、Tailwind CSS、Zustand、Supabase、Drizzle ORM、Zod、Stripe**。
 - **テスト**: **Vitest、React Testing Library、Storybook**。
 - **ドキュメント生成**: **vitepress**。
-- **その他**: Sentry, Framelink Figma, Postgres (LOCAL-supabase), git, Sequential Thinking, github, MarkItDown, Context7, Playwright, serena。
+- **その他**: Sentry, Figma, Framer, Postgres (LOCAL-supabase), git, Sequential Thinking, github, MarkItDown, Context7, Playwright, serena。
 - その他の依存関係については、`vns-masakinihirota` の `package.json` を参照してください。
 
-## 全体の指示書
+## 1. 全体指示書
 
 1. **コード生成指示書**
 
@@ -50,33 +50,29 @@
    - ファイル名: `.copilot-document-instructions.md`
    - ドキュメントの書き方やルールを定義します。
 
+- **コンテキスト指示書**: `.github/.context7-instructions.md`
+  最新の情報で作成されたコード情報を取得します。
 
+- **Next.js App router 指示書**: `.github/.copilot-appRouter-instructions.md`
+  Next.js の App router の書き方やルールを定義します。
 
-### 2.2. 個別指示書
+- **conform 指示書**: `.github/.copilot-conform-instructions.md`
+  conform ライブラリの書き方やルールを定義します。
 
-- **コンテキスト指示書**: `./個別指示書/.context7-instructions.md`
-	最新の情報で作成されたコード情報を取得します。
+- **設計指示書**: `.github/.copilot-design-system-instructions.md`
+  デザインシステムの書き方やルールを定義します。
 
-- **Next.js App router 指示書**: `./個別指示書/.copilot-appRouter-instructions.md`
-	Next.jsのApp routerの書き方やルールを定義します。
-
-- **conform 指示書**: `./個別指示書/.copilot-conform-instructions.md`
-	conformライブラリの書き方やルールを定義します。
-
-- **設計指示書**: `./個別指示書/.copilot-design-system-instructions.md`
-	デザインシステムの書き方やルールを定義します。
-
-- **Drizzle ORM 指示書**: `.github/個別指示書/.copilot-drizzle-orm.md`
-	Drizzle ORMの書き方やルールを定義します。
+- **Drizzle ORM 指示書**: `.github/.copilot-drizzle-orm.md`
+  Drizzle ORM の書き方やルールを定義します。
 
 - **Supabase 指示書**: `.github/supabase指示書/*.md`
-	Supabaseの書き方やルールを定義します。
+  Supabase の書き方やルールを定義します。
 
-- **キャラクター指示書**: `.copilot-character-instructions.md`
+- **キャラクター指示書**: `.github/.copilot-character-instructions.md`
 
 ---
 
-3 実装
+## 3. 実装
 
 実装は、
 最初に、要件定義書から設計書を作成しています。
@@ -85,49 +81,70 @@
 
 そのタスクリストからタスク分解をして実装しやすい粒度のタスクを作成します。
 そのタスクからプロンプトファイルを書き、
-プロンプトファイルを用いてAI指示を出して実装をします。
-
-
+プロンプトファイルを用いて AI 指示を出して実装をします。
 
 要件定義書と設計書は
-vns-masakinihirota-designリポジトリ内に置いてあります。
+vns-masakinihirota-design リポジトリ内に置いてあります。
 その設計書からタスクリストを作成します。
 
 - タスクリスト
 
-`.github\__task-list\tasks.md`
+`.github/__task-list/tasks.md`
 
 タスクリストのなかから実装するタスクを選び、
 タスクが大きかったら、さらにサブタスクに分解をします。
 
 タスク、サブタスクが用意できたら、それを元にプロンプトファイルを作成します。
-プロンプトファイルを使用してAIに指示を出して実装をします。
+プロンプトファイルを使用して AI に指示を出して実装をします。
 
 - プロンプトファイルの場所
 
-`.github\_prompt`内のプロンプトファイル
+`.github/_prompt`内のプロンプトファイル
+
+> 参考: プロンプトファイルの最小テンプレート
+
+```md
+# 背景
+
+[タスク ID/関連設計書へのリンク]
+
+# 目的
+
+[今回の出力で満たすべきゴール]
+
+# 制約
+
+[技術/設計/命名/テスト方針など。必要なら該当指示書の相対パスを列挙]
+
+# 出力
+
+[期待するファイル、差分、テスト、ドキュメント]
+```
 
 ---
 
-## 3. 指示書の読み込みルール
+## 4. 指示書の読み込みルール
 
-### 3.1. 優先順位
+### 4.1. 優先順位
 
 指示書を読み込む際の優先順位は以下の通りです：
 
-1. **タスクファイル**（`.github\_prompt`内のプロンプトファイル）
+1. **タスクファイル**（`.github/_prompt`内のプロンプトファイル）
 2. **個別指示書**（`.github/`内の `*-instructions.md`ファイル）
 3. **全体指示書**（プロジェクト全体のルールを定義したファイル）
 
+### 4.2. 実務での読み込ませ方
+
+- Copilot Chat では質問先頭に `#file:.github/copilot-instructions.md` や対象プロンプト `#file:.github/_prompt/<task>.md` を付与。
+- 必要な指示書をエディターで開いた状態で質問（アクティブファイルの重み付けを活用）。
 
 # プロジェクト
-
 
 ## プロジェクト情報の管理
 
 ### Serena MCP 連携
 
-- **情報収集パス**: `vns-masakinihirota\.serena`
+- **情報収集パス**: `.serena`
 - **設計書リポジトリ**: `vns-masakinihirota-design`
 - **参照方法**: 常に最新の設計書情報を確認してから作業開始
 
@@ -208,15 +225,13 @@ vns-masakinihirota-designリポジトリ内に置いてあります。
 
 ---
 
-
 ### 段階別作業の原則
 
 **作業開始前の確認**:
 
-1. **Serena MCP**: `vns-masakinihirota\.serena` で現在のプロジェクト状況を確認
+1. **Serena MCP**: `vns-masakinihirota/.serena` で現在のプロジェクト状況を確認
 2. **設計書**: `vns-masakinihirota-design` で最新の要件・設計情報を確認
 3. **現在の段階**: Phase 1（要件定義）/ Phase 2（設計）/ Phase 3（タスクリスト）/ Phase 4（実装）を明確化
-
 
 ### 遵守事項 (DO's)
 
@@ -230,9 +245,6 @@ vns-masakinihirota-designリポジトリ内に置いてあります。
 
 - 環境変数は `.env` ファイルおよび `.env.local` ファイルで管理し、Next.js の仕組みに従って安全に利用してください。
 - 環境変数の実装は、開発者が責任を持って行ってください。
-
-
-
 
 ## 開発環境と主要ツール
 
@@ -250,7 +262,6 @@ vns-masakinihirota-designリポジトリ内に置いてあります。
   ],
   "settings": {}
 }
-
 ```
 
 2.  **GitHub Copilot を使ったコード生成**:
@@ -267,8 +278,6 @@ vns-masakinihirota-designリポジトリ内に置いてあります。
 
     - **要件定義 → 設計書 → タスクリスト → 実装 → テスト → ドキュメント** の順序で進行します。
     - 各段階完了時に Serena MCP の情報を更新します。
-
-
 
 ## ドキュメント規約
 
