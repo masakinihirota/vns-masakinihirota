@@ -8,6 +8,8 @@
 - **その他**: Sentry, Figma, Framer, Postgres (LOCAL-supabase), git, Sequential Thinking, github, MarkItDown, Context7, Playwright, serena。
 - その他の依存関係については、`vns-masakinihirota` の `package.json` を参照してください。
 
+定期的に、実際のファイル配置・リンク切れがないかをSerena MCPでチェックしてください。
+
 ## 1. 全体指示書
 
 1. **コード生成指示書**
@@ -65,10 +67,11 @@
 - **Drizzle ORM 指示書**: `.github/.copilot-drizzle-orm.md`
   Drizzle ORM の書き方やルールを定義します。
 
-- **Supabase 指示書**: `.github/supabase指示書/*.md`
-  Supabase の書き方やルールを定義します。
-
 - **キャラクター指示書**: `.github/.copilot-character-instructions.md`
+  GitHub Copilot のキャラクターや振る舞いを定義します。
+
+- **Supabase 指示書**: `.github/.copilot-supabase-instructions.md`
+  Supabase の書き方やルールを定義します。
 
 ---
 
@@ -286,3 +289,59 @@ vns-masakinihirota-design リポジトリ内に置いてあります。
 - コードとドキュメントは同時に記述することを推奨します。
 
 ---
+
+タスク ID とプロンプトファイル名の対応ルールは以下の通りです：
+
+- タスク ID は `TASK-<番号>` の形式で命名します。
+- プロンプトファイル名は `PROMPT-<番号>.md` の形式で命名します。
+- タスク ID とプロンプトファイル名の番号は一致させます。
+
+例:
+
+- タスク ID: `TASK-001`
+- 対応するプロンプトファイル名: `PROMPT-001.md`
+
+タスク分解・サブタスク化の基準（例: 1-2 日で完了する粒度）
+
+### 関連設計書や要件定義書へのリンク記法例
+
+- **要件定義書へのリンク**: `[要件定義書名](../vns-masakinihirota-design/0010-要件定義書/<0000-要件定義書ファイル名>.md)`
+- **関連設計書へのリンク**: `[設計書名](../vns-masakinihirota-design/0020-設計/<設計書ファイル名>.md)`
+
+#### 使用例
+
+- [UI コンポーネント設計書](../vns-masakinihirota-design/docs/ui-components.md)
+- [認証機能要件定義書](../vns-masakinihirota-design/requirements/auth-requirements.md)
+
+- **テスト計画書の場所**: `U:\2025src\___masakinihirota\vns-masakinihirota-design\0200-テスト計画書`
+
+### Serena MCPの分析・レポート生成手順
+
+1. **データ収集**:
+  - `.serena` ディレクトリ内の最新データを確認します。
+  - 必要に応じて、`vns-masakinihirota-design` リポジトリから関連情報を取得します。
+
+2. **分析ツールの準備**:
+  - Serena MCP の分析ツールを起動します。
+  - プロジェクト設定ファイルを読み込み、現在のプロジェクト状況を確認します。
+
+3. **分析の実行**:
+  - 必要な分析モジュールを選択します（例: タスク進捗、依存関係、リソース使用状況）。
+  - 分析対象のデータを指定し、分析を開始します。
+
+4. **レポート生成**:
+  - 分析結果を基に、レポートを自動生成します。
+  - レポート形式は PDF または Markdown を選択可能です。
+
+5. **レポートの確認と保存**:
+  - 生成されたレポートを確認し、必要に応じて修正を加えます。
+  - 修正版をプロジェクトディレクトリ内の適切な場所に保存します。
+
+6. **共有**:
+  - レポートをチームメンバーと共有します。
+  - 必要に応じて、`vns-masakinihirota-doc` リポジトリにアップロードします。
+
+7. **更新**:
+  - 分析結果を基に、タスクリストや設計書を更新します。
+  - Serena MCP のデータも最新状態に保ちます。
+
