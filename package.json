@@ -11,10 +11,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
-    "prepare": "husky",
-    "lint": "biome lint --write src supabase/schemas",
-    "format": "biome format --write src supabase/schemas",
-    "check": "biome check --write src supabase/schemas"
+    "prepare": "husky"
   },
   "dependencies": {
     "@jpisnice/shadcn-ui-mcp-server": "github:Jpisnice/shadcn-ui-mcp-server",
@@ -47,7 +44,6 @@
     "tailwind-merge": "^3.2.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
     "@eslint/eslintrc": "^3",
     "@stagewise/toolbar": "^0.2.1",
     "@tailwindcss/postcss": "^4",

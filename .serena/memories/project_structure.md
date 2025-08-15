@@ -28,7 +28,6 @@ vns-masakinihirota/
 ## 主要ファイル
 - `next.config.ts`: Next.js設定（next-intl統合）
 - `drizzle.config.ts`: Drizzle ORM設定
-- `biome.json`: コード品質ツール設定
 - `tsconfig.json`: TypeScript設定
 - `supabase/config.toml`: Supabase設定
 

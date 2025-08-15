@@ -18,7 +18,7 @@
 - **Hono**: 軽量Webフレームワーク（APIルート用）
 
 ## 開発ツール
-- **Biome**: リンター・フォーマッター（ESLint + Prettier代替）
+- **ESLint + Prettier**: リンター・フォーマッター
 - **Husky**: Git hooks
 - **lint-staged**: ステージングファイルのリント
 - **tsx**: TypeScript実行環境

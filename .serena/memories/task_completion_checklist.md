@@ -38,7 +38,7 @@ pnpm dev
 
 ### 6. 認証フローテスト
 - Google OAuth ログイン
-- GitHub OAuth ログイン  
+- GitHub OAuth ログイン
 - 匿名認証
 - ログアウト機能
 
@@ -62,6 +62,5 @@ git log --oneline -5
 ```
 
 ## エラー対応
-- Biomeエラー: `pnpm check`で自動修正を試行
 - TypeScriptエラー: 型定義の見直し
 - Supabaseエラー: `supabase status`で確認
