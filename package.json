@@ -14,7 +14,6 @@
     "prepare": "husky",
     "lint": "next lint",
     "lint:fix": "next lint --fix"
-
   },
   "dependencies": {
     "@jpisnice/shadcn-ui-mcp-server": "github:Jpisnice/shadcn-ui-mcp-server",
@@ -47,6 +46,7 @@
     "tailwind-merge": "^3.2.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.2.0",
     "@eslint/eslintrc": "^3",
     "@stagewise/toolbar": "^0.2.1",
     "@tailwindcss/postcss": "^4",
