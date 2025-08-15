@@ -1,0 +1,65 @@
+# プロジェクトの言語 (csharp, python, rust, java, typescript, go, cpp, または ruby)
+#  * C を使用する場合は cpp を指定してください
+#  * JavaScript を使用する場合は typescript を指定してください
+# 特別な要件:
+#  * csharp: プロジェクトフォルダ内に .sln ファイルが存在する必要があります
+language: typescript
+
+# プロジェクトの .gitignore ファイルを使用してファイルを無視するかどうか
+# 2025-04-07 に追加
+ignore_all_files_in_gitignore: true
+# 無視する追加のパスのリスト
+# gitignore と同じ構文を使用できるため、* や ** を使用可能
+# 以前は `ignored_dirs` と呼ばれていました。設定を更新してください。
+# 2025-04-07 に名前変更して追加
+ignored_paths: []
+
+# プロジェクトが読み取り専用モードかどうか
+# true に設定すると、すべての編集ツールが無効になり、使用しようとするとエラーになります
+# 2025-04-18 に追加
+read_only: false
+
+# 除外するツール名のリスト。ツールを除外しないことを推奨します。詳細は README を参照してください。
+# 以下はツールの完全なリストです。
+# 最新のツールリストを確認し、説明を表示するには、`uv run scripts/print_tool_overview.py` を実行してください。
+#
+#  * `activate_project`: プロジェクトを名前でアクティブ化します。
+#  * `check_onboarding_performed`: プロジェクトのオンボーディングが既に実行されたかどうかを確認します。
+#  * `create_text_file`: プロジェクトディレクトリ内にファイルを作成/上書きします。
+#  * `delete_lines`: ファイル内の特定の行範囲を削除します。
+#  * `delete_memory`: Serena のプロジェクト固有のメモリストアからメモリを削除します。
+#  * `execute_shell_command`: シェルコマンドを実行します。
+#  * `find_referencing_code_snippets`: 指定された位置のシンボルが参照されているコードスニペットを検索します。
+#  * `find_referencing_symbols`: 指定された位置のシンボルを参照するシンボルを検索します（オプションでタイプでフィルタリング可能）。
+#  * `find_symbol`: 指定された名前/部分文字列を持つシンボルをグローバル（またはローカル）検索します（オプションでタイプでフィルタリング可能）。
+#  * `get_current_config`: アクティブおよび利用可能なプロジェクト、ツール、コンテキスト、モードを含むエージェントの現在の設定を表示します。
+#  * `get_symbols_overview`: 指定されたファイルまたはディレクトリで定義されたトップレベルシンボルの概要を取得します。
+#  * `initial_instructions`: 現在のプロジェクトの初期指示を取得します。
+#     システムプロンプトを設定できない環境（例: Claude Desktop）でのみ使用してください。
+#  * `insert_after_symbol`: 指定されたシンボルの定義の末尾にコンテンツを挿入します。
+#  * `insert_at_line`: ファイル内の指定された行にコンテンツを挿入します。
+#  * `insert_before_symbol`: 指定されたシンボルの定義の先頭にコンテンツを挿入します。
+#  * `list_dir`: 指定されたディレクトリ内のファイルとディレクトリをリストします（オプションで再帰的に）。
+#  * `list_memories`: Serena のプロジェクト固有のメモリストア内のメモリをリストします。
+#  * `onboarding`: オンボーディングを実行します（テストやビルドなどの重要なタスクを特定）。
+#  * `prepare_for_new_conversation`: 新しい会話を準備するための指示を提供します（必要なコンテキストを続行するため）。
+#  * `read_file`: プロジェクトディレクトリ内のファイルを読み取ります。
+#  * `read_memory`: Serena のプロジェクト固有のメモリストアから指定された名前のメモリを読み取ります。
+#  * `remove_project`: Serena の設定からプロジェクトを削除します。
+#  * `replace_lines`: ファイル内の特定の行範囲を新しいコンテンツで置き換えます。
+#  * `replace_symbol_body`: シンボルの完全な定義を置き換えます。
+#  * `restart_language_server`: 言語サーバーを再起動します（Serena を介さない編集が発生した場合に必要になることがあります）。
+#  * `search_for_pattern`: プロジェクト内でパターンを検索します。
+#  * `summarize_changes`: コードベースに加えられた変更を要約するための指示を提供します。
+#  * `switch_modes`: モードのリストを提供してモードをアクティブ化します。
+#  * `think_about_collected_information`: 収集した情報の完全性を考察するためのツール。
+#  * `think_about_task_adherence`: 現在のタスクに沿っているかどうかを判断するためのツール。
+#  * `think_about_whether_you_are_done`: タスクが本当に完了しているかどうかを判断するためのツール。
+#  * `write_memory`: Serena のプロジェクト固有のメモリストアに名前付きメモリ（将来参照用）を書き込みます。
+excluded_tools: []
+
+# プロジェクトの初期プロンプト。プロジェクトをアクティブ化すると常に LLM に提供されます。
+# （メモリは必要に応じてロードされるのに対し、初期プロンプトは常に提供されます）。
+initial_prompt: ""
+
+project_name: "vns-masakinihirota"
