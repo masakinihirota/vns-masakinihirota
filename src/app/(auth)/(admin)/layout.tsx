@@ -3,8 +3,8 @@
 
 // getLoginUser や isAdminUser は適当な関数を用意します。
 
-"use server";
-import "server-only";
+"use server"
+import "server-only"
 // import { notFound } from "next/navigation";
 // import { FC, ReactNode } from "react";
 
