@@ -8,7 +8,7 @@
 - **その他**: Sentry, Figma, Framer, Postgres (LOCAL-supabase), git, Sequential Thinking, github, MarkItDown, Context7, Playwright, serena。
 - その他の依存関係については、`vns-masakinihirota` の `package.json` を参照してください。
 
-Serena MCPを使い、プロジェクトを常にチェックしている状態にしてください。
+Serena MCPを使い、プロジェクトを常にチェックしてください。
 
 **コードの最新化**:
 常に pull request で最新のコードの状態にします。
