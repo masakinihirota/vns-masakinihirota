@@ -4,7 +4,17 @@ import createNextIntlPlugin from "next-intl/plugin";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["images.pexels.com", "placehold.co"], // ここにホスト名を追加
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.pexels.com",
+      },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+      },
+    ],
+    dangerouslyAllowSVG: true, // Enable SVG support
   },
 };
 

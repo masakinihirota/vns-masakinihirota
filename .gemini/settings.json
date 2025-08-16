@@ -1,0 +1,11 @@
+{
+    "selectedAuthType": "oauth-personal",
+    "mcpServers": {
+        "playwright": {
+            "command": "npx",
+            "args": [
+                "@playwright/mcp@latest"
+            ]
+        }
+    }
+}

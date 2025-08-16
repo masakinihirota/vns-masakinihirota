@@ -1,7 +1,7 @@
 {
-  "AppLayout": {
-    "home": "AppLayout ホーム",
-    "logout": "Logout",
-    "profile": "Profile"
-  }
+	"AppLayout": {
+		"home": "AppLayout ホーム",
+		"logout": "Logout",
+		"profile": "Profile"
+	}
 }
