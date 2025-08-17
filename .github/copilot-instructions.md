@@ -1,5 +1,11 @@
 # GitHub Copilot 指示書 for `vns-masakinihirota`
 
+serena index create
+
+Serena MCP を使い、プロジェクトを常にチェックしてください。
+
+この指示書は、`vns-masakinihirota` プロジェクトにおける GitHub Copilot の使用方法とルールを定義しています。プロジェクトの目的は、Web アプリケーションの開発を効率化し、チーム全体での一貫性を保つことです。
+
 ## 主要ツールと依存関係
 
 - **技術スタック**: **TypeScript、Node.js、Next.js (App Router)、React、Shadcn/UI、Radix UI、Tailwind CSS、Zustand、Supabase、Drizzle ORM、Zod、Stripe**。
@@ -7,8 +13,6 @@
 - **ドキュメント生成**: **vitepress**。
 - **その他**: Sentry, Figma, Framer, Postgres (LOCAL-supabase), git, Sequential Thinking, github, MarkItDown, Context7, Playwright, serena。
 - その他の依存関係については、`vns-masakinihirota` の `package.json` を参照してください。
-
-Serena MCPを使い、プロジェクトを常にチェックしてください。
 
 **コードの最新化**:
 常に pull request で最新のコードの状態にします。
