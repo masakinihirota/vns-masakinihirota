@@ -4,20 +4,20 @@
 優先度: 🔴 高 / 🟡 中 / 🟢 低
 
 ## サマリー
-- 総タスク数: 0 (初期追加前)
-- フェーズ: Phase 3 (タスクリスト作成)
-- 次アクション: 認証・基盤機能の実装タスクを確定し着手
+- 総タスク数: 46 (未着手ステータス含む)
+- フェーズ: Phase 3 (タスクリスト作成 → Phase 4 移行準備)
+- 次アクション: 基盤(TASK-001〜006) 着手 / 認証ギャップ(TASK-010,012,015) 対応開始
 
 ---
 ## 1. 🏗️ 基盤・インフラ (優先度: 🔴 高)
-- [ ] TASK-001: リポジトリ構成レビューと整備
+- [x] TASK-001: リポジトリ構成レビューと整備
   - 説明: 既存構成確認、不要ファイル/不足指示書確認、ワークスペース整合性確保
   - 成果物: 調整差分、README更新、改善提案メモ
   - テスト要件: なし(レビュー中心)
-- [ ] TASK-002: Biome/Eslint/Formatter/TSConfig 整合性チェック
-  - 説明: コード品質ツール設定の統合・不足ルール洗い出し
-  - 成果物: 設定 diff、改善案、CI 反映 PR
-  - テスト要件: フォーマット/型チェック実行ログ
+- [x] TASK-002: Biome 整合性チェック
+  - 説明: Biome 単独運用。check は lint のみ。
+  - 成果物: package.json scripts (lint / format / check) 整理, devDependencies 更新
+  - テスト要件: `pnpm check` でエラーなし
 - [ ] TASK-003: パッケージスクリプト/CI 下準備
   - 説明: lint / typecheck / test / build スクリプト統一
   - 成果物: package.json scripts、（必要なら）GitHub Actions 下書き
@@ -37,18 +37,37 @@
 
 ## 2. 🔐 認証 (優先度: 🔴 高)
 - [ ] TASK-010: 認証要件再確認とギャップ分析
-  - 説明: 要件定義/設計書と Supabase Auth 機能の突合
-  - 成果物: ギャップ一覧 md
+  - 説明: 要件定義/設計書と現状 (OAuth/匿名 実装済) の突合し不足洗い出し
+  - 成果物: ギャップ一覧 md (メール/パスワード除外方針明記)
   - テスト要件: なし
-
+- [x] TASK-011: OAuth/匿名 認証 UI 基本実装
+  - 説明: Google / GitHub / 匿名ログインフォーム実装済み確認
+  - 成果物: `oauth-*` 各フォーム, middleware リダイレクト
+  - テスト要件: 後続で自動化予定 (TASK-018 へ委譲)
 - [ ] TASK-012: セッション取得とユーザーコンテキスト Hook
-  - 説明: Server Component / Client Hook (useCurrentUser) 実装
+  - 説明: Server Component / Client Hook (useCurrentUser) 実装（未実装なら追加）
   - 成果物: hooks ファイル、型定義
   - テスト要件: Hook のユニットテスト
-- [ ] TASK-013: 認証ガード (ルート保護) 実装
-  - 説明: Middleware / Server Action 判定
-  - 成果物: middleware.ts, ユーティリティ
+- [ ] TASK-013: 認証ガード (ルート保護) 実装強化
+  - 説明: middleware のパス例外整理 / Server Action 用ユーティリティ抽出
+  - 成果物: middleware.ts 更新, guard util
   - テスト要件: 保護ルートの挙動テスト
+- [ ] TASK-015: 匿名 → 正式アカウント昇格フロー設計
+  - 説明: 匿名ユーザーのOAuth連携/属性移行手順定義 (メールパスワード無し方針)
+  - 成果物: 昇格仕様 md, 必要な Supabase API 呼出シーケンス
+  - テスト要件: 昇格シナリオモックテスト
+- [ ] TASK-016: プロフィール初期プロビジョン自動化
+  - 説明: 新規 (OAuth/匿名) 認証時 profile/root_accounts 同期
+  - 成果物: server action or edge function, schema 同期コード
+  - テスト要件: 新規ログイン後プロファイル存在確認テスト
+- [ ] TASK-017: Auth エラーコード統一 & 表示指針
+  - 説明: Supabase エラー→ユーザー向け/ログ向けマッピング
+  - 成果物: error-map util, ドキュメント
+  - テスト要件: 代表エラー変換テスト
+- [ ] TASK-018: 認証テスト整備 (Unit/Integration)
+  - 説明: middleware / hooks / フォーム 動作テスト
+  - 成果物: vitest + RTL テストケース
+  - テスト要件: CI で green
 
 
 ## 3. 👤 ユーザープロフィール (優先度: 🔴 高)
