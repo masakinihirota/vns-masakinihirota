@@ -14,83 +14,55 @@ Serena MCP を使い、プロジェクトを常にチェックしてください
 - **その他**: Sentry, Figma, Framer, Postgres (LOCAL-supabase), git, Sequential Thinking, github, MarkItDown, Context7, Playwright, serena。
 - その他の依存関係については、`vns-masakinihirota` の `package.json` を参照してください。
 
-**コードの最新化**:
-常に pull request で最新のコードの状態にします。
-タスクを実装する際は、必ず最新の状態で作業を開始してください。
-
-設計・要件の同期
+### 設計・要件の確認と最新情報の取得
 
 実装前に必ず vns-masakinihirota-design の設計書・要件定義書を確認し、設計変更があれば速やかに反映してください。
 
-ドキュメント更新の習慣化
+### ドキュメント更新の習慣化
 
 コード変更時は vns-masakinihirota-doc の該当ドキュメントも同時に更新してください。
 README.md やテスト計画書も常に最新状態を保ちましょう。
 
-## 1. 全体指示書
+## 1. 指示書
 
-1. **コード生成指示書**
+指示書は、GitHub Copilot がプロジェクトのタスクを管理し、開発者が効率的に作業を進めるためのガイドラインです。以下の指示書を参照してください。
 
-   - ファイル名: `.copilot-codeGeneration-instructions.md`
-   - コード生成時のルールや規約を定義します。
+[serena 指示書](.copilot-serena-MCP.md)
 
-2. **命名規則指示書**
+[翻訳指示書](.copilot-translation-instructions.md)
 
-   - ファイル名: `.copilot-namingConventions-instructions.md`
-   - 変数名や関数名、ファイル名の命名規則を定義します。
+[タスク指示書](.copilot-task-instructions.md)
 
-3. **タスクリスト指示書**
+[タスクリスト指示書](.copilot-task-instructions.md)
+タスクリスト（`.github/__task-list/tasks.md`）を新規作成 / 更新 / 再構成する際は、必ずこの指示書を先に開いて内容を読み込み、方針（粒度・依存関係・命名・完了条件・テスト観点）を適用してください。未読状態でのタスク追加は禁止します。
 
-   - ファイル名: `.copilot-task-instructions.md`
-   - タスクの進行方法や管理ルールを定義します。
+[コード生成指示書](.copilot-codeGeneration-instructions.md)
 
-- タスクリスト（`.github/__task-list/tasks.md`）を新規作成 / 更新 / 再構成する際は、必ずこの指示書を先に開いて内容を読み込み、方針（粒度・依存関係・命名・完了条件・テスト観点）を適用してください。未読状態でのタスク追加は禁止します。
+[命名規則指示書](.copilot-namingConventions-instructions.md)
 
-4. **デザイン指示書**
+[キャラクター指示書](.copilot-character-instructions.md)
 
-   - ファイル名: `.copilot-design-system-instructions.md`
-   - UI コンポーネントのデザインルールを定義します。
+[ドキュメント指示書](.copilot-document-instructions.md)
 
-5. **テスト指示書**
+[Next.js App router 指示書](.copilot-appRouter-instructions.md)
 
-   - ファイル名: `.copilot-testing-instructions.md`
-   - テストの実施方法や基準を定義します。
+[デザインシステム指示書](.copilot-design-system-instructions.md)
 
-6. **コミット指示書**
+[figma 指示書](.copilot-figma-instructions.md)
 
-   - ファイル名: `.copilot-commit-message-instructions.md`
-   - コミットメッセージの書き方やルールを定義します。
+[Drizzle ORM 指示書](.copilot-drizzle-orm.md)
 
-7. **レビュー指示書**
+[conform 指示書](.copilot-conform-instructions.md)
 
-   - ファイル名: `.copilot-review-instructions.md`
-   - コードレビューのルールや手順を定義します。
+[Supabase 指示書](.copilot-supabase-instructions.md)
 
-8. **ドキュメント指示書**
+[context7 指示書](.context7-instructions.md)
 
-   - ファイル名: `.copilot-document-instructions.md`
-   - ドキュメントの書き方やルールを定義します。
+[テスト指示書](.copilot-testing-instructions.md)
 
-- **コンテキスト指示書**: `.github/.context7-instructions.md`
-  最新の情報で作成されたコード情報を取得します。
+[コミット指示書](.copilot-commit-message-instructions.md)
 
-- **Next.js App router 指示書**: `.github/.copilot-appRouter-instructions.md`
-  Next.js の App router の書き方やルールを定義します。
-
-- **conform 指示書**: `.github/.copilot-conform-instructions.md`
-  conform ライブラリの書き方やルールを定義します。
-
-- **設計指示書**: `.github/.copilot-design-system-instructions.md`
-  デザインシステムの書き方やルールを定義します。
-
-- **Drizzle ORM 指示書**: `.github/.copilot-drizzle-orm.md`
-  Drizzle ORM の書き方やルールを定義します。
-
-- **キャラクター指示書**: `.github/.copilot-character-instructions.md`
-  GitHub Copilot のキャラクターや振る舞いを定義します。
-
-- **Supabase 指示書**: `.github/.copilot-supabase-instructions.md`
-  Supabase の書き方やルールを定義します。
+[レビュー指示書](.copilot-review-instructions.md)
 
 ---
 
@@ -123,26 +95,6 @@ vns-masakinihirota-design リポジトリ内に置いてあります。
 
 `.github/_prompt`内のプロンプトファイル
 
-> 参考: プロンプトファイルの最小テンプレート
-
-```md
-# 背景
-
-[タスク ID/関連設計書へのリンク]
-
-# 目的
-
-[今回の出力で満たすべきゴール]
-
-# 制約
-
-[技術/設計/命名/テスト方針など。必要なら該当指示書の相対パスを列挙]
-
-# 出力
-
-[期待するファイル、差分、テスト、ドキュメント]
-```
-
 ---
 
 ## 4. 指示書の読み込みルール
@@ -154,11 +106,6 @@ vns-masakinihirota-design リポジトリ内に置いてあります。
 1. **タスクファイル**（`.github/_prompt`内のプロンプトファイル）
 2. **個別指示書**（`.github/`内の `*-instructions.md`ファイル）
 3. **全体指示書**（プロジェクト全体のルールを定義したファイル）
-
-### 4.2. 実務での読み込ませ方
-
-- Copilot Chat では質問先頭に `#file:.github/copilot-instructions.md` や対象プロンプト `#file:.github/_prompt/<task>.md` を付与。
-- 必要な指示書をエディターで開いた状態で質問（アクティブファイルの重み付けを活用）。
 
 # プロジェクト
 
@@ -321,18 +268,6 @@ vns-masakinihirota-design リポジトリ内に置いてあります。
 - 対応するプロンプトファイル名: `PROMPT-001.md`
 
 タスク分解・サブタスク化の基準（例: 1-2 日で完了する粒度）
-
-### 関連設計書や要件定義書へのリンク記法例
-
-- **要件定義書へのリンク**: `[要件定義書名](../vns-masakinihirota-design/0010-要件定義書/<0000-要件定義書ファイル名>.md)`
-- **関連設計書へのリンク**: `[設計書名](../vns-masakinihirota-design/0020-設計/<設計書ファイル名>.md)`
-
-#### 使用例
-
-- [UI コンポーネント設計書](../vns-masakinihirota-design/docs/ui-components.md)
-- [認証機能要件定義書](../vns-masakinihirota-design/requirements/auth-requirements.md)
-
-- **テスト計画書の場所**: `U:\2025src\___masakinihirota\vns-masakinihirota-design\0200-テスト計画書`
 
 ### Serena MCP の分析・レポート生成手順
 
