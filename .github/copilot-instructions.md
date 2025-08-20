@@ -27,42 +27,42 @@ README.md やテスト計画書も常に最新状態を保ちましょう。
 
 指示書は、GitHub Copilot がプロジェクトのタスクを管理し、開発者が効率的に作業を進めるためのガイドラインです。以下の指示書を参照してください。
 
-[serena 指示書](.copilot-serena-MCP.md)
+[serena 指示書](serena-MCP.md)
 
-[翻訳指示書](.copilot-translation-instructions.md)
+[翻訳指示書](translation-instructions.md)
 
-[タスク指示書](.copilot-task-instructions.md)
+[タスク指示書](task-instructions.md)
 
-[タスクリスト指示書](.copilot-task-instructions.md)
+[タスクリスト指示書](task-instructions.md)
 タスクリスト（`.github/__task-list/tasks.md`）を新規作成 / 更新 / 再構成する際は、必ずこの指示書を先に開いて内容を読み込み、方針（粒度・依存関係・命名・完了条件・テスト観点）を適用してください。未読状態でのタスク追加は禁止します。
 
-[コード生成指示書](.copilot-codeGeneration-instructions.md)
+[コード生成指示書](codeGeneration-instructions.md)
 
-[命名規則指示書](.copilot-namingConventions-instructions.md)
+[命名規則指示書](namingConventions-instructions.md)
 
-[キャラクター指示書](.copilot-character-instructions.md)
+[キャラクター指示書](character-instructions.md)
 
-[ドキュメント指示書](.copilot-document-instructions.md)
+[ドキュメント指示書](document-instructions.md)
 
-[Next.js App router 指示書](.copilot-appRouter-instructions.md)
+[Next.js App router 指示書](appRouter-instructions.md)
 
-[デザインシステム指示書](.copilot-design-system-instructions.md)
+[デザインシステム指示書](design-system-instructions.md)
 
-[figma 指示書](.copilot-figma-instructions.md)
+[figma 指示書](figma-instructions.md)
 
-[Drizzle ORM 指示書](.copilot-drizzle-orm.md)
+[Drizzle ORM 指示書](drizzle-orm.md)
 
-[conform 指示書](.copilot-conform-instructions.md)
+[conform 指示書](conform-instructions.md)
 
-[Supabase 指示書](.copilot-supabase-instructions.md)
+[Supabase 指示書](supabase-instructions.md)
 
 [context7 指示書](.context7-instructions.md)
 
-[テスト指示書](.copilot-testing-instructions.md)
+[テスト指示書](testing-instructions.md)
 
-[コミット指示書](.copilot-commit-message-instructions.md)
+[コミット指示書](commit-message-instructions.md)
 
-[レビュー指示書](.copilot-review-instructions.md)
+[レビュー指示書](review-instructions.md)
 
 ---
 

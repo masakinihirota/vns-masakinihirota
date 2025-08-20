@@ -30,7 +30,7 @@ Supabaseを使い、型安全なクエリとRLSを実装してください。
 ## 2. プロジェクト全体のコーディング規約
 
 ### 2.1. 命名規則
-- 命名規則の詳細は `.copilot-namingConventions-instructions.md` を参照してください。
+- 命名規則の詳細は `namingConventions-instructions.md` を参照してください。
 
 ### 2.2. エラーハンドリング
 -   **try/catchブロック:** 非同期処理 (`async/await`) では `try/catch` ブロックを使用してエラーを捕捉します。
@@ -183,7 +183,7 @@ export * from './[ComponentB]/component-b';
 
 # TypeScript と React のコーディング標準
 
-すべてのコードに [copilot-codeGeneration-instructions](.copilot-codeGeneration-instructions.md) を適用してください。
+すべてのコードに [copilot-codeGeneration-instructions](codeGeneration-instructions.md) を適用してください。
 
 ## TypeScript ガイドライン
 
@@ -204,7 +204,7 @@ export * from './[ComponentB]/component-b';
     -   子要素 (`children`) を受け取るコンポーネントには、`React.FC` 型ではなく、`React.PropsWithChildren<{ /* props */ }>` や、propsの型定義に `children?: React.ReactNode` を含める方法を推奨します。`React.FC` は暗黙的に `children` を含みますが、明示的に定義する方がコンポーネントの責務が明確になります。
     -   コンポーネントのpropsには具体的な型を定義します。
 -   **コンポーネントの責務分離:** コンポーネントは小さく、単一の責務に集中するように設計します。複雑なロジックはカスタムフックに切り出すことを検討します。
--   **スタイリング:** コンポーネントのスタイリングには、[copilot-codeGeneration-instructions](.copilot-codeGeneration-instructions.md) で定義されたUI技術（Shadcn/UI, Radix UI, Tailwind CSS）の規約に従います。CSS Modulesの使用は、プロジェクト全体の規約と照らし合わせて判断します。
+-   **スタイリング:** コンポーネントのスタイリングには、[copilot-codeGeneration-instructions](codeGeneration-instructions.md) で定義されたUI技術（Shadcn/UI, Radix UI, Tailwind CSS）の規約に従います。CSS Modulesの使用は、プロジェクト全体の規約と照らし合わせて判断します。
 -   **副作用の管理:** `useEffect` フックは、その依存配列を正しく設定し、不要な再実行を防ぎます。クリーンアップ関数が必要な場合は必ず実装します。
 -   **キーの適切な使用:** リストレンダリング時には、各要素にユニークで安定した `key` プロパティを指定します。配列のインデックスを `key` として使用するのは、リストが静的で並び替えやフィルタリングが行われない場合に限定します。
 

@@ -106,10 +106,10 @@ Next.jsなら機能やページ単位で、1-4を繰り返します。
 AIによる「大きな石開発」を実践する上で、GitHub CopilotのようなAIツールは強力なパートナーとなります。
 GitHub Copilotに適切な指示を与えることで、開発の各フェーズをよりスムーズに進めることができます。
 
-以下は、`.github/.copilot-character-instructions.md` の指示書の例です。
+以下は、`.github/character-instructions.md` の指示書の例です。
 これをGitHub Copilotに読み込ませることで、開発の意図を正確に伝え、より的確なコード生成を提案してもらいます。
 
-```.github/.copilot-character-instructions.md
+```.github/character-instructions.md
 プロジェクトは、「**大きな石開発**」という段階的なアプローチで進めます。これは、まず**大きな石（骨格）**から構築し、次に**小さな石（テスト）**、**砂（機能）**、そして最後に**水（実装）**を埋めていくことで、堅牢かつ効率的な開発を目指すものです。
 
 ---
