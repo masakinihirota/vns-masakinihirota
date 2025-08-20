@@ -6,6 +6,8 @@ Serena MCP を使い、プロジェクトを常にチェックしてください
 
 この指示書は、`vns-masakinihirota` プロジェクトにおける GitHub Copilot の使用方法とルールを定義しています。プロジェクトの目的は、Web アプリケーションの開発を効率化し、チーム全体での一貫性を保つことです。
 
+GitHub Copilot の返信の最後に、なにか Tips と関連するアドバイスがありましたら教えて下さい。
+
 ## 主要ツールと依存関係
 
 - **技術スタック**: **TypeScript、Node.js、Next.js (App Router)、React、Shadcn/UI、Radix UI、Tailwind CSS、Zustand、Supabase、Drizzle ORM、Zod、Stripe**。

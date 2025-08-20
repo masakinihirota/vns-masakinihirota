@@ -87,8 +87,6 @@ export const rootAccounts = pgTable(
     rawAppMetaData: jsonb("raw_app_meta_data"),
     rawUserMetaData: jsonb("raw_user_meta_data"),
     isAnonymous: boolean("is_anonymous").notNull().default(false),
-
-    // auth.usersの追加フィールド
     instanceId: uuid("instance_id"),
     emailChange: text("email_change"),
     emailChangeTokenNew: text("email_change_token_new"),
@@ -108,6 +106,16 @@ export const rootAccounts = pgTable(
     recoveryToken: text("recovery_token"),
     recoverySentAt: timestamp("recovery_sent_at", { withTimezone: true }),
     emailChangeConfirmStatus: integer("email_change_confirm_status").default(0),
+    bannedUntil: timestamp("banned_until", { withTimezone: true }),
+    isSuperAdmin: boolean("is_super_admin").default(false),
+    isSsoUser: boolean("is_sso_user").notNull().default(false),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
 
     // アプリケーション固有フィールド
     isVerified: boolean("is_verified").notNull().default(false),
@@ -128,16 +136,6 @@ export const rootAccounts = pgTable(
       .default(false),
     invitedAt: timestamp("invited_at", { withTimezone: true }),
     confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
-    bannedUntil: timestamp("banned_until", { withTimezone: true }),
-    isSuperAdmin: boolean("is_super_admin").default(false),
-    isSsoUser: boolean("is_sso_user").notNull().default(false),
-    deletedAt: timestamp("deleted_at", { withTimezone: true }),
-    createdAt: timestamp("created_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true })
-      .notNull()
-      .defaultNow(),
   },
   (t) => [
     check("totalPoints_check", sql`${t.totalPoints} >= 0`),
