@@ -1,37 +1,23 @@
-import { sql } from "drizzle-orm";
 import {
-  check,
   pgTable,
   uuid,
   text,
-  varchar,
   integer,
   boolean,
   jsonb,
   timestamp,
-  pgEnum,
 } from "drizzle-orm/pg-core";
-import { languages } from "./languages";
-import { authUsers } from "./auth_users";
 
-// living_area_segmentのEnum定義
-export const livingAreaSegmentEnum = pgEnum("living_area_segment", [
-    'area1',
-    'area2',
-    'area3'
-]);
-
-// root_accountsテーブル定義
-export const rootAccounts = pgTable(
-  "root_accounts",
+// authUsersテーブル定義
+export const authUsers = pgTable(
+  "auth_users",
   {
-    // auth.usersから直接コピーするフィールド
     id: uuid("id").primaryKey(),
     aud: text("aud"),
     role: text("role"),
     email: text("email").unique(),
     emailConfirmedAt: timestamp("email_confirmed_at", { withTimezone: true }),
-    phone: text("phone"),
+    phone: text("phone").unique(),
     phoneConfirmedAt: timestamp("phone_confirmed_at", { withTimezone: true }),
     lastSignInAt: timestamp("last_sign_in_at", { withTimezone: true }),
     rawAppMetaData: jsonb("raw_app_meta_data"),
@@ -55,6 +41,7 @@ export const rootAccounts = pgTable(
     }),
     recoveryToken: text("recovery_token"),
     recoverySentAt: timestamp("recovery_sent_at", { withTimezone: true }),
+    confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
     emailChangeConfirmStatus: integer("email_change_confirm_status").default(0),
     bannedUntil: timestamp("banned_until", { withTimezone: true }),
     isSuperAdmin: boolean("is_super_admin").default(false),
@@ -66,29 +53,9 @@ export const rootAccounts = pgTable(
     updatedAt: timestamp("updated_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
-
-    // アプリケーション固有フィールド
-    isVerified: boolean("is_verified").notNull().default(false),
-    motherTongueCode: varchar("mother_tongue_code", { length: 10 }).references(
-      () => languages.id,
-    ),
-    siteLanguageCode: varchar("site_language_code", { length: 10 }).references(
-      () => languages.id,
-    ),
-    birthGeneration: varchar("birth_generation", { length: 50 }),
-    totalPoints: integer("total_points").notNull().default(0),
-    livingAreaSegment: livingAreaSegmentEnum("living_area_segment"),
-    lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
-    warningCount: integer("warning_count").notNull().default(0),
-    lastWarningAt: timestamp("last_warning_at", { withTimezone: true }),
-    isAnonymousInitialAuth: boolean("is_anonymous_initial_auth")
-      .notNull()
-      .default(false),
+    encryptedPassword: text("encrypted_password"),
     invitedAt: timestamp("invited_at", { withTimezone: true }),
-    confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
-  },
-  (t) => [
-    check("totalPoints_check", sql`${t.totalPoints} >= 0`),
-    check("warningCount_check", sql`${t.warningCount} >= 0`),
-  ],
+    reauthenticationToken: text("reauthentication_token"),
+    reauthenticationSentAt: timestamp("reauthentication_sent_at", { withTimezone: true }),
+  }
 );

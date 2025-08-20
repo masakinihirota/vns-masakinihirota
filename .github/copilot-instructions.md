@@ -58,7 +58,7 @@ README.md やテスト計画書も常に最新状態を保ちましょう。
 
 [Supabase 指示書](supabase-instructions.md)
 
-[context7 指示書](.context7-instructions.md)
+[context7 指示書](context7-instructions.md)
 
 [テスト指示書](testing-instructions.md)
 
