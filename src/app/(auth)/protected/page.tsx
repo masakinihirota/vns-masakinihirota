@@ -16,7 +16,7 @@ export default async function ProtectedPage() {
 
 	// root_accountsテーブルの全データを取得
 	const { data: rootAccounts, error: rootAccountError } = await supabase
-		.from("root_accounts")
+		.from("auth_users")
 		.select("*")
 
 	return (
@@ -38,7 +38,7 @@ export default async function ProtectedPage() {
 			{/* データを表示 */}
 			{/* root_accountsテーブルの全ユーザーデータを表示 */}
 			{/* RLSを有効化することで自分自身のデータだけが見える。 */}
-			<h2 className='mb-2 text-lg font-bold'>root_accountsテーブル全データ</h2>
+			<h2 className='mb-2 text-lg font-bold'>auth_usersテーブル全データ</h2>
 			{rootAccountError && (
 				<p className='text-red-500'>エラー: {rootAccountError.message}</p>
 			)}
