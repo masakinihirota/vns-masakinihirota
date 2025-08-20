@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "next dev --turbopack",
 		"build": "next build",
+		"build:turbo": "next build --turbopack",
 		"start": "next start",
 		"db:seed": "tsx supabase_drizzle/seeds/seed.ts",
 		"db:generate": "drizzle-kit generate",
