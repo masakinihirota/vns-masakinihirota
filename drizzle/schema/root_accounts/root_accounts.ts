@@ -3,23 +3,15 @@ import {
   check,
   pgTable,
   uuid,
-  text,
   varchar,
   integer,
   boolean,
-  jsonb,
   timestamp,
   pgEnum,
 } from "drizzle-orm/pg-core";
 import { languages } from "./languages";
 import { authUsers } from "./auth_users";
-
-// living_area_segmentのEnum定義
-export const livingAreaSegmentEnum = pgEnum("living_area_segment", [
-    'area1',
-    'area2',
-    'area3'
-]);
+import { livingAreaSegmentEnum } from "./enums";
 
 // root_accountsテーブル定義
 export const rootAccounts = pgTable(
@@ -49,7 +41,7 @@ export const rootAccounts = pgTable(
     ),
     birthGeneration: varchar("birth_generation", { length: 50 }),
     totalPoints: integer("total_points").notNull().default(0),
-    livingAreaSegment: livingAreaSegmentEnum("living_area_segment"),
+    livingAreaSegment: livingAreaSegmentEnum("living_area_segment").notNull().default("area1"),
     warningCount: integer("warning_count").notNull().default(0),
     lastWarningAt: timestamp("last_warning_at", { withTimezone: true }),
     isAnonymousInitialAuth: boolean("is_anonymous_initial_auth")

@@ -1,5 +1,12 @@
 import { pgEnum } from "drizzle-orm/pg-core";
 
+// living_area_segmentのEnum定義
+export const livingAreaSegmentEnum = pgEnum("living_area_segment", [
+    'area1',
+    'area2',
+    'area3'
+]);
+
 // 認証プロバイダ (Supabase provider 名称 + anonymous 初期状態)
 export const authProviderEnum = pgEnum("auth_provider", [
   "google",
