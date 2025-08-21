@@ -1,27 +1,23 @@
 @startuml 現在のER図関連図
 ' Relations-only ER diagram (各テーブルのカラムは省略)
 
+entity auth.users
 entity root_accounts
 entity account_providers
-entity auth_users
 entity auth_events
 entity user_languages
 entity languages
 entity points_transactions
 
 ' Relationships
+auth.users ||--||auth_users : "AFTER INSERT TRIGGER"
+auth_users ||--||  root_accounts: "1:1 belongs_to"
+
 root_accounts ||--o{ account_providers : "1..* has"
 root_accounts ||--o{ auth_events : "1..* has"
 root_accounts ||--o{ user_languages : "1..* has"
 root_accounts ||--o{ points_transactions : "1..* has"
-root_accounts ||--|| auth_users : "1:1 belongs_to"
 
-languages ||--o{ user_languages : "1..* has"
-languages ||--o{ root_accounts : "referenced by"
 
-note bottom
-	Enums used: auth_provider, points_reason, auth_event_type,
-	language_proficiency, living_area_segment
-end note
 
 @enduml
