@@ -7,7 +7,7 @@ import {
   index,
   bigint,
 } from "drizzle-orm/pg-core";
-import { pointsReasonEnum } from "./enums";
+import { pointsReasonEnum } from "../enums";
 import { rootAccounts } from "./root_accounts";
 
 export const pointsTransactions = pgTable(
