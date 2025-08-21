@@ -26,42 +26,11 @@ export const rootAccounts = pgTable(
   "root_accounts",
   {
     id: uuid("id").primaryKey(), // 独自のUUID
+    // auth.usersとの1:1関係
     authUserId: uuid("auth_user_id")
     .references(() => authUsers.id, { onDelete: 'cascade' })
     .notNull()
     .unique(), // auth_usersとの1:1関係
-    aud: text("aud"),
-    role: text("role"),
-    email: text("email").unique(),
-    emailConfirmedAt: timestamp("email_confirmed_at", { withTimezone: true }),
-    phone: text("phone"),
-    phoneConfirmedAt: timestamp("phone_confirmed_at", { withTimezone: true }),
-    lastSignInAt: timestamp("last_sign_in_at", { withTimezone: true }),
-    rawAppMetaData: jsonb("raw_app_meta_data"),
-    rawUserMetaData: jsonb("raw_user_meta_data"),
-    isAnonymous: boolean("is_anonymous").notNull().default(false),
-    instanceId: uuid("instance_id"),
-    emailChange: text("email_change"),
-    emailChangeTokenNew: text("email_change_token_new"),
-    emailChangeTokenCurrent: text("email_change_token_current"),
-    emailChangeSentAt: timestamp("email_change_sent_at", {
-      withTimezone: true,
-    }),
-    phoneChange: text("phone_change"),
-    phoneChangeToken: text("phone_change_token"),
-    phoneChangeSentAt: timestamp("phone_change_sent_at", {
-      withTimezone: true,
-    }),
-    confirmationToken: text("confirmation_token"),
-    confirmationSentAt: timestamp("confirmation_sent_at", {
-      withTimezone: true,
-    }),
-    recoveryToken: text("recovery_token"),
-    recoverySentAt: timestamp("recovery_sent_at", { withTimezone: true }),
-    emailChangeConfirmStatus: integer("email_change_confirm_status").default(0),
-    bannedUntil: timestamp("banned_until", { withTimezone: true }),
-    isSuperAdmin: boolean("is_super_admin").default(false),
-    isSsoUser: boolean("is_sso_user").notNull().default(false),
     deletedAt: timestamp("deleted_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
