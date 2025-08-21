@@ -79,3 +79,7 @@ where
   (is_sso_user = false);
 
 create index IF not exists users_is_anonymous_idx on auth.users using btree (is_anonymous) TABLESPACE pg_default;
+
+create trigger on_auth_user_created
+after INSERT on auth.users for EACH row
+execute FUNCTION handle_new_user ();
