@@ -6,7 +6,7 @@ import {
   text,
   index,
 } from "drizzle-orm/pg-core";
-import { authEventTypeEnum } from "./enums";
+import { authEventTypeEnum } from "../enums";
 import { rootAccounts } from "./root_accounts";
 
 export const authEvents = pgTable(
