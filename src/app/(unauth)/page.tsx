@@ -53,6 +53,8 @@ export default function Home() {
 				<br />
 				{/* Team */}
 				<Link href='/team-03'>Teamページへ</Link>
+				{/* Root Accounts */}
+				<Link href='/root_accounts'>Root Accountsページへ</Link>
 			</main>
 			<footer className=''>footer</footer>
 		</>
