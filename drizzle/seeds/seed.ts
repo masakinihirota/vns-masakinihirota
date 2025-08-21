@@ -9,7 +9,8 @@
 import 'dotenv/config';
 import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
-import { languages } from '../schema/root_accounts/languages.sql';
+import { languages } from '../schema/languages';
+
 
 // 将来他テーブル seed 用に型を用意
 type SeedContext = {
