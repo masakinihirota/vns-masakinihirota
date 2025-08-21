@@ -5,7 +5,7 @@ config({ path: ".env" });
 
 export default defineConfig({
   // フォルダ内にあるスキーマファイルを読み込む
-  schema: "./drizzle/schema/",
+  schema: "./drizzle/schema/**/*.ts",
   // Supabase へのマイグレーションファイルを出力するディレクトリ
   out: "./supabase/migrations",
   dialect: "postgresql",
