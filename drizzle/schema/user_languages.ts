@@ -6,7 +6,7 @@ import {
   primaryKey,
   index,
 } from "drizzle-orm/pg-core";
-import { languageProficiencyEnum } from "../enums";
+import { languageProficiencyEnum } from "./enums";
 import { rootAccounts } from "./root_accounts";
 import { languages } from "./languages";
 

@@ -6,7 +6,7 @@
 
 import { drizzle } from 'drizzle-orm/postgres-js'
 import { reset, seed } from "drizzle-seed"
-import * as schema from '../schema/root_accounts/root_accounts'
+import * as schema from '../schema/root_accounts'
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL is not defined in the environment variables.");
