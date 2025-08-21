@@ -43,3 +43,32 @@ export const languageProficiencyEnum = pgEnum("language_proficiency", [
   "basic",
   "learning",
 ]);
+
+// アカウント状態 (Phase 1 必須)
+export const accountStatusEnum = pgEnum("account_status", [
+  "active",
+  "suspended",
+  "banned",
+  "pending"
+]);
+
+// アカウント種別 (Phase 2)
+export const accountTypeEnum = pgEnum("account_type", [
+  "anonymous",
+  "free",
+  "premium"
+]);
+
+// サブスクリプションティア (Phase 3)
+export const subscriptionTierEnum = pgEnum("subscription_tier", [
+  "basic",
+  "premium",
+  "enterprise"
+]);
+
+// テーマ設定 (Phase 3)
+export const themePreferenceEnum = pgEnum("theme_preference", [
+  "light",
+  "dark",
+  "auto"
+]);

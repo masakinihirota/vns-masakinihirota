@@ -8,10 +8,14 @@ import {
   boolean,
   timestamp,
   pgEnum,
+  text,
 } from "drizzle-orm/pg-core";
 import { languages } from "./languages";
 import { authUsers } from "./auth_users";
-import { livingAreaSegmentEnum } from "./enums";
+import {
+  livingAreaSegmentEnum,
+  accountStatusEnum
+} from "./enums";
 
 // root_accountsテーブル定義
 export const rootAccounts = pgTable(
@@ -31,7 +35,7 @@ export const rootAccounts = pgTable(
       .defaultNow(),
     deletedAt: timestamp("deleted_at", { withTimezone: true }),
 
-    // アプリケーション固有フィールド
+    // アプリケーション固有フィールド (既存)
     isVerified: boolean("is_verified").notNull().default(false),
     motherTongueCode: varchar("mother_tongue_code", { length: 10 }).references(
       () => languages.id,
@@ -49,9 +53,41 @@ export const rootAccounts = pgTable(
       .default(false),
     invitedAt: timestamp("invited_at", { withTimezone: true }),
     confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
+
+    // ===== Phase 1 追加フィールド (設計書準拠) =====
+
+    // ポイント管理関連
+    maxPoints: integer("max_points").notNull().default(1000),
+    lastPointRecoveryAt: timestamp("last_point_recovery_at", { withTimezone: true }),
+    totalConsumedPoints: integer("total_consumed_points").notNull().default(0),
+    activityPoints: integer("activity_points").notNull().default(0),
+    clickPoints: integer("click_points").notNull().default(0),
+
+    // 信頼度・認証関連
+    consecutiveDays: integer("consecutive_days").notNull().default(0),
+    trustScore: integer("trust_score").notNull().default(0),
+    oauthProviders: text("oauth_providers").array().notNull().default(sql`ARRAY[]::text[]`),
+    oauthCount: integer("oauth_count").notNull().default(0),
+
+    // アカウント状態関連
+    accountStatus: accountStatusEnum("account_status").notNull().default("active"),
   },
   (t) => [
+    // 既存制約
     check("totalPoints_check", sql`${t.totalPoints} >= 0`),
     check("warningCount_check", sql`${t.warningCount} >= 0`),
+
+    // Phase 1 追加制約
+    check("maxPoints_check", sql`${t.maxPoints} > 0`),
+    check("totalConsumedPoints_check", sql`${t.totalConsumedPoints} >= 0`),
+    check("activityPoints_check", sql`${t.activityPoints} >= 0`),
+    check("clickPoints_check", sql`${t.clickPoints} >= 0`),
+    check("consecutiveDays_check", sql`${t.consecutiveDays} >= 0`),
+    check("trustScore_check", sql`${t.trustScore} >= 0`),
+    check("oauthCount_check", sql`${t.oauthCount} >= 0`),
+
+    // ビジネスルール制約
+    check("totalPoints_maxPoints_check", sql`${t.totalPoints} <= ${t.maxPoints}`),
+    check("oauthCount_providers_check", sql`${t.oauthCount} = array_length(${t.oauthProviders}, 1)`),
   ],
 );
