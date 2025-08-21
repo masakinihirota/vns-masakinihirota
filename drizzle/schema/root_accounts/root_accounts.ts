@@ -31,13 +31,13 @@ export const rootAccounts = pgTable(
     .references(() => authUsers.id, { onDelete: 'cascade' })
     .notNull()
     .unique(), // auth_usersとの1:1関係
-    deletedAt: timestamp("deleted_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
+    deletedAt: timestamp("deleted_at", { withTimezone: true }),
 
     // アプリケーション固有フィールド
     isVerified: boolean("is_verified").notNull().default(false),
@@ -50,7 +50,6 @@ export const rootAccounts = pgTable(
     birthGeneration: varchar("birth_generation", { length: 50 }),
     totalPoints: integer("total_points").notNull().default(0),
     livingAreaSegment: livingAreaSegmentEnum("living_area_segment"),
-    lastLoginAt: timestamp("last_login_at", { withTimezone: true }),
     warningCount: integer("warning_count").notNull().default(0),
     lastWarningAt: timestamp("last_warning_at", { withTimezone: true }),
     isAnonymousInitialAuth: boolean("is_anonymous_initial_auth")
