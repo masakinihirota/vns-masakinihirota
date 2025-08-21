@@ -25,6 +25,110 @@ Supabase UI Next.js Example
 Social Authentication
 https://supabase.com/ui/docs/nextjs/social-auth
 
+## Overview
+
+本リポジトリは Next.js(App Router) / TypeScript / Supabase / Drizzle ORM / shadcn-ui / Tailwind を基盤としたアプリケーションです。設計・要件・公開ドキュメントはマルチリポジトリで分離されています。
+
+### 技術スタック概要
+- Web: Next.js 15, React 19
+- 言語: TypeScript (strict)
+- UI: shadcn/ui, Radix UI, Tailwind CSS v4
+- データ: Supabase (Auth, Storage, Postgres) + Drizzle ORM
+- 品質: Biome (lint/format), Husky + lint-staged, (今後) Vitest / RTL / Playwright
+- 国際化: next-intl
+- 監視: Sentry (未設定)
+
+### ディレクトリ概要
+| Path | 説明 |
+|------|------|
+| `src/app` | App Router ルート/レイアウト/ページ |
+| `src/components` | UI コンポーネント (shadcn/ui 拡張含む) |
+| `src/lib` | ランタイム共通処理 (supabase クライアントなど) |
+| `supabase_drizzle/` | Drizzle スキーマ & 生成成果物 |
+| `scripts/` | 自動化/補助スクリプト |
+| `.github/` | タスクリスト, AI 用指示書, プロンプト |
+| `docs/` | リポジトリローカルの補足ドキュメント |
+
+## Development
+
+### 前提
+1. Node.js (推奨: 20.x LTS) / pnpm
+2. Supabase CLI (ローカル動作が必要な場合)
+3. `.env` or `.env.local` に Supabase 認証情報を設定
+
+### 環境変数 (例)
+```
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+SUPABASE_SERVICE_ROLE_KEY=...(Server 専用)
+```
+`SUPABASE_SERVICE_ROLE_KEY` は Server Action / Edge Function 等で必要になる場合のみ利用し、クライアントへ流出しないようにしてください。
+
+### コマンド
+| コマンド | 用途 |
+|----------|------|
+| `pnpm dev` | 開発サーバ起動 (Turbopack) |
+| `pnpm build` | 本番ビルド |
+| `pnpm start` | 本番起動 |
+| `pnpm lint` | Biome lint |
+| `pnpm lint:fix` | 自動修正 |
+| `pnpm format` | フォーマット |
+| `pnpm db:generate` | Drizzle schema から SQL 生成 |
+| `pnpm db:migrate` | マイグレーション適用 |
+| `pnpm db:studio` | Drizzle Studio 起動 |
+
+## Database / ORM
+Drizzle を利用して型安全にスキーマを管理します。初期テーブルは `supabase_drizzle/schema` を参照。
+マイグレーションフロー:
+1. スキーマ編集
+2. `pnpm db:generate`
+3. 生成物確認
+4. `pnpm db:migrate`
+
+## Authentication
+Supabase Auth を利用し以下の方式をサポート:
+- OAuth: Google, GitHub
+- 匿名ログイン: 初期体験用 (後に昇格フロー TASK-015)
+
+セッション維持: `src/middleware.ts` + `src/lib/supabase/middleware.ts`
+Server Side 利用: `src/lib/supabase/server.ts`
+将来タスク: プロファイル自動プロビジョン (TASK-016), エラーコード統一 (TASK-017)
+
+## Task Management / AI 指示書
+タスクリスト: `.github/__task-list/tasks.md`
+プロンプト: `.github/_prompt/PROMPT-xxx.md`
+指示書類: `.github/*.md` (命名 / コード生成 / テスト 等)
+
+運用ルール概要:
+- 1タスクは 1-2 日規模
+- 実装前に関連設計書とタスク指示書を開く
+- 完了時にドキュメント & タスクリスト更新
+
+## Coding Standards
+- Biome 設定は `biome.jsonc` 参照 (対象から除外されているコンポーネント群に注意)
+- import 並び替え: Biome assist 設定で自動
+- 厳密 TypeScript (`strict: true`)
+
+## 国際化 (i18n)
+`next-intl` を利用。設定エントリ: `createNextIntlPlugin` in `next.config.ts`。
+
+## 今後の整備予定 (抜粋)
+- テスト基盤 (Vitest / RTL / Playwright) 導入 (TASK-070〜)
+- 監視 Sentry 設定 (TASK-091)
+- 昇格フロー & プロファイル自動化 (TASK-015, 016)
+- マッチングアルゴリズム v1 (TASK-041, 042)
+
+## Contributing
+1. ブランチ: `dev` から feature ブランチ作成
+2. コミット: プロジェクトの commit message ルール指示書に従う
+3. PR: 自動テスト (将来) を pass 後レビュー依頼
+
+## License
+TBD
+
+---
+以下、create-next-app 初期 README 原文
+
 
 
 ここより下はオリジナル
