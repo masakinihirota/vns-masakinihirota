@@ -8,7 +8,7 @@ import {
   uniqueIndex,
   index,
 } from "drizzle-orm/pg-core";
-import { authProviderEnum } from "../enums";
+import { authProviderEnum } from "./enums";
 import { rootAccounts } from "./root_accounts";
 
 export const accountProviders = pgTable(

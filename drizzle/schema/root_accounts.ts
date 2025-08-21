@@ -25,8 +25,11 @@ export const livingAreaSegmentEnum = pgEnum("living_area_segment", [
 export const rootAccounts = pgTable(
   "root_accounts",
   {
-    // auth.usersから直接コピーするフィールド
-    id: uuid("id").primaryKey(),
+    id: uuid("id").primaryKey(), // 独自のUUID
+    authUserId: uuid("auth_user_id")
+    .references(() => authUsers.id, { onDelete: 'cascade' })
+    .notNull()
+    .unique(), // auth_usersとの1:1関係
     aud: text("aud"),
     role: text("role"),
     email: text("email").unique(),

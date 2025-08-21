@@ -59,3 +59,14 @@ export const authUsers = pgTable(
     reauthenticationSentAt: timestamp("reauthentication_sent_at", { withTimezone: true }),
   }
 );
+
+//
+// RLS（Row Level Security）設計
+//
+// -- auth_users: 自分のデータのみアクセス可能
+// CREATE POLICY "auth_users_policy" ON auth_users
+// USING (auth.uid() = id);
+
+// -- root_accounts: auth_user_idを通じてアクセス制御
+// CREATE POLICY "root_accounts_policy" ON root_accounts
+// USING (auth.uid() = (SELECT id FROM auth_users WHERE id = auth_user_id));
