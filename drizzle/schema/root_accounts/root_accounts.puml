@@ -1,0 +1,43 @@
+@startuml root_accounts
+' root_accounts 単独 ER 図
+entity "root_accounts" as root_accounts {
+  * id : uuid <<PK>>
+  --
+  auth_user_id : uuid <<FK, unique>>
+  aud : text
+  role : text
+  email : text <<unique>>
+  email_confirmed_at : timestamp
+  phone : text
+  phone_confirmed_at : timestamp
+  last_sign_in_at : timestamp
+  raw_app_meta_data : jsonb
+  raw_user_meta_data : jsonb
+  is_anonymous : boolean
+  instance_id : uuid
+  created_at : timestamp
+  updated_at : timestamp
+  -- app specific --
+  is_verified : boolean
+  mother_tongue_code : varchar(10) <<FK>>
+  site_language_code : varchar(10) <<FK>>
+  birth_generation : varchar(50)
+  total_points : integer
+  living_area_segment : living_area_segment
+  last_login_at : timestamp
+  warning_count : integer
+  deleted_at : timestamp
+  invited_at : timestamp
+  confirmed_at : timestamp
+}
+
+note right of root_accounts
+  Constraints:
+  - totalPoints_check: total_points >= 0
+  - warningCount_check: warning_count >= 0
+  FKs:
+  - auth_user_id -> auth_users.id (onDelete: cascade)
+  - mother_tongue_code -> languages.id
+  - site_language_code -> languages.id
+end note
+@enduml
