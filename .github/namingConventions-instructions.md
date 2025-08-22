@@ -1,3 +1,7 @@
+---
+applyTo: "**"
+---
+
 # 命名規則指示書（Naming Conventions）
 
 ## 1. 基本方針

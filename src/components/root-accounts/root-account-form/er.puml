@@ -1,0 +1,39 @@
+@startuml er
+' Root Accounts Table
+entity "root_accounts" {
+  * id : UUID
+  --
+  auth_user_id : UUID
+  mother_tongue_code : VARCHAR(10)
+  site_language_code : VARCHAR(10)
+  total_points : INTEGER
+  living_area_segment : ENUM
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+' Auth Users Table
+entity "auth_users" {
+  * id : UUID
+  --
+  email : TEXT
+  phone : TEXT
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+' Account Providers Table
+entity "account_providers" {
+  * id : INTEGER
+  --
+  root_account_id : UUID
+  provider : ENUM
+  provider_user_id : TEXT
+  linked_at : TIMESTAMP
+}
+
+' Relationships
+root_accounts ||--o{ auth_users : "auth_user_id"
+root_accounts ||--o{ account_providers : "root_account_id"
+
+@enduml
