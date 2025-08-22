@@ -1,5 +1,5 @@
 ---
-applyTo: "**"
+applyTo: "*.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.sass,*.json,*.env"
 ---
 
 # 命名規則指示書（Naming Conventions）

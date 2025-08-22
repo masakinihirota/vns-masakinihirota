@@ -18,7 +18,9 @@ auth_users ||--||  root_accounts: "1:1 belongs_to"
 root_accounts ||-r-o{ account_providers : "1..* has"
 root_accounts ||-r-o{ auth_events : "1..* has"
 root_accounts ||-r-o{ user_languages : "1..* has"
+root_accounts ||-r-o{ languages : "1..* has"
 root_accounts ||-r-o{ points_transactions : "1..* has"
+
 
 ' ユーザープロファイル
 root_accounts ||-d-o{ user_profiles

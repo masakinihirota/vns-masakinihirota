@@ -1,5 +1,5 @@
 ---
-applyTo: "**"
+applyTo: "*.md"
 ---
 
 個別の指示書（AI向け）

@@ -1,7 +1,6 @@
 ---
-applyTo: "*.ts,.tsx"
+applyTo: "*.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.sass,*.json,*.env"
 ---
-
 
 # Next.js App Router：ルーティングとコンポーネントの分離戦略
 
