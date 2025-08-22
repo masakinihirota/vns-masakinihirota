@@ -1,7 +1,7 @@
 -- Seedデータ挿入用サンプル sql
 -- INSERT INTO "public"."movies" ("id", "name", "description")
 -- VALUES
---   (1, 'The Empire Strikes Back', 'After the Rebels are brutally overpowered by the Empire on the ice planet Hoth, Luke Skywalker begins Jedi training with Yoda.'),
+--   (1, 'The Empire Strikes Back', 'After the Rebels are brutally overpowered by the Empire on the ice planet, Luke begins Jedi training with Yoda.'),
 --   (12, 'name', 'description'),
 --
 -- Seed for root_accounts related tables: languages, auth_users, root_accounts

@@ -1,3 +1,7 @@
+---
+applyTo: "**"
+---
+
 # GitHub Copilot 指示書 for `vns-masakinihirota`
 
 serena index create

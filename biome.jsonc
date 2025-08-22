@@ -9,9 +9,9 @@
   "files": {
     "includes": [
       // フォルダ以下を指定
-      "src/app/**/*.{ts,tsx,js,jsx,json,jsonc,md,mdx}",
-      "src/components/**/*.{ts,tsx,js,jsx,json,jsonc,md,mdx}",
-      "src/hooks/**/*.{ts,tsx,js,jsx,json,jsonc,md,mdx}",
+      "src/app/**/*.{ts,tsx,js,jsx,json,jsonc}",
+      "src/components/**/*.{ts,tsx,js,jsx,json,jsonc}",
+      "src/hooks/**/*.{ts,tsx,js,jsx,json,jsonc}",
       // フォルダ以下を除外
       "!src/components/ui/**/*",
       "!src/components/shadcnui-blocks/**/*",
@@ -20,7 +20,8 @@
       // "!globals.css",
       "!src/components/app-sidebar.tsx",
       "!src/components/theme-provider.tsx",
-      "!src/components/search-form.tsx"
+      "!src/components/search-form.tsx",
+      "!*.chatmode.md"
     ]
   },
   "formatter": {
@@ -35,7 +36,7 @@
       "style": {
         "noNonNullAssertion": "off"
       }
-    },
+    }
   },
   "javascript": {
     "formatter": {
