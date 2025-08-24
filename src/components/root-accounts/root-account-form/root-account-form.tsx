@@ -17,6 +17,8 @@ import {
 	rootAccountFormSchema
 } from "@/types/root-account"
 
+import type { z } from "zod"
+
 export interface RootAccountFormProps {
 	mode: "create" | "edit"
 	defaultValues?: RootAccountFormData
@@ -69,7 +71,7 @@ export const RootAccountForm: React.FC<RootAccountFormProps> = ({
 			event.preventDefault()
 
 			const submission = parseWithZod(formData, {
-				schema: rootAccountFormSchema as any
+				schema: rootAccountFormSchema as z.ZodSchema<RootAccountFormData>
 			})
 
 			if (submission.status === "success" && onSubmit) {
