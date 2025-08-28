@@ -45,3 +45,5 @@ yarn-error.log*
 # .serena/cache/
 # .serena/memories/
 # .serena/logs/
+
+_template

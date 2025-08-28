@@ -21,7 +21,8 @@
       "!src/components/app-sidebar.tsx",
       "!src/components/theme-provider.tsx",
       "!src/components/search-form.tsx",
-      "!*.chatmode.md"
+      "!*.chatmode.md",
+      "!_template/**/*"
     ]
   },
   "formatter": {
