@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm'
-import { authUsers } from "./schema/auth_users"
-import { rootAccounts } from "./schema/root_accounts"
+import { authUsers } from "./schema/root_accounts/auth_users"
+import { rootAccounts } from "./schema/root_accounts/root_accounts"
 
 // 関係を明示した型定義
 export type AuthUserWithRootAccount = {

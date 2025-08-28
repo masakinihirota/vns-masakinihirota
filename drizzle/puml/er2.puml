@@ -1,0 +1,252 @@
+@startuml VNS masakinihirota Database ER Diagram
+!define TABLE(x) entity x << (T,#FFAAAA) >>
+!define ENUM(x) entity x << (E,#AAFFAA) >>
+
+title VNS masakinihirota Database ER Diagram
+
+' Supabase Auth Schema
+entity auth_users {
+  * id : uuid [PK]
+  --
+  aud : text
+  role : text
+  email : text [UNIQUE]
+  email_confirmed_at : timestamp
+  phone : text [UNIQUE]
+  phone_confirmed_at : timestamp
+  last_sign_in_at : timestamp
+  raw_app_meta_data : jsonb
+  raw_user_meta_data : jsonb
+  is_anonymous : boolean [DEFAULT false]
+  instance_id : uuid
+  email_change : text
+  email_change_token_new : text
+  email_change_token_current : text
+  email_change_sent_at : timestamp
+  phone_change : text
+  phone_change_token : text
+  phone_change_sent_at : timestamp
+  confirmation_token : text
+  confirmation_sent_at : timestamp
+  recovery_token : text
+  recovery_sent_at : timestamp
+  confirmed_at : timestamp
+  email_change_confirm_status : integer [DEFAULT 0]
+  banned_until : timestamp
+  is_super_admin : boolean [DEFAULT false]
+  is_sso_user : boolean [DEFAULT false]
+  deleted_at : timestamp
+  created_at : timestamp [DEFAULT NOW()]
+  updated_at : timestamp [DEFAULT NOW()]
+  encrypted_password : text
+  invited_at : timestamp
+  reauthentication_token : text
+  reauthentication_sent_at : timestamp
+}
+
+' Core Application Schema
+entity root_accounts {
+  * id : uuid [PK]
+  --
+  ' 1:1 relationship with auth_users
+  auth_user_id : uuid [FK, UNIQUE] -> auth_users.id
+  created_at : timestamp [DEFAULT NOW()]
+  updated_at : timestamp [DEFAULT NOW()]
+  deleted_at : timestamp
+
+  ' Basic application fields
+  is_verified : boolean [DEFAULT false]
+  mother_tongue_code : varchar(10) [FK] -> languages.id
+  site_language_code : varchar(10) [FK] -> languages.id
+  birth_generation : varchar(50)
+  living_area_segment : living_area_segment_enum [DEFAULT area1]
+  is_anonymous_initial_auth : boolean [DEFAULT false]
+  invited_at : timestamp
+  confirmed_at : timestamp
+
+  ' === Phase 1 追加フィールド (設計書準拠) ===
+
+  ' Point Management (ポイント管理関連)
+  total_points : integer [DEFAULT 0, CHECK >= 0]
+  max_points : integer [DEFAULT 1000, CHECK > 0]
+  last_point_recovery_at : timestamp
+  total_consumed_points : integer [DEFAULT 0, CHECK >= 0]
+  activity_points : integer [DEFAULT 0, CHECK >= 0]
+  click_points : integer [DEFAULT 0, CHECK >= 0]
+
+  ' Trust & Authentication (信頼度・認証関連)
+  consecutive_days : integer [DEFAULT 0, CHECK >= 0]
+  trust_score : integer [DEFAULT 0, CHECK >= 0]
+  oauth_providers : text[]  [DEFAULT ARRAY[]::text[]]
+  oauth_count : integer [DEFAULT 0, CHECK >= 0]
+  warning_count : integer [DEFAULT 0, CHECK >= 0]
+  last_warning_at : timestamp
+
+  ' Account Status (アカウント状態関連)
+  account_status : account_status_enum [DEFAULT active]
+
+  ' Business Rule Constraints
+  [CHECK: total_points <= max_points]
+  [CHECK: oauth_count = array_length(oauth_providers, 1)]
+}
+
+entity languages {
+  * id : varchar(10) [PK]
+  --
+  name : text
+  native_name : text
+}
+
+entity user_languages {
+  * root_account_id : uuid [PK, FK] -> root_accounts.id
+  * language_id : varchar(10) [PK, FK] -> languages.id
+  --
+  proficiency : language_proficiency_enum
+  added_at : timestamp [DEFAULT NOW()]
+}
+
+entity account_providers {
+  * id : integer [PK] [GENERATED IDENTITY]
+  --
+  root_account_id : uuid [FK] -> root_accounts.id
+  provider : auth_provider_enum
+  provider_user_id : text
+  is_primary : boolean [DEFAULT false]
+  linked_at : timestamp [DEFAULT NOW()]
+  created_at : timestamp [DEFAULT NOW()]
+  --
+  [UNIQUE: provider, provider_user_id]
+  [UNIQUE: root_account_id, provider]
+}
+
+entity points_transactions {
+  * id : bigint [PK] [GENERATED IDENTITY]
+  --
+  root_account_id : uuid [FK] -> root_accounts.id
+  delta : integer
+  reason : points_reason_enum
+  description : text
+  created_at : timestamp [DEFAULT NOW()]
+}
+
+entity auth_events {
+  * id : bigint [PK] [GENERATED IDENTITY]
+  --
+  root_account_id : uuid [FK] -> root_accounts.id
+  event_type : auth_event_type_enum
+  ip_address : text
+  user_agent : text
+  created_at : timestamp [DEFAULT NOW()]
+  message : text
+}
+
+' Enums
+ENUM(living_area_segment_enum) {
+  area1
+  area2
+  area3
+}
+
+ENUM(auth_provider_enum) {
+  google
+  github
+  anonymous
+}
+
+ENUM(points_reason_enum) {
+  system_adjust
+  manual_adjust
+  signup_bonus
+  profile_complete
+  login_streak
+  penalty
+}
+
+ENUM(auth_event_type_enum) {
+  sign_in
+  sign_out
+  refresh
+  anonymous_upgrade
+  provider_link
+  provider_unlink
+  failure
+}
+
+ENUM(language_proficiency_enum) {
+  native
+  fluent
+  intermediate
+  basic
+  learning
+}
+
+' 新しいEnum定義
+ENUM(account_status_enum) {
+  active
+  suspended
+  banned
+  pending
+}
+
+' Relationships
+auth_users ||--|| root_accounts : "1:1 (auth_user_id)"
+root_accounts }|--|| languages : "mother_tongue (mother_tongue_code)"
+root_accounts }|--|| languages : "site_language (site_language_code)"
+root_accounts ||--o{ user_languages : "1:N"
+languages ||--o{ user_languages : "1:N"
+root_accounts ||--o{ account_providers : "1:N"
+root_accounts ||--o{ points_transactions : "1:N"
+root_accounts ||--o{ auth_events : "1:N"
+
+note right of auth_users
+  Supabase Auth Schema
+  - Core authentication table
+  - Managed by Supabase Auth
+end note
+
+note right of root_accounts
+  Application Core Account
+  - 1:1 relationship with auth_users
+  - Extends auth functionality
+  - Phase 1 機能完全実装済み
+
+  Point System Features:
+  - ポイント管理 (total/max/consumed)
+  - 24時間回復システム対応
+  - 活動・クリックポイント分離
+
+  Trust & Security Features:
+  - 連続経過日数トラッキング
+  - 信頼度スコア算出
+  - マルチOAuth認証管理
+  - アカウント状態制御
+end note
+
+note right of user_languages
+  Composite Primary Key:
+  (root_account_id, language_id)
+
+  Language Proficiency Management
+end note
+
+note right of account_providers
+  Multiple Auth Provider Support
+  - Google, GitHub, Anonymous
+  - One primary provider per account
+end note
+
+note right of points_transactions
+  Point System Transaction Log
+  - All point changes tracked
+  - Audit trail for point system
+  - Supports delta tracking
+end note
+
+note right of auth_events
+  Authentication Event Logging
+  - Login/logout tracking
+  - Security event monitoring
+  - Anonymous upgrade tracking
+end note
+
+@enduml

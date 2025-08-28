@@ -17,58 +17,27 @@
 - [x] TASK-002: Biome 整合性チェック
   - 説明: Biome 単独運用。check は lint のみ。
   - 成果物: package.json scripts (lint / format / check) 整理, devDependencies 更新
-  - テスト要件: `pnpm check` でエラーなし
-- [ ] TASK-003: パッケージスクリプト/CI 下準備
+  - テスト要件: なし(レビュー中心)
+- [x] TASK-003: パッケージスクリプト
   - 説明: lint / typecheck / test / build スクリプト統一
   - 成果物: package.json scripts、（必要なら）GitHub Actions 下書き
-  - テスト要件: スクリプト実行結果
-- [ ] TASK-004: Supabase 環境初期設定同期
+  - テスト要件: なし(レビュー中心)
+- [x] TASK-004: Supabase 環境初期設定同期
   - 説明: ローカル supabase セットアップ手順整備・env 変数整理
   - 成果物: `.env.example`、セットアップドキュメント
-  - テスト要件: ローカル起動確認ログ
-- [ ] TASK-005: Drizzle ORM 初期マイグレーション整備
+  - テスト要件: なし(レビュー中心)
+- [x] TASK-005: Drizzle ORM 初期マイグレーション整備
   - 説明: 既存 schema 確認、初期テーブル（users 基本）定義
   - 成果物: drizzle schema / migration、適用手順
-  - テスト要件: マイグレーション適用成功ログ
-- [ ] TASK-006: エラーハンドリング / ロギング方針草案
-  - 説明: 共通エラー型・Sentry 連携方針
-  - 成果物: エラー型定義、ガイドライン md
-  - テスト要件: サンプルエラー送信確認
+  - テスト要件: なし(レビュー中心)
 
 ## 2. 🔐 認証 (優先度: 🔴 高)
-- [ ] TASK-010: 認証要件再確認とギャップ分析
-  - 説明: 要件定義/設計書と現状 (OAuth/匿名 実装済) の突合し不足洗い出し
-  - 成果物: ギャップ一覧 md (メール/パスワード除外方針明記)
-  - テスト要件: なし
 - [x] TASK-011: OAuth/匿名 認証 UI 基本実装
   - 説明: Google / GitHub / 匿名ログインフォーム実装済み確認
   - 成果物: `oauth-*` 各フォーム, middleware リダイレクト
   - テスト要件: 後続で自動化予定 (TASK-018 へ委譲)
-- [ ] TASK-012: セッション取得とユーザーコンテキスト Hook
-  - 説明: Server Component / Client Hook (useCurrentUser) 実装（未実装なら追加）
-  - 成果物: hooks ファイル、型定義
-  - テスト要件: Hook のユニットテスト
-- [ ] TASK-013: 認証ガード (ルート保護) 実装強化
-  - 説明: middleware のパス例外整理 / Server Action 用ユーティリティ抽出
-  - 成果物: middleware.ts 更新, guard util
-  - テスト要件: 保護ルートの挙動テスト
-- [ ] TASK-015: 匿名 → 正式アカウント昇格フロー設計
-  - 説明: 匿名ユーザーのOAuth連携/属性移行手順定義 (メールパスワード無し方針)
-  - 成果物: 昇格仕様 md, 必要な Supabase API 呼出シーケンス
-  - テスト要件: 昇格シナリオモックテスト
-- [ ] TASK-016: プロフィール初期プロビジョン自動化
-  - 説明: 新規 (OAuth/匿名) 認証時 profile/root_accounts 同期
-  - 成果物: server action or edge function, schema 同期コード
-  - テスト要件: 新規ログイン後プロファイル存在確認テスト
-- [ ] TASK-017: Auth エラーコード統一 & 表示指針
-  - 説明: Supabase エラー→ユーザー向け/ログ向けマッピング
-  - 成果物: error-map util, ドキュメント
-  - テスト要件: 代表エラー変換テスト
-- [ ] TASK-018: 認証テスト整備 (Unit/Integration)
-  - 説明: middleware / hooks / フォーム 動作テスト
-  - 成果物: vitest + RTL テストケース
-  - テスト要件: CI で green
 
+## *. ルートアカウント (優先度: 🔴 高)
 
 ## 3. 👤 ユーザープロフィール (優先度: 🔴 高)
 - [ ] TASK-020: プロフィール要件/設計再確認

@@ -1,0 +1,21 @@
+@startuml account_providers
+' account_providers 単独の ER 図（参照: root_accounts は外部テーブル）
+entity "account_providers" as account_providers {
+  * id : integer <<PK>>
+  --
+  root_account_id : uuid <<FK>>
+  provider : authProviderEnum
+  provider_user_id : text
+  is_primary : boolean
+  linked_at : timestamp
+  created_at : timestamp
+}
+
+note right of account_providers
+  Constraints / Indexes:
+  - UNIQUE(provider, provider_user_id)
+  - UNIQUE(root_account_id, provider)
+  - INDEX(root_account_id)
+  - FK: root_account_id -> root_accounts.id (外部参照)
+end note
+@enduml
