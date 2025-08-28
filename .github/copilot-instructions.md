@@ -36,33 +36,33 @@ README.md やテスト計画書も常に最新状態を保ちましょう。
 
 [serena 指示書](./all/serena-MCP-instructions.md)
 
-[翻訳指示書](./all/translation-instructions.md)
+[翻訳 指示書](./all/translation-instructions.md)
 
-[コミット指示書](./all/commit-message-instructions.md)
+[コミット 指示書](./all/commit-message-instructions.md)
 
-[レビュー指示書](./all/review-instructions.md)
+[レビュー 指示書](./all/review-instructions.md)
 
 ### markdown関連
 
-[タスク指示書](./markdown/task-instructions.md)
+[タスク 指示書](./markdown/task-instructions.md)
 
-[タスクリスト指示書](./markdown/task-instructions.md)
+[タスクリスト 指示書](./markdown/task-instructions.md)
 
 タスクリスト（`.github/__task-list/tasks.md`）を新規作成 / 更新 / 再構成する際は、必ずこの指示書を先に開いて内容を読み込み、方針（粒度・依存関係・命名・完了条件・テスト観点）を適用してください。未読状態でのタスク追加は禁止します。
 
 ### code関連
 
-[コード生成指示書1](./code/codeGeneration-instructions.md)
+[コード生成 指示書](./code/codeGeneration-instructions.md)
 
-[コード生成指示書2](./code/codeGeneration2-instructions.md)
+[コンポーネントのテンプレート](./code/codeTemplate-instructions.md)
 
-[命名規則指示書](./code/namingConventions-instructions.md)
+[命名規則 指示書](./code/namingConventions-instructions.md)
 
-[ドキュメント指示書](./markdown/document-instructions.md)
+[ドキュメント 指示書](./markdown/document-instructions.md)
 
 [Next.js App router 指示書](./code/appRouter-instructions.md)
 
-[デザインシステム指示書](./code/design-system-instructions.md)
+[デザインシステム 指示書](./code/design-system-instructions.md)
 
 [figma 指示書](./code/figma-instructions.md)
 
@@ -74,7 +74,7 @@ README.md やテスト計画書も常に最新状態を保ちましょう。
 
 [context7 指示書](./code/context7-instructions.md)
 
-[テスト指示書](./code/testing-instructions.md)
+[テスト 指示書](./code/testing-instructions.md)
 
 ### その他
 
