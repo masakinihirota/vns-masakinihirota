@@ -1,17 +1,15 @@
-import * as Route1Components from "../../../../ /components/[Feature1]"
+import * as template from "@/components/template"
 
 /**
- * Route1Pageコンポーネント
- * /route1 のページを表示します。
+ * TemplatePage - ルーティングとコンポーネント分離の最小サンプル
+ * components/template/index.ts から一括インポート
  */
-const Route1Page = () => {
+export default function TemplatePage() {
 	return (
-		<div>
-			<h1>Route 1 Page</h1>
-			<Route1Components.ComponentA />
-			<Route1Components.ComponentB />
-		</div>
+		<main className='max-w-xl mx-auto p-6'>
+			<h1 className='text-2xl font-bold mb-6'>Template Sample Page</h1>
+			<template.ComponentA />
+			<template.ComponentB />
+		</main>
 	)
 }
-
-export default Route1Page

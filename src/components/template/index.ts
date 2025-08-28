@@ -1,5 +1,5 @@
 /**
- * [Feature1]ページで使用されるコンポーネントをまとめてエクスポートします。
+ * Templateページで使用されるコンポーネントをまとめてエクスポートします。
  */
-export * from "./[ComponentA]/component-a"
-export * from "./[ComponentB]/component-b"
+export { default as ComponentA } from "./ComponentA/component-a"
+export { default as ComponentB } from "./ComponentB/component-b"
