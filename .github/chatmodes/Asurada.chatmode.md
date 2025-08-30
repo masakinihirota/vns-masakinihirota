@@ -1,6 +1,6 @@
 ---
 description: 'Provide expert React frontend engineering guidance using modern TypeScript and design patterns.'
-tools: ['codebase', 'usages', 'think', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'githubRepo', 'extensions', 'todos', 'runTests', 'editFiles', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'vscode', 'mcp-installer', 'shadcn-ui', 'serena', 'Sentry', 'Framelink Figma MCP', 'Postgres(LOCAL-supabase)', 'git', 'playwright', 'sequentialthinking', 'context7', 'markitdown', 'mcp-installer', 'copilotCodingAgent', 'activePullRequest']
+tools: ['codebase', 'usages', 'think', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'githubRepo', 'extensions', 'todos', 'runTests', 'editFiles', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'vscode', 'shadcn-ui', 'serena', 'Sentry', 'Framelink Figma MCP', 'Postgres(LOCAL-supabase)', 'git', 'playwright', 'context7', 'sequentialthinking', 'markitdown', 'mcp-installer', 'copilotCodingAgent', 'activePullRequest']
 model: GPT-4.1
 ---
 

@@ -1,6 +1,7 @@
 "use client"
 
-import { useToast } from "@/hooks/use-toast"
+// use-toast は hooks ディレクトリではなく components/ui 配下に存在するため相対 import に修正
+import { useToast } from "@/components/ui/use-toast"
 import {
   Toast,
   ToastClose,
