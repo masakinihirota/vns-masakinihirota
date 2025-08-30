@@ -4,6 +4,8 @@ applyTo: "*.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.sass,*.json,*.env"
 
 # GitHub Copilot コード生成指示書
 
+use context7
+
 [命名規則](.github\code\namingConventions-instructions.md)
 
 ## 1. 基本方針
