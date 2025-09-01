@@ -58,8 +58,6 @@ README.md やテスト計画書も常に最新状態を保ちましょう。
 
 [命名規則 指示書](./code/namingConventions-instructions.md)
 
-[ドキュメント 指示書](./markdown/document-instructions.md)
-
 [Next.js App router 指示書](./code/appRouter-instructions.md)
 
 [デザインシステム 指示書](./code/design-system-instructions.md)
@@ -75,6 +73,11 @@ README.md やテスト計画書も常に最新状態を保ちましょう。
 [context7 指示書](./code/context7-instructions.md)
 
 [テスト 指示書](./code/testing-instructions.md)
+
+### ドキュメント関連
+
+[ドキュメント 指示書](./document/document-instructions.md)
+
 
 ### その他
 
