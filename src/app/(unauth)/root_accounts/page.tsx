@@ -1,6 +1,9 @@
-"use client" // This is a Client Component
-import React from "react"
+import { RootAccountsDashboard } from "@/components/root-accounts"
 
-export default function rootAccounts() {
-	return <div>rootAccounts</div>
+/**
+ * /root_accounts ルート
+ * UIは `RootAccountsDashboard` に委譲。将来ここでデータフェッチ (Server Component) を行い props 渡しへ移行予定。
+ */
+export default function RootAccountsPage() {
+	return <RootAccountsDashboard />
 }
