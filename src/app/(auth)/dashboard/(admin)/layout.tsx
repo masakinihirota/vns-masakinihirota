@@ -5,18 +5,7 @@
 
 "use server"
 import "server-only"
-// import { notFound } from "next/navigation";
-// import { FC, ReactNode } from "react";
 
-// const Layout: FC<{ children: ReactNode }> = async ({ children }) => {
-//   const user = await getLoginUser();
-
-//   if (!isAdminUser(user)) {
-//     リダイレクトでもOK
-//     return notFound();
-//   }
-
-//   return <>{children}</>;
-// };
-
-// export default Layout;
+export default function Layout({ children }: { children: React.ReactNode }) {
+	return <>{children}</>
+}
