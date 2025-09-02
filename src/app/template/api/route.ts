@@ -3,7 +3,7 @@
 // 最小の GET ハンドラを定義してモジュール化する
 import { NextResponse } from "next/server"
 
-export const runtime = "edge" // 参考: 省略可
+export const runtime = "nodejs" // 参考: 省略可
 
 export async function GET() {
 	return NextResponse.json({
