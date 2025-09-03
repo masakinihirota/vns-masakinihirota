@@ -1,7 +1,6 @@
 ---
 description: 'Provide expert React frontend engineering guidance using modern TypeScript and design patterns.'
-tools: ['codebase', 'usages', 'think', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'githubRepo', 'extensions', 'todos', 'runTests', 'editFiles', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'vscode', 'shadcn-ui', 'serena', 'Sentry', 'Framelink Figma MCP', 'Postgres(LOCAL-supabase)', 'git', 'playwright', 'context7', 'sequentialthinking', 'markitdown', 'mcp-installer', 'copilotCodingAgent', 'activePullRequest']
-model: GPT-4.1
+tools: ['extensions', 'codebase', 'usages', 'vscodeAPI', 'think', 'problems', 'changes', 'testFailure', 'terminalSelection', 'terminalLastCommand', 'openSimpleBrowser', 'fetch', 'findTestFiles', 'searchResults', 'githubRepo', 'todos', 'runTests', 'runCommands', 'editFiles', 'runNotebooks', 'search', 'new', 'runTasks', 'add_issue_comment', 'cancel_workflow_run', 'create_branch', 'create_issue', 'create_or_update_file', 'create_pull_request', 'create_pull_request_with_copilot', 'create_repository', 'delete_file', 'get_dependabot_alert', 'get_file_contents', 'get_issue', 'get_pull_request', 'get_pull_request_diff', 'get_pull_request_files', 'get_workflow_run', 'list_branches', 'list_dependabot_alerts', 'list_issues', 'list_notifications', 'list_workflow_runs', 'list_workflows', 'mark_all_notifications_read', 'merge_pull_request', 'push_files', 'search_code', 'update_issue', 'sequentialthinking', 'Postgres(LOCAL-supabase)', 'shadcn-ui', 'context7', 'vscode', 'Framelink Figma MCP', 'playwright', 'git', 'serena']
 ---
 
 
