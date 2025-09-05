@@ -1,7 +1,12 @@
 -- (重要)
--- authスキーマ関連の場合
+-- ※authスキーマ関連の場合
 -- Supabaseで利用するときはダッシュボードのSQL EDITORからトリガーのSQL文を実行してtriggerを登録すること、それ以外の方法では受け付けてもらえない。
--- Drizzleのトリガーとトリガー関数はSLQ文で直接SupabaseのGUI SQL Editor に貼り付けます。
+-- 方法：Drizzleのトリガーとトリガー関数はSQL文で直接SupabaseのGUI SQL Editor に貼り付けます。
+
+-- TODO
+-- RLSの設定を後で考える
+-- auth.usersとカスケード接続をする。
+-- auth.usersで、編集、削除した時このデータも編集、削除する
 
 -- トリガー関数の作成
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -77,10 +82,25 @@ BEGIN
     NEW.is_anonymous,
     NEW.confirmed_at
   );
+  INSERT INTO public.root_accounts (
+    id,
+    created_at,
+    updated_at
+  )
+  VALUES (
+    NEW.id,
+    NEW.created_at,
+    NEW.updated_at
+  );
   RETURN NEW;
 END;
 $$;
 
+-- 既存トリガーを削除（安全のため）
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+
+-- RLSは後でRBAC(role base access control)の時に一緒に考える
+-- ALTER TABLE public.root_accounts ENABLE ROW LEVEL SECURITY;
 
 -- トリガーの作成
 CREATE TRIGGER on_auth_user_created
@@ -89,11 +109,6 @@ FOR EACH ROW
 EXECUTE FUNCTION public.handle_new_user();
 
 ---
-
--- AIに聞いた
--- カスタムクレームが変更された時同期されないのではないか？
-
-
 
 -- このトリガーでは新規作成（INSERT）イベントしか扱っていないため、ユーザー情報の更新（UPDATE）や削除（DELETE）には対応できません。
 
@@ -107,53 +122,3 @@ EXECUTE FUNCTION public.handle_new_user();
 
 -- 完全な同期を実現するには
 -- データの不整合を防ぐためには、INSERTだけでなく、UPDATEとDELETEのイベントにも対応するトリガーを設定する必要があります。
-
--- 以下に、より完全な同期を実現するためのトリガーの例を示します。
-
--- SQL
-
--- -- トリガー関数の作成
--- CREATE OR REPLACE FUNCTION public.handle_user_changes()
--- RETURNS trigger
--- LANGUAGE plpgsql
--- SECURITY DEFINER
--- SET search_path = ''
--- AS $$
--- BEGIN
---   IF TG_OP = 'INSERT' THEN
---     -- 新規ユーザー作成時に public.users に挿入
---     INSERT INTO public.users (id, email)
---     VALUES (NEW.id, NEW.email);
---     RETURN NEW;
---   ELSIF TG_OP = 'UPDATE' THEN
---     -- ユーザー情報更新時に public.users も更新
---     UPDATE public.users
---     SET email = NEW.email
---     WHERE id = NEW.id;
---     RETURN NEW;
---   ELSIF TG_OP = 'DELETE' THEN
---     -- ユーザー削除時に public.users からも削除
---     DELETE FROM public.users
---     WHERE id = OLD.id;
---     RETURN OLD;
---   END IF;
--- END;
--- $$;
-
--- ---
-
--- -- トリガーの作成
--- -- INSERT, UPDATE, DELETEの各イベントに対応
--- CREATE TRIGGER on_auth_user_changes
--- AFTER INSERT OR UPDATE OR DELETE ON auth.users
--- FOR EACH ROW
--- EXECUTE FUNCTION public.handle_user_changes();
--- このコードでは、IF TG_OP = '...' THEN という条件分岐を使って、どの操作（INSERT、UPDATE、DELETE）が実行されたかに応じて異なる処理を行います。
-
--- INSERT: NEWという特別な変数から新しいユーザーの情報を取得し、public.usersに挿入します。
-
--- UPDATE: NEWから更新後の情報を取得し、public.usersの該当レコードを更新します。
-
--- DELETE: OLDという特別な変数から削除されるユーザーの情報を取得し、public.usersから削除します。
-
--- このように、すべてのイベントに対応するトリガーを設定することで、auth.users と public.users の間での完全なデータ同期が実現でき、データの不整合を回避できます。

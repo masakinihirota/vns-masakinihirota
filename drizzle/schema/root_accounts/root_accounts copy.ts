@@ -7,11 +7,11 @@ import {
   integer,
   boolean,
   timestamp,
-  // pgEnum,
+  pgEnum,
   text,
 } from "drizzle-orm/pg-core";
 import { languages } from "./languages";
-// import { authUsers } from "./auth_users";
+import { authUsers } from "./auth_users";
 import {
   livingAreaSegmentEnum,
   accountStatusEnum
@@ -23,10 +23,10 @@ export const rootAccounts = pgTable(
   {
     id: uuid("id").primaryKey(), // 独自のUUID
     // auth.usersとpublic.auth_usersとの1:1:1関係 つまり共通id
-    // authUserId: uuid("auth_user_id")
-    // .references(() => authUsers.id, { onDelete: 'cascade' })
-    // .notNull()
-    // .unique(), // auth_usersとの1:1関係
+    authUserId: uuid("auth_user_id")
+    .references(() => authUsers.id, { onDelete: 'cascade' })
+    .notNull()
+    .unique(), // auth_usersとの1:1関係
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
