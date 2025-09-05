@@ -22,7 +22,8 @@
       "!src/components/theme-provider.tsx",
       "!src/components/search-form.tsx",
       "!*.chatmode.md",
-      "!_template/**/*"
+      "!_template/**/*",
+      "!type.ts"
     ]
   },
   "formatter": {
