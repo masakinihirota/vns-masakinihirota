@@ -22,7 +22,7 @@ export const rootAccounts = pgTable(
   "root_accounts",
   {
     id: uuid("id").primaryKey(), // 独自のUUID
-    // auth.usersとの1:1関係
+    // auth.usersとpublic.auth_usersとの1:1:1関係 つまり共通id
     authUserId: uuid("auth_user_id")
     .references(() => authUsers.id, { onDelete: 'cascade' })
     .notNull()
