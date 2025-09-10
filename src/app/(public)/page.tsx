@@ -1,7 +1,7 @@
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
-import { ModeToggle } from "@/app/ModeTogglePage/mode-toggle"
+import { ModeToggle } from "@/app/(unauth)/ModeTogglePage/mode-toggle"
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher"
 
 export default function Home() {
@@ -11,6 +11,9 @@ export default function Home() {
 
 	return (
 		<>
+			このページはlogin(slotページ)のリンクをトップに持ってくる、その下には説明(ランディングページ)を置く。
+			<br></br>
+			<br></br>
 			{/* ランディングページへのリンク */}
 			<Link href='/landing'>ランディングページ</Link>
 			<br />

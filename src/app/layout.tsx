@@ -102,6 +102,7 @@ export default async function RootLayout({
 					disableTransitionOnChange
 				>
 					<NextIntlClientProvider>
+						{/* ヘッダーのナビリンク */}
 						<Navbar03Page />
 						{children}
 					</NextIntlClientProvider>
