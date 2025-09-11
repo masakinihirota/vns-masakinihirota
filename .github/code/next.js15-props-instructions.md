@@ -423,7 +423,7 @@ export async function createPost(formData: FormData) {
     });
 
     // 現在のユーザー情報を取得（認証が必要）
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const { data: { user }, error: authError } = await supabase.auth.getClaims();
 
     if (authError || !user) {
       return {
@@ -502,7 +502,7 @@ export async function updatePost(postId: string, formData: FormData) {
     });
 
     // 現在のユーザー情報を取得
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const { data: { user }, error: authError } = await supabase.auth.getClaims();
 
     if (authError || !user) {
       return {
@@ -562,7 +562,7 @@ export async function deletePost(postId: string) {
     const supabase = createServerClient();
 
     // 現在のユーザー情報を取得
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const { data: { user }, error: authError } = await supabase.auth.getClaims();
 
     if (authError || !user) {
       return {
@@ -635,7 +635,7 @@ const DashboardPage = async () => {
   const supabase = createServerClient();
 
   // 認証チェック
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  const { data: { user }, error: authError } = await supabase.auth.getClaims();
 
   if (authError || !user) {
     redirect('/login');
