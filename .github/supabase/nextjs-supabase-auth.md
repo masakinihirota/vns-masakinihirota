@@ -149,14 +149,14 @@ export async function middleware(request: NextRequest) {
   )
 
   // Do not run code between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
+  // supabase.auth.getClaims(). A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
 
-  // IMPORTANT: DO NOT REMOVE auth.getUser()
+  // IMPORTANT: DO NOT REMOVE auth.getClaims()
 
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await supabase.auth.getClaims()
 
   if (
     !user &&

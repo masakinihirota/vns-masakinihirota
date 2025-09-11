@@ -7,10 +7,10 @@ import { createClient } from "@/lib/supabase/server"
 export default async function ProtectedPage() {
 	const supabase = await createClient()
 
-	const { data: userData, error } = await supabase.auth.getUser()
+	const { data: userData, error } = await supabase.auth.getClaims()
 
 	// ユーザーが存在しない場合は、ログインページにリダイレクト
-	if (error || !userData?.user) {
+	if (error || !userData?.claims) {
 		redirect("/login")
 	}
 
@@ -29,7 +29,7 @@ export default async function ProtectedPage() {
 				Protected ページ
 				<br />
 				<span className='text-sm text-muted-foreground'>
-					Hello <span>{userData.user.email}</span>
+					Hello <span>{userData.claims.email}</span>
 				</span>
 			</p>
 			<LogoutButton />
