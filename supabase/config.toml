@@ -148,7 +148,7 @@ refresh_token_reuse_interval = 10
 # Allow/disallow new user signups to your project.
 enable_signup = true
 
-# signing_keys_path = "./signing_key.json"
+signing_keys_path = "./signing_key.json"
 
 # 匿名認証の有効化
 # 匿名認証を有効にすると、ユーザーはサインアップやサインインをせずにアプリケーションを使用できるようになります。
