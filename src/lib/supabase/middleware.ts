@@ -42,7 +42,9 @@ export async function updateSession(request: NextRequest) {
   //   data: { user },
   // } = await supabase.auth.getClaims();
 	// const { data: userData, error } = await supabase.auth.getClaims()
-	const { data, error } = await supabase.auth.getClaims()
+  const { data, error } = await supabase.auth.getClaims()
+  // dataの表示
+
 
   if (
     // 未認証でもアクセス許可のpath
