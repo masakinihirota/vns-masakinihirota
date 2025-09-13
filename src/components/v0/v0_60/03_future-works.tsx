@@ -1,3 +1,4 @@
+// 「未来」コンポーネント
 import { CalendarIcon, StarIcon } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"

@@ -18,7 +18,7 @@ type LifeComponentProps = {
 	works: Work[]
 }
 
-export default function Component({ works = [] }: LifeComponentProps) {
+export default function Component02({ works = [] }: LifeComponentProps) {
 	const [filter, setFilter] = useState<string | null>(null)
 
 	const filteredWorks = filter

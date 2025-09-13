@@ -19,7 +19,7 @@ type Props = {
 	works: Work[]
 }
 
-export default function Component({ works = [] }: Props) {
+export default function Component01({ works = [] }: Props) {
 	const [filter, setFilter] = useState<string | null>(null)
 
 	const filteredWorks = filter
