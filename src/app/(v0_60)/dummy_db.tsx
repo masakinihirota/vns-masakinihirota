@@ -1,5 +1,68 @@
-const works = [
-	{ id: "1", title: "作品A", tier: 1, type: "anime" },
-	{ id: "2", title: "作品B", tier: 2, type: "manga" },
-	{ id: "3", title: "作品C", tier: 3, type: "anime" }
+export const dummyWorks = [
+	{
+		id: "1",
+		title: "青のオアシス",
+		tier: 1,
+		type: "anime",
+		genre: "ファンタジー",
+		author: "水野蒼"
+	},
+	{
+		id: "2",
+		title: "緑の約束",
+		tier: 2,
+		type: "manga",
+		genre: "ヒューマンドラマ",
+		author: "森川葉"
+	},
+	{
+		id: "3",
+		title: "星降る夜に",
+		tier: 1,
+		type: "novel",
+		genre: "SF",
+		author: "星野光"
+	},
+	{
+		id: "4",
+		title: "サクラ咲く道",
+		tier: 3,
+		type: "anime",
+		genre: "青春",
+		author: "桜井春"
+	},
+	{
+		id: "5",
+		title: "月下の剣士",
+		tier: 2,
+		type: "game",
+		genre: "アクションRPG",
+		author: "月影剣"
+	},
+	{
+		id: "6",
+		title: "未来都市計画",
+		tier: 1,
+		type: "manga",
+		genre: "サスペンス",
+		author: "未来創造"
+	},
+	{
+		id: "7",
+		title: "風のメロディ",
+		tier: 2,
+		type: "anime",
+		genre: "音楽",
+		author: "風間奏"
+	},
+	{
+		id: "8",
+		title: "光と影の狭間",
+		tier: 3,
+		type: "novel",
+		genre: "ミステリー",
+		author: "影山光"
+	}
 ]
+
+// 他のダミーデータもここに追加可能
