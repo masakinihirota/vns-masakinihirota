@@ -1,24 +1,12 @@
-import Link from "next/link"
+// v0_60.tsx: v0_60コンポーネント群の動作確認用ページ
+import LifeComponent from "@/components/v0/v0_60/02_life-component"
 
-import type React from "react"
-
-const V0_60: React.FC<{ children?: React.ReactNode }> = () => {
+export default function V0_60Page() {
 	return (
-		<>
-			{/* v0のコンポーネントのリンクを並べる。 */}
-			v0_60 開始
-			<br />
-			<br />
-			<Link href='/01_now-favorites'>01 今のお気に入り コンポーネント</Link>
-			<br />
-			<br />
-			{/* src\components\v0\60\02_life-component.tsx */}
-			<br />
-			<br />
-			<br /> v0_60 終わり
-			<br />
-		</>
+		<main className='p-8'>
+			<h1 className='text-3xl font-bold mb-6 text-center'>
+				v0_60 コンポーネント動作確認
+			</h1>
+		</main>
 	)
 }
-
-export default V0_60
