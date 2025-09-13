@@ -30,21 +30,26 @@ export async function updateSession(request: NextRequest) {
   );
 
   // Do not run code between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
+  // supabase.auth.getClaims().
+  // A simple mistake could make it very hard to debug
   // issues with users being randomly logged out.
-  // createServerClientとsupabase.auth.getUser()の間でコードを実行しないでください。単純なミスが原因で、ユーザーがランダムにログアウトされる問題をデバッグするのが非常に難しくなる可能性があります。
+  // createServerClientとsupabase.auth.getClaims()の間でコードを実行しないでください。単純なミスが原因で、ユーザーがランダムにログアウトされる問題をデバッグするのが非常に難しくなる可能性があります。
 
-  // IMPORTANT: DO NOT REMOVE auth.getUser()
-  // 重要: auth.getUser()を削除しないでください
+  // IMPORTANT: DO NOT REMOVE auth.getClaims()
+  // 重要: auth.getClaims()を削除しないでください
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getClaims();
+	// const { data: userData, error } = await supabase.auth.getClaims()
+  const { data, error } = await supabase.auth.getClaims()
+  // dataの表示
+
 
   if (
     // 未認証でもアクセス許可のpath
     // ユーザーが認証されていない
-    !user &&
+    error || !data?.claims &&
     // 認証されていないユーザーがアクセスできるパス
     !request.nextUrl.pathname.startsWith("/") &&
     !request.nextUrl.pathname.startsWith("/login") &&
@@ -54,7 +59,7 @@ export async function updateSession(request: NextRequest) {
     // no user, potentially respond by redirecting the user to the login page
     // ユーザーがログインしていない場合、ログインページにリダイレクトします。
     const url = request.nextUrl.clone();
-    url.pathname = "/login";
+    url.pathname = "/";
     return NextResponse.redirect(url);
   }
 
