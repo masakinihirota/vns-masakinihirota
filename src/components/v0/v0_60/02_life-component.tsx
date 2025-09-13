@@ -1,3 +1,4 @@
+"use client"
 // 「人生」コンポーネント
 import { useState } from "react"
 
