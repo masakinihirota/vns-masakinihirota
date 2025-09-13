@@ -65,4 +65,43 @@ export const dummyWorks = [
 	}
 ]
 
+// 未来の期待作品用ダミーデータ
+export const dummyFutureWorks = [
+	{
+		id: "f1",
+		title: "銀河の旅人",
+		tier: 1,
+		type: "anime",
+		releaseDate: "2026-04-01"
+	},
+	{
+		id: "f2",
+		title: "AIの見る夢",
+		tier: 2,
+		type: "manga",
+		releaseDate: "2026-07-15"
+	},
+	{
+		id: "f3",
+		title: "時の彼方へ",
+		tier: 3,
+		type: "anime",
+		releaseDate: "2027-01-10"
+	},
+	{
+		id: "f4",
+		title: "新世界創造",
+		tier: 1,
+		type: "anime",
+		releaseDate: "2026-10-20"
+	},
+	{
+		id: "f5",
+		title: "未来都市計画Z",
+		tier: 2,
+		type: "manga",
+		releaseDate: "2027-03-05"
+	}
+]
+
 // 他のダミーデータもここに追加可能
