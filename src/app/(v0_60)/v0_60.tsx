@@ -11,6 +11,8 @@ export default function V0_60Page() {
 			<br />
 			<Link href='/02_life-component'>02_life-component</Link>
 			<br />
+			<Link href='/03_future-works'>03_future-works</Link>
+			<br />
 			{/* 03以降もここにリンクを置く */}
 		</div>
 	)
