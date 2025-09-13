@@ -48,3 +48,7 @@ yarn-error.log*
 
 _template
 type.ts
+
+# local backup files
+*.backup
+*.zip
