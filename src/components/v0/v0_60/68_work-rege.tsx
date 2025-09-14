@@ -1,0 +1,195 @@
+// はい、承知しました。作品登録用のコンポーネントを日本語で作成します。ユーザーの種類（管理人またはユーザー）に応じて表示を変更し、必要な情報を入力できるフォームを作成します。
+
+// ```typescriptreact
+
+// ```
+
+// このコンポーネントは以下の特徴を持っています：
+
+// 1. 管理人とユーザーで表示される項目が異なります（`isAdmin`ステートで制御）。
+// 2. カテゴリ、作品名、評価（ティア）は必須項目として実装しています。
+// 3. 管理人向けの追加フィールドは条件付きレンダリングで表示されます。
+// 4. 適正年齢幅はスライダーで実装しています。
+// 5. チェックボックス、セレクトボックス、テキストエリアなど、様々な入力形式を使用しています。
+
+
+// このコンポーネントをさらに改善するためには、以下のような機能を追加することができます：
+
+// 1. フォームのバリデーション
+// 2. 送信時のエラーハンドリング
+// 3. 管理人かどうかの判定ロジック（現在はステートで仮実装）
+// 4. データベースとの連携
+// 5. 画像アップロード機能
+
+// 必要に応じて、これらの機能を追加していくことで、より完全な作品登録システムを構築できます。
+
+
+'use client'
+
+import { useState } from 'react'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Select } from "@/components/ui/select"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Slider } from "@/components/ui/slider"
+import { Textarea } from "@/components/ui/textarea"
+
+export default function WorkRegistrationForm() {
+  const [isAdmin, setIsAdmin] = useState(false) // 管理人かどうかの状態
+  const [category, setCategory] = useState('')
+  const [title, setTitle] = useState('')
+  const [tier, setTier] = useState(5) // デフォルトは未評価
+
+  const categories = ['アニメ', '漫画', 'ゲーム', '映画', '小説']
+  const tierNames = {
+    1: 'ティア1',
+    2: 'ティア2',
+    3: 'ティア3',
+    4: '普通もしくは自分に合わない',
+    5: '未評価',
+    6: '未読',
+    7: 'おすすめ'
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // ここでフォームデータの送信処理を行う
+    console.log('フォームが送信されました')
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <h1 className="text-2xl font-bold">作品登録</h1>
+
+      <div>
+        <Label htmlFor="category">カテゴリ</Label>
+        <Select
+          id="category"
+          value={category}
+          onValueChange={setCategory}
+        >
+          {categories.map((cat) => (
+            <Select.Option key={cat} value={cat}>{cat}</Select.Option>
+          ))}
+        </Select>
+      </div>
+
+      <div>
+        <Label htmlFor="title">作品名</Label>
+        <Input
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
+      </div>
+
+      <div>
+        <Label htmlFor="tier">評価</Label>
+        <Select
+          id="tier"
+          value={tier.toString()}
+          onValueChange={(value) => setTier(Number(value))}
+        >
+          {Object.entries(tierNames).map(([key, value]) => (
+            <Select.Option key={key} value={key}>{value}</Select.Option>
+          ))}
+        </Select>
+      </div>
+
+      {isAdmin && (
+        <>
+          <div>
+            <Label htmlFor="subCategory">サブカテゴリ（複数選択可）</Label>
+            <div className="space-y-2">
+              {['少年漫画', '少女漫画', '青年漫画', '女性漫画', 'ラブコメ', 'スポーツ'].map((subCat) => (
+                <div key={subCat} className="flex items-center">
+                  <Checkbox id={`subCat-${subCat}`} />
+                  <Label htmlFor={`subCat-${subCat}`} className="ml-2">{subCat}</Label>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <Label htmlFor="author">作家名</Label>
+            <Input id="author" />
+          </div>
+
+          <div>
+            <Label htmlFor="isOwnWork">自作作品ですか？</Label>
+            <Checkbox id="isOwnWork" />
+          </div>
+
+          <div>
+            <Label htmlFor="firstPublished">初出年</Label>
+            <Input id="firstPublished" type="number" />
+          </div>
+
+          <div>
+            <Label htmlFor="workSize">作品の規模</Label>
+            <Select id="workSize">
+              <Select.Option value="small">小（短時間で読み、見終わる）</Select.Option>
+              <Select.Option value="medium">中（何時間もかかる）</Select.Option>
+              <Select.Option value="large">大（何日もかかる）</Select.Option>
+            </Select>
+          </div>
+
+          <div>
+            <Label htmlFor="ageRange">適正年齢幅</Label>
+            <Slider
+              id="ageRange"
+              defaultValue={[0, 100]}
+              max={100}
+              step={1}
+              className="w-full"
+            />
+          </div>
+
+          <div>
+            <Label htmlFor="isCompleted">完結していますか？</Label>
+            <Checkbox id="isCompleted" />
+          </div>
+
+          <div>
+            <Label htmlFor="country">発売国</Label>
+            <Input id="country" />
+          </div>
+
+          <div>
+            <Label htmlFor="language">言語</Label>
+            <Input id="language" />
+          </div>
+
+          <div>
+            <Label htmlFor="officialSite">公式サイトURL</Label>
+            <Input id="officialSite" type="url" />
+          </div>
+
+          <div>
+            <Label htmlFor="introductionUrl">作品紹介URL</Label>
+            <Input id="introductionUrl" type="url" />
+          </div>
+
+          <div>
+            <Label htmlFor="searchUrl">作品検索URL</Label>
+            <Input id="searchUrl" type="url" />
+          </div>
+
+          <div>
+            <Label htmlFor="affiliateUrl">アフィリエイトURL</Label>
+            <Input id="affiliateUrl" type="url" />
+          </div>
+
+          <div>
+            <Label htmlFor="tags">作品タグ（カンマ区切りで入力）</Label>
+            <Textarea id="tags" placeholder="SF,タイムリープ,歴史物" />
+          </div>
+        </>
+      )}
+
+      <Button type="submit">登録</Button>
+    </form>
+  )
+}

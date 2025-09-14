@@ -1,0 +1,13 @@
+import React from "react";
+import VoteMatch from "@/components/v0/v0_60/66_vote-match";
+
+const Page66 = () => {
+  return (
+    <div>
+      <h1>66 Component</h1>
+      <VoteMatch />
+    </div>
+  );
+};
+
+export default Page66;
