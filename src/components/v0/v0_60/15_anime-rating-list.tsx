@@ -14,6 +14,7 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from "@/components/ui/dialog"
+import { dummyAnimeWorks } from "@/app/(v0_60)/dummy_db"
 
 type AnimeWork = {
 	id: string
@@ -30,7 +31,7 @@ type AnimeListProps = {
 }
 
 export default function AnimeRatingList({
-	works = [],
+	works = dummyAnimeWorks, // デフォルトでダミーデータを使用
 	userPoints = 0
 }: AnimeListProps) {
 	const [animeList, setAnimeList] = useState<AnimeWork[]>([])

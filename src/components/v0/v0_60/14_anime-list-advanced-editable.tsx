@@ -113,14 +113,23 @@ const tierNames = {
 
 const DAILY_LIKE_LIMIT = 5
 
+// 型定義を追加
+interface WorkItem {
+  id: string;
+  title: string;
+  tier: number;
+  type: string;
+  comment: string;
+}
+
 export default function Component() {
 	const [displayMode, setDisplayMode] = useState("full")
 	const [category, setCategory] = useState("all")
 	const [showEvaluated, setShowEvaluated] = useState(true)
-	const [works, setWorks] = useState(myList.works)
-	const [likes, setLikes] = useState({})
+	const [works, setWorks] = useState<WorkItem[]>(myList.works), setWorks] = useState(myList.works)
+	const [likes, setLikes] = useState<Record<string, number>>({}), setLikes] = useState({})
 	const [dailyLikes, setDailyLikes] = useState(0)
-	const [editingComment, setEditingComment] = useState(null)
+	const [editingComment, setEditingComment] = useState<string | null>(null), setEditingComment] = useState(null)
 	const [editedComment, setEditedComment] = useState("")
 
 	useEffect(() => {
@@ -145,11 +154,11 @@ export default function Component() {
 		return true
 	})
 
-	const handleTierChange = (id, newTier) => {
-		setWorks(
-			works.map((work) => (work.id === id ? { ...work, tier: newTier } : work))
-		)
-	}
+	const handleTierChange = (id: string, newTier: number) => {
+    setWorks(
+        works.map((work) => (work.id === id ? { ...work, tier: Number(newTier) } : work))
+    )
+}
 
 	const handleLike = (id) => {
 		if (dailyLikes >= DAILY_LIKE_LIMIT) {

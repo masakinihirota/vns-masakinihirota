@@ -1,4 +1,6 @@
 // 自動マッチング画面
+'use client'
+
 import { useState } from "react"
 import { UserCheck, UserPlus, Users } from "lucide-react"
 
