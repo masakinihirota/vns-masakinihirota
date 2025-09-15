@@ -1,4 +1,6 @@
 // ユーザー価値観履歴
+"use client"
+
 import { useState } from "react"
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"

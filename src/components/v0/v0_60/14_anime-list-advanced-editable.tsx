@@ -120,7 +120,7 @@ export default function Component() {
 	const [works, setWorks] = useState(myList.works)
 	const [likes, setLikes] = useState({})
 	const [dailyLikes, setDailyLikes] = useState(0)
-	const [editingComment, setEditingComment] = useState(null)
+	const [editingComment, setEditingComment] = useState<string | null>(null)
 	const [editedComment, setEditedComment] = useState("")
 
 	useEffect(() => {
@@ -145,19 +145,19 @@ export default function Component() {
 		return true
 	})
 
-	const handleTierChange = (id, newTier) => {
+	const handleTierChange = (id: string, newTier: string) => {
 		setWorks(
 			works.map((work) => (work.id === id ? { ...work, tier: newTier } : work))
 		)
 	}
 
-	const handleLike = (id) => {
+	const handleLike = (id: string) => {
 		if (dailyLikes >= DAILY_LIKE_LIMIT) {
 			alert("1日のいいね上限に達しました。")
 			return
 		}
 
-		const newLikes = { ...likes, [id]: (likes[id] || 0) + 1 }
+		const newLikes: Record<string, number> = { ...likes, [id]: (likes[id] || 0) + 1 }
 		setLikes(newLikes)
 		setDailyLikes(dailyLikes + 1)
 
@@ -166,12 +166,12 @@ export default function Component() {
 		localStorage.setItem("lastLikeDate", new Date().toDateString())
 	}
 
-	const handleEditComment = (id, comment) => {
+	const handleEditComment = (id: string, comment: string) => {
 		setEditingComment(id)
 		setEditedComment(comment)
 	}
 
-	const handleSaveComment = (id) => {
+	const handleSaveComment = (id: string) => {
 		setWorks(
 			works.map((work) =>
 				work.id === id ? { ...work, comment: editedComment } : work

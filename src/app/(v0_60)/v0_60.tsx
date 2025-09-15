@@ -7,7 +7,7 @@ export default function V0_60Page() {
 		<div>
 			TOPページに置くリンクの一部をv0_60用に設定
 			<br />
-			{/* <Link href='/01_now-favorites'>01_now-favorites</Link>
+			<Link href='/01_now-favorites'>01_now-favorites</Link>
 			<br />
 			<Link href='/02_life-component'>02_life-component</Link>
 			<br />
@@ -26,12 +26,12 @@ export default function V0_60Page() {
 			<Link href='/09'>09_component</Link>
 			<br />
 			<Link href='/10'>10_component</Link>
-			<br /> */}
-			<Link href='/11'>11_component</Link>
+			<br />
+			{/* <Link href='/11'>11_component</Link>
 			<br />
 			<Link href='/12'>12_component</Link>
 			<br />
-			<Link href='/13'>13_component</Link>
+			<Link href='/13'>13_component</Link> */}
 			<br />
 			<Link href='/14'>14_component</Link>
 			<br />
@@ -56,6 +56,16 @@ export default function V0_60Page() {
 			<Link href='/24'>24_component</Link>
 			<br />
 			<Link href='/25'>25_component</Link>
+			<br />
+			<Link href='/26'>26_component</Link>
+			<br />
+			<Link href='/27'>27_component</Link>
+			<br />
+			<Link href='/28'>28_component</Link>
+			<br />
+			<Link href='/29'>29_component</Link>
+			<br />
+			<Link href='/30'>30_component</Link>
 			<br />
 			<Link href="/31">31 Component</Link>
 			<br />
@@ -86,8 +96,59 @@ export default function V0_60Page() {
 			<Link href="/44">44_root-account-dashboard</Link>
 			<br />
 			<Link href="/45">45_tag-works-display</Link>
-			{/* 以降もここにリンクを置く */}
-			{/* リンクのフォルダ名を設定します。 */}
+			<br />
+			<Link href="/46">46_user-account-dashboard</Link>
+			<br />
+			<Link href="/47">47_user-account-settings</Link>
+			<br />
+			<Link href="/48">48_user-management</Link>
+			<br />
+			<Link href="/49">49_user-management2</Link>
+			<br />
+			<Link href="/50">50_user-profile</Link>
+			<br />
+			<Link href="/51">51_user-profile2</Link>
+			<br />
+			<Link href="/52">52_user-profile3</Link>
+			<br />
+			<Link href="/53">53_user-profile4</Link>
+			<br />
+			<Link href="/54">54_user-profile5</Link>
+			<br />
+			<Link href="/55">55_user-profile6</Link>
+			<br />
+			<Link href="/56">56_user-profile7</Link>
+			<br />
+			<Link href="/57">57_user-profile8</Link>
+			<br />
+			<Link href="/58">58_user-profile9</Link>
+			<br />
+			<Link href="/59">59_user-profile10</Link>
+			<br />
+			<Link href="/60">60_user-profile11</Link>
+			<br />
+			<Link href="/61">61_user-profile12</Link>
+			<br />
+			<Link href="/62">62_user-profile13</Link>
+			<br />
+			<Link href="/63">63_user-profile14</Link>
+			<br />
+			<Link href="/64">64_user-profile15</Link>
+			<br />
+			<Link href="/65">65_user-profile16</Link>
+			<br />
+			<Link href="/66">66_user-profile17</Link>
+			<br />
+			<Link href="/67">67_user-profile18</Link>
+			<br />
+			<Link href="/68">68_user-profile19</Link>
+			<br />
+			<Link href="/69">69_user-profile20</Link>
+			<br />
+			<Link href="/70">70_user-profile21</Link>
+			<br />
+			<br />
+			<br />
 		</div>
 	)
 }
