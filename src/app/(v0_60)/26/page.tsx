@@ -1,6 +1,14 @@
 import Component from "@/components/v0/v0_60/26_favorite-works"
 
-const dummyWorks = [
+// Define the Work type
+type Work = {
+	id: string
+	title: string
+	tier: number
+	type: string
+}
+
+const dummyWorks: Work[] = [
 	{ id: "1", title: "進撃の巨人 1期", tier: 1, type: "anime" },
 	{ id: "2", title: "進撃の巨人 2期", tier: 1, type: "anime" },
 	{ id: "3", title: "進撃の巨人 3期", tier: 2, type: "anime" },
