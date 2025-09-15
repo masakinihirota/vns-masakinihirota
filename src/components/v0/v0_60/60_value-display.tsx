@@ -1,9 +1,9 @@
 // 価値観表示コンポーネント
 import { AlertTriangle, CheckCircle2, Circle, Minus, X } from "lucide-react"
+import React from "react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import dummyDataRaw from "./60_value-display.dummyData.json"
 
 type ValueOption = "◎" | "◯" | "ー" | "▲" | "✕"
 
@@ -44,18 +44,25 @@ const ValueBadge = ({ value }: { value: ValueOption }) => {
 	return <Badge className={`ml-2 ${colorMap[value]}`}>{value}</Badge>
 }
 
-const dummyData = dummyDataRaw as ValueItem[]
+// ダミーデータの作成
+const dummyValues: ValueItem[] = [
+	{ category: "健康", option: "運動", value: "◎" },
+	{ category: "仕事", option: "効率", value: "◯" },
+	{ category: "趣味", option: "読書", value: "ー" },
+	{ category: "家族", option: "時間", value: "▲" },
+	{ category: "友人", option: "信頼", value: "✕" }
+]
 
-export default function ValueDisplay({ values = dummyData as ValueItemdummyData }: ValueDisplayProps) {
+export default function ValueDisplay() {
 	return (
 		<Card className='w-full max-w-2xl'>
 			<CardHeader>
 				<CardTitle>価値観一覧</CardTitle>
 			</CardHeader>
 			<CardContent>
-				{values.length > 0 ? (
+				{dummyValues.length > 0 ? (
 					<div className='grid gap-4'>
-						{values.map((item, index) => (
+						{dummyValues.map((item, index) => (
 							<div
 								key={index}
 								className='flex items-center justify-between p-2 border rounded'
