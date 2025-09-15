@@ -81,8 +81,6 @@ export default function V0_60Page() {
 			<br />
 			<Link href='/38'>38_permission-management2</Link>
 			<br />
-			<Link href='/39'>39_planetarium-poetry</Link>
-			<br />
 			<Link href='/40'>40_point-system</Link>
 			<br />
 			<Link href='/41'>41_problem-report-management</Link>
