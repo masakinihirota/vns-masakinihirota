@@ -59,21 +59,22 @@ export default function Component() {
 	}
 
 	return (
-		<div className='flex h-screen bg-gray-100'>
+		<div className='flex h-screen bg-gray-200 dark:bg-gray-900'>
 			<DragDropContext onDragEnd={onDragEnd}>
 				{/* 左側：ユーザーリスト作成画面 */}
-				<div className='w-1/2 p-4 bg-white shadow-md overflow-y-auto'>
-					<h2 className='text-2xl font-bold mb-4'>ユーザーリスト作成</h2>
-					<div className='mb-4'>
-						<Label htmlFor='list-name'>リスト名</Label>
-						<Input
-							id='list-name'
-							value={userList.name}
-							onChange={(e) =>
-								setUserList({ ...userList, name: e.target.value })
-							}
-						/>
-					</div>
+				   <div className='w-1/2 p-4 shadow-md overflow-y-auto'>
+					   <h2 className='text-2xl font-bold mb-4 text-sky-900 dark:text-sky-100'>ユーザーリスト作成</h2>
+					   <div className='mb-4'>
+						   <Label htmlFor='list-name' className='text-sky-900 dark:text-sky-100'>リスト名</Label>
+						   <Input
+							   id='list-name'
+							   value={userList.name}
+							   className='text-sky-900 dark:text-sky-100 bg-white dark:bg-gray-800'
+							   onChange={(e) =>
+								   setUserList({ ...userList, name: e.target.value })
+							   }
+						   />
+					   </div>
 					<Droppable droppableId='userList'>
 						{(provided) => (
 							<ul
@@ -88,7 +89,7 @@ export default function Component() {
 												ref={provided.innerRef}
 												{...provided.draggableProps}
 												{...provided.dragHandleProps}
-												className='p-2 bg-gray-100 rounded'
+												   className='p-2 bg-gray-200 dark:bg-gray-800 rounded text-sky-900 dark:text-sky-100'
 											>
 												{work.title}
 											</li>
@@ -102,8 +103,8 @@ export default function Component() {
 				</div>
 
 				{/* 右側：カテゴリ別登録作品リスト */}
-				<div className='w-1/2 p-4 bg-white shadow-md overflow-y-auto'>
-					<h2 className='text-2xl font-bold mb-4'>登録作品リスト</h2>
+				   <div className='w-1/2 p-4  shadow-md overflow-y-auto'>
+					   <h2 className='text-2xl font-bold mb-4 text-sky-900 dark:text-sky-100'>登録作品リスト</h2>
 					<Tabs defaultValue='anime'>
 						<TabsList>
 							<TabsTrigger value='anime'>アニメ</TabsTrigger>
@@ -130,7 +131,7 @@ export default function Component() {
 															ref={provided.innerRef}
 															{...provided.draggableProps}
 															{...provided.dragHandleProps}
-															className='p-2 bg-gray-100 rounded'
+															   className='p-2 bg-gray-200 dark:bg-gray-800 rounded text-sky-900 dark:text-sky-100'
 														>
 															{work.title}
 														</li>
@@ -163,7 +164,7 @@ export default function Component() {
 															ref={provided.innerRef}
 															{...provided.draggableProps}
 															{...provided.dragHandleProps}
-															className='p-2 bg-gray-100 rounded'
+															   className='p-2 bg-gray-200 dark:bg-gray-800 rounded text-sky-900 dark:text-sky-100'
 														>
 															{work.title}
 														</li>

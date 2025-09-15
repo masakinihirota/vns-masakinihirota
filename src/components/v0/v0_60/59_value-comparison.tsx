@@ -1,4 +1,5 @@
 // 画像UIの比較機能
+"use client"
 import React, { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
@@ -120,9 +121,9 @@ export default function Component() {
 	)
 
 	const getBackgroundColor = (self: ValueOption, other: ValueOption) => {
-		if (self === other) return "bg-green-100"
-		if (other === "▲" || other === "✕") return "bg-red-100"
-		return "bg-white"
+		if (self === other) return "bg-green-500" // 緑色
+		if (other === "▲" || other === "✕") return "bg-red-500" // 赤色
+		return "bg-gray-100" // 白色
 	}
 
 	const handleValueChange = (
@@ -140,21 +141,21 @@ export default function Component() {
 	}
 
 	return (
-		<Card className='w-full max-w-4xl mx-auto'>
-			<CardContent className='p-6'>
+		<Card className='w-full max-w-4xl mx-auto bg-gray-50'> {/* カード背景色を変更 */}
+			<CardContent className='p-6 bg-white'> {/* コンテンツ背景色を変更 */}
 				<div className='flex justify-between items-center mb-4'>
-					<Button variant='outline' size='icon'>
+					<Button variant='outline' size='icon' className='text-gray-700'> {/* ボタンの色を変更 */}
 						<ChevronLeft className='h-4 w-4' />
 					</Button>
-					<h2 className='text-2xl font-bold'>自分</h2>
-					<Button variant='outline' size='icon'>
+					<h2 className='text-2xl font-bold text-gray-800'>自分</h2> {/* テキスト色を変更 */}
+					<Button variant='outline' size='icon' className='text-gray-700'> {/* ボタンの色を変更 */}
 						<ChevronRight className='h-4 w-4' />
 					</Button>
-					<Button variant='outline' size='icon'>
+					<Button variant='outline' size='icon' className='text-gray-700'> {/* ボタンの色を変更 */}
 						<ChevronLeft className='h-4 w-4' />
 					</Button>
-					<h2 className='text-2xl font-bold'>相手</h2>
-					<Button variant='outline' size='icon'>
+					<h2 className='text-2xl font-bold text-gray-800'>相手</h2> {/* テキスト色を変更 */}
+					<Button variant='outline' size='icon' className='text-gray-700'> {/* ボタンの色を変更 */}
 						<ChevronRight className='h-4 w-4' />
 					</Button>
 				</div>
@@ -162,15 +163,15 @@ export default function Component() {
 					<Button variant='outline' size='icon'>
 						<ChevronLeft className='h-4 w-4' />
 					</Button>
-					<h3 className='text-xl font-semibold mx-4'>お題：{currentTopic}</h3>
+					<h3 className='text-xl font-semibold mx-4 text-gray-700'>お題：{currentTopic}</h3> {/* テキスト色を変更 */}
 					<Button variant='outline' size='icon'>
 						<ChevronRight className='h-4 w-4' />
 					</Button>
 				</div>
 				<div className='grid grid-cols-[1fr,auto,auto] gap-2'>
 					<div></div>
-					<div className='text-center font-bold'>自分</div>
-					<div className='text-center font-bold'>相手</div>
+					<div className='text-center font-bold text-gray-800'>自分</div> {/* テキスト色を変更 */}
+					<div className='text-center font-bold text-gray-800'>相手</div> {/* テキスト色を変更 */}
 					{valueItems.map((item) => (
 						<React.Fragment key={item.topic}>
 							<div className='flex items-center'>{item.topic}</div>
@@ -183,7 +184,7 @@ export default function Component() {
 											key={option}
 											variant='ghost'
 											size='sm'
-											className={`p-1 ${values[item.topic].self === option ? "bg-primary text-primary-foreground" : ""}`}
+											className={`p-1 ${values[item.topic].self === option ? "bg-blue-500 text-white" : "text-gray-700"}`}
 											onClick={() =>
 												handleValueChange(item.topic, "self", option)
 											}
