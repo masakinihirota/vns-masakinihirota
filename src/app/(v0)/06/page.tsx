@@ -1,6 +1,6 @@
 import { dummyWorks } from "../dummy_db"
 
-import Component02 from "@/components/v0/v0_60/_00/06_life-component"
+import Component02 from "@/components/v0/v0_60/06_life-component"
 
 const LifeComponentPage = () => {
 	return (
