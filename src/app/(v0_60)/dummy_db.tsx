@@ -148,4 +148,23 @@ export const dummyAnimeWorks = [
 	},
 ];
 
+// ダミーデータ: マンガ評価リスト
+export const dummyMangas = [
+	{
+		id: 1,
+		title: "進撃の巨人",
+		author: "諫山創"
+	},
+	{
+		id: 2,
+		title: "ワンピース",
+		author: "尾田栄一郎"
+	},
+	{
+		id: 3,
+		title: "ナルト",
+		author: "岸本斉史"
+	},
+];
+
 // 他のダミーデータもここに追加可能

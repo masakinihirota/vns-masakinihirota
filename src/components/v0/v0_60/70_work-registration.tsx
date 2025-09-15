@@ -1,4 +1,6 @@
 // 作品登録画面
+"use client"
+
 import { useState } from "react"
 
 import { Button } from "@/components/ui/button"

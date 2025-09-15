@@ -1,4 +1,6 @@
 // 手動マッチング画面
+"use client"
+
 import { useState } from "react"
 import { ChevronRight, Heart, Star, Users } from "lucide-react"
 

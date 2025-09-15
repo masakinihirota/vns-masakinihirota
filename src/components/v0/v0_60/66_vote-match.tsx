@@ -1,4 +1,6 @@
 // 単一 価値観を答えるUI
+
+"use client"
 import { useEffect, useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 

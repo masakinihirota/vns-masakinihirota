@@ -1,4 +1,5 @@
 // ユーザーの基本情報コンポーネント
+"use client"
 import {
 	Briefcase,
 	Calendar,

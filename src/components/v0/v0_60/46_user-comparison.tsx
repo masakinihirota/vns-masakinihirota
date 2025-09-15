@@ -1,4 +1,5 @@
 // グループ機能_手動グループ
+"use client"
 import { useState } from "react"
 
 import { Button } from "@/components/ui/button"
