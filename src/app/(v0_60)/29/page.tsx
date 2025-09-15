@@ -1,11 +1,5 @@
-import React from "react";
+import Component from '@/components/v0/v0_60/29_layout';
 
-const Page29 = () => {
-  return (
-    <div>
-
-    </div>
-  );
-};
-
-export default Page29;
+export default function Page() {
+  return <Component><div /></Component>;
+}

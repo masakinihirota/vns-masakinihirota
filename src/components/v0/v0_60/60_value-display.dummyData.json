@@ -1,0 +1,27 @@
+[
+    {
+        "category": "人",
+        "option": "重要",
+        "value": "◎"
+    },
+    {
+        "category": "信頼",
+        "option": "必要",
+        "value": "◯"
+    },
+    {
+        "category": "金",
+        "option": "普通",
+        "value": "ー"
+    },
+    {
+        "category": "健康",
+        "option": "注意",
+        "value": "▲"
+    },
+    {
+        "category": "自由",
+        "option": "不要",
+        "value": "✕"
+    }
+]

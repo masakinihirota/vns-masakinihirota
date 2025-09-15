@@ -1,4 +1,6 @@
 // ユーザープロフィール 確認画面
+"use client"
+
 import { useState } from "react"
 import { BookOpen, Briefcase, Heart, Star } from "lucide-react"
 
@@ -16,10 +18,22 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
+// 型定義
+interface TierItem {
+	title: string
+	tier: number
+}
+
+interface TiersData {
+	now: TierItem[]
+	future: TierItem[]
+	life: TierItem[]
+}
+
 export default function UserProfile() {
 	const [activeTab, setActiveTab] = useState("now")
 
-	const tiers = {
+	const tiers: TiersData = {
 		now: [
 			{ title: "進撃の巨人", tier: 1 },
 			{ title: "ダンジョン飯", tier: 2 },
@@ -29,8 +43,8 @@ export default function UserProfile() {
 		life: [{ title: "スラムダンク", tier: 1 }]
 	}
 
-	const renderTiers = (tierList) => {
-		return tierList.map((item, index) => (
+	const renderTiers = (tierList: TierItem[]) => {
+		return tierList.map((item: TierItem, index: number) => (
 			<div key={index} className='flex items-center justify-between py-2'>
 				<span>{item.title}</span>
 				<Badge
