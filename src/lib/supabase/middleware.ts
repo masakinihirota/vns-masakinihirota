@@ -38,19 +38,23 @@ export async function updateSession(request: NextRequest) {
   // IMPORTANT: DO NOT REMOVE auth.getClaims()
   // 重要: auth.getClaims()を削除しないでください
 
+    const {
+    data: { user },
+  } = await supabase.auth.getUser();
   // const {
   //   data: { user },
   // } = await supabase.auth.getClaims();
 	// const { data: userData, error } = await supabase.auth.getClaims()
-  const { data, error } = await supabase.auth.getClaims()
+  // const { data, error } = await supabase.auth.getClaims()
   // dataの表示
 
 
   if (
     // 未認証でもアクセス許可のpath
     // ユーザーが認証されていない
-    error || !data?.claims &&
+    // error || !data?.claims &&
     // 認証されていないユーザーがアクセスできるパス
+    !user &&
     !request.nextUrl.pathname.startsWith("/") &&
     !request.nextUrl.pathname.startsWith("/login") &&
     !request.nextUrl.pathname.startsWith("/lang") &&
