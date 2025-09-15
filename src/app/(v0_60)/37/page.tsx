@@ -1,0 +1,12 @@
+import Component37 from "@/components/v0/v0_60/37_permission-management"
+
+const Page37 = () => {
+	return (
+		<div>
+			<h1>37 Component</h1>
+			<Component37 />
+		</div>
+	)
+}
+
+export default Page37
