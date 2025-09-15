@@ -1,13 +1,12 @@
-import React from "react";
-import WorkListDisplay from "@/components/v0/v0_60/67_work-list-display";
+import WorkListDisplay from "@/components/v0/v0_60/67_work-list-display"
 
 const Page67 = () => {
-  return (
-    <div>
-      <h1>67 Component</h1>
-      <WorkListDisplay />
-    </div>
-  );
-};
+	return (
+		<div>
+			<h1>67 Component</h1>
+			<WorkListDisplay />
+		</div>
+	)
+}
 
-export default Page67;
+export default Page67

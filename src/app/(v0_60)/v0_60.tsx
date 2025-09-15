@@ -21,7 +21,7 @@ export default function V0_60Page() {
 			<br />
 			<Link href='/07'>07_component</Link>
 			<br />
-			<Link href="/08">08_mparison-list</Link>
+			<Link href='/08'>08_mparison-list</Link>
 			<br />
 			<Link href='/09'>09_component</Link>
 			<br />
@@ -67,85 +67,85 @@ export default function V0_60Page() {
 			<br />
 			<Link href='/30'>30_component</Link>
 			<br />
-			<Link href="/31">31 Component</Link>
+			<Link href='/31'>31 Component</Link>
 			<br />
-			<Link href="/32">32 Component</Link>
+			<Link href='/32'>32 Component</Link>
 			<br />
-			<Link href="/33">33 Component</Link>
+			<Link href='/33'>33 Component</Link>
 			<br />
-			<Link href="/34">34 Component</Link>
+			<Link href='/34'>34 Component</Link>
 			<br />
-			<Link href="/35">35 Component</Link>
+			<Link href='/35'>35 Component</Link>
 			<br />
-			<Link href="/36">36_mind-map-list</Link>
+			<Link href='/36'>36_mind-map-list</Link>
 			<br />
-			<Link href="/37">37_permission-management</Link>
+			<Link href='/37'>37_permission-management</Link>
 			<br />
-			<Link href="/38">38_permission-management2</Link>
+			<Link href='/38'>38_permission-management2</Link>
 			<br />
-			<Link href="/39">39_planetarium-poetry</Link>
+			<Link href='/39'>39_planetarium-poetry</Link>
 			<br />
-			<Link href="/40">40_point-system</Link>
+			<Link href='/40'>40_point-system</Link>
 			<br />
-			<Link href="/41">41_problem-report-management</Link>
+			<Link href='/41'>41_problem-report-management</Link>
 			<br />
-			<Link href="/42">42_problem-report-management2</Link>
+			<Link href='/42'>42_problem-report-management2</Link>
 			<br />
-			<Link href="/43">43_registration-form</Link>
+			<Link href='/43'>43_registration-form</Link>
 			<br />
-			<Link href="/44">44_root-account-dashboard</Link>
+			<Link href='/44'>44_root-account-dashboard</Link>
 			<br />
-			<Link href="/45">45_tag-works-display</Link>
+			<Link href='/45'>45_tag-works-display</Link>
 			<br />
-			<Link href="/46">46_user-account-dashboard</Link>
+			<Link href='/46'>46_user-account-dashboard</Link>
 			<br />
-			<Link href="/47">47_user-account-settings</Link>
+			<Link href='/47'>47_user-account-settings</Link>
 			<br />
-			<Link href="/48">48_user-management</Link>
+			<Link href='/48'>48_user-management</Link>
 			<br />
-			<Link href="/49">49_user-management2</Link>
+			<Link href='/49'>49_user-management2</Link>
 			<br />
-			<Link href="/50">50_user-profile</Link>
+			<Link href='/50'>50_user-profile</Link>
 			<br />
-			<Link href="/51">51_user-profile2</Link>
+			<Link href='/51'>51_user-profile2</Link>
 			<br />
-			<Link href="/52">52_user-profile3</Link>
+			<Link href='/52'>52_user-profile3</Link>
 			<br />
-			<Link href="/53">53_user-profile4</Link>
+			<Link href='/53'>53_user-profile4</Link>
 			<br />
-			<Link href="/54">54_user-profile5</Link>
+			<Link href='/54'>54_user-profile5</Link>
 			<br />
-			<Link href="/55">55_user-profile6</Link>
+			<Link href='/55'>55_user-profile6</Link>
 			<br />
-			<Link href="/56">56_user-profile7</Link>
+			<Link href='/56'>56_user-profile7</Link>
 			<br />
-			<Link href="/57">57_user-profile8</Link>
+			<Link href='/57'>57_user-profile8</Link>
 			<br />
-			<Link href="/58">58_user-profile9</Link>
+			<Link href='/58'>58_user-profile9</Link>
 			<br />
-			<Link href="/59">59_user-profile10</Link>
+			<Link href='/59'>59_user-profile10</Link>
 			<br />
-			<Link href="/60">60_user-profile11</Link>
+			<Link href='/60'>60_user-profile11</Link>
 			<br />
-			<Link href="/61">61_user-profile12</Link>
+			<Link href='/61'>61_user-profile12</Link>
 			<br />
-			<Link href="/62">62_user-profile13</Link>
+			<Link href='/62'>62_user-profile13</Link>
 			<br />
-			<Link href="/63">63_user-profile14</Link>
+			<Link href='/63'>63_user-profile14</Link>
 			<br />
-			<Link href="/64">64_user-profile15</Link>
+			<Link href='/64'>64_user-profile15</Link>
 			<br />
-			<Link href="/65">65_user-profile16</Link>
+			<Link href='/65'>65_user-profile16</Link>
 			<br />
-			<Link href="/66">66_user-profile17</Link>
+			<Link href='/66'>66_user-profile17</Link>
 			<br />
-			<Link href="/67">67_user-profile18</Link>
+			<Link href='/67'>67_user-profile18</Link>
 			<br />
-			<Link href="/68">68_user-profile19</Link>
+			<Link href='/68'>68_user-profile19</Link>
 			<br />
-			<Link href="/69">69_user-profile20</Link>
+			<Link href='/69'>69_user-profile20</Link>
 			<br />
-			<Link href="/70">70_user-profile21</Link>
+			<Link href='/70'>70_user-profile21</Link>
 			<br />
 			<br />
 			<br />
