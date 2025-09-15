@@ -1,13 +1,12 @@
-import React from "react";
-import UserValueHistory from "@/components/v0/v0_60/58_user-value-history";
+import UserValueHistory from "@/components/v0/v0_60/58_user-value-history"
 
 const Page58 = () => {
-  return (
-    <div>
-      <h1>58 Component</h1>
-      <UserValueHistory />
-    </div>
-  );
-};
+	return (
+		<div>
+			<h1>58 Component</h1>
+			<UserValueHistory />
+		</div>
+	)
+}
 
-export default Page58;
+export default Page58

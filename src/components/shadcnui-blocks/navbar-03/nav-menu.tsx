@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { NavigationMenuProps } from "@radix-ui/react-navigation-menu";
 import { LucideIcon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+;
 import { foods, travelMenuItems } from "./config";
 
 export const NavMenu = (props: NavigationMenuProps) => (

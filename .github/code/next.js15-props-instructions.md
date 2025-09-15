@@ -777,7 +777,7 @@ export default function Error({ error, reset }: ErrorProps) {
 
 ```typescript
 // filepath: components/blog/blog-list.tsx
-import React from "react";
+;
 import { BlogPost } from "@/app/blog/api/route";
 
 interface BlogListProps {

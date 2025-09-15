@@ -107,18 +107,18 @@ export const dummyFutureWorks = [
 // 同盟表示コンポーネント用ダミーデータ
 export const dummyAlliances = [
 	{
-		id: '1',
-		name: 'Alliance Alpha',
+		id: "1",
+		name: "Alliance Alpha",
 		memberCount: 10,
-		description: 'This is a description for Alliance Alpha.',
+		description: "This is a description for Alliance Alpha."
 	},
 	{
-		id: '2',
-		name: 'Alliance Beta',
+		id: "2",
+		name: "Alliance Beta",
 		memberCount: 15,
-		description: 'This is a description for Alliance Beta.',
-	},
-];
+		description: "This is a description for Alliance Beta."
+	}
+]
 
 // ダミーデータ: アニメ評価リスト
 export const dummyAnimeWorks = [
@@ -128,7 +128,7 @@ export const dummyAnimeWorks = [
 		tier: 1,
 		type: "anime",
 		likes: 10,
-		lastAccessed: "2025-09-13T12:00:00.000Z",
+		lastAccessed: "2025-09-13T12:00:00.000Z"
 	},
 	{
 		id: "2",
@@ -136,7 +136,7 @@ export const dummyAnimeWorks = [
 		tier: 2,
 		type: "anime",
 		likes: 5,
-		lastAccessed: "2025-09-12T15:30:00.000Z",
+		lastAccessed: "2025-09-12T15:30:00.000Z"
 	},
 	{
 		id: "3",
@@ -144,9 +144,9 @@ export const dummyAnimeWorks = [
 		tier: 3,
 		type: "anime",
 		likes: 8,
-		lastAccessed: "2025-09-10T10:00:00.000Z",
-	},
-];
+		lastAccessed: "2025-09-10T10:00:00.000Z"
+	}
+]
 
 // ダミーデータ: マンガ評価リスト
 export const dummyMangas = [
@@ -164,7 +164,7 @@ export const dummyMangas = [
 		id: 3,
 		title: "ナルト",
 		author: "岸本斉史"
-	},
-];
+	}
+]
 
 // 他のダミーデータもここに追加可能
