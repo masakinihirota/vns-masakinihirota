@@ -149,7 +149,7 @@ export const dummyAnimeWorks = [
 ]
 
 // ダミーデータ: マンガ評価リスト
-export const dummyMangas = [
+export const dummyManages = [
 	{
 		id: 1,
 		title: "進撃の巨人",
