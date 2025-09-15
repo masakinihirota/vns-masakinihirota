@@ -1,146 +1,72 @@
 // 価値観の質問に答えるUI
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { PlusCircle, Trash2 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import categoryData from './23_categoryData.json';
 
-type Option = {
-	id: string
-	text: string
+interface Subcategory {
+  id: string;
+  name: string;
 }
 
-type Question = {
-	id: string
-	topic: string
-	options: Option[]
-	explanation: string
-	category: {
-		large: string
-		medium: string
-		small: string
-	}
-	createdAt: string
-	createdBy: string
+interface Category {
+  id: string;
+  name: string;
+  subcategories: Subcategory[];
 }
 
-type CategoryData = {
-	[key: string]: {
-		[key: string]: string[]
-	}
+interface Question {
+  id: string;
+  category: {
+	large: string;
+	medium: string;
+	small: string;
+  };
+  options: { id: string; text: string }[];
+  topic?: string;
+  explanation?: string;
+  createdAt?: string; // Added createdAt property
+  createdBy?: string; // Added createdBy property
 }
 
-const categoryData: CategoryData = {
-	趣味活動: {
-		"視聴、見る、読む、聞く活動": [
-			"漫画",
-			"アニメ",
-			"ゲーム",
-			"ドラマ",
-			"エンタメ",
-			"映画",
-			"小説",
-			"音楽"
-		],
-		作る活動: [
-			"同人活動に参加している",
-			"同人誌を作っている",
-			"アプリを開発している",
-			"ゲーム開発"
-		]
-	},
-	ワークライフバランス: {
-		"生活、ライフスタイル": [
-			"生き方",
-			"家事",
-			"健康",
-			"家族",
-			"社会",
-			"自立",
-			"宗教"
-		],
-		お金: ["経済観念", "消費"],
-		時間管理: [
-			"仕事と家庭とプライベートの割合",
-			"計画性",
-			"即興性",
-			"効率性",
-			"ゆとり"
-		],
-		仕事: [
-			"企業形態",
-			"報酬",
-			"目標設定",
-			"やりがい、意欲、挑戦",
-			"キャリア志向",
-			"安定志向",
-			"社会貢献",
-			"企業への貢献",
-			"管理能力",
-			"労働時間",
-			"職場環境",
-			"成長性",
-			"福利厚生",
-			"仕事観",
-			"コミュニケーション能力",
-			"チームワーク",
-			"休暇"
-		],
-		スキル: ["持っているスキル", "専門性"],
-		ビジョン: ["将来の夢と将来のビジョン"],
-		老後: ["老後の計画"]
-	},
-	パートナー: {
-		婚活: [
-			"結婚の必要性",
-			"結婚の時期",
-			"同棲、お試しの付き合い",
-			"最重要な項目",
-			"お金",
-			"発言権",
-			"行動",
-			"信頼",
-			"尊重",
-			"コミュニケーション",
-			"家事",
-			"家族計画",
-			"家族、親族",
-			"ビジョン",
-			"夫婦のライフプラン",
-			"宗教",
-			"奉仕、貢献"
-		],
-		恋人: ["恋愛対象", "恋愛観", "人生観", "付き合い方", "相手に望むもの"]
-	},
-	他人: {
-		事件: ["想像で判断する"],
-		災害: ["避難準備を用意している", "避難場所を考えている"],
-		戦争: ["首相", "他国"],
-		尊敬: ["尊敬する人"]
-	}
+interface MindMapCategoryProps {
+  categoryData: Record<string, Record<string, string[]>>;
+  onSelect: (category: { large: string; medium: string; small: string }) => void;
+  question: Question;
 }
 
-const MindMapCategory = ({ categoryData, onSelect, question }) => {
-	const [selectedLarge, setSelectedLarge] = useState("")
-	const [selectedMedium, setSelectedMedium] = useState("")
+const MindMapCategory: React.FC<MindMapCategoryProps> = ({ categoryData, onSelect, question }) => {
+	const [selectedLarge, setSelectedLarge] = useState<string>('')
+	const [selectedMedium, setSelectedMedium] = useState<string>('')
+	const [currentQuestion, setQuestion] = useState<Question>({
+		id: '',
+		category: { large: '', medium: '', small: '' },
+		options: [],
+	})
 
-	const handleLargeClick = (category) => {
+	const handleLargeClick = (category: string) => {
 		setSelectedLarge(category)
-		setSelectedMedium("")
-		onSelect({ large: category, medium: "", small: "" })
+		setSelectedMedium('')
+		onSelect({ large: category, medium: '', small: '' })
 	}
 
-	const handleMediumClick = (category) => {
+	const handleMediumClick = (category: string) => {
 		setSelectedMedium(category)
-		onSelect({ large: selectedLarge, medium: category, small: "" })
+		onSelect({ large: selectedLarge, medium: category, small: '' })
 	}
 
-	const handleSmallClick = (category) => {
+	const handleSmallClick = (category: string) => {
 		onSelect({ large: selectedLarge, medium: selectedMedium, small: category })
+	}
+
+	const handleCategorySelect = (category: { large: string; medium: string; small: string }) => {
+		setQuestion((prev: Question) => ({ ...prev, category }))
 	}
 
 	return (
@@ -263,7 +189,7 @@ export default function Component() {
 		}))
 	}
 
-	const handleCategorySelect = (category) => {
+	const handleCategorySelect = (category: { large: string; medium: string; small: string }) => {
 		setQuestion((prev) => ({ ...prev, category }))
 	}
 
