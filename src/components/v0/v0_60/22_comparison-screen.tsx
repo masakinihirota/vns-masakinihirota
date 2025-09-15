@@ -1,4 +1,6 @@
 // ユーザープロフィール比較機能
+
+'use client'
 import { useState } from "react"
 import { ThumbsUp } from "lucide-react"
 

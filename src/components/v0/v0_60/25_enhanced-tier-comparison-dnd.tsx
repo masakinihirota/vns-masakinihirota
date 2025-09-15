@@ -1,4 +1,6 @@
 // Webアプリのメニュー2
+
+'use client'
 import { useMemo, useState } from "react"
 import {
 	DragDropContext,

@@ -9,11 +9,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
+// ダミーデータのインポート
+import dummyUserData from "./53_user-profile.dummyData.json"
+
+// ユーザーの型定義
+interface User {
+	id: string
+	name: string
+	email: string
+	avatar: string | null
+	created_at: string
+	updated_at: string
+}
+
 // Supabaseクライアントの初期化（実際の値に置き換えてください）
-const supabase = createClient("YOUR_SUPABASE_URL", "YOUR_SUPABASE_ANON_KEY")
+// const supabase = createClient("YOUR_SUPABASE_URL", "YOUR_SUPABASE_ANON_KEY")
 
 export default function UserProfile() {
-	const [user, setUser] = useState(null)
+	const [user, setUser] = useState<User | null>(null)
 	const [name, setName] = useState("")
 	const [email, setEmail] = useState("")
 
@@ -22,37 +35,26 @@ export default function UserProfile() {
 	}, [])
 
 	async function fetchUserProfile() {
-		const {
-			data: { user }
-		} = await supabase.auth.getUser()
-		if (user) {
-			const { data, error } = await supabase
-				.from("users")
-				.select("*")
-				.eq("id", user.id)
-				.single()
-
-			if (error) console.error("Error fetching user profile:", error)
-			else {
-				setUser(data)
-				setName(data.name)
-				setEmail(data.email)
-			}
-		}
+		// ダミーデータを使用
+		setUser(dummyUserData)
+		setName(dummyUserData.name)
+		setEmail(dummyUserData.email)
 	}
 
-	async function handleUpdate(e) {
+	async function handleUpdate(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault()
-		const { data, error } = await supabase
-			.from("users")
-			.update({ name, email })
-			.eq("id", user.id)
 
-		if (error) console.error("Error updating user profile:", error)
-		else {
-			console.log("Profile updated successfully:", data)
-			fetchUserProfile() // 更新後にプロフィールを再取得
+		// ダミーデータの更新（実際のアプリケーションではAPI呼び出し）
+		const updatedUser = {
+			...dummyUserData,
+			name,
+			email,
+			updated_at: new Date().toISOString()
 		}
+
+		// 状態を更新
+		setUser(updatedUser)
+		console.log("Profile updated successfully:", updatedUser)
 	}
 
 	if (!user) return <div>ログインしてください</div>
