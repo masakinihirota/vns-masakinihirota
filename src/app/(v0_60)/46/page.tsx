@@ -1,13 +1,12 @@
-import React from "react";
-import Component from "@/components/v0/v0_60/46_user-comparison";
+import Component from "@/components/v0/v0_60/46_user-comparison"
 
 const Page46 = () => {
-  return (
-    <div>
-      <h1>46 Component</h1>
-      <Component />
-    </div>
-  );
-};
+	return (
+		<div>
+			<h1>46 Component</h1>
+			<Component />
+		</div>
+	)
+}
 
-export default Page46;
+export default Page46
