@@ -1,4 +1,5 @@
 // ルートアカウント
+"use client"
 import React, { useState } from "react"
 import { AlertCircle, History, Star, UserPlus } from "lucide-react"
 
@@ -53,7 +54,7 @@ export default function RootAccountDashboard() {
 									<Checkbox
 										id='oasis-declaration'
 										checked={oasisDeclaration}
-										onCheckedChange={setOasisDeclaration}
+										onCheckedChange={(checked) => setOasisDeclaration(checked === true)}
 									/>
 									<Label htmlFor='oasis-declaration'>
 										オアシス宣言に同意します

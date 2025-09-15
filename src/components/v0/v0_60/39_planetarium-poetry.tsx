@@ -136,7 +136,7 @@ export default function PlanetariumPoetry() {
 	}, [loaded])
 
 	return (
-		<div className='w-full h-screen bg-black'>
+		<div className='w-full h-screen'>
 			<canvas ref={canvasRef} className='w-full h-full' />
 		</div>
 	)

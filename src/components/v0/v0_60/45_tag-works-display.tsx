@@ -1,4 +1,6 @@
 // タグ別作品表示
+"use client"
+
 import { useState } from "react"
 
 import { Badge } from "@/components/ui/badge"

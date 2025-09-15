@@ -109,7 +109,9 @@ export default function Component() {
 			{list.map((work) => (
 				<li key={work.id} className='flex justify-between items-center'>
 					<span>{work.title}</span>
-					{"count" in work && <Badge variant='secondary'>{work.count}</Badge>}
+					{"count" in work && typeof work.count === "number" && (
+						<Badge variant='secondary'>{work.count}</Badge>
+					)}
 				</li>
 			))}
 		</ul>

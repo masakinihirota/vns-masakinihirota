@@ -30,7 +30,7 @@ import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select } from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger } from "@/components/ui/select"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
@@ -42,14 +42,14 @@ export default function WorkRegistrationForm() {
   const [tier, setTier] = useState(5) // デフォルトは未評価
 
   const categories = ['アニメ', '漫画', 'ゲーム', '映画', '小説']
-  const tierNames = {
-    1: 'ティア1',
-    2: 'ティア2',
-    3: 'ティア3',
-    4: '普通もしくは自分に合わない',
-    5: '未評価',
-    6: '未読',
-    7: 'おすすめ'
+  const tierNames: { [key: string]: string } = {
+    "1": 'ティア1',
+    "2": 'ティア2',
+    "3": 'ティア3',
+    "4": '普通もしくは自分に合わない',
+    "5": '未評価',
+    "6": '未読',
+    "7": 'おすすめ'
   }
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -65,13 +65,17 @@ export default function WorkRegistrationForm() {
       <div>
         <Label htmlFor="category">カテゴリ</Label>
         <Select
-          id="category"
           value={category}
           onValueChange={setCategory}
         >
-          {categories.map((cat) => (
-            <Select.Option key={cat} value={cat}>{cat}</Select.Option>
-          ))}
+          <SelectTrigger aria-label="カテゴリを選択">
+            {category || "カテゴリを選択"}
+          </SelectTrigger>
+          <SelectContent>
+            {categories.map((cat) => (
+              <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </div>
 
@@ -88,13 +92,17 @@ export default function WorkRegistrationForm() {
       <div>
         <Label htmlFor="tier">評価</Label>
         <Select
-          id="tier"
           value={tier.toString()}
           onValueChange={(value) => setTier(Number(value))}
         >
-          {Object.entries(tierNames).map(([key, value]) => (
-            <Select.Option key={key} value={key}>{value}</Select.Option>
-          ))}
+          <SelectTrigger aria-label="評価を選択">
+            {tierNames[tier.toString()] || "評価を選択"}
+          </SelectTrigger>
+          <SelectContent>
+            {Object.entries(tierNames).map(([key, value]) => (
+              <SelectItem key={key} value={key}>{value}</SelectItem>
+            ))}
+          </SelectContent>
         </Select>
       </div>
 
@@ -129,10 +137,15 @@ export default function WorkRegistrationForm() {
 
           <div>
             <Label htmlFor="workSize">作品の規模</Label>
-            <Select id="workSize">
-              <Select.Option value="small">小（短時間で読み、見終わる）</Select.Option>
-              <Select.Option value="medium">中（何時間もかかる）</Select.Option>
-              <Select.Option value="large">大（何日もかかる）</Select.Option>
+            <Select>
+              <SelectTrigger aria-label="作品の規模を選択">
+                規模を選択
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="small">小（短時間で読み、見終わる）</SelectItem>
+                <SelectItem value="medium">中（何時間もかかる）</SelectItem>
+                <SelectItem value="large">大（何日もかかる）</SelectItem>
+              </SelectContent>
             </Select>
           </div>
 

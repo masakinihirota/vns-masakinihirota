@@ -1,4 +1,5 @@
 // Mind Map Category List
+"use client"
 import * as React from "react"
 import { ChevronRight } from "lucide-react"
 
@@ -133,7 +134,7 @@ function TreeNode({ node }: { node: TreeNode }) {
 
 export default function Component() {
 	return (
-		<div className='w-full max-w-md p-4 bg-white rounded-lg shadow'>
+		<div className='w-full max-w-md p-4 rounded-lg shadow'>
 			<h2 className='text-2xl font-bold mb-4'>価値観のカテゴリー</h2>
 			{data.map((node, index) => (
 				<TreeNode key={index} node={node} />

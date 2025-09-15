@@ -21,6 +21,7 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from "@/components/ui/dialog"
+import { dummyAnimeWorks } from "@/app/(v0_60)/dummy_db"
 
 type Work = {
 	id: string
@@ -39,7 +40,7 @@ interface Props {
 }
 
 export default function MangaRatingList({
-	works = [],
+	works = dummyAnimeWorks,
 	userPoints,
 	onLike,
 	onUnlike

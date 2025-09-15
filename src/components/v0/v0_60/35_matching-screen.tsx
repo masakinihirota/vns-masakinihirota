@@ -74,7 +74,7 @@ const dummyProfiles: UserProfile[] = [
 	}
 ]
 
-export default function MatchingScreen() {
+export function MatchingScreen() {
 	const [groups, setGroups] = useState<Group[]>([])
 	const [points, setPoints] = useState(1000)
 	const [selectedGroup, setSelectedGroup] = useState<Group | null>(null)

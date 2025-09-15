@@ -12,7 +12,7 @@ import { Slider } from "@/components/ui/slider"
 import { Textarea } from "@/components/ui/textarea"
 
 const categories = ["アニメ", "漫画", "ゲーム", "映画", "小説"]
-const subCategories = {
+const subCategories: Record<string, string[]> = {
 	アニメ: ["冒険", "格闘", "大河", "ラブコメ", "BL"],
 	漫画: ["少年漫画", "少女漫画", "青年漫画", "女性漫画", "ラブコメ", "スポーツ"]
 	// 他のカテゴリのサブカテゴリも同様に定義
@@ -57,28 +57,30 @@ export default function WorkRegistrationForm() {
 
 			<div>
 				<Label htmlFor='category'>カテゴリ</Label>
-				<Select
-					id='category'
-					value={category}
-					onValueChange={(value) => {
-						setCategory(value)
-						setSubCategory([])
-					}}
-				>
-					<option value=''>カテゴリを選択</option>
-					{categories.map((cat) => (
-						<option key={cat} value={cat}>
-							{cat}
-						</option>
-					))}
-				</Select>
+				<div>
+					<Label htmlFor='category'>カテゴリ</Label>
+					<Select
+						value={category}
+						onValueChange={(value) => {
+							setCategory(value)
+							setSubCategory([])
+						}}
+					>
+						<option value=''>カテゴリを選択</option>
+						{categories.map((cat) => (
+							<option key={cat} value={cat}>
+								{cat}
+							</option>
+						))}
+					</Select>
+				</div>
 			</div>
 
 			{category && (
 				<div>
 					<Label>サブカテゴリ</Label>
 					<div className='grid grid-cols-2 gap-2'>
-						{subCategories[category].map((subCat) => (
+						{subCategories[category]?.map((subCat: string) => (
 							<div key={subCat} className='flex items-center space-x-2'>
 								<Checkbox
 									id={subCat}
@@ -106,7 +108,6 @@ export default function WorkRegistrationForm() {
 			<div>
 				<Label htmlFor='tier'>評価</Label>
 				<Select
-					id='tier'
 					value={tier.toString()}
 					onValueChange={(value) => setTier(Number(value))}
 				>

@@ -68,7 +68,7 @@ const dummyHistory: HistoryItem[] = [
 	}
 ]
 
-export default function UserHistory() {
+export function UserHistory() {
 	const [history, setHistory] = useState<HistoryItem[]>(dummyHistory)
 	const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc")
 	const [filter, setFilter] = useState("")
@@ -111,7 +111,7 @@ export default function UserHistory() {
 							<SelectValue placeholder='カテゴリでフィルタ' />
 						</SelectTrigger>
 						<SelectContent>
-							<SelectItem value=''>すべて</SelectItem>
+							<SelectItem value='all'>すべて</SelectItem>
 							<SelectItem value='プロフィール'>プロフィール</SelectItem>
 							<SelectItem value='アニメ'>アニメ</SelectItem>
 							<SelectItem value='グループ'>グループ</SelectItem>

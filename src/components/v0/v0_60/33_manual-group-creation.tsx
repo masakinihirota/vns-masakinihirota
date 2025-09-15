@@ -1,4 +1,6 @@
 // 手動グループ作成画面
+"use client"
+
 import { useState } from "react"
 import { PlusCircle, Search, UserPlus } from "lucide-react"
 
@@ -9,19 +11,25 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-export default function Component() {
-	const [groupName, setGroupName] = useState("")
-	const [searchQuery, setSearchQuery] = useState("")
-	const [groupMembers, setGroupMembers] = useState([])
+interface User {
+	id: number;
+	name: string;
+	avatar: string;
+}
 
-	const dummyUsers = [
+export default function Component() {
+	const [groupName, setGroupName] = useState("");
+	const [searchQuery, setSearchQuery] = useState("");
+	const [groupMembers, setGroupMembers] = useState<User[]>([]);
+
+	const dummyUsers: User[] = [
 		{ id: 1, name: "田中太郎", avatar: "/placeholder.svg?height=40&width=40" },
 		{ id: 2, name: "佐藤花子", avatar: "/placeholder.svg?height=40&width=40" },
 		{ id: 3, name: "鈴木一郎", avatar: "/placeholder.svg?height=40&width=40" }
-	]
+	];
 
-	const handleAddMember = (user) => {
-		setGroupMembers([...groupMembers, user])
+	const handleAddMember = (user: User): void => {
+		setGroupMembers([...groupMembers, user]);
 	}
 
 	return (

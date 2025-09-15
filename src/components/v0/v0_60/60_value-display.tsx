@@ -43,7 +43,7 @@ const ValueBadge = ({ value }: { value: ValueOption }) => {
 	return <Badge className={`ml-2 ${colorMap[value]}`}>{value}</Badge>
 }
 
-export default function ValueDisplay({ values = [] }: ValueDisplayProps) {
+export default function ValueDisplay({ values = dummyData as ValueItem[] }: ValueDisplayProps) {
 	return (
 		<Card className='w-full max-w-2xl'>
 			<CardHeader>

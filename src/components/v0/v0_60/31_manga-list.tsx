@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react"
 import { Pencil, Trash2 } from "lucide-react"
 
-import { supabase } from "../lib/supabase"
+import { dummyMangas } from "@/app/(v0_60)/dummy_db"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -31,48 +31,21 @@ export default function MangaList() {
 		fetchMangas()
 	}, [])
 
+	// Supabaseからのフェッチを削除し、ダミーデータを使用
 	async function fetchMangas() {
-		const { data, error } = await supabase
-			.from("mangas")
-			.select("*")
-			.order("id", { ascending: true })
-		if (error) console.error("エラー:", error)
-		else setMangas(data || [])
+		setMangas(dummyMangas)
 	}
 
 	async function addManga() {
-		const { data, error } = await supabase
-			.from("mangas")
-			.insert([newManga])
-			.select()
-		if (error) console.error("エラー:", error)
-		else {
-			setMangas([...mangas, ...data])
-			setNewManga({ title: "", author: "" })
-		}
+		console.warn("addManga is disabled when using dummy data.")
 	}
 
 	async function updateManga(id: number) {
-		const mangaToUpdate = mangas.find((manga) => manga.id === id)
-		if (!mangaToUpdate) return
-
-		const { error } = await supabase
-			.from("mangas")
-			.update({ title: mangaToUpdate.title, author: mangaToUpdate.author })
-			.eq("id", id)
-		if (error) console.error("エラー:", error)
-		else {
-			setEditingId(null)
-			fetchMangas()
-		}
+		console.warn("updateManga is disabled when using dummy data.")
 	}
 
 	async function deleteManga(id: number) {
-		const { error } = await supabase.from("mangas").delete().eq("id", id)
-		if (error) console.error("エラー:", error)
-		else {
-			setMangas(mangas.filter((manga) => manga.id !== id))
-		}
+		console.warn("deleteManga is disabled when using dummy data.")
 	}
 
 	return (
