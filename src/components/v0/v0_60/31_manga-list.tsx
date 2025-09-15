@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react"
 import { Pencil, Trash2 } from "lucide-react"
 
-import { dummyMangas } from "@/app/(v0_60)/dummy_db"
+import { dummyMangas } from "@/app/(v0_60)/dummy_db2"
 
 import { Button } from "@/components/ui/button"
 import {

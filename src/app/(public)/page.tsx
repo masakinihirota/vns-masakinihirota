@@ -2,7 +2,7 @@ import Link from "next/link"
 import { useTranslations } from "next-intl"
 
 import { ModeToggle } from "@/app/(unauth)/ModeTogglePage/mode-toggle"
-import V0_60 from "@/app/(v0_60)/v0_60"
+import V0_60 from "@/app/(v0)/v0_60"
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher"
 
 export default function Home() {
