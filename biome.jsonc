@@ -16,6 +16,7 @@
       "!src/components/ui/**/*",
       "!src/components/shadcnui-blocks/**/*",
       "!src/components/oauth/**/*",
+      "!src/components/v0/**/*",
       // 特定ファイルを除外
       // "!globals.css",
       "!src/components/app-sidebar.tsx",
