@@ -1,4 +1,5 @@
 // ユーザーの基本情報
+
 import { Heart, Star } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"

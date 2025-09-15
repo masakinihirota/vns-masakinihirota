@@ -437,9 +437,19 @@ export default function Component() {
 			choice: NumberChoice | AmountChoice | TimeChoice
 		) => {
 			if (choice.condition === "非表示") {
-				return `${choice.value}${choice.unit || ""}`
+				if ("value" in choice) {
+					return `${choice.value}${choice.unit || ""}`
+				} else if ("time" in choice) {
+					return `${choice.time}${choice.unit || ""}`
+				}
+				return ""
 			} else {
-				return `${choice.value}${choice.unit || ""} ${choice.condition}`
+				if ("value" in choice) {
+					return `${choice.value}${choice.unit || ""} ${choice.condition}`
+				} else if ("time" in choice) {
+					return `${choice.time}${choice.unit || ""} ${choice.condition}`
+				}
+				return ""
 			}
 		}
 
@@ -448,21 +458,21 @@ export default function Component() {
 				return normalChoices.map((choice, index) => (
 					<div key={index} className='mb-4'>
 						{renderIcons(choice, index)}
-						<span>{choice.text || `選択肢 ${index + 1}`}</span>
+						<span className='text-gray-800'>{choice.text || `選択肢 ${index + 1}`}</span>
 					</div>
 				))
 			case "数字":
 				return numberChoices.map((choice, index) => (
 					<div key={index} className='mb-4'>
 						{renderIcons(choice, index)}
-						<span>{renderChoiceText(choice)}</span>
+						<span className='text-gray-800'>{renderChoiceText(choice)}</span>
 					</div>
 				))
 			case "金額":
 				return amountChoices.map((choice, index) => (
 					<div key={index} className='mb-4'>
 						{renderIcons(choice, index)}
-						<span>
+						<span className='text-gray-800'>
 							{renderChoiceText(choice)} {currency}
 						</span>
 					</div>
@@ -471,7 +481,7 @@ export default function Component() {
 				return timeChoices.map((choice, index) => (
 					<div key={index} className='mb-4'>
 						{renderIcons(choice, index)}
-						<span>{renderChoiceText(choice)}</span>
+						<span className='text-gray-800'>{renderChoiceText(choice)}</span>
 					</div>
 				))
 		}
@@ -553,8 +563,8 @@ export default function Component() {
 			</div>
 			<div className='flex-1'>
 				<h2 className='text-2xl font-bold mb-4'>プレビュー</h2>
-				<div className='border p-4 rounded-lg bg-gray-50'>
-					<h3 className='text-xl font-semibold mb-4'>
+				<div className='border p-4 rounded-lg bg-gray-100 text-gray-800'>
+					<h3 className='text-xl font-semibold mb-4 text-gray-900'>
 						{topic || "お題が入力されていません"}
 					</h3>
 					<div className='space-y-2'>{renderPreviewChoices()}</div>

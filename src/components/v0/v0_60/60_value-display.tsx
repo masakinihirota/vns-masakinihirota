@@ -3,6 +3,7 @@ import { AlertTriangle, CheckCircle2, Circle, Minus, X } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import dummyDataRaw from "./60_value-display.dummyData.json"
 
 type ValueOption = "◎" | "◯" | "ー" | "▲" | "✕"
 
@@ -43,7 +44,9 @@ const ValueBadge = ({ value }: { value: ValueOption }) => {
 	return <Badge className={`ml-2 ${colorMap[value]}`}>{value}</Badge>
 }
 
-export default function ValueDisplay({ values = [] }: ValueDisplayProps) {
+const dummyData = dummyDataRaw as ValueItem[]
+
+export default function ValueDisplay({ values = dummyData }: ValueDisplayProps) {
 	return (
 		<Card className='w-full max-w-2xl'>
 			<CardHeader>
