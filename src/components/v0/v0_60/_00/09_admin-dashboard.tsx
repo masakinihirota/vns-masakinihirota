@@ -62,7 +62,14 @@ export default function AdminDashboard() {
 	)
 }
 
-function AdminMenuItem({ icon, title, description, href }) {
+interface AdminMenuItemProps {
+	icon: React.ReactNode
+	title: string
+	description: string
+	href: string
+}
+
+function AdminMenuItem({ icon, title, description, href }: AdminMenuItemProps) {
 	return (
 		<Card>
 			<CardHeader className='flex flex-row items-center gap-4'>
