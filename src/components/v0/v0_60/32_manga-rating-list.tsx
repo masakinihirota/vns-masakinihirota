@@ -21,7 +21,7 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from "@/components/ui/dialog"
-import { dummyAnimeWorks } from "@/app/(v0_60)/dummy_db2"
+import { dummyAnimeWorks } from "@/app/(v0)/dummy_db2"
 
 type Work = {
 	id: string
