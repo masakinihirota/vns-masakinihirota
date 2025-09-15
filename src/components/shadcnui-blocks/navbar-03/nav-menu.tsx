@@ -1,5 +1,7 @@
 "use client";
 
+import React from "react";
+
 import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
@@ -13,7 +15,7 @@ import { cn } from "@/lib/utils";
 import { NavigationMenuProps } from "@radix-ui/react-navigation-menu";
 import { LucideIcon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+;
 import { foods, travelMenuItems } from "./config";
 
 export const NavMenu = (props: NavigationMenuProps) => (
@@ -21,7 +23,7 @@ export const NavMenu = (props: NavigationMenuProps) => (
     <NavigationMenuList className="gap-0 space-x-0 text-sm">
       <NavigationMenuItem>
         <Button variant="ghost" className="text-[15px] font-normal" asChild>
-          <Link href="#">Home</Link>
+          <Link href="/">Home</Link>
         </Button>
       </NavigationMenuItem>
       <NavigationMenuItem>
