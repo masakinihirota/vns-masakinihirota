@@ -21,19 +21,17 @@ export default function V0_60Page() {
 			<br />
 			<Link href='/07'>07_component</Link>
 			<br />
-			<Link href='/08'>08_mparison-list</Link>
+			<Link href='/08'>08_map-list</Link>
 			<br />
 			<Link href='/09'>09_component</Link>
 			<br />
 			<Link href='/10'>10_component</Link>
 			<br />
-			{/* <Link href='/11'>11_component</Link>
+			<Link href='/11'>11_component</Link>
 			<br />
 			<Link href='/12'>12_component</Link>
 			<br />
-			<Link href='/13'>13_component</Link> */}
-			<br />
-			<Link href='/14'>14_component</Link>
+			<Link href='/13'>13_component</Link>
 			<br />
 			<Link href='/15'>15_component</Link>
 			<br />
