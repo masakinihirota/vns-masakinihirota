@@ -1,14 +1,16 @@
 // Favorite Work Components
 'use client'
 
+
 import { useState } from "react"
 import { Book, Film, Star } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import dummyWorks from "./26_dummyData.json"
 
-type Work = {
+export type Work = {
 	id: string
 	title: string
 	tier: number
@@ -19,6 +21,7 @@ type WorksListProps = {
 	name: string
 	works: Work[]
 }
+
 
 const TierBadge = ({ tier }: { tier: number }) => {
 	const colors = [
@@ -50,19 +53,26 @@ const WorkItem = ({ work }: { work: Work }) => (
 	</Card>
 )
 
-export default function Component(
+
+// JSONデータの型チェック
+const validateWorks = (data: any): Work[] => {
+    if (!Array.isArray(data)) {
+        throw new Error("Invalid data format: Expected an array.")
+    }
+    return data.map((item) => {
+        if (typeof item.id !== "string" || typeof item.title !== "string" || typeof item.tier !== "number" || !["anime", "manga"].includes(item.type)) {
+            throw new Error("Invalid data format: Work item is malformed.")
+        }
+        return item as Work
+    })
+}
+
+const validatedDummyWorks = validateWorks(dummyWorks)
+
+export default function FavoriteWorks(
 	{ name, works }: WorksListProps = {
 		name: "マイリスト",
-		works: [
-			{ id: "1", title: "進撃の巨人 1期", tier: 1, type: "anime" },
-			{ id: "2", title: "進撃の巨人 2期", tier: 1, type: "anime" },
-			{ id: "3", title: "進撃の巨人 3期", tier: 2, type: "anime" },
-			{ id: "4", title: "進撃の巨人 4期", tier: 2, type: "anime" },
-			{ id: "5", title: "新世紀エヴァンゲリオン", tier: 1, type: "anime" },
-			{ id: "21", title: "進撃の巨人", tier: 1, type: "manga" },
-			{ id: "22", title: "寄生獣", tier: 2, type: "manga" },
-			{ id: "23", title: "Dr.クマヒゲ", tier: 3, type: "manga" }
-		]
+		works: validatedDummyWorks
 	}
 ) {
 	const [filter, setFilter] = useState<"all" | "anime" | "manga">("all")
