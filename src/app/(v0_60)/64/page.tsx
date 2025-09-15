@@ -1,13 +1,12 @@
-import React from "react";
-import ValueRegistrationForm2 from "@/components/v0/v0_60/64_value-registration-form2";
+import ValueRegistrationForm2 from "@/components/v0/v0_60/64_value-registration-form2"
 
 const Page64 = () => {
-  return (
-    <div>
-      <h1>64 Component</h1>
-      <ValueRegistrationForm2 />
-    </div>
-  );
-};
+	return (
+		<div>
+			<h1>64 Component</h1>
+			<ValueRegistrationForm2 />
+		</div>
+	)
+}
 
-export default Page64;
+export default Page64

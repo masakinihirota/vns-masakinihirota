@@ -107,17 +107,17 @@ export const dummyFutureWorks = [
 // 同盟表示コンポーネント用ダミーデータ
 export const dummyAlliances = [
 	{
-		id: '1',
-		name: 'Alliance Alpha',
+		id: "1",
+		name: "Alliance Alpha",
 		memberCount: 10,
-		description: 'This is a description for Alliance Alpha.',
+		description: "This is a description for Alliance Alpha."
 	},
 	{
-		id: '2',
-		name: 'Alliance Beta',
+		id: "2",
+		name: "Alliance Beta",
 		memberCount: 15,
-		description: 'This is a description for Alliance Beta.',
-	},
-];
+		description: "This is a description for Alliance Beta."
+	}
+]
 
 // 他のダミーデータもここに追加可能
