@@ -1,4 +1,6 @@
 // Favorite Work Components
+'use client'
+
 import { useState } from "react"
 import { Book, Film, Star } from "lucide-react"
 
