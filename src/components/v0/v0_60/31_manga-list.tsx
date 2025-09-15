@@ -4,7 +4,7 @@
 import { useEffect, useState } from "react"
 import { Pencil, Trash2 } from "lucide-react"
 
-import { dummyMangas } from "@/app/(v0_60)/dummy_db"
+import { dummyManages } from "@/app/(v0)/dummy_db2"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -23,17 +23,17 @@ type Manga = {
 }
 
 export default function MangaList() {
-	const [mangas, setMangas] = useState<Manga[]>([])
+	const [manages, setManages] = useState<Manga[]>([])
 	const [newManga, setNewManga] = useState({ title: "", author: "" })
 	const [editingId, setEditingId] = useState<number | null>(null)
 
 	useEffect(() => {
-		fetchMangas()
+		fetchManages()
 	}, [])
 
 	// Supabaseからのフェッチを削除し、ダミーデータを使用
-	async function fetchMangas() {
-		setMangas(dummyMangas)
+	async function fetchManages() {
+		setManages(dummyManages)
 	}
 
 	async function addManga() {
@@ -65,7 +65,7 @@ export default function MangaList() {
 				<Button onClick={addManga}>漫画を追加</Button>
 			</div>
 			<div className='grid gap-4'>
-				{mangas.map((manga) => (
+				{manages.map((manga) => (
 					<Card key={manga.id}>
 						<CardHeader>
 							<CardTitle>
@@ -73,8 +73,8 @@ export default function MangaList() {
 									<Input
 										value={manga.title}
 										onChange={(e) =>
-											setMangas(
-												mangas.map((m) =>
+											setManages(
+												manages.map((m) =>
 													m.id === manga.id
 														? { ...m, title: e.target.value }
 														: m
@@ -92,8 +92,8 @@ export default function MangaList() {
 								<Input
 									value={manga.author}
 									onChange={(e) =>
-										setMangas(
-											mangas.map((m) =>
+										setManages(
+											manages.map((m) =>
 												m.id === manga.id ? { ...m, author: e.target.value } : m
 											)
 										)
