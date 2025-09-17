@@ -7,19 +7,11 @@ export default function V0_60Page() {
 		<div>
 			TOPページに置くリンクの一部をv0_60用に設定
 			<br />
-			<Link href='/01_now-favorites'>01_now-favorites</Link>
+			{/* <Link href='/01_now-favorites'>01_now-favorites</Link>
 			<br />
 			<Link href='/02_life-component'>02_life-component</Link>
 			<br />
 			<Link href='/03_future-works'>03_future-works</Link>
-			<br />
-			<Link href='/04_user-profile'>X 04_user-profile</Link>
-			<br />
-			<Link href='/05'>X 05_book-list</Link>
-			<br />
-			<Link href='/06'>06_life-component</Link>
-			<br />
-			<Link href='/07'>07_component</Link>
 			<br />
 			<Link href='/08'>08_map-list</Link>
 			<br />
@@ -48,7 +40,7 @@ export default function V0_60Page() {
 			<Link href='/21'>21_component</Link>
 			<br />
 			<Link href='/22'>22_component</Link>
-			<br />
+			<br /> */}
 			<Link href='/23'>23_component</Link>
 			<br />
 			<Link href='/24'>24_component</Link>
