@@ -1,6 +1,6 @@
 // 18_component page
 
-import Component from "@/components/v0/v0_60/18_auto-group"
+import Component from "@/components/v0/v0_group_alliance/18_auto-group"
 
 const Page18 = () => {
 	return (

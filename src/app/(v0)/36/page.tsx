@@ -1,4 +1,4 @@
-import Component36 from "@/components/v0/v0_60/36_mind-map-list"
+import Component36 from "@/components/v0/v0_etc/36_mind-map-list"
 
 const Page36 = () => {
 	return (

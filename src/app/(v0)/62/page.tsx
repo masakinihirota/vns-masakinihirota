@@ -1,4 +1,4 @@
-import ValueRegistrationFormRevised5 from "@/components/v0/v0_60/62_value-registration-form-revised-5"
+import ValueRegistrationFormRevised5 from "@/components/v0/v0_values/62_value-registration-form-revised-5"
 
 const Page62 = () => {
 	return (

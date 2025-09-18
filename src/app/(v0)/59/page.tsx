@@ -1,4 +1,4 @@
-import ValueComparison from "@/components/v0/v0_60/59_value-comparison"
+import ValueComparison from "@/components/v0/v0_etc/59_value-comparison"
 
 const Page59 = () => {
 	return (

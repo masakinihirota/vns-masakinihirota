@@ -1,4 +1,4 @@
-import Component34 from "@/components/v0/v0_60/34_manual-matching"
+import Component34 from "@/components/v0/v0_matching/34_manual-matching"
 
 const Page34 = () => {
 	return (
