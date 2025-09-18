@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/24_data-management"
+import Component from "@/components/v0/v0_etc/24_data-management"
 
 const Page24 = () => {
 	return (

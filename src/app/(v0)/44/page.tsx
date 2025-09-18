@@ -1,4 +1,4 @@
-import Component44 from "@/components/v0/v0_60/44_root-account-dashboard"
+import Component44 from "@/components/v0/v0_root_accounts/44_root-account-dashboard"
 
 const Page44 = () => {
 	return (

@@ -1,6 +1,6 @@
 // 19_component page
 
-import Component from "@/components/v0/v0_60/19_auto-matching"
+import Component from "@/components/v0/v0_group_alliance/19_auto-matching"
 
 const Page19 = () => {
 	return (

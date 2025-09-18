@@ -1,4 +1,4 @@
-import Component40 from "@/components/v0/v0_60/40_point-system"
+import Component40 from "@/components/v0/v0_root_accounts/40_point-system"
 
 const Page40 = () => {
 	return (

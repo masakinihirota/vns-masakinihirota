@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/48_user-list-creator"
+import Component from "@/components/v0/v0_list/48_user-list-creator"
 
 const Page48 = () => {
 	return (

@@ -1,4 +1,4 @@
-import VoteMatch from "@/components/v0/v0_60/66_vote-match"
+import VoteMatch from "@/components/v0/v0_values/66_vote-match"
 
 const Page66 = () => {
 	return (

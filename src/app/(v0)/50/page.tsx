@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/50_user-management2"
+import Component from "@/components/v0/v0_admin/50_user-management2"
 
 const Page50 = () => {
 	return (

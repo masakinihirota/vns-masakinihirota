@@ -1,6 +1,6 @@
 import { dummyFutureWorks } from "../dummy_db"
 
-import Component from "@/components/v0/v0_60/03_future-works"
+import Component from "@/components/v0/v0_user_profiles/03_future-works"
 
 export default function FutureWorksPage() {
 	return (

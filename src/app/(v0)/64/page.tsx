@@ -1,4 +1,4 @@
-import ValueRegistrationForm2 from "@/components/v0/v0_60/64_value-registration-form2"
+import ValueRegistrationForm2 from "@/components/v0/v0_values/64_value-registration-form2"
 
 const Page64 = () => {
 	return (

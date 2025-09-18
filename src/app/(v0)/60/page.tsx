@@ -1,4 +1,4 @@
-import ValueDisplay from "@/components/v0/v0_60/60_value-display"
+import ValueDisplay from "@/components/v0/v0_etc/60_value-display"
 
 const Page60 = () => {
 	return (
