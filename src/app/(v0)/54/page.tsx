@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/54_user-profile2"
+import Component from "@/components/v0/v0_user_profiles/54_user-profile2"
 
 const Page54 = () => {
 	return (

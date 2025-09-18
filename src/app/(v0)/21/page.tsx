@@ -1,4 +1,4 @@
-import Component21 from "@/components/v0/v0_60/21_comparison-list"
+import Component21 from "@/components/v0/v0_matching/21_comparison-list"
 
 const Page21 = () => {
 	return (

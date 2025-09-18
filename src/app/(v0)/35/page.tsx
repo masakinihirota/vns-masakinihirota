@@ -1,4 +1,4 @@
-import { MatchingScreen } from "@/components/v0/v0_60/35_matching-screen"
+import { MatchingScreen } from "@/components/v0/v0_matching/35_matching-screen"
 
 const Page35 = () => {
 	return (

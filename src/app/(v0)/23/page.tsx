@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/23_create-value-question"
+import Component from "@/components/v0/v0_values/23_create-value-question"
 
 const Page23 = () => {
 	return (

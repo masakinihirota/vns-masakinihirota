@@ -1,7 +1,7 @@
-import dummyWorks from "@/components/v0/v0_60/26_dummyData.json"
+import dummyWorks from "@/components/v0/v0_list/26_dummyData.json"
 import FavoriteWorks, {
 	type Work
-} from "@/components/v0/v0_60/26_favorite-works"
+} from "@/components/v0/v0_list/26_favorite-works"
 
 const Page26 = () => {
 	return (

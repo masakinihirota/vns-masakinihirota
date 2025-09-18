@@ -1,4 +1,4 @@
-import Component43 from "@/components/v0/v0_60/43_registration-form"
+import Component43 from "@/components/v0/v0_works/43_registration-form"
 
 const Page43 = () => {
 	return (
