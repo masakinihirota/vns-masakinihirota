@@ -1,4 +1,4 @@
-import ValueHistoryPC from "@/components/v0/v0_60/61_value-history-pc"
+import ValueHistoryPC from "@/components/v0/v0_values/61_value-history-pc"
 
 const Page61 = () => {
 	return (

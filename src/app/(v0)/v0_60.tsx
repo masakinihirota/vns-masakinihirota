@@ -7,19 +7,11 @@ export default function V0_60Page() {
 		<div>
 			TOPページに置くリンクの一部をv0_60用に設定
 			<br />
-			<Link href='/01_now-favorites'>01_now-favorites</Link>
+			{/* <Link href='/01_now-favorites'>01_now-favorites</Link>
 			<br />
 			<Link href='/02_life-component'>02_life-component</Link>
 			<br />
 			<Link href='/03_future-works'>03_future-works</Link>
-			<br />
-			<Link href='/04_user-profile'>X 04_user-profile</Link>
-			<br />
-			<Link href='/05'>X 05_book-list</Link>
-			<br />
-			<Link href='/06'>06_life-component</Link>
-			<br />
-			<Link href='/07'>07_component</Link>
 			<br />
 			<Link href='/08'>08_map-list</Link>
 			<br />
@@ -43,9 +35,9 @@ export default function V0_60Page() {
 			<br />
 			<Link href='/19'>19_component</Link>
 			<br />
-			<Link href='/20'>20_component</Link>
+			<Link href='/20'>20_component</Link> */}
 			<br />
-			<Link href='/21'>21_component</Link>
+			{/* <Link href='/21'>21_component</Link>
 			<br />
 			<Link href='/22'>22_component</Link>
 			<br />
@@ -63,8 +55,8 @@ export default function V0_60Page() {
 			<br />
 			<Link href='/29'>29_component</Link>
 			<br />
-			<Link href='/30'>30_component</Link>
-			<br />
+			<Link href='/30'>30_component</Link> */}
+			{/* <br />
 			<Link href='/31'>31 Component</Link>
 			<br />
 			<Link href='/32'>32 Component</Link>
@@ -82,8 +74,8 @@ export default function V0_60Page() {
 			<Link href='/38'>38_permission-management2</Link>
 			<br />
 			<Link href='/40'>40_point-system</Link>
-			<br />
-			<Link href='/41'>41_problem-report-management</Link>
+			<br /> */}
+			{/* <Link href='/41'>41_problem-report-management</Link>
 			<br />
 			<Link href='/42'>42_problem-report-management2</Link>
 			<br />
@@ -101,8 +93,8 @@ export default function V0_60Page() {
 			<br />
 			<Link href='/49'>49_user-management2</Link>
 			<br />
-			<Link href='/50'>50_user-profile</Link>
-			<br />
+			<Link href='/50'>50_user-profile</Link> */}
+			{/* <br />
 			<Link href='/51'>51_user-profile2</Link>
 			<br />
 			<Link href='/52'>52_user-profile3</Link>
@@ -122,7 +114,7 @@ export default function V0_60Page() {
 			<Link href='/59'>59_user-profile10</Link>
 			<br />
 			<Link href='/60'>60_user-profile11</Link>
-			<br />
+			<br /> */}
 			<Link href='/61'>61_user-profile12</Link>
 			<br />
 			<Link href='/62'>62_user-profile13</Link>

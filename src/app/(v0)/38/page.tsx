@@ -1,4 +1,4 @@
-import Component38 from "@/components/v0/v0_60/38_permission-management2"
+import Component38 from "@/components/v0/v0_admin/38_permission-management2"
 
 const Page38 = () => {
 	return (

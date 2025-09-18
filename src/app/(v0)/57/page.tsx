@@ -1,4 +1,4 @@
-import UserRatingHistory from "@/components/v0/v0_60/57_user-rating-history"
+import UserRatingHistory from "@/components/v0/v0_etc/57_user-rating-history"
 
 const Page57 = () => {
 	return (

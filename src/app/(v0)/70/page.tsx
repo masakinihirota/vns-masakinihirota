@@ -1,4 +1,4 @@
-import WorkRegistration from "@/components/v0/v0_60/70_work-registration"
+import WorkRegistration from "@/components/v0/v0_works/70_work-registration"
 
 const Page70 = () => {
 	return (

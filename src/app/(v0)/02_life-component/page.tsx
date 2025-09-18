@@ -1,6 +1,6 @@
 import { dummyWorks } from "../dummy_db"
 
-import Component from "@/components/v0/v0_60/02_life-component"
+import Component from "@/components/v0/v0_user_profiles/02_life-component"
 
 export default function LifeComponentPage() {
 	return (
