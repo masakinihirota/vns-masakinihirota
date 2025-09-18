@@ -1,4 +1,4 @@
-import MangaList from "@/components/v0/v0_60/31_manga-list"
+import MangaList from "@/components/v0/v0_etc/31_manga-list"
 
 const Page31 = () => {
 	return (

@@ -1,4 +1,4 @@
-import Component42 from "@/components/v0/v0_60/42_problem-report-management2"
+import Component42 from "@/components/v0/v0_admin/42_problem-report-management2"
 
 const Page42 = () => {
 	return (

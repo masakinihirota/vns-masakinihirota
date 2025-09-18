@@ -1,6 +1,6 @@
 "use client"
 
-import MangaRatingList from "@/components/v0/v0_60/32_manga-rating-list"
+import MangaRatingList from "@/components/v0/v0_etc/32_manga-rating-list"
 
 const Page32 = () => {
 	return (

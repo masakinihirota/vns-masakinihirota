@@ -1,4 +1,4 @@
-import WorkRegistrationForm from "@/components/v0/v0_60/69_work-registration-form"
+import WorkRegistrationForm from "@/components/v0/v0_works/69_work-registration-form"
 
 const Page69 = () => {
 	return (

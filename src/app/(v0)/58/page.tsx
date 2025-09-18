@@ -1,4 +1,4 @@
-import UserValueHistory from "@/components/v0/v0_60/58_user-value-history"
+import UserValueHistory from "@/components/v0/v0_values/58_user-value-history"
 
 const Page58 = () => {
 	return (
