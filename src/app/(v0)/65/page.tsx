@@ -1,4 +1,4 @@
-import ValuesConfirmation from "@/components/v0/v0_60/65_values-confirmation"
+import ValuesConfirmation from "@/components/v0/v0_values/65_values-confirmation"
 
 const Page65 = () => {
 	return (

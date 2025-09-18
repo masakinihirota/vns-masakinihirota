@@ -1,4 +1,4 @@
-import ValueRegistrationForm from "@/components/v0/v0_60/63_value-registration-form"
+import ValueRegistrationForm from "@/components/v0/v0_values/63_value-registration-form"
 
 const Page63 = () => {
 	return (

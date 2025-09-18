@@ -1,4 +1,4 @@
-import WorkRege from "@/components/v0/v0_60/68_work-rege"
+import WorkRege from "@/components/v0/v0_works/68_work-rege"
 
 const Page68 = () => {
 	return (
