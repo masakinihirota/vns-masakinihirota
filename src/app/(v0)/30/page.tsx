@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/30_list-and-tags"
+import Component from "@/components/v0/v0_list/30_list-and-tags"
 
 const Page30 = () => {
 	return (

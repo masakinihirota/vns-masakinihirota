@@ -1,4 +1,4 @@
-import WorkListDisplay from "@/components/v0/v0_60/67_work-list-display"
+import WorkListDisplay from "@/components/v0/v0_list/67_work-list-display"
 
 const Page67 = () => {
 	return (

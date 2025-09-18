@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/25_enhanced-tier-comparison-dnd"
+import Component from "@/components/v0/v0_etc/25_enhanced-tier-comparison-dnd"
 
 const Page25 = () => {
 	return (
