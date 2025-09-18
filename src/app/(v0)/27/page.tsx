@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/27_favorite-works2"
+import Component from "@/components/v0/v0_etc/27_favorite-works2"
 
 const dummyWorks = [
 	{ id: "1", title: "進撃の巨人 1期", tier: 1, type: "anime" },

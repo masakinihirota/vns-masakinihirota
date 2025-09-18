@@ -1,6 +1,6 @@
 // 20_component page
 
-import Component from "@/components/v0/v0_60/20_category-works-display"
+import Component from "@/components/v0/v0_list/20_category-works-display"
 
 const Page20 = () => {
 	return (

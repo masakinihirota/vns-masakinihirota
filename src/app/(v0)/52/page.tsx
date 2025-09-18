@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/52_user-profile-form"
+import Component from "@/components/v0/v0_user_profiles/52_user-profile-form"
 
 const Page52 = () => {
 	return (

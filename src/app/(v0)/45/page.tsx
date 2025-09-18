@@ -1,4 +1,4 @@
-import Component from "@/components/v0/v0_60/45_tag-works-display"
+import Component from "@/components/v0/v0_tag/45_tag-works-display"
 
 const Page45 = () => {
 	return (
