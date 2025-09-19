@@ -1,6 +1,8 @@
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
+import V0_60 from "../(__etc)/(AI_v0)/v0_60"
+
 import GeminiComponents from "@/app/(__etc)/(AI_gemini)/gemini"
 // V0_folder
 import V0_folder from "@/app/(__etc)/(AI_v0)/v0_folder"
@@ -21,7 +23,7 @@ export default function Home() {
 			<GeminiComponents />
 			<br></br>
 			{/* v0_60のコンポーネントを使うページへのリンク */}
-			{/* <V0_60 /> */}
+			<V0_60 />
 			{/* V0_folderのコンポーネントを使うページへのリンク */}
 			<V0_folder />
 			<br></br>
