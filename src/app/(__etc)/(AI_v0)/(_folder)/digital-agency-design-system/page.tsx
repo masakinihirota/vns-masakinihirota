@@ -1,6 +1,6 @@
 import Link from "next/link"
 
-import { Button } from "@/components/AI/v0_folder/digital-agency-design-system"
+import { Button } from "@/components/(__etc)/AI/v0_folder/digital-agency-design-system"
 
 export default function Component() {
 	return (
