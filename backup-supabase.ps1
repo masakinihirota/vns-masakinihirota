@@ -1,3 +1,4 @@
+# 公式ドキュメントに従ったバックアップスクリプト
 # backup-supabase.ps1
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $backupDir = "supabase/backup"
