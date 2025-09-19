@@ -1,0 +1,12 @@
+import Component from "@/components/AI/v0/v0_etc/24_data-management"
+
+const Page24 = () => {
+	return (
+		<div>
+			<h1>24 Data Management</h1>
+			<Component />
+		</div>
+	)
+}
+
+export default Page24

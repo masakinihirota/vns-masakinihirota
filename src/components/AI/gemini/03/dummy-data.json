@@ -1,0 +1,27 @@
+[
+	{
+		"type": "single",
+		"question": "お気に入りの季節はどれですか？",
+		"options": ["春", "夏", "秋", "冬"]
+	},
+	{
+		"type": "multiple",
+		"question": "好きなプログラミング言語をすべて選んでください。",
+		"options": ["JavaScript", "Python", "Java", "C++", "Ruby", "TypeScript"]
+	},
+	{
+		"type": "single",
+		"question": "旅行で行きたい場所は？",
+		"options": ["海", "山", "都会", "温泉"]
+	},
+	{
+		"type": "multiple",
+		"question": "よく飲む飲み物を選んでください。",
+		"options": ["コーヒー", "紅茶", "水", "ジュース", "炭酸飲料"]
+	},
+	{
+		"type": "single",
+		"question": "朝食によく食べるものは？",
+		"options": ["パン", "ごはん", "シリアル", "食べない"]
+	}
+]
