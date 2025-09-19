@@ -52,3 +52,12 @@ type.ts
 # local backup files
 *.backup
 *.zip
+
+# サンプル UIを外部サイトで作ってもらったサンプルを置く場所
+_v60-folder/
+_geminiUI/
+_ai_ui/
+
+env.*
+env
+env.download
