@@ -1,105 +1,102 @@
 // この設定ファイルから相対パスで指定します。
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
-  "vcs": {
-    "enabled": false,
-    "clientKind": "git",
-    "useIgnoreFile": false
-  },
-  "files": {
-    "includes": [
-      // フォルダ以下を指定
-      "src/app/**/*.{ts,tsx,js,jsx,json,jsonc}",
-      "src/components/**/*.{ts,tsx,js,jsx,json,jsonc}",
-      "src/hooks/**/*.{ts,tsx,js,jsx,json,jsonc}",
-      // フォルダ以下を除外
-      "!src/components/ui/**/*",
-      "!src/components/shadcnui-blocks/**/*",
-      "!src/components/oauth/**/*",
-      "!src/components/(__etc)/**/*",
-      // 特定ファイルを除外
-      // "!globals.css",
-      "!src/components/app-sidebar.tsx",
-      "!src/components/theme-provider.tsx",
-      "!src/components/search-form.tsx",
-      "!*.chatmode.md",
-      "!_template/**/*",
-      "!type.ts"
-    ]
-  },
-  "formatter": {
-    "enabled": true,
-    "indentStyle": "tab",
-    "indentWidth": 2
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true,
-      "style": {
-        "noNonNullAssertion": "off"
-      }
-    }
-  },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "double",
-      "jsxQuoteStyle": "single",
-      "semicolons": "asNeeded",
-      "trailingCommas": "none"
-    }
-  },
-  "assist": {
-    "actions": {
-      "source": {
-        "organizeImports": {
-          "level": "on",
-          "options": {
-            "groups": [
-              // ===== react packages =====
-              // react関連パッケージを優先してimport
-              {
-                "type": false,
-                "source": [
-                  "react*",
-                  "react/**"
-                ]
-              },
-              // ===== npm packages =====
-              // react*,react/**以外のnpmパッケージを全てキャッチ
-              {
-                "type": false,
-                "source": ":PACKAGE:"
-              },
-              ":BLANK_LINE:",
-              // ===== lib modules =====
-              // ./libディレクトリを優先してimport
-              {
-                "type": false,
-                "source": "./lib/**"
-              },
-              // ===== user modules =====
-              // ./libディレクトリ以外のユーザー定義モジュールをまとめてキャッチ
-              {
-                "type": false,
-                "source": ":PATH:"
-              },
-              ":BLANK_LINE:",
-              // ===== other imports =====
-              // 上記に引っかからない全てのimportをここでキャッチ
-              {
-                "type": false
-              },
-              ":BLANK_LINE:",
-              // ===== import types =====
-              // 最後にtype-only importをキャッチ
-              {
-                "type": true
-              }
-            ]
-          }
-        }
-      }
-    }
-  }
+	"$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
+	},
+	"files": {
+		"includes": [
+			// フォルダ以下を指定
+			"src/app/**/*.{ts,tsx,js,jsx,json,jsonc}",
+			"src/components/**/*.{ts,tsx,js,jsx,json,jsonc}",
+			"src/hooks/**/*.{ts,tsx,js,jsx,json,jsonc}",
+			// フォルダ以下を除外
+			"!src/components/ui/**/*",
+			"!src/components/shadcnui-blocks/**/*",
+			"!src/components/oauth/**/*",
+			"!src/components/(__etc)/**/*",
+			// 特定ファイルを除外
+			// "!globals.css",
+			"!src/components/app-sidebar.tsx",
+			"!src/components/theme-provider.tsx",
+			"!src/components/search-form.tsx",
+			"!*.chatmode.md",
+			"!_template/**/*",
+			"!type.ts"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab",
+		"indentWidth": 2
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"style": {
+				"noNonNullAssertion": "off"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double",
+			"jsxQuoteStyle": "single",
+			"semicolons": "asNeeded",
+			"trailingCommas": "none"
+		}
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": {
+					"level": "on",
+					"options": {
+						"groups": [
+							// ===== react packages =====
+							// react関連パッケージを優先してimport
+							{
+								"type": false,
+								"source": ["react*", "react/**"]
+							},
+							// ===== npm packages =====
+							// react*,react/**以外のnpmパッケージを全てキャッチ
+							{
+								"type": false,
+								"source": ":PACKAGE:"
+							},
+							":BLANK_LINE:",
+							// ===== lib modules =====
+							// ./libディレクトリを優先してimport
+							{
+								"type": false,
+								"source": "./lib/**"
+							},
+							// ===== user modules =====
+							// ./libディレクトリ以外のユーザー定義モジュールをまとめてキャッチ
+							{
+								"type": false,
+								"source": ":PATH:"
+							},
+							":BLANK_LINE:",
+							// ===== other imports =====
+							// 上記に引っかからない全てのimportをここでキャッチ
+							{
+								"type": false
+							},
+							":BLANK_LINE:",
+							// ===== import types =====
+							// 最後にtype-only importをキャッチ
+							{
+								"type": true
+							}
+						]
+					}
+				}
+			}
+		}
+	}
 }

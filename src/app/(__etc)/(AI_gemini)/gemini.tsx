@@ -18,6 +18,12 @@ export default function GeminiComponents() {
 			<br />
 			{/* 料金コンポーネント */}
 			<Link href='/05'>料金コンポーネントページへ</Link>
+			<br />
+			{/* ルートアカウント */}
+			<Link href='/06'>ルートアカウントページへ</Link>
+			<br />
+			<Link href='/07'>ルートアカウント管理画面ページへ 静的UI</Link>
+			<br />
 		</div>
 	)
 }
