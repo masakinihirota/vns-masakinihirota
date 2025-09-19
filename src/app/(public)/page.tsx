@@ -1,9 +1,9 @@
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
-import GeminiComponents from "@/app/(AI_gemini)/gemini"
+import GeminiComponents from "@/app/(__etc)/(AI_gemini)/gemini"
 // V0_folder
-import V0_folder from "@/app/(AI_v0)/v0_folder"
+import V0_folder from "@/app/(__etc)/(AI_v0)/v0_folder"
 import { ModeToggle } from "@/app/(unauth)/ModeTogglePage/mode-toggle"
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher"
 
