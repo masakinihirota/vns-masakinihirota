@@ -1,9 +1,13 @@
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
+import GeminiComponents from "@/app/(AI_gemini)/gemini"
+// V0_folder
+import V0_folder from "@/app/(AI_v0)/v0_folder"
 import { ModeToggle } from "@/app/(unauth)/ModeTogglePage/mode-toggle"
-import V0_60 from "@/app/(v0)/v0_60"
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher"
+
+// v0_folder.tsx
 
 export default function Home() {
 	// 翻訳
@@ -12,11 +16,14 @@ export default function Home() {
 
 	return (
 		<>
-			このページはlogin(slotページ)のリンクをトップに持ってくる、その下には説明(ランディングページ)を置く。
+			{/* このページはlogin(slotページ)のリンクをトップに持ってくる、その下には説明(ランディングページ)を置く。 */}
 			<br></br>
+			<GeminiComponents />
 			<br></br>
 			{/* v0_60のコンポーネントを使うページへのリンク */}
-			<V0_60 />
+			{/* <V0_60 /> */}
+			{/* V0_folderのコンポーネントを使うページへのリンク */}
+			<V0_folder />
 			<br></br>
 			{/* ランディングページへのリンク */}
 			<Link href='/landing'>ランディングページ</Link>
