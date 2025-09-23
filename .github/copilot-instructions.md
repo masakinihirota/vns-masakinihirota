@@ -12,6 +12,10 @@ Serena MCP を使い、プロジェクトを常にチェックしてください
 
 GitHub Copilot の返信の最後に、なにか Tips と関連するアドバイスがありましたら教えて下さい。
 
+## 開発ガイドライン
+思考は英語で行います。
+会話は日本語で行います。
+
 ## 主要ツールと依存関係
 
 - **技術スタック**: **TypeScript、Node.js、Next.js (App Router)、React、Shadcn/UI、Radix UI、Tailwind CSS、Zustand、Supabase、Drizzle ORM、Zod、Stripe**。
