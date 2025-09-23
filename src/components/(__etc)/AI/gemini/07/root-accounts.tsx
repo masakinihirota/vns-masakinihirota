@@ -1,8 +1,11 @@
+"use client"
+
 import { useState } from "react"
 import Image from "next/image"
 
 import type React from "react"
 
+// 静的UI
 // ルートアカウントの静的データ
 const staticData = {
 	rootAccount: {
@@ -104,8 +107,8 @@ const DataItem: React.FC<{
 	</div>
 )
 
-// メインのAppコンポーネント
-export default function App() {
+// メインのRootAccountsコンポーネント
+export default function RootAccounts() {
 	const { rootAccount, userProfiles, profileManagement } = staticData
 	const [profiles, setProfiles] = useState(userProfiles)
 	const [editingProfileId, setEditingProfileId] = useState<string | null>(null)
