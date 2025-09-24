@@ -165,6 +165,9 @@ importers:
       postgres:
         specifier: ^3.4.7
         version: 3.4.7
+      punycode:
+        specifier: ^2.3.1
+        version: 2.3.1
       react:
         specifier: 19.1.1
         version: 19.1.1
