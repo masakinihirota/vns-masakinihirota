@@ -66,4 +66,5 @@ env.download
 supabase/migrations/meta/
 
 # Gemini CLI ENV
-.gemini/settings.json
+settings.json
+signing_key.json
