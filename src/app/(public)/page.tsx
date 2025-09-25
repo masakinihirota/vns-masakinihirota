@@ -20,11 +20,17 @@ export default function Home() {
 		<>
 			{/* このページはlogin(slotページ)のリンクをトップに持ってくる、その下には説明(ランディングページ)を置く。 */}
 			<br></br>
+			GeminiComponents
+			<br></br>
 			<GeminiComponents />
 			<br></br>
 			{/* v0_60のコンポーネントを使うページへのリンク */}
+			V0_60
+			<br></br>
 			<V0_60 />
 			{/* V0_folderのコンポーネントを使うページへのリンク */}
+			V0_folder
+			<br></br>
 			<V0_folder />
 			<br></br>
 			{/* ランディングページへのリンク */}

@@ -1,3 +1,5 @@
+// メインのルートアカウントコンポーネント
+// このコンポーネントを使用する。
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -27,7 +29,7 @@ export default function RootAccountDashboard({ data }: RootAccountDashboardProps
               </div>
               <div>
                 <h1 className="text-xl font-bold text-foreground">ルートアカウント管理</h1>
-                <p className="text-sm text-muted-foreground">Virtual Network Society</p>
+                <p className="text-sm text-muted-foreground">Virtual Network Service</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
