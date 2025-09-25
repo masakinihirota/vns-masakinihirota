@@ -61,3 +61,10 @@ _ai_ui/
 env.*
 env
 env.download
+
+# supabase
+supabase/migrations/meta/
+
+# Gemini CLI ENV
+settings.json
+signing_key.json
