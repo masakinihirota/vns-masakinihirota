@@ -69,7 +69,7 @@ README.md やテスト計画書も常に最新状態を保ちましょう。
 
 - [figma 指示書](./instructions/etc/figma.instructions.md)
 
-- [Drizzle ORM 指示書](./instructions/code/drizzle-orm.md)
+- [Drizzle ORM 指示書](./instructions/code/drizzle-orm.instructions.md)
 
 - [conform 指示書](./instructions/code_next.js/conform.instructions.md)
 
@@ -81,14 +81,11 @@ README.md やテスト計画書も常に最新状態を保ちましょう。
 
 ### ドキュメント関連
 
-
 - [ドキュメント 指示書](./instructions/document/document.instructions.md)
-
 
 ### その他
 
-[キャラクター指示書](./キャラクター指示書/character.instructions.md)
-
+[キャラクター指示書](./instructions/etc/character.instructions.md)
 
 ---
 

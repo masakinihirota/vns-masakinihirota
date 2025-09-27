@@ -1,11 +1,11 @@
 // エイリアスを使わず、正しい相対パスでスキーマ集約ファイルをインポート
 import { schema } from "../../../../drizzle/schema"
 
-import RootAccountDashboard from "@/components/(__etc)/AI/v0_folder/root-accounts/root-account-dashboard"
+import RootAccountDashboard from "@/components_sample/AI/v0/v0_folder/root-accounts/root-account-dashboard"
 // Drizzleクライアントとスキーマをインポート
 import { db } from "@/lib/db"
 
-import type { RootAccountDashboardData } from "@/components/(__etc)/AI/v0_folder/root-accounts/root-account-dashboard.types"
+import type { RootAccountDashboardData } from "@/components_sample/AI/v0/v0_folder/root-accounts/root-account-dashboard.types"
 
 /**
  * サーバーサイドでデータを取得する関数

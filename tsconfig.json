@@ -37,7 +37,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/components/(__etc)/AI/gemini/03/003.jsx"
+    "src/components_sample/AI/gemini/03/003.jsx"
   ],
   "exclude": [
     "node_modules"

@@ -1,4 +1,4 @@
-import * as template from "@/components/template"
+import * as template from "@/components_sample/template"
 
 /**
  * TemplatePage - ルーティングとコンポーネント分離の最小サンプル
