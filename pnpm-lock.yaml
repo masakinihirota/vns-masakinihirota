@@ -217,9 +217,6 @@ importers:
       '@eslint/eslintrc':
         specifier: ^3.3.1
         version: 3.3.1
-      '@stagewise/toolbar':
-        specifier: ^0.6.3
-        version: 0.6.3
       '@tailwindcss/postcss':
         specifier: ^4.1.13
         version: 4.1.13
@@ -1823,10 +1820,6 @@ packages:
 
   '@sinclair/typebox@0.34.41':
     resolution: {integrity: sha512-6gS8pZzSXdyRHTIqoqSVknxolr1kzfy4/CeDnrzsVz8TTIWUbOBr6gnzOmTYJ3eXQNh4IYHIGi5aIL7sOZ2G/g==}
-
-  '@stagewise/toolbar@0.6.3':
-    resolution: {integrity: sha512-Xdp4PROAE2W1niBezeLOIj98bYq1ngXG5Wisr2lPe56ENMYvEMj2bagTBcFPhpac+B/Vxwb+s3NgxX1e95f2XA==}
-    deprecated: 'This package is deprecated and has been replaced by the stagewise CLI. Get started with the CLI here: https://stagewise.io/docs'
 
   '@standard-schema/spec@1.0.0':
     resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
@@ -6127,8 +6120,6 @@ snapshots:
   '@sideway/pinpoint@2.0.0': {}
 
   '@sinclair/typebox@0.34.41': {}
-
-  '@stagewise/toolbar@0.6.3': {}
 
   '@standard-schema/spec@1.0.0': {}
 

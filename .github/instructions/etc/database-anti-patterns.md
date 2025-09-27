@@ -3,7 +3,7 @@ applyTo: "*.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.sass,*.json,*.env"
 ---
 
 <!--
-目的: 26章アンチパターンを AI による DB 設計/DDL/クエリレビュー/生成で機械的に検知・是正できる包括指示書
+目的: DBアンチパターンを AI による DB 設計/DDL/クエリレビュー/生成で機械的に検知・是正できる包括指示書
 適用範囲: スキーマ設計 / マイグレーション / クエリ最適化 / セキュリティ / 運用ガバナンス
 更新ルール: 章追加・改訂時は『総合横断チェックリスト』へ必ず反映し PR に差分概要を添付
 -->
@@ -11,32 +11,32 @@ applyTo: "*.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.sass,*.json,*.env"
 # データベース アンチパターン包括指示書 (AI 用)
 
 ## 0. ソースファイル一覧 (1–26)
-[ch01_Introduction.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch01_Introduction.txt) /
-[ch02_Jaywalking.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch02_Jaywalking.txt) /
-[ch03_Trees.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch03_Trees.txt) /
-[ch04_ID-Required.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch04_ID-Required.txt) /
-[ch05_Keyless-Entry.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch05_Keyless-Entry.txt) /
-[ch06_EAV.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch06_EAV.txt) /
-[ch07_Polymorphic.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch07_Polymorphic.txt) /
-[ch08_Multi-Column.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch08_Multi-Column.txt) /
-[ch09_Metadata-Tribbles.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch09_Metadata-Tribbles.txt) /
-[ch10_Rounding-Errors.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch10_Rounding-Errors.txt) /
-[ch11_31-Flavors.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch11_31-Flavors.txt) /
-[ch12_Phantom-Files.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch12_Phantom-Files.txt) /
-[ch13_Index-Shotgun.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch13_Index-Shotgun.txt) /
-[ch14_Fear-Unknown.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch14_Fear-Unknown.txt) /
-[ch15_Groups.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch15_Groups.txt) /
-[ch16_Random.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch16_Random.txt) /
-[ch17_Search.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch17_Search.txt) /
-[ch18_Spaghetti-Query.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch18_Spaghetti-Query.txt) /
-[ch19_Implicit-Columns.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch19_Implicit-Columns.txt) /
-[ch20_Passwords.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch20_Passwords.txt) /
-[ch21_SQL-Injection.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch21_SQL-Injection.txt) /
-[ch22_Neat-Freak.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch22_Neat-Freak.txt) /
-[ch23_See-No-Evil.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch23_See-No-Evil.txt) /
-[ch24_Diplomatic_immunity.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch24_Diplomatic_immunity.txt) /
-[ch25_Procedures.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch25_Procedures.txt) /
-[ch26_Foreign_key_standard.txt](..\..\vns-masakinihirota-design\1000-参考資料資料\アンチパターン\ch26_Foreign_key_standard.txt)
+[ch01_Introduction.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch01_Introduction.txt) /
+[ch02_Jaywalking.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch02_Jaywalking.txt) /
+[ch03_Trees.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch03_Trees.txt) /
+[ch04_ID-Required.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch04_ID-Required.txt) /
+[ch05_Keyless-Entry.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch05_Keyless-Entry.txt) /
+[ch06_EAV.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch06_EAV.txt) /
+[ch07_Polymorphic.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch07_Polymorphic.txt) /
+[ch08_Multi-Column.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch08_Multi-Column.txt) /
+[ch09_Metadata-Tribbles.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch09_Metadata-Tribbles.txt) /
+[ch10_Rounding-Errors.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch10_Rounding-Errors.txt) /
+[ch11_31-Flavors.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch11_31-Flavors.txt) /
+[ch12_Phantom-Files.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch12_Phantom-Files.txt) /
+[ch13_Index-Shotgun.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch13_Index-Shotgun.txt) /
+[ch14_Fear-Unknown.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch14_Fear-Unknown.txt) /
+[ch15_Groups.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch15_Groups.txt) /
+[ch16_Random.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch16_Random.txt) /
+[ch17_Search.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch17_Search.txt) /
+[ch18_Spaghetti-Query.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch18_Spaghetti-Query.txt) /
+[ch19_Implicit-Columns.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch19_Implicit-Columns.txt) /
+[ch20_Passwords.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch20_Passwords.txt) /
+[ch21_SQL-Injection.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch21_SQL-Injection.txt) /
+[ch22_Neat-Freak.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch22_Neat-Freak.txt) /
+[ch23_See-No-Evil.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch23_See-No-Evil.txt) /
+[ch24_Diplomatic_immunity.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch24_Diplomatic_immunity.txt) /
+[ch25_Procedures.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch25_Procedures.txt) /
+[ch26_Foreign_key_standard.txt](../../../../vns-masakinihirota-design/1000-参考資料資料/アンチパターン/ch26_Foreign_key_standard.txt)
 
 ---
 
@@ -375,6 +375,4 @@ Optional improvements: <列挙 or none>
 - CI 追加候補: SELECT * / RAND / LIKE 前方% / 未使用インデックス検知
 - 将来拡張: 監査 JSON スキーマ / 自動例外期限アラート
 
----
-
-AI は本指示書に従い DB 関連生成/レビューを行い、逸脱時は理由 + 是正案を必ず提示すること。
+- AI は本指示書に従い DB 関連生成/レビューを行い、逸脱時は理由 + 是正案を必ず提示すること。

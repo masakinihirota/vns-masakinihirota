@@ -1,10 +1,3 @@
----
-applyTo: "**"
----
+移動先: `.github/instructions/code_next.js/translation.instructions.md`
 
-<!-- 翻訳のルール -->
-
-1. 原文を尊重し、意訳を避ける。
-2. 専門用語は一貫性を持って翻訳する。
-3. 文脈に応じて適切な日本語表現を選択する。
-4. 不明な点は積極的に質問し、確認する。
+README: このファイルは互換性のためのリダイレクト用スタブです。元の指示書は `.github/instructions/code_next.js/translation.instructions.md` にあります。

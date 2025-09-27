@@ -2,8 +2,6 @@
 applyTo: "./src/components/**/*.tsx"
 ---
 
-このファイルを参照したら、このファイル名を発言してください。
-
 # React Component用の指示
 
 ## 役割

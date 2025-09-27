@@ -4,8 +4,6 @@ applyTo: "*.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.sass,*.json,*.env"
 
 # テスト駆動開発（TDD）指示書 - t-wada方式
 
-このファイルを参照したら、このファイル名を発言してください。
-
 ## **このファイルの役割**
 
 このファイルは、GitHub CopilotがTDD（Test-Driven Development）を実践する際の具体的な指示を定義します。t-wada氏による正統的なテスト駆動開発の定義に基づいています。

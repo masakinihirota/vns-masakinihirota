@@ -6,7 +6,7 @@ applyTo: "*.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.sass,*.json,*.env"
 
 use context7
 
-[命名規則](.github\code\namingConventions-instructions.md)
+[命名規則](./namingConventions.instructions.md)
 
 ## 1. 基本方針
 

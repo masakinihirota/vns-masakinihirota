@@ -36,56 +36,58 @@ README.md やテスト計画書も常に最新状態を保ちましょう。
 ## 1. 指示書
 指示書は、GitHub Copilot がプロジェクトのタスクを管理し、開発者が効率的に作業を進めるためのガイドラインです。以下の指示書を参照してください。
 
-### すべてが対象(フォルダ:all)
 
-[serena 指示書](./all/serena-MCP-instructions.md)
+### すべてが対象 (指示書の所在)
 
-[翻訳 指示書](./all/translation-instructions.md)
+- [serena 指示書](./instructions/etc/serena-MCP.instructions.md)
 
-[コミット 指示書](./all/commit-message-instructions.md)
+- [翻訳 指示書](./instructions/code_next.js/translation.instructions.md)
 
-[レビュー 指示書](./all/review-instructions.md)
+- [コミット 指示書](./instructions/github/commit-message.instructions.md)
 
-### markdown関連
+- [レビュー 指示書](./instructions/github/review.instructions.md)
 
-[タスク 指示書](./markdown/task-instructions.md)
+### markdown 関連 (タスク指示書)
 
-[タスクリスト 指示書](./markdown/task-instructions.md)
+- [タスク 指示書](./__task-list/tasks.md)
+
+- [タスクリスト 指示書](./__task-list/tasks.md)
 
 タスクリスト（`.github/__task-list/tasks.md`）を新規作成 / 更新 / 再構成する際は、必ずこの指示書を先に開いて内容を読み込み、方針（粒度・依存関係・命名・完了条件・テスト観点）を適用してください。未読状態でのタスク追加は禁止します。
 
 ### code関連
 
-[コード生成 指示書](./code/codeGeneration-instructions.md)
+- [コード生成 指示書](./instructions/code/codeGeneration.instructions.md)
 
-[コンポーネントのテンプレート](./code/codeTemplate-instructions.md)
+- [コンポーネントのテンプレート](./instructions/code/codeTemplate.instructions.md)
 
-[命名規則 指示書](./code/namingConventions-instructions.md)
+- [命名規則 指示書](./instructions/code/namingConventions.instructions.md)
 
-[Next.js App router 指示書](./code/appRouter-instructions.md)
+- [Next.js App router 指示書](./instructions/code_next.js/appRouter.instructions.md)
 
-[デザインシステム 指示書](./code/design-system-instructions.md)
+- [デザインシステム 指示書](./instructions/code/design-system.instructions.md)
 
-[figma 指示書](./code/figma-instructions.md)
+- [figma 指示書](./instructions/etc/figma.instructions.md)
 
-[Drizzle ORM 指示書](./code/drizzle-orm.md)
+- [Drizzle ORM 指示書](./instructions/code/drizzle-orm.md)
 
-[conform 指示書](./code/conform-instructions.md)
+- [conform 指示書](./instructions/code_next.js/conform.instructions.md)
 
-[Supabase 指示書](./code/supabase-instructions.md)
+- [Supabase 指示書](./instructions/code/supabase.instructions.md)
 
-[context7 指示書](./code/context7-instructions.md)
+- [context7 指示書](./instructions/code/context7.instructions.md)
 
-[テスト 指示書](./code/testing-instructions.md)
+- [テスト 指示書](./instructions/code_test/testing.instructions.md)
 
 ### ドキュメント関連
 
-[ドキュメント 指示書](./document/document-instructions.md)
+
+- [ドキュメント 指示書](./instructions/document/document.instructions.md)
 
 
 ### その他
 
-[キャラクター指示書](./キャラクター指示書/character-instructions.md)
+[キャラクター指示書](./キャラクター指示書/character.instructions.md)
 
 
 ---
