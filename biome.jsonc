@@ -17,6 +17,7 @@
 			"!src/components/shadcnui-blocks/**/*",
 			"!src/components/oauth/**/*",
 			"!src/components/(__etc)/**/*",
+			"!.kiro",
 			// 特定ファイルを除外
 			// "!globals.css",
 			"!src/components/app-sidebar.tsx",
@@ -60,7 +61,10 @@
 							// react関連パッケージを優先してimport
 							{
 								"type": false,
-								"source": ["react*", "react/**"]
+								"source": [
+									"react*",
+									"react/**"
+								]
 							},
 							// ===== npm packages =====
 							// react*,react/**以外のnpmパッケージを全てキャッチ

@@ -1,14 +1,3 @@
----
-applyTo: "**"
----
+移動先: `.github/instructions/github/commit-message.instructions.md`
 
-Copilot がコミットメッセージを生成する際は、以下のガイドラインに従ってください。
-
-コミットメッセージは必ず日本語で記述してください。
-変更内容を明確に表現してください。
-
-コミットメッセージは、最初にConventional Commits に従って記述し、その後ファイルごとの詳細な変更内容を記述してください。
-
-feat: ユーザー認証機能を追加
-docs: READMEを更新
-style: 不要なCSSを削除
+README: このファイルは互換性のためのリダイレクト用スタブです。元の指示書は `.github/instructions/github/commit-message.instructions.md` にあります。

@@ -4,7 +4,7 @@
 
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import * as schema from '../../drizzle/schema/root_accounts/root_accounts';
+import * as schema from '../../drizzle/schema';
 
 // 環境変数からデータベースURLを取得
 const DATABASE_URL = process.env.DATABASE_URL;

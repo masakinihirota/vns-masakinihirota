@@ -40,7 +40,7 @@ export default function RootAccountDashboard() {
 									ルートアカウント管理
 								</h1>
 								<p className='text-sm text-muted-foreground'>
-									Virtual Network Society
+									Virtual Network Service
 								</p>
 							</div>
 						</div>

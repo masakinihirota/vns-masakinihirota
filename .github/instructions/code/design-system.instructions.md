@@ -1,0 +1,31 @@
+---
+applyTo: "*.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.sass,*.json,*.env"
+---
+
+デザインシステムはデジタル庁のを採用します。
+
+## デザインシステムをReactのコンポーネントでコード化したリポジトリをuithubで取ってきたもの。
+
+このサンプルをみて、デザインシステムのコンポーネントを作成します。
+
+[vns-masakinihirota-design\1000-参考資料資料\デザインシステム_デジタル庁\design-system-example-components.txt](../../vns-masakinihirota-design/1000-参考資料資料/デザインシステム_デジタル庁/design-system-example-components.txt)
+
+masakinihirotaのデザインテーマを決めます。
+
+## デザインテーマ
+
+基調色は青、オアシスの水である青色をイメージしています。
+サブカラーには、リラックス感を与える淡い緑色を使用します。
+- フォントは読みやすさを重視します。
+- ボタンは角丸で、ホバー時に色が変わるようにします。
+
+
+
+## デジタル庁デザインシステム
+デザインデータ
+
+v2.5.1
+更新日2025年7月2日
+
+https://www.figma.com/design/PHFZA2gbTl55ySPvhqfEp3/%E3%83%87%E3%82%B8%E3%82%BF%E3%83%AB%E5%BA%81%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0-%E3%83%87%E3%82%B6%E3%82%A4%E3%83%B3%E3%83%87%E3%83%BC%E3%82%BF-v2.5.1--Community-?node-id=4-293&p=f&t=VD7lHIkMGJGHb01G-0
+
