@@ -1,516 +1,400 @@
-"use client" // This is a Client Component
+import { useId } from "react"
+import Link from "next/link"
 
-import { useEffect, useId, useState } from "react"
-import Image from "next/image"
+type FeatureGroup = {
+	category: string
+	headline: string
+	description: string
+	items: string[]
+}
 
-// Define the main Landing Page component
-export default function Home() {
-	const videosSectionId = useId()
-	const oasisDeclarationContentId = useId()
-	const aboutSectionId = useId()
-
-	// State to manage the current theme ('light' or 'dark')
-	// Initialize from local storage or default to 'light'
-	const [theme, setTheme] = useState<"light" | "dark">(() => {
-		if (typeof window !== "undefined") {
-			const savedTheme = localStorage.getItem("theme") as
-				| "light"
-				| "dark"
-				| null
-			if (savedTheme) {
-				return savedTheme
-			}
-			// Check system preference if no theme is saved
-			if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-				return "dark"
-			}
-		}
-		return "light" // Default theme
-	})
-
-	// State to manage the visibility of the Oasis Declaration
-	const [isOasisDeclarationExpanded, setIsOasisDeclarationExpanded] =
-		useState(false)
-
-	// Effect to apply the 'dark' class to the html element and save theme preference
-	useEffect(() => {
-		const htmlElement = document.documentElement
-		if (theme === "dark") {
-			htmlElement.classList.add("dark")
-		} else {
-			htmlElement.classList.remove("dark")
-		}
-		// Save theme preference to local storage
-		localStorage.setItem("theme", theme)
-	}, [theme]) // Rerun effect when theme changes
-
-	// Function to toggle the visibility of the Oasis Declaration
-	const toggleOasisDeclaration = () => {
-		setIsOasisDeclarationExpanded(!isOasisDeclarationExpanded)
+const featureGroups: FeatureGroup[] = [
+	{
+		category: "Non-auth Experience",
+		headline: "認証なしでも価値観の世界を垣間見る",
+		description:
+			"ダミーのプロフィールやマッチング結果を通じて、ログイン前でもサービスの雰囲気を体験できます。",
+		items: [
+			"ランダムに切り替わるダミープロフィール",
+			"価値観と作品データで作られたサンプルマッチング",
+			"公式が用意した作品・価値観ギャラリー"
+		]
+	},
+	{
+		category: "Onboarding",
+		headline: "価値観の共有はオアシス宣誓から",
+		description:
+			"Supabase Authを使ったOAuthログイン後、初期設定モーダルで価値観の土台を整えます。",
+		items: [
+			"地域・母語・UI言語の選択",
+			"生誕世代と広告表示のポリシー登録",
+			"オアシス宣誓への同意で初回セットアップ完了"
+		]
+	},
+	{
+		category: "Profiles",
+		headline: "目的別のプロフィールを育てる",
+		description:
+			"ひとつのルートアカウントから最大4つのプロフィールを作成し、それぞれの目的や状態を管理。",
+		items: [
+			"目的は work / friend / marriage / end_of_life / other",
+			"状態は standby / open / exploring / closed",
+			"プロフィール作成時に自動生成される『自分のグループ』"
+		]
+	},
+	{
+		category: "Works & Values",
+		headline: "作品と価値観が出会いを導く",
+		description:
+			"公式作品カタログに加えてユーザー自身の登録も可能。価値観の設問に回答し、重要なポイントにはフラグを付けられます。",
+		items: [
+			"作品カテゴリは anime / manga (MVP)",
+			"作品ごとに tense と tier を設定",
+			"価値観の回答には is_important フラグを保持"
+		]
+	},
+	{
+		category: "Matching",
+		headline: "暫定スコアで出会いのきっかけを提示",
+		description:
+			"作品や価値観の一致度から 0-100 のスコアを算出し、High / Medium / Low / Very Low のランクで表示します。",
+		items: [
+			"score >= 75 の自動マッチング候補を最大5件保存",
+			"手動マッチングで気になる人をグループに追加",
+			"偏りペナルティや重要項目の加点で精度を調整"
+		]
 	}
+]
 
-	// Function to toggle between light and dark themes
-	const toggleTheme = () => {
-		setTheme(theme === "light" ? "dark" : "light")
+const userJourney = [
+	{
+		step: "01",
+		title: "Landing / Browse",
+		description:
+			"ランディングと `/browse` でダミーデータを閲覧し、価値観ベースの体験イメージを掴む"
+	},
+	{
+		step: "02",
+		title: "Auth & Onboarding",
+		description:
+			"Google / GitHub で認証し、初期設定モーダルで地域・言語・宣誓を登録"
+	},
+	{
+		step: "03",
+		title: "Dashboard",
+		description:
+			"ルートアカウントのポイントや経過日数、プロフィールのサマリーを確認"
+	},
+	{
+		step: "04",
+		title: "Profiles",
+		description: "目的別プロフィールを作成し、作品・価値観を登録"
+	},
+	{
+		step: "05",
+		title: "Match",
+		description:
+			"スコア付けされた候補から次のアクションを選び、グループで交流を始める"
 	}
+]
+
+const dataModels = [
+	{
+		name: "root_accounts",
+		points: [
+			"auth_user_id と 1:1 のルートを保持",
+			"地域・母語・言語・世代・広告ポリシー・オアシス宣誓を保存",
+			"ポイントと作成日からの経過日数を管理"
+		]
+	},
+	{
+		name: "user_profiles",
+		points: [
+			"目的と状態を持つプロフィールを最大4件",
+			"作成時に自分のグループを自動生成",
+			"ルート削除時は CASCADE で整理"
+		]
+	},
+	{
+		name: "works & profile_works",
+		points: [
+			"公式作品は管理者シード、ユーザー作品は tier1-3 のみ",
+			"tense (now / future / life) と tier を付与",
+			"オアシス宣言に則った作品選択を支援"
+		]
+	},
+	{
+		name: "value_questions / value_options / profile_value_answers",
+		points: [
+			"設問・選択肢モデルで価値観を構造化",
+			"回答ごとに is_important で重み付け",
+			"将来的な i18n 拡張を視野に単一言語から開始"
+		]
+	}
+]
+
+const nonFunctionalHighlights = [
+	"主要 API / SSR の P90 200ms 以内を目標",
+	"Supabase Auth + RLS + Zod でセキュリティと入力品質を担保",
+	"可用性 99.9% / Supabase 標準バックアップ",
+	"モジュール化とスキーマ整備で拡張に備える",
+	"A11y・レスポンシブ・ネタバレ配慮のシンプル UI"
+]
+
+const oasisPrinciples = [
+	"褒めは公に、叱責は個別に小さな声で",
+	"誹謗中傷・ヘイト・個人情報詮索・違法/権利侵害コンテンツの禁止",
+	"安心・安全・寛容・建設的な議論の場を維持",
+	"広告はユーザーが主導権を持つ",
+	"誰もが争わずに休息できるオアシスを守る"
+]
+
+export default function LandingPage() {
+	const oasisSectionId = useId()
 
 	return (
-		// Apply background color classes with dark mode variants
-		// Adjusted general text color for dark mode
-		// 全体の文字色と背景色をTailwindで指定
-		<div className='text-gray-800 bg-blue-50 dark:bg-gray-900 dark:text-gray-100'>
-			{/* Header */}
-			{/* Apply background and shadow classes with dark mode variants */}
-			<header className='py-4 bg-white shadow-md dark:bg-gray-800 dark:shadow-lg'>
-				<div className='container flex items-center justify-between px-6 mx-auto'>
-					{/* masakinihirotaロゴの色をTailwindで指定 */}
-					<div className='text-2xl font-bold text-blue-800 dark:text-teal-400'>
-						masakinihirota
+		<main className='min-h-screen bg-slate-950 text-slate-50'>
+			<section className='relative overflow-hidden bg-gradient-to-br from-sky-500 via-blue-600 to-indigo-700'>
+				<div className='absolute inset-0 opacity-20 mix-blend-screen bg-[radial-gradient(circle_at_top,white,transparent_60%)]' />
+				<div className='relative flex flex-col max-w-6xl gap-10 px-6 py-24 mx-auto md:flex-row md:items-center md:gap-16'>
+					<div className='md:w-2/3'>
+						<p className='text-sm uppercase tracking-[0.4em] text-sky-100'>
+							Value Network Service · MVP
+						</p>
+						<h1 className='mt-4 text-4xl font-bold leading-tight text-white md:text-5xl lg:text-6xl'>
+							価値観でつながる、安心な出会いのオアシス。
+						</h1>
+						<p className='mt-6 text-lg leading-relaxed text-sky-50 md:max-w-2xl md:text-xl'>
+							昨日僕が感動した作品を、今日の君はまだ知らない。個人情報に依存せず、作品と価値観を軸にマッチングする
+							VNS masakinihirota の MVP へようこそ。
+						</p>
+						<div className='flex flex-wrap gap-4 mt-10'>
+							<Link
+								href='/auth'
+								className='rounded-full bg-white px-6 py-3 font-semibold text-blue-700 shadow-lg shadow-sky-900/40 transition hover:-translate-y-0.5 hover:bg-slate-100'
+							>
+								OAuthで始める
+							</Link>
+							<Link
+								href='/browse'
+								className='rounded-full border border-white/40 px-6 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white/10'
+							>
+								ダミー体験を見る
+							</Link>
+						</div>
 					</div>
-					<nav>
-						{/* Theme Toggle Button */}
-						<button
-							type='button'
-							onClick={toggleTheme}
-							className='px-4 py-2 text-gray-800 transition-colors duration-300 bg-gray-200 rounded-full dark:bg-gray-700 dark:text-gray-200'
-						>
-							{theme === "light" ? "ダークモード" : "ライトモード"}
-						</button>
-						{/* Navigation links can be added here */}
-					</nav>
+					<div className='md:w-1/3'>
+						<div className='p-6 border rounded-3xl border-white/20 bg-white/10 backdrop-blur'>
+							<p className='text-xs font-semibold uppercase tracking-[0.3em] text-sky-200'>
+								Oasis Declaration
+							</p>
+							<p className='mt-4 text-base leading-relaxed text-sky-50'>
+								安心・安全・寛容なコミュニティを守る「オアシス宣言」に同意した人だけが集う場所。褒めは公に、叱責は個別に。価値観を尊重しあう文化から、次の一歩が生まれます。
+							</p>
+							<Link
+								className='inline-flex items-center gap-2 mt-6 text-sm font-semibold text-sky-100 hover:text-white'
+								href='#oasis'
+							>
+								詳細を見る
+								<span aria-hidden='true'>→</span>
+							</Link>
+						</div>
+					</div>
 				</div>
-			</header>
+			</section>
 
-			{/* Hero Section */}
-			{/* 背景グラデーションと文字色をTailwindで指定 */}
-			<section className='px-6 py-20 text-center text-white bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-800 dark:to-indigo-900'>
-				<div className='container mx-auto'>
-					<h1 className='mb-4 text-4xl font-bold md:text-5xl'>
-						昨日僕が感動した作品を、今日の君はまだ知らない。
-					</h1>
-					{/* Catchphrase */}
-					{/* Text color is white, which should be visible on dark background */}
-					<p className='mb-8 text-1xl font-semibold md:text-1xl opacity-95'>
-						インターネットという情報の洪水の中からまっさきに価値ある情報を拾い上げるサービスです。
+			<section className='max-w-6xl px-6 py-24 mx-auto space-y-12'>
+				<header className='text-center'>
+					<p className='text-sm uppercase tracking-[0.4em] text-sky-400'>
+						MVP Scope
 					</p>
-					{/* Text color is white, which should be visible on dark background */}
-					<p className='mb-8 text-xl md:text-2xl opacity-90'>VNS</p>
-					{/* Call to Action Button */}
-					{/* ボタンの色とテキスト色をTailwindで指定 */}
-					<a
-						href='#about'
-						className='px-8 py-3 font-bold text-blue-800 transition duration-300 bg-white rounded-full shadow-lg hover:bg-blue-50 dark:bg-teal-600 dark:text-white dark:hover:bg-teal-700'
-					>
-						masakinihirotaとは
-					</a>
-				</div>
-			</section>
-
-			{/* About Section */}
-			{/* 背景色をTailwindで指定 */}
-			<section
-				id={aboutSectionId}
-				className='px-6 py-20 bg-blue-100 dark:bg-gray-800'
-			>
-				<div className='container mx-auto'>
-					{/* セクションタイトルの色をTailwindで指定 */}
-					<h2 className='mb-12 text-3xl font-bold text-center text-blue-800 md:text-4xl dark:text-teal-400'>
-						masakinihirotaとは
+					<h2 className='mt-3 text-3xl font-bold text-white md:text-4xl'>
+						最小構成で価値検証に集中
 					</h2>
-
-					{/* Tutorial and Document Links */}
-					<div className='mb-8 text-lg text-center'>
-						{/* リンクのテキスト色をTailwindで指定 */}
-						<a
-							href='[チュートリアルへのリンクURL]'
-							target='_blank'
-							rel='noreferrer'
-							className='mx-4 font-semibold text-indigo-600 hover:underline dark:text-teal-300 dark:hover:text-teal-400'
+					<p className='mt-5 text-lg text-slate-200'>
+						0020-MVP
+						要件に沿って実装する高優先度の機能を、体験の流れに沿って紹介します。
+					</p>
+				</header>
+				<div className='grid gap-6 lg:grid-cols-2'>
+					{featureGroups.map((group) => (
+						<article
+							key={group.category}
+							className='flex h-full flex-col rounded-2xl border border-white/5 bg-slate-900/60 p-8 shadow-[0_30px_80px_-40px_rgba(14,116,144,0.8)]'
 						>
-							チュートリアル
-						</a>
-						{/* セパレータの色をTailwindで指定 */}
-						<span className='text-gray-500 dark:text-gray-400'>|</span>{" "}
-						{/* Separator */}
-						{/* リンクのテキスト色をTailwindで指定 */}
-						<a
-							href='[ドキュメントへのリンクURL]'
-							target='_blank'
-							rel='noreferrer'
-							className='mx-4 font-semibold text-indigo-600 hover:underline dark:text-teal-300 dark:hover:text-teal-400'
-						>
-							ドキュメント
-						</a>
-						{/* Remember to replace the placeholder URLs above with actual links */}
-					</div>
-
-					{/* Overview of the concept and Name Origin */}
-					{/* 段落テキストの色をTailwindで指定 */}
-					<div className='max-w-3xl mx-auto mb-12 text-lg leading-relaxed text-center text-gray-700 dark:text-gray-200'>
-						<p className='mb-4'>
-							masakinihirotaは、インターネットという情報の洪水の中から、まっさきに価値ある情報を拾い上げ紹介するサービスです。名刺、履歴書のように自己紹介をして自分の価値観に合う人を探します。
-						</p>
-						{/* 名前の由来タイトルの色をTailwindで指定 */}
-						<h3 className='mb-4 text-2xl font-semibold text-blue-800 dark:text-teal-400'>
-							名前の由来
-						</h3>
-						<p className='mb-4'>
-							インターネットという情報の洪水の中から、まっさきに価値ある情報を拾い上げるサービスであることに由来しています。
-						</p>
-						{/* Image placeholder for "洪水から物を拾い上げる画像" */}
-						<Image
-							src='https://placehold.co/500x300/bae6fd/1e3a8a?text=洪水から物を拾い上げるイメージ'
-							alt='洪水から物を拾い上げるイメージ画像'
-							width={500}
-							height={300}
-							className='concept-image'
-						/>
-						<p className='mb-4'>
-							洪水の中から拾い上げた価値がある作品を、その作品を好きな人同士、そして価値観が合う人同士とマッチングさせます。
-						</p>
-						<p className='mb-4'>
-							インターネットの大量の情報の中から自分の好きなものを見つけるのは大変です。masakinihirotaは、その中から本当に価値のある物を拾い上げるサイトです。
-						</p>
-
-						{/* Oasis Declaration Section */}
-						{/* 宣言セクションのテキスト色をTailwindで指定 */}
-						<div className='text-gray-800 oasis-declaration dark:text-gray-100'>
-							{/* Toggle Header */}
-							{/* 宣言タイトルの色をTailwindで指定 */}
-							<button
-								type='button'
-								className={`text-2xl font-bold text-blue-800 dark:text-teal-400 toggle-header ${isOasisDeclarationExpanded ? "expanded" : ""}`}
-								onClick={toggleOasisDeclaration}
-								aria-expanded={isOasisDeclarationExpanded}
-								aria-controls='oasis-declaration-content'
-							>
-								オアシス宣言
-							</button>
-							{/* Collapsible Content */}
-							<div
-								className='toggle-content'
-								style={{
-									display: isOasisDeclarationExpanded ? "block" : "none"
-								}}
-							>
-								<p className='mb-4'>
-									インターネットという情報の洪水の中で、オアシスの場所であることを宣言します。
-								</p>
-								<p className='mb-4 font-semibold'>
-									モットー：褒めるときは大きな声でみんなの前で、叱るときは二人きりで小さな声で。
-								</p>
-								<div
-									id={oasisDeclarationContentId}
-									className='toggle-content'
-									style={{
-										display: isOasisDeclarationExpanded ? "block" : "none"
-									}}
-								>
-									{/* リストアイテムのテキスト色をTailwindで指定 */}
-									<ul className='max-w-md mx-auto text-left list-disc list-inside dark:text-gray-200'>
-										<li>
-											インターネット上で翼を休める場所、砂漠の中で命の水を授かる場所を作ります。
-										</li>
-										<li>広告はユーザー側に主導権があります。</li>
-										<li>
-											共通の価値観を持った人々のオアシスという場所を作ります。
-										</li>
-										<li>
-											お互いの価値観を認めるのならば、誰もが参加できます。
-										</li>
-										<li>きれいな世界、優しい世界を守り、広めます。</li>
-										<li>
-											誰もが争うことなく休憩する場所であることを目指します。
-										</li>
-										<li>誰もが笑顔になれる場所です。</li>
-									</ul>
-								</div>
-								{/* End Collapsible Content */}
-							</div>
-							{/* End Oasis Declaration Section */}
-						</div>
-					</div>
-					{/* Key Aspects in Grid */}
-					<div className='grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3'>
-						{/* Concept Item 1 to 6 */}
-						{/* カードの背景色とテキスト色をTailwindで指定 */}
-						<div className='p-8 text-center rounded-lg shadow-md bg-cyan-100 dark:bg-zinc-700 dark:text-gray-200'>
-							{/* アイコンの色をTailwindで指定 */}
-							<div className='mb-4 text-4xl text-blue-800 dark:text-teal-400'>
-								🧬
-							</div>{" "}
-							{/* Icon placeholder */}
-							{/* タイトルの色をTailwindで指定 */}
-							<h3 className='mb-4 text-xl font-semibold text-blue-800 dark:text-teal-400'>
-								価値観で繋がる
-							</h3>{" "}
-							{/* Accent color */}
-							{/* 段落テキストの色をTailwindで指定 */}
-							<p className='text-gray-700 dark:text-gray-400'>
-								年齢や肩書きといった属性情報ではなく、「何を大切にしているか」「何に興味があるか」といった価値観そのものでマッチングを行います。人間性ではなく、価値観の相性を重視した新しい繋がり方を提供します。
+							<p className='text-xs uppercase tracking-[0.3em] text-sky-300'>
+								{group.category}
 							</p>
-						</div>
-						<div className='p-8 text-center rounded-lg shadow-md bg-cyan-100 dark:bg-zinc-700 dark:text-gray-200'>
-							<div className='mb-4 text-4xl text-blue-800 dark:text-teal-400'>
-								👤
-							</div>{" "}
-							{/* Icon placeholder */}
-							<h3 className='mb-4 text-xl font-semibold text-blue-800 dark:text-teal-400'>
-								あなたの価値観を表現
-							</h3>{" "}
-							{/* Accent color */}
-							<p className='text-gray-700 dark:text-gray-400'>
-								自身の価値観を「ネット上の属性情報がない名刺、履歴書、自己紹介カード」のように作成できます。あなたがどんな人間で、何を大切にし、何に興味があるのかを表現し、共有するツールとなります。
-							</p>
-						</div>
-						<div className='p-8 text-center rounded-lg shadow-md bg-cyan-100 dark:bg-zinc-700 dark:text-gray-200'>
-							<div className='mb-4 text-4xl text-blue-800 dark:text-teal-400'>
-								🎬
-							</div>{" "}
-							{/* Icon placeholder */}
-							<h3 className='mb-4 text-xl font-semibold text-blue-800 dark:text-teal-400'>
-								好きな作品が絆に
-							</h3>{" "}
-							{/* Accent color */}
-							<p className='text-gray-700 dark:text-gray-400'>
-								好きな作品を登録し、そのリストを基にマッチングを行います。同じ作品に感動した人、似た感性を持つ人同士が繋がり、友人になるきっかけが生まれます。
-							</p>
-						</div>
-						<div className='p-8 text-center rounded-lg shadow-md bg-cyan-100 dark:bg-zinc-700 dark:text-gray-200'>
-							<div className='mb-4 text-4xl text-blue-800 dark:text-teal-400'>
-								🤝
-							</div>{" "}
-							{/* Icon placeholder */}
-							<h3 className='mb-4 text-xl font-semibold text-blue-800 dark:text-teal-400'>
-								広がる交流の可能性
-							</h3>{" "}
-							{/* Accent color */}
-							<p className='text-gray-700 dark:text-gray-400'>
-								価値観が合う人同士で繋がり、グループを作り、語り合い、遊び、学び、共に想像し、物を作り、交流を深めます。友人、仕事仲間、パートナーなど、多様な関係性を自然な形で築くことができます。
-							</p>
-						</div>
-						<div className='p-8 text-center rounded-lg shadow-md bg-cyan-100 dark:bg-zinc-700 dark:text-gray-200'>
-							<div className='mb-4 text-4xl text-blue-800 dark:text-teal-400'>
-								🧘
-							</div>{" "}
-							{/* Icon placeholder */}
-							<h3 className='mb-4 text-xl font-semibold text-blue-800 dark:text-teal-400'>
-								心満たされるオアシス
-							</h3>{" "}
-							{/* Accent color */}
-							<p className='text-gray-700 dark:text-gray-400'>
-								情報過多な日常から離れ、厳選された作品を静かに、そしてじっくりと楽しむことができる場所です。まるでオアシスで心身を癒やすように、作品の世界に没入し、疲れを癒やすことができます。
-							</p>
-						</div>
-						<div className='p-8 text-center rounded-lg shadow-md bg-cyan-100 dark:bg-zinc-700 dark:text-gray-200'>
-							<div className='mb-4 text-4xl text-blue-800 dark:text-teal-400'>
-								✨
-							</div>{" "}
-							{/* Icon placeholder */}
-							<h3 className='mb-4 text-xl font-semibold text-blue-800 dark:text-teal-400'>
-								創造し、共に歩む
-							</h3>{" "}
-							{/* Accent color */}
-							<p className='text-gray-700 dark:text-gray-400'>
-								作品から得たインスピレーションを元に、仲間と共に新しい何かを生み出す活動を応援します。また、外部サービスの終了に左右されず、価値観で繋がった絆は継続し、共に新しい場所で活動を続けることが可能です。
-							</p>
-						</div>
-					</div>
-					{/* Additional text about avoiding incompatible relationships and carrying over environment */}
-					{/* 段落テキストの色をTailwindで指定 */}
-					<div className='max-w-3xl mx-auto mt-12 text-lg leading-relaxed text-center text-gray-700 dark:text-gray-200'>
-						<p className='mb-4'>
-							masakinihirotaでは、価値観が合わない人と無理して付き合う必要はありません。相手の価値観を知ってからコミュニケーションを図ることで、よりスムーズで心地よい人間関係を築けます。
-						</p>
-						<p className='mb-4'>
-							また、属性情報がないため、その人の能力やスキル、そして価値観そのもので判断されます。あなたが作り、育てた「価値観に基づく繋がり」は、特定のサービスに依存せず、他の場所でも共に活動を続けるための強固な基盤となります。例えば、あるゲームのサービスが終了しても、同じ価値観を持つ仲間と別のゲームで一緒に遊ぶ、といったことが自然に実現できます。
-						</p>
-						<p>
-							これは、あなたが作成し、育てた環境を他のオンラインゲームでも持ち回りできるようになることを意味します。
-						</p>
-					</div>
-				</div>
-			</section>
-
-			{/* Videos Section */}
-			{/* 背景色をTailwindで指定 */}
-			<section
-				id={videosSectionId}
-				className='px-6 py-20 bg-white dark:bg-gray-900'
-			>
-				<div className='container max-w-3xl mx-auto'>
-					{/* タイトルテキストの色をTailwindで指定 */}
-					<h2 className='mb-12 text-3xl font-bold text-center text-gray-800 md:text-4xl dark:text-gray-100'>
-						重要な動画
-					</h2>
-					<div className='flex justify-center'>
-						{/* Video Item 1 */}
-						<div className='w-full'>
-							{/* 動画タイトルの色をTailwindで指定 */}
-							<h3 className='mb-4 text-xl font-semibold text-center text-gray-800 dark:text-gray-100'>
-								[動画タイトル]
+							<h3 className='mt-4 text-2xl font-semibold text-white'>
+								{group.headline}
 							</h3>
-							<div className='video-container'>
-								{/* Replace with actual YouTube embed URL */}
-								<iframe
-									src='https://www.youtube.com/embed/VIDEO_ID_1'
-									title='重要な動画1'
-									frameBorder='0'
-									allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-									allowFullScreen
-								></iframe>
-							</div>
-							{/* 動画説明文のテキスト色をTailwindで指定 */}
-							<p className='mt-4 text-center text-gray-700 dark:text-gray-200'>
-								[ここに動画の説明文を記載してください。動画の内容やポイントなどを簡潔にまとめます。]
+							<p className='mt-3 text-base text-slate-200'>
+								{group.description}
 							</p>
-						</div>
+							<ul className='mt-6 space-y-2 text-sm text-slate-300'>
+								{group.items.map((item) => (
+									<li key={item} className='flex items-start gap-3'>
+										<span className='inline-flex flex-none w-2 h-2 mt-1 rounded-full bg-sky-400' />
+										<span>{item}</span>
+									</li>
+								))}
+							</ul>
+						</article>
+					))}
+				</div>
+			</section>
+
+			<section className='py-24 bg-slate-900/70'>
+				<div className='flex flex-col max-w-6xl gap-10 px-6 mx-auto lg:flex-row lg:items-start'>
+					<div className='lg:w-1/3'>
+						<p className='text-sm uppercase tracking-[0.4em] text-sky-400'>
+							User Journey
+						</p>
+						<h2 className='mt-3 text-3xl font-bold text-white md:text-4xl'>
+							価値観に出会うまでの導線
+						</h2>
+						<p className='mt-5 text-base text-slate-200'>
+							MVP で提供する画面遷移を5ステップに凝縮。導線ごとに
+							`/`・`/browse`・`/auth` などのルートを明示しています。
+						</p>
 					</div>
+					<ol className='grid flex-1 gap-6 md:grid-cols-2'>
+						{userJourney.map((stage) => (
+							<li
+								key={stage.step}
+								className='rounded-2xl border border-white/5 bg-slate-950/60 p-6 shadow-[0_20px_60px_-40px_rgba(56,189,248,0.8)]'
+							>
+								<span className='text-xs font-semibold uppercase tracking-[0.3em] text-sky-400'>
+									Step {stage.step}
+								</span>
+								<p className='mt-3 text-xl font-semibold text-white'>
+									{stage.title}
+								</p>
+								<p className='mt-3 text-sm leading-relaxed text-slate-300'>
+									{stage.description}
+								</p>
+							</li>
+						))}
+					</ol>
 				</div>
 			</section>
 
-			{/* Idea Origin Section - Moved to the bottom */}
-			{/* 背景色とテキスト色をTailwindで指定 */}
-			<section className='px-6 py-12 text-gray-700 bg-cyan-100 dark:bg-zinc-700 dark:text-gray-400'>
-				<div className='container mx-auto text-center'>
-					{/* タイトルの色をTailwindで指定 */}
-					<h3 className='mb-4 text-2xl font-semibold text-blue-800 dark:text-teal-400'>
-						アイデアの出発点
-					</h3>
-					{/* 段落テキストの色をTailwindで指定 */}
-					<p className='max-w-3xl mx-auto mb-4'>
-						このプロジェクトは、2016年に構想が始まりました。インターネット上の情報の海から価値あるものを見つけ出すというアイデアは、以下のQiita記事にその原点があります。
+			<section className='max-w-6xl px-6 py-24 mx-auto'>
+				<div className='text-center'>
+					<p className='text-sm uppercase tracking-[0.4em] text-sky-400'>
+						Data Model
 					</p>
-					<p className='max-w-3xl mx-auto'>
-						{/* リンクのテキスト色をTailwindで指定 */}
-						<a
-							href='https://qiita.com/masakinihirota/items/017f9ea887788e015758'
-							target='_blank'
-							rel='noreferrer'
-							className='font-semibold text-indigo-600 hover:underline dark:text-teal-500 dark:hover:text-teal-600'
-						>
-							masakinihirota 「真っ先に拾った」 #vns.blue - Qiita
-						</a>
-					</p>
-				</div>
-			</section>
-
-			{/* Call to Action Section */}
-			{/* 背景グラデーションとテキスト色をTailwindで指定 */}
-			<section className='px-6 py-16 text-center text-white bg-gradient-to-r from-blue-500 to-blue-600 dark:from-blue-800 dark:to-indigo-900'>
-				<div className='container mx-auto'>
-					<h2 className='mb-6 text-3xl font-bold md:text-4xl'>
-						あなたもmasakinihirotaで新しい発見と繋がりを。
+					<h2 className='mt-3 text-3xl font-bold text-white md:text-4xl'>
+						価値観を維持するデータ設計
 					</h2>
-					<p className='mb-8 text-xl opacity-90'>
-						価値観で繋がる心地よいコミュニティがあなたを待っています。
+					<p className='mt-5 text-lg text-slate-200'>
+						シンプルな4つの軸で RLS
+						による所有権管理と、将来拡張を見据えたスキーマを整備しています。
 					</p>
-					{/* Call to Action Button */}
-					<div className='mt-8 text-lg'>
-						{/* ボタンの色とテキスト色をTailwindで指定 */}
-						<a
-							href='https://masakinihirota.com/'
-							className='inline-block px-8 py-3 mt-4 font-bold text-blue-800 transition duration-300 bg-white rounded-full shadow-lg hover:bg-blue-50 dark:bg-teal-600 dark:text-white dark:hover:bg-teal-700'
+				</div>
+				<div className='grid gap-6 mt-10 md:grid-cols-2'>
+					{dataModels.map((model) => (
+						<article
+							key={model.name}
+							className='rounded-2xl border border-white/5 bg-slate-900/60 p-8 text-left shadow-[0_30px_80px_-40px_rgba(14,165,233,0.6)]'
 						>
-							サイトへアクセス
-						</a>
+							<h3 className='text-xl font-semibold text-white'>{model.name}</h3>
+							<ul className='mt-4 space-y-2 text-sm text-slate-300'>
+								{model.points.map((point) => (
+									<li key={point} className='flex gap-3'>
+										<span className='inline-flex flex-none w-2 h-2 mt-1 rounded-full bg-sky-400' />
+										<span>{point}</span>
+									</li>
+								))}
+							</ul>
+						</article>
+					))}
+				</div>
+			</section>
+
+			<section className='py-24 bg-slate-900/70'>
+				<div className='flex flex-col max-w-6xl gap-12 px-6 mx-auto lg:flex-row'>
+					<div className='lg:w-1/3'>
+						<p className='text-sm uppercase tracking-[0.4em] text-sky-400'>
+							Quality Gates
+						</p>
+						<h2 className='mt-3 text-3xl font-bold text-white md:text-4xl'>
+							非機能要件も MVP 水準で
+						</h2>
+						<p className='mt-5 text-base text-slate-200'>
+							パフォーマンス、セキュリティ、信頼性、ユーザビリティの観点で最小構成の品質を担保します。
+						</p>
+					</div>
+					<ul className='flex-1 space-y-4'>
+						{nonFunctionalHighlights.map((highlight) => (
+							<li
+								key={highlight}
+								className='rounded-2xl border border-white/5 bg-slate-950/60 p-6 text-sm leading-relaxed text-slate-200 shadow-[0_20px_60px_-40px_rgba(14,165,233,0.8)]'
+							>
+								{highlight}
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+
+			<section
+				id={oasisSectionId}
+				className='max-w-5xl px-6 py-24 mx-auto text-center'
+			>
+				<p className='text-sm uppercase tracking-[0.4em] text-sky-400'>
+					Oasis Declaration
+				</p>
+				<h2 className='mt-3 text-3xl font-bold text-white md:text-4xl'>
+					穏やかな場を守るための約束
+				</h2>
+				<p className='mt-5 text-lg text-slate-200'>
+					オアシス宣言はコミュニティの土台です。価値観を尊重する姿勢を共有し、お互いの安全を守ります。
+				</p>
+				<ul className='grid gap-4 mt-10 text-sm text-left text-slate-200 md:grid-cols-2'>
+					{oasisPrinciples.map((principle) => (
+						<li
+							key={principle}
+							className='flex gap-3 rounded-2xl border border-white/5 bg-slate-900/60 p-5 shadow-[0_20px_60px_-40px_rgba(56,189,248,0.6)]'
+						>
+							<span className='inline-flex flex-none w-2 h-2 mt-1 rounded-full bg-sky-400' />
+							<span>{principle}</span>
+						</li>
+					))}
+				</ul>
+			</section>
+
+			<section className='py-24 bg-gradient-to-br from-slate-900 via-slate-950 to-black'>
+				<div className='flex flex-col items-center max-w-5xl gap-8 px-6 mx-auto text-center'>
+					<h2 className='text-3xl font-bold text-white md:text-4xl'>
+						価値観に寄り添うマッチングを、今すぐ試す
+					</h2>
+					<p className='max-w-2xl text-base text-slate-300'>
+						最小の登録で価値検証とフィードバック取得を目指す
+						MVP。あなたの作品や価値観を登録し、同じ感性を持つ仲間と出会ってください。
+					</p>
+					<div className='flex flex-wrap justify-center gap-4'>
+						<Link
+							href='/onboarding'
+							className='rounded-full bg-sky-500 px-6 py-3 font-semibold text-white shadow-lg shadow-sky-900/40 transition hover:-translate-y-0.5 hover:bg-sky-400'
+						>
+							初期設定モーダルを確認
+						</Link>
+						<Link
+							href='/match'
+							className='rounded-full border border-sky-400/60 px-6 py-3 font-semibold text-sky-200 transition hover:-translate-y-0.5 hover:bg-sky-500/10'
+						>
+							マッチング結果を見る
+						</Link>
 					</div>
 				</div>
 			</section>
 
-			{/* Footer */}
-			{/* 背景色とテキスト色をTailwindで指定 */}
-			<footer className='px-6 py-8 text-center text-white bg-blue-900 dark:bg-gray-950 dark:text-gray-400'>
-				<div className='container mx-auto'>
-					<p>© 2025 masakinihirota. All rights reserved.</p>
-				</div>
+			<footer className='py-10 text-xs text-center border-t border-white/5 bg-black/80 text-slate-500'>
+				<p>
+					© {new Date().getFullYear()} VNS masakinihirota. All rights reserved.
+				</p>
 			</footer>
-
-			{/* Custom styles for this component using jsx */}
-			{/* Tailwindで指定できない、またはカスタムが必要なスタイルのみを残す */}
-			<style jsx>{`
-        .concept-image {
-            width: 100%;
-            max-width: 500px; /* Limit max width */
-            height: auto;
-            margin: 20px auto; /* Center the image */
-            display: block;
-            border-radius: 8px; /* Rounded corners */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
-        }
-        /* Image might need dark mode specific source or filter if it doesn't look good */
-        /* .dark .concept-image { filter: invert(1); } */
-
-
-        .oasis-declaration {
-            margin-top: 3rem; /* Add space above the declaration */
-            padding-top: 2rem;
-            /* ボーダーの色はTailwindで指定 */
-            border-top-width: 2px;
-            border-top-style: dashed;
-        }
-
-        .oasis-declaration h3 {
-            margin-bottom: 1rem;
-        }
-        .oasis-declaration ul {
-            list-style: disc;
-            margin-left: 1.5rem;
-            text-align: left; /* Align list items to the left */
-        }
-        .oasis-declaration ul li {
-            margin-bottom: 0.5rem;
-            line-height: 1.6;
-        }
-        .toggle-header {
-            cursor: pointer; /* Indicate it's clickable */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-         .toggle-header::after {
-            content: '+'; /* Plus sign when collapsed */
-            margin-left: 0.5rem;
-            font-size: 1.2em;
-            transition: transform 0.3s ease;
-          }
-          .toggle-header.expanded::after {
-             content: '-'; /* Minus sign when expanded */
-             transform: rotate(0deg); /* Ensure no rotation */
-           }
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            max-width: 800px; /* Limit max width for larger screens */
-            background: #000;
-            margin: 20px auto; /* Center the video */
-            border-radius: 8px; /* Rounded corners */
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .idea-origin-section {
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-            /* 背景色はTailwindで指定 */
-            text-align: center;
-        }
-
-        .idea-origin-section h3 {
-            margin-bottom: 1rem;
-        }
-        .idea-origin-section p {
-            max-width: 600px; /* Limit width for readability */
-            margin: 0.5rem auto; /* Center paragraphs */
-        }
-      `}</style>
-		</div>
+		</main>
 	)
 }
