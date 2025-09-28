@@ -4,12 +4,6 @@ applyTo: "*.js,*.jsx,*.ts,*.tsx,*.css,*.scss,*.sass,*.json,*.env"
 
 デザインシステムはデジタル庁のを採用します。
 
-## デザインシステムをReactのコンポーネントでコード化したリポジトリをuithubで取ってきたもの。
-
-このサンプルをみて、デザインシステムのコンポーネントを作成します。
-
-[vns-masakinihirota-design\1000-参考資料資料\デザインシステム_デジタル庁\design-system-example-components.txt](../../vns-masakinihirota-design/1000-参考資料資料/デザインシステム_デジタル庁/design-system-example-components.txt)
-
 masakinihirotaのデザインテーマを決めます。
 
 ## デザインテーマ
