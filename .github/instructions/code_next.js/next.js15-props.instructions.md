@@ -18,6 +18,7 @@ applyTo: "*.js,*.jsx,*.ts,*.tsx"
 - **Server Actions**: フォーム処理とデータ更新、Supabaseとの直接連携
 
 ### 2. Supabaseデータフローパターン
+
 ```
 Pattern 1: Supabase Client (Direct) → Page Components → UI Components
 Pattern 2: Supabase → API Routes → Page Components → UI Components
@@ -25,34 +26,12 @@ Pattern 3: Supabase → Server Actions → Page Components → UI Components
 ```
 
 ### 3. 型安全性の確保
+
 - Supabaseの型生成機能を活用
 - Zodを使用したデータバリデーション
 - Database型とZodスキーマの組み合わせ
 
 ---
-
-## Supabaseクライアント設定
-
-### 基本設定とタイプ生成
-
-```typescript
-// filepath: lib/supabase/client.ts
-import { createClient } from "@supabase/supabase-js";
-import { Database } from "@/types/database.types";
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
-
-export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
-
-// Server Component用クライアント
-export const createServerClient = () => {
-  return createClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!
-  );
-};
-```
 
 ### Database型定義の例
 
