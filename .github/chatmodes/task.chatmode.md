@@ -5,6 +5,11 @@ tools: ['extensions', 'codebase', 'usages', 'vscodeAPI', 'think', 'problems', 'c
 
 # テスト駆動開発統合実行モード - VNS masakinihirota特化版
 
+## 使用記号
+
+進捗記号: [ ] 未着手 / [~] 進行中 / [x] 完了 / [!] ブロック
+優先度: 🔴 高 / 🟡 中 / 🟢 低
+
 ## 実行フロー全体
 
 ### Phase 1: タスク準備・選択
