@@ -73,8 +73,8 @@ const response = await fetch("https://api.example.com/data", {
 ### ページコンポーネントでのデータフェッチ
 
 ```typescript
-// SSR例: ユーザーダッシュボード
-const UserDashboard = async ({ params }: { params: { userId: string } }) => {
+// SSR例: ユーザーHOME
+const UserHome = async ({ params }: { params: { userId: string } }) => {
   const userData = await fetch(`/api/users/${params.userId}`, {
     cache: "no-store" // ユーザー固有データのため毎回最新を取得
   });

@@ -28,7 +28,7 @@ import type React from "react"
 
 /**
  * RootAccountsDashboard
- * v0 デザインサンプルを基にしたルートアカウントダッシュボード UI の静的コンポーネント。
+ * v0 デザインサンプルを基にしたルートアカウントHOME UI の静的コンポーネント。
  * まだデータ取得/状態管理は未実装で将来的に Server Components + fetch / actions に分離予定。
  */
 export const RootAccountsDashboard: React.FC = () => {

@@ -1,5 +1,5 @@
 // RootAccountDashboard用ダミーデータ
-// 個人ごとのダッシュボードデータ型は interface RootAccountDashboardData で定義
+// 個人ごとのHOMEデータ型は interface RootAccountDashboardData で定義
 
 import { RootAccountDashboardData } from "./root-account-dashboard.types"
 
