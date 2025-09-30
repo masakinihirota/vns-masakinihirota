@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/app/(unauth)/ModeTogglePage/mode-toggle"
+import { ModeToggle } from "@/app/(public)/ModeTogglePage/mode-toggle"
 
 export default function Home() {
 	return (

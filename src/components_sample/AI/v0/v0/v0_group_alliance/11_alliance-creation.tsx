@@ -1,6 +1,6 @@
 "use client"
 
-// 手動アライアンス作成画面
+// 手動それ以上のまとまり作成画面
 import { useId, useState } from "react"
 
 import { Button } from "@/components/ui/button"
@@ -45,8 +45,8 @@ export default function AllianceCreation() {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault()
-		// ここでアライアンス作成のロジックを実装します
-		console.log("アライアンス作成:", {
+		// ここでそれ以上のまとまり作成のロジックを実装します
+		console.log("それ以上のまとまり作成:", {
 			allianceName,
 			allianceDescription,
 			selectedGroups
@@ -57,20 +57,20 @@ export default function AllianceCreation() {
 	return (
 		<Card className='w-full max-w-2xl mx-auto'>
 			<CardHeader>
-				<CardTitle>アライアンス作成</CardTitle>
+				<CardTitle>それ以上のまとまり作成</CardTitle>
 				<CardDescription>
-					新しいアライアンスを作成し、グループをまとめましょう。
+					新しいそれ以上のまとまりを作成し、グループをまとめましょう。
 				</CardDescription>
 			</CardHeader>
 			<form onSubmit={handleSubmit}>
 				<CardContent className='space-y-4'>
 					<div className='space-y-2'>
-						<Label htmlFor={allianceNameId}>アライアンス名</Label>
+						<Label htmlFor={allianceNameId}>それ以上のまとまり名</Label>
 						<Input
 							id={allianceNameId}
 							value={allianceName}
 							onChange={(e) => setAllianceName(e.target.value)}
-							placeholder='アライアンス名を入力'
+							placeholder='それ以上のまとまり名を入力'
 							required
 						/>
 					</div>
@@ -80,7 +80,7 @@ export default function AllianceCreation() {
 							id={allianceDescriptionId}
 							value={allianceDescription}
 							onChange={(e) => setAllianceDescription(e.target.value)}
-							placeholder='アライアンスの説明を入力'
+							placeholder='それ以上のまとまりの説明を入力'
 							rows={3}
 						/>
 					</div>
@@ -102,7 +102,7 @@ export default function AllianceCreation() {
 				</CardContent>
 				<CardFooter>
 					<Button type='submit' className='w-full'>
-						アライアンスを作成
+						それ以上のまとまりを作成
 					</Button>
 				</CardFooter>
 			</form>

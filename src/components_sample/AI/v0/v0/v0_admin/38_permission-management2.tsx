@@ -29,7 +29,7 @@ const permissions: Permission[] = [
 	{ id: "1", name: "ユーザー閲覧", description: "ユーザー情報の閲覧権限" },
 	{ id: "2", name: "ユーザー編集", description: "ユーザー情報の編集権限" },
 	{ id: "3", name: "グループ作成", description: "新規グループの作成権限" },
-	{ id: "4", name: "アライアンス管理", description: "アライアンスの管理権限" },
+	{ id: "4", name: "それ以上のまとまり管理", description: "それ以上のまとまりの管理権限" },
 	{ id: "5", name: "作品登録", description: "新規作品の登録権限" }
 ]
 
@@ -100,7 +100,7 @@ export default function PermissionManagement() {
 						))}
 					</TableBody>
 				</Table>
-				<div className='mt-4 flex justify-end'>
+				<div className='flex justify-end mt-4'>
 					<Button onClick={handleSave}>保存</Button>
 				</div>
 			</CardContent>

@@ -1,12 +1,12 @@
 import Link from "next/link"
 import { useTranslations } from "next-intl"
 
-import V0_60 from "../../(___sample)/v0_60"
+import V0_60 from "../../../(___sample)/v0_60"
 
 import GeminiComponents from "@/app/(___sample)/(gemini)/gemini"
 // V0_folder
 import V0_folder from "@/app/(___sample)/v0_folder"
-import { ModeToggle } from "@/app/(unauth)/ModeTogglePage/mode-toggle"
+import { ModeToggle } from "@/app/(public)/ModeTogglePage/mode-toggle"
 import LocaleSwitcher from "@/components/i18n/LocaleSwitcher"
 
 // v0_folder.tsx

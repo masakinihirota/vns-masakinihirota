@@ -4,7 +4,7 @@ applyTo: "**"
 
 # 生成AIへの 指示書 for `vns-masakinihirota` プロジェクト
 
-日本語で行います。
+日本語を使用してください。
 
 serena index create
 
@@ -121,3 +121,14 @@ AIによるコード生成のサンプルは、以下のパスを参照してく
 
 - [レビュー 指示書](../.github/instructions/github/review.instructions.md)
 
+
+---
+
+## 構造的重要設計書
+
+アプリ全体の土台となる構造的重要設計書は以下の通りです。
+
+- [URL設計書](../../vns-masakinihirota-design\0020-設計\0017-URL設計書.md)
+- [画面遷移図（PlantUML）](../../vns-masakinihirota-design\0010-要件定義書\0015-画面遷移図.puml)
+- [ER 図フォルダ](../drizzle/ER図/)
+    このフォルダの下の*.pumlファイル

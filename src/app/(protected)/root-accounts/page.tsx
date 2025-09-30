@@ -21,7 +21,7 @@ async function getDashboardData() {
 		avatar: "/diverse-user-avatars.png"
 	}
 
-	// ダッシュボードコンポーネントが必要とする形式にデータを整形
+	// HOMEコンポーネントが必要とする形式にデータを整形
 	const dashboardData: RootAccountDashboardData = {
 		user: {
 			...hardcodedUserData,

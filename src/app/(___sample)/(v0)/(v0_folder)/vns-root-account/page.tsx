@@ -27,11 +27,11 @@ export default function RootAccountDashboard() {
 		<div className='min-h-screen bg-background'>
 			{/* Header */}
 			<header className='border-b bg-card'>
-				<div className='container mx-auto px-6 py-4'>
+				<div className='container px-6 py-4 mx-auto'>
 					<div className='flex items-center justify-between'>
 						<div className='flex items-center space-x-4'>
-							<div className='h-8 w-8 rounded-lg bg-primary flex items-center justify-center'>
-								<span className='text-primary-foreground font-bold text-sm'>
+							<div className='flex items-center justify-center w-8 h-8 rounded-lg bg-primary'>
+								<span className='text-sm font-bold text-primary-foreground'>
 									VNS
 								</span>
 							</div>
@@ -58,12 +58,12 @@ export default function RootAccountDashboard() {
 				</div>
 			</header>
 
-			<div className='container mx-auto px-6 py-8'>
+			<div className='container px-6 py-8 mx-auto'>
 				{/* User Profile Management - Top Priority */}
-				<Card className='mb-8 border-2 border-accent/20 shadow-lg'>
+				<Card className='mb-8 border-2 shadow-lg border-accent/20'>
 					<CardHeader className='bg-gradient-to-r from-accent/5 to-primary/5'>
 						<CardTitle className='text-xl'>
-							<Users className='h-6 w-6 text-accent inline mr-2' />
+							<Users className='inline w-6 h-6 mr-2 text-accent' />
 							ユーザープロフィールリスト
 							<Badge variant='secondary' className='ml-2'>
 								最重要
@@ -75,9 +75,9 @@ export default function RootAccountDashboard() {
 					</CardHeader>
 					<CardContent className='pt-6'>
 						<div className='space-y-3'>
-							<div className='flex items-center justify-between p-4 bg-blue-50 border-2 border-blue-300 rounded-lg'>
+							<div className='flex items-center justify-between p-4 border-2 border-blue-300 rounded-lg bg-blue-50'>
 								<div className='flex items-center space-x-3'>
-									<Avatar className='h-10 w-10'>
+									<Avatar className='w-10 h-10'>
 										<AvatarImage src='/diverse-user-avatars.png' />
 										<AvatarFallback>田中</AvatarFallback>
 									</Avatar>
@@ -88,7 +88,7 @@ export default function RootAccountDashboard() {
 											</span>
 											<Badge
 												variant='outline'
-												className='text-xs bg-blue-100 text-blue-800'
+												className='text-xs text-blue-800 bg-blue-100'
 											>
 												仕事用
 											</Badge>
@@ -101,9 +101,9 @@ export default function RootAccountDashboard() {
 								<div className='flex items-center space-x-2'>
 									<Badge
 										variant='default'
-										className='bg-green-100 text-green-800'
+										className='text-green-800 bg-green-100'
 									>
-										<CheckCircle className='h-3 w-3 mr-1' />
+										<CheckCircle className='w-3 h-3 mr-1' />
 										アクティブ
 									</Badge>
 									<Button variant='outline' size='sm'>
@@ -112,9 +112,9 @@ export default function RootAccountDashboard() {
 								</div>
 							</div>
 
-							<div className='flex items-center justify-between p-4 bg-purple-50 border-2 border-purple-300 rounded-lg'>
+							<div className='flex items-center justify-between p-4 border-2 border-purple-300 rounded-lg bg-purple-50'>
 								<div className='flex items-center space-x-3'>
-									<Avatar className='h-10 w-10'>
+									<Avatar className='w-10 h-10'>
 										<AvatarImage src='/diverse-user-avatars.png' />
 										<AvatarFallback>学習</AvatarFallback>
 									</Avatar>
@@ -125,7 +125,7 @@ export default function RootAccountDashboard() {
 											</span>
 											<Badge
 												variant='outline'
-												className='text-xs bg-purple-100 text-purple-800'
+												className='text-xs text-purple-800 bg-purple-100'
 											>
 												学習用
 											</Badge>
@@ -138,9 +138,9 @@ export default function RootAccountDashboard() {
 								<div className='flex items-center space-x-2'>
 									<Badge
 										variant='default'
-										className='bg-green-100 text-green-800'
+										className='text-green-800 bg-green-100'
 									>
-										<CheckCircle className='h-3 w-3 mr-1' />
+										<CheckCircle className='w-3 h-3 mr-1' />
 										アクティブ
 									</Badge>
 									<Button variant='outline' size='sm'>
@@ -149,9 +149,9 @@ export default function RootAccountDashboard() {
 								</div>
 							</div>
 
-							<div className='flex items-center justify-between p-4 bg-pink-50 border-2 border-pink-300 rounded-lg'>
+							<div className='flex items-center justify-between p-4 border-2 border-pink-300 rounded-lg bg-pink-50'>
 								<div className='flex items-center space-x-3'>
-									<Avatar className='h-10 w-10'>
+									<Avatar className='w-10 h-10'>
 										<AvatarImage src='/diverse-user-avatars.png' />
 										<AvatarFallback>💕</AvatarFallback>
 									</Avatar>
@@ -162,13 +162,13 @@ export default function RootAccountDashboard() {
 											</span>
 											<Badge
 												variant='outline'
-												className='text-xs bg-pink-100 text-pink-800'
+												className='text-xs text-pink-800 bg-pink-100'
 											>
 												婚活用
 											</Badge>
 											<Badge
 												variant='secondary'
-												className='text-xs bg-orange-100 text-orange-800'
+												className='text-xs text-orange-800 bg-orange-100'
 											>
 												1つまで
 											</Badge>
@@ -181,9 +181,9 @@ export default function RootAccountDashboard() {
 								<div className='flex items-center space-x-2'>
 									<Badge
 										variant='default'
-										className='bg-green-100 text-green-800'
+										className='text-green-800 bg-green-100'
 									>
-										<CheckCircle className='h-3 w-3 mr-1' />
+										<CheckCircle className='w-3 h-3 mr-1' />
 										アクティブ
 									</Badge>
 									<Button variant='outline' size='sm'>
@@ -195,7 +195,7 @@ export default function RootAccountDashboard() {
 							{/* 非アクティブプロフィール */}
 							<div className='flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg'>
 								<div className='flex items-center space-x-3'>
-									<Avatar className='h-10 w-10'>
+									<Avatar className='w-10 h-10'>
 										<AvatarFallback>趣味</AvatarFallback>
 									</Avatar>
 									<div>
@@ -205,7 +205,7 @@ export default function RootAccountDashboard() {
 											</span>
 											<Badge
 												variant='outline'
-												className='text-xs bg-green-100 text-green-800'
+												className='text-xs text-green-800 bg-green-100'
 											>
 												遊び用
 											</Badge>
@@ -227,13 +227,13 @@ export default function RootAccountDashboard() {
 							</div>
 						</div>
 
-						<div className='flex space-x-2 pt-3 border-t'>
+						<div className='flex pt-3 space-x-2 border-t'>
 							<Button variant='outline' size='sm'>
-								<Settings className='h-4 w-4 mr-2' />
+								<Settings className='w-4 h-4 mr-2' />
 								一括管理
 							</Button>
 							<Button variant='outline' size='sm'>
-								<Shield className='h-4 w-4 mr-2' />
+								<Shield className='w-4 h-4 mr-2' />
 								公開設定
 							</Button>
 						</div>
@@ -253,14 +253,14 @@ export default function RootAccountDashboard() {
 					<CardContent className='pt-6'>
 						<div className='space-y-6'>
 							<div className='space-y-4'>
-								<h4 className='font-medium text-sm'>
+								<h4 className='text-sm font-medium'>
 									1. 目的を選択してください（複数選択可能）
 								</h4>
-								<div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
+								<div className='grid grid-cols-2 gap-3 md:grid-cols-3'>
 									<Button
 										variant='outline'
 										size='sm'
-										className='h-auto p-3 flex items-center justify-start space-x-3 bg-white hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900 border-2'
+										className='flex items-center justify-start h-auto p-3 space-x-3 bg-white border-2 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-900'
 									>
 										<span className='text-lg'>⚪</span>
 										<span className='text-sm font-medium'>基本用</span>
@@ -268,7 +268,7 @@ export default function RootAccountDashboard() {
 									<Button
 										variant='outline'
 										size='sm'
-										className='h-auto p-3 flex items-center justify-start space-x-3 bg-white hover:bg-blue-50 hover:border-blue-300 hover:text-blue-900 border-2'
+										className='flex items-center justify-start h-auto p-3 space-x-3 bg-white border-2 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-900'
 									>
 										<span className='text-lg'>💼</span>
 										<span className='text-sm font-medium'>仕事用</span>
@@ -276,7 +276,7 @@ export default function RootAccountDashboard() {
 									<Button
 										variant='outline'
 										size='sm'
-										className='h-auto p-3 flex items-center justify-start space-x-3 bg-white hover:bg-orange-50 hover:border-orange-300 hover:text-orange-900 border-2'
+										className='flex items-center justify-start h-auto p-3 space-x-3 bg-white border-2 hover:bg-orange-50 hover:border-orange-300 hover:text-orange-900'
 									>
 										<span className='text-lg'>🎯</span>
 										<span className='text-sm font-medium'>就職用</span>
@@ -284,7 +284,7 @@ export default function RootAccountDashboard() {
 									<Button
 										variant='outline'
 										size='sm'
-										className='h-auto p-3 flex items-center justify-start space-x-3 bg-white hover:bg-green-50 hover:border-green-300 hover:text-green-900 border-2'
+										className='flex items-center justify-start h-auto p-3 space-x-3 bg-white border-2 hover:bg-green-50 hover:border-green-300 hover:text-green-900'
 									>
 										<span className='text-lg'>🎮</span>
 										<span className='text-sm font-medium'>遊び用</span>
@@ -292,7 +292,7 @@ export default function RootAccountDashboard() {
 									<Button
 										variant='outline'
 										size='sm'
-										className='h-auto p-3 flex items-center justify-start space-x-3 bg-white hover:bg-purple-50 hover:border-purple-300 hover:text-purple-900 border-2'
+										className='flex items-center justify-start h-auto p-3 space-x-3 bg-white border-2 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-900'
 									>
 										<span className='text-lg'>🌟</span>
 										<span className='text-sm font-medium'>推し活</span>
@@ -300,7 +300,7 @@ export default function RootAccountDashboard() {
 									<Button
 										variant='outline'
 										size='sm'
-										className='h-auto p-3 flex items-center justify-start space-x-3 bg-white hover:bg-teal-50 hover:border-teal-300 hover:text-teal-900 border-2'
+										className='flex items-center justify-start h-auto p-3 space-x-3 bg-white border-2 hover:bg-teal-50 hover:border-teal-300 hover:text-teal-900'
 									>
 										<span className='text-lg'>👁️</span>
 										<span className='text-sm font-medium'>
@@ -310,7 +310,7 @@ export default function RootAccountDashboard() {
 									<Button
 										variant='outline'
 										size='sm'
-										className='h-auto p-3 flex items-center justify-start space-x-3 bg-gray-100 hover:bg-gray-200 hover:border-gray-400 opacity-50 cursor-not-allowed border-2'
+										className='flex items-center justify-start h-auto p-3 space-x-3 bg-gray-100 border-2 opacity-50 cursor-not-allowed hover:bg-gray-200 hover:border-gray-400'
 										disabled
 									>
 										<span className='text-lg'>💕</span>
@@ -323,7 +323,7 @@ export default function RootAccountDashboard() {
 							</div>
 
 							<div className='space-y-4'>
-								<h4 className='font-medium text-sm'>
+								<h4 className='text-sm font-medium'>
 									2. プロフィールタイトルを設定
 								</h4>
 								<div className='space-y-3'>
@@ -341,20 +341,20 @@ export default function RootAccountDashboard() {
 							</div>
 
 							<div className='space-y-4'>
-								<h4 className='font-medium text-sm'>3. 作成方法を選択</h4>
-								<div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+								<h4 className='text-sm font-medium'>3. 作成方法を選択</h4>
+								<div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
 									<Button
 										variant='outline'
 										size='sm'
-										className='h-auto p-4 flex items-center justify-start space-x-3 bg-white hover:bg-green-50 hover:border-green-300 hover:text-green-900'
+										className='flex items-center justify-start h-auto p-4 space-x-3 bg-white hover:bg-green-50 hover:border-green-300 hover:text-green-900'
 									>
-										<User className='h-5 w-5 text-green-600' />
+										<User className='w-5 h-5 text-green-600' />
 										<span className='text-sm font-medium'>新規作成</span>
 									</Button>
 									<Button
 										variant='outline'
 										size='sm'
-										className='h-auto p-4 flex items-center justify-start space-x-3 bg-white hover:bg-blue-50 hover:border-blue-300 hover:text-blue-900'
+										className='flex items-center justify-start h-auto p-4 space-x-3 bg-white hover:bg-blue-50 hover:border-blue-300 hover:text-blue-900'
 									>
 										<span className='text-lg'>📋</span>
 										<span className='text-sm font-medium'>
@@ -365,7 +365,7 @@ export default function RootAccountDashboard() {
 							</div>
 
 							<Button className='w-full bg-green-500 hover:bg-green-600'>
-								<User className='h-4 w-4 mr-2' />
+								<User className='w-4 h-4 mr-2' />
 								新しいユーザープロフィールを作成
 							</Button>
 						</div>
@@ -375,7 +375,7 @@ export default function RootAccountDashboard() {
 				<Card className='mb-8'>
 					<CardHeader>
 						<CardTitle className='flex items-center space-x-2'>
-							<Users className='h-5 w-5 text-blue-600' />
+							<Users className='w-5 h-5 text-blue-600' />
 							<span>グループ機能</span>
 						</CardTitle>
 						<CardDescription>
@@ -383,14 +383,14 @@ export default function RootAccountDashboard() {
 						</CardDescription>
 					</CardHeader>
 					<CardContent className='space-y-4'>
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+						<div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
 							<div className='space-y-3'>
-								<h4 className='font-medium flex items-center space-x-2'>
+								<h4 className='flex items-center space-x-2 font-medium'>
 									<span>👑</span>
 									<span>管理中のグループ</span>
 								</h4>
 								<div className='space-y-2'>
-									<div className='flex items-center justify-between p-3 bg-yellow-50 border border-yellow-200 rounded-lg'>
+									<div className='flex items-center justify-between p-3 border border-yellow-200 rounded-lg bg-yellow-50'>
 										<div className='flex items-center space-x-2'>
 											<span>🏢</span>
 											<span className='text-sm font-medium'>
@@ -399,12 +399,12 @@ export default function RootAccountDashboard() {
 										</div>
 										<Badge
 											variant='outline'
-											className='bg-yellow-100 text-yellow-800'
+											className='text-yellow-800 bg-yellow-100'
 										>
 											45人
 										</Badge>
 									</div>
-									<div className='flex items-center justify-between p-3 bg-yellow-50 border border-yellow-200 rounded-lg'>
+									<div className='flex items-center justify-between p-3 border border-yellow-200 rounded-lg bg-yellow-50'>
 										<div className='flex items-center space-x-2'>
 											<span>🎮</span>
 											<span className='text-sm font-medium'>
@@ -413,7 +413,7 @@ export default function RootAccountDashboard() {
 										</div>
 										<Badge
 											variant='outline'
-											className='bg-yellow-100 text-yellow-800'
+											className='text-yellow-800 bg-yellow-100'
 										>
 											32人
 										</Badge>
@@ -421,12 +421,12 @@ export default function RootAccountDashboard() {
 								</div>
 							</div>
 							<div className='space-y-3'>
-								<h4 className='font-medium flex items-center space-x-2'>
+								<h4 className='flex items-center space-x-2 font-medium'>
 									<span>👥</span>
 									<span>参加中のグループ</span>
 								</h4>
 								<div className='space-y-2'>
-									<div className='flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg'>
+									<div className='flex items-center justify-between p-3 border border-blue-200 rounded-lg bg-blue-50'>
 										<div className='flex items-center space-x-2'>
 											<span>🎵</span>
 											<span className='text-sm font-medium'>
@@ -435,19 +435,19 @@ export default function RootAccountDashboard() {
 										</div>
 										<Badge
 											variant='outline'
-											className='bg-blue-100 text-blue-800'
+											className='text-blue-800 bg-blue-100'
 										>
 											18人
 										</Badge>
 									</div>
-									<div className='flex items-center justify-between p-3 bg-blue-50 border border-blue-200 rounded-lg'>
+									<div className='flex items-center justify-between p-3 border border-blue-200 rounded-lg bg-blue-50'>
 										<div className='flex items-center space-x-2'>
 											<span>📚</span>
 											<span className='text-sm font-medium'>読書クラブ</span>
 										</div>
 										<Badge
 											variant='outline'
-											className='bg-blue-100 text-blue-800'
+											className='text-blue-800 bg-blue-100'
 										>
 											24人
 										</Badge>
@@ -455,9 +455,9 @@ export default function RootAccountDashboard() {
 								</div>
 							</div>
 						</div>
-						<div className='flex space-x-2 pt-4 border-t'>
+						<div className='flex pt-4 space-x-2 border-t'>
 							<Button variant='outline' size='sm'>
-								<Users className='h-4 w-4 mr-2' />
+								<Users className='w-4 h-4 mr-2' />
 								グループ管理
 							</Button>
 							<Button variant='outline' size='sm'>
@@ -472,27 +472,27 @@ export default function RootAccountDashboard() {
 					<CardHeader>
 						<CardTitle className='flex items-center space-x-2'>
 							<span className='text-purple-600'>🤝</span>
-							<span>アライアンス機能</span>
+							<span>それ以上のまとまり機能</span>
 						</CardTitle>
 						<CardDescription>
-							参加・管理しているアライアンスの状況と権限
+							参加・管理しているそれ以上のまとまりの状況と権限
 						</CardDescription>
 					</CardHeader>
 					<CardContent className='space-y-4'>
-						<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+						<div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
 							<div className='space-y-3'>
-								<h4 className='font-medium flex items-center space-x-2'>
+								<h4 className='flex items-center space-x-2 font-medium'>
 									<span>⚡</span>
 									<span>リーダー権限あり</span>
 								</h4>
-								<div className='p-3 bg-purple-50 border border-purple-200 rounded-lg'>
+								<div className='p-3 border border-purple-200 rounded-lg bg-purple-50'>
 									<div className='flex items-center justify-between mb-2'>
 										<span className='text-sm font-medium'>
 											テックイノベーション連合
 										</span>
 										<Badge
 											variant='outline'
-											className='bg-purple-100 text-purple-800'
+											className='text-purple-800 bg-purple-100'
 										>
 											リーダー
 										</Badge>
@@ -503,18 +503,18 @@ export default function RootAccountDashboard() {
 								</div>
 							</div>
 							<div className='space-y-3'>
-								<h4 className='font-medium flex items-center space-x-2'>
+								<h4 className='flex items-center space-x-2 font-medium'>
 									<span>🎨</span>
 									<span>メンバー参加</span>
 								</h4>
-								<div className='p-3 bg-green-50 border border-green-200 rounded-lg'>
+								<div className='p-3 border border-green-200 rounded-lg bg-green-50'>
 									<div className='flex items-center justify-between mb-2'>
 										<span className='text-sm font-medium'>
 											クリエイター協会
 										</span>
 										<Badge
 											variant='outline'
-											className='bg-green-100 text-green-800'
+											className='text-green-800 bg-green-100'
 										>
 											メンバー
 										</Badge>
@@ -525,27 +525,27 @@ export default function RootAccountDashboard() {
 								</div>
 							</div>
 						</div>
-						<div className='flex space-x-2 pt-4 border-t'>
+						<div className='flex pt-4 space-x-2 border-t'>
 							<Button variant='outline' size='sm'>
-								<Settings className='h-4 w-4 mr-2' />
-								アライアンス管理
+								<Settings className='w-4 h-4 mr-2' />
+								それ以上のまとまり管理
 							</Button>
 							<Button variant='outline' size='sm'>
-								<Link2 className='h-4 w-4 mr-2' />
+								<Link2 className='w-4 h-4 mr-2' />
 								新規参加申請
 							</Button>
 						</div>
 					</CardContent>
 				</Card>
 
-				<div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
+				<div className='grid grid-cols-1 gap-6 lg:grid-cols-3'>
 					{/* Left Column - Account Status & Settings */}
-					<div className='lg:col-span-2 space-y-6'>
+					<div className='space-y-6 lg:col-span-2'>
 						{/* Account Status Overview */}
 						<Card>
 							<CardHeader>
 								<CardTitle className='flex items-center space-x-2'>
-									<User className='h-5 w-5' />
+									<User className='w-5 h-5' />
 									<span>アカウント状態</span>
 								</CardTitle>
 							</CardHeader>
@@ -554,9 +554,9 @@ export default function RootAccountDashboard() {
 									<span className='text-sm font-medium'>ステータス</span>
 									<Badge
 										variant='default'
-										className='bg-green-100 text-green-800'
+										className='text-green-800 bg-green-100'
 									>
-										<CheckCircle className='h-3 w-3 mr-1' />
+										<CheckCircle className='w-3 h-3 mr-1' />
 										アクティブ
 									</Badge>
 								</div>
@@ -581,7 +581,7 @@ export default function RootAccountDashboard() {
 						<Card>
 							<CardHeader>
 								<CardTitle className='flex items-center space-x-2'>
-									<Settings className='h-5 w-5' />
+									<Settings className='w-5 h-5' />
 									<span>アカウント設定</span>
 								</CardTitle>
 							</CardHeader>
@@ -646,22 +646,22 @@ export default function RootAccountDashboard() {
 						<Card>
 							<CardHeader>
 								<CardTitle className='flex items-center space-x-2'>
-									<AlertTriangle className='h-5 w-5 text-orange-500' />
+									<AlertTriangle className='w-5 h-5 text-orange-500' />
 									<span>警告・リセット</span>
 								</CardTitle>
 							</CardHeader>
 							<CardContent className='space-y-4'>
-								<div className='flex justify-between items-center'>
+								<div className='flex items-center justify-between'>
 									<span className='text-sm font-medium'>警告回数</span>
 									<Badge variant='outline'>0回</Badge>
 								</div>
 
-								<div className='flex justify-between items-center'>
+								<div className='flex items-center justify-between'>
 									<span className='text-sm font-medium'>リセット実行回数</span>
 									<span className='text-sm'>1回</span>
 								</div>
 
-								<div className='flex justify-between items-center'>
+								<div className='flex items-center justify-between'>
 									<span className='text-sm font-medium'>最終リセット</span>
 									<span className='text-xs text-muted-foreground'>
 										2024年8月15日
@@ -669,7 +669,7 @@ export default function RootAccountDashboard() {
 								</div>
 
 								<Button variant='destructive' size='sm' className='w-full'>
-									<FileText className='h-4 w-4 mr-2' />
+									<FileText className='w-4 h-4 mr-2' />
 									全データリセット
 								</Button>
 							</CardContent>
@@ -679,7 +679,7 @@ export default function RootAccountDashboard() {
 						<Card>
 							<CardHeader>
 								<CardTitle className='flex items-center space-x-2'>
-									<Link2 className='h-5 w-5' />
+									<Link2 className='w-5 h-5' />
 									<span>OAuth認証状況</span>
 								</CardTitle>
 								<CardDescription>
@@ -688,10 +688,10 @@ export default function RootAccountDashboard() {
 							</CardHeader>
 							<CardContent className='space-y-4'>
 								<div className='space-y-3'>
-									<div className='flex items-center justify-between p-3 border rounded-lg bg-green-50 border-green-200'>
+									<div className='flex items-center justify-between p-3 border border-green-200 rounded-lg bg-green-50'>
 										<div className='flex items-center space-x-3'>
-											<div className='w-8 h-8 bg-red-500 rounded flex items-center justify-center'>
-												<span className='text-white text-sm font-bold'>G</span>
+											<div className='flex items-center justify-center w-8 h-8 bg-red-500 rounded'>
+												<span className='text-sm font-bold text-white'>G</span>
 											</div>
 											<div>
 												<span className='text-sm font-medium'>Google</span>
@@ -702,17 +702,17 @@ export default function RootAccountDashboard() {
 										</div>
 										<Badge
 											variant='default'
-											className='bg-green-100 text-green-800'
+											className='text-green-800 bg-green-100'
 										>
-											<CheckCircle className='h-3 w-3 mr-1' />
+											<CheckCircle className='w-3 h-3 mr-1' />
 											接続済み
 										</Badge>
 									</div>
 
-									<div className='flex items-center justify-between p-3 border rounded-lg bg-green-50 border-green-200'>
+									<div className='flex items-center justify-between p-3 border border-green-200 rounded-lg bg-green-50'>
 										<div className='flex items-center space-x-3'>
-											<div className='w-8 h-8 bg-gray-900 rounded flex items-center justify-center'>
-												<span className='text-white text-sm font-bold'>G</span>
+											<div className='flex items-center justify-center w-8 h-8 bg-gray-900 rounded'>
+												<span className='text-sm font-bold text-white'>G</span>
 											</div>
 											<div>
 												<span className='text-sm font-medium'>GitHub</span>
@@ -723,17 +723,17 @@ export default function RootAccountDashboard() {
 										</div>
 										<Badge
 											variant='default'
-											className='bg-green-100 text-green-800'
+											className='text-green-800 bg-green-100'
 										>
-											<CheckCircle className='h-3 w-3 mr-1' />
+											<CheckCircle className='w-3 h-3 mr-1' />
 											接続済み
 										</Badge>
 									</div>
 
 									<div className='flex items-center justify-between p-3 border rounded-lg bg-gray-50'>
 										<div className='flex items-center space-x-3'>
-											<div className='w-8 h-8 bg-black rounded flex items-center justify-center'>
-												<span className='text-white text-sm font-bold'>X</span>
+											<div className='flex items-center justify-center w-8 h-8 bg-black rounded'>
+												<span className='text-sm font-bold text-white'>X</span>
 											</div>
 											<div>
 												<span className='text-sm font-medium'>X (Twitter)</span>
@@ -746,9 +746,9 @@ export default function RootAccountDashboard() {
 									</div>
 								</div>
 
-								<div className='mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg'>
-									<div className='flex items-center space-x-2 mb-2'>
-										<Shield className='h-4 w-4 text-blue-600' />
+								<div className='p-4 mt-4 border border-blue-200 rounded-lg bg-blue-50'>
+									<div className='flex items-center mb-2 space-x-2'>
+										<Shield className='w-4 h-4 text-blue-600' />
 										<span className='text-sm font-medium'>認証統計</span>
 									</div>
 									<div className='grid grid-cols-2 gap-4 text-center'>
@@ -775,7 +775,7 @@ export default function RootAccountDashboard() {
 				<Card className='mt-8 border border-muted'>
 					<CardHeader>
 						<CardTitle className='flex items-center space-x-2 text-lg'>
-							<User className='h-5 w-5 text-muted-foreground' />
+							<User className='w-5 h-5 text-muted-foreground' />
 							<span>基本情報管理</span>
 							<Badge variant='outline' className='ml-2 text-xs'>
 								設定済み
@@ -786,10 +786,10 @@ export default function RootAccountDashboard() {
 						</CardDescription>
 					</CardHeader>
 					<CardContent className='pt-6'>
-						<div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+						<div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
 							{/* Language Settings */}
 							<div className='space-y-4'>
-								<h3 className='font-semibold text-base flex items-center space-x-2'>
+								<h3 className='flex items-center space-x-2 text-base font-semibold'>
 									<span>🌐</span>
 									<span>言語設定</span>
 								</h3>
@@ -801,7 +801,7 @@ export default function RootAccountDashboard() {
 												<span className='text-sm font-medium'>母語</span>
 												<Badge
 													variant='default'
-													className='bg-blue-100 text-blue-800'
+													className='text-blue-800 bg-blue-100'
 												>
 													日本語
 												</Badge>
@@ -814,19 +814,19 @@ export default function RootAccountDashboard() {
 												<div className='flex flex-wrap gap-2'>
 													<Badge
 														variant='outline'
-														className='bg-green-50 border-green-200 text-green-800'
+														className='text-green-800 border-green-200 bg-green-50'
 													>
 														日本語（ネイティブ）
 													</Badge>
 													<Badge
 														variant='outline'
-														className='bg-blue-50 border-blue-200 text-blue-800'
+														className='text-blue-800 border-blue-200 bg-blue-50'
 													>
 														英語（中級）
 													</Badge>
 													<Badge
 														variant='outline'
-														className='bg-orange-50 border-orange-200 text-orange-800'
+														className='text-orange-800 border-orange-200 bg-orange-50'
 													>
 														中国語（初級）
 													</Badge>
@@ -838,7 +838,7 @@ export default function RootAccountDashboard() {
 												size='sm'
 												className='w-full bg-transparent'
 											>
-												<Settings className='h-4 w-4 mr-2' />
+												<Settings className='w-4 h-4 mr-2' />
 												言語設定を編集
 											</Button>
 										</div>
@@ -848,7 +848,7 @@ export default function RootAccountDashboard() {
 
 							{/* Region Settings */}
 							<div className='space-y-4'>
-								<h3 className='font-semibold text-base flex items-center space-x-2'>
+								<h3 className='flex items-center space-x-2 text-base font-semibold'>
 									<span>🌍</span>
 									<span>地球3分割設定</span>
 								</h3>
@@ -860,7 +860,7 @@ export default function RootAccountDashboard() {
 												<span className='text-sm'>現在の活動地域</span>
 												<Badge
 													variant='default'
-													className='bg-red-100 text-red-800'
+													className='text-red-800 bg-red-100'
 												>
 													Area 1 (日付変更線〜+8h)
 												</Badge>
@@ -869,7 +869,7 @@ export default function RootAccountDashboard() {
 											<div className='space-y-3'>
 												<span className='text-sm font-medium'>地域選択</span>
 												<div className='space-y-2'>
-													<div className='flex items-center justify-between p-3 bg-red-50 border-2 border-red-300 rounded-lg'>
+													<div className='flex items-center justify-between p-3 border-2 border-red-300 rounded-lg bg-red-50'>
 														<div className='flex items-center space-x-2'>
 															<div className='w-4 h-4 bg-red-500 rounded-full'></div>
 															<div>
@@ -883,13 +883,13 @@ export default function RootAccountDashboard() {
 														</div>
 														<Badge
 															variant='default'
-															className='bg-red-100 text-red-800'
+															className='text-red-800 bg-red-100'
 														>
 															選択中
 														</Badge>
 													</div>
 
-													<div className='flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-yellow-50 hover:border-yellow-200 cursor-pointer'>
+													<div className='flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-yellow-50 hover:border-yellow-200'>
 														<div className='flex items-center space-x-2'>
 															<div className='w-4 h-4 bg-yellow-500 rounded-full'></div>
 															<div>
@@ -906,7 +906,7 @@ export default function RootAccountDashboard() {
 														</Button>
 													</div>
 
-													<div className='flex items-center justify-between p-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-blue-50 hover:border-blue-200 cursor-pointer'>
+													<div className='flex items-center justify-between p-3 border border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-blue-50 hover:border-blue-200'>
 														<div className='flex items-center space-x-2'>
 															<div className='w-4 h-4 bg-blue-500 rounded-full'></div>
 															<div>
@@ -930,21 +930,21 @@ export default function RootAccountDashboard() {
 												size='sm'
 												className='w-full bg-transparent'
 											>
-												<Settings className='h-4 w-4 mr-2' />
+												<Settings className='w-4 h-4 mr-2' />
 												地域設定を変更
 											</Button>
 
 											{/* 地球3分割の説明文 */}
-											<div className='p-4 bg-blue-50 border border-blue-200 rounded-lg'>
-												<h4 className='font-medium text-sm mb-3 flex items-center space-x-2'>
+											<div className='p-4 border border-blue-200 rounded-lg bg-blue-50'>
+												<h4 className='flex items-center mb-3 space-x-2 text-sm font-medium'>
 													<span>📍</span>
 													<span>地球3分割について</span>
 												</h4>
-												<p className='text-sm text-muted-foreground mb-3'>
+												<p className='mb-3 text-sm text-muted-foreground'>
 													地球を日付変更線から3つのエリアに分割し、あなたが主に活動する時間帯のエリアを選択してください。
 													これにより、同じ時間帯で活動するユーザーとのマッチング精度が向上します。
 												</p>
-												<div className='text-xs text-muted-foreground space-y-1'>
+												<div className='space-y-1 text-xs text-muted-foreground'>
 													<p>
 														• <strong>Area 1:</strong>{" "}
 														日付変更線から8時間分（120度）
