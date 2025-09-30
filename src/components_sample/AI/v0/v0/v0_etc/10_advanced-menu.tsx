@@ -58,7 +58,7 @@ const initialMenuItems: MenuItem[] = [
 	},
 	{
 		id: "alliance",
-		label: "アライアンス",
+		label: "それ以上のまとまり",
 		isAdvanced: true,
 		isUnlocked: false
 	},
@@ -90,14 +90,14 @@ export default function Component() {
 	}
 
 	return (
-		<div className='w-64 bg-background text-foreground p-4 rounded-lg shadow-md'>
-			<h2 className='text-2xl font-bold mb-4'>メニュー</h2>
+		<div className='w-64 p-4 rounded-lg shadow-md bg-background text-foreground'>
+			<h2 className='mb-4 text-2xl font-bold'>メニュー</h2>
 			<ul className='space-y-2'>
 				{menuItems.map(
 					(item) =>
 						!item.isAdvanced && (
 							<li key={item.id}>
-								<Button variant='ghost' className='w-full justify-start'>
+								<Button variant='ghost' className='justify-start w-full'>
 									{item.label}
 								</Button>
 							</li>
@@ -111,12 +111,12 @@ export default function Component() {
 				className='mt-4'
 			>
 				<CollapsibleTrigger asChild>
-					<Button variant='outline' className='w-full justify-between'>
+					<Button variant='outline' className='justify-between w-full'>
 						アドバンスメニュー
 						{isAdvancedOpen ? (
-							<ChevronDown className='h-4 w-4' />
+							<ChevronDown className='w-4 h-4' />
 						) : (
-							<ChevronRight className='h-4 w-4' />
+							<ChevronRight className='w-4 h-4' />
 						)}
 					</Button>
 				</CollapsibleTrigger>
@@ -128,7 +128,7 @@ export default function Component() {
 									<li key={item.id}>
 										<Button
 											variant='ghost'
-											className='w-full justify-start'
+											className='justify-start w-full'
 											disabled={!item.isUnlocked}
 										>
 											{item.label}

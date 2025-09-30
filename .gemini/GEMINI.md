@@ -4,7 +4,7 @@ applyTo: "**"
 
 # 生成AIへの 指示書 for `vns-masakinihirota` プロジェクト
 
-日本語で行います。
+日本語を使用してください。
 
 serena index create
 

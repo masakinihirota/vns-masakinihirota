@@ -19,9 +19,9 @@ type Role =
 	| "リーダー"
 	| "サブリーダー"
 	| "メンバー"
-	| "アライアンスリーダー"
-	| "アライアンスサブリーダー"
-	| "アライアンスメンバー"
+	| "それ以上のまとまりリーダー"
+	| "それ以上のまとまりサブリーダー"
+	| "それ以上のまとまりメンバー"
 
 type Permission = {
 	name: string
@@ -37,16 +37,16 @@ const roles: Role[] = [
 	"リーダー",
 	"サブリーダー",
 	"メンバー",
-	"アライアンスリーダー",
-	"アライアンスサブリーダー",
-	"アライアンスメンバー"
+	"それ以上のまとまりリーダー",
+	"それ以上のまとまりサブリーダー",
+	"それ以上のまとまりメンバー"
 ]
 
 const permissions: Permission[] = [
 	{ name: "ユーザー管理", description: "ユーザーの追加、編集、削除" },
 	{ name: "グループ作成", description: "新しいグループの作成" },
 	{ name: "コンテンツ編集", description: "サイトコンテンツの編集" },
-	{ name: "アライアンス管理", description: "アライアンスの作成と管理" }
+	{ name: "それ以上のまとまり管理", description: "それ以上のまとまりの作成と管理" }
 ]
 
 export default function PermissionManagement() {

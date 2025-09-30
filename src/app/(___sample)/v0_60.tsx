@@ -42,7 +42,7 @@ export default function V0_60Page() {
 			<Link href='/56'>56_user-profile7</Link>
 			<br />
 			<br />
-			グループ・アライアンス
+			グループ・それ以上のまとまり
 			<br />
 			<Link href='/11'>11_component</Link>
 			<br />

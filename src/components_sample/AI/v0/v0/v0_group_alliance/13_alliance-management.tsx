@@ -1,4 +1,4 @@
-// アライアンス機能の使い方
+// それ以上のまとまり機能の使い方
 "use client"
 import { useState } from "react"
 import { Send, UserPlus, Users } from "lucide-react"
@@ -65,13 +65,13 @@ export default function Component() {
 
 	return (
 		<div className='container mx-auto p-4'>
-			<h1 className='text-2xl font-bold mb-4'>アライアンス管理</h1>
+			<h1 className='text-2xl font-bold mb-4'>それ以上のまとまり管理</h1>
 
 			<Card className='mb-6'>
 				<CardHeader>
-					<CardTitle>新しいアライアンスを作成</CardTitle>
+					<CardTitle>新しいそれ以上のまとまりを作成</CardTitle>
 					<CardDescription>
-						アライアンス名を入力して、新しいアライアンスを作成します。
+						それ以上のまとまり名を入力して、新しいそれ以上のまとまりを作成します。
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
@@ -79,7 +79,7 @@ export default function Component() {
 						<Input
 							value={newAllianceName}
 							onChange={(e) => setNewAllianceName(e.target.value)}
-							placeholder='アライアンス名'
+							placeholder='それ以上のまとまり名'
 						/>
 						<Button onClick={createAlliance}>
 							<UserPlus className='mr-2 h-4 w-4' />

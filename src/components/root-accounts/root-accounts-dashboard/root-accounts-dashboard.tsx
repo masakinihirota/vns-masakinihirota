@@ -35,11 +35,11 @@ export const RootAccountsDashboard: React.FC = () => {
 	return (
 		<div className='min-h-screen bg-background'>
 			<header className='border-b bg-card'>
-				<div className='container mx-auto px-6 py-4'>
+				<div className='container px-6 py-4 mx-auto'>
 					<div className='flex items-center justify-between'>
 						<div className='flex items-center space-x-4'>
-							<div className='h-8 w-8 rounded-lg bg-primary flex items-center justify-center'>
-								<span className='text-primary-foreground font-bold text-sm'>
+							<div className='flex items-center justify-center w-8 h-8 rounded-lg bg-primary'>
+								<span className='text-sm font-bold text-primary-foreground'>
 									VNS
 								</span>
 							</div>
@@ -65,14 +65,14 @@ export const RootAccountsDashboard: React.FC = () => {
 					</div>
 				</div>
 			</header>
-			<div className='container mx-auto px-6 py-8 space-y-8'>
+			<div className='container px-6 py-8 mx-auto space-y-8'>
 				{/* プロフィールリスト */}
 				<UserProfilesSection />
 				{/* 新規プロフィール作成 */}
 				<NewProfileSection />
 				{/* グループ機能 */}
 				<GroupsSection />
-				{/* アライアンス機能 */}
+				{/* それ以上のまとまり機能 */}
 				<AlliancesSection />
 				{/* アカウント状態/設定・警告/OAuth */}
 				<AccountStatusAndSettings />
@@ -86,10 +86,10 @@ export const RootAccountsDashboard: React.FC = () => {
 /* ---------- Sub Sections (暫定的に同ファイル。将来分割可能) ---------- */
 
 const UserProfilesSection: React.FC = () => (
-	<Card className='border-2 border-accent/20 shadow-lg'>
+	<Card className='border-2 shadow-lg border-accent/20'>
 		<CardHeader className='bg-gradient-to-r from-accent/5 to-primary/5'>
 			<CardTitle className='text-xl'>
-				<Users className='h-6 w-6 text-accent inline mr-2' />
+				<Users className='inline w-6 h-6 mr-2 text-accent' />
 				ユーザープロフィールリスト
 				<Badge variant='secondary' className='ml-2'>
 					最重要
@@ -130,7 +130,7 @@ const UserProfilesSection: React.FC = () => (
 				{/* Inactive */}
 				<div className='flex items-center justify-between p-4 bg-white border border-gray-200 rounded-lg'>
 					<div className='flex items-center space-x-3'>
-						<Avatar className='h-10 w-10'>
+						<Avatar className='w-10 h-10'>
 							<AvatarFallback>趣味</AvatarFallback>
 						</Avatar>
 						<div>
@@ -140,7 +140,7 @@ const UserProfilesSection: React.FC = () => (
 								</span>
 								<Badge
 									variant='outline'
-									className='text-xs bg-green-100 text-green-800'
+									className='text-xs text-green-800 bg-green-100'
 								>
 									遊び用
 								</Badge>
@@ -161,13 +161,13 @@ const UserProfilesSection: React.FC = () => (
 					</div>
 				</div>
 			</div>
-			<div className='flex space-x-2 pt-3 border-t'>
+			<div className='flex pt-3 space-x-2 border-t'>
 				<Button variant='outline' size='sm'>
-					<Settings className='h-4 w-4 mr-2' />
+					<Settings className='w-4 h-4 mr-2' />
 					一括管理
 				</Button>
 				<Button variant='outline' size='sm'>
-					<Shield className='h-4 w-4 mr-2' />
+					<Shield className='w-4 h-4 mr-2' />
 					公開設定
 				</Button>
 			</div>
@@ -197,7 +197,7 @@ const ProfileRow: React.FC<ProfileRowProps> = ({
 		className={`flex items-center justify-between p-4 ${bg} border-2 ${border} rounded-lg`}
 	>
 		<div className='flex items-center space-x-3'>
-			<Avatar className='h-10 w-10'>
+			<Avatar className='w-10 h-10'>
 				<AvatarImage src='/diverse-user-avatars.png' />
 				<AvatarFallback>田中</AvatarFallback>
 			</Avatar>
@@ -210,7 +210,7 @@ const ProfileRow: React.FC<ProfileRowProps> = ({
 					{extraBadge && (
 						<Badge
 							variant='secondary'
-							className='text-xs bg-orange-100 text-orange-800'
+							className='text-xs text-orange-800 bg-orange-100'
 						>
 							1つまで
 						</Badge>
@@ -220,8 +220,8 @@ const ProfileRow: React.FC<ProfileRowProps> = ({
 			</div>
 		</div>
 		<div className='flex items-center space-x-2'>
-			<Badge variant='default' className='bg-green-100 text-green-800'>
-				<CheckCircle className='h-3 w-3 mr-1' />
+			<Badge variant='default' className='text-green-800 bg-green-100'>
+				<CheckCircle className='w-3 h-3 mr-1' />
 				{status}
 			</Badge>
 			<Button variant='outline' size='sm'>
@@ -244,7 +244,7 @@ const NewProfileSection: React.FC = () => (
 		</CardHeader>
 		<CardContent className='pt-6 space-y-6'>
 			{/* 目的選択・タイトル入力など UI 静的保持 */}
-			<div className='grid grid-cols-2 md:grid-cols-3 gap-3'>
+			<div className='grid grid-cols-2 gap-3 md:grid-cols-3'>
 				{[
 					"基本用",
 					"仕事用",
@@ -257,7 +257,7 @@ const NewProfileSection: React.FC = () => (
 						key={label}
 						variant='outline'
 						size='sm'
-						className='h-auto p-3 flex items-center justify-start space-x-3 border-2 bg-white'
+						className='flex items-center justify-start h-auto p-3 space-x-3 bg-white border-2'
 					>
 						{" "}
 						<span className='text-lg'>
@@ -270,7 +270,7 @@ const NewProfileSection: React.FC = () => (
 					disabled
 					variant='outline'
 					size='sm'
-					className='h-auto p-3 flex items-center justify-start space-x-3 bg-gray-100 opacity-50 cursor-not-allowed border-2'
+					className='flex items-center justify-start h-auto p-3 space-x-3 bg-gray-100 border-2 opacity-50 cursor-not-allowed'
 				>
 					<span className='text-lg'>💕</span>
 					<div className='flex flex-col items-start'>
@@ -280,7 +280,7 @@ const NewProfileSection: React.FC = () => (
 				</Button>
 			</div>
 			<div className='space-y-3'>
-				<h4 className='font-medium text-sm'>プロフィールタイトル</h4>
+				<h4 className='text-sm font-medium'>プロフィールタイトル</h4>
 				<div className='flex items-center space-x-2'>
 					<input
 						type='text'
@@ -292,26 +292,26 @@ const NewProfileSection: React.FC = () => (
 					</Button>
 				</div>
 			</div>
-			<div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
+			<div className='grid grid-cols-1 gap-3 md:grid-cols-2'>
 				<Button
 					variant='outline'
 					size='sm'
-					className='h-auto p-4 flex items-center justify-start space-x-3'
+					className='flex items-center justify-start h-auto p-4 space-x-3'
 				>
-					<User className='h-5 w-5 text-green-600' />
+					<User className='w-5 h-5 text-green-600' />
 					<span className='text-sm font-medium'>新規作成</span>
 				</Button>
 				<Button
 					variant='outline'
 					size='sm'
-					className='h-auto p-4 flex items-center justify-start space-x-3'
+					className='flex items-center justify-start h-auto p-4 space-x-3'
 				>
 					<span className='text-lg'>📋</span>
 					<span className='text-sm font-medium'>既存をコピー</span>
 				</Button>
 			</div>
 			<Button className='w-full bg-green-500 hover:bg-green-600'>
-				<User className='h-4 w-4 mr-2' />
+				<User className='w-4 h-4 mr-2' />
 				新しいユーザープロフィールを作成
 			</Button>
 		</CardContent>
@@ -322,7 +322,7 @@ const GroupsSection: React.FC = () => (
 	<Card>
 		<CardHeader>
 			<CardTitle className='flex items-center space-x-2'>
-				<Users className='h-5 w-5 text-blue-600' />
+				<Users className='w-5 h-5 text-blue-600' />
 				<span>グループ機能</span>
 			</CardTitle>
 			<CardDescription>
@@ -331,9 +331,9 @@ const GroupsSection: React.FC = () => (
 		</CardHeader>
 		<CardContent className='space-y-4'>
 			{/* 簡略化で静的表示 */}
-			<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+			<div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
 				<div className='space-y-2'>
-					<h4 className='font-medium flex items-center space-x-2'>
+					<h4 className='flex items-center space-x-2 font-medium'>
 						<span>👑</span>
 						<span>管理中のグループ</span>
 					</h4>
@@ -351,7 +351,7 @@ const GroupsSection: React.FC = () => (
 					/>
 				</div>
 				<div className='space-y-2'>
-					<h4 className='font-medium flex items-center space-x-2'>
+					<h4 className='flex items-center space-x-2 font-medium'>
 						<span>👥</span>
 						<span>参加中のグループ</span>
 					</h4>
@@ -359,9 +359,9 @@ const GroupsSection: React.FC = () => (
 					<GroupRow icon='📚' name='読書クラブ' count='24' color='blue' />
 				</div>
 			</div>
-			<div className='flex space-x-2 pt-4 border-t'>
+			<div className='flex pt-4 space-x-2 border-t'>
 				<Button variant='outline' size='sm'>
-					<Users className='h-4 w-4 mr-2' />
+					<Users className='w-4 h-4 mr-2' />
 					グループ管理
 				</Button>
 				<Button variant='outline' size='sm'>
@@ -399,27 +399,27 @@ const AlliancesSection: React.FC = () => (
 		<CardHeader>
 			<CardTitle className='flex items-center space-x-2'>
 				<span className='text-purple-600'>🤝</span>
-				<span>アライアンス機能</span>
+				<span>それ以上のまとまり機能</span>
 			</CardTitle>
 			<CardDescription>
-				参加・管理しているアライアンスの状況と権限
+				参加・管理しているそれ以上のまとまりの状況と権限
 			</CardDescription>
 		</CardHeader>
 		<CardContent className='space-y-4'>
-			<div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+			<div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
 				<div className='space-y-3'>
-					<h4 className='font-medium flex items-center space-x-2'>
+					<h4 className='flex items-center space-x-2 font-medium'>
 						<span>⚡</span>
 						<span>リーダー権限あり</span>
 					</h4>
-					<div className='p-3 bg-purple-50 border border-purple-200 rounded-lg'>
+					<div className='p-3 border border-purple-200 rounded-lg bg-purple-50'>
 						<div className='flex items-center justify-between mb-2'>
 							<span className='text-sm font-medium'>
 								テックイノベーション連合
 							</span>
 							<Badge
 								variant='outline'
-								className='bg-purple-100 text-purple-800'
+								className='text-purple-800 bg-purple-100'
 							>
 								リーダー
 							</Badge>
@@ -430,14 +430,14 @@ const AlliancesSection: React.FC = () => (
 					</div>
 				</div>
 				<div className='space-y-3'>
-					<h4 className='font-medium flex items-center space-x-2'>
+					<h4 className='flex items-center space-x-2 font-medium'>
 						<span>🎨</span>
 						<span>メンバー参加</span>
 					</h4>
-					<div className='p-3 bg-green-50 border border-green-200 rounded-lg'>
+					<div className='p-3 border border-green-200 rounded-lg bg-green-50'>
 						<div className='flex items-center justify-between mb-2'>
 							<span className='text-sm font-medium'>クリエイター協会</span>
-							<Badge variant='outline' className='bg-green-100 text-green-800'>
+							<Badge variant='outline' className='text-green-800 bg-green-100'>
 								メンバー
 							</Badge>
 						</div>
@@ -447,13 +447,13 @@ const AlliancesSection: React.FC = () => (
 					</div>
 				</div>
 			</div>
-			<div className='flex space-x-2 pt-4 border-t'>
+			<div className='flex pt-4 space-x-2 border-t'>
 				<Button variant='outline' size='sm'>
-					<Settings className='h-4 w-4 mr-2' />
-					アライアンス管理
+					<Settings className='w-4 h-4 mr-2' />
+					それ以上のまとまり管理
 				</Button>
 				<Button variant='outline' size='sm'>
-					<Link2 className='h-4 w-4 mr-2' />
+					<Link2 className='w-4 h-4 mr-2' />
 					新規参加申請
 				</Button>
 			</div>
@@ -462,12 +462,12 @@ const AlliancesSection: React.FC = () => (
 )
 
 const AccountStatusAndSettings: React.FC = () => (
-	<div className='grid grid-cols-1 lg:grid-cols-3 gap-6'>
-		<div className='lg:col-span-2 space-y-6'>
+	<div className='grid grid-cols-1 gap-6 lg:grid-cols-3'>
+		<div className='space-y-6 lg:col-span-2'>
 			<Card>
 				<CardHeader>
 					<CardTitle className='flex items-center space-x-2'>
-						<User className='h-5 w-5' />
+						<User className='w-5 h-5' />
 						<span>アカウント状態</span>
 					</CardTitle>
 				</CardHeader>
@@ -475,8 +475,8 @@ const AccountStatusAndSettings: React.FC = () => (
 					<StatusRow
 						label='ステータス'
 						value={
-							<Badge variant='default' className='bg-green-100 text-green-800'>
-								<CheckCircle className='h-3 w-3 mr-1' />
+							<Badge variant='default' className='text-green-800 bg-green-100'>
+								<CheckCircle className='w-3 h-3 mr-1' />
 								アクティブ
 							</Badge>
 						}
@@ -502,7 +502,7 @@ const AccountStatusAndSettings: React.FC = () => (
 			<Card>
 				<CardHeader>
 					<CardTitle className='flex items-center space-x-2'>
-						<Settings className='h-5 w-5' />
+						<Settings className='w-5 h-5' />
 						<span>アカウント設定</span>
 					</CardTitle>
 				</CardHeader>
@@ -542,7 +542,7 @@ const AccountStatusAndSettings: React.FC = () => (
 			<Card>
 				<CardHeader>
 					<CardTitle className='flex items-center space-x-2'>
-						<AlertTriangle className='h-5 w-5 text-orange-500' />
+						<AlertTriangle className='w-5 h-5 text-orange-500' />
 						<span>警告・リセット</span>
 					</CardTitle>
 				</CardHeader>
@@ -564,7 +564,7 @@ const AccountStatusAndSettings: React.FC = () => (
 						}
 					/>
 					<Button variant='destructive' size='sm' className='w-full'>
-						<FileText className='h-4 w-4 mr-2' />
+						<FileText className='w-4 h-4 mr-2' />
 						全データリセット
 					</Button>
 				</CardContent>
@@ -608,7 +608,7 @@ const OAuthSection: React.FC = () => (
 	<Card>
 		<CardHeader>
 			<CardTitle className='flex items-center space-x-2'>
-				<Link2 className='h-5 w-5' />
+				<Link2 className='w-5 h-5' />
 				<span>OAuth認証状況</span>
 			</CardTitle>
 			<CardDescription>
@@ -629,8 +629,8 @@ const OAuthSection: React.FC = () => (
 				/>
 				<div className='flex items-center justify-between p-3 border rounded-lg bg-gray-50'>
 					<div className='flex items-center space-x-3'>
-						<div className='w-8 h-8 bg-black rounded flex items-center justify-center'>
-							<span className='text-white text-sm font-bold'>X</span>
+						<div className='flex items-center justify-center w-8 h-8 bg-black rounded'>
+							<span className='text-sm font-bold text-white'>X</span>
 						</div>
 						<div>
 							<span className='text-sm font-medium'>X (Twitter)</span>
@@ -642,9 +642,9 @@ const OAuthSection: React.FC = () => (
 					</Button>
 				</div>
 			</div>
-			<div className='mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg'>
-				<div className='flex items-center space-x-2 mb-2'>
-					<Shield className='h-4 w-4 text-blue-600' />
+			<div className='p-4 mt-4 border border-blue-200 rounded-lg bg-blue-50'>
+				<div className='flex items-center mb-2 space-x-2'>
+					<Shield className='w-4 h-4 text-blue-600' />
 					<span className='text-sm font-medium'>認証統計</span>
 				</div>
 				<div className='grid grid-cols-2 gap-4 text-center'>
@@ -672,20 +672,20 @@ const OAuthRow: React.FC<OAuthRowProps> = ({
 	iconBg,
 	identifier
 }) => (
-	<div className='flex items-center justify-between p-3 border rounded-lg bg-green-50 border-green-200'>
+	<div className='flex items-center justify-between p-3 border border-green-200 rounded-lg bg-green-50'>
 		<div className='flex items-center space-x-3'>
 			<div
 				className={`w-8 h-8 ${iconBg} rounded flex items-center justify-center`}
 			>
-				<span className='text-white text-sm font-bold'>{provider[0]}</span>
+				<span className='text-sm font-bold text-white'>{provider[0]}</span>
 			</div>
 			<div>
 				<span className='text-sm font-medium'>{provider}</span>
 				<p className='text-xs text-muted-foreground'>{identifier}</p>
 			</div>
 		</div>
-		<Badge variant='default' className='bg-green-100 text-green-800'>
-			<CheckCircle className='h-3 w-3 mr-1' />
+		<Badge variant='default' className='text-green-800 bg-green-100'>
+			<CheckCircle className='w-3 h-3 mr-1' />
 			接続済み
 		</Badge>
 	</div>
@@ -695,7 +695,7 @@ const BasicInformationSection: React.FC = () => (
 	<Card className='border border-muted'>
 		<CardHeader>
 			<CardTitle className='flex items-center space-x-2 text-lg'>
-				<User className='h-5 w-5 text-muted-foreground' />
+				<User className='w-5 h-5 text-muted-foreground' />
 				<span>基本情報管理</span>
 				<Badge variant='outline' className='ml-2 text-xs'>
 					設定済み
@@ -704,9 +704,9 @@ const BasicInformationSection: React.FC = () => (
 			<CardDescription>母語・使用言語・地域設定の基本情報</CardDescription>
 		</CardHeader>
 		<CardContent className='pt-6'>
-			<div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+			<div className='grid grid-cols-1 gap-6 lg:grid-cols-2'>
 				<div className='space-y-4'>
-					<h3 className='font-semibold text-base flex items-center space-x-2'>
+					<h3 className='flex items-center space-x-2 text-base font-semibold'>
 						<span>🌐</span>
 						<span>言語設定</span>
 					</h3>
@@ -717,7 +717,7 @@ const BasicInformationSection: React.FC = () => (
 								value={
 									<Badge
 										variant='default'
-										className='bg-blue-100 text-blue-800'
+										className='text-blue-800 bg-blue-100'
 									>
 										日本語
 									</Badge>
@@ -728,19 +728,19 @@ const BasicInformationSection: React.FC = () => (
 								<div className='flex flex-wrap gap-2'>
 									<Badge
 										variant='outline'
-										className='bg-green-50 border-green-200 text-green-800'
+										className='text-green-800 border-green-200 bg-green-50'
 									>
 										日本語（ネイティブ）
 									</Badge>
 									<Badge
 										variant='outline'
-										className='bg-blue-50 border-blue-200 text-blue-800'
+										className='text-blue-800 border-blue-200 bg-blue-50'
 									>
 										英語（中級）
 									</Badge>
 									<Badge
 										variant='outline'
-										className='bg-orange-50 border-orange-200 text-orange-800'
+										className='text-orange-800 border-orange-200 bg-orange-50'
 									>
 										中国語（初級）
 									</Badge>
@@ -751,14 +751,14 @@ const BasicInformationSection: React.FC = () => (
 								size='sm'
 								className='w-full bg-transparent'
 							>
-								<Settings className='h-4 w-4 mr-2' />
+								<Settings className='w-4 h-4 mr-2' />
 								言語設定を編集
 							</Button>
 						</CardContent>
 					</Card>
 				</div>
 				<div className='space-y-4'>
-					<h3 className='font-semibold text-base flex items-center space-x-2'>
+					<h3 className='flex items-center space-x-2 text-base font-semibold'>
 						<span>🌍</span>
 						<span>地球3分割設定</span>
 					</h3>
@@ -767,7 +767,7 @@ const BasicInformationSection: React.FC = () => (
 							<StatusRow
 								label='現在の活動地域'
 								value={
-									<Badge variant='default' className='bg-red-100 text-red-800'>
+									<Badge variant='default' className='text-red-800 bg-red-100'>
 										Area 1 (日付変更線〜+8h)
 									</Badge>
 								}
@@ -798,11 +798,11 @@ const BasicInformationSection: React.FC = () => (
 								size='sm'
 								className='w-full bg-transparent'
 							>
-								<Settings className='h-4 w-4 mr-2' />
+								<Settings className='w-4 h-4 mr-2' />
 								地域設定を変更
 							</Button>
-							<div className='p-4 bg-blue-50 border border-blue-200 rounded-lg space-y-2 text-xs text-muted-foreground'>
-								<h4 className='font-medium text-sm flex items-center space-x-2'>
+							<div className='p-4 space-y-2 text-xs border border-blue-200 rounded-lg bg-blue-50 text-muted-foreground'>
+								<h4 className='flex items-center space-x-2 text-sm font-medium'>
 									<span>📍</span>
 									<span>地球3分割について</span>
 								</h4>

@@ -159,7 +159,7 @@ CREATE TABLE groups (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
 
--- アライアンステーブル（グループに依存）
+-- それ以上のまとまりテーブル（グループに依存）
 CREATE TABLE alliances (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL,
@@ -254,7 +254,7 @@ CREATE TABLE group_members (
     PRIMARY KEY (group_id, user_profile_id)
 );
 
--- アライアンスグループ
+-- それ以上のまとまりグループ
 CREATE TABLE alliance_groups (
     alliance_id UUID NOT NULL REFERENCES alliances(id) ON DELETE CASCADE,
     group_id UUID NOT NULL REFERENCES groups(id) ON DELETE CASCADE,
