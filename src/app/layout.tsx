@@ -3,7 +3,6 @@ import "./globals.css"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale } from "next-intl/server"
 
-import Navbar03Page from "@/components/shadcnui-blocks/navbar-03/navbar-03"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
@@ -95,17 +94,15 @@ export default async function RootLayout({
 	return (
 		<html lang={locale} suppressHydrationWarning>
 			<body>
+				{/* ダークモード切り替え */}
 				<ThemeProvider
 					attribute='class'
 					defaultTheme='system'
 					enableSystem
 					disableTransitionOnChange
 				>
-					<NextIntlClientProvider>
-						{/* ヘッダーのナビリンク */}
-						<Navbar03Page />
-						{children}
-					</NextIntlClientProvider>
+					{/* 国際化 */}
+					<NextIntlClientProvider>{children}</NextIntlClientProvider>
 				</ThemeProvider>
 			</body>
 		</html>
