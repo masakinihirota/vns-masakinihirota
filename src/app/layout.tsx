@@ -1,9 +1,9 @@
-import type { Metadata } from "next"
-import "./globals.css"
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale } from "next-intl/server"
 
 import { ThemeProvider } from "@/components/theme-provider"
+
+import type { Metadata } from "next"
 
 export const metadata: Metadata = {
 	title: "masakinihirota",
