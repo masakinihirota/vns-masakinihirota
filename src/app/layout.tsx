@@ -1,6 +1,8 @@
 import { NextIntlClientProvider } from "next-intl"
 import { getLocale } from "next-intl/server"
 
+// import "./globals.css"
+
 import { ThemeProvider } from "@/components/theme-provider"
 
 import type { Metadata } from "next"
