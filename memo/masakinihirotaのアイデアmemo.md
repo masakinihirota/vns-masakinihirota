@@ -115,23 +115,65 @@ SNSが表現の自由により攻撃的な世界となるならば
 
 ## グループの種類
 
-1種類の集合あたり最大10人
+1種類の集合あたり最大10人～
 
-	Group or Home (自分の家=家族用)
-	Neighborhood (ネイバーフッド) 近所
-	Village (ヴィレッジ)村
-	Town (タウン)	町
-	City (シティ)	市
-	Metropolis(メトロポリス) 都 / 大都市圏
-	State (ステート)		州
-	Country(カントリー) Nation (ネイション) 国 Kingdom 王国
-	Continent (コンティネント)	大陸
-	Alliance 連合、連盟 (複数大陸)
-	an earth ある一つの惑星
+	Group or Home (自分の家=家族用)	10
+	Neighborhood (ネイバーフッド) 近所	10
+	Village (ヴィレッジ)村	10
+	Town (タウン)	町	10
+	City (シティ)	市	10
+	Metropolis(メトロポリス) 都 / 大都市圏	10
+	State (ステート)		州	10
+	Country(カントリー) Nation (ネイション) 国 Kingdom 王国	10
+	Continent (コンティネント)	大陸	10
+	Alliance 連合、連盟 (複数大陸)	10
+	Hemispheres (半球)	10
+	an earth ある一つの惑星	1億
+
+Solar System (太陽系、恒星とその惑星)
+Star Cluster (恒星のグループ)
+Galaxy (恒星・星団の巨大な集まり)
+Local Group (銀河のグループ、局所銀河群)
+Supercluster (銀河群・銀河団の巨大な集まり、超銀河団)
+Observable Universe (観測可能な宇宙全体)
 
 を構成できます。
 
 
+
+
+
+承知いたしました。ご提示いただいた階層構造を、カテゴリの列を削除して、よりシンプルに再構成します。
+
+---
+
+## グループ・宇宙の階層構造（シンプル版）
+
+| 日本語名 | 英語名 | スケール/規模（例） |
+| :--- | :--- | :--- |
+| **家庭・集団** | Group or Home | 10 |
+| **近所** | Neighborhood | 10 |
+| **村** | Village | 10 |
+| **町** | Town | 10 |
+| **市** | City | 10 |
+| **都 / 大都市圏** | Metropolis | 10 |
+| **州** | State | 10 |
+| **国 / 王国** | Country / Nation / Kingdom | 10 |
+| **大陸** | Continent | 10 |
+| **連合、連盟** | Alliance | 10 |
+| **半球** | Hemispheres | 10 |
+| **ある一つの惑星** | an earth | 1億 |
+|---|---|---|
+| **太陽系** | Solar System | - |
+| **星団** | Star Cluster | - |
+| **銀河** | Galaxy | - |
+| **局所銀河群** | Local Group | - |
+| **超銀河団** | Supercluster | - |
+| **観測可能な宇宙** | Observable Universe | - |
+
+
+
+---
 
 常にグループ単位で対処できるので
 即座に短時間で低コストで対応できます。
@@ -356,6 +398,17 @@ VNS、masakinihirotaにおけるコミュニティ運営の基本理念です。
 
 インターネット上の平和を作り上げる。
 そのためにノーベル平和賞を貰えるぐらい多くの人に使ってもらうようなシステムを作る。
+
+
+
+### 外部でのルール
+
+VNSルールを採用します。
+
+の一言で済むようにする
+
+VNSルールというページを作る
+オアシス宣言を守るなどを1ページにまとめる
 
 
 
@@ -1126,9 +1179,22 @@ OAuth認証の一覧
 目的ごとにユーザープロフィールを作成できますし、
 1つのユーザープロフィールに複数の目的も設定できます。
 
-遊び用
+遊び用 play
+仕事用 Business 
+婚活用 marriage hunting、marriage partner
+
+創作用
+仲間用
+友達用
 仕事用
+悩み用
+パートナー用
 婚活用
+
+１つのユーザープロフィールを
+複数同時に使える
+
+
 
 
 #### グループの名前
