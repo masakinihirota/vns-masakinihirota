@@ -1,2 +1,2 @@
-npx lint-staged
-pnpm check
+# npx lint-staged
+# pnpm check

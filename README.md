@@ -1,3 +1,8 @@
+drizzle\trigger_functions\auth.users2auth_users.sql
+このトリガーを最初にSQL Editorで実行してください
+
+
+
 新しくリポジトリの変更
 
 ## Workspace Structure
