@@ -36,9 +36,10 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/components_sample/AI/gemini/03/003.jsx"
-, "_ai_ui/_geminiUI/07 ユーザープロフィール作成UI/ProfileBuilder.jsx"  ],
+    ".next/types/**/*.ts"
+  ],
+  //     "src/components_sample/AI/gemini/03/03.jsx"
+  // , "_ai_ui/_geminiUI/07 ユーザープロフィール作成UI/ProfileBuilder.jsx"  ],
   "exclude": [
     "node_modules"
   ]
