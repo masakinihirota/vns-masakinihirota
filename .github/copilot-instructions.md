@@ -102,8 +102,6 @@ AIによるコード生成のサンプルは、以下のパスを参照してく
 
 - [TDD 指示書](./instructions/code_test/TDD.instructions.md)
 
-- [テストコード 指示書](./instructions/code_test/testing.instructions.md)
-
 ### ドキュメント関連
 
 - [ドキュメント 指示書](./instructions/document/document.instructions.md)

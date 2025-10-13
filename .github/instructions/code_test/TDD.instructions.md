@@ -77,20 +77,6 @@ TODO:
 - アサーションのないテストコードを書く
 - 先にテストリストをすべてテストコード化する
 
-```typescript
-// テストの例（React Testing Library + Vitest）
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import FizzBuzz from './FizzBuzz';
-
-describe('FizzBuzz', () => {
-  it('数を文字列に変換する', () => {
-    render(<FizzBuzz number={1} />);
-    expect(screen.getByText('1')).toBeInTheDocument();
-  });
-});
-```
-
 ### **ステップ3：テストを成功させる（グリーン）**
 
 失敗するテストを成功させる最小限のコードを書きます。
@@ -104,15 +90,6 @@ describe('FizzBuzz', () => {
 - アサーションを削除してテストを成功させる
 - テスト対象を動かした値をコピーして期待値にペーストする
 - テストを書きながらリファクタリングも一緒にやる
-
-```typescript
-// 最小限の実装例
-const FizzBuzz: React.FC<{ number: number }> = ({ number }) => {
-  return <div>{number.toString()}</div>;
-};
-
-export default FizzBuzz;
-```
 
 ### **ステップ4：リファクタリング**
 
@@ -157,58 +134,6 @@ export default FizzBuzz;
 
 ---
 
-## **Vitestを使用したテスト実装ガイドライン**
-
-### **基本的なテストの書き方**
-
-```typescript
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import '@testing-library/jest-dom';
-import ComponentName from './ComponentName';
-
-describe('ComponentName', () => {
-  it('should render the component with initial text', () => {
-    render(<ComponentName />);
-    expect(screen.getByText('Hello')).toBeInTheDocument();
-  });
-
-  it('should change text on button click', () => {
-    render(<ComponentName />);
-    fireEvent.click(screen.getByRole('button'));
-    expect(screen.getByText('Clicked!')).toBeInTheDocument();
-  });
-});
-```
-
-### **非同期処理のテスト**
-
-```typescript
-it('should load data asynchronously', async () => {
-  render(<AsyncComponent />);
-
-  // 非同期処理の完了を待つ
-  const loadedData = await screen.findByText('Loaded Data');
-  expect(loadedData).toBeInTheDocument();
-});
-```
-
-### **モックの使用**
-
-```typescript
-import { vi } from 'vitest';
-
-it('should call the onClick handler', () => {
-  const mockOnClick = vi.fn();
-  render(<Button onClick={mockOnClick}>Click me</Button>);
-
-  fireEvent.click(screen.getByRole('button'));
-  expect(mockOnClick).toHaveBeenCalledTimes(1);
-});
-```
-
----
-
 ## **React/Next.jsでのTDD実践指針**
 
 ### **コンポーネントのテスト**
@@ -217,31 +142,6 @@ it('should call the onClick handler', () => {
 2. **イベントハンドリングテスト** - ユーザーの操作に正しく反応するか
 3. **プロップステスト** - プロップスが正しく処理されるか
 4. **状態変更テスト** - 状態の変更が正しく反映されるか
-
-### **Server Actionsのテスト**
-
-```typescript
-import { describe, it, expect, vi } from 'vitest';
-import { createUser } from './actions';
-
-describe('createUser Server Action', () => {
-  it('should create user successfully', async () => {
-    const formData = new FormData();
-    formData.append('name', 'Test User');
-    formData.append('email', 'test@example.com');
-
-    const result = await createUser(formData);
-
-    expect(result.success).toBe(true);
-    expect(result.data).toEqual({
-      name: 'Test User',
-      email: 'test@example.com'
-    });
-  });
-});
-```
-
----
 
 ## **よくある誤解と注意点**
 
