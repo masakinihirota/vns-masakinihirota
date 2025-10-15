@@ -3,17 +3,17 @@
 ## ExecPlanについて
 
 複雑な機能や大規模なリファクタリングに取り組む際は、
-必ず `.agent\plans.md` を使用してください。
+必ず [plans.md](./plans.md) を使用してください。
 
 「ExecPlan」という言葉を使ったときは、
-`.agent\plans.md` を参照し、以下を実行してください：
+[plans.md](./plans.md) を参照し、以下を実行してください：
 
 1. 全体像を理解する
 2. 進捗状況を確認する
-3. 作業後に `.agent\plans.md` を更新する
+3. 作業後に [plans.md](./plans.md) を更新する
 4. 発見事項と決定事項を記録する
 
-`.agent\plans.md` はあなたの長期記憶であり、
+[plans.md](./plans.md) はあなたの長期記憶であり、
 プロジェクトの羅針盤です。
 
 

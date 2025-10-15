@@ -6,17 +6,16 @@ tools: ['search/codebase', 'problems', 'changes', 'fetch', 'githubRepo', 'edit/e
 description: 'plans.mdの実装を依頼するプロンプト'
 ---
 
-この機能の実装計画を `.agent\plans.md` に書いてください。
+アクセス権限設計書の実装計画を [plans.md](../codex/plans.md)に書いてください。
 
 以下のドキュメントを参考に、
 ライブラリの統合方法を調査し、
 詳細な実行計画を作成してください。
 
-[機能仕様書のドキュメントを添付]
+`0020 個別機能 大 -01要件定義書 -02設計書 -03テスト計画書\0012-02-アクセス権限設計書.md`
 
-
-`.agent\plans.md` に基づいて実装してください。
-進捗に応じて `.agent\plans.md` を更新してください。
+[plans.md](../codex/plans.md) に基づいて実装してください。
+進捗に応じて [plans.md](../codex/plans.md) を更新してください。
 
 
 
