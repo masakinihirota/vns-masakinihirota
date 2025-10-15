@@ -8778,7 +8778,13 @@ SNSのアカウントを書きたくないのなら
 
 ----------------------------------------
 
+自民党、記者会見の全文書き起こしをXで公開　「徹底した一次情報を」 - ITmedia NEWS
+https://www.itmedia.co.jp/news/articles/2510/15/news104.html
 
+価値観サイトのチェーンのソースとして扱う
+
+Xユーザーの衆議院議員 鈴木貴子/SUZUKI Takakoさん: 「全文書き起こしに対するポジティブ評価を頂きありがとうございます。 また、「長過ぎて読みづらい」などのお声も頂いております。」 / X
+https://x.com/_SuzukiTakako_/status/1978256932717965809?ref_src=twsrc%5Etfw%7Ctwcamp%5Etweetembed%7Ctwterm%5E1978256932717965809%7Ctwgr%5E2115599d77917178970d57e7bb7785c6180567b1%7Ctwcon%5Es1_&ref_url=https%3A%2F%2Fwww.itmedia.co.jp%2Fnews%2Farticles%2F2510%2F15%2Fnews104.html
 
 ----------------------------------------
 
