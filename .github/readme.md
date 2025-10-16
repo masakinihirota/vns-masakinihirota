@@ -57,3 +57,16 @@ plans.md 戦略の解説（外部）: Qiita 記事等をご参照ください。
 GPT-5-Codex の概要 npaka
 https://note.com/npaka/n/n8538f2ad7004
 
+# 感想
+GPT-5-Codex が高性能でコードの実装能力やレビューに特化した学習を受けていることがわかりました。
+それに、AIがMCPなどを利用してネットにつながった今、指示書にいろいろな設定を書くよりも
+ネットから最新の情報を直接取得したほうが良い場合があります。
+なので、Webアプリ特有の指示以外はネットから情報を取得してもらうことで、
+指示書をできるだけシンプルに保つことが出来るようになりました。
+
+# Codex IDE extension
+
+
+
+Codex IDE extension
+https://developers.openai.com/codex/ide/
