@@ -1,6 +1,6 @@
 // この設定ファイルから相対パスで指定します。
 {
-	"$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
 	"vcs": {
 		"enabled": false,
 		"clientKind": "git",
@@ -61,10 +61,7 @@
 							// react関連パッケージを優先してimport
 							{
 								"type": false,
-								"source": [
-									"react*",
-									"react/**"
-								]
+								"source": ["react*", "react/**"]
 							},
 							// ===== npm packages =====
 							// react*,react/**以外のnpmパッケージを全てキャッチ
