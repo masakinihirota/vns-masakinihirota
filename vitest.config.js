@@ -11,7 +11,8 @@ export default defineConfig({
             '**/*.d.ts',
             'cypress/**',
             '**/.{eslint,mocha,prettier}rc.{?(c|m)js,yml}',
-            'src/components_sample/**'
+            'src/components_sample/**',
+            'src/app/(**/*|___sample/**)'
         ],
         globals: true,
         environment: 'jsdom',
