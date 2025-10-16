@@ -12,7 +12,7 @@ export default defineConfig({
             'cypress/**',
             '**/.{eslint,mocha,prettier}rc.{?(c|m)js,yml}',
             'src/components_sample/**',
-            'src/app/(**/*|___sample/**)'
+            'src/app/(**/___sample/**)'
         ],
         globals: true,
         environment: 'jsdom',
