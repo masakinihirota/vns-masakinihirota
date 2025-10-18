@@ -68,3 +68,6 @@ supabase/migrations/meta/
 # Gemini CLI ENV
 settings.json
 signing_key.json
+
+# instructions
+.old.instructions/
