@@ -565,7 +565,7 @@ export default function RootAccountDashboard() {
 									<Badge variant='secondary'>プレミアム</Badge>
 								</div>
 								<div className='flex items-center justify-between'>
-									<span className='text-sm font-medium'>連続経過日数</span>
+									<span className='text-sm font-medium'>信頼継続日数</span>
 									<span className='text-sm font-bold text-accent'>127日</span>
 								</div>
 								<div className='flex items-center justify-between'>
