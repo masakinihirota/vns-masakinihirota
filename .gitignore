@@ -58,6 +58,7 @@ _v60-folder/
 _geminiUI/
 _ai_ui/
 
+env.download
 env.*
 env
 env.download
@@ -68,3 +69,8 @@ supabase/migrations/meta/
 # Gemini CLI ENV
 settings.json
 signing_key.json
+
+# instructions
+.old.instructions/
+
+memo2/
