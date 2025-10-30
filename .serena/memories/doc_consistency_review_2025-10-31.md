@@ -1,0 +1,1 @@
+2025-10-31: Reviewed 0010-01-全体要件定義書.md against vnsとmasakinihirotaの概要.md. Found contradictions (プロフィール上限4 vs 10/30, グループ自動作成でリーダー/メンバー選択記述) and noted missing要素 (実績システム、リスタート制度、レポート/自動動画生成等).
