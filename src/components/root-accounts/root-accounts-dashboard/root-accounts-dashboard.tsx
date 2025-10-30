@@ -486,7 +486,7 @@ const AccountStatusAndSettings: React.FC = () => (
 						value={<Badge variant='secondary'>プレミアム</Badge>}
 					/>
 					<StatusRow
-						label='連続経過日数'
+						label='信頼継続日数'
 						value={<span className='text-sm font-bold text-accent'>127日</span>}
 					/>
 					<StatusRow

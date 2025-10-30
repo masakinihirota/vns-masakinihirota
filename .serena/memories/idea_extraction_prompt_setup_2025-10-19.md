@@ -1,0 +1,1 @@
+2025-10-19: `.github/prompts/idea-extract.prompt.md` を新規追加。アイデアメモ（memo/masakinihirotaのアイデアmemo.md）から `memo/アイデアのまとめ/*.md` へ自動仕分けするための詳細な作業手順とスクリプト実装方針を整理。マッチング、スクリプト実行、Serenaメモ更新までの流れを記載。

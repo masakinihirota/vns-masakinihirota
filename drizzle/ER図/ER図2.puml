@@ -216,7 +216,7 @@ note right of root_accounts
   - 活動・クリックポイント分離
 
   Trust & Security Features:
-  - 連続経過日数トラッキング
+  - 信頼継続日数トラッキング
   - 信頼度スコア算出
   - マルチOAuth認証管理
   - アカウント状態制御
