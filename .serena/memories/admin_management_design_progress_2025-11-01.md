@@ -1,0 +1,1 @@
+2025-11-01: 管理機能の設計書 (0900-02) を作成。管理ダッシュボードと関連機能のApp Router構成、Drizzle追加スキーマ（admin_roles, moderation_cases, penalty_records, approval_requests, notification_templates, notification_jobs, audit_trails等）、Supabase RLS/RBAC連携方針、テスト観点、検討事項を整理し、主要ディレクトリ・スキーマのチェックリストを提示。

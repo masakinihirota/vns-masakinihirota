@@ -1,0 +1,1 @@
+2025-11-01: 価値観登録機能の設計書v0.1を作成。App Router構成、Drizzle論理モデル（values_catalog, user_value_profiles, root_accounts拡張）、RLS/RBAC方針、テスト観点、チェックリスト（主要ディレクトリ/スキーマ）を整理し、検討事項としてカタログ多言語化や匿名データ統合などを列挙。
