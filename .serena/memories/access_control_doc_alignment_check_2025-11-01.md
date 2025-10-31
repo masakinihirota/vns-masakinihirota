@@ -1,0 +1,1 @@
+アクセス権限設計書 指示1 を調査。App Router に `src/app/(authorized)/access-control` が存在せず、Server Action `actions.ts` や `upsertRole` 等の実装も未作成。Drizzle スキーマには `acl_roles` などのテーブルが定義されておらず、Supabase migrations にも `acl_` テーブルが未定義。現状は設計先行で実装は未着手。
