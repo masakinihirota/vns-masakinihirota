@@ -53,6 +53,7 @@ export const authUsers = pgTable(
     updatedAt: timestamp("updated_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
+    lastRoleRefreshAt: timestamp("last_role_refresh_at", { withTimezone: true }),
     encryptedPassword: text("encrypted_password"),
     invitedAt: timestamp("invited_at", { withTimezone: true }),
     reauthenticationToken: text("reauthentication_token"),
