@@ -32,6 +32,12 @@ export const permissionEffectEnum = pgEnum("acl_permission_effect", [
   "deny",
 ]);
 
+export const scopeDomainEnum = pgEnum("acl_permission_scope_domain", [
+  "global",
+  "group",
+  "country",
+]);
+
 export const membershipStateEnum = pgEnum("acl_membership_state", [
   "pending",
   "active",

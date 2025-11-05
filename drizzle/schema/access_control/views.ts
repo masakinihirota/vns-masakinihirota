@@ -4,6 +4,7 @@ import {
   permissionActionEnum,
   permissionEffectEnum,
   permissionResourceEnum,
+  scopeDomainEnum,
 } from "./enums";
 
 export const vwEffectivePermissions = pgView("vw_effective_permissions", {
@@ -13,6 +14,7 @@ export const vwEffectivePermissions = pgView("vw_effective_permissions", {
   resourceType: permissionResourceEnum("resource_type"),
   action: permissionActionEnum("action"),
   effect: permissionEffectEnum("effect"),
+  scopeDomain: scopeDomainEnum("scope_domain"),
   scopeFilter: jsonb("scope_filter").$type<Record<string, unknown>>(),
   validFrom: timestamp("valid_from", { withTimezone: true }),
   validUntil: timestamp("valid_until", { withTimezone: true }),

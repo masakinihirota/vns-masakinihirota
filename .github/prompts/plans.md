@@ -165,6 +165,9 @@ When you revise a plan, you must ensure your changes are comprehensively reflect
 - [x] (2025-11-01 04:15Z) 設計書 `vns-masakinihirota-design/0020 個別機能 大 -01要件定義書 -02設計書 -03テスト計画書/0012-02-アクセス権限設計書.md` を精読し、本計画の初版を作成した。
 - [x] (2025-11-01 07:45Z) マイルストーン1: Drizzleスキーマ/マイグレーション/RLS下準備（テーブル、新カラム、インデックス、監査連携フック、RPC雛形）を追加。残タスク: `pnpm db:generate` の自動生成差分確認、およびSupabase環境への適用検証。
 - [x] (2025-11-01 07:48Z) Supabaseローカル環境で `20251101073000_access_control.sql` を適用。`supabase migration repair 20251015225118 --status reverted --local` で履歴を同期後、`supabase db push --local` を実行し、ACLテーブル・ビューの作成と `check_permission` の許可/不可/例外シナリオを手動SQLで検証。
+- [x] (2025-11-05 06:20Z) レビュー指摘対応: `scope_domain` ENUM追加、Drizzle/SQLスキーマへの列追加、`vw_effective_permissions` の列拡張、`check_permission` のスコープ・制約・例外優先ロジック修正を実施。Supabaseマイグレーションのユニーク制約とSeedデータも更新。
+- [x] (2025-11-05 06:45Z) `check_permission` 例外判定で `resource_id IS NULL` のワイルドカードが機能しない問題を修正（例外リソース未指定時は対象リソースに関わらず許可）。
+- [x] (2025-11-05 07:05Z) 例外判定でメンバーシップの有効期間をチェックする条件を追加し、失効済み/未開始の例外が誤って適用されないように修正。
 - [ ] (2025-11-01 04:30Z) マイルストーン2: Next.js App Router UI・Server Action・サービス層・Hook導線整備。
 - [ ] (2025-11-01 04:40Z) マイルストーン3: Supabase RLSポリシー、例外承認フロー、監査ログ連携、棚卸しバッチの仕組み構築。
 - [ ] (2025-11-01 04:50Z) マイルストーン4: Vitest/SQLテスト・Bioma lint・ビルド・ドキュメント反映・最終検証。
@@ -174,6 +177,8 @@ When you revise a plan, you must ensure your changes are comprehensively reflect
 - Observation: 現在のコードベースにアクセス権限関連のApp Router階層やDrizzleテーブル、Supabaseマイグレーションが存在しないため、設計書の全要素が新規追加である。Evidence: Serenaメモ `access_control_doc_alignment_check_2025-11-01` と `drizzle/schema/access_control` が空であることを確認 (2025-11-01 GitHub Copilot)。
 - Observation: Drizzle側で `acl_roles` が `root_accounts` へ外部キー参照を持つと循環依存が発生するため、TypeScriptスキーマでは参照を外しSQLマイグレーションで整合性を担保した。Evidence: `drizzle/schema/access_control/roles.ts` はUUIDのみを保持し、`supabase/migrations/20251101073000_access_control.sql` で外部キーを定義 (2025-11-01 GitHub Copilot)。
 - Observation: Supabase CLI の `create type if not exists ... as enum` が構文エラーとなり、`supabase db push --local` に失敗した。Evidence: CLIエラー `syntax error at or near "not"` を受け、DOブロックで型存在チェックを行うようマイグレーションを修正 (2025-11-01 GitHub Copilot)。
+- Observation: 初回実装では `scope_domain` 列が欠落しており、組織/国ドメイン別アクセス制御要件（設計書 §6/§7）が実現できない状態だった。今回の修正でENUMと列を追加し、ビュー・Seedも整合させた (2025-11-05 GitHub Copilot)。
+- Observation: `check_permission` がスコープフィルタおよび制約ペイロードを参照せず、例外優先順位も仕様と乖離していたため、PL/pgSQLロジックを全面的に見直し安全側に倒した (2025-11-05 GitHub Copilot)。
 - Observation: ローカルDBがリモート専用のマイグレーション `20251015225118` を保持しており `supabase db push --local --dry-run` が失敗。`supabase migration repair 20251015225118 --status reverted --local` で履歴を揃えると正常に適用できた (2025-11-01 GitHub Copilot)。
 
 ## Decision Log
@@ -185,6 +190,10 @@ When you revise a plan, you must ensure your changes are comprehensively reflect
 - Decision: `acl_roles.root_account_id` の外部キーはSupabaseマイグレーションで定義し、Drizzleスキーマは循環依存を避けるためUUID型のみ保持する。Rationale: `root_accounts` がデフォルトロールIDを参照する都合でTypeScriptモジュールの循環 import を防ぐ必要があったため。Date/Author: 2025-11-01 GitHub Copilot。
 - Decision: マイグレーション適用前に `supabase migration list --local` で差分確認し、欠落バージョンは `supabase migration repair` で解消する手順を採用。Rationale: リポジトリ未管理の履歴が存在すると `supabase db push` が失敗するため。Date/Author: 2025-11-01 GitHub Copilot。
 - Decision: ENUM作成は `create type if not exists` ではなく DO ブロックで確認した上で作成する。Rationale: Supabaseローカル環境のPostgreSQLが該当構文を受け付けず、再実行可能なマイグレーションが必要なため。Date/Author: 2025-11-01 GitHub Copilot。
+- Decision: `acl_role_permissions` に `scope_domain` 列を追加し、`global/group/country` をENUMで管理する。Rationale: ドメイン別アクセス境界の実装とユニーク制約強化の双方を担保するため。Date/Author: 2025-11-05 GitHub Copilot。
+- Decision: `check_permission` は承認済み例外を最優先で評価し、その後ドメイン・制約を満たすdeny/allowを順に判定する安全側ロジックへ改修した。Rationale: 設計書のdeny優先要件を維持しつつ例外承認での一時的許可を活かすため。Date/Author: 2025-11-05 GitHub Copilot。
+- Decision: 例外権限 `resource_id` がNULLの場合は全リソースへの暫定許可として扱う。Rationale: 要件上の「全リソース向け例外」を反映し、呼び出し側引数の有無で挙動が変わらないようにするため。Date/Author: 2025-11-05 GitHub Copilot。
+- Decision: 例外判定でも `acl_memberships` の有効期間 (`valid_from`/`valid_until`) を尊重する。Rationale: 棚卸しや延期処理で状態フラグが残っても期間外であれば権限を無効化するため。Date/Author: 2025-11-05 GitHub Copilot。
 
 ## Outcomes & Retrospective
 

@@ -78,6 +78,7 @@ export async function seedAccessControl(
       roleId: adminRole.id,
       permissionId: managePermission.id,
       effect: "allow",
+      scopeDomain: "global",
       lastUpdatedBy: operatorUserId,
     });
   }

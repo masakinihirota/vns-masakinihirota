@@ -9,7 +9,7 @@ import {
 import { authUsers } from "../root_accounts/auth_users";
 import { aclPermissions } from "./permissions";
 import { aclRoles } from "./roles";
-import { permissionEffectEnum } from "./enums";
+import { permissionEffectEnum, scopeDomainEnum } from "./enums";
 
 export const aclRolePermissions = pgTable(
   "acl_role_permissions",
@@ -22,6 +22,7 @@ export const aclRolePermissions = pgTable(
       .notNull()
       .references(() => aclPermissions.id, { onDelete: "cascade" }),
     effect: permissionEffectEnum("effect").notNull().default("allow"),
+    scopeDomain: scopeDomainEnum("scope_domain").notNull().default("global"),
     scopeFilter: jsonb("scope_filter")
       .$type<Record<string, unknown>>()
       .notNull()
@@ -41,7 +42,7 @@ export const aclRolePermissions = pgTable(
   (table) => ({
     uniqRolePermissionEffect: uniqueIndex(
       "acl_role_permissions_role_permission_effect_idx",
-    ).on(table.roleId, table.permissionId, table.effect),
+    ).on(table.roleId, table.permissionId, table.scopeDomain, table.effect),
     validUntilIdx: index("acl_role_permissions_valid_until_idx").on(
       table.validUntil,
     ),

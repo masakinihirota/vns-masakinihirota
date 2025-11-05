@@ -59,6 +59,18 @@ $$;
 
 do $$
 begin
+  if not exists (select 1 from pg_type where typname = 'acl_permission_scope_domain') then
+    create type public.acl_permission_scope_domain as enum (
+      'global',
+      'group',
+      'country'
+    );
+  end if;
+end
+$$;
+
+do $$
+begin
   if not exists (select 1 from pg_type where typname = 'acl_membership_state') then
     create type public.acl_membership_state as enum (
       'pending',
@@ -133,13 +145,14 @@ create table if not exists public.acl_role_permissions (
   role_id uuid not null references public.acl_roles(id) on delete cascade,
   permission_id uuid not null references public.acl_permissions(id) on delete cascade,
   effect acl_permission_effect not null default 'allow',
+  scope_domain acl_permission_scope_domain not null default 'global',
   scope_filter jsonb not null default '{}'::jsonb,
   valid_from timestamptz,
   valid_until timestamptz,
   last_updated_by uuid references public.auth_users(id) on delete set null,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
-  constraint acl_role_permissions_unique unique (role_id, permission_id, effect)
+  constraint acl_role_permissions_unique unique (role_id, permission_id, scope_domain, effect)
 );
 
 create index if not exists acl_role_permissions_valid_until_idx
@@ -221,6 +234,7 @@ select
   p.resource_type,
   p.action,
   rp.effect,
+  rp.scope_domain,
   coalesce(rp.scope_filter, '{}'::jsonb) as scope_filter,
   rp.valid_from,
   rp.valid_until,
@@ -240,6 +254,7 @@ select
   eg.resource_type,
   eg.action,
   'allow'::acl_permission_effect as effect,
+  'global'::acl_permission_scope_domain as scope_domain,
   '{}'::jsonb as scope_filter,
   null as valid_from,
   eg.expires_at as valid_until,
@@ -257,71 +272,124 @@ create or replace function public.check_permission(
   p_root_account_id uuid,
   p_resource_type acl_permission_resource,
   p_action acl_permission_action,
-  p_resource_id uuid default null
+  p_resource_id uuid default null,
+  p_context jsonb default '{}'::jsonb
 ) returns boolean
 language plpgsql
 security definer
 as $$
 declare
-  deny_exists boolean;
-  allow_exists boolean;
-  exception_exists boolean;
+  context jsonb := coalesce(p_context, '{}'::jsonb);
+  allow_exists boolean := false;
+  perm record;
+  scope_matches boolean;
+  constraint_matches boolean;
 begin
-  select exists (
-    select 1
-    from public.acl_memberships m
-      join public.acl_role_permissions rp on rp.role_id = m.role_id and rp.effect = 'deny'
-      join public.acl_permissions p on p.id = rp.permission_id
-    where m.user_id = p_user_id
-      and m.root_account_id = p_root_account_id
-      and m.state = 'active'
-      and (m.valid_from is null or m.valid_from <= now())
-      and (m.valid_until is null or m.valid_until >= now())
-      and (rp.valid_from is null or rp.valid_from <= now())
-      and (rp.valid_until is null or rp.valid_until >= now())
-      and p.resource_type = p_resource_type
-      and p.action = p_action
-  ) into deny_exists;
-
-  if deny_exists then
-    return false;
-  end if;
-
-  select exists (
-    select 1
-    from public.acl_memberships m
-      join public.acl_role_permissions rp on rp.role_id = m.role_id and rp.effect = 'allow'
-      join public.acl_permissions p on p.id = rp.permission_id
-    where m.user_id = p_user_id
-      and m.root_account_id = p_root_account_id
-      and m.state = 'active'
-      and (m.valid_from is null or m.valid_from <= now())
-      and (m.valid_until is null or m.valid_until >= now())
-      and (rp.valid_from is null or rp.valid_from <= now())
-      and (rp.valid_until is null or rp.valid_until >= now())
-      and p.resource_type = p_resource_type
-      and p.action = p_action
-  ) into allow_exists;
-
-  if allow_exists then
-    return true;
-  end if;
-
-  select exists (
+  if exists (
     select 1
     from public.acl_exception_grants eg
       join public.acl_memberships m on m.id = eg.membership_id
     where m.user_id = p_user_id
       and m.root_account_id = p_root_account_id
       and m.state = 'active'
+      and (m.valid_from is null or m.valid_from <= now())
+      and (m.valid_until is null or m.valid_until >= now())
       and eg.status = 'approved'
       and eg.expires_at >= now()
       and eg.resource_type = p_resource_type
       and eg.action = p_action
-      and (p_resource_id is null or eg.resource_id is null or eg.resource_id = p_resource_id)
-  ) into exception_exists;
+      and (
+        (eg.resource_id is not null and p_resource_id is not null and eg.resource_id = p_resource_id)
+        or eg.resource_id is null
+      )
+  ) then
+    return true;
+  end if;
 
-  return exception_exists;
+  for perm in
+    select
+      rp.effect,
+      rp.scope_domain,
+      coalesce(rp.scope_filter, '{}'::jsonb) as scope_filter,
+      p.constraint_type,
+      coalesce(p.constraint_payload, '{}'::jsonb) as constraint_payload
+    from public.acl_memberships m
+      join public.acl_role_permissions rp on rp.role_id = m.role_id
+      join public.acl_permissions p on p.id = rp.permission_id
+    where m.user_id = p_user_id
+      and m.root_account_id = p_root_account_id
+      and m.state = 'active'
+      and (m.valid_from is null or m.valid_from <= now())
+      and (m.valid_until is null or m.valid_until >= now())
+      and (rp.valid_from is null or rp.valid_from <= now())
+      and (rp.valid_until is null or rp.valid_until >= now())
+      and p.resource_type = p_resource_type
+      and p.action = p_action
+  loop
+    scope_matches := false;
+
+    if perm.scope_domain = 'global' then
+      scope_matches := true;
+    elsif perm.scope_domain = 'group' then
+      if context ? 'group_id' then
+        if perm.scope_filter ? 'group_id' then
+          scope_matches := (context ->> 'group_id') = (perm.scope_filter ->> 'group_id');
+        else
+          scope_matches := true;
+        end if;
+      end if;
+    elsif perm.scope_domain = 'country' then
+      if context ? 'country_id' then
+        if perm.scope_filter ? 'country_id' then
+          scope_matches := (context ->> 'country_id') = (perm.scope_filter ->> 'country_id');
+        else
+          scope_matches := true;
+        end if;
+      end if;
+    end if;
+
+    if scope_matches and perm.scope_filter ? 'resource_id' then
+      scope_matches :=
+        p_resource_id is not null
+        and (perm.scope_filter ->> 'resource_id') = p_resource_id::text;
+    end if;
+
+    if not scope_matches then
+      continue;
+    end if;
+
+    constraint_matches := false;
+    case perm.constraint_type
+      when 'none' then
+        constraint_matches := true;
+      when 'ownership' then
+        if context ? 'owner_user_id' then
+          constraint_matches := (context ->> 'owner_user_id') = p_user_id::text;
+        elsif context ? 'is_owner' then
+          constraint_matches := lower(context ->> 'is_owner') in ('true', 't', '1');
+        end if;
+      when 'segment' then
+        if (perm.constraint_payload ? 'segment') and (context ? 'segment') then
+          constraint_matches := (perm.constraint_payload ->> 'segment') = (context ->> 'segment');
+        end if;
+      when 'expression' then
+        if context ? 'expression_result' then
+          constraint_matches := lower(context ->> 'expression_result') in ('true', 't', '1');
+        end if;
+    end case;
+
+    if not constraint_matches then
+      continue;
+    end if;
+
+    if perm.effect = 'deny' then
+      return false;
+    elsif perm.effect = 'allow' then
+      allow_exists := true;
+    end if;
+  end loop;
+
+  return allow_exists;
 end;
 $$;
 
