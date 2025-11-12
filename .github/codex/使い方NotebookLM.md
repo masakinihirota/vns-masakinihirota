@@ -1,3 +1,5 @@
+NotebookLMに聞いた使い方
+
 ソース
 
 https://github.com/openai/openai-cookbook/blob/main/articles/codex_exec_plans.md
@@ -14,12 +16,18 @@ https://github.com/openai/openai-cookbook/blob/main/articles/codex_exec_plans.md
 2.  **`AGENTS.md`の更新:** `AGENTS.md`内で、計画を使用するタイミングを記述し、計画の略称（例: **ExecPlan**）を定義します。
 3.  **略称の使用:** この略称は任意ですが、Codexに特定の計画の定義を指示するためにプロンプト内で使用できます。
 
+
+
 **`AGENTS.md`の例**:
 ```md
 # ExecPlans
 
 When writing complex features or significant refactors, use an ExecPlan (as described in .agent/PLANS.md) from design to implementation.
 ```
+
+GitHub Copilot ではスラッシュコマンドを使用します。
+
+
 
 ## 2. 実行計画（ExecPlan）の作成と運用ルール
 

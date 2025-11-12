@@ -1,3 +1,61 @@
+Next.js16
+https://www.youtube.com/watch?v=niqdY8Nyxho
+
+キャッシュ
+https://nextjs.org/docs/app/api-reference/functions/cacheLife
+
+毎回新鮮なデータが欲しい
+SSR
+サスペンスで囲む <Suspense></Suspense> :キャッシュしなくてもいい 一瞬消えます。ローディングをつけたい場合はfallbackをつけます。
+ <Suspense fallback={Loading...} /></Suspense>
+
+ブログ記事
+ISR
+
+ppr
+静的な部分
+動的な部分
+を分けている
+🌓
+
+データフェッチがでてきたら
+サスペンスでくくるかキャッシュしろと出てくる
+
+クライアント側でデータフェッチ
+TanStack Query
+SWR
+
+"use cache"
+cacheLife("days");
+cacheLife("max"); // 30日
+
+default
+seconds
+minutes
+hours
+days
+weeks
+max
+
+キャッシュをすぐに反映させたい場合
+古いデータを一回見せる、バックグラウンドで新しいデータを再検証
+リバリデートパス revalidatePath("/posts")
+リバリデートタグ revalidateTag("posts", "max")
+
+付箋を貼っておく
+cacheTag("posts")
+付箋を更新
+updateTag("posts")
+同時に複数のキャッシュデータを更新したい時
+最新のデータをすぐに表示したい時、古いデータは見せない
+
+
+
+
+
+
+
+
 drizzle\trigger_functions\auth.users2auth_users.sql
 このトリガーを最初にSQL Editorで実行してください
 

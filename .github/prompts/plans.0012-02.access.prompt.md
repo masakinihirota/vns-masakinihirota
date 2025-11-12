@@ -16,6 +16,7 @@ tools: ['search/codebase', 'problems', 'changes', 'fetch', 'githubRepo', 'edit/e
 `0012-02-アクセス権限設計書.md`
 
 この設計書を[plans.md](./plans.md)に書いてください。
+[plans.md](./plans.md) でまだチェックされてないProgressから開発をしてください。
 [plans.md](./plans.md) に基づいて実装してください。
 進捗に応じて [plans.md](./plans.md) を更新してください。
 

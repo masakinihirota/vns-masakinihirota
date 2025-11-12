@@ -74,3 +74,6 @@ signing_key.json
 .old.instructions/
 
 memo2/
+
+#serena
+.serena/cache
