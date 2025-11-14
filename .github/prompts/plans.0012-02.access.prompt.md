@@ -4,22 +4,21 @@ mode: agent
 tools: ['search/codebase', 'problems', 'changes', 'fetch', 'githubRepo', 'edit/editFiles', 'search', 'runTests', 'runCommands', 'runTasks', 'runNotebooks', 'new', 'extensions', 'usages', 'vscodeAPI', 'think', 'testFailure', 'openSimpleBrowser', 'todos', 'Sentry/search_docs', 'github/create_or_update_file', 'serena/*', 'context7/*', 'sequentialthinking/sequentialthinking', 'edit', 'chrome-devtools/*', 'Postgres(LOCAL-supabase)/*', 'supabase/apply_migration', 'supabase/confirm_cost', 'supabase/deploy_edge_function', 'supabase/execute_sql', 'supabase/generate_typescript_types', 'supabase/get_advisors', 'supabase/get_anon_key', 'supabase/get_edge_function', 'supabase/get_logs', 'supabase/list_migrations', 'supabase/list_tables', 'supabase/search_docs', 'unsplash/*', 'vscode/get_terminal_output', 'shadcn-ui/*', 'shadcn/*', 'playwright/browser_navigate', 'playwright/browser_resize', 'playwright/browser_select_option', 'calil-library-mcp/*', 'sequentialthinking/*']
 ---
 
-[plans.md](./plans.md) を読んでください。
+実装前に[plans.md](./plans.md) を読んで把握してください。
 
 ## 実装
 ### アクセス制御システムの実装
 
-以下のドキュメントを参考に、
-ライブラリの統合方法を調査し、
-詳細な実行計画を作成してください。
+以下のドキュメントを参考にライブラリの統合方法を調査し、詳細な実行計画を作成してください。
 
 `0012-02-アクセス権限設計書.md`
 
-この設計書を[plans.md](./plans.md)に書いてください。
+この設計書を読んで[plans.md](./plans.md)に書いてください。
 [plans.md](./plans.md) でまだチェックされてないProgressから開発をしてください。
 [plans.md](./plans.md) に基づいて実装してください。
+「次のステップ」を絶対にユーザーに聞かないでください。
+わからないところはtoolsを使い自分で調査するようにしてください。
 進捗に応じて [plans.md](./plans.md) を更新してください。
-
 
 ## このプロンプトが終了したら
 正常に終了したか確かめてください

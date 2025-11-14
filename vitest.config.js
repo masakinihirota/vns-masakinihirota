@@ -4,7 +4,7 @@ import path from "path";
 
 export default defineConfig({
     test: {
-        include: ['src/app/**/*.test.tsx', 'tests/**/*.spec.ts', 'tests/**/*.test.tsx'],
+        include: ['src/**/*.test.{ts,tsx}'],
         exclude: [
             'coverage/**',
             'dist/**',
