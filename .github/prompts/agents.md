@@ -40,6 +40,10 @@
 テスト駆動開発は
 `.github\instructions\.copilot-TDD-instructions.md` の内容に従ってください。
 
+## Supabase
+
+ローカルで開発しているのでリモートのSupabaseは無視してください。
+ローカルのSupabaseでのみ開発を行ってください。
 
 ## 作業終了時
 作業が完了したらドキュメントを更新してください。
