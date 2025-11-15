@@ -32,9 +32,7 @@ export const aclMemberships = pgTable(
       .defaultNow(),
     validUntil: timestamp("valid_until", { withTimezone: true }),
     delegationDepth: integer("delegation_depth").notNull().default(0),
-    createdBy: uuid("created_by").references(() => authUsers.id, {
-      onDelete: "set null",
-    }),
+    createdBy: uuid("created_by").references(() => authUsers.id, { onDelete: "set null" }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -43,16 +41,12 @@ export const aclMemberships = pgTable(
       .defaultNow(),
   },
   (table) => ({
-    uniqMembership: uniqueIndex("acl_memberships_root_user_role_idx").on(
+    uniqMembership: uniqueIndex("acl_memberships_unique").on(
       table.rootAccountId,
       table.userId,
       table.roleId,
     ),
-    stateIndex: index("acl_memberships_state_idx").on(
-      table.rootAccountId,
-      table.userId,
-      table.state,
-    ),
+    stateIndex: index("acl_memberships_state_idx").on(table.rootAccountId, table.userId, table.state),
     delegationDepthNonNegative: check(
       "acl_memberships_delegation_depth_non_negative",
       sql`${table.delegationDepth} >= 0`,
@@ -62,4 +56,4 @@ export const aclMemberships = pgTable(
       sql`${table.delegationDepth} <= 5`,
     ),
   }),
-);
+);;;

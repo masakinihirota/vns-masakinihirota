@@ -1,0 +1,1 @@
+2025-11-16: review4DB prompt body rewritten with structured sections (前提情報・確認観点・未使用/不足確認・出力形式・クロージング) to ensure reviewers cover unused columns, missing elements, and provide actionable advice.

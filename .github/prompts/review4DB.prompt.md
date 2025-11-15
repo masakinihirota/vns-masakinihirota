@@ -1,23 +1,38 @@
 ---
 description: Review DBスキーマ
-agent: agent
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chrome-devtools/*', 'context7/*', 'next-devtools/*', 'Postgres(LOCAL-supabase)/*', 'Sentry/search_docs', 'sequentialthinking/*', 'serena/*', 'shadcn/*', 'shadcn-ui/*', 'supabase/deploy_edge_function', 'supabase/execute_sql', 'supabase/generate_typescript_types', 'supabase/get_edge_function', 'supabase/list_tables', 'supabase/search_docs', 'unsplash/*', 'vscode/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'runSubagent', 'runTests']
+tools: ['serena/*', 'context7/*', 'Postgres(LOCAL-supabase)/*', 'supabase/execute_sql', 'supabase/list_tables', 'supabase/search_docs', 'supabase/generate_typescript_types', 'sequentialthinking/*', 'fetch', 'runCommands', 'runSubagent', 'changes', 'problems']
 ---
 
-DBスキーマをレビューしてください。
-現在Supabaseのスキーマと照合し、以下の観点で確認を行ってください。
-Drizzle ORMのスキーマ定義とSupabaseの実際のDBスキーマが一致しているか
-各テーブルおよびカラムの命名規則がプロジェクトのルールに従っているか
-各カラムの型および制約（NOT NULL、DEFAULT値、外部キーなど）が適切に設定されているか
-インデックスやユニーク制約が必要に応じて設定されているか
-各テーブルおよびカラムに対するコメントが適切に記述されているか
-不要なスキーマや冗長な定義がないか
+現在利用しているSupabaseのDB全体を対象にレビューを行ってください。Drizzle ORMで管理しているスキーマとSupabase上の実体との差異を特定し、整合性と品質を保証することが目的です。
 
+## 前提情報の取得
+- Drizzle ORMのスキーマ定義はdrizzle/schema配下を参照する。
+- Supabaseの実スキーマはPostgres(LOCAL-supabase)/*およびsupabase/*系ツールで取得する。
+- 必要に応じてserena/*やchanges、problemsでローカル差分やエラー状況を確認する。
 
+## 確認・分析観点
+- Drizzle ORMのスキーマ定義とSupabase実スキーマが構造・制約・コメントまで一致しているか。
+- テーブル・カラム・インデックス・制約の命名規則がプロジェクトルールに従っているか。
+- カラム型、NOT NULL、DEFAULT、外部キー、チェック制約が適切か。
+- インデックス、ユニーク制約、複合キーの設計がクエリ要件に合致しているか。
+- 各テーブルとカラムに必要十分なコメントが付与されているか。
+- 不要または冗長なテーブル・カラム・ビュー・関数が存在しないか。
 
-変更箇所ごとに潜在的なバグ、仕様逸脱、動作退行、パフォーマンス劣化、セキュリティ・可用性への影響を優先度順に指摘してください（例: 致命的 > 重大 > 注意 > 軽微）。
-各指摘は、影響範囲・再現手順・期待される挙動・修正の方向性を簡潔にまとめ、該当ファイルと行番号を必ず明示してください。
-想定と違う動作が懸念される箇所は、理由や前提（例: 入力値、非同期処理、例外処理）を添えて質問または確認事項として列挙してください。
-重大な変更にテストが追加されていない場合は、欠落テストの種類や想定ケースを指摘し、必要に応じて具体例を示してください。
-問題が見つからなかった場合でも、その旨と残るリスクや追加検証が望ましい箇所を記録してください。
+## 未使用・不足項目の洗い出し
+- Supabaseに存在するがDrizzleで管理していないテーブル・カラム・制約を列挙する。
+- Drizzleで定義済みにもかかわらずSupabaseで欠落している要素を列挙する。
+- 使用実績のない（参照が確認できない）カラム・テーブルを特定し、参照元コードやクエリとの突合結果を記録する。
+- 今後追加が必要と考えられる制約・コメント・インデックス・RLS/RBAC設定を提案する。
+- マイグレーションの抜け漏れや適用順序の不整合が疑われる箇所があれば、修正案と影響範囲を示す。
 
+## レビュー結果の出力形式
+- 発見事項は優先度（致命的 > 重大 > 注意 > 軽微）の順に並べる。
+- 各指摘に対して、該当ファイル/テーブル/カラム、行番号やSQL定義、影響範囲、再現手順、期待挙動、修正方針を簡潔に記載する。
+- 想定と異なる挙動が懸念される場合は、前提条件や入力値、非同期処理の有無など根拠を添えて質問または確認事項として整理する。
+- 重大な変更にテストが追加されていない場合は、欠落テストの種類や想定ケース、必要なテストデータを指摘する。
+- 改善提案や運用上のアドバイス（例: 監査ログ、メンテナンス手順、移行計画）があれば明示する。
+
+## クロージング
+- 問題が見つからなかった場合でも、その旨と残るリスク、追加検証が望ましい箇所、保留事項を整理して記録する。
+- 判断に不確実性がある場合は、追加で確認すべき情報や依頼事項（例: 実行計画の取得、業務要件の再確認）を列挙する。
+- 今後のアクション項目を優先度付きで提示する（例: マイグレーション作成、制約追加、命名修正）。

@@ -31,10 +31,10 @@ export const aclPermissions = pgTable(
       .defaultNow(),
   },
   (table) => ({
-    uniqPermission: uniqueIndex("acl_permissions_resource_action_constraint_idx").on(
+    uniqPermission: uniqueIndex("acl_permissions_unique").on(
       table.resourceType,
       table.action,
       table.constraintType,
     ),
   }),
-);
+);;;

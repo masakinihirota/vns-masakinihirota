@@ -33,14 +33,11 @@ export const aclRoles = pgTable(
       .defaultNow(),
   },
   (table) => ({
-    uniqRootAccountCode: uniqueIndex("acl_roles_root_account_code_idx").on(
+    uniqRootAccountCode: uniqueIndex("acl_roles_root_account_code_unique").on(
       table.rootAccountId,
       table.code,
     ),
-    priorityIdx: index("acl_roles_priority_idx").on(
-      table.rootAccountId,
-      table.priority,
-    ),
-    systemIdx: index("acl_roles_system_idx").on(table.isSystem),
+    priorityIdx: index("acl_roles_priority_idx").on(table.rootAccountId, table.priority),
+    systemIdx: index("acl_roles_is_system_idx").on(table.isSystem),
   }),
-);
+);;;

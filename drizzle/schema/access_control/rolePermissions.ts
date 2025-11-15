@@ -29,9 +29,7 @@ export const aclRolePermissions = pgTable(
       .default({}),
     validFrom: timestamp("valid_from", { withTimezone: true }),
     validUntil: timestamp("valid_until", { withTimezone: true }),
-    lastUpdatedBy: uuid("last_updated_by").references(() => authUsers.id, {
-      onDelete: "set null",
-    }),
+    lastUpdatedBy: uuid("last_updated_by").references(() => authUsers.id, { onDelete: "set null" }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -40,11 +38,12 @@ export const aclRolePermissions = pgTable(
       .defaultNow(),
   },
   (table) => ({
-    uniqRolePermissionEffect: uniqueIndex(
-      "acl_role_permissions_role_permission_effect_idx",
-    ).on(table.roleId, table.permissionId, table.scopeDomain, table.effect),
-    validUntilIdx: index("acl_role_permissions_valid_until_idx").on(
-      table.validUntil,
+    uniqRolePermissionEffect: uniqueIndex("acl_role_permissions_unique").on(
+      table.roleId,
+      table.permissionId,
+      table.scopeDomain,
+      table.effect,
     ),
+    validUntilIdx: index("acl_role_permissions_valid_until_idx").on(table.validUntil),
   }),
-);
+);;;
