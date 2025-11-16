@@ -12,7 +12,7 @@
 
 ### ✅ 整合している項目
 - Next.js 15.5.2 + React 19.1.1 完全一致
-- TypeScript 5.x 実装済み  
+- TypeScript 5.x 実装済み
 - Tailwind CSS v4 実装済み
 - next-intl v4.3.9 (3言語: ja/en/de) 実装済み
 - Supabase Auth (OAuth: Google/GitHub/Anonymous) 実装済み
@@ -23,7 +23,7 @@
 
 #### 1. 実装規模の大幅拡大
 - **ページ数**: 設計書記載なし → **実際112ページ実装済み**
-- **コンポーネント数**: 設計書記載なし → **実際95コンポーネント実装済み**  
+- **コンポーネント数**: 設計書記載なし → **実際95コンポーネント実装済み**
 - **shadcn/uiコンポーネント**: 設計書38個 → **実際49個実装済み（+11個）**
 - **総TSXファイル数**: **311ファイル**の大規模実装
 
@@ -41,7 +41,7 @@
 - `src/components/oauth/` (OAuth専用)
 - `src/components/i18n/` (国際化専用)
 - `src/components/root-accounts/` (ルートアカウント管理)
-- `src/components/_pre-auth/` (認証前画面用)
+- `src/components/public/` (認証前画面用)
 
 ## 数値比較表
 

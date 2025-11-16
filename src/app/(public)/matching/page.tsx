@@ -1,4 +1,4 @@
-import { Matching } from "@/components/_pre-auth/Matching"
+import { Matching } from "@/components/public/Matching"
 
 export default function Page() {
 	return <Matching />

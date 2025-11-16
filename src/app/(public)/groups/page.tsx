@@ -1,4 +1,4 @@
-import { Groups } from "@/components/_pre-auth/Groups"
+import { Groups } from "@/components/public/Groups"
 
 export default function Page() {
 	return <Groups />
