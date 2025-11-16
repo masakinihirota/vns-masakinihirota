@@ -1,4 +1,4 @@
-import { Settings } from "@/components/_pre-auth/Settings"
+import { Settings } from "@/components/public/Settings"
 
 export default function Page() {
 	return <Settings />

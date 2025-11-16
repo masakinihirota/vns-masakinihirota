@@ -1,3 +1,19 @@
+MIT、AI時代の新開発論を提唱。「可読性の高いソフトウェア」は"バイブコーディング"を終わらせるか | XenoSpectrum
+https://xenospectrum.com/mit-legible-software-concepts-synchronizations-ai-coding/
+
+自己完結性: 各概念は、それ自身の状態と実行可能なアクションを持つ。例えば、「コメント」概念はコメントのデータとその追加・削除といったアクションを内部に保持する。
+
+独立性: 最も重要な特徴は、概念同士が直接的な依存関係を持たない点にある。これは、特定の機能（例えば「コメント」）を修正・拡張する際に、他の機能（例えば「投稿」）のコードを気にする必要がないことを意味する。
+
+plans.*.prompt.mdを複数作るのは自己完結性、独立性を確保するため。
+
+plans.0012-02.access.prompt.md
+plans.0014-02.org.prompt.md
+
+
+
+---
+
 2025/10/20時点で最良のAIコーディングプロセス
 https://zenn.dev/erukiti/articles/2510-ai-coding
 

@@ -1,4 +1,4 @@
-import { Dashboard } from "@/components/_pre-auth/Dashboard"
+import { Dashboard } from "@/components/public/Dashboard"
 
 export default function Page() {
 	return <Dashboard />

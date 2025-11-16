@@ -1,5 +1,0 @@
-@startuml enums
-' Enum 定義（PlantUMLでは note で表現）
-note "Postgres Enums used in this schema:\n\n\nauth_provider: google, github, anonymous\npoints_reason: system_adjust, manual_adjust, signup_bonus, profile_complete, login_streak, penalty\nauth_event_type: sign_in, sign_out, refresh, anonymous_upgrade, provider_link, provider_unlink, failure\nlanguage_proficiency: native, fluent, intermediate, basic, learning\nliving_area_segment: area1, area2, area3" as enums_note
-end note
-@enduml

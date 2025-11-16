@@ -1,4 +1,4 @@
-import { Profile } from "@/components/_pre-auth/Profile"
+import { Profile } from "@/components/public/Profile"
 
 export default function Page() {
 	return <Profile />

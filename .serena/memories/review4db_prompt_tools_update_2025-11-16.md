@@ -1,0 +1,1 @@
+2025-11-16: review4DB prompt front matter updated to include MCP tools for DB schema review. Tools now cover Serena file analysis, Context7 docs, local Supabase Postgres, and Supabase SQL/doc utilities plus supporting helpers (sequential thinking, fetch, runCommands, runSubagent, changes, problems).

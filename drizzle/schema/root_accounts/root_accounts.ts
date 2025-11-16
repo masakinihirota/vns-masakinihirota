@@ -16,6 +16,7 @@ import {
   livingAreaSegmentEnum,
   accountStatusEnum
 } from "./enums";
+import { aclRoles } from "../access_control/roles";
 
 // root_accountsテーブル定義
 export const rootAccounts = pgTable(
@@ -53,6 +54,10 @@ export const rootAccounts = pgTable(
       .default(false),
     invitedAt: timestamp("invited_at", { withTimezone: true }),
     confirmedAt: timestamp("confirmed_at", { withTimezone: true }),
+
+    defaultRoleId: uuid("default_role_id").references(() => aclRoles.id, {
+      onDelete: "set null",
+    }),
 
     // ===== Phase 1 追加フィールド (設計書準拠) =====
 
