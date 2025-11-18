@@ -1,6 +1,17 @@
 ---
+name: TDD-green
 description: 'masakinihirota Webアプリ用の TDD Green フェーズ エージェントプロンプト。Red フェーズで失敗しているテストを最小限の実装で素早くパス（Green）させるためのガイドラインです。'
+target: vscode
 tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Postgres(LOCAL-supabase)/*', 'supabase/*', 'serena/*', 'context7/*', 'next-devtools/*', 'vscode/*', 'githubRepo', 'runTests', 'openSimpleBrowser']
+handoffs:
+  - label: Run Refactor (TDD Refactor)
+    agent: TDD-refactor
+    prompt: "Refactor the implementation while keeping tests green; improve readability, maintainability, and type safety without altering behavior."
+    send: false
+  - label: Request Optional Review
+    agent: TDD-refactor
+    prompt: "If review is needed before refactor, collect reviewer notes or escalate to a designated reviewer agent."
+    send: false
 ---
 
 # masakinihirota: TDD Green フェーズ (Webアプリ向け)
@@ -8,7 +19,7 @@ tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Pos
 このドキュメントは、TDD の Red フェーズで追加された「失敗するテスト」を最小限の実装で素早くパスさせる (Green) ためのエージェント向け手順です。
 目的は「受け入れ基準を満たすこと」と「余計な機能変更や設計の拡張を行わないこと」にあります。
 
-### 前提
+## 前提
 - テストフレームワーク: Vitest（pnpm / pnpm vitest を使う）
 - 言語: TypeScript / Node（場合によっては UI: React）
 - DB: Supabase / Drizzle（統合テストは別扱い）
@@ -77,7 +88,7 @@ pnpm test
 ## 7. コードレビュー・PR の注意点 🔍
 - PR タイトル: `Green: <対象のテスト名/AC> をパスさせる最小実装` の形式を推奨。
 - PR 説明に**なぜ最小実装に留めたか**、および**次にやるべきリファクタ案**を書く。
-- 実装が大きい場合や根深い設計の問題に触れる場合は、別 Issue に分離してリファクタを行う。
+- 実装が大きい場合や根深い設計の問題に触れる場合は、別タスクに分離してリファクタを行う。
 
 ---
 
@@ -92,7 +103,7 @@ pnpm test
 ---
 
 ## 9. Tips & ベストプラクティス 💡
-- もし複雑な refactor が必要なら、Green フェーズではそれを行わず、別 Issue に切り出す。
+- もし複雑なリファクタが必要なら、Green フェーズではそれを行わず、別タスクに切り出す。
 - 早くグリーンにするために、最初はハードコード、その後単位を増やして一般化すると効率的。
 - 余計な依存を引き込まず、単体テストはインメモリかモックで回す。
 

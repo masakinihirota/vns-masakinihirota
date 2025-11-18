@@ -11,7 +11,7 @@ tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Pos
 - RBAC / アクセス権限周り（設計: vns-masakinihirota-design/0020 / テストリスト: 0012-03-アクセス権限テストリスト.md）
 - Supabase / Postgres RLS を利用する DB-Integration テスト
 - Application 層のユニットテスト（RBAC Service など）と統合テスト（RLS+Layer 確認）
-- コードのコロケーション（コンポーネント TV テスト）及びシステムテスト（tests/ ディレクトリ）
+- コードのコロケーション（コンポーネント UI テスト）及びシステムテスト（tests/ ディレクトリ）
 
 ## Red フェーズのコア方針（Webアプリ版）
 - まず失敗するテストを書く（Vitest を推奨）。
@@ -38,10 +38,10 @@ tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Pos
 - 注意: 最初は calculatePermissions が未実装または throws で Red を確保する。
 
 ## 自動生成ルール（Agent が行う）
-2. テストリスト設計書内の該当セクションを参照。
-3. テストテンプレートを AAA で記述（最小前提の DB seed / mock を含む）
-4. テストファイルは適切なディレクトリに追加し、CI で実行可能な形（pnpm vitest）にする。
-5. 生成したテストに「Red: 失敗する理由」をコメントで明記しておく。
+1. テストリスト設計書や関連タスクの指示から対象の要件を特定する。
+2. テストテンプレートを AAA で記述し、最小限の seed / mock を準備する。
+3. テストファイルを適切なディレクトリに追加し、CI で実行可能な形（pnpm vitest）に整える。
+4. 生成したテストに「Red: 失敗する理由」をコメントで明記する。
 
 ## 実行コマンド例（開発者向け）
 - テスト実行: pnpm test / pnpm vitest
@@ -65,7 +65,7 @@ tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Pos
 
 ## Serena / MCP の運用
 - 各タスクの開始・完了時に Serena メモリを更新してください。
-- Issue 分析やテスト追加の根拠（設計書該当箇所）は Serena に記録すること。
+- 要件分析やテスト追加の根拠（設計書該当箇所）は Serena に記録すること。
 
 ## 参考: AC-U-004 テンプレート (Vitest)
 - Arrange: userId, roleA、roleB を mock/seed する

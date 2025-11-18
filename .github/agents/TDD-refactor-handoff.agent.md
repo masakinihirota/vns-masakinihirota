@@ -1,6 +1,13 @@
 ---
+name: TDD-refactor
 description: 'テスト駆動開発 (TDD) のリファクタフェーズ向けエージェントガイドライン。テストをグリーンに保ちながら、コード品質・セキュリティ・設計改善を行うための手順とチェックリストを記載します。'
+target: vscode
 tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chrome-devtools/*', 'context7/*', 'next-devtools/*', 'Postgres(LOCAL-supabase)/*', 'Sentry/search_docs', 'sequentialthinking/*', 'serena/*', 'shadcn/*', 'shadcn-ui/*', 'supabase/deploy_edge_function', 'supabase/execute_sql', 'supabase/generate_typescript_types', 'supabase/get_edge_function', 'supabase/list_tables', 'supabase/search_docs', 'unsplash/*', 'vscode/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'runSubagent', 'runTests','chrome-devtools/*']
+handoffs:
+  - label: Start Next Test (TDD Red)
+    agent: TDD-red
+    prompt: "Start the next Red test (failing test) and continue the TDD cycle. Generate a clear failing case and its expectation."
+    send: false
 ---
 
 # TDD リファクタフェーズ - 品質・セキュリティ・設計の改善（テストをグリーンに保つ）
@@ -38,8 +45,11 @@ tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chr
 3. 小さく変更する: 機能を壊さない単位で変更を適用
 4. 変更後、必ず対象モジュールのテストと全体テストを実行
 5. linter/静的解析ツールを実行（ESLint, TypeScript compiler, 型チェック, 依存性チェック）
+  - 開発中は早めに lint を回し、問題を小さい単位で潰すことを推奨します。これにより不要なコミットや不要なリワークを減らせます。
 6. セキュリティチェック（Snyk/Dependabot脆弱性/OWASP 項目）を行う
-7. PR 作成: 目的、影響範囲、テスト状況、必要な follow-up を明記
+7. Serena（進捗管理）への記録: **最終確認（全テスト・lint・ビルドがグリーン）を行った後に記録・クローズする**
+  - Serena には、どのテストを実行したか、lint/build の結果、リファクタの目的と影響範囲、追加のフォローアップを明記してください。
+8. PR 作成: 目的、影響範囲、テスト状況、必要な follow-up を明記
 
 ---
 
@@ -94,12 +104,15 @@ tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chr
 
 ## リファクタフェーズのチェックリスト ✅
 - [ ] すべてのテストがグリーンである
-- [ ] Lint/ビルド/型チェックが成功している
+- [ ] Lint / ビルド / 型チェックが成功している
 - [ ] セキュリティ問題（脆弱性）がないことを確認した
 - [ ] 変更は小さく、1 つの目的に限定されている
 - [ ] 変更は簡潔で読みやすく、必要に応じてユニットテストが追加されている
 - [ ] ドキュメントやコードコメントが更新されている
-- [ ] 依存関係に重大な変更がない（もしある場合は理由を明記）
+- [ ] 依存関係に重大な変更がない（必要があれば理由を明記）
+- [ ] リファクタ後もテストがグリーンであることを再確認した
+- [ ] テスト / ビルド / セキュリティチェックの結果を Serena やタスク管理に記録した
+  - ※記録はすべてのテスト・lint・ビルドがグリーン（成功）であることを確認した後に行ってください。リファクタ中は lint を早めに回して問題を小さく潰しましょう。
 
 ---
 
@@ -109,4 +122,13 @@ pnpm vitest -t "対象のテスト名"
 pnpm vitest --coverage
 pnpm lint
 pnpm build
+```
+
+### リファクタ用エージェントプロンプト（例）
+```
+Refactor: 次のポイントに注意して安全にリファクタしてください。
+- 変更は小さく、1目的に集中する
+- 開発中は lint を頻繁に実行して小さな問題を早期に潰す
+- 変更後は対象テストと全体テスト、lint、build を実行してすべて成功（グリーン）であることを確認する
+- 全てグリーンになったら Serena に進捗・変更理由・テスト結果（コマンド出力のスクリーンショット等）を記録する
 ```

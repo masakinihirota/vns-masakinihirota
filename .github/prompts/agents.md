@@ -1,3 +1,7 @@
+## Primary Directive
+
+- Think in English, interact with the user in Japanese.
+
 ## 基本指示
 
 文書は日本語で書いてください。
