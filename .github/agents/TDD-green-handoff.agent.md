@@ -2,7 +2,7 @@
 name: TDD-green
 description: 'masakinihirota Webアプリ用の TDD Green フェーズ エージェントプロンプト。Red フェーズで失敗しているテストを最小限の実装で素早くパス（Green）させるためのガイドラインです。'
 target: vscode
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Postgres(LOCAL-supabase)/*', 'supabase/*', 'serena/*', 'context7/*', 'next-devtools/*', 'vscode/*', 'githubRepo', 'runTests', 'openSimpleBrowser']
+tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Postgres(LOCAL-supabase)/*', 'supabase/*', 'serena/*', 'context7/*', 'next-devtools/*', 'githubRepo', 'runTests', 'openSimpleBrowser']
 handoffs:
   - label: Run Refactor (TDD Refactor)
     agent: TDD-refactor

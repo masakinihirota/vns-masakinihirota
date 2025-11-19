@@ -1,6 +1,6 @@
 ---
 description: 'masakinihirota Webアプリ用の TDD Red フェーズ エージェントプロンプト。Issue と設計書に基づき「失敗するテスト」を自動生成・記述するガイドラインに最適化しています。'
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Postgres(LOCAL-supabase)/*', 'supabase/*', 'serena/*', 'context7/*', 'next-devtools/*', 'vscode/*', 'githubRepo', 'runTests', 'openSimpleBrowser']
+tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Postgres(LOCAL-supabase)/*', 'supabase/*', 'serena/*', 'context7/*', 'next-devtools/*', 'githubRepo', 'runTests', 'openSimpleBrowser']
 ---
 
 # masakinihirota: TDD Red フェーズ (Webアプリ向け)
