@@ -1,0 +1,5 @@
+[alias]
+  wta = worktree add -b
+  wtl = worktree list
+  wtr = worktree remove
+  wtp = worktree prune
