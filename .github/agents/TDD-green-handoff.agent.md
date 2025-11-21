@@ -2,15 +2,16 @@
 name: TDD-green
 description: 'masakinihirota Webアプリ用の TDD Green フェーズ エージェントプロンプト。Red フェーズで失敗しているテストを最小限の実装で素早くパス（Green）させるためのガイドラインです。'
 target: vscode
+model: Raptor mini (Preview)
 tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'Postgres(LOCAL-supabase)/*', 'supabase/*', 'serena/*', 'context7/*', 'next-devtools/*', 'githubRepo', 'runTests', 'openSimpleBrowser']
 handoffs:
   - label: Run Refactor (TDD Refactor)
     agent: TDD-refactor
-    prompt: "Refactor the implementation while keeping tests green; improve readability, maintainability, and type safety without altering behavior."
+    prompt: "テストがグリーンの状態を維持したまま実装をリファクタしてください。挙動を変更せずに可読性、保守性、型安全性を向上させてください。完了後 serena に進捗を更新してください。"
     send: false
   - label: Request Optional Review
     agent: TDD-refactor
-    prompt: "If review is needed before refactor, collect reviewer notes or escalate to a designated reviewer agent."
+    prompt: "レビューが必要な場合は、レビュアーの指摘を収集し、必要に応じて指定のレビュアーエージェントにエスカレーションしてください。完了後 serena に進捗を更新してください。"
     send: false
 ---
 

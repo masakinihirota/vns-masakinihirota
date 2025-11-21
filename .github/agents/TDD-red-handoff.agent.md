@@ -1,15 +1,17 @@
 ---
 name: TDD-red
-description: Generate failing (red) tests for an agreed specification or feature to kick off a TDD cycle. This agent generates explicit failing tests that encode acceptance criteria.
+description: 合意された仕様または機能に対して失敗するテスト（Red）を生成し、TDDサイクルを開始します。このエージェントは受け入れ基準を明示的に記述した失敗するテストを生成します。
 target: vscode
+model: Raptor mini (Preview)
 tools: [ 'search', 'fetch' ]
 handoffs:
-  - label: Implement To Make Tests Pass (Green)
+  - label: テストを通過させるための実装 (Green)
     agent: TDD-green
-    prompt: "Implement the code required to make the failing tests pass. Focus on the minimal changes required for correctness and test-driven behavior. Provide file paths and code changes in the response."
+    prompt: "失敗しているテストを通過させるために必要な最小限のコードを実装してください。正確性とテスト駆動の動作に焦点を当ててください。レスポンスにはファイルパスとコード変更を含めてください。完了後 serena に進捗を更新してください。"
     send: false
-  # Note: You can add an optional handoff to a CodeReviewer agent after review is available
 ---
+
+prompt: "以下の失敗テストをパスさせるための最小実装を作成してください。関連タスク: {TASK_ID}、参照設計: {DESIGN_DOC_PATH}。完了後 serena に進捗を更新してください。"
 
 # TDD - RED: 失敗テストの作成
 

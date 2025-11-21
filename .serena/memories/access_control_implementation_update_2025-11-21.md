@@ -1,0 +1,1 @@
+確認結果: DB側の実装が進行（Drizzle schema と Supabase migration にアクセス制御テーブル/関数/ビュー/seedが追加済）。アプリ層（Server Actions/API/UI/ラッパー）の実装は未着手。次は `src/lib/access-control` ラッパーと `src/app/(protected)/access-control`のServer Actions・UIの実装を推奨します。
