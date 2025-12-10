@@ -23,11 +23,11 @@ DADSの要件とHID/ Shadcn指示が衝突した場合、DADSで定義したト�
 
 ## 参照リソース
 
-| リソース | パス / URL |
-|---------|-----------|
-| **コンポーネント実装例** | `src/components/dads-reference/` |
-| **Tailwindプラグイン** | `@digital-go-jp/tailwind-theme-plugin` |
-| **公式ドキュメント** | https://design.digital.go.jp/ |
+| リソース                 | パス / URL                             |
+| ------------------------ | -------------------------------------- |
+| **コンポーネント実装例** | `src/components/dads-reference/`       |
+| **Tailwindプラグイン**   | `@digital-go-jp/tailwind-theme-plugin` |
+| **公式ドキュメント**     | https://design.digital.go.jp/          |
 
 ## デザイン原則
 
@@ -51,15 +51,15 @@ DADSの要件とHID/ Shadcn指示が衝突した場合、DADSで定義したト�
 
 DADSのタイポグラフィトークンを使用する。形式: `text-{種類}-{サイズ}{ウェイト}-{行間}`
 
-| 用途 | トークン | 説明 |
-|------|---------|------|
-| 標準テキスト | `text-std-16N-170` | 16px, normal, 行間170% |
-| 標準テキスト（太字） | `text-std-16B-170` | 16px, bold, 行間170% |
-| 見出し | `text-std-24B-150` | 24px, bold, 行間150% |
-| 大見出し | `text-std-32B-150` | 32px, bold, 行間150% |
-| 密なテキスト | `text-dns-16N-130` | 16px, normal, 行間130% |
-| アウトラインテキスト | `text-oln-16N-100` | 16px, normal, 行間100% |
-| アウトラインテキスト（太字） | `text-oln-16B-100` | 16px, bold, 行間100% |
+| 用途                         | トークン           | 説明                   |
+| ---------------------------- | ------------------ | ---------------------- |
+| 標準テキスト                 | `text-std-16N-170` | 16px, normal, 行間170% |
+| 標準テキスト（太字）         | `text-std-16B-170` | 16px, bold, 行間170%   |
+| 見出し                       | `text-std-24B-150` | 24px, bold, 行間150%   |
+| 大見出し                     | `text-std-32B-150` | 32px, bold, 行間150%   |
+| 密なテキスト                 | `text-dns-16N-130` | 16px, normal, 行間130% |
+| アウトラインテキスト         | `text-oln-16N-100` | 16px, normal, 行間100% |
+| アウトラインテキスト（太字） | `text-oln-16B-100` | 16px, bold, 行間100%   |
 
 **フォントファミリー**: `font-sans`（Noto Sans JP）
 
@@ -67,46 +67,46 @@ DADSのタイポグラフィトークンを使用する。形式: `text-{種類}
 
 #### プロジェクト固有カラー（VNS masakinihirota）
 
-| 用途 | カラーコード | Tailwindトークン | 説明 |
-|------|-------------|-----------------|------|
-| **メインカラー** | `#007EFE` | `bg-brand-primary`, `text-brand-primary` | オアシスの青（主要アクション、ヘッダー） |
-| **メインカラー（ホバー）** | `#0066CC` | `bg-brand-primary-hover` | ホバー状態 |
-| **メインカラー（アクティブ）** | `#004C99` | `bg-brand-primary-active` | アクティブ状態 |
-| **サブカラー1** | `#E6F4FB` | `bg-brand-light` | 淡い水色（セクション背景） |
-| **サブカラー2** | `#FFFFFF` | `bg-white` | 白（カード背景、メイン背景） |
-| **サブカラー3** | `#F5FAFD` | `bg-brand-subtle` | 青みがかった白（交互の背景） |
-| **アクセント（黄）** | `#FFD600` | `bg-accent-yellow`, `ring-accent-yellow` | 黄色（フォーカスリング、注目ポイント） |
-| **アクセント（緑）** | `#00C48C` | `bg-accent-green`, `text-accent-green` | グリーン（成功状態、ポジティブ） |
+| 用途                           | カラーコード | Tailwindトークン                         | 説明                                     |
+| ------------------------------ | ------------ | ---------------------------------------- | ---------------------------------------- |
+| **メインカラー**               | `#007EFE`    | `bg-brand-primary`, `text-brand-primary` | オアシスの青（主要アクション、ヘッダー） |
+| **メインカラー（ホバー）**     | `#0066CC`    | `bg-brand-primary-hover`                 | ホバー状態                               |
+| **メインカラー（アクティブ）** | `#004C99`    | `bg-brand-primary-active`                | アクティブ状態                           |
+| **サブカラー1**                | `#E6F4FB`    | `bg-brand-light`                         | 淡い水色（セクション背景）               |
+| **サブカラー2**                | `#FFFFFF`    | `bg-white`                               | 白（カード背景、メイン背景）             |
+| **サブカラー3**                | `#F5FAFD`    | `bg-brand-subtle`                        | 青みがかった白（交互の背景）             |
+| **アクセント（黄）**           | `#FFD600`    | `bg-accent-yellow`, `ring-accent-yellow` | 黄色（フォーカスリング、注目ポイント）   |
+| **アクセント（緑）**           | `#00C48C`    | `bg-accent-green`, `text-accent-green`   | グリーン（成功状態、ポジティブ）         |
 
 #### プロジェクトカラー使用ガイドライン
 
-| シーン | 推奨クラス |
-|--------|----------|
+| シーン               | 推奨クラス                                                                                |
+| -------------------- | ----------------------------------------------------------------------------------------- |
 | **プライマリボタン** | `bg-brand-primary text-white hover:bg-brand-primary-hover active:bg-brand-primary-active` |
-| **フォーカスリング** | `ring-accent-yellow`（プロジェクト統一） |
-| **ページ背景** | `bg-white` または `bg-brand-subtle` |
-| **カード背景** | `bg-white` |
-| **セクション区切り** | `bg-brand-light` |
-| **成功メッセージ** | `bg-accent-green text-white` |
-| **リンク** | `text-brand-primary hover:underline` |
+| **フォーカスリング** | `ring-accent-yellow`（プロジェクト統一）                                                  |
+| **ページ背景**       | `bg-white` または `bg-brand-subtle`                                                       |
+| **カード背景**       | `bg-white`                                                                                |
+| **セクション区切り** | `bg-brand-light`                                                                          |
+| **成功メッセージ**   | `bg-accent-green text-white`                                                              |
+| **リンク**           | `text-brand-primary hover:underline`                                                      |
 
 #### DADSカラートークン（システム共通）
 
-| 用途 | トークン | 説明 |
-|------|---------|------|
-| **プライマリ** | `bg-blue-900`, `text-blue-900` | メインアクション、リンク |
-| **プライマリホバー** | `bg-blue-1000`, `text-blue-1000` | ホバー状態 |
-| **プライマリアクティブ** | `bg-blue-1200`, `text-blue-1200` | アクティブ状態 |
-| **エラー** | `bg-error-1`, `text-error-1` | エラー状態 |
-| **エラーホバー** | `bg-red-1000`, `text-red-1000` | エラーホバー |
-| **成功** | `bg-success-1`, `text-success-1` | 成功状態 |
-| **成功ホバー** | `bg-green-1000`, `text-green-1000` | 成功ホバー |
-| **グレー（テキスト）** | `text-solid-gray-800` | 本文テキスト |
-| **グレー（補助）** | `text-solid-gray-600` | サポートテキスト |
-| **グレー（無効）** | `text-solid-gray-420` | 無効状態テキスト |
-| **グレー（背景）** | `bg-solid-gray-50` | 無効状態背景 |
-| **ボーダー** | `border-solid-gray-600` | 標準ボーダー |
-| **フォーカス** | `ring-accent-yellow`, `outline-black` | フォーカスリング（プロジェクト統一） |
+| 用途                     | トークン                              | 説明                                 |
+| ------------------------ | ------------------------------------- | ------------------------------------ |
+| **プライマリ**           | `bg-blue-900`, `text-blue-900`        | メインアクション、リンク             |
+| **プライマリホバー**     | `bg-blue-1000`, `text-blue-1000`      | ホバー状態                           |
+| **プライマリアクティブ** | `bg-blue-1200`, `text-blue-1200`      | アクティブ状態                       |
+| **エラー**               | `bg-error-1`, `text-error-1`          | エラー状態                           |
+| **エラーホバー**         | `bg-red-1000`, `text-red-1000`        | エラーホバー                         |
+| **成功**                 | `bg-success-1`, `text-success-1`      | 成功状態                             |
+| **成功ホバー**           | `bg-green-1000`, `text-green-1000`    | 成功ホバー                           |
+| **グレー（テキスト）**   | `text-solid-gray-800`                 | 本文テキスト                         |
+| **グレー（補助）**       | `text-solid-gray-600`                 | サポートテキスト                     |
+| **グレー（無効）**       | `text-solid-gray-420`                 | 無効状態テキスト                     |
+| **グレー（背景）**       | `bg-solid-gray-50`                    | 無効状態背景                         |
+| **ボーダー**             | `border-solid-gray-600`               | 標準ボーダー                         |
+| **フォーカス**           | `ring-accent-yellow`, `outline-black` | フォーカスリング（プロジェクト統一） |
 
 ### 4. フォーカススタイル
 
@@ -122,13 +122,13 @@ focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-accent-yellow
 
 ### 5. 角丸（Border Radius）
 
-| サイズ | トークン | 用途 |
-|--------|---------|------|
-| 4px | `rounded-4` | 極小要素 |
-| 6px | `rounded-6` | 小さいボタン |
-| 8px | `rounded-8` | 標準的なボタン、入力フィールド |
-| 12px | `rounded-12` | 大きな要素 |
-| 16px | `rounded-16` | カード、バナー |
+| サイズ | トークン     | 用途                           |
+| ------ | ------------ | ------------------------------ |
+| 4px    | `rounded-4`  | 極小要素                       |
+| 6px    | `rounded-6`  | 小さいボタン                   |
+| 8px    | `rounded-8`  | 標準的なボタン、入力フィールド |
+| 12px   | `rounded-12` | 大きな要素                     |
+| 16px   | `rounded-16` | カード、バナー                 |
 
 ## 実装ルール
 
@@ -138,7 +138,7 @@ focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-accent-yellow
 
 ```tsx
 // 例: Shadcn/UIのButtonをプロジェクトスタイルで上書き
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 <Button
   className="bg-brand-primary text-white text-oln-16B-100 rounded-8 min-h-14 px-4 py-3
@@ -149,20 +149,20 @@ import { Button } from '@/components/ui/button';
              focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-accent-yellow"
 >
   送信する
-</Button>
+</Button>;
 ```
 
 ### 新規コンポーネント作成時
 
 1. まず `src/components/dads-reference/` の実装例を確認
-2. アクセシビリティ属性（aria-*）を必ず含める
+2. アクセシビリティ属性（aria-\*）を必ず含める
 3. DADSのデザイントークンを使用
 4. フォーカススタイルを必ず実装
 
 ### フォーム要素の実装パターン
 
 ```tsx
-import { Label, SupportText, ErrorText, Input } from '@/components/dads-reference';
+import { Label, SupportText, ErrorText, Input } from "@/components/dads-reference";
 
 // フォームフィールドの基本構成
 const FormField = () => {
@@ -172,9 +172,7 @@ const FormField = () => {
   const hasError = true; // バリデーション状態
 
   // エラー時は errorTextId を先に、supportTextId を後に
-  const describedBy = hasError
-    ? `${errorTextId} ${supportTextId}`
-    : supportTextId;
+  const describedBy = hasError ? `${errorTextId} ${supportTextId}` : supportTextId;
 
   return (
     <div className="flex flex-col items-start gap-2">
@@ -182,9 +180,7 @@ const FormField = () => {
         メールアドレス
         <RequirementBadge>※必須</RequirementBadge>
       </Label>
-      <SupportText id={supportTextId}>
-        確認メールを送信します
-      </SupportText>
+      <SupportText id={supportTextId}>確認メールを送信します</SupportText>
       <Input
         id={formId}
         name="email"
@@ -192,11 +188,7 @@ const FormField = () => {
         aria-describedby={describedBy}
         isError={hasError}
       />
-      {hasError && (
-        <ErrorText id={errorTextId}>
-          ＊正しいメールアドレスを入力してください
-        </ErrorText>
-      )}
+      {hasError && <ErrorText id={errorTextId}>＊正しいメールアドレスを入力してください</ErrorText>}
     </div>
   );
 };
@@ -222,17 +214,17 @@ const FormField = () => {
 
 ## 参照ファイル一覧
 
-| コンポーネント | 参照パス | 用途 |
-|---------------|---------|------|
-| Button | `src/components/dads-reference/Button.tsx` | ボタン（3種類のバリアント） |
-| Input | `src/components/dads-reference/Input.tsx` | テキスト入力 |
-| Label | `src/components/dads-reference/Label.tsx` | フォームラベル |
-| Select | `src/components/dads-reference/Select.tsx` | セレクトボックス |
-| Checkbox | `src/components/dads-reference/Checkbox.tsx` | チェックボックス |
-| Radio | `src/components/dads-reference/Radio.tsx` | ラジオボタン |
-| ErrorText | `src/components/dads-reference/ErrorText.tsx` | エラーメッセージ |
-| SupportText | `src/components/dads-reference/SupportText.tsx` | サポートテキスト |
-| Textarea | `src/components/dads-reference/Textarea.tsx` | テキストエリア |
+| コンポーネント | 参照パス                                        | 用途                        |
+| -------------- | ----------------------------------------------- | --------------------------- |
+| Button         | `src/components/dads-reference/Button.tsx`      | ボタン（3種類のバリアント） |
+| Input          | `src/components/dads-reference/Input.tsx`       | テキスト入力                |
+| Label          | `src/components/dads-reference/Label.tsx`       | フォームラベル              |
+| Select         | `src/components/dads-reference/Select.tsx`      | セレクトボックス            |
+| Checkbox       | `src/components/dads-reference/Checkbox.tsx`    | チェックボックス            |
+| Radio          | `src/components/dads-reference/Radio.tsx`       | ラジオボタン                |
+| ErrorText      | `src/components/dads-reference/ErrorText.tsx`   | エラーメッセージ            |
+| SupportText    | `src/components/dads-reference/SupportText.tsx` | サポートテキスト            |
+| Textarea       | `src/components/dads-reference/Textarea.tsx`    | テキストエリア              |
 
 ## 重要な注意事項
 
@@ -244,11 +236,11 @@ const FormField = () => {
 
 ## ブレークポイント
 
-| 名前 | サイズ | 用途 |
-|------|--------|------|
-| default | - | モバイル |
-| `desktop:` | 48em (768px) | デスクトップ |
-| `desktop-admin:` | 62em (992px) | 管理画面 |
+| 名前             | サイズ       | 用途         |
+| ---------------- | ------------ | ------------ |
+| default          | -            | モバイル     |
+| `desktop:`       | 48em (768px) | デスクトップ |
+| `desktop-admin:` | 62em (992px) | 管理画面     |
 
 ```tsx
 // レスポンシブの例
