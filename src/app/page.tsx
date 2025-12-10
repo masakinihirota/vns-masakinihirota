@@ -6,7 +6,6 @@ export default function Home() {
       <main className="">
         sampleへのLink
         <Link href="/sample">sample</Link>
-
       </main>
     </div>
   );

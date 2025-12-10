@@ -43,5 +43,3 @@ next-env.d.ts
 # supabase
 supabase/signing_key.json
 
-# サンプル
-sample
