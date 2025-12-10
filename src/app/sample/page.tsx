@@ -1,4 +1,4 @@
-import { ProfileListContainer } from "@/components/sample";
+import * as Sample from "./components";
 
 const profiles = [
   {
@@ -68,7 +68,7 @@ export default function SamplePage() {
           </p>
         </div>
 
-        <ProfileListContainer profiles={profiles} />
+        <Sample.ProfileListContainer profiles={profiles} />
       </main>
     </div>
   );
