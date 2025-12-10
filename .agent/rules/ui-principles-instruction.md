@@ -489,7 +489,6 @@ export default function CommunityPage() {
 
 - 主要なボタンは十分なサイズ（最小44x44px）
 - 頻繁に使うアクションは画面の端やコーナーに配置
-- モバイルではタップ領域を十分に確保
 
 ```tsx
 // ✅ Good: 十分なサイズのボタン
