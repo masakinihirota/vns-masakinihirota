@@ -38,6 +38,33 @@ trigger: always_on
 <button aria-disabled="true">送信できません</button>
 ```
 
+#### ARIA属性の必須化
+
+- **label と id の紐付け**: 全てのフォーム要素は `<label htmlFor="id">` で紐付けること
+- **aria-describedby**: エラーメッセージ、ヘルプテキストは `aria-describedby` で関連付けること
+- **aria-label**: アイコンのみのボタンや、視覚的ラベルがない要素には `aria-label` を必須とする
+- **role 属性**: セマンティックでない要素に意味を持たせる場合は `role` を使用すること（例: `role="article"`, `role="status"`）
+- **aria-live**: 動的に変更されるコンテンツには `aria-live="polite"` または `"assertive"` を使用すること
+
+#### スクリーンリーダー専用コンテンツ
+
+- **sr-only の使用**: 視覚的に隠すが、スクリーンリーダーには読み上げる要素には `className="sr-only"` を使用すること
+- **用途**: フォームラベル、補足説明、ナビゲーションのスキップリンクなど
+- **例**:
+  ```tsx
+  <label htmlFor="search" className="sr-only">
+    検索
+  </label>
+  <input id="search" type="text" placeholder="検索..." />
+  ```
+
+#### React Key Props の命名規則
+
+- **一意で安定した識別子**: 配列のレンダリング時、`key` には一意で安定した識別子を使用すること
+  - ✅ Good: ユニークID（`key={profile.id}`）
+  - ⚠️ 注意: 複合キー（``key={`${profile.name}-${index}`}``）はユニークIDがない場合のみ
+  - ❌ Bad: インデックスのみ（`key={index}`）は並び順が変わる場合に問題が発生
+
 ### 2. タイポグラフィ（Tailwind標準クラス）
 
 デスクトップPC向けの標準的なタイポグラフィ設定:
