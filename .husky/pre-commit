@@ -1,1 +1,6 @@
+# 整形
+pnpm lint:fix
+# write mode
+pnpm format:fix
+# Build
 pnpm run build

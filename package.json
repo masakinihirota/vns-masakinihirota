@@ -7,6 +7,11 @@
     "build": "next build",
     "start": "next start",
     "prepare": "husky",
+    "supabase:types:local": "supabase gen types typescript --local > src/types/types_db.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --check .",
+    "format:fix": "prettier --write .",
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
@@ -25,8 +30,11 @@
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.8",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-prettier": "^5.2.2",
     "husky": "^9.1.7",
     "jsdom": "^27.3.0",
+    "prettier": "^3.4.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
