@@ -14,6 +14,23 @@ const eslintConfig = defineConfig([
     },
     rules: {
       "prettier/prettier": "error",
+
+      // strict-rule準拠ルール（型情報不要なもののみ）
+      // II-3 let禁止、constのみ使用
+      "prefer-const": "error",
+      "no-var": "error",
+
+      // III-1 throw禁止
+      "no-throw-literal": "error",
+
+      // III-2 try/catch禁止（警告レベル）
+      "no-restricted-syntax": [
+        "warn",
+        {
+          selector: "TryStatement",
+          message: "try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）",
+        },
+      ],
     },
   },
   // Override default ignores of eslint-config-next.

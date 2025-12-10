@@ -7,17 +7,11 @@ import {
   filterProfilesByName,
   sortProfilesByName,
   getUniqueRoles,
+  type Profile,
 } from "./profile-list.logic";
 
-type Profile = {
-  name: string;
-  role: string;
-  bio: string;
-  avatarUrl?: string;
-};
-
 interface ProfileListContainerProps {
-  profiles: Profile[];
+  readonly profiles: readonly Profile[];
 }
 
 /**
@@ -31,7 +25,7 @@ export const ProfileListContainer = ({ profiles }: ProfileListContainerProps) =>
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   // ユニークな役割を取得
-  const uniqueRoles = useMemo(() => getUniqueRoles(profiles), [profiles]);
+  const uniqueRoles = useMemo(() => getUniqueRoles({ profiles }), [profiles]);
 
   // フィルタリングとソートを適用
   const filteredAndSortedProfiles = useMemo(() => {
@@ -39,16 +33,16 @@ export const ProfileListContainer = ({ profiles }: ProfileListContainerProps) =>
 
     // 名前でフィルタリング
     if (searchText) {
-      result = filterProfilesByName(result, searchText);
+      result = filterProfilesByName({ profiles: result, searchText });
     }
 
     // 役割でフィルタリング
     if (selectedRole) {
-      result = filterProfilesByRole(result, selectedRole);
+      result = filterProfilesByRole({ profiles: result, role: selectedRole });
     }
 
     // ソート
-    result = sortProfilesByName(result, sortOrder);
+    result = sortProfilesByName({ profiles: result, order: sortOrder });
 
     return result;
   }, [profiles, searchText, selectedRole, sortOrder]);

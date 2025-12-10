@@ -492,7 +492,7 @@ export default function CommunityPage() {
 
 ```tsx
 // ✅ Good: 十分なサイズのボタン
-<Button size="lg" className="w-full md:w-auto min-h-[44px]">
+<Button size="lg" className="w-full md:w-auto min-h-11">
   新規作成
 </Button>
 ```

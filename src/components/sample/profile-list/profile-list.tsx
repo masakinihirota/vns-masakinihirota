@@ -1,18 +1,33 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-interface ProfileListProps {
-  name: string;
-  role: string;
-  bio: string;
-  avatarUrl?: string;
+export interface ProfileListProps {
+  readonly name: string;
+  readonly role: string;
+  readonly bio: string;
+  readonly avatarUrl?: string;
 }
 
 /**
  * ユーザープロフィールを表示するリストコンポーネント
+ *
  * @param name - ユーザー名
  * @param role - 役割
  * @param bio - 自己紹介
  * @param avatarUrl - アバター画像のURL（オプション）
+ *
+ * @example
+ * ```tsx
+ * <ProfileList
+ *   name="山田太郎"
+ *   role="エンジニア"
+ *   bio="フルスタック開発者"
+ * />
+ * ```
+ *
+ * @remarks
+ * - アバター画像がない場合は名前のイニシャルを表示します
+ * - ホバー時に背景色が変わります
+ * - 最後の要素以外には下線が表示されます
  */
 export const ProfileList = ({ name, role, bio, avatarUrl }: ProfileListProps) => {
   const initials = name
