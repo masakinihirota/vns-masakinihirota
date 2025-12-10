@@ -1,3 +1,7 @@
+---
+trigger: always_on
+---
+
 # Decision Log Protocol (決定ログ運用ルール)
 
 このプロジェクトでは、開発スピードを維持しつつ仕様変更を管理するため、**「決定ログ (Decision Log)」運用**を採用しています。
