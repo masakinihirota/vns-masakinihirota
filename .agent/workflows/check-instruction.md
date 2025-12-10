@@ -6,8 +6,9 @@ description: 指示書に従っているかのチェック
 
 .db-antipattern-instructions.md
 decision-log-instruction.md
-japanese.md
+
 ui-dadsi-instruction.md
-ui-principles-instruction.md
 ui-shadcn-instruction.md
+
+ui-principles-instruction.md
 ux-instruction.md
