@@ -1,4 +1,4 @@
-import * as Sample from "./components";
+import * as Sample from "../../components/profile-list";
 
 const profiles = [
   {
