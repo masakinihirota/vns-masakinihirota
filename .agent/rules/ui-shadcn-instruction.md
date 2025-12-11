@@ -2,54 +2,213 @@
 trigger: always_on
 ---
 
-# 適用優先順位（UI指示書の併用ルール）
+# Shadcn/UI プロンプトテンプレート集
 
-- 最優先: `ui-dadsi-instruction.md`（DADS実装指示）で定義されたデザイントークン・アクセシビリティ実装（`aria-disabled`、フォーカスリング、コントラスト、タイポ）。
-- 本書: Shadcn/UIの利用を前提とした**プロンプト補助**です。実装規約ではないため、DADS/HIDと矛盾する場合は必ずDADS→HIDを優先してください。
+**要約**: AIに効果的なUI生成を依頼するためのKERNEL準拠プロンプトテンプレート
 
-この順序で解釈し、Shadcnの生成サンプルを適用する際は必ずDADSトークンとアクセシビリティ要件に置き換えてから利用してください。
+## 適用優先順位
 
-しかし、現代のWebデザインのトレンドと、AIに適切な出力をさせるための**具体的なコンポーネント**や**コンテキスト**が不足しているため、より**洗練されたプロンプト**に改善できます。
+1. **最優先**: [ui-dadsi-instruction.md](ui-dadsi-instruction.md) - デザイントークン、アクセシビリティ実装
+2. **本書**: プロンプト補助のみ（実装規約ではない）
 
----
-
-## 💡 より現代的で効果的なプロンプトへの改善
-
-現在のプロンプトをベースに、より具体的でAIが出力を出しやすいよう、**「目的」「対象」「技術/ビジュアル」**の要素を追加して改善することをお勧めします。
-
-### 1. 改善案（コンポーネント指定型）
-
-特定の画面や要素（フォーム、ナビゲーションなど）を改善する場合に最適です。
-
-> 💬 **「現代のウェブ表示」に沿った指示をするためのプロンプトの例:**
->
-> 以下のWebアプリケーションの**ログイン画面**（または**グローバルナビゲーションバー**など具体的なコンポーネント）を、**プロフェッショナルでモダンなミニマリズム**の基準で改善してください。
->
-> **【デザイン基準】**
->
-> - **レスポンシブデザイン**: デスクトップ、タブレット各ブレイクポイントでのレイアウトを提示すること。
-> - **アクセシビリティ**: WCAG 2.1 AAレベルに準拠し、特に**テキストと背景のコントラスト比は4.5:1以上**を厳守すること。
-> - **モダンなミニマリズム**: **余白（ホワイトスペース）**を大胆に使用し、**サンセリフ体**のフォント（例: Inter、Noto Sans JP）を採用し、**フラットデザイン**または**ニューモーフィズムの控えめな活用**を提案すること。
-> - **色**: ブランドカラー（例: `#007bff`）を一つ指定し、その他の色は**ニュートラルカラー（白、黒、グレー）**を基調とすること。
->
-> **【具体的な改善要求】**
->
-> - **視線誘導**: ユーザーが最も重要なアクション（例: ログインボタン）に迷わず到達できるような設計にすること。
-> - **入力補助**: エラーメッセージやプレースホルダーテキストの表示方法を具体的に示すこと。
-> - **出力形式**: 改善後のUIの**ワイヤーフレーム（またはHTML/CSSの骨子コード）**と、デザインの**コンセプト（なぜそのデザインにしたかの説明）**を出力してください。
+⚠️ **重要**: 本書のテンプレートを使用する際は、必ずDADS指示書の制約（`aria-disabled`、`ring-yellow-400`、Tailwind標準クラスのみ）に置き換えてください。
 
 ---
 
-### 2. なぜこの指示が良いのか？（現代のWebデザインのポイント）
+## テンプレート1: 新規コンポーネント生成
 
-現代のWebデザインに沿ったプロンプトにするためには、単に「モダン」と言うだけでなく、以下の要素を指示することが重要です。
+```
+Task: [ログインフォーム]を実装
+Input: ユーザー名、パスワード、ログインボタン
+Constraints:
+  - Shadcn/UI Form + Button コンポーネント使用
+  - DADS準拠（ui-dadsi-instruction.md参照）
+  - aria-disabled必須（disabled属性禁止）
+  - フォーカスリング: ring-yellow-400
+  - Tailwind標準クラスのみ（カスタムCSS変数禁止）
+  - バリデーション: Zod + React Hook Form
+Output:
+  - TSXファイル（型安全）
+  - ユニットテスト（Vitest）
+  - アクセシビリティ検証済み
+```
 
-| 要素                         | 現代のWebデザインでの重要性                  | プロンプトでの指示方法                                                           |
-| :--------------------------- | :------------------------------------------- | :------------------------------------------------------------------------------- |
-| **余白（ホワイトスペース）** | 情報のグループ化と視覚的な負荷軽減に不可欠。 | **「余白を大胆に使用し」**と具体的に指定する。                                   |
-| **タイポグラフィ**           | 可読性とブランドイメージを決定づける。       | **「サンセリフ体」**の使用を推奨し、具体的なフォント名を例示する。               |
-| **カラーパレット**           | 統一感とプロフェッショナル感を出す。         | **「ニュートラルカラーを基調とする」**など、色の数を制限する指示を入れる。       |
-| **視線誘導**                 | ユーザー体験（UX）の核心。                   | **「最も重要なアクションに迷わず到達できる」**など、具体的なUXの目標を盛り込む。 |
-| **アクセシビリティ**         | 法的・倫理的な最低限の基準。                 | **WCAG 2.1 AAレベル**という専門用語を含め、遵守すべき基準を明確にする。          |
+**生成例**:
 
-この改善プロンプトを使用することで、AIは単なる「見た目の改善」ではなく、**「ユーザビリティ」「アクセシビリティ」「美しさ」**を兼ね備えた、より**実用的なUI**を提案してくれるでしょう。
+```tsx
+// ✅ DADS準拠のログインフォーム
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+
+export function LoginForm() {
+  const {
+    register,
+    formState: { isValid },
+  } = useForm();
+
+  return (
+    <form className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <label htmlFor="username" className="text-sm font-semibold text-gray-900">
+          ユーザー名
+          <span className="ml-1 text-red-600" aria-label="必須">
+            *
+          </span>
+        </label>
+        <input
+          id="username"
+          {...register("username", { required: true })}
+          aria-required="true"
+          className="rounded-md border border-gray-300 px-4 py-3 focus:outline-none focus:ring-4 focus:ring-yellow-400"
+        />
+      </div>
+
+      <Button
+        type="submit"
+        aria-disabled={!isValid}
+        onClick={(e) => !isValid && e.preventDefault()}
+        className="bg-blue-600 px-8 py-3 text-white hover:bg-blue-700 focus:ring-4 focus:ring-yellow-400"
+      >
+        ログイン
+      </Button>
+    </form>
+  );
+}
+```
+
+---
+
+## テンプレート2: 既存UIの改善
+
+```
+Task: [グローバルナビゲーション]をモダンなデザインに改善
+Input: 現在のコード [ファイルパス]
+Constraints:
+  - デスクトップ優先（lg:1024px基準）
+  - 余白を大胆に使用（py-16, gap-6）
+  - Noto Sans JP（font-sans）
+  - コントラスト比4.5:1以上
+  - キーボードナビゲーション対応
+Scope: ナビゲーションバーのみ（フッターは除外）
+Output:
+  - 改善後のTSXコード
+  - Before/After の比較
+  - アクセシビリティチェックリスト
+```
+
+---
+
+## テンプレート3: レスポンシブ対応
+
+```
+Task: [カードグリッド]にレスポンシブ対応を追加
+Input: デスクトップ版コード（lg:基準）
+Constraints:
+  - ブレイクポイント: sm(640), md(768), lg(1024)
+  - デスクトップ→タブレット→モバイルの順で調整
+  - grid-cols: lg:3, md:2, sm:1
+  - タッチターゲット: 最小44px×44px
+Output: レスポンシブ対応済みTSX
+```
+
+**生成例**:
+
+```tsx
+// ✅ レスポンシブカードグリッド
+<div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+  {items.map((item) => (
+    <article key={item.id} className="rounded-lg border border-gray-200 bg-white p-6">
+      <h3 className="text-xl font-bold">{item.title}</h3>
+    </article>
+  ))}
+</div>
+```
+
+---
+
+## テンプレート4: エラー状態の実装
+
+```
+Task: [フォーム入力]にエラー状態を追加
+Input: 基本的な入力フィールド
+Constraints:
+  - エラー時: aria-invalid="true" + role="alert"
+  - エラーメッセージ: id付与 + aria-describedby
+  - エラーカラー: bg-red-50 text-red-700 border-red-200
+  - コントラスト比4.5:1以上
+Output: エラーハンドリング実装済みTSX
+```
+
+**生成例**:
+
+```tsx
+// ✅ エラー状態対応の入力フィールド
+<div className="flex flex-col gap-2">
+  <label htmlFor="email" className="text-sm font-semibold text-gray-900">
+    メールアドレス
+  </label>
+  <input
+    id="email"
+    type="email"
+    aria-invalid={hasError}
+    aria-describedby="email-error"
+    className={cn(
+      "rounded-md border px-4 py-3 focus:outline-none focus:ring-4 focus:ring-yellow-400",
+      hasError ? "border-red-200 bg-red-50" : "border-gray-300",
+    )}
+  />
+  {hasError && (
+    <p id="email-error" className="text-sm text-red-600" role="alert">
+      有効なメールアドレスを入力してください
+    </p>
+  )}
+</div>
+```
+
+---
+
+## KERNEL準拠の指示方法
+
+### ✅ Good（具体的・検証可能）
+
+```
+Task: プロフィールカードを実装
+Constraints:
+  - Shadcn/UI Card使用
+  - WCAG AA準拠（axe DevToolsでエラー0件）
+  - React Testing Library（カバレッジ80%以上）
+Output: TSX + テスト
+```
+
+### ❌ Bad（曖昧・検証不可）
+
+```
+モダンで使いやすいプロフィールカードを作って
+```
+
+---
+
+## よくある間違いと修正例
+
+| ❌ 間違い                     | ✅ 修正                 | 理由                 |
+| ----------------------------- | ----------------------- | -------------------- |
+| `disabled`                    | `aria-disabled="true"`  | DADS必須要件         |
+| `focus:ring-blue-600`         | `focus:ring-yellow-400` | フォーカスリング統一 |
+| `bg-[var(--primary)]`         | `bg-blue-600`           | カスタム変数禁止     |
+| `text-gray-400` on `bg-white` | `text-gray-900`         | コントラスト不足     |
+| `key={index}`                 | `key={item.id}`         | 一意なキー必須       |
+
+---
+
+## 検証コマンド
+
+```bash
+# Shadcn生成コードのDADS適合性チェック
+grep -r "disabled=" src/components/ui/  # 0件であること
+grep -r "var(--" src/                    # 0件であること
+grep -r "ring-blue" src/                 # 0件であること（ring-yellow-400に統一）
+```
+
+---
+
+**最終確認**: このテンプレートで生成したコードは、必ず[ui-dadsi-instruction.md](ui-dadsi-instruction.md)の「必須検証項目」でチェックしてください。

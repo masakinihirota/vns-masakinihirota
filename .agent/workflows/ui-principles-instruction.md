@@ -4,8 +4,95 @@ trigger: model_decision
 
 # ヒューマンインターフェースデザイン（HID）指針 UI実装指示書
 
-このプロジェクトのUI設計・実装では、以下の24のヒューマンインターフェースデザイン指針を厳守してください。
-Next.js App Router + Shadcn/UI + Tailwind CSS を使用し、静的なUIページを**モックデータ**で構築します。
+**要約**: Next.js/Shadcn/UIでHID 24指針を3層優先度（必須5項目/推奨10項目/任意9項目）で段階的に適用
+
+## 実行フレームワーク（KERNEL準拠）
+
+### 新規画面実装時
+
+```
+Input:
+  - 画面要件定義（Figmaデザイン、ユーザーストーリー）
+  - 対象ユーザーセグメント（新規/既存/管理者）
+  - 対象デバイス（デスクトップ優先）
+
+Task: HID 24指針に基づくUI実装
+
+Constraints:
+  - Tier 1必須5項目を100%遵守（シンプル、一貫性、コンストレイント、認知負荷、フィッツの法則）
+  - Tier 2推奨10項目を主要機能で適用
+  - DADS準拠（ui-dadsi-instruction.md: aria-disabled、ring-yellow-400、Tailwind標準クラス）
+  - モックデータはSupabaseスキーマ互換形式（src/lib/mock-data/）
+  - レスポンス時間0.4秒以内（Lighthouseスコア90+）
+
+Output:
+  - TSXコンポーネント（型安全、テスト可能）
+  - Storybookストーリー
+  - HID Tier 1チェックリスト（通過証明）
+```
+
+### 既存画面改善時
+
+```
+Input: 改善対象画面、現在の問題点（アクセシビリティ、パフォーマンス）
+Task: Tier 1違反の解消 → Tier 2の段階的適用
+Constraints: リグレッション防止（既存テスト100%維持）
+Output: Before/After比較レポート、Lighthouseスコア改善証明
+```
+
+---
+
+## 優先度階層（3層構造）
+
+### 🔴 Tier 1: 必須（Critical - 全画面で遵守）
+
+**対象**: 新規実装、既存改修、全コードレビュー
+
+| #          | 指針                 | 検証方法                                                         | 理由             | 違反例                          |
+| ---------- | -------------------- | ---------------------------------------------------------------- | ---------------- | ------------------------------- |
+| **HID-1**  | **シンプルにする**   | 画面要素数≤9個                                                   | 認知負荷軽減     | 1画面に10個以上のボタン         |
+| **HID-6**  | **一貫性**           | プライマリ=`variant="default"`<br>破壊的=`variant="destructive"` | 学習コスト削減   | 削除ボタンが`variant="default"` |
+| **HID-11** | **コンストレイント** | 全フォームにバリデーション                                       | エラー防止       | `required`なし                  |
+| **HID-16** | **フィッツの法則**   | プライマリボタン最小44×44px                                      | タップ成功率向上 | 小さすぎるボタン                |
+| **HID-13** | **記憶に頼らない**   | ヘルプテキスト必須                                               | 完了率向上       | 説明なしのフォーム              |
+
+**自動検証コマンド**:
+
+```bash
+# Tier 1チェックスクリプト
+grep -rn 'variant="default"' src/app/ | wc -l  # 一貫性
+grep -rn 'required' src/app/ | wc -l           # コンストレイント
+npm run lighthouse -- --only-categories=accessibility,performance
+```
+
+---
+
+### 🟡 Tier 2: 推奨（High - 主要機能で適用）
+
+**対象**: コア機能、課金フロー、オンボーディング、ダッシュボード
+
+| #      | 指針                   | 適用シーン                   | 実装例                       |
+| ------ | ---------------------- | ---------------------------- | ---------------------------- |
+| HID-2  | 簡単にする             | タスク完了≤3クリック         | ワンクリック作成ボタン       |
+| HID-3  | メンタルモデル         | 馴染みのあるパターン         | タブ、ハンバーガーメニュー   |
+| HID-4  | シグニファイア         | クリック可能要素を明確に     | `<Button>`コンポーネント必須 |
+| HID-5  | マッピング             | 編集ボタンは対象の近く       | カード内にアクションボタン   |
+| HID-7  | ユーザー主導権         | 自動リダイレクト回避         | モーダルのEscキー対応        |
+| HID-10 | 視覚ゲシュタルト       | グループ化（gap-2 vs gap-6） | Cardでセクション分離         |
+| HID-12 | ユーザーの言葉         | 技術用語回避                 | "Submit"→"送信する"          |
+| HID-14 | プリコンピュテーション | スマートデフォルト           | `defaultValue="public"`      |
+| HID-17 | ヒックの法則           | 選択肢5〜7個                 | サブメニュー化               |
+| HID-20 | メジャータスク最適化   | 主要機能を前面に             | ダッシュボード配置           |
+
+---
+
+### 🟢 Tier 3: 任意（Medium - 余裕があれば）
+
+**対象**: 詳細設定画面、管理者機能、エンゲージメント向上施策
+
+（残り9項目: HID-8直接操作、HID-9モードレス、HID-15エラー回避、HID-18複雑性保存、HID-19タスクコヒーレンス、HID-21パースエージョン、HID-22ショートカット、HID-23オブジェクトベース、HID-24ビュー表象）
+
+---
 
 ## 適用優先順位（UI指示書の併用ルール）
 
@@ -21,6 +108,273 @@ DADSのスタイル要件を満たした上で、本書の指針で情報設計�
 - **UIライブラリ**: Shadcn/UI (new-york スタイル)
 - **スタイリング**: Tailwind CSS v4
 - **データ**: モックデータ（Supabase接続前提のスキーマ互換形式）
+
+---
+
+## 🎯 シーン別クイックガイド（実装パターン集）
+
+### 🆕 新規ユーザーオンボーディング
+
+**適用原則**: HID-1シンプル、HID-13記憶に頼らない、HID-14プリコンピュテーション
+
+**実装例**:
+
+```tsx
+// ✅ Tier 1準拠: 1画面1質問、ヘルプテキスト、スマートデフォルト
+export default function OnboardingStep1() {
+  return (
+    <Card className="mx-auto max-w-md">
+      <CardHeader>
+        <CardTitle>プロフィール設定 (1/3)</CardTitle>
+        <CardDescription>あなたの表示名を教えてください</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-2">
+          <Label htmlFor="displayName">
+            表示名<span className="text-red-600">*</span>
+          </Label>
+          <Input id="displayName" required placeholder="例: 田中太郎" maxLength={50} />
+          <p className="text-sm text-muted-foreground">
+            他のユーザーに表示される名前です。後から変更できます。
+          </p>
+        </div>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Button variant="outline" disabled aria-disabled="true">
+          戻る
+        </Button>
+        <Button type="submit">次へ</Button>
+      </CardFooter>
+    </Card>
+  );
+}
+```
+
+**チェックリスト**:
+
+- [x] HID-1: 画面要素数≤9個（タイトル、説明、ラベル、入力、ヘルプ、ボタン×2 = 7個）
+- [x] HID-6: 一貫性（次へ=`variant="default"`、戻る=`variant="outline"`）
+- [x] HID-11: コンストレイント（`required`、`maxLength`）
+- [x] HID-13: 記憶に頼らない（ヘルプテキスト、placeholder）
+
+---
+
+### 💰 課金フロー（料金プラン選択）
+
+**適用原則**: HID-1シンプル、HID-6一貫性、HID-14プリコンピュテーション
+
+**実装例**:
+
+```tsx
+// ✅ Tier 1準拠: 3プラン表示、推奨プランをデフォルト選択
+export default function PricingPage() {
+  const [selectedPlan, setSelectedPlan] = useState<"basic" | "standard" | "premium">("standard");
+
+  return (
+    <div className="grid gap-6 md:grid-cols-3">
+      <PricingCard
+        plan="premium"
+        price="¥2,980/月"
+        features={["全機能", "優先サポート", "API無制限"]}
+        badge="人気"
+        isSelected={selectedPlan === "premium"}
+        onClick={() => setSelectedPlan("premium")}
+      />
+      <PricingCard
+        plan="standard"
+        price="¥1,480/月"
+        features={["基本機能", "標準サポート", "API 10,000回/月"]}
+        badge="推奨"
+        isSelected={selectedPlan === "standard"}
+        onClick={() => setSelectedPlan("standard")}
+      />
+      <PricingCard
+        plan="basic"
+        price="¥480/月"
+        features={["限定機能", "コミュニティサポート", "API 1,000回/月"]}
+        isSelected={selectedPlan === "basic"}
+        onClick={() => setSelectedPlan("basic")}
+      />
+    </div>
+  );
+}
+```
+
+**チェックリスト**:
+
+- [x] HID-1: シンプル（3プランのみ）
+- [x] HID-6: 一貫性（全カード同じレイアウト）
+- [x] HID-14: プリコンピュテーション（standardをデフォルト選択）
+- [x] HID-16: フィッツの法則（カード全体がクリック可能）
+
+---
+
+### 📝 データ入力フォーム（コミュニティ作成）
+
+**適用原則**: HID-1シンプル、HID-11コンストレイント、HID-13記憶に頼らない
+
+**実装例**:
+
+```tsx
+// ✅ Tier 1準拠: 必須項目のみ、バリデーション、ヘルプテキスト
+export default function CreateCommunityForm() {
+  return (
+    <form className="space-y-6">
+      <div className="space-y-2">
+        <Label htmlFor="name">
+          コミュニティ名<span className="text-red-600">*</span>
+        </Label>
+        <Input id="name" required minLength={3} maxLength={50} placeholder="例: Next.js勉強会" />
+        <p className="text-sm text-muted-foreground">3〜50文字で入力してください</p>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="description">説明（任意）</Label>
+        <Textarea id="description" placeholder="コミュニティの目的や活動内容" maxLength={500} />
+        <p className="text-sm text-muted-foreground">最大500文字</p>
+      </div>
+
+      <div className="space-y-2">
+        <Label>公開設定</Label>
+        <Select defaultValue="public">
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="public">公開（推奨）</SelectItem>
+            <SelectItem value="members">メンバーのみ</SelectItem>
+            <SelectItem value="private">非公開</SelectItem>
+          </SelectContent>
+        </Select>
+        <p className="text-sm text-muted-foreground">公開設定は後から変更できます</p>
+      </div>
+
+      <div className="flex justify-end gap-2">
+        <Button type="button" variant="outline">
+          キャンセル
+        </Button>
+        <Button type="submit">作成</Button>
+      </div>
+    </form>
+  );
+}
+```
+
+**チェックリスト**:
+
+- [x] HID-1: シンプル（必須項目は名前のみ）
+- [x] HID-6: 一貫性（作成=`variant="default"`、キャンセル=`variant="outline"`）
+- [x] HID-11: コンストレイント（`required`, `minLength`, `maxLength`）
+- [x] HID-13: 記憶に頼らない（各フィールドにヘルプテキスト）
+- [x] HID-14: プリコンピュテーション（公開設定のデフォルト）
+
+---
+
+### 🗑️ 破壊的アクション（削除確認）
+
+**適用原則**: HID-6一貫性、HID-11コンストレイント
+
+**実装例**:
+
+```tsx
+// ✅ Tier 1準拠: 破壊的アクションは必ず確認ダイアログ
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button variant="destructive" size="sm">
+      <Trash2 className="mr-2 h-4 w-4" />
+      削除
+    </Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>コミュニティを削除しますか?</AlertDialogTitle>
+      <AlertDialogDescription>
+        この操作は取り消せません。すべてのデータが完全に削除されます。
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>キャンセル</AlertDialogCancel>
+      <AlertDialogAction
+        onClick={handleDelete}
+        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+      >
+        削除する
+      </AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
+
+**チェックリスト**:
+
+- [x] HID-6: 一貫性（削除=`variant="destructive"`固定）
+- [x] HID-11: コンストレイント（確認ダイアログ必須）
+- [x] HID-12: ユーザーの言葉（"Delete"ではなく"削除"）
+
+---
+
+## 自動検証ツール
+
+### Tier 1チェックスクリプト
+
+```bash
+#!/bin/bash
+# scripts/hid-tier1-check.sh
+
+echo "=== HID Tier 1 必須項目チェック ==="
+
+# HID-6: 一貫性（ボタンvariant）
+echo "\n[HID-6] ボタンスタイル一貫性チェック..."
+grep -rn 'variant="default"' src/app/ | wc -l
+if grep -rn 'className=".*bg-blue' src/app/; then
+  echo "❌ カスタムボタン色検出（DADS違反）"
+else
+  echo "✅ Tailwind標準クラスのみ使用"
+fi
+
+# HID-11: コンストレイント（フォームバリデーション）
+echo "\n[HID-11] フォームバリデーションチェック..."
+INPUT_COUNT=$(grep -rn '<Input' src/app/ | wc -l)
+REQUIRED_COUNT=$(grep -rn 'required' src/app/ | wc -l)
+echo "Input要素: $INPUT_COUNT, required属性: $REQUIRED_COUNT"
+
+# HID-16: フィッツの法則（ボタンサイズ）
+echo "\n[HID-16] プライマリボタンサイズチェック..."
+if grep -rn 'size="sm".*variant="default"' src/app/; then
+  echo "⚠️  プライマリボタンに size=\"sm\" 使用"
+fi
+
+# Lighthouse実行
+echo "\n[Performance] Lighthouseスコア..."
+npm run lighthouse -- --only-categories=accessibility,performance
+
+echo "\n=== Tier 1チェック完了 ==="
+```
+
+### Storybook統合
+
+```typescript
+// .storybook/hid-checker.ts
+export function checkHIDTier1Compliance(story: any) {
+  const violations: string[] = [];
+
+  // HID-1: シンプルさ（要素数チェック）
+  const elementCount = story.querySelectorAll("button, input, select").length;
+  if (elementCount > 9) {
+    violations.push(`HID-1違反: 画面要素数${elementCount}個（9個以下推奨）`);
+  }
+
+  // HID-6: 一貫性（破壊的アクションチェック）
+  const deleteButtons = story.querySelectorAll('button:contains("削除")');
+  deleteButtons.forEach((btn: HTMLButtonElement) => {
+    if (!btn.className.includes("destructive")) {
+      violations.push('HID-6違反: 削除ボタンが variant="destructive" ではない');
+    }
+  });
+
+  return violations;
+}
+```
 
 ---
 
@@ -585,38 +939,60 @@ export default function CommunityPage() {
 
 ## 📋 チェックリスト（UIレビュー時）
 
-新しいUIコンポーネントやページを作成したら、以下をチェックしてください：
+### 🔴 Tier 1: 必須（全画面で確認）
 
-### 基本原則
+新しいUIコンポーネントやページを作成したら、**必ず**以下をチェック：
 
-- [ ] 画面の要素数は最小限か（シンプル）
-- [ ] タスク完了までのステップ数は適切か（簡単）
-- [ ] 馴染みのあるUIパターンを使用しているか（メンタルモデル）
-- [ ] クリック可能な要素は明確か（シグニファイア）
-- [ ] 操作と結果の対応は明確か（マッピング）
-- [ ] スタイルは一貫しているか（一貫性）
+- [ ] **HID-1 シンプル**: 画面要素数≤9個（ボタン、入力、ラベル等を数える）
+- [ ] **HID-6 一貫性**: プライマリ=`variant="default"`、破壊的=`variant="destructive"`、キャンセル=`variant="outline"`
+- [ ] **HID-11 コンストレイント**: 全入力に`required`/`minLength`/`maxLength`等のバリデーション
+- [ ] **HID-13 記憶に頼らない**: 全フォームフィールドにヘルプテキストまたはplaceholder
+- [ ] **HID-16 フィッツの法則**: プライマリボタン最小44×44px（`size="lg"` or `min-h-11`）
 
-### インタラクション
+**不合格時の対応**: Tier 1違反は**実装前に必ず修正**。コードレビューでブロック対象。
 
-- [ ] ユーザーが自由に操作できるか（主導権）
-- [ ] 直接操作の感覚があるか
-- [ ] 不要なモードはないか
-- [ ] グルーピングは適切か（ゲシュタルト）
-- [ ] 誤操作を防ぐ制約があるか
+---
 
-### 情報提示
+### 🟡 Tier 2: 推奨（主要機能で確認）
 
-- [ ] 専門用語を使っていないか
-- [ ] 必要な情報はその場にあるか
-- [ ] デフォルト値は適切か
-- [ ] エラー回避の工夫はあるか
+**対象**: ダッシュボード、課金フロー、オンボーディング、コア機能
 
-### 効率性
+- [ ] **HID-2 簡単**: タスク完了までのクリック数≤3回
+- [ ] **HID-3 メンタルモデル**: 馴染みのあるUIパターン（タブ、ドロップダウン等）
+- [ ] **HID-4 シグニファイア**: クリック可能要素が明確（`<Button>`コンポーネント使用）
+- [ ] **HID-5 マッピング**: 編集ボタンは編集対象の直近に配置
+- [ ] **HID-7 ユーザー主導権**: 自動リダイレクト回避、モーダルのEscキー対応
+- [ ] **HID-10 ゲシュタルト**: 関連要素は近く（gap-2）、グループ間は離す（gap-6）
+- [ ] **HID-12 ユーザーの言葉**: 「Submit」→「送信」、技術用語回避
+- [ ] **HID-14 プリコンピュテーション**: スマートデフォルト値設定
+- [ ] **HID-17 ヒックの法則**: 選択肢5〜7個（多い場合はカテゴリ分け）
+- [ ] **HID-20 メジャータスク最適化**: 主要機能をヘッダー/サイドバーに配置
 
-- [ ] ボタンサイズは十分か
-- [ ] 選択肢の数は適切か
-- [ ] 主要タスクが前面にあるか
-- [ ] ショートカットはあるか
+---
+
+### 🟢 Tier 3: 任意（余裕があれば）
+
+**対象**: 詳細設定、管理者機能、エンゲージメント向上施策
+
+- [ ] 直接操作の感覚（インライン編集、ドラッグ＆ドロップ）
+- [ ] モードレス設計（編集モード/表示モードの分離回避）
+- [ ] キーボードショートカット（`Ctrl+K`検索等）
+- [ ] オブジェクトベース設計（CRUD操作の一貫性）
+
+---
+
+### 自動チェック実行
+
+```bash
+# Tier 1自動検証
+bash scripts/hid-tier1-check.sh
+
+# Lighthouse実行
+npm run lighthouse
+
+# Storybook visual regression test
+npm run test-storybook
+```
 
 ---
 

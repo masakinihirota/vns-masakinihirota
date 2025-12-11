@@ -4,6 +4,157 @@ trigger: model_decision
 
 # AI向け指示書：Next.js/SupabaseプロダクトにおけるUX心理学的デザイン要件
 
+**要約**: UX心理学原则25個を3層優先度（必須5項目/推奨10項目/任意10項目）でシーン別に適用
+
+## 実行フレームワーク（KERNEL準拠）
+
+### 新規機能追加時
+
+```
+Input:
+  - 機能要件定義
+  - ターゲットKPI（離脱率10%削減、コンバージョン率20%向上等）
+  - ユーザーセグメント
+
+Task: UX心理学原則を活用したエンゲージメント最大化
+
+Constraints:
+  - Tier 1必須5項目を100%適用（ドハティ闾値、認知負荷、親近性バイアス、美的ユーザビリティ、ツァイガルニク効果）
+  - Tier 2推奨10項目をコア機能で適用
+  - HID 24指針（ui-principles-instruction.md）と並行適用
+  - A/Bテストで効果測定必須
+
+Output:
+  - 実装コード（TSXコンポーネント）
+  - A/Bテスト設定（Vercel Edge Config等）
+  - 成果測定ダッシュボード（Supabase Analytics）
+```
+
+### 既存画面最適化時
+
+```
+Input: 現在のKPIデータ、離脱ポイント分析
+Task: ボトルネック解消のためのUX原則適用
+Constraints: 現状のKPIを下回らせない（リグレッション防止）
+Output: Before/After KPI比較レポート、統計的有意性検証
+```
+
+---
+
+## 優先度階層（3層構造）
+
+### 🔴 Tier 1: 必須（Critical - 全画面で適用）
+
+**対象**: 新規実装、主要機能、全画面
+
+| #        | 原則                   | 実装要件                                              | 根拠データ                   | 検証方法                   |
+| -------- | ---------------------- | ----------------------------------------------------- | ---------------------------- | -------------------------- |
+| **UX-1** | **ドハティ闾値**       | Supabase API応答0.4秒以内<br>超える場合スケルトン表示 | 0.4秒を超えると離脱率15%増加 | Lighthouse Performance 90+ |
+| **UX-2** | **認知負荷**           | フォーム項目≤7個/画面<br>超える場合はステップ分割     | ミラーのマジカルナンバー7±2  | 項目数カウント             |
+| **UX-3** | **親近性バイアス**     | サインインボタンは右上<br>ロゴは左上（慣習の配置）    | 慣習的UIで学習コスト削減     | ユーザビリティテスト       |
+| **UX-5** | **美的ユーザビリティ** | 高品質ビジュアル<br>DADSデザインシステム準拠          | 美しいUIは軽微な不具合を許容 | デザインシステムスコア80+  |
+| **UX-6** | **ツァイガルニク効果** | オンボーディングチェックリスト<br>一部自動完了        | Blinkistで課金率27%向上      | 完了率計測                 |
+
+**実装例：ドハティ闾値（UX-1）**:
+
+```tsx
+// ✅ 0.4秒以内の応答がAIかはスケルトン表示
+export default function ProfileList() {
+  const { data: profiles, isLoading } = useQuery({
+    queryKey: ["profiles"],
+    queryFn: fetchProfiles,
+    staleTime: 30000, // 30秒キャッシュ
+  });
+
+  if (isLoading) {
+    return (
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <Card key={i}>
+            <CardHeader>
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </CardHeader>
+          </Card>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      {profiles?.map((profile) => (
+        <ProfileCard key={profile.id} profile={profile} />
+      ))}
+    </div>
+  );
+}
+```
+
+---
+
+### 🟡 Tier 2: 推奨（High - コア機能で適用）
+
+**対象**: ダッシュボード、課金フロー、オンボーディング
+
+| #     | 原則                 | 実装要件                     | 根拠データ                  |
+| ----- | -------------------- | ---------------------------- | --------------------------- |
+| UX-7  | 目標勾配効果         | プログレスバーで進捗率表示   | 目標に近づくと努力が加速    |
+| UX-8  | ゲーミフィケーション | XP・ストリークシステム       | 達成感と競争心刺激          |
+| UX-9  | 変動型報酬           | フィード、通知の予測不能性   | ドーパミン放出、習慣化      |
+| UX-10 | 授かり効果           | 登録直後にパーソナライズ提供 | 所有感で価値過大評価        |
+| UX-11 | おとり効果           | 3プラン表示（中間がデコイ）  | 特定プランを魅力的に見せる  |
+| UX-12 | アンカー効果         | 割引前価格を先に表示         | 参照点として利用            |
+| UX-13 | デフォルト効果       | 推奨プランをデフォルト選択   | 変更の手間回避              |
+| UX-14 | 希少性効果           | 期間限定オファー表示         | 損失回避で購入意欲向上      |
+| UX-15 | 好奇心ギャップ       | 情報の欠如で課金誘導         | ギャップを埋める行動促進    |
+| UX-16 | ピーク・エンドの法則 | タスク完了時にアニメーション | 最高/終わりの瞬間が評価決定 |
+
+**実装例：おとり効果（UX-11）**:
+
+```tsx
+// ✅ 3プラン表示でStandardを魅力的に見せる
+export default function PricingPage() {
+  return (
+    <div className="grid gap-6 md:grid-cols-3">
+      {/* 高額プラン（アンカー） */}
+      <PricingCard
+        plan="Premium"
+        price="¥2,980/月"
+        originalPrice="¥4,980/月"  {/* アンカー効果 */}
+        features={['全機能', '優先サポート']}
+      />
+
+      {/* 中間プラン（デコイ） */}
+      <PricingCard
+        plan="Standard"
+        price="¥1,480/月"
+        features={['基本機能', '標準サポート']}
+        badge="推奨"  {/* デフォルト効果 */}
+        isHighlighted
+      />
+
+      {/* 低額プラン */}
+      <PricingCard
+        plan="Basic"
+        price="¥480/月"
+        features={['限定機能']}
+      />
+    </div>
+  );
+}
+```
+
+---
+
+### 🟢 Tier 3: 任意（Medium - 余裕があれば）
+
+**対象**: エンゲージメント向上施策、詳細設定
+
+（残り10項目: UX-4スキューモーフィズム、UX-17ユーザー歓喜効果、UX-18労働の錠覚、UX-19段階的開示、UX-20反応型オンボーディング、UX-21社会的証明、UX-22フレーミング効果、UX-23確証バイアス回避、UX-24共感ギャップ、UX-25調査バイアス）
+
+---
+
 ## 目的
 
 Next.jsとSupabaseで構成されるデジタルプロダクトの設計・改善において、提供されたUX心理学の知見を最大限に活用し、ユーザーの定着、エンゲージメント、およびコンバージョン率を最大化することを目指します。
@@ -65,13 +216,261 @@ UI/UX設計、コンポーネント実装の要件定義、およびグロース
 | **反応型オンボーディング (Reactive Onboarding)** | ユーザーが特定の機能を初めて使おうとした時など、**ニーズが発生した文脈に合わせ**て関連情報やチュートリアル（例：ツールチップ）を提供すること,                                                                                     | ,                  |
 | **社会的証明 (Social Proof)**                    | プロダクトの信頼性を高めるため、B2Bサービスであれば有名顧客のロゴ、コンシューマーサービスであればユーザーレビューや評価など、**他者の意見や行動を示す情報**を目立つように表示すること,                                            | ,                  |
 
-### V. 開発およびデータ戦略に関する指示
+### V. 開発およびデータ戦略に関する指示（Tier 3任意）
 
 開発プロセスにおける認知バイアスを回避し、客観的なデータに基づいた改善を徹底すること。
 
-| UX原則                               | Next.js/Supabaseへの適用指示（実装要件）                                                                                                                                              | 根拠となるノウハウ |
-| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------- |
-| **確証バイアス (Confirmation Bias)** | デザイナーや開発者の**既存の仮説に矛盾するSupabaseのデータ分析結果**やユーザーフィードバックが出た場合、これを無視せず、意識的に検証し、客観的な意思決定を行うこと,                   | ,                  |
-| **共感ギャップ (Empathy Gap)**       | 開発者やデザイナー自身の知識や経験のみに頼らず、**定量的（Supabaseデータ）および定性的（ユーザーヒアリング）なデータ**を収集・分析し、ユーザーの実際の感情やニーズを深く理解すること, | ,                  |
-| **観察効果 (Hawthorne Effect)**      | ユーザーインタビューやユーザビリティテストを実施する際、ユーザーが**観察されていることによる行動変化**（素直なフィードバックの困難さ）を認識し、結果の解釈に反映させること,           | ,                  |
-| **調査バイアス (Survey Bias)**       | ユーザーからのフィードバックやNPSアンケートを収集する際、質問の設計やサンプリング方法が**母集団の特性を正確に反映しているか**を厳密に検証し、偏りのないデータ収集を徹底すること,      | ,                  |
+| UX原則                               | Next.js/Supabaseへの適用指示（実装要件）                                                                                                                                              | 根拠となるノウハウ     |
+| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :--------------------- |
+| **確証バイアス (Confirmation Bias)** | デザイナーや開発者の**既存の仮説に矛盾するSupabaseのデータ分析結果**やユーザーフィードバックが出た場合、これを無視せず、意識的に検証し、客観的な意思決定を行うこと,                   | 意思決定の質向上       |
+| **共感ギャップ (Empathy Gap)**       | 開発者やデザイナー自身の知識や経験のみに頼らず、**定量的（Supabaseデータ）および定性的（ユーザーヒアリング）なデータ**を収集・分析し、ユーザーの実際の感情やニーズを深く理解すること, | ユーザー中心設計の実現 |
+| **観察効果 (Hawthorne Effect)**      | ユーザーインタビューやユーザビリティテストを実施する際、ユーザーが**観察されていることによる行動変化**（素直なフィードバックの困難さ）を認識し、結果の解釈に反映させること,           | テスト精度向上         |
+| **調査バイアス (Survey Bias)**       | ユーザーからのフィードバックやNPSアンケートを収集する際、質問の設計やサンプリング方法が**母集団の特性を正確に反映しているか**を厳密に検証し、偏りのないデータ収集を徹底すること,      | データ品質確保         |
+
+---
+
+## 🎯 シーン別適用ガイド
+
+### 🆕 新規ユーザーオンボーディング
+
+**適用原則**: UX-2認知負荷、UX-6ツァイガルニク効果、UX-7目標勾配効果
+
+**実装例**:
+
+```tsx
+// ✅ チェックリスト式オンボーディング（Blinkistモデル）
+export default function OnboardingChecklist() {
+  const [tasks, setTasks] = useState([
+    { id: 1, title: "プロフィール設定", completed: true }, // 自動完了
+    { id: 2, title: "アバター追加", completed: false },
+    { id: 3, title: "最初の投稿", completed: false },
+  ]);
+
+  const progress = (tasks.filter((t) => t.completed).length / tasks.length) * 100;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>セットアップを完了しましょう</CardTitle>
+        <Progress value={progress} className="mt-2" /> {/* 目標勾配効果 */}
+        <p className="text-sm text-muted-foreground">{Math.round(progress)}% 完了</p>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        {tasks.map((task) => (
+          <div key={task.id} className="flex items-center gap-2">
+            <Checkbox checked={task.completed} onCheckedChange={() => toggleTask(task.id)} />
+            <span className={task.completed ? "line-through text-muted-foreground" : ""}>
+              {task.title}
+            </span>
+          </div>
+        ))}
+      </CardContent>
+    </Card>
+  );
+}
+```
+
+**KPI目標**: オンボーディング完了率60%→目標: 85%
+
+---
+
+### 💰 課金フロー
+
+**適用原則**: UX-11おとり効果、UX-12アンカー効果、UX-13デフォルト効果、UX-14希少性効果
+
+**実装例**:
+
+```tsx
+// ✅ 4つの心理学原則を組み合わせた料金ページ
+export default function PricingWithPsychology() {
+  const [timeLeft, setTimeLeft] = useState(3600); // 希少性効果
+
+  return (
+    <div className="space-y-8">
+      {/* 希少性効果 */}
+      <Alert className="border-yellow-400 bg-yellow-50">
+        <Timer className="h-4 w-4" />
+        <AlertTitle>期間限定オファー</AlertTitle>
+        <AlertDescription>
+          あと{Math.floor(timeLeft / 60)}分で終了！初回限定50%OFF
+        </AlertDescription>
+      </Alert>
+
+      <div className="grid gap-6 md:grid-cols-3">
+        {/* アンカー（高額プラン） */}
+        <PricingCard
+          plan="Premium"
+          price="¥2,980"
+          originalPrice="¥5,980"  {/* アンカー効果 */}
+          discount="50% OFF"
+        />
+
+        {/* デフォルト（推奨プラン） */}
+        <PricingCard
+          plan="Standard"
+          price="¥1,480"
+          originalPrice="¥2,980"
+          discount="50% OFF"
+          badge="最も人気"  {/* デフォルト効果 */}
+          isRecommended
+        />
+
+        {/* デコイ（中間プラン） */}
+        <PricingCard
+          plan="Basic"
+          price="¥980"
+          originalPrice="¥1,980"
+          discount="50% OFF"
+        />
+      </div>
+    </div>
+  );
+}
+```
+
+**KPI目標**: コンバージョン率12%→目標: 18% (+50%)
+
+---
+
+### 📋 ダッシュボード（継続利用）
+
+**適用原則**: UX-8ゲーミフィケーション、UX-9変動型報酬、UX-16ピーク・エンドの法則
+
+**実装例**:
+
+```tsx
+// ✅ XPシステムとストリークで習慣化
+export default function DashboardWithGamification() {
+  const [user, setUser] = useState({
+    xp: 1250,
+    level: 5,
+    streak: 7, // 連続ログイン日数
+  });
+
+  const nextLevelXP = user.level * 300;
+  const progress = (user.xp / nextLevelXP) * 100;
+
+  return (
+    <div className="space-y-6">
+      {/* XPプログレス */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle>Level {user.level}</CardTitle>
+              <CardDescription>
+                {user.xp} / {nextLevelXP} XP
+              </CardDescription>
+            </div>
+            <Badge variant="secondary">🔥 {user.streak}日連続</Badge>
+          </div>
+          <Progress value={progress} className="mt-2" />
+        </CardHeader>
+      </Card>
+
+      {/* 変動型報酬（フィード） */}
+      <Card>
+        <CardHeader>
+          <CardTitle>最新のアクティビティ</CardTitle>
+        </CardHeader>
+        <CardContent>
+          {/* ランダムな通知で変動型報酬 */}
+          <ActivityFeed activities={randomActivities} />
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+```
+
+**KPI目標**: 7日リテンション30%→目標: 50% (+67%)
+
+---
+
+## A/Bテスト設定例
+
+```typescript
+// lib/ab-testing.ts
+import { cookies } from 'next/headers';
+
+export function getABTestVariant(testName: string): 'control' | 'variant' {
+  const cookieStore = cookies();
+  const variant = cookieStore.get(`ab_${testName}`)?.value;
+
+  if (variant) return variant as 'control' | 'variant';
+
+  // 50/50で振り分け
+  const newVariant = Math.random() < 0.5 ? 'control' : 'variant';
+  cookieStore.set(`ab_${testName}`, newVariant, { maxAge: 60 * 60 * 24 * 30 });
+
+  return newVariant;
+}
+
+// 使用例
+export default function PricingPage() {
+  const variant = getABTestVariant('pricing_decoy_effect');
+
+  if (variant === 'variant') {
+    return <PricingWithDecoyEffect />;  // UX-11おとり効果適用
+  }
+
+  return <PricingStandard />;  // コントロール
+}
+```
+
+---
+
+## 成果測定ダッシュボード（Supabase）
+
+```sql
+-- コンバージョン率計測
+CREATE OR REPLACE FUNCTION calculate_conversion_rate(
+  test_name TEXT,
+  variant TEXT
+) RETURNS NUMERIC AS $$
+DECLARE
+  total_users INTEGER;
+  converted_users INTEGER;
+BEGIN
+  SELECT COUNT(*) INTO total_users
+  FROM ab_test_events
+  WHERE test_name = $1 AND variant = $2;
+
+  SELECT COUNT(*) INTO converted_users
+  FROM ab_test_events
+  WHERE test_name = $1 AND variant = $2 AND event_type = 'conversion';
+
+  RETURN (converted_users::NUMERIC / NULLIF(total_users, 0)) * 100;
+END;
+$$ LANGUAGE plpgsql;
+
+-- 実行例
+SELECT
+  test_name,
+  variant,
+  calculate_conversion_rate(test_name, variant) as conversion_rate
+FROM ab_test_events
+GROUP BY test_name, variant;
+```
+
+---
+
+## チェックリスト（UXレビュー時）
+
+### 🔴 Tier 1: 必須（全機能）
+
+- [ ] **UX-1 ドハティ闾値**: API応答≤0.4秒 or スケルトン表示
+- [ ] **UX-2 認知負荷**: フォーム項目≤7個/画面
+- [ ] **UX-3 親近性バイアス**: 慣習的UI配置（ロゴ左上、サインイン右上）
+- [ ] **UX-5 美的ユーザビリティ**: DADSデザインシステム準拠
+- [ ] **UX-6 ツァイガルニク効果**: オンボーディングチェックリスト
+
+### 🟡 Tier 2: 推奨（コア機能）
+
+- [ ] 目標勾配効果: プログレスバー表示
+- [ ] おとり効果: 3プラン表示（中間がデコイ）
+- [ ] アンカー効果: 割引前価格表示
+- [ ] デフォルト効果: 推奨プランをデフォルト選択
+- [ ] 希少性効果: 期限付きオファー
+
+---
