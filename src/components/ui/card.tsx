@@ -1,75 +1,62 @@
-import * as React from "react";
+import React from "react";
 
-import { cn } from "@/lib/utils";
+export const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
+  children,
+  className,
+  ...props
+}) => (
+  // Provide sensible default spacing/rounded styling so content within cards
+  // isn't flush to the very edge. Consumers can still override by passing className.
+  <div className={`rounded-lg overflow-hidden ${className ?? ""}`} data-testid="card" {...props}>
+    {children}
+  </div>
+);
 
-function Card({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card"
-      className={cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+export const CardHeader: React.FC<React.PropsWithChildren<{ className?: string }>> = ({
+  children,
+  className,
+}) => (
+  // Add default padding for headers so titles/icons are not pressed to the edge
+  <div className={`px-6 py-4 ${className ?? ""}`} data-testid="card-header">
+    {children}
+  </div>
+);
 
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-header"
-      className={cn(
-        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-        className,
-      )}
-      {...props}
-    />
-  );
-}
+export const CardTitle: React.FC<React.PropsWithChildren<{ className?: string }>> = ({
+  children,
+  className,
+}) => (
+  <h3 className={className} data-testid="card-title">
+    {children}
+  </h3>
+);
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-title"
-      className={cn("leading-none font-semibold", className)}
-      {...props}
-    />
-  );
-}
+export const CardDescription: React.FC<React.PropsWithChildren<{ className?: string }>> = ({
+  children,
+  className,
+}) => (
+  <div className={`${className ?? ""}`} data-testid="card-desc">
+    {children}
+  </div>
+);
 
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-description"
-      className={cn("text-muted-foreground text-sm", className)}
-      {...props}
-    />
-  );
-}
+export const CardContent: React.FC<React.PropsWithChildren<{ className?: string }>> = ({
+  children,
+  className,
+}) => (
+  // Default inner padding for card content; individual callers can adjust via className
+  <div className={`px-6 py-4 ${className ?? ""}`} data-testid="card-content">
+    {children}
+  </div>
+);
 
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-action"
-      className={cn("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className)}
-      {...props}
-    />
-  );
-}
+export const CardFooter: React.FC<React.PropsWithChildren<{ className?: string }>> = ({
+  children,
+  className,
+}) => (
+  <div className={`px-6 py-3 ${className ?? ""}`} data-testid="card-footer">
+    {children}
+  </div>
+);
 
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="card-content" className={cn("px-6", className)} {...props} />;
-}
-
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-footer"
-      className={cn("flex items-center px-6 [.border-t]:pt-6", className)}
-      {...props}
-    />
-  );
-}
-
-export { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent };
+export default Card;
