@@ -1,0 +1,142 @@
+[
+  {
+    "path": "/home",
+    "label": "ホーム",
+    "group": "main",
+    "order": 10,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/user-profiles",
+    "label": "プロフィール",
+    "group": "main",
+    "order": 20,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/matching",
+    "label": "マッチング",
+    "group": "main",
+    "order": 30,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/recommendations",
+    "label": "おすすめ",
+    "group": "main",
+    "order": 40,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/search",
+    "label": "検索",
+    "group": "group",
+    "order": 10,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/nations",
+    "label": "国",
+    "group": "group",
+    "order": 20,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/groups",
+    "label": "グループ",
+    "group": "group",
+    "order": 30,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/works",
+    "label": "作品",
+    "group": "registration",
+    "order": 10,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/values",
+    "label": "価値観",
+    "group": "registration",
+    "order": 20,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/skills",
+    "label": "スキル",
+    "group": "registration",
+    "order": 30,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/lists",
+    "label": "リスト",
+    "group": "more",
+    "order": 10,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/chains",
+    "label": "チェーン",
+    "group": "more",
+    "order": 20,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/mandala",
+    "label": "マンダラチャート",
+    "group": "more",
+    "order": 30,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/achievements",
+    "label": "実績",
+    "group": "more",
+    "order": 40,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/badges",
+    "label": "アチーブメント",
+    "group": "more",
+    "order": 50,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/results",
+    "label": "成果",
+    "group": "more",
+    "order": 60,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/tutorial",
+    "label": "チュートリアル",
+    "group": "more",
+    "order": 70,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/settings",
+    "label": "設定",
+    "group": "footer",
+    "order": 10,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/pricing",
+    "label": "プライシング",
+    "group": "footer",
+    "order": 20,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/root-accounts",
+    "label": "ルートアカウント",
+    "group": "footer",
+    "order": 30,
+    "visibleInMenu": true
+  }
+]
