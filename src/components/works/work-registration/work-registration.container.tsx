@@ -1,19 +1,18 @@
 "use client";
 
-import { useForm, Resolver } from "react-hook-form";
+import { useForm, useWatch, Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   WorkFormValues,
-  generateDummyWork,
+  dummyFormValues,
   initialFormValues,
   workSchema,
+  BASE_POINTS,
+  DISCOUNT_TAGS,
+  DISCOUNT_URL,
 } from "./work-registration.logic";
 import { WorkRegistration } from "./work-registration";
-import { useState } from "react";
-// import { toast } from "sonner";
-
-// Using console/alert fallback if toast is missing, but Assuming toast might be available or I'll just use window.alert for "Dummy" phase.
-// Actually, looking at components/ui, I didn't see 'sonner' or 'toast'. I'll stick to a simple alert for now to avoid dependency issues.
+import { useState, useMemo } from "react";
 
 export function WorkRegistrationContainer() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -23,24 +22,34 @@ export function WorkRegistrationContainer() {
     defaultValues: initialFormValues,
   });
 
+  const watchedTags = useWatch({ control: form.control, name: "tags" });
+  const watchedUrls = useWatch({ control: form.control, name: "urls" });
+
+  const requiredPoints = useMemo(() => {
+    let points = BASE_POINTS;
+    // watchedTags might be undefined initially or if fields are unregistered
+    if (watchedTags && watchedTags.length > 0) points -= DISCOUNT_TAGS;
+    // watchedUrls might be undefined
+    if (watchedUrls && watchedUrls.some((u) => u.value?.trim() !== "")) points -= DISCOUNT_URL;
+    return Math.max(0, points);
+  }, [watchedTags, watchedUrls]);
+
   const handleSubmit = async (values: WorkFormValues) => {
     setIsSubmitting(true);
     // Simulate API call
+    const submissionData = {
+      ...values,
+      pointsSpent: requiredPoints,
+    };
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("Form Submitted:", values);
-    alert(`登録完了 (ダミー)\nタイトル: ${values.title}\nステータス: ${values.status}`);
+    console.log("Form Submitted:", submissionData);
+    alert(`登録完了！\n消費ポイント: ${requiredPoints}pt\n${JSON.stringify(submissionData, null, 2)}`);
     setIsSubmitting(false);
   };
 
   const handleFillDummyData = () => {
-    const dummy = generateDummyWork();
-    form.reset({
-      title: dummy.title,
-      description: dummy.description || "",
-      itemTime: dummy.itemTime || "",
-      status: dummy.status,
-      // images, tags are arrays, might need handling if UI inputs existed
-    });
+    form.reset(dummyFormValues);
   };
 
   return (
@@ -49,6 +58,7 @@ export function WorkRegistrationContainer() {
       onSubmit={handleSubmit}
       isSubmitting={isSubmitting}
       onFillDummyData={handleFillDummyData}
+      requiredPoints={requiredPoints}
     />
   );
 }

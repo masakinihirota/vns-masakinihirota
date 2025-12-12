@@ -18,6 +18,7 @@ const TestWrapper = () => {
       onSubmit={vi.fn()}
       isSubmitting={false}
       onFillDummyData={vi.fn()}
+      requiredPoints={100}
     />
   );
 };
@@ -26,11 +27,12 @@ describe("WorkRegistration", () => {
   it("renders the form fields", () => {
     render(<TestWrapper />);
 
-    expect(screen.getByRole("heading", { name: "作品登録" })).toBeDefined();
-    expect(screen.getByLabelText("タイトル")).toBeDefined();
-    expect(screen.getByLabelText("説明")).toBeDefined();
-    // Select component might be harder to query by label directly without userEvent, but we check presence
-    expect(screen.getByText("ステータス")).toBeDefined();
-    expect(screen.getByRole("button", { name: "登録する" })).toBeDefined();
+    expect(screen.getByRole("heading", { name: "作品を登録" })).toBeDefined();
+    // Use regex for partial match or exact string if label includes *
+    // "作品タイトル *"
+    expect(screen.getByText(/作品タイトル/)).toBeDefined();
+    expect(screen.getByText("カテゴリを選択")).toBeDefined();
+    expect(screen.getByText("制作年代・時期")).toBeDefined();
+    expect(screen.getByRole("button", { name: "この内容で登録する" })).toBeDefined();
   });
 });
