@@ -44,7 +44,9 @@ export function WorkRegistrationContainer() {
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
     console.log("Form Submitted:", submissionData);
-    alert(`登録完了！\n消費ポイント: ${requiredPoints}pt\n${JSON.stringify(submissionData, null, 2)}`);
+    alert(
+      `登録完了！\n消費ポイント: ${requiredPoints}pt\n${JSON.stringify(submissionData, null, 2)}`,
+    );
     setIsSubmitting(false);
   };
 

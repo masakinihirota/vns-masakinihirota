@@ -81,15 +81,13 @@ export function WorkRegistration({
   const filteredOfficialTags = useMemo(() => {
     if (!officialSearchQuery) return OFFICIAL_TAGS;
     return OFFICIAL_TAGS.filter((tag) =>
-      tag.toLowerCase().includes(officialSearchQuery.toLowerCase())
+      tag.toLowerCase().includes(officialSearchQuery.toLowerCase()),
     );
   }, [officialSearchQuery]);
 
   const filteredUserTags = useMemo(() => {
     if (!userSearchQuery) return USER_TAGS;
-    return USER_TAGS.filter((tag) =>
-      tag.toLowerCase().includes(userSearchQuery.toLowerCase())
-    );
+    return USER_TAGS.filter((tag) => tag.toLowerCase().includes(userSearchQuery.toLowerCase()));
   }, [userSearchQuery]);
 
   const getTagStyle = (tagName: string, isSelected: boolean) => {
@@ -103,7 +101,11 @@ export function WorkRegistration({
   };
 
   // --- Handlers ---
-  const toggleTag = (tagToToggle: string, currentTags: string[], onChange: (tags: string[]) => void) => {
+  const toggleTag = (
+    tagToToggle: string,
+    currentTags: string[],
+    onChange: (tags: string[]) => void,
+  ) => {
     if (currentTags.includes(tagToToggle)) {
       onChange(currentTags.filter((t) => t !== tagToToggle));
     } else {
@@ -206,13 +208,13 @@ export function WorkRegistration({
                                       "flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all",
                                       isSelected
                                         ? "border-blue-600 bg-blue-50 text-blue-700 ring-1 ring-blue-600"
-                                        : "border-gray-200 hover:border-blue-300 hover:bg-gray-50 text-gray-600"
+                                        : "border-gray-200 hover:border-blue-300 hover:bg-gray-50 text-gray-600",
                                     )}
                                   >
                                     <Icon
                                       className={cn(
                                         "w-6 h-6",
-                                        isSelected ? "text-blue-600" : "text-gray-400"
+                                        isSelected ? "text-blue-600" : "text-gray-400",
                                       )}
                                     />
                                     <span className="text-sm font-bold">{cat.label}</span>
@@ -243,7 +245,7 @@ export function WorkRegistration({
                                 const isCollapsible = group.collapsible;
                                 const isExpanded = isCollapsible ? isPastExpanded : true;
                                 const selectedItemInGroup = group.items.find(
-                                  (item) => item.id === field.value
+                                  (item) => item.id === field.value,
                                 );
 
                                 return (
@@ -287,11 +289,13 @@ export function WorkRegistration({
                                                 "w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all border flex items-center justify-between group",
                                                 isSelected
                                                   ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                                                  : "bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:bg-blue-50"
+                                                  : "bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:bg-blue-50",
                                               )}
                                             >
                                               <span>{per.label}</span>
-                                              {isSelected && <Check className="w-4 h-4 text-white" />}
+                                              {isSelected && (
+                                                <Check className="w-4 h-4 text-white" />
+                                              )}
                                               {!isSelected && (
                                                 <span className="w-4 h-4 rounded-full border border-gray-300 group-hover:border-blue-400" />
                                               )}
@@ -344,7 +348,7 @@ export function WorkRegistration({
                                         "inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium animate-in fade-in zoom-in duration-200",
                                         isOfficial
                                           ? "bg-blue-100 text-blue-700"
-                                          : "bg-emerald-100 text-emerald-700"
+                                          : "bg-emerald-100 text-emerald-700",
                                       )}
                                     >
                                       {isOfficial && <BadgeCheck className="w-3 h-3" />}
@@ -352,14 +356,12 @@ export function WorkRegistration({
                                       {tag}
                                       <button
                                         type="button"
-                                        onClick={() =>
-                                          toggleTag(tag, field.value, field.onChange)
-                                        }
+                                        onClick={() => toggleTag(tag, field.value, field.onChange)}
                                         className={cn(
                                           "rounded-full p-0.5 transition-colors",
                                           isOfficial
                                             ? "hover:bg-blue-200 hover:text-blue-900"
-                                            : "hover:bg-emerald-200 hover:text-emerald-900"
+                                            : "hover:bg-emerald-200 hover:text-emerald-900",
                                         )}
                                       >
                                         <X className="w-3 h-3" />
@@ -392,7 +394,7 @@ export function WorkRegistration({
                                           }
                                           className={cn(
                                             "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                            getTagStyle(tag, isSelected)
+                                            getTagStyle(tag, isSelected),
                                           )}
                                         >
                                           {isSelected ? "✓ " : "+ "}
@@ -427,7 +429,7 @@ export function WorkRegistration({
                                               }
                                               className={cn(
                                                 "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                                getTagStyle(tag, isSelected)
+                                                getTagStyle(tag, isSelected),
                                               )}
                                             >
                                               {isSelected ? "✓ " : "+ "}
@@ -449,7 +451,7 @@ export function WorkRegistration({
                                   onClick={() => setIsOfficialExpanded(!isOfficialExpanded)}
                                   className={cn(
                                     "w-full text-blue-600 border-blue-200 hover:bg-blue-50 hover:border-blue-300",
-                                    isOfficialExpanded && "bg-blue-50"
+                                    isOfficialExpanded && "bg-blue-50",
                                   )}
                                 >
                                   <LayoutGrid className="w-4 h-4 mr-2" />
@@ -487,7 +489,7 @@ export function WorkRegistration({
                                           }
                                           className={cn(
                                             "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                            getTagStyle(tag, isSelected)
+                                            getTagStyle(tag, isSelected),
                                           )}
                                         >
                                           {isSelected ? "✓ " : "+ "}
@@ -518,9 +520,7 @@ export function WorkRegistration({
                                       </div>
                                       <Button
                                         type="button"
-                                        onClick={() =>
-                                          addCustomTag(field.value, field.onChange)
-                                        }
+                                        onClick={() => addCustomTag(field.value, field.onChange)}
                                         disabled={!userSearchQuery.trim()}
                                         className="bg-emerald-600 hover:bg-emerald-700 text-white"
                                       >
@@ -550,7 +550,7 @@ export function WorkRegistration({
                                               }
                                               className={cn(
                                                 "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                                getTagStyle(tag, isSelected)
+                                                getTagStyle(tag, isSelected),
                                               )}
                                             >
                                               {isSelected ? "✓ " : "+ "}
@@ -572,7 +572,7 @@ export function WorkRegistration({
                                   onClick={() => setIsUserExpanded(!isUserExpanded)}
                                   className={cn(
                                     "w-full text-emerald-600 border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300",
-                                    isUserExpanded && "bg-emerald-50"
+                                    isUserExpanded && "bg-emerald-50",
                                   )}
                                 >
                                   <LayoutGrid className="w-4 h-4 mr-2" />
@@ -635,7 +635,7 @@ export function WorkRegistration({
                                         "flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-medium rounded-sm transition-all",
                                         isActive
                                           ? "bg-white text-blue-700 shadow-sm"
-                                          : "text-gray-500 hover:text-gray-700"
+                                          : "text-gray-500 hover:text-gray-700",
                                       )}
                                     >
                                       <TypeIcon className="w-3 h-3" />
@@ -672,9 +672,7 @@ export function WorkRegistration({
                                     variant="ghost"
                                     size="icon"
                                     onClick={() => {
-                                      const newUrls = field.value.filter(
-                                        (_, i) => i !== idx
-                                      );
+                                      const newUrls = field.value.filter((_, i) => i !== idx);
                                       field.onChange(newUrls);
                                     }}
                                     className="text-gray-400 hover:text-red-500 h-11 w-11"
@@ -689,10 +687,7 @@ export function WorkRegistration({
                             type="button"
                             variant="outline"
                             onClick={() => {
-                              field.onChange([
-                                ...field.value,
-                                { type: "official", value: "" },
-                              ]);
+                              field.onChange([...field.value, { type: "official", value: "" }]);
                             }}
                             className="w-full mt-4 border-dashed text-gray-500 hover:text-blue-600 hover:border-blue-300"
                           >
@@ -718,16 +713,12 @@ export function WorkRegistration({
                         </div>
 
                         <div className="flex items-baseline justify-between mb-2 relative z-10">
-                          <span className="text-sm font-bold text-gray-600">
-                            消費ポイント
-                          </span>
+                          <span className="text-sm font-bold text-gray-600">消費ポイント</span>
                           <div className="flex items-baseline gap-1">
                             <span className="text-3xl font-extrabold text-blue-600">
                               {requiredPoints}
                             </span>
-                            <span className="text-sm font-bold text-blue-400">
-                              pt
-                            </span>
+                            <span className="text-sm font-bold text-blue-400">pt</span>
                           </div>
                         </div>
 
@@ -736,9 +727,7 @@ export function WorkRegistration({
                           <div
                             className={cn(
                               "flex items-center justify-between text-xs",
-                              watchedTags.length > 0
-                                ? "text-green-600 font-bold"
-                                : "text-gray-400"
+                              watchedTags.length > 0 ? "text-green-600 font-bold" : "text-gray-400",
                             )}
                           >
                             <span className="flex items-center gap-1">
@@ -756,7 +745,7 @@ export function WorkRegistration({
                               "flex items-center justify-between text-xs",
                               watchedUrls.some((u) => u.value)
                                 ? "text-green-600 font-bold"
-                                : "text-gray-400"
+                                : "text-gray-400",
                             )}
                           >
                             <span className="flex items-center gap-1">
@@ -788,7 +777,12 @@ export function WorkRegistration({
                       <div className="space-y-4">
                         <div className="text-sm text-gray-600 space-y-2">
                           <p className="flex items-center gap-2">
-                            <Check className={cn("w-4 h-4", watchedTitle ? 'text-green-500' : 'text-gray-300')} />
+                            <Check
+                              className={cn(
+                                "w-4 h-4",
+                                watchedTitle ? "text-green-500" : "text-gray-300",
+                              )}
+                            />
                             タイトル入力
                           </p>
                           {/* Add other validations here if needed */}
