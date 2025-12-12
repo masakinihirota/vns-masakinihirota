@@ -13,7 +13,7 @@ export default function Home() {
 
         <div className="flex gap-4">
           <Button asChild variant="outline">
-            <Link href="/sample">Sample Page</Link>
+            <Link href="/home">Home (Dev)</Link>
           </Button>
 
           <Button asChild>
