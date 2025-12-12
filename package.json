@@ -19,6 +19,8 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@digital-go-jp/design-tokens": "^1.1.2",
+    "@digital-go-jp/tailwind-theme-plugin": "^0.3.3",
     "@hono/zod-validator": "^0.7.5",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-avatar": "^1.1.11",

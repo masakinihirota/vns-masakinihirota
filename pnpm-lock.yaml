@@ -7,6 +7,12 @@ settings:
 importers:
   .:
     dependencies:
+      "@digital-go-jp/design-tokens":
+        specifier: ^1.1.2
+        version: 1.1.2
+      "@digital-go-jp/tailwind-theme-plugin":
+        specifier: ^0.3.3
+        version: 0.3.3(tailwindcss@4.1.17)
       "@hono/zod-validator":
         specifier: ^0.7.5
         version: 0.7.5(hono@4.10.8)(zod@4.1.13)
@@ -401,6 +407,20 @@ packages:
         integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==,
       }
     engines: { node: ">=18" }
+
+  "@digital-go-jp/design-tokens@1.1.2":
+    resolution:
+      {
+        integrity: sha512-djYz57N1ku/JFILn/h/l/926Jfpsw5sEP05MkfxLoUzvfU8iVAllXiL8tJdxnbb8NY5YXuj2r8O4TJt3uRVD0Q==,
+      }
+
+  "@digital-go-jp/tailwind-theme-plugin@0.3.3":
+    resolution:
+      {
+        integrity: sha512-QkDBsnzsU053fLG3LjUf00csyb5Ubs8d9WzEmV4loBUv4vzGsDhZ7UPtvGOzYD2r0DJWK9ImIPKnx3t5/3OF7g==,
+      }
+    peerDependencies:
+      tailwindcss: ^3.4.17 || ^4.0.0
 
   "@emnapi/core@1.7.1":
     resolution:
@@ -5701,6 +5721,12 @@ snapshots:
       postcss: 8.5.6
 
   "@csstools/css-tokenizer@3.0.4": {}
+
+  "@digital-go-jp/design-tokens@1.1.2": {}
+
+  "@digital-go-jp/tailwind-theme-plugin@0.3.3(tailwindcss@4.1.17)":
+    dependencies:
+      tailwindcss: 4.1.17
 
   "@emnapi/core@1.7.1":
     dependencies:
