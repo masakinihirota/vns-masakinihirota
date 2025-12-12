@@ -1,12 +1,46 @@
 ---
-description: 'plans.mdの実装を依頼するプロンプト'
+description: "plans.mdの実装を依頼するプロンプト"
 agent: agent
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chrome-devtools/*', 'context7/*', 'next-devtools/*', 'Postgres(LOCAL-supabase)/*', 'sequentialthinking/*', 'serena/*', 'supabase/deploy_edge_function', 'supabase/execute_sql', 'supabase/generate_typescript_types', 'supabase/get_edge_function', 'supabase/list_tables', 'supabase/search_docs', 'unsplash/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'runSubagent', 'runTests']
+tools:
+  [
+    "edit",
+    "runNotebooks",
+    "search",
+    "new",
+    "runCommands",
+    "runTasks",
+    "chrome-devtools/*",
+    "context7/*",
+    "next-devtools/*",
+    "Postgres(LOCAL-supabase)/*",
+    "sequentialthinking/*",
+    "serena/*",
+    "supabase/deploy_edge_function",
+    "supabase/execute_sql",
+    "supabase/generate_typescript_types",
+    "supabase/get_edge_function",
+    "supabase/list_tables",
+    "supabase/search_docs",
+    "unsplash/*",
+    "usages",
+    "vscodeAPI",
+    "problems",
+    "changes",
+    "testFailure",
+    "openSimpleBrowser",
+    "fetch",
+    "githubRepo",
+    "extensions",
+    "todos",
+    "runSubagent",
+    "runTests",
+  ]
 ---
 
 [plans.md](./plans.md) を読んでください。
 
 ## 実装
+
 ### XXXの実装
 
 以下のドキュメントを参考に、
@@ -19,8 +53,8 @@ tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chr
 [plans.md](./plans.md) に基づいて実装してください。
 進捗に応じて [plans.md](./plans.md) を更新してください。
 
-
 ## このプロンプトが終了したら
+
 正常に終了したか確かめてください
 エラーが出てないかチェックしてください。
 テストが通っているか確認してください。
@@ -34,5 +68,3 @@ tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chr
 ドキュメントは
 `doc/`
 に書いてください。
-
-

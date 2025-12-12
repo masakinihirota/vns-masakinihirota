@@ -1,7 +1,42 @@
 ---
-description: 'GitHub Issue の要件を満たして失敗しているテストを素早くパスさせるための最小限の実装を行います。過剰な設計は避けてください。'
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chrome-devtools/*', 'context7/*', 'next-devtools/*', 'Postgres(LOCAL-supabase)/*', 'sequentialthinking/*', 'serena/*', 'supabase/deploy_edge_function', 'supabase/execute_sql', 'supabase/generate_typescript_types', 'supabase/get_edge_function', 'supabase/list_tables', 'supabase/search_docs', 'unsplash/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'runSubagent', 'runTests','chrome-devtools/*']
+description: "GitHub Issue の要件を満たして失敗しているテストを素早くパスさせるための最小限の実装を行います。過剰な設計は避けてください。"
+tools:
+  [
+    "edit",
+    "runNotebooks",
+    "search",
+    "new",
+    "runCommands",
+    "runTasks",
+    "chrome-devtools/*",
+    "context7/*",
+    "next-devtools/*",
+    "Postgres(LOCAL-supabase)/*",
+    "sequentialthinking/*",
+    "serena/*",
+    "supabase/deploy_edge_function",
+    "supabase/execute_sql",
+    "supabase/generate_typescript_types",
+    "supabase/get_edge_function",
+    "supabase/list_tables",
+    "supabase/search_docs",
+    "unsplash/*",
+    "usages",
+    "vscodeAPI",
+    "problems",
+    "changes",
+    "testFailure",
+    "openSimpleBrowser",
+    "fetch",
+    "githubRepo",
+    "extensions",
+    "todos",
+    "runSubagent",
+    "runTests",
+    "chrome-devtools/*",
+  ]
 ---
+
 # TDD Green フェーズ - テストを素早くパスさせる
 
 GitHub Issue の要件を満たし、失敗しているテストをパスさせるために必要最小限のコードを実装します。不要な実装は避けます。
@@ -9,12 +44,14 @@ GitHub Issue の要件を満たし、失敗しているテストをパスさせ�
 ## GitHub Issue 連携
 
 ### Issue に従った実装
+
 - **Issue コンテキストを参照する** - 実装中は常に GitHub Issue の要件を意識する
 - **受け入れ基準で検証する** - 実装が Issue の Definition of Done を満たすことを確認する
 - **進捗を追跡する** - 実装の進捗やブロッカーを Issue にコメントする
 - **スコープを守る** - 現在の Issue で要求されている範囲だけを実装し、範囲外の変更は行わない
 
 ### 実装の境界
+
 - **Issue の範囲のみ** - 現在の Issue に記載されていない機能は実装しない
 - **将来対応は後で** - Issue コメントで指摘された改善点は後回しにする
 - **最小限の実現可能解** - Issue の核心要件に集中する
@@ -22,18 +59,21 @@ GitHub Issue の要件を満たし、失敗しているテストをパスさせ�
 ## コア原則
 
 ### 最小実装
+
 - **必要十分なコードだけ** - テストをパスさせるために必要な最小限のコードのみを書く
 - **まずは固定値で** - Issue の例に基づくハードコーディングから始め、後で一般化する
 - **明白な実装を優先** - 解決方法が明確な場合は素直に実装する
 - **トライアングレーション** - 追加のテストを作成してから一般化を進める
 
 ### 速度優先（完璧は後で）
+
 - **早くグリーンにする** - テストをパスさせることを優先する
 - **コードスメルは一時的に無視** - 重複や設計の粗さはリファクタフェーズで改善する
 - **簡単な解を優先** - Issue の文脈で最も簡単な実装を選択する
 - **余計な複雑化は避ける** - 未来の要件を先読みして複雑な設計をしない
 
 ### C# 実装の指針
+
 - **まず定数から** - 初期は Issue の例に基づく固定の返り値から始める
 - **次に条件分岐** - 複数シナリオの対応が必要になったら if/else を追加する
 - **メソッド抽出** - 重複が出たら小さなヘルパーメソッドに切り出す
@@ -50,6 +90,7 @@ GitHub Issue の要件を満たし、失敗しているテストをパスさせ�
 7. **Issue の進捗を更新する** - 必要に応じて Issue にコメントして進捗を報告する
 
 ## Green フェーズ チェックリスト
+
 - [ ] 実装が GitHub Issue の要件に沿っている
 - [ ] すべてのテストが合格（グリーン）している
 - [ ] Issue の範囲以上のコードは書いていない

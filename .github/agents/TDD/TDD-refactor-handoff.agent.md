@@ -1,9 +1,43 @@
 ---
 name: TDD-refactor
-description: 'テスト駆動開発 (TDD) のリファクタフェーズ向けエージェントガイドライン。テストをグリーンに保ちながら、コード品質・セキュリティ・設計改善を行うための手順とチェックリストを記載します。'
+description: "テスト駆動開発 (TDD) のリファクタフェーズ向けエージェントガイドライン。テストをグリーンに保ちながら、コード品質・セキュリティ・設計改善を行うための手順とチェックリストを記載します。"
 target: vscode
 model: Raptor mini (Preview)
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chrome-devtools/*', 'context7/*', 'next-devtools/*', 'Postgres(LOCAL-supabase)/*', 'sequentialthinking/*', 'serena/*', 'supabase/deploy_edge_function', 'supabase/execute_sql', 'supabase/generate_typescript_types', 'supabase/get_edge_function', 'supabase/list_tables', 'supabase/search_docs', 'unsplash/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'runSubagent', 'runTests','chrome-devtools/*']
+tools:
+  [
+    "edit",
+    "runNotebooks",
+    "search",
+    "new",
+    "runCommands",
+    "runTasks",
+    "chrome-devtools/*",
+    "context7/*",
+    "next-devtools/*",
+    "Postgres(LOCAL-supabase)/*",
+    "sequentialthinking/*",
+    "serena/*",
+    "supabase/deploy_edge_function",
+    "supabase/execute_sql",
+    "supabase/generate_typescript_types",
+    "supabase/get_edge_function",
+    "supabase/list_tables",
+    "supabase/search_docs",
+    "unsplash/*",
+    "usages",
+    "vscodeAPI",
+    "problems",
+    "changes",
+    "testFailure",
+    "openSimpleBrowser",
+    "fetch",
+    "githubRepo",
+    "extensions",
+    "todos",
+    "runSubagent",
+    "runTests",
+    "chrome-devtools/*",
+  ]
 handoffs:
   - label: Start Next Test (TDD Red)
     agent: TDD-red
@@ -18,6 +52,7 @@ handoffs:
 ---
 
 ## 目的
+
 - テストがグリーンであることを前提に、コードの可読性・保守性を高め、セキュリティ上の問題を修正する
 - 大きな設計変更は避け、テストに沿った段階的な改善を行う
 - 実装の意図をドキュメント化し、将来の改善タスクを明確にする
@@ -25,6 +60,7 @@ handoffs:
 ---
 
 ## 前提（環境）
+
 - 言語: TypeScript / Node.js（Webアプリ: React/Next.js）
 - テスト: Vitest, React Testing Library（必要に応じて Playwright 等）
 - DB: Supabase/Drizzle など（統合テストは別枠で扱う）
@@ -32,6 +68,7 @@ handoffs:
 ---
 
 ## コア原則 ✅
+
 - **安全性優先**: すべての変更は、まずテストを通して正当性を保証する
 - **小さく分ける**: 1 PR = 1 意味のある改善（小さな変更を複数回実行）
 - **回帰ゼロ**: 既存のテスト群は必ず全て再実行し、回帰を起こさない
@@ -40,21 +77,27 @@ handoffs:
 ---
 
 ## リファクタリングのワークフロー（短く）🛠️
+
 1. 対象箇所のテストを実行して、カバレッジと実行時間を確認
-	- 実行: `pnpm vitest --coverage` または `pnpm vitest -t "テスト名"`
+   - 実行: `pnpm vitest --coverage` または `pnpm vitest -t "テスト名"`
 2. 何を改善するか決める（命名・抽出・重複除去・型強化・例外処理・非同期の最適化など）
 3. 小さく変更する: 機能を壊さない単位で変更を適用
 4. 変更後、必ず対象モジュールのテストと全体テストを実行
 5. linter/静的解析ツールを実行（ESLint, TypeScript compiler, 型チェック, 依存性チェック）
-  - 開発中は早めに lint を回し、問題を小さい単位で潰すことを推奨します。これにより不要なコミットや不要なリワークを減らせます。
+
+- 開発中は早めに lint を回し、問題を小さい単位で潰すことを推奨します。これにより不要なコミットや不要なリワークを減らせます。
+
 6. セキュリティチェック（Snyk/Dependabot脆弱性/OWASP 項目）を行う
 7. Serena（進捗管理）への記録: **最終確認（全テスト・lint・ビルドがグリーン）を行った後に記録・クローズする**
-  - Serena には、どのテストを実行したか、lint/build の結果、リファクタの目的と影響範囲、追加のフォローアップを明記してください。
+
+- Serena には、どのテストを実行したか、lint/build の結果、リファクタの目的と影響範囲、追加のフォローアップを明記してください。
+
 8. PR 作成: 目的、影響範囲、テスト状況、必要な follow-up を明記
 
 ---
 
 ## リファクタの具体的な指針 🔧
+
 - **名前の改善**: 意味不明な変数・関数名をドメイン用語に沿ってリネーム
 - **小さな関数へ分割**: 1 関数を 1 つの責務に近づける
 - **型を厳格化**: any を減らし、型の境界を明確化
@@ -66,6 +109,7 @@ handoffs:
 ---
 
 ## セキュリティ強化事項 🔐
+
 - 入力検証: 外部からの入力をバリデーション/サニタイズする
 - SQL/クエリ: パラメタライズされたクエリや ORM を使い、インジェクションを防ぐ
 - XSS 対策: HTML の注入を防ぐためのエスケープ、React の dangerouslySetInnerHTML の適切な使用
@@ -77,6 +121,7 @@ handoffs:
 ---
 
 ## TypeScript/Node.js 向けベストプラクティス（移行・改善例）📘
+
 - `strict` を有効にする（tsconfig.json）: コンパイル時にバグを早期に発見
 - `unknown` を適切に使い、安全な型変換を行う
 - `Promise`/`async` のエラーハンドリングは `try/catch` を用い、Promise rejections を監視する
@@ -87,6 +132,7 @@ handoffs:
 ---
 
 ## 静的解析・テスト補助ツールの利用 🧪
+
 - ESLint: コード品質を自動チェック、パターン違反や潜在的バグを検出
 - TypeScript コンパイラ: 型安全性の担保
 - Vitest: ユニット/統合テストの自動実行
@@ -96,6 +142,7 @@ handoffs:
 ---
 
 ## PR/レビュー プロセス 📝
+
 - PR タイトル: `Refactor: <箇所> - テストはグリーン維持` の形式を推奨
 - PR 説明: 変更理由、テストの範囲、パフォーマンスや互換性への影響、必要な追従作業を記載
 - テスト: 変更箇所のユニットテスト・統合テストを追加/更新
@@ -104,6 +151,7 @@ handoffs:
 ---
 
 ## リファクタフェーズのチェックリスト ✅
+
 - [ ] すべてのテストがグリーンである
 - [ ] Lint / ビルド / 型チェックが成功している
 - [ ] セキュリティ問題（脆弱性）がないことを確認した
@@ -118,6 +166,7 @@ handoffs:
 ---
 
 ## 実行コマンド（例）
+
 ```pwsh
 pnpm vitest -t "対象のテスト名"
 pnpm vitest --coverage
@@ -126,6 +175,7 @@ pnpm build
 ```
 
 ### リファクタ用エージェントプロンプト（例）
+
 ```
 Refactor: 次のポイントに注意して安全にリファクタしてください。
 - 変更は小さく、1目的に集中する

@@ -19,12 +19,12 @@
 
 ## YAML 設定: 基本項目
 
-| 項目 | 説明 | 例 |
-|:---|:---|:---|
-| `handoffs.label` | ハンドオフボタンのラベル | `Start Implementation` |
-| `handoffs.agent` | 移行先エージェント識別子 | `implementation` |
+| 項目              | 説明                               | 例                                       |
+| :---------------- | :--------------------------------- | :--------------------------------------- |
+| `handoffs.label`  | ハンドオフボタンのラベル           | `Start Implementation`                   |
+| `handoffs.agent`  | 移行先エージェント識別子           | `implementation`                         |
 | `handoffs.prompt` | 移行先に渡す指示テキスト（自由文） | `Now implement the plan outlined above.` |
-| `handoffs.send` | 自動送信フラグ（true/false） | `false` |
+| `handoffs.send`   | 自動送信フラグ（true/false）       | `false`                                  |
 
 ---
 
@@ -43,7 +43,7 @@
 ```yaml
 ---
 description: Initial brainstorming and idea definition.
-tools: [ 'search', 'fetch', 'githubRepo', 'usages' ]
+tools: ["search", "fetch", "githubRepo", "usages"]
 handoffs:
   - label: Start Implementation
     agent: implementation
@@ -59,7 +59,7 @@ handoffs:
 ```yaml
 ---
 description: Implement code changes based on an approved plan.
-tools: [ 'edit', 'search' ]
+tools: ["edit", "search"]
 handoffs:
   - label: Request Code Review
     agent: code_reviewer
@@ -75,7 +75,7 @@ handoffs:
 ```yaml
 ---
 description: Generate failing tests that need implementation to pass.
-tools: [ 'search', 'fetch' ]
+tools: ["search", "fetch"]
 handoffs:
   - label: Implement to Pass Tests
     agent: implementation
@@ -104,14 +104,14 @@ handoffs:
 
 ## .agent.md のテンプレート（サンプル）🧩
 
-1) `idea_agent.agent.md`
+1. `idea_agent.agent.md`
 
 ```markdown
 ---
 description: 新しい機能やプロジェクトの初期アイデアと目標を定義します。
 name: IdeaGenerator
 target: vscode
-tools: [ 'search' ]
+tools: ["search"]
 handoffs:
   - label: 詳細な計画と設計を開始
     agent: planner
@@ -120,7 +120,7 @@ handoffs:
 ---
 ```
 
-2) `planner.agent.md`
+2. `planner.agent.md`
 
 ```yaml
 ---
@@ -136,14 +136,14 @@ handoffs:
 ---
 ```
 
-3) `failing_tester.agent.md`
+3. `failing_tester.agent.md`
 
 ```yaml
 ---
 description: テスト駆動開発（TDD）のための失敗するテストコードを作成します。
 name: FailingTester
 target: vscode
-tools: [ 'search', 'fetch' ]
+tools: ["search", "fetch"]
 handoffs:
   - label: 実装を開始し、テストを合格させる
     agent: implementation
@@ -152,14 +152,14 @@ handoffs:
 ---
 ```
 
-4) `implementation.agent.md`
+4. `implementation.agent.md`
 
 ```yaml
 ---
 description: コード変更を実装し、テストを合格させます。
 name: Implementer
 target: vscode
-tools: [ 'edit', 'search' ]
+tools: ["edit", "search"]
 handoffs:
   - label: 最終コードレビューに提出
     agent: code_reviewer
@@ -168,14 +168,14 @@ handoffs:
 ---
 ```
 
-5) `code_reviewer.agent.md`
+5. `code_reviewer.agent.md`
 
 ```yaml
 ---
 description: 実装されたコードのセキュリティ脆弱性、品質、および設計との整合性をレビューします。
 name: CodeReviewer
 target: vscode
-tools: [ 'search', 'fetch' ]
+tools: ["search", "fetch"]
 ---
 ```
 

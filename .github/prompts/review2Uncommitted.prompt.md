@@ -1,7 +1,40 @@
 ---
 description: Review 指示書 コミットしていない変更の差分
 agent: agent
-tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chrome-devtools/*', 'context7/*', 'next-devtools/*', 'Postgres(LOCAL-supabase)/*', 'sequentialthinking/*', 'serena/*', 'supabase/deploy_edge_function', 'supabase/execute_sql', 'supabase/generate_typescript_types', 'supabase/get_edge_function', 'supabase/list_tables', 'supabase/search_docs', 'unsplash/*', 'usages', 'vscodeAPI', 'problems', 'changes', 'testFailure', 'openSimpleBrowser', 'fetch', 'githubRepo', 'extensions', 'todos', 'runSubagent', 'runTests']
+tools:
+  [
+    "edit",
+    "runNotebooks",
+    "search",
+    "new",
+    "runCommands",
+    "runTasks",
+    "chrome-devtools/*",
+    "context7/*",
+    "next-devtools/*",
+    "Postgres(LOCAL-supabase)/*",
+    "sequentialthinking/*",
+    "serena/*",
+    "supabase/deploy_edge_function",
+    "supabase/execute_sql",
+    "supabase/generate_typescript_types",
+    "supabase/get_edge_function",
+    "supabase/list_tables",
+    "supabase/search_docs",
+    "unsplash/*",
+    "usages",
+    "vscodeAPI",
+    "problems",
+    "changes",
+    "testFailure",
+    "openSimpleBrowser",
+    "fetch",
+    "githubRepo",
+    "extensions",
+    "todos",
+    "runSubagent",
+    "runTests",
+  ]
 ---
 
 コミットしていない変更の差分を対象にレビューしてください。
@@ -11,4 +44,3 @@ tools: ['edit', 'runNotebooks', 'search', 'new', 'runCommands', 'runTasks', 'chr
 想定と違う動作が懸念される箇所は、理由や前提（例: 入力値、非同期処理、例外処理）を添えて質問または確認事項として列挙してください。
 重大な変更にテストが追加されていない場合は、欠落テストの種類や想定ケースを指摘し、必要に応じて具体例を示してください。
 問題が見つからなかった場合でも、その旨と残るリスクや追加検証が望ましい箇所を記録してください。
-

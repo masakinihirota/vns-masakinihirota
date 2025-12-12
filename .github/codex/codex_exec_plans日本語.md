@@ -2,7 +2,6 @@
 
 https://github.com/openai/openai-cookbook/blob/main/articles/codex_exec_plans.md
 
-
 # PLANS.md を使用した複数時間の課題解決
 
 Codex と `gpt-5-codex` モデルは、研究、設計、実装にかなりの時間を要する複雑なタスクを実装するために使用できます。ここで説明するアプローチは、モデルがこれらのタスクを実装し、プロジェクトの成功した完了に向けて導く方法の一つです。
@@ -22,10 +21,6 @@ Codex と `gpt-5-codex` モデルは、研究、設計、実装にかなりの�
 
 複雑な機能や重要なリファクタリングを書く際は、設計から実装まで ExecPlan（.agent/PLANS.md で説明されているもの）を使用してください。
 ```
-
-
-
-
 
 ## `PLANS.md`
 

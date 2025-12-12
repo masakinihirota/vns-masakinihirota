@@ -1,4 +1,3 @@
-
 # 「ハンドオフ」機能 — 開発ワークフローを自動化する3つの活用例
 
 カスタムエージェントを活用して、専門的な役割を持つAI間でコンテキストを引き継ぎながら作業を行う手法を整理しました。情報はすべて残し、重複を統合して見やすく再構成しています。
@@ -6,6 +5,7 @@
 ---
 
 ## 目次
+
 1. 「ハンドオフ」とは？
 2. ハンドオフの仕組み
 3. 活用例（計画→実装、実装→レビュー、失敗テスト→合格）
@@ -53,12 +53,12 @@
 
 主要設定項目:
 
-| 設定項目 | 説明 | 例 |
-| :--- | :--- | :--- |
-| `handoffs.label` | ハンドオフボタンに表示するテキスト | `Start Implementation` |
-| `handoffs.agent` | 移行先のエージェント識別子 | `implementation` |
-| `handoffs.prompt` | 移行先に送る指示テキスト | `Now implement the plan outlined above.` |
-| `handoffs.send` | 自動送信のフラグ（デフォルト: `false`） | `false` |
+| 設定項目          | 説明                                    | 例                                       |
+| :---------------- | :-------------------------------------- | :--------------------------------------- |
+| `handoffs.label`  | ハンドオフボタンに表示するテキスト      | `Start Implementation`                   |
+| `handoffs.agent`  | 移行先のエージェント識別子              | `implementation`                         |
+| `handoffs.prompt` | 移行先に送る指示テキスト                | `Now implement the plan outlined above.` |
+| `handoffs.send`   | 自動送信のフラグ（デフォルト: `false`） | `false`                                  |
 
 ---
 
@@ -87,7 +87,7 @@ handoffs:
 ```yaml
 ---
 description: Implement code changes based on an approved plan.
-tools: [ 'edit', 'search' ]
+tools: ["edit", "search"]
 handoffs:
   - label: Request Code Review
     agent: code_reviewer
@@ -103,7 +103,7 @@ handoffs:
 ```yaml
 ---
 description: Generate failing tests that need implementation to pass.
-tools: [ 'search', 'fetch' ]
+tools: ["search", "fetch"]
 handoffs:
   - label: Implement to Pass Tests
     agent: implementation
@@ -120,12 +120,12 @@ handoffs:
 
 ### ワークフロー（概要）
 
-| ステップ | フェーズ | Source | Target |
-| :--- | :--- | :--- | :--- |
-| 1 | アイデア→計画 | `idea_agent` | `planner` |
-| 2 | 計画→失敗テスト | `planner` | `failing_tester` |
-| 3 | 失敗テスト→実装 | `failing_tester` | `implementation` |
-| 4 | 実装→レビュー | `implementation` | `code_reviewer` |
+| ステップ | フェーズ        | Source           | Target           |
+| :------- | :-------------- | :--------------- | :--------------- |
+| 1        | アイデア→計画   | `idea_agent`     | `planner`        |
+| 2        | 計画→失敗テスト | `planner`        | `failing_tester` |
+| 3        | 失敗テスト→実装 | `failing_tester` | `implementation` |
+| 4        | 実装→レビュー   | `implementation` | `code_reviewer`  |
 
 ### Step 1: `idea_agent` → `planner` の例
 
@@ -145,7 +145,7 @@ handoffs:
 ```yaml
 ---
 description: Generate implementation plans, requirements, and design overview.
-tools: [ 'search', 'fetch' ]
+tools: ["search", "fetch"]
 handoffs:
   - label: TDD用の失敗テストを作成
     agent: failing_tester
@@ -172,7 +172,7 @@ handoffs:
 ```yaml
 ---
 description: Implement code changes and ensure tests pass.
-tools: [ 'edit', 'search' ]
+tools: ["edit", "search"]
 handoffs:
   - label: 最終コードレビューに提出
     agent: code_reviewer
@@ -194,14 +194,12 @@ handoffs:
 この稿を基に、プロジェクトに合わせてハンドオフのワークフローを微調整してください。まずは一つの流れ（例：計画→実装）から運用を始め、段階的に複数ステップを繋げていくのをおすすめします。
 
 このシナリオを実施する際のポイント（まとめ）:
+
 - Plannerには読み取り専用のリサーチツール（`search`, `fetch`, `githubRepo`, `usages`）を許可し、実装用エージェントに編集ツール（`edit`, `search`, `fetch`）を付与するなど、役割に応じたツール権限を付けてください。
 - 各ハンドオフの`prompt`は具体的に書くことで、移行先エージェントの動作が安定します。
 - 最初は`send: false`で運用し、信頼できるプロンプトが確立したら`send: true`の自動送信を検討してください。
 
-
 ### 記述例（YAMLフロントマター）
-
-
 
 ### 主要プロンプトの例
 
@@ -209,28 +207,9 @@ handoffs:
 
 上記プロンプトは、Plannerが生成した要件・設計をそのまま実装エージェントに渡すための基本形です。必要に応じて、ファイル名や追加の制約（例: 対象モジュール、コードスタイル、テストフレームワーク）を追記してください。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ---
 
-## 具体的な使い方 2２つ目の具体例（実装 (Implementation) → レビュー (Review)）**に焦点を当てて、ハンドオフのYAML設定とプロンプトの具体例をご説明します。
+## 具体的な使い方 2２つ目の具体例（実装 (Implementation) → レビュー (Review)）\*\*に焦点を当てて、ハンドオフのYAML設定とプロンプトの具体例をご説明します。
 
 ---
 
@@ -248,25 +227,27 @@ handoffs:
 
 このハンドオフは、実装エージェントのファイル（例: `implementation.agent.md`）のYAMLフロントマターに記述されます。
 
-| 設定項目 | 記述例 | 役割とソースの裏付け |
-| :--- | :--- | :--- |
-| **`description`** | `Implement code changes based on an approved plan.` | このエージェント（実装エージェント）の説明です。 |
-| **`tools`** | `[ 'edit' , 'search' , 'fetch' ]` | 実装エージェントは「完全な編集能力」を必要とします。 |
-| **`handoffs.label`** | `- label : Request Code Review` | ハンドオフボタンに表示されるテキストです。この例では「コードレビューをリクエスト」という意味です。 |
-| **`handoffs.agent`** | `agent : code_reviewer` | 移行先のターゲットエージェントの識別子を指定します。ここでは「code\_reviewer（コードレビュアー）」エージェントを指定しています。 |
-| **`handoffs.prompt`** | `prompt : Review the implementation changes just completed for quality and security issues.` | **次のエージェント（コードレビューエージェント）に自動的に送る指示テキスト（プロンプト）**です。 |
-| **`handoffs.send`** | `send : false` | 既定値は`false`です。ユーザーはプロンプトを確認してから送信できます。|
+| 設定項目              | 記述例                                                                                       | 役割とソースの裏付け                                                                                                            |
+| :-------------------- | :------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
+| **`description`**     | `Implement code changes based on an approved plan.`                                          | このエージェント（実装エージェント）の説明です。                                                                                |
+| **`tools`**           | `[ 'edit' , 'search' , 'fetch' ]`                                                            | 実装エージェントは「完全な編集能力」を必要とします。                                                                            |
+| **`handoffs.label`**  | `- label : Request Code Review`                                                              | ハンドオフボタンに表示されるテキストです。この例では「コードレビューをリクエスト」という意味です。                              |
+| **`handoffs.agent`**  | `agent : code_reviewer`                                                                      | 移行先のターゲットエージェントの識別子を指定します。ここでは「code_reviewer（コードレビュアー）」エージェントを指定しています。 |
+| **`handoffs.prompt`** | `prompt : Review the implementation changes just completed for quality and security issues.` | **次のエージェント（コードレビューエージェント）に自動的に送る指示テキスト（プロンプト）**です。                                |
+| **`handoffs.send`**   | `send : false`                                                                               | 既定値は`false`です。ユーザーはプロンプトを確認してから送信できます。                                                           |
 
 ### 記述例（YAMLフロントマター）
 
 description : Implement code changes based on an approved plan.
 tools : [ 'edit' , 'search' ]
 handoffs :
- - label : Request Code Review
-   agent : code_reviewer
-   prompt : Review the implementation changes just completed for quality and security issues.
-   send : false
-```
+
+- label : Request Code Review
+  agent : code_reviewer
+  prompt : Review the implementation changes just completed for quality and security issues.
+  send : false
+
+````
 
 
 ### 抽出されたプロンプト
@@ -336,7 +317,7 @@ handoffs :
    prompt : Implement the required code changes to make the tests outlined above pass.
    send : false
 ---
-```
+````
 
 ### 抽出されたプロンプト
 
@@ -350,23 +331,7 @@ handoffs :
 
 この指示により、実装エージェントは、実装の目標が抽象的な機能ではなく、目の前にある具体的なテストケースをクリアすることであると理解し、**必要なコード変更のみに集中して**作業を進めることが可能になります。
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-アイデア＞計画＞要件定義＞ 設計＞TDDでの実装＞失敗するテスト＞成功するテスト＞＞＞完成  というような感じでハンドオフを書いてみて
-
-
+アイデア＞計画＞要件定義＞ 設計＞TDDでの実装＞失敗するテスト＞成功するテスト＞＞＞完成 というような感じでハンドオフを書いてみて
 
 お客様のご提示された高度で体系的な開発ワークフロー（アイデアから完成まで）を実現するために、カスタムエージェントの「ハンドオフ」機能を連鎖させた具体的な設定例を作成いたします。
 
@@ -374,12 +339,12 @@ handoffs :
 
 ### ワークフローの構成
 
-| ステップ | 開発フェーズ | 担当エージェント (Source) | 移行先エージェント (Target) | 関連するソース情報 |
-| :--- | :--- | :--- | :--- | :--- |
-| **Step 1** | アイデア → 計画/設計 | `idea_agent` | `planner` | 専門的な役割の作成, 計画エージェントの存在 |
-| **Step 2** | 計画/設計 → TDDテスト準備 | `planner` | `failing_tester` | 計画から実装への移行例 |
-| **Step 3** | 失敗するテスト → 実装/成功 | `failing_tester` | `implementation` | 失敗テストを合格テストへ導く例 |
-| **Step 4** | 実装 → 完成/レビュー | `implementation` | `code_reviewer` | 実装からレビューへの移行例 |
+| ステップ   | 開発フェーズ               | 担当エージェント (Source) | 移行先エージェント (Target) | 関連するソース情報                         |
+| :--------- | :------------------------- | :------------------------ | :-------------------------- | :----------------------------------------- |
+| **Step 1** | アイデア → 計画/設計       | `idea_agent`              | `planner`                   | 専門的な役割の作成, 計画エージェントの存在 |
+| **Step 2** | 計画/設計 → TDDテスト準備  | `planner`                 | `failing_tester`            | 計画から実装への移行例                     |
+| **Step 3** | 失敗するテスト → 実装/成功 | `failing_tester`          | `implementation`            | 失敗テストを合格テストへ導く例             |
+| **Step 4** | 実装 → 完成/レビュー       | `implementation`          | `code_reviewer`             | 実装からレビューへの移行例                 |
 
 ---
 
@@ -391,23 +356,24 @@ handoffs :
 
 このエージェントは、ユーザーとの対話を通じて初期のアイデアや目標を明確化した後に、ハンドオフを実行します。
 
-| 設定項目 | 記述例 |
-| :--- | :--- |
-| `handoffs.label` | `詳細な計画と設計を開始` |
-| `handoffs.agent` | `planner` |
+| 設定項目          | 記述例                                                                                                           |
+| :---------------- | :--------------------------------------------------------------------------------------------------------------- |
+| `handoffs.label`  | `詳細な計画と設計を開始`                                                                                         |
+| `handoffs.agent`  | `planner`                                                                                                        |
 | `handoffs.prompt` | **`このアイデアと目標に基づき、要件定義、高レベル設計、および実装ステップを含む詳細な計画を生成してください。`** |
 
 ```yaml
 ---
-description : Initial brainstorming and idea definition.
-handoffs :
- - label : 詳細な計画と設計を開始
-   agent : planner
-   prompt : このアイデアと目標に基づき、要件定義、高レベル設計、および実装ステップを含む詳細な計画を生成してください。
-   send : false
+description: Initial brainstorming and idea definition.
+handoffs:
+  - label: 詳細な計画と設計を開始
+    agent: planner
+    prompt: このアイデアと目標に基づき、要件定義、高レベル設計、および実装ステップを含む詳細な計画を生成してください。
+    send: false
 ---
 ```
-*解説: `planner`エージェントは、プロジェクトのコンテキストを収集し、詳細な実装計画を生成するよう指示されている役割です。*
+
+_解説: `planner`エージェントは、プロジェクトのコンテキストを収集し、詳細な実装計画を生成するよう指示されている役割です。_
 
 ## 2. Step 2: 計画・設計 → TDDでの失敗テスト作成
 
@@ -415,24 +381,25 @@ handoffs :
 
 ### 移行元: `planner.agent.md` (計画エージェント) の設定
 
-| 設定項目 | 記述例 |
-| :--- | :--- |
-| `handoffs.label` | `TDD用の失敗テストを作成` |
-| `handoffs.agent` | `failing_tester` |
+| 設定項目          | 記述例                                                                                                             |
+| :---------------- | :----------------------------------------------------------------------------------------------------------------- |
+| `handoffs.label`  | `TDD用の失敗テストを作成`                                                                                          |
+| `handoffs.agent`  | `failing_tester`                                                                                                   |
 | `handoffs.prompt` | **`承認された要件と設計に基づき、実装対象の機能に対応する、現在は失敗するテストケースを最初に作成してください。`** |
 
 ```yaml
 ---
-description : Generate implementation plans, requirements, and design overview.
-tools : [ 'search' , 'fetch' ]
-handoffs :
- - label : TDD用の失敗テストを作成
-   agent : failing_tester
-   prompt : 承認された要件と設計に基づき、実装対象の機能に対応する、現在は失敗するテストケースを最初に作成してください。
-   send : false
+description: Generate implementation plans, requirements, and design overview.
+tools: ["search", "fetch"]
+handoffs:
+  - label: TDD用の失敗テストを作成
+    agent: failing_tester
+    prompt: 承認された要件と設計に基づき、実装対象の機能に対応する、現在は失敗するテストケースを最初に作成してください。
+    send: false
 ---
 ```
-*解説: 大規模な実装を一度にレビューする代わりに、失敗するテストを先に生成することは、より検証しやすいステップで進めるために役立ちます。*
+
+_解説: 大規模な実装を一度にレビューする代わりに、失敗するテストを先に生成することは、より検証しやすいステップで進めるために役立ちます。_
 
 ## 3. Step 3: 失敗するテスト → 実装（成功するテスト）
 
@@ -440,20 +407,20 @@ handoffs :
 
 ### 移行元: `failing_tester.agent.md` (失敗テスト作成エージェント) の設定
 
-| 設定項目 | 記述例 |
-| :--- | :--- |
-| `handoffs.label` | `実装を開始し、テストを合格させる` |
-| `handoffs.agent` | `implementation` |
+| 設定項目          | 記述例                                                                                                         |
+| :---------------- | :------------------------------------------------------------------------------------------------------------- |
+| `handoffs.label`  | `実装を開始し、テストを合格させる`                                                                             |
+| `handoffs.agent`  | `implementation`                                                                                               |
 | `handoffs.prompt` | **`直前に提示された失敗テストをすべて合格させるために必要なコード変更を実装し、ファイルに適用してください。`** |
 
 ```yaml
 ---
-description : Generate failing tests based on the implementation plan.
-handoffs :
- - label : 実装を開始し、テストを合格させる
-   agent : implementation
-   prompt : 直前に提示された失敗テストをすべて合格させるために必要なコード変更を実装し、ファイルに適用してください。
-   send : false
+description: Generate failing tests based on the implementation plan.
+handoffs:
+  - label: 実装を開始し、テストを合格させる
+    agent: implementation
+    prompt: 直前に提示された失敗テストをすべて合格させるために必要なコード変更を実装し、ファイルに適用してください。
+    send: false
 ---
 ```
 
@@ -463,17 +430,18 @@ handoffs :
 
 ### 移行元: `implementation.agent.md` (実装エージェント) の設定
 
-| 設定項目 | 記述例 |
-| :--- | :--- |
-| `handoffs.label` | `最終コードレビューに提出` |
-| `handoffs.agent` | `code_reviewer` |
+| 設定項目          | 記述例                                                                                                                         |
+| :---------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| `handoffs.label`  | `最終コードレビューに提出`                                                                                                     |
+| `handoffs.agent`  | `code_reviewer`                                                                                                                |
 | `handoffs.prompt` | **`完了した実装（テスト合格済み）のコード変更全体について、品質、セキュリティ、および設計との整合性をレビューしてください。`** |
 
 description : Implement code changes and ensure tests pass.
+
 ```yaml
 ---
 description: Generate an implementation plan
-tools: [ 'search', 'fetch', 'githubRepo', 'usages' ]
+tools: ["search", "fetch", "githubRepo", "usages"]
 handoffs:
   - label: Start Implementation
     agent: implementation
@@ -481,23 +449,12 @@ handoffs:
     send: false
 ---
 ```
-*解説: レビューエージェントは、セキュリティの脆弱性を特定し、改善点を提案することに特化した専門的な指示を持つことができます。*
+
+_解説: レビューエージェントは、セキュリティの脆弱性を特定し、改善点を提案することに特化した専門的な指示を持つことができます。_
 
 この一連のハンドオフを設定することで、お客様の望む「アイデア」から「完成」に至るまでの一貫した、統制の取れた開発ワークフローをAIエージェント間で実現できます。この機能は、開発者に各ステップの**レビューと承認のコントロール**を維持させながら、マルチステップのワークフローをオーケストレーションします。
 
-
-
-
-
-
-
-
-
-
-
-
 アイデアから作りたいものを想定して、計画を立てて設計書をつくって、テスト駆動開発で開発するためにテストリストを作って、テストを失敗して、テストを成功させる、そしてものを作るまでをハンドオフで書いてみてください
-
 
 お客様が想定された、**アイデア出しからTDD（テスト駆動開発）を経由してレビュー完了に至る、高度で連続的な開発ワークフロー**を実現するためのハンドオフ設定を、具体的なYAMLフロントマターの記述例としてご提案します。
 
@@ -521,18 +478,18 @@ handoffs:
 
 #### 移行元: `idea_agent.agent.md` のハンドオフ設定
 
-| 設定項目 | 記述例 |
-| :--- | :--- |
-| `handoffs.label` | `詳細な計画と設計を開始` |
-| `handoffs.agent` | `planner` |
+| 設定項目          | 記述例                                                                                                           |
+| :---------------- | :--------------------------------------------------------------------------------------------------------------- |
+| `handoffs.label`  | `詳細な計画と設計を開始`                                                                                         |
+| `handoffs.agent`  | `planner`                                                                                                        |
 | `handoffs.prompt` | **`このアイデアと目標に基づき、要件定義、高レベル設計、および実装ステップを含む詳細な計画を生成してください。`** |
 
 ```yaml
 handoffs:
- - label : 詳細な計画と設計を開始
-   agent : planner
-   prompt : このアイデアと目標に基づき、要件定義、高レベル設計、および実装ステップを含む詳細な計画を生成してください。
-   send : false
+  - label: 詳細な計画と設計を開始
+    agent: planner
+    prompt: このアイデアと目標に基づき、要件定義、高レベル設計、および実装ステップを含む詳細な計画を生成してください。
+    send: false
 ```
 
 ### Step 2: 計画・設計 → TDDでの失敗テスト作成
@@ -541,10 +498,10 @@ handoffs:
 
 #### 移行元: `planner.agent.md` のハンドオフ設定
 
-| 設定項目 | 記述例 |
-| :--- | :--- |
-| `handoffs.label` | `TDD: 失敗するテストケースを作成` |
-| `handoffs.agent` | `failing_tester` |
+| 設定項目          | 記述例                                                                                                                     |
+| :---------------- | :------------------------------------------------------------------------------------------------------------------------- |
+| `handoffs.label`  | `TDD: 失敗するテストケースを作成`                                                                                          |
+| `handoffs.agent`  | `failing_tester`                                                                                                           |
 | `handoffs.prompt` | **`承認された設計と要件に基づき、これから実装する機能に対応する、現在は失敗するテストコードのリストを作成してください。`** |
 
 ```yaml
@@ -561,18 +518,18 @@ handoffs:
 
 #### 移行元: `failing_tester.agent.md` のハンドオフ設定
 
-| 設定項目 | 記述例 |
-| :--- | :--- |
-| `handoffs.label` | `実装を開始し、テストを合格させる` |
-| `handoffs.agent` | `implementation` |
+| 設定項目          | 記述例                                                                                                         |
+| :---------------- | :------------------------------------------------------------------------------------------------------------- |
+| `handoffs.label`  | `実装を開始し、テストを合格させる`                                                                             |
+| `handoffs.agent`  | `implementation`                                                                                               |
 | `handoffs.prompt` | **`直前に提示された失敗テストをすべて合格させるために必要なコード変更を実装し、ファイルに適用してください。`** |
 
 ```yaml
 handoffs:
- - label : 実装を開始し、テストを合格させる
-   agent : implementation
-   prompt : 直前に提示された失敗テストをすべて合格させるために必要なコード変更を実装し、ファイルに適用してください。
-   send : false
+  - label: 実装を開始し、テストを合格させる
+    agent: implementation
+    prompt: 直前に提示された失敗テストをすべて合格させるために必要なコード変更を実装し、ファイルに適用してください。
+    send: false
 ```
 
 ### Step 4: 実装（テスト成功） → 完成・最終レビュー
@@ -581,27 +538,23 @@ handoffs:
 
 #### 移行元: `implementation.agent.md` のハンドオフ設定
 
-| 設定項目 | 記述例 |
-| :--- | :--- |
-| `handoffs.label` | `最終コードレビューに提出` |
-| `handoffs.agent` | `code_reviewer` |
+| 設定項目          | 記述例                                                                                                                         |
+| :---------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| `handoffs.label`  | `最終コードレビューに提出`                                                                                                     |
+| `handoffs.agent`  | `code_reviewer`                                                                                                                |
 | `handoffs.prompt` | **`完了した実装（テスト合格済み）のコード変更全体について、品質、セキュリティ、および設計との整合性をレビューしてください。`** |
 
 ```yaml
 handoffs:
- - label : 最終コードレビューに提出
-   agent : code_reviewer
-   prompt : 完了した実装（テスト合格済み）のコード変更全体について、品質、セキュリティ、および設計との整合性をレビューしてください。
-   send : false
+  - label: 最終コードレビューに提出
+    agent: code_reviewer
+    prompt: 完了した実装（テスト合格済み）のコード変更全体について、品質、セキュリティ、および設計との整合性をレビューしてください。
+    send: false
 ```
 
 ### まとめ
 
 この連鎖的なハンドオフの仕組みにより、開発者は各ステップ（計画、テスト、実装など）をレビューし、承認するコントロールを維持しながら、AIエージェントの専門的な能力 を活用して、複雑な開発プロセスをスムーズに進行させることができます。これは、一つのタスクを完了したAIが、次のタスクに必要な**明確な指示（プロンプト）**と**コンテキスト**を自動で引き継ぎ、次の専門家（エージェント）にバトンを渡す仕組みです。
-
-
-
-
 
 お客様のご要望に基づき、以前の会話で構築した**アイデアからTDD（テスト駆動開発）を経て完成に至る**までのマルチステップワークフローを実現するための、具体的なカスタムエージェントのYAMLファイル（`.agent.md`ファイル）を記述します。
 
@@ -617,16 +570,17 @@ handoffs:
 
 ```markdown
 ---
-description : 新しい機能やプロジェクトの初期アイデアと目標を定義します。
-name : IdeaGenerator
-target : vscode
-tools : [ 'search' ] # 初期リサーチ用のツール
-handoffs :
- - label : 詳細な計画と設計を開始
-   agent : planner
-   prompt : このアイデアと目標に基づき、要件定義、高レベル設計、および実装ステップを含む詳細な計画を生成してください。
-   send : false
+description: 新しい機能やプロジェクトの初期アイデアと目標を定義します。
+name: IdeaGenerator
+target: vscode
+tools: ["search"] # 初期リサーチ用のツール
+handoffs:
+  - label: 詳細な計画と設計を開始
+    agent: planner
+    prompt: このアイデアと目標に基づき、要件定義、高レベル設計、および実装ステップを含む詳細な計画を生成してください。
+    send: false
 ---
+
 # アイデア生成の指示
 
 あなたはプロジェクトのアイデア立案者です。ユーザーの要望を聞き、プロジェクトの主要な目標と初期の要件を整理してください。計画や実装のコード変更は行いません。
@@ -663,15 +617,15 @@ handoffs :
 
 ```yaml
 ---
-description : 承認された計画に基づき、テスト駆動開発（TDD）のための失敗するテストコードを作成します。
-name : FailingTester
-target : vscode
-tools : [ 'search' , 'fetch' ]
-handoffs :
- - label : 実装を開始し、テストを合格させる
-   agent : implementation
-   prompt : 直前に提示された失敗テストをすべて合格させるために必要なコード変更を実装し、ファイルに適用してください。
-   send : false
+description: 承認された計画に基づき、テスト駆動開発（TDD）のための失敗するテストコードを作成します。
+name: FailingTester
+target: vscode
+tools: ["search", "fetch"]
+handoffs:
+  - label: 実装を開始し、テストを合格させる
+    agent: implementation
+    prompt: 直前に提示された失敗テストをすべて合格させるために必要なコード変更を実装し、ファイルに適用してください。
+    send: false
 ---
 # テスト作成の指示
 
@@ -686,15 +640,15 @@ handoffs :
 
 ```yaml
 ---
-description : コード変更を実装し、テストを合格させます。
-name : Implementer
-target : vscode
-tools : [ 'edit' , 'search' ] # 実装のために完全な編集能力が必要
-handoffs :
- - label : 最終コードレビューに提出
-   agent : code_reviewer
-   prompt : 完了した実装（テスト合格済み）のコード変更全体について、品質、セキュリティ、および設計との整合性をレビューしてください。
-   send : false
+description: コード変更を実装し、テストを合格させます。
+name: Implementer
+target: vscode
+tools: ["edit", "search"] # 実装のために完全な編集能力が必要
+handoffs:
+  - label: 最終コードレビューに提出
+    agent: code_reviewer
+    prompt: 完了した実装（テスト合格済み）のコード変更全体について、品質、セキュリティ、および設計との整合性をレビューしてください。
+    send: false
 ---
 # 実装の指示
 
@@ -711,15 +665,12 @@ handoffs :
 
 ```yaml
 ---
-description : 実装されたコードのセキュリティ脆弱性、品質、および設計との整合性をレビューします。
-name : CodeReviewer
-target : vscode
-tools : [ 'search' , 'fetch' ] # レビューには読み取りアクセスのみが必要
+description: 実装されたコードのセキュリティ脆弱性、品質、および設計との整合性をレビューします。
+name: CodeReviewer
+target: vscode
+tools: ["search", "fetch"] # レビューには読み取りアクセスのみが必要
 ---
 # コードレビューの指示
 
 あなたはセキュリティレビュアー/コード品質担当者です。提示されたコード変更を厳密にレビューし、セキュリティの脆弱性を特定し、改善点を提案することに焦点を当てて動作してください。
 ```
-
-
-
