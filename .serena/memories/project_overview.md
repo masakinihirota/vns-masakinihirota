@@ -1,0 +1,3 @@
+- プロジェクト概要: Next.js 16(App Router)とReact 19で構築するmasakinihirota向けWebアプリ。Supabaseをバックエンド(BaaS)として利用し、Radix UIやTailwind CSSでUI構築。
+- 主なディレクトリ: src/app(App Routerのページとルート), src/components(UI/レイアウト/プロフィール一覧など再利用コンポーネント), src/lib(ユーティリティ・DBアクセス・Supabase周辺), src/hooks, supabase(設定・SQLスキーマ), tests(システムテストセットアップ)。
+- 特徴: Supabaseクライアント実装, 認証フォーム群, プロフィールリスト機能のロジック+テスト, app routerで保護/公開/サンプルルートを管理。

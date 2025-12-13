@@ -1,0 +1,5 @@
+- TypeScript必須。const優先(No var, prefer-const)やtry/catch制限などESLintルール有り。throwはError等のオブジェクトのみ。
+- Prettier設定: printWidth 100, double quote, trailing comma all, semi必須, tab幅2, LF。
+- React/Next標準構文。App Router構成でレイアウト.tsx, page.tsx命名に従う。
+- テストはVitest + Testing LibraryでReact Testing Library APIを使用。コンポーネント近傍にユニット/統合テストを配置する方針。
+- Tailwind CSS + Digital go design tokens/テーマプラグインを活用し、UIはRadixコンポーネントをベースに構築。
