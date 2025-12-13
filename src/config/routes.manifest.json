@@ -138,5 +138,19 @@
     "group": "footer",
     "order": 30,
     "visibleInMenu": true
+  },
+  {
+    "path": "/oasis",
+    "label": "オアシス宣言",
+    "group": "footer",
+    "order": 40,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/human",
+    "label": "人間宣言",
+    "group": "footer",
+    "order": 50,
+    "visibleInMenu": true
   }
 ]

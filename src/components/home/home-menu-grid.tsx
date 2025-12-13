@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { type LucideIcon } from "lucide-react";
+
 import routesManifest from "@/config/routes.manifest.json";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { iconFor as getIcon } from "@/config/menu-icons";

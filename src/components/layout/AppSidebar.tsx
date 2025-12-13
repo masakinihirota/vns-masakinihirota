@@ -4,26 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Home,
-  User,
-  Search,
-  Heart,
-  Flag,
-  Users,
-  Briefcase,
-  Lightbulb,
-  Wrench,
   ChevronRight,
-  List,
-  Link2,
-  Grid,
-  Trophy,
-  Medal,
-  Star,
-  GraduationCap,
-  Settings,
-  CreditCard,
-  UserCircle,
   MoreHorizontal,
   LogOut,
   UserPlus,
@@ -60,7 +41,7 @@ import {
 import routesManifest from "@/config/routes.manifest.json";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getMenuItemState, getMenuUnlockTip, MenuItemState } from "@/lib/tutorial/tutorial";
-import { ICON_MAP, iconFor } from "@/config/menu-icons";
+import { iconFor } from "@/config/menu-icons";
 
 /**
  * 左サイドメニュー要件定義書に基づくメニュー構成
