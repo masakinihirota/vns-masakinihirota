@@ -1,0 +1,5 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="background:#111">
+  <defs><filter id="neon"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+  <path d="M 45 45 L 155 45 L 155 100 C 155 145 100 170 100 170 C 100 170 45 145 45 100 Z" fill="none" stroke="#00BCD4" stroke-width="5" filter="url(#neon)"/>
+  <text x="100" y="120" font-family="Arial, sans-serif" font-weight="bold" font-size="60" text-anchor="middle" fill="#FFFFFF">VNS</text>
+</svg>
