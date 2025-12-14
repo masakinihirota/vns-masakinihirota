@@ -1,0 +1,4 @@
+- 変更後は`pnpm lint`と`pnpm format`で静的チェックを実行し、必要に応じて`pnpm test`でユニット/統合テストを走らせる。
+- Supabaseスキーマ変更時は`supabase/`配下のSQLや型を更新し、`pnpm supabase:types:local`で型定義を再生成。
+- Next.jsルートやコンポーネントを追加した場合は近接テストを作成し、`tests/`ディレクトリにはシステムテストを追加。
+- 作業内容と検証結果を簡潔に記録してコミット。

@@ -1,0 +1,6 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 30 30 L 170 30 L 170 100 C 170 160 100 190 100 190 C 100 190 30 160 30 100 Z" fill="#006064" opacity="0.3"/>
+  <path d="M 40 40 L 160 40 L 160 100 C 160 150 100 180 100 180 C 100 180 40 150 40 100 Z" fill="#009688"/>
+  <path d="M 50 50 L 150 50 L 150 100 C 150 140 100 165 100 165 C 100 165 50 140 50 100 Z" fill="none" stroke="white" stroke-width="2"/>
+  <text x="100" y="120" font-family="Arial, sans-serif" font-weight="bold" font-size="60" text-anchor="middle" fill="#FFFFFF">VNS</text>
+</svg>

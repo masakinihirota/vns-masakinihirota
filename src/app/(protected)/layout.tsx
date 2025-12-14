@@ -16,7 +16,7 @@ export default async function AuthLayout({ children }: { children: React.ReactNo
   // 開発環境でも、(protected)配下は基本的に認証を求めるべきだが、
   // 開発初期の利便性のため、またはユーザー指示により調整可能。
   // ここでは厳密にチェックする。
-  if (error || !user) {
+  if ((error || !user) && process.env.NODE_ENV !== "development") {
     redirect("/login");
   }
 

@@ -9,9 +9,13 @@ export const Avatar: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLD
   </div>
 );
 
-export const AvatarImage: React.FC<{ src?: string; alt?: string }> = ({ src, alt }) => (
+export const AvatarImage: React.FC<React.ImgHTMLAttributes<HTMLImageElement>> = ({
+  className,
+  alt,
+  ...props
+}) => (
   // eslint-disable-next-line @next/next/no-img-element
-  <img src={src} alt={alt} data-testid="avatar-image" />
+  <img className={className} alt={alt} {...props} data-testid="avatar-image" />
 );
 
 export const AvatarFallback: React.FC<

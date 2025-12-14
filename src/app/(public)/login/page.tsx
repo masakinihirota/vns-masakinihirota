@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Button as DadsButton } from "@/components/dads";
 
 import { AnonymousLoginForm } from "@/components/auth/anonymous-login-form";
 import { GitHubLoginForm } from "@/components/auth/github-login-form";
@@ -15,6 +16,17 @@ export default function Page() {
           昨日僕が感動したことを、今日の君はまだ知らない。
         </p>
         <p className="text-sm text-gray-400">ログインしていません</p>
+        <div className="mt-4 p-4 border border-gray-700 rounded bg-gray-900 inline-block">
+          <p className="text-xs text-gray-400 mb-2">DADS Component Verification</p>
+          <div className="flex gap-2 justify-center">
+            <DadsButton variant="solid-fill" size="sm">
+              Solid Fill
+            </DadsButton>
+            <DadsButton variant="outline" size="sm">
+              Outline
+            </DadsButton>
+          </div>
+        </div>
       </div>
 
       <h1 className="text-2xl font-bold mb-8">ユーザーの認証方法を選択してください</h1>

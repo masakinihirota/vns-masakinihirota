@@ -1,0 +1,25 @@
+
+> vns-masakinihirota@0.3.0 build U:\2026src\vns-masakinihirota.worktrees\anti
+> next build
+
+   笆ｲ Next.js 16.0.10 (Turbopack)
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ 笨・Compiled successfully in 20.0s
+   Running TypeScript ...
+Failed to compile.
+
+./src/components/works/work-list/work-list.tsx:80:59
+Type error: Type '{ children: string; className: string; title: string; }' is not assignable to type 'IntrinsicAttributes & { className?: string | undefined; } & { children?: ReactNode; }'.
+  Property 'title' does not exist on type 'IntrinsicAttributes & { className?: string | undefined; } & { children?: ReactNode; }'.
+
+  78 |                 <span className="text-xs text-slate-400 font-mono">{work.period}</span>
+  79 |               </div>
+> 80 |               <CardTitle className="text-lg line-clamp-1" title={work.title}>
+     |                                                           ^
+  81 |                 {work.title}
+  82 |               </CardTitle>
+  83 |             </CardHeader>
+Next.js build worker exited with code: 1 and signal: null
+窶右LIFECYCLE窶・Command failed with exit code 1.

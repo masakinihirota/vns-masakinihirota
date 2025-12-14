@@ -40,7 +40,7 @@ export function AnonymousLoginForm({ className, ...props }: React.ComponentProps
     }
 
     // ログイン成功後にリダイレクト（保護されたルートへ）
-    router.push("/");
+    router.push("/home");
     console.log("🚀 ~ handleAnonymousLogin ~ error:", error);
   };
 
