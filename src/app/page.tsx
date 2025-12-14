@@ -6,10 +6,18 @@ export default function Home() {
   const devRoutes = [
     { title: "Home (Protected)", path: "/home", desc: "Main content dashboard" },
     { title: "Root Accounts", path: "/root-accounts", desc: "Root management" },
-    { title: "Matching Selection", path: "/matching", desc: "New Entry point for matching" },
-    { title: "Auto Matching", path: "/matching/auto", desc: "New Auto matching logic" },
-    { title: "Manual Matching (New)", path: "/matching/manual", desc: "New Shadcn-UI Refactor" },
-    { title: "Manual Matching (Old)", path: "/manual-matching", desc: "Previous implementation" },
+    { title: "Auto Matching", path: "/auto-matching", desc: "Automated matching implementation" },
+    {
+      title: "Manual Matching Console",
+      path: "/manual-matching",
+      desc: "Manual matching 3-column console",
+    },
+    {
+      title: "Matching Conditions",
+      path: "/manual-matching/conditions",
+      desc: "Matching algorithm settings",
+    },
+    { title: "Values (New)", path: "/values", desc: "Questionnaire to register values" },
     { title: "Profile", path: "/profile", desc: "User profile page" },
     { title: "Works", path: "/works", desc: "Works directory" },
     { title: "Oasis Declaration", path: "/oasis", desc: "Project Philosophy & Manifesto" },

@@ -182,7 +182,7 @@ const footerMenuItems = manifestRoutes
 const mockUser = {
   name: "masakinihirota",
   email: "@masakinihirota",
-  avatar: "/avatars/masakinihirota.jpg",
+  avatar: "/avatars/masakinihirota.png",
 };
 
 // ナビゲーション項目コンポーネント（Lv制対応）

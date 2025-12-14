@@ -1,5 +1,5 @@
-import { ManualMatchingContainer } from "../../components/manual-matching";
+import { ManualMatchingConsoleContainer } from "@/components/manual-matching/console/manual-matching-console.container";
 
 export default function ManualMatchingPage() {
-  return <ManualMatchingContainer />;
+  return <ManualMatchingConsoleContainer />;
 }
