@@ -1,4 +1,0 @@
-src/components/layout/AppSidebar.test.ts(5,3): error TS2305: Module '"./AppSidebar"' has no exported member 'ICON_MAP'.
-src/components/layout/AppSidebar.test.ts(7,3): error TS2459: Module '"./AppSidebar"' declares 'iconFor' locally, but it is not exported.
-src/components/layout/ICON_MAP.test.ts(2,10): error TS2305: Module '"./AppSidebar"' has no exported member 'ICON_MAP'.
-src/components/root-accounts/root-account-dashboard/root-account-dashboard.tsx(17,13): error TS2339: Property 'user' does not exist on type '{ id: string; name: string; avatar: string; profiles: UserProfile[]; }'.
