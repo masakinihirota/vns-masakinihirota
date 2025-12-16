@@ -23,7 +23,6 @@ export default function Home() {
     { title: "Oasis Declaration", path: "/oasis", desc: "Project Philosophy & Manifesto" },
     { title: "Human Declaration", path: "/human", desc: "Affirming human nature" },
     { title: "Landing Page", path: "/lp", desc: "New VNS Landing Page" },
-    { title: "Sample", path: "/sample", desc: "Sample components" },
   ];
 
   return (

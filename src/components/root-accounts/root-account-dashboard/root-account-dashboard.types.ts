@@ -1,90 +1,28 @@
 "use client";
 
-export interface UserProfile {
-  title: string;
-  type: string;
-  description: string;
-  active: boolean;
-  badgeColor: string;
-  limit?: boolean;
-}
-
-export interface Group {
-  name: string;
-  members: number;
-}
-
-export interface Alliance {
-  name: string;
-  description: string;
-}
-
-export interface AccountStatus {
-  status: string;
-  type: string;
-  days: number;
-  lastLogin: string;
-}
-
-export interface AccountSettings {
-  tutorialDone: boolean;
-  valuesAnswered: boolean;
-  adsConsent: boolean;
-  menuLevel: string;
-}
-
-export interface Warnings {
-  count: number;
-  resetCount: number;
-  lastReset: string;
-}
-
-export interface OAuth {
-  google: { connected: boolean; email: string };
-  github: { connected: boolean; username: string };
-  twitter: { connected: boolean };
-  stats: { connected: number; disconnected: number };
-}
+export type FileStatusEnum = 'active' | 'suspended' | 'archived';
 
 export interface Language {
-  native: string;
-  available: string[];
-}
-
-export interface RegionArea {
+  id: string;
   name: string;
-  description: string;
-  selected: boolean;
+  native_name: string;
 }
 
-export interface Region {
-  current: string;
-  areas: RegionArea[];
-}
-
-export interface BasicInfo {
-  language: Language;
-  region: Region;
-}
-
-export interface RootAccountDashboardData {
-  user: {
-    id: string;
-    name: string;
-    avatar: string;
-    profiles: UserProfile[];
-  };
-  groups: {
-    managed: Group[];
-    joined: Group[];
-  };
-  alliances: {
-    leader: Alliance[];
-    member: Alliance[];
-  };
-  accountStatus: AccountStatus;
-  accountSettings: AccountSettings;
-  warnings: Warnings;
-  oauth: OAuth;
-  basicInfo: BasicInfo;
+export interface RootAccount {
+  id: string;
+  display_id: string;
+  display_name: string;
+  statement: string;
+  mother_tongue_code: string;
+  site_language_code: string;
+  location: string;
+  birth_generation: string;
+  level: number;
+  total_points: number;
+  warning_count: number;
+  status: FileStatusEnum;
+  is_anonymous_initial_auth: boolean;
+  is_sso_user: boolean;
+  created_at: string;
+  last_login_at: string;
 }
