@@ -1,6 +1,6 @@
 "use client";
 
-export type FileStatusEnum = 'active' | 'suspended' | 'archived';
+export type FileStatusEnum = "active" | "suspended" | "archived";
 
 export interface Language {
   id: string;

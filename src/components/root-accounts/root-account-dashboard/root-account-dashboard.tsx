@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   User,
   MapPin,
@@ -11,8 +11,8 @@ import {
   Save,
   CreditCard,
   AlertCircle,
-  Terminal
-} from 'lucide-react';
+  Terminal,
+} from "lucide-react";
 import { RootAccount } from "./root-account-dashboard.types";
 import { LANGUAGES_MOCK } from "./root-account-dashboard.dummyData";
 
@@ -24,7 +24,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<RootAccount>(data);
-  const [activeTab, setActiveTab] = useState<'profile' | 'security' | 'audit'>('profile');
+  const [activeTab, setActiveTab] = useState<"profile" | "security" | "audit">("profile");
 
   // Simulate Server Action for Update
   const handleSave = async () => {
@@ -34,7 +34,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       setIsLoading(false);
       setIsEditing(false);
       // In a real app, this would trigger a toast notification based on Chapter 4 requirements
-      alert('更新が完了しました (Server Action Mock)');
+      alert("更新が完了しました (Server Action Mock)");
     }, 1000);
   };
 
@@ -44,7 +44,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   };
 
   const handleChange = (field: keyof RootAccount, value: string | number) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   return (
@@ -54,11 +54,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center text-white font-bold">R</div>
+              <div className="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center text-white font-bold">
+                R
+              </div>
               <span className="font-bold text-lg text-slate-800">Root Account System</span>
             </div>
             <div className="flex items-center gap-4">
-              <span className="text-sm text-slate-500">Authenticated as: {formData.display_id}</span>
+              <span className="text-sm text-slate-500">
+                Authenticated as: {formData.display_id}
+              </span>
               <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center">
                 <User size={18} className="text-slate-500" />
               </div>
@@ -68,7 +72,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       </nav>
 
       <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-
         {/* Page Header */}
         <div className="mb-8">
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4">
@@ -143,7 +146,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 <dl>
                   <dt className="text-sm font-medium text-slate-500 truncate">総獲得ポイント</dt>
                   <dd>
-                    <div className="text-2xl font-bold text-slate-900">{formData.total_points.toLocaleString()} pt</div>
+                    <div className="text-2xl font-bold text-slate-900">
+                      {formData.total_points.toLocaleString()} pt
+                    </div>
                   </dd>
                 </dl>
               </div>
@@ -160,7 +165,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 <dl>
                   <dt className="text-sm font-medium text-slate-500 truncate">アカウント状態</dt>
                   <dd className="flex items-center gap-2 mt-1">
-                    {formData.status === 'active' ? (
+                    {formData.status === "active" ? (
                       <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                         有効 (Active)
                       </span>
@@ -185,7 +190,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 <dl>
                   <dt className="text-sm font-medium text-slate-500 truncate">警告カウント</dt>
                   <dd>
-                    <div className="text-2xl font-bold text-slate-900">{formData.warning_count}</div>
+                    <div className="text-2xl font-bold text-slate-900">
+                      {formData.warning_count}
+                    </div>
                   </dd>
                 </dl>
               </div>
@@ -198,31 +205,34 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
           <div className="border-b border-slate-200">
             <nav className="-mb-px flex space-x-8 px-6" aria-label="Tabs">
               <button
-                onClick={() => setActiveTab('profile')}
-                className={`${activeTab === 'profile'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-                  } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
+                onClick={() => setActiveTab("profile")}
+                className={`${
+                  activeTab === "profile"
+                    ? "border-indigo-500 text-indigo-600"
+                    : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
               >
                 <User size={16} />
                 基本情報 (Profile)
               </button>
               <button
-                onClick={() => setActiveTab('security')}
-                className={`${activeTab === 'security'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-                  } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
+                onClick={() => setActiveTab("security")}
+                className={`${
+                  activeTab === "security"
+                    ? "border-indigo-500 text-indigo-600"
+                    : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
               >
                 <Shield size={16} />
                 セキュリティ & 連携
               </button>
               <button
-                onClick={() => setActiveTab('audit')}
-                className={`${activeTab === 'audit'
-                  ? 'border-indigo-500 text-indigo-600'
-                  : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-                  } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
+                onClick={() => setActiveTab("audit")}
+                className={`${
+                  activeTab === "audit"
+                    ? "border-indigo-500 text-indigo-600"
+                    : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
               >
                 <Terminal size={16} />
                 監査ログ (Audit)
@@ -231,7 +241,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
           </div>
 
           <div className="p-6">
-            {activeTab === 'profile' && (
+            {activeTab === "profile" && (
               <div className="space-y-8 animate-in fade-in duration-300">
                 {/* Basic Info Section */}
                 <section>
@@ -240,7 +250,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     ユーザー属性
                   </h3>
                   <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-
                     {/* Display ID */}
                     <div className="sm:col-span-3">
                       <label className="block text-sm font-medium text-slate-700">Display ID</label>
@@ -252,19 +261,23 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           className="bg-slate-100 block w-full border-slate-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border text-slate-500 cursor-not-allowed"
                         />
                       </div>
-                      <p className="mt-1 text-xs text-slate-500">システム内での一意な識別子です (変更不可)</p>
+                      <p className="mt-1 text-xs text-slate-500">
+                        システム内での一意な識別子です (変更不可)
+                      </p>
                     </div>
 
                     {/* Display Name */}
                     <div className="sm:col-span-3">
-                      <label className="block text-sm font-medium text-slate-700">表示名 (Display Name)</label>
+                      <label className="block text-sm font-medium text-slate-700">
+                        表示名 (Display Name)
+                      </label>
                       <div className="mt-1">
                         <input
                           type="text"
                           disabled={!isEditing}
                           value={formData.display_name}
-                          onChange={(e) => handleChange('display_name', e.target.value)}
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? 'border-slate-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white' : 'bg-slate-50 border-transparent'}`}
+                          onChange={(e) => handleChange("display_name", e.target.value)}
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white" : "bg-slate-50 border-transparent"}`}
                         />
                       </div>
                     </div>
@@ -279,8 +292,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           type="text"
                           disabled={!isEditing}
                           value={formData.location}
-                          onChange={(e) => handleChange('location', e.target.value)}
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? 'border-slate-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white' : 'bg-slate-50 border-transparent'}`}
+                          onChange={(e) => handleChange("location", e.target.value)}
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white" : "bg-slate-50 border-transparent"}`}
                           placeholder="例: 東京都, 日本"
                         />
                       </div>
@@ -295,7 +308,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         {isEditing ? (
                           <select
                             value={formData.birth_generation}
-                            onChange={(e) => handleChange('birth_generation', e.target.value)}
+                            onChange={(e) => handleChange("birth_generation", e.target.value)}
                             className="block w-full py-2 px-3 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
                             <option value="1960s">1960s</option>
@@ -315,14 +328,16 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
                     {/* Statement */}
                     <div className="sm:col-span-6">
-                      <label className="block text-sm font-medium text-slate-700">自己紹介 (Statement)</label>
+                      <label className="block text-sm font-medium text-slate-700">
+                        自己紹介 (Statement)
+                      </label>
                       <div className="mt-1">
                         <textarea
                           rows={3}
                           disabled={!isEditing}
                           value={formData.statement}
-                          onChange={(e) => handleChange('statement', e.target.value)}
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? 'border-slate-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white' : 'bg-slate-50 border-transparent'}`}
+                          onChange={(e) => handleChange("statement", e.target.value)}
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white" : "bg-slate-50 border-transparent"}`}
                         />
                       </div>
                     </div>
@@ -339,42 +354,56 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   </h3>
                   <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     <div className="sm:col-span-3">
-                      <label className="block text-sm font-medium text-slate-700">母国語 (Mother Tongue)</label>
+                      <label className="block text-sm font-medium text-slate-700">
+                        母国語 (Mother Tongue)
+                      </label>
                       <div className="mt-1">
                         {isEditing ? (
                           <select
                             value={formData.mother_tongue_code}
-                            onChange={(e) => handleChange('mother_tongue_code', e.target.value)}
+                            onChange={(e) => handleChange("mother_tongue_code", e.target.value)}
                             className="block w-full py-2 px-3 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
-                            {LANGUAGES_MOCK.map(lang => (
-                              <option key={lang.id} value={lang.id}>{lang.native_name} ({lang.name})</option>
+                            {LANGUAGES_MOCK.map((lang) => (
+                              <option key={lang.id} value={lang.id}>
+                                {lang.native_name} ({lang.name})
+                              </option>
                             ))}
                           </select>
                         ) : (
                           <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 border-transparent">
-                            {LANGUAGES_MOCK.find(l => l.id === formData.mother_tongue_code)?.native_name}
+                            {
+                              LANGUAGES_MOCK.find((l) => l.id === formData.mother_tongue_code)
+                                ?.native_name
+                            }
                           </div>
                         )}
                       </div>
                     </div>
 
                     <div className="sm:col-span-3">
-                      <label className="block text-sm font-medium text-slate-700">サイト表示言語 (Site Language)</label>
+                      <label className="block text-sm font-medium text-slate-700">
+                        サイト表示言語 (Site Language)
+                      </label>
                       <div className="mt-1">
                         {isEditing ? (
                           <select
                             value={formData.site_language_code}
-                            onChange={(e) => handleChange('site_language_code', e.target.value)}
+                            onChange={(e) => handleChange("site_language_code", e.target.value)}
                             className="block w-full py-2 px-3 border border-slate-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
-                            {LANGUAGES_MOCK.map(lang => (
-                              <option key={lang.id} value={lang.id}>{lang.native_name} ({lang.name})</option>
+                            {LANGUAGES_MOCK.map((lang) => (
+                              <option key={lang.id} value={lang.id}>
+                                {lang.native_name} ({lang.name})
+                              </option>
                             ))}
                           </select>
                         ) : (
                           <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 border-transparent">
-                            {LANGUAGES_MOCK.find(l => l.id === formData.site_language_code)?.native_name}
+                            {
+                              LANGUAGES_MOCK.find((l) => l.id === formData.site_language_code)
+                                ?.native_name
+                            }
                           </div>
                         )}
                       </div>
@@ -385,15 +414,21 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             )}
 
             {/* Security Tab (Placeholder based on Chapter 5 ACCOUNT_PROVIDERS) */}
-            {activeTab === 'security' && (
+            {activeTab === "security" && (
               <div className="space-y-6 animate-in fade-in duration-300">
                 <section>
-                  <h3 className="text-lg leading-6 font-medium text-slate-900 mb-4">認証プロバイダ連携</h3>
+                  <h3 className="text-lg leading-6 font-medium text-slate-900 mb-4">
+                    認証プロバイダ連携
+                  </h3>
                   <div className="bg-slate-50 rounded-md p-4 border border-slate-200">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-white rounded-full border border-slate-200 flex items-center justify-center shadow-sm">
-                          <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+                          <img
+                            src="https://www.google.com/favicon.ico"
+                            alt="Google"
+                            className="w-5 h-5"
+                          />
                         </div>
                         <div>
                           <p className="text-sm font-medium text-slate-900">Google Account</p>
@@ -411,7 +446,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </section>
 
                 <section>
-                  <h3 className="text-lg leading-6 font-medium text-slate-900 mb-4">アカウントセキュリティ</h3>
+                  <h3 className="text-lg leading-6 font-medium text-slate-900 mb-4">
+                    アカウントセキュリティ
+                  </h3>
                   <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
                     <div className="flex">
                       <div className="flex-shrink-0">
@@ -429,11 +466,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             )}
 
             {/* Audit Tab (Based on Chapter 9: Logs & Audit) */}
-            {activeTab === 'audit' && (
+            {activeTab === "audit" && (
               <div className="space-y-6 animate-in fade-in duration-300">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg leading-6 font-medium text-slate-900">最近の認証イベント (AUTH_EVENTS)</h3>
-                  <button className="text-sm text-indigo-600 hover:text-indigo-800">全ログを表示</button>
+                  <h3 className="text-lg leading-6 font-medium text-slate-900">
+                    最近の認証イベント (AUTH_EVENTS)
+                  </h3>
+                  <button className="text-sm text-indigo-600 hover:text-indigo-800">
+                    全ログを表示
+                  </button>
                 </div>
 
                 <div className="flex flex-col">
@@ -443,33 +484,71 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         <table className="min-w-full divide-y divide-slate-200">
                           <thead className="bg-slate-50">
                             <tr>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                              <th
+                                scope="col"
+                                className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                              >
                                 日時
                               </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                              <th
+                                scope="col"
+                                className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                              >
                                 イベント
                               </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                              <th
+                                scope="col"
+                                className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                              >
                                 IPアドレス
                               </th>
-                              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                              <th
+                                scope="col"
+                                className="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                              >
                                 ステータス
                               </th>
                             </tr>
                           </thead>
                           <tbody className="bg-white divide-y divide-slate-200">
                             {[
-                              { date: '2024-05-20 09:30:00', event: 'LOGIN', ip: '192.168.1.1', status: 'Success' },
-                              { date: '2024-05-19 18:45:12', event: 'PROFILE_UPDATE', ip: '192.168.1.1', status: 'Success' },
-                              { date: '2024-05-18 10:15:00', event: 'LOGIN', ip: '192.168.1.1', status: 'Success' },
-                              { date: '2024-05-15 14:20:55', event: 'LOGIN_FAILED', ip: '203.0.113.42', status: 'Failed' },
+                              {
+                                date: "2024-05-20 09:30:00",
+                                event: "LOGIN",
+                                ip: "192.168.1.1",
+                                status: "Success",
+                              },
+                              {
+                                date: "2024-05-19 18:45:12",
+                                event: "PROFILE_UPDATE",
+                                ip: "192.168.1.1",
+                                status: "Success",
+                              },
+                              {
+                                date: "2024-05-18 10:15:00",
+                                event: "LOGIN",
+                                ip: "192.168.1.1",
+                                status: "Success",
+                              },
+                              {
+                                date: "2024-05-15 14:20:55",
+                                event: "LOGIN_FAILED",
+                                ip: "203.0.113.42",
+                                status: "Failed",
+                              },
                             ].map((log, idx) => (
                               <tr key={idx}>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{log.date}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{log.event}</td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{log.ip}</td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                                  {log.date}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">
+                                  {log.event}
+                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                                  {log.ip}
+                                </td>
                                 <td className="px-6 py-4 whitespace-nowrap">
-                                  {log.status === 'Success' ? (
+                                  {log.status === "Success" ? (
                                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
                                       Success
                                     </span>
