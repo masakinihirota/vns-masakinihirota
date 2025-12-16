@@ -1,0 +1,7 @@
+- 開発サーバー: `pnpm dev`
+- ビルド/本番起動: `pnpm build` → `pnpm start`
+- ESLintチェックと修正: `pnpm lint`, `pnpm lint:fix`
+- Prettierチェックと整形: `pnpm format`, `pnpm format:fix`
+- 一括チェック/整形: `pnpm check`, `pnpm fix`
+- テスト関連: `pnpm test`(Vitest)、`pnpm coverage`、`pnpm test:ui`
+- Supabase型生成: `pnpm supabase:types:local`

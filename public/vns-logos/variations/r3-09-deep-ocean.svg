@@ -1,0 +1,5 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="g09" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00BCD4"/><stop offset="50%" stop-color="#009688"/><stop offset="100%" stop-color="#0D47A1"/></linearGradient></defs>
+  <path d="M 40 40 L 160 40 L 160 100 C 160 150 100 180 100 180 C 100 180 40 150 40 100 Z" fill="url(#g09)"/>
+  <text x="100" y="120" font-family="Arial, sans-serif" font-weight="bold" font-size="60" text-anchor="middle" fill="#FFFFFF">VNS</text>
+</svg>

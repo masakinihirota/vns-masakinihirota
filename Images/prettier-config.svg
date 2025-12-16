@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" style="background-color: #1e1e1e;">
+  <!-- Backgrounds -->
+  <rect x="0" y="0" width="600" height="600" fill="#1e1e1e" />
+  <rect x="600" y="0" width="600" height="600" fill="#f8f9fa" />
+
+  <!-- Title -->
+  <text x="300" y="40" font-family="sans-serif" font-size="20" fill="#ffffff" text-anchor="middle" font-weight="bold">prettier.config.mjs</text>
+  <text x="900" y="40" font-family="'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif" font-size="20" fill="#333333" text-anchor="middle" font-weight="bold">設定の解説</text>
+
+  <!-- Code Section (Left) -->
+  <g font-family="Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace" font-size="16" xml:space="preserve">
+    <!-- Line 1 -->
+    <text x="40" y="90" fill="#6A9955">/** @type {import("prettier").Config} */</text>
+
+    <!-- Line 2 -->
+    <text x="40" y="120">
+        <tspan fill="#569CD6">const</tspan> <tspan fill="#9CDCFE">config</tspan> <tspan fill="#D4D4D4">= {</tspan>
+    </text>
+
+    <!-- Line 3: printWidth -->
+    <text x="40" y="150" fill="#9CDCFE">  printWidth<tspan fill="#D4D4D4">: </tspan><tspan fill="#B5CEA8">100</tspan><tspan fill="#D4D4D4">,</tspan></text>
+
+    <!-- Line 4: singleQuote -->
+    <text x="40" y="180" fill="#9CDCFE">  singleQuote<tspan fill="#D4D4D4">: </tspan><tspan fill="#569CD6">false</tspan><tspan fill="#D4D4D4">,</tspan></text>
+
+    <!-- Line 5: trailingComma -->
+    <text x="40" y="210" fill="#9CDCFE">  trailingComma<tspan fill="#D4D4D4">: </tspan><tspan fill="#CE9178">"all"</tspan><tspan fill="#D4D4D4">,</tspan></text>
+
+    <!-- Line 6: semi -->
+    <text x="40" y="240" fill="#9CDCFE">  semi<tspan fill="#D4D4D4">: </tspan><tspan fill="#569CD6">true</tspan><tspan fill="#D4D4D4">,</tspan></text>
+
+    <!-- Line 7: tabWidth -->
+    <text x="40" y="270" fill="#9CDCFE">  tabWidth<tspan fill="#D4D4D4">: </tspan><tspan fill="#B5CEA8">2</tspan><tspan fill="#D4D4D4">,</tspan></text>
+
+    <!-- Line 8: useTabs -->
+    <text x="40" y="300" fill="#9CDCFE">  useTabs<tspan fill="#D4D4D4">: </tspan><tspan fill="#569CD6">false</tspan><tspan fill="#D4D4D4">,</tspan></text>
+
+    <!-- Line 9: bracketSpacing -->
+    <text x="40" y="330" fill="#9CDCFE">  bracketSpacing<tspan fill="#D4D4D4">: </tspan><tspan fill="#569CD6">true</tspan><tspan fill="#D4D4D4">,</tspan></text>
+
+    <!-- Line 10: arrowParens -->
+    <text x="40" y="360" fill="#9CDCFE">  arrowParens<tspan fill="#D4D4D4">: </tspan><tspan fill="#CE9178">"always"</tspan><tspan fill="#D4D4D4">,</tspan></text>
+
+    <!-- Line 11: endOfLine -->
+    <text x="40" y="390" fill="#9CDCFE">  endOfLine<tspan fill="#D4D4D4">: </tspan><tspan fill="#CE9178">"lf"</tspan><tspan fill="#D4D4D4">,</tspan></text>
+
+    <!-- Line 12 -->
+    <text x="40" y="420" fill="#D4D4D4">};</text>
+
+    <!-- Line 13 -->
+    <text x="40" y="470">
+        <tspan fill="#C586C0">export</tspan> <tspan fill="#C586C0">default</tspan> <tspan fill="#9CDCFE">config</tspan><tspan fill="#D4D4D4">;</tspan>
+    </text>
+  </g>
+
+  <!-- Explanations (Right) -->
+  <g font-family="'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif" font-size="14" fill="#333333">
+    <!-- printWidth -->
+    <text x="640" y="150" font-weight="bold">1行の最大長さを100文字に設定</text>
+    <text x="640" y="165" font-size="12" fill="#666666">デフォルト(80)より長くし、不要な折り返しを防ぎます。</text>
+
+    <!-- singleQuote -->
+    <text x="640" y="180" font-weight="bold">ダブルクォート（"）を使用</text>
+    <text x="640" y="195" font-size="12" fill="#666666">falseなので、文字列は "..." で囲まれます。</text>
+
+    <!-- trailingComma -->
+    <text x="640" y="210" font-weight="bold">末尾カンマを常に付ける</text>
+    <text x="640" y="225" font-size="12" fill="#666666">gitの差分を綺麗に保つため、可能な箇所全てに付けます。</text>
+
+    <!-- semi -->
+    <text x="640" y="240" font-weight="bold">セミコロン（;）を付ける</text>
+    <text x="640" y="255" font-size="12" fill="#666666">文末に必ずセミコロンを付与します。</text>
+
+    <!-- tabWidth -->
+    <text x="640" y="270" font-weight="bold">インデント幅はスペース2つ</text>
+
+    <!-- useTabs -->
+    <text x="640" y="300" font-weight="bold">タブ文字を使わずスペースを使用</text>
+
+    <!-- bracketSpacing -->
+    <text x="640" y="330" font-weight="bold">オブジェクトの括弧内にスペースを入れる</text>
+    <text x="640" y="345" font-size="12" fill="#666666">{ foo: bar } のように読みやすくします。</text>
+
+    <!-- arrowParens -->
+    <text x="640" y="360" font-weight="bold">アロー関数の引数に常に括弧を付ける</text>
+    <text x="640" y="375" font-size="12" fill="#666666">(x) => x のように、引数が1つでも括弧を付けます。</text>
+
+    <!-- endOfLine -->
+    <text x="640" y="390" font-weight="bold">改行コードをLF（\n）に統一</text>
+    <text x="640" y="405" font-size="12" fill="#666666">OS間の差異によるgitのトラブルを防ぎます。</text>
+  </g>
+
+  <!-- Connector Lines -->
+  <g stroke="#cccccc" stroke-width="1" stroke-dasharray="4">
+    <line x1="580" y1="145" x2="630" y2="145" />
+    <line x1="580" y1="175" x2="630" y2="175" />
+    <line x1="580" y1="205" x2="630" y2="205" />
+    <line x1="580" y1="235" x2="630" y2="235" />
+    <line x1="580" y1="265" x2="630" y2="265" />
+    <line x1="580" y1="295" x2="630" y2="295" />
+    <line x1="580" y1="325" x2="630" y2="325" />
+    <line x1="580" y1="355" x2="630" y2="355" />
+    <line x1="580" y1="385" x2="630" y2="385" />
+  </g>
+</svg>

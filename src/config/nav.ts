@@ -8,6 +8,14 @@ export const footerNav = [
     href: "/about",
   },
   {
+    label: "オアシス宣言",
+    href: "/oasis",
+  },
+  {
+    label: "人間宣言",
+    href: "/human",
+  },
+  {
     label: "お問い合わせ",
     href: "/contact",
   },

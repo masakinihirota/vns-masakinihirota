@@ -39,12 +39,11 @@ export async function updateSession(request: NextRequest) {
 
   if (
     !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth')
+    request.nextUrl.pathname.startsWith('/works')
   ) {
-    // no user, potentially redirect to login
-    // but we have public pages, so maybe basic logic here
-    // For now proceed
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+    return NextResponse.redirect(url)
   }
 
   return supabaseResponse
