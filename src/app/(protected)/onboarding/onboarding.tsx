@@ -227,9 +227,10 @@ export default function App() {
                       onClick={() => setSelectedArea(area.id)}
                       className={`
                         cursor-pointer rounded-xl border-2 p-4 transition-all relative group overflow-hidden
-                        ${selectedArea === area.id
-                          ? "border-yellow-400 bg-yellow-50/50 shadow-md"
-                          : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
+                        ${
+                          selectedArea === area.id
+                            ? "border-yellow-400 bg-yellow-50/50 shadow-md"
+                            : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
                         }
                       `}
                     >
@@ -274,9 +275,10 @@ export default function App() {
                       onClick={() => handleCulturalSphereChange(sphere.id)}
                       className={`
                         cursor-pointer rounded-lg border-2 p-3 transition-all relative group overflow-hidden flex flex-col items-center justify-center text-center h-full min-h-[100px]
-                        ${culturalSphere === sphere.id
-                          ? "border-yellow-400 bg-yellow-50/50 shadow-md"
-                          : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
+                        ${
+                          culturalSphere === sphere.id
+                            ? "border-yellow-400 bg-yellow-50/50 shadow-md"
+                            : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
                         }
                       `}
                     >
@@ -377,9 +379,10 @@ export default function App() {
                       onClick={() => setBirthGeneration(gen)}
                       className={`
                         cursor-pointer rounded-lg border-2 p-3 transition-all relative group overflow-hidden flex items-center justify-center text-center h-14
-                        ${birthGeneration === gen
-                          ? "border-yellow-400 bg-yellow-50/50 shadow-md font-semibold"
-                          : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
+                        ${
+                          birthGeneration === gen
+                            ? "border-yellow-400 bg-yellow-50/50 shadow-md font-semibold"
+                            : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
                         }
                       `}
                     >
@@ -415,9 +418,10 @@ export default function App() {
                         onClick={() => setNativeLanguage(lang)}
                         className={`
                           px-3 py-2 rounded-full text-sm border transition-all
-                          ${nativeLanguage === lang
-                            ? "bg-slate-800 text-white border-slate-800 shadow-sm"
-                            : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                          ${
+                            nativeLanguage === lang
+                              ? "bg-slate-800 text-white border-slate-800 shadow-sm"
+                              : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                           }
                         `}
                       >
@@ -444,9 +448,10 @@ export default function App() {
                         onClick={() => toggleAvailableLanguage(lang)}
                         className={`
                           px-3 py-2 rounded-full text-sm border transition-all
-                          ${availableLanguages.includes(lang)
-                            ? "bg-slate-800 text-white border-slate-800 shadow-sm"
-                            : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                          ${
+                            availableLanguages.includes(lang)
+                              ? "bg-slate-800 text-white border-slate-800 shadow-sm"
+                              : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                           }
                         `}
                       >
@@ -551,9 +556,10 @@ export default function App() {
                   }
                   className={`
                     w-full min-h-14 px-4 py-3 rounded-lg font-medium transition-all shadow-sm text-lg
-                    ${!isAdult || !agreements.oasis || !agreements.human || !agreements.honesty
-                      ? "bg-slate-200 text-slate-400 cursor-not-allowed"
-                      : "bg-slate-900 hover:bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
+                    ${
+                      !isAdult || !agreements.oasis || !agreements.human || !agreements.honesty
+                        ? "bg-slate-200 text-slate-400 cursor-not-allowed"
+                        : "bg-slate-900 hover:bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
                     }
                   `}
                 >
