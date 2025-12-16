@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { ChevronDown, Globe, Languages, MapPin, MessageCircle } from "lucide-react";
 import { useOnboarding, CULTURAL_SPHERES, GENERATIONS, LANGUAGE_OPTIONS } from "./onboarding.logic";
 
@@ -39,32 +40,61 @@ export function Onboarding() {
                   </span>
                   地球3分割 (Earth Division)
                 </label>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="flex flex-col md:flex-row w-full gap-0">
                   {[
-                    { id: "area1", label: "エリア 1", color: "bg-blue-50 text-blue-500" },
-                    { id: "area2", label: "エリア 2", color: "bg-green-50 text-green-500" },
-                    { id: "area3", label: "エリア 3", color: "bg-orange-50 text-orange-500" },
+                    {
+                      id: "area1",
+                      label: "エリア 1",
+                      color: "bg-blue-50 text-blue-500",
+                      image: "/world/area1.svg",
+                      rounded: "rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:rounded-b-none",
+                      width: 310,
+                      height: 400,
+                    },
+                    {
+                      id: "area2",
+                      label: "エリア 2",
+                      color: "bg-green-50 text-green-500",
+                      image: "/world/area2.svg",
+                      rounded: "rounded-none",
+                      width: 300,
+                      height: 400,
+                    },
+                    {
+                      id: "area3",
+                      label: "エリア 3",
+                      color: "bg-orange-50 text-orange-500",
+                      image: "/world/area3.svg",
+                      rounded: "rounded-b-xl md:rounded-r-xl md:rounded-bl-none md:rounded-t-none",
+                      width: 310,
+                      height: 400,
+                    },
                   ].map((area) => (
                     <div
                       key={area.id}
                       onClick={() => actions.setSelectedArea(area.id)}
+                      style={{
+                        flexGrow: area.width,
+                        aspectRatio: `${area.width}/${area.height}`,
+                      }}
                       className={`
-                        cursor-pointer rounded-xl border-2 p-4 transition-all relative group overflow-hidden
-                        ${
-                          state.selectedArea === area.id
-                            ? "border-yellow-400 bg-yellow-50/50 shadow-md"
-                            : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
+                        cursor-pointer border-2 transition-all relative group overflow-hidden
+                        ${area.rounded}
+                        ${state.selectedArea === area.id
+                          ? "border-yellow-400 bg-yellow-50/50 shadow-md z-10"
+                          : "border-slate-100 hover:border-slate-300 hover:bg-slate-50 border-l-0 border-t-0 md:border-t-2 md:border-l-0 first:border-l-2 first:border-t-2 z-0"
                         }
                       `}
                     >
-                      <div className="aspect-[3/2] relative w-full mb-3">
-                        <div
-                          className={`absolute inset-0 flex items-center justify-center rounded-md ${area.color}`}
-                        >
-                          <Globe className="w-12 h-12 opacity-80" />
-                        </div>
+                      <div className="absolute inset-0">
+                        <Image
+                          src={area.image}
+                          alt={area.label}
+                          fill
+                          className="object-cover scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                        />
                       </div>
-                      <div className="text-center font-semibold text-slate-700">{area.label}</div>
                     </div>
                   ))}
                 </div>
@@ -94,10 +124,9 @@ export function Onboarding() {
                       onClick={() => actions.setCulturalSphere(sphere.id)}
                       className={`
                         cursor-pointer rounded-lg border-2 p-3 transition-all relative group overflow-hidden flex flex-col items-center justify-center text-center h-full min-h-[100px]
-                        ${
-                          state.culturalSphere === sphere.id
-                            ? "border-yellow-400 bg-yellow-50/50 shadow-md"
-                            : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
+                        ${state.culturalSphere === sphere.id
+                          ? "border-yellow-400 bg-yellow-50/50 shadow-md"
+                          : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
                         }
                       `}
                     >
@@ -198,10 +227,9 @@ export function Onboarding() {
                       onClick={() => actions.setBirthGeneration(gen)}
                       className={`
                         cursor-pointer rounded-lg border-2 p-3 transition-all relative group overflow-hidden flex items-center justify-center text-center h-14
-                        ${
-                          state.birthGeneration === gen
-                            ? "border-yellow-400 bg-yellow-50/50 shadow-md font-semibold"
-                            : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
+                        ${state.birthGeneration === gen
+                          ? "border-yellow-400 bg-yellow-50/50 shadow-md font-semibold"
+                          : "border-slate-200 hover:border-slate-300 hover:bg-slate-50 hover:-translate-y-1"
                         }
                       `}
                     >
@@ -237,10 +265,9 @@ export function Onboarding() {
                         onClick={() => actions.setNativeLanguage(lang)}
                         className={`
                           px-3 py-2 rounded-full text-sm border transition-all
-                          ${
-                            state.nativeLanguage === lang
-                              ? "bg-slate-800 text-white border-slate-800 shadow-sm"
-                              : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                          ${state.nativeLanguage === lang
+                            ? "bg-slate-800 text-white border-slate-800 shadow-sm"
+                            : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                           }
                         `}
                       >
@@ -267,10 +294,9 @@ export function Onboarding() {
                         onClick={() => actions.toggleAvailableLanguage(lang)}
                         className={`
                           px-3 py-2 rounded-full text-sm border transition-all
-                          ${
-                            state.availableLanguages.includes(lang)
-                              ? "bg-slate-800 text-white border-slate-800 shadow-sm"
-                              : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                          ${state.availableLanguages.includes(lang)
+                            ? "bg-slate-800 text-white border-slate-800 shadow-sm"
+                            : "bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:bg-slate-50"
                           }
                         `}
                       >
@@ -375,10 +401,9 @@ export function Onboarding() {
                   disabled={!state.canSubmit}
                   className={`
                     w-full min-h-14 px-4 py-3 rounded-lg font-medium transition-all shadow-sm text-lg
-                    ${
-                      !state.canSubmit
-                        ? "bg-slate-200 text-slate-400 cursor-not-allowed"
-                        : "bg-slate-900 hover:bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
+                    ${!state.canSubmit
+                      ? "bg-slate-200 text-slate-400 cursor-not-allowed"
+                      : "bg-slate-900 hover:bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
                     }
                   `}
                 >
@@ -390,8 +415,8 @@ export function Onboarding() {
               </div>
             </form>
           </div>
-        </div>
-      </main>
-    </div>
+        </div >
+      </main >
+    </div >
   );
 }
