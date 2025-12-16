@@ -61,19 +61,22 @@ export const PROFILE_TYPES: ProfileType[] = ["Main", "Sub", "Game", "Work"];
 
 export const getTypeColor = (type: ProfileType): string => {
   switch (type) {
-    case "Main": return "border-blue-500 text-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.2)]";
-    case "Game": return "border-purple-500 text-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.2)]";
-    case "Work": return "border-emerald-500 text-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.2)]";
-    default: return "border-slate-500 text-slate-500";
+    case "Main":
+      return "border-blue-500 text-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.2)]";
+    case "Game":
+      return "border-purple-500 text-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.2)]";
+    case "Work":
+      return "border-emerald-500 text-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.2)]";
+    default:
+      return "border-slate-500 text-slate-500";
   }
 };
 
 export const filterProfiles = (profiles: UserProfile[], query: string): UserProfile[] => {
   if (!query) return profiles;
   const lowerQuery = query.toLowerCase();
-  return profiles.filter(p =>
-    p.name.toLowerCase().includes(lowerQuery) ||
-    p.handle.toLowerCase().includes(lowerQuery)
+  return profiles.filter(
+    (p) => p.name.toLowerCase().includes(lowerQuery) || p.handle.toLowerCase().includes(lowerQuery),
   );
 };
 
@@ -81,14 +84,14 @@ export const createNewProfile = (name: string, handle: string, type: ProfileType
   return {
     id: `p-${Date.now()}`,
     name,
-    handle: handle.startsWith('@') ? handle : `@${handle}`,
+    handle: handle.startsWith("@") ? handle : `@${handle}`,
     bio: "No description provided yet.",
     avatarColor: "bg-slate-500",
     lastUpdated: "Just now",
     attributes: {
       purpose: "General",
       role: "User",
-      type: type
+      type: type,
     },
   };
 };
