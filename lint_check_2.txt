@@ -1,0 +1,40 @@
+
+> vns-masakinihirota@0.3.0 lint U:\2026src\vns-masakinihirota.worktrees\anti
+> eslint .
+
+
+U:\2026src\vns-masakinihirota.worktrees\anti\src\components\matching-manual\manual-matching-console.tsx
+  257:9   warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  332:7   warning  try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）                                                                                                                                                                                                                                            no-restricted-syntax
+  353:7   warning  try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）                                                                                                                                                                                                                                            no-restricted-syntax
+  425:5   warning  try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）                                                                                                                                                                                                                                            no-restricted-syntax
+  598:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  598:21  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+  606:21  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  606:21  warning  img elements must have an alt prop, either with meaningful text, or an empty string for decorative images                                                                                                                                                                                jsx-a11y/alt-text
+
+U:\2026src\vns-masakinihirota.worktrees\anti\src\components\matching-manual\matching-settings.tsx
+  186:5  warning  try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）  no-restricted-syntax
+  224:5  warning  try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）  no-restricted-syntax
+
+U:\2026src\vns-masakinihirota.worktrees\anti\src\components\user-edited-userprofiles\user-profile-app.tsx
+   431:11  error    Insert `␍⏎··········`                                                                                                                                                                                                                                                                    prettier/prettier
+   432:1   error    Insert `··`                                                                                                                                                                                                                                                                              prettier/prettier
+   433:1   error    Insert `··`                                                                                                                                                                                                                                                                              prettier/prettier
+   635:15  error    Insert `␍⏎··············`                                                                                                                                                                                                                                                                prettier/prettier
+   636:1   error    Insert `··`                                                                                                                                                                                                                                                                              prettier/prettier
+   637:1   error    Insert `··`                                                                                                                                                                                                                                                                              prettier/prettier
+   641:11  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+   847:13  error    Insert `␍⏎············`                                                                                                                                                                                                                                                                  prettier/prettier
+   848:1   error    Insert `··`                                                                                                                                                                                                                                                                              prettier/prettier
+   849:1   error    Insert `··`                                                                                                                                                                                                                                                                              prettier/prettier
+  1360:48  warning  Unused eslint-disable directive (no problems were reported)
+
+U:\2026src\vns-masakinihirota.worktrees\anti\src\components\user-profiles\user-profile-manager.tsx
+  254:9  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  318:5  warning  try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）                                                                                                                                                                                                                                            no-restricted-syntax
+
+✖ 23 problems (9 errors, 14 warnings)
+  9 errors and 1 warning potentially fixable with the `--fix` option.
+
+ ELIFECYCLE  Command failed with exit code 1.
