@@ -16,22 +16,19 @@ export const AutoMatchingContainer = () => {
     remote: false,
   });
 
+  const handleSearch = async () => {
+    setLoading(true);
+    await calculateMatches(criteria)
+      .then((data) => setResults(data))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+  };
+
   useEffect(() => {
     // Initial fetch
     handleSearch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const handleSearch = async () => {
-    setLoading(true);
-    try {
-      const data = await calculateMatches(criteria);
-      setResults(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleCriteriaChange = (
     key: keyof SearchCriteria,

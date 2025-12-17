@@ -11,16 +11,14 @@ export const ValuesListContainer = () => {
 
   useEffect(() => {
     const loadData = async () => {
-      try {
-        const [qData, aData] = await Promise.all([fetchValues(), fetchUserAnswers()]);
-        setQuestions(qData);
-        const answersMap = aData.reduce((acc, curr) => ({ ...acc, [curr.questionId]: curr }), {});
-        setAnswers(answersMap);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
+      await Promise.all([fetchValues(), fetchUserAnswers()])
+        .then(([qData, aData]) => {
+          setQuestions(qData);
+          const answersMap = aData.reduce((acc, curr) => ({ ...acc, [curr.questionId]: curr }), {});
+          setAnswers(answersMap);
+        })
+        .catch((e) => console.error(e))
+        .finally(() => setLoading(false));
     };
     loadData();
   }, []);
@@ -38,13 +36,9 @@ export const ValuesListContainer = () => {
 
     // Debounce save (simplified here to direct save for now, could be improved)
     setSavingId(questionId);
-    try {
-      await saveUserAnswer(newAnswer);
-    } catch (e) {
-      console.error("Failed to save", e);
-    } finally {
-      setSavingId(null);
-    }
+    await saveUserAnswer(newAnswer)
+      .catch((e) => console.error("Failed to save", e))
+      .finally(() => setSavingId(null));
   };
 
   const handlePrivacyToggle = async (questionId: string) => {

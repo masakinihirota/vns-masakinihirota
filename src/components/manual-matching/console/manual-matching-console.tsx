@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { UserProfile, Work } from "../common/types";
 import {
   Sun,
@@ -89,10 +90,13 @@ const UserCard = ({
       `}
     >
       <div className="flex items-start gap-3">
-        <img
+        <Image
           src={user.photoUrl}
           alt={user.name}
+          width={48}
+          height={48}
           className="w-12 h-12 rounded-full bg-slate-100 object-cover"
+          unoptimized
         />
         <div className="flex-1 min-w-0">
           <div className="flex justify-between items-start">
@@ -259,19 +263,25 @@ export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (prop
                 {/* 1. Header with Photos */}
                 <div className="flex items-center justify-center gap-8 mb-4">
                   <div className="text-center">
-                    <img
+                    <Image
                       src={props.selectedSubject.photoUrl}
                       className="w-20 h-20 rounded-full object-cover border-2 border-blue-500 mb-2"
                       alt="Subject"
+                      width={80}
+                      height={80}
+                      unoptimized
                     />
                     <div className="font-bold text-sm">{props.selectedSubject.name}</div>
                   </div>
                   <div className="text-slate-300 dark:text-slate-700 text-2xl font-light">×</div>
                   <div className="text-center">
-                    <img
+                    <Image
                       src={props.selectedCandidate.photoUrl}
                       className="w-20 h-20 rounded-full object-cover border-2 border-pink-500 mb-2"
                       alt="Candidate"
+                      width={80}
+                      height={80}
+                      unoptimized
                     />
                     <div className="font-bold text-sm">{props.selectedCandidate.name}</div>
                   </div>
