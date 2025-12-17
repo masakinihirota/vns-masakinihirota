@@ -1,64 +1,191 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+
+type Route = {
+  title: string;
+  path: string;
+  desc: string;
+  badge?: string;
+};
+
+type RouteSection = {
+  title: string;
+  routes: Route[];
+};
 
 export default function Home() {
-  const devRoutes = [
-    { title: "Home (Protected)", path: "/home", desc: "Main content dashboard" },
-    { title: "Root Accounts", path: "/root-accounts", desc: "Root management" },
-    { title: "Auto Matching", path: "/auto-matching", desc: "Automated matching implementation" },
+  const routeSections: RouteSection[] = [
     {
-      title: "Manual Matching Console",
-      path: "/manual-matching",
-      desc: "Manual matching 3-column console",
+      title: "🔥 New & Experimental (Check These!)",
+      routes: [
+        {
+          title: "Root Accounts Control",
+          path: "/root-accounts-controle",
+          desc: "New Root Account Control UI",
+          badge: "New",
+        },
+        {
+          title: "Gemini Root Account",
+          path: "/gemini-root-account",
+          desc: "Gemini Style Root Account Dashboard",
+          badge: "New",
+        },
+        {
+          title: "Work Registration",
+          path: "/work-registration-form",
+          desc: "New Work Registration Form",
+          badge: "New",
+        },
+        {
+          title: "Vote Match",
+          path: "/vote-match",
+          desc: "Political/Social Vote Match UI",
+          badge: "New",
+        },
+      ],
     },
     {
-      title: "Matching Conditions",
-      path: "/manual-matching/conditions",
-      desc: "Matching algorithm settings",
+      title: "Core Functionality",
+      routes: [
+        { title: "Home (Protected)", path: "/home", desc: "Authenticated User Dashboard" },
+        { title: "Matching (Hub)", path: "/matching", desc: "Matching Entry / Top" },
+        { title: "Works Directory", path: "/works", desc: "List of Registered Works" },
+        { title: "Product List", path: "/product-list", desc: "Product List Demo" },
+      ],
     },
-    { title: "Values (New)", path: "/values", desc: "Questionnaire to register values" },
-    { title: "Profile", path: "/profile", desc: "User profile page" },
-    { title: "Works", path: "/works", desc: "Works directory" },
-    { title: "Oasis Declaration", path: "/oasis", desc: "Project Philosophy & Manifesto" },
-    { title: "Human Declaration", path: "/human", desc: "Affirming human nature" },
-    { title: "Landing Page", path: "/lp", desc: "New VNS Landing Page" },
+    {
+      title: "Account & Profile",
+      routes: [
+        { title: "Root Accounts", path: "/root-accounts", desc: "Root Account Management (Old?)" },
+        { title: "Profile", path: "/profile", desc: "User Profile View" },
+        { title: "Profile Edited", path: "/profile-edited", desc: "Profile Edit Flow" },
+        { title: "Onboarding", path: "/onboarding", desc: "User Onboarding Flow" },
+      ],
+    },
+    {
+      title: "Values & Matching Tools",
+      routes: [
+        { title: "Values Registration", path: "/values", desc: "Register Personal Values" },
+        { title: "Values Selection", path: "/values-selection", desc: "Select Important Values" },
+        {
+          title: "Auto Matching",
+          path: "/auto-matching",
+          desc: "Automated Matching Implementation",
+        },
+        { title: "Manual Matching", path: "/manual-matching", desc: "Manual Matching Console" },
+        {
+          title: "Matching Conditions",
+          path: "/manual-matching/conditions",
+          desc: "Algorithm Settings",
+        },
+      ],
+    },
+    {
+      title: "Legacy / Other",
+      routes: [{ title: "New Work (Old)", path: "/works/new", desc: "Previous Work Registration" }],
+    },
+    {
+      title: "Public / Static",
+      routes: [
+        { title: "Landing Page", path: "/lp", desc: "VNS Landing Page" },
+        { title: "Oasis Declaration", path: "/oasis", desc: "Project Philosophy" },
+        { title: "Human Declaration", path: "/human", desc: "Human Nature Declaration" },
+      ],
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-muted/40 p-8">
-      <main className="container mx-auto space-y-8">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <h1 className="text-4xl font-bold tracking-tight">VNS Masakinihirota Dev Portal</h1>
-          <p className="text-muted-foreground">Development entry points for UI/UX verification.</p>
-          <Button asChild size="lg">
-            <Link href="/login">Log in / Auth</Link>
-          </Button>
+    <div className="min-h-screen bg-neutral-100 p-8 dark:bg-neutral-900 font-sans">
+      <main className="container mx-auto space-y-12 max-w-6xl">
+        <div className="flex flex-col items-center gap-6 text-center py-8">
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+            VNS Development Portal
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl">
+            Central hub for UI/UX verification, new feature testing, and page navigation.
+          </p>
+          <div className="flex gap-4">
+            <Button asChild size="lg" className="rounded-full px-8">
+              <Link href="/login">Log in / Auth</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+              <Link
+                href="https://github.com/masakinihirota/vns-masakinihirota"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Repository
+              </Link>
+            </Button>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {devRoutes.map((route) => (
-            <Card key={route.path} className="hover:shadow-md transition-shadow">
-              <CardHeader>
-                <CardTitle className="text-lg">
-                  <Link href={route.path} className="hover:underline text-primary">
-                    {route.title}
-                  </Link>
-                </CardTitle>
-                <CardDescription className="text-xs font-mono">{route.path}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">{route.desc}</p>
-                <Button
-                  asChild
-                  variant="ghost"
-                  size="sm"
-                  className="mt-4 w-full justify-start pl-0"
-                >
-                  <Link href={route.path}>Go to page &rarr;</Link>
-                </Button>
-              </CardContent>
-            </Card>
+        <div className="space-y-10">
+          {routeSections.map((section) => (
+            <section key={section.title} className="space-y-4">
+              <div className="flex items-center gap-4">
+                <h2 className="text-2xl font-bold text-foreground border-l-4 border-indigo-500 pl-4">
+                  {section.title}
+                </h2>
+                <div className="h-px bg-border flex-grow"></div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {section.routes.map((route) => (
+                  <Card
+                    key={route.path}
+                    className="group hover:shadow-lg transition-all duration-300 hover:border-indigo-200 dark:hover:border-indigo-800"
+                  >
+                    <CardHeader className="pb-3">
+                      <div className="flex justify-between items-start gap-2">
+                        <CardTitle className="text-base font-semibold">
+                          <Link
+                            href={route.path}
+                            className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
+                          >
+                            {route.title}
+                          </Link>
+                        </CardTitle>
+                        {route.badge && (
+                          <Badge
+                            variant="destructive"
+                            className="ml-auto text-[10px] px-2 py-0.5 h-auto"
+                          >
+                            {route.badge}
+                          </Badge>
+                        )}
+                      </div>
+                      <CardDescription
+                        className="text-xs font-mono text-muted-foreground/70 truncate"
+                        title={route.path}
+                      >
+                        {route.path}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="text-sm text-muted-foreground mb-4 min-h-[40px]">
+                        {route.desc}
+                      </p>
+                      <Button
+                        asChild
+                        variant="secondary"
+                        size="sm"
+                        className="w-full justify-between group-hover:bg-indigo-50 dark:group-hover:bg-indigo-950/30 transition-colors"
+                      >
+                        <Link href={route.path}>
+                          Open Page{" "}
+                          <span className="group-hover:translate-x-1 transition-transform">
+                            &rarr;
+                          </span>
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       </main>
