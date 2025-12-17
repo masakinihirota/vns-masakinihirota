@@ -44,6 +44,37 @@ export default function Home() {
           desc: "Political/Social Vote Match UI",
           badge: "New",
         },
+        {
+          title: "Mandala Chart",
+          path: "/mandala-chart",
+          desc: "Mandala Chart UI Integration",
+          badge: "New",
+        },
+      ],
+    },
+    {
+      title: "Recently Added / Drafts",
+      routes: [
+        { title: "Profile 2", path: "/profile2", desc: "Alternative Profile Page" },
+        { title: "User Profiles", path: "/user-profiles", desc: "User Profile List" },
+        {
+          title: "User Edited Profiles",
+          path: "/user-edited-userprofiles",
+          desc: "User Profile Edit Interface",
+        },
+        { title: "Values Input", path: "/values-input", desc: "Values Input Screen" },
+        { title: "Valus Screen", path: "/valus-screen", desc: "Values UI Screen" },
+        {
+          title: "Matching Manual (Alt)",
+          path: "/matching-manual",
+          desc: "Alternative Manual Matching",
+        },
+        { title: "Matching / Auto", path: "/matching/auto", desc: "Sub-route: Auto Matching" },
+        {
+          title: "Matching / Manual",
+          path: "/matching/manual",
+          desc: "Sub-route: Manual Matching",
+        },
       ],
     },
     {
@@ -62,6 +93,7 @@ export default function Home() {
         { title: "Profile", path: "/profile", desc: "User Profile View" },
         { title: "Profile Edited", path: "/profile-edited", desc: "Profile Edit Flow" },
         { title: "Onboarding", path: "/onboarding", desc: "User Onboarding Flow" },
+        { title: "Login", path: "/login", desc: "Login Page" },
       ],
     },
     {
@@ -89,7 +121,7 @@ export default function Home() {
     {
       title: "Public / Static",
       routes: [
-        { title: "Landing Page", path: "/lp", desc: "VNS Landing Page" },
+        { title: "Landing Page", path: "/landing-page", desc: "VNS Landing Page" },
         { title: "Oasis Declaration", path: "/oasis", desc: "Project Philosophy" },
         { title: "Human Declaration", path: "/human", desc: "Human Nature Declaration" },
       ],
