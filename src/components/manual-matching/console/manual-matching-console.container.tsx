@@ -30,14 +30,10 @@ export const ManualMatchingConsoleContainer = () => {
   useEffect(() => {
     const load = async () => {
       setLoadingSubjects(true);
-      try {
-        const data = await fetchSubjects();
-        setSubjects(data);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoadingSubjects(false);
-      }
+      fetchSubjects()
+        .then((data) => setSubjects(data))
+        .catch((e) => console.error(e))
+        .finally(() => setLoadingSubjects(false));
     };
     load();
   }, []);
@@ -45,21 +41,15 @@ export const ManualMatchingConsoleContainer = () => {
   // Fetch candidates when subject selected
   useEffect(() => {
     if (!selectedSubject) {
-      setCandidates([]);
-      setSelectedCandidate(null);
       return;
     }
 
     const load = async () => {
       setLoadingCandidates(true);
-      try {
-        const data = await fetchCandidates(selectedSubject.gender);
-        setCandidates(data);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoadingCandidates(false);
-      }
+      fetchCandidates(selectedSubject.gender)
+        .then((data) => setCandidates(data))
+        .catch((e) => console.error(e))
+        .finally(() => setLoadingCandidates(false));
     };
     load();
   }, [selectedSubject]);
@@ -82,6 +72,8 @@ export const ManualMatchingConsoleContainer = () => {
   // Handlers
   const handleSubjectSelect = (user: UserProfile) => {
     setSelectedSubject(user);
+    setCandidates([]);
+    setSelectedCandidate(null);
   };
 
   const handleCandidateSelect = (user: UserProfile) => {
@@ -96,19 +88,21 @@ export const ManualMatchingConsoleContainer = () => {
   const handleExecuteMatch = async () => {
     // Simulate API call
     setIsProcessingMatch(true);
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      alert(
-        `マッチング成功!\n${selectedSubject?.name} さんと ${selectedCandidate?.name} さんをマッチングしました。`,
-      );
-      setIsMatchModalOpen(false);
-      setMatchComment("");
-    } catch (e) {
-      console.error(e);
-      alert("マッチングに失敗しました");
-    } finally {
-      setIsProcessingMatch(false);
-    }
+    new Promise((resolve) => setTimeout(resolve, 1000))
+      .then(() => {
+        alert(
+          `マッチング成功!\n${selectedSubject?.name} さんと ${selectedCandidate?.name} さんをマッチングしました。`,
+        );
+        setIsMatchModalOpen(false);
+        setMatchComment("");
+      })
+      .catch((e) => {
+        console.error(e);
+        alert("マッチングに失敗しました");
+      })
+      .finally(() => {
+        setIsProcessingMatch(false);
+      });
   };
 
   return (

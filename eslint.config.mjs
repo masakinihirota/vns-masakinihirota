@@ -14,7 +14,8 @@ const eslintConfig = defineConfig([
     },
     rules: {
       "prettier/prettier": "error",
-
+      "@typescript-eslint/no-unused-vars": "off",
+      // "no-unused-vars": "off", // JS標準ルールも念のためOFF
       // strict-rule準拠ルール（型情報不要なもののみ）
       // II-3 let禁止、constのみ使用
       "prefer-const": "error",

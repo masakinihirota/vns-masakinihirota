@@ -1,4 +1,5 @@
 import type React from "react";
+import Image from "next/image";
 import { Artwork, ArtworkKey, DisplayMode, FilterOption, SortOption } from "./product-list.logic";
 
 interface ProductListProps {
@@ -257,12 +258,15 @@ export const ProductList: React.FC<ProductListProps> = ({
                 key={artwork.id}
                 className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-transform duration-300 ease-in-out border border-gray-200 dark:border-gray-700"
               >
-                <img
+                <Image
                   src={artwork.thumbnail_url}
                   alt={artwork.title}
+                  width={400}
+                  height={300}
                   className="w-full h-48 object-cover object-center"
+                  unoptimized
                   onError={(e) => {
-                    const target = e.currentTarget;
+                    const target = e.currentTarget as HTMLImageElement;
                     target.onerror = null;
                     target.src = "https://placehold.co/400x300?text=画像なし";
                   }}

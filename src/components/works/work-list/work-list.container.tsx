@@ -13,14 +13,10 @@ export const WorksListContainer = () => {
 
   useEffect(() => {
     const loadWorks = async () => {
-      try {
-        const data = await fetchWorks();
-        setWorks(data);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
+      await fetchWorks()
+        .then((data) => setWorks(data))
+        .catch((e) => console.error(e))
+        .finally(() => setLoading(false));
     };
     loadWorks();
   }, []);

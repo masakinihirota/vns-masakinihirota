@@ -32,15 +32,15 @@ export const ProductListContainer: React.FC = () => {
     const fetchArtworks = async () => {
       setLoading(true);
       setError(null);
-      try {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setArtworks(MOCK_ARTWORKS);
-      } catch (err) {
-        setError("データ取得中にエラーが発生しました。");
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
+      new Promise((resolve) => setTimeout(resolve, 500))
+        .then(() => setArtworks(MOCK_ARTWORKS))
+        .catch((err) => {
+          setError("データ取得中にエラーが発生しました。");
+          console.error(err);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     };
     fetchArtworks();
   }, []);

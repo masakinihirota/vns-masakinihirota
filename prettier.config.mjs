@@ -8,7 +8,7 @@ const config = {
   useTabs: false,
   bracketSpacing: true,
   arrowParens: "always",
-  endOfLine: "lf",
+  endOfLine: "auto",
 };
 
 export default config;

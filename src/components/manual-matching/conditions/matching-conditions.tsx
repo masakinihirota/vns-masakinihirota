@@ -1,7 +1,7 @@
 import React from "react";
 import { MatchingSettings, VALUE_OPTIONS, GENRE_OPTIONS } from "./matching-conditions.logic";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
