@@ -30,7 +30,8 @@ export function WorkRegistrationContainer() {
     // watchedTags might be undefined initially or if fields are unregistered
     if (watchedTags && watchedTags.length > 0) points -= DISCOUNT_TAGS;
     // watchedUrls might be undefined
-    if (watchedUrls && watchedUrls.some((u) => u.value?.trim() !== "")) points -= DISCOUNT_URL;
+    if (watchedUrls && watchedUrls.some((u: { value?: string }) => u.value?.trim() !== ""))
+      points -= DISCOUNT_URL;
     return Math.max(0, points);
   }, [watchedTags, watchedUrls]);
 

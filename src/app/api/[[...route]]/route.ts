@@ -5,7 +5,9 @@ export const runtime = "edge";
 
 const app = new Hono().basePath("/api");
 
-app.get("/hello", (c) => {
+// Allow `any` for Hono context in this route handler
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+app.get("/hello", (c: any) => {
   return c.json({
     message: "Hello from Hono!",
   });
