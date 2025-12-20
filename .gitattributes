@@ -1,0 +1,23 @@
+# Enforce LF line endings across the repo to avoid CRLF/prettier issues on Windows
+# Set default behavior to automatically normalize line endings and use LF
+* text=auto eol=lf
+
+# Explicitly ensure common text files use LF
+*.md text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.css text eol=lf
+*.scss text eol=lf
+
+# Keep binary files unchanged
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
