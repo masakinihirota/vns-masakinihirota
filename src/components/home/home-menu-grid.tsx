@@ -49,11 +49,7 @@ export function HomeMenuGrid() {
               {routes.map((route) => {
                 const Icon = getIcon(route.path);
                 return (
-                  <Link
-                    key={route.path}
-                    href={toUrl(route.path)}
-                    className="block group"
-                  >
+                  <Link key={route.path} href={toUrl(route.path)} className="block group">
                     <Card className="h-full hover:shadow-md transition-shadow hover:border-blue-200">
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-base font-medium group-hover:text-blue-600 transition-colors">

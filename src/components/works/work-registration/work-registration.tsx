@@ -80,15 +80,13 @@ export function WorkRegistration({
   const filteredOfficialTags = useMemo(() => {
     if (!officialSearchQuery) return OFFICIAL_TAGS;
     return OFFICIAL_TAGS.filter((tag) =>
-      tag.toLowerCase().includes(officialSearchQuery.toLowerCase())
+      tag.toLowerCase().includes(officialSearchQuery.toLowerCase()),
     );
   }, [officialSearchQuery]);
 
   const filteredUserTags = useMemo(() => {
     if (!userSearchQuery) return USER_TAGS;
-    return USER_TAGS.filter((tag) =>
-      tag.toLowerCase().includes(userSearchQuery.toLowerCase())
-    );
+    return USER_TAGS.filter((tag) => tag.toLowerCase().includes(userSearchQuery.toLowerCase()));
   }, [userSearchQuery]);
 
   const getTagStyle = (tagName: string, isSelected: boolean) => {
@@ -105,7 +103,7 @@ export function WorkRegistration({
   const toggleTag = (
     tagToToggle: string,
     currentTags: string[],
-    onChange: (tags: string[]) => void
+    onChange: (tags: string[]) => void,
   ) => {
     if (currentTags.includes(tagToToggle)) {
       onChange(currentTags.filter((t) => t !== tagToToggle));
@@ -114,10 +112,7 @@ export function WorkRegistration({
     }
   };
 
-  const addCustomTag = (
-    currentTags: string[],
-    onChange: (tags: string[]) => void
-  ) => {
+  const addCustomTag = (currentTags: string[], onChange: (tags: string[]) => void) => {
     const newTag = userSearchQuery.trim();
     if (!newTag) return;
     if (!currentTags.includes(newTag)) {
@@ -168,10 +163,7 @@ export function WorkRegistration({
                       name="title"
                       render={({ field }) => (
                         <FormItem>
-                          <Label
-                            htmlFor="title"
-                            className="text-lg font-bold mb-2 block"
-                          >
+                          <Label htmlFor="title" className="text-lg font-bold mb-2 block">
                             作品タイトル <span className="text-red-500">*</span>
                           </Label>
                           <FormControl>
@@ -215,20 +207,16 @@ export function WorkRegistration({
                                       "flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all",
                                       isSelected
                                         ? "border-blue-600 bg-blue-50 text-blue-700 ring-1 ring-blue-600"
-                                        : "border-gray-200 hover:border-blue-300 hover:bg-gray-50 text-gray-600"
+                                        : "border-gray-200 hover:border-blue-300 hover:bg-gray-50 text-gray-600",
                                     )}
                                   >
                                     <Icon
                                       className={cn(
                                         "w-6 h-6",
-                                        isSelected
-                                          ? "text-blue-600"
-                                          : "text-gray-400"
+                                        isSelected ? "text-blue-600" : "text-gray-400",
                                       )}
                                     />
-                                    <span className="text-sm font-bold">
-                                      {cat.label}
-                                    </span>
+                                    <span className="text-sm font-bold">{cat.label}</span>
                                   </button>
                                 );
                               })}
@@ -254,11 +242,9 @@ export function WorkRegistration({
                             <div className="flex flex-col gap-4">
                               {PERIOD_GROUPS.map((group) => {
                                 const isCollapsible = group.collapsible;
-                                const isExpanded = isCollapsible
-                                  ? isPastExpanded
-                                  : true;
+                                const isExpanded = isCollapsible ? isPastExpanded : true;
                                 const selectedItemInGroup = group.items.find(
-                                  (item) => item.id === field.value
+                                  (item) => item.id === field.value,
                                 );
 
                                 return (
@@ -266,20 +252,16 @@ export function WorkRegistration({
                                     {isCollapsible ? (
                                       <button
                                         type="button"
-                                        onClick={() =>
-                                          setIsPastExpanded(!isPastExpanded)
-                                        }
+                                        onClick={() => setIsPastExpanded(!isPastExpanded)}
                                         className="flex items-center justify-between w-full text-left text-xs font-bold text-gray-700 uppercase tracking-wider px-1 py-1 hover:bg-gray-100 rounded focus:outline-none"
                                       >
                                         <div className="flex items-center gap-2">
                                           <span>{group.label}</span>
-                                          {!isExpanded &&
-                                            selectedItemInGroup && (
-                                              <span className="text-blue-600 font-bold ml-1">
-                                                選択中:{" "}
-                                                {selectedItemInGroup.label}
-                                              </span>
-                                            )}
+                                          {!isExpanded && selectedItemInGroup && (
+                                            <span className="text-blue-600 font-bold ml-1">
+                                              選択中: {selectedItemInGroup.label}
+                                            </span>
+                                          )}
                                         </div>
                                         {isExpanded ? (
                                           <ChevronUp className="w-4 h-4" />
@@ -296,20 +278,17 @@ export function WorkRegistration({
                                     {isExpanded && (
                                       <div className="flex flex-col gap-2 animate-in slide-in-from-top-2 duration-200">
                                         {group.items.map((per) => {
-                                          const isSelected =
-                                            field.value === per.id;
+                                          const isSelected = field.value === per.id;
                                           return (
                                             <button
                                               key={per.id}
                                               type="button"
-                                              onClick={() =>
-                                                field.onChange(per.id)
-                                              }
+                                              onClick={() => field.onChange(per.id)}
                                               className={cn(
                                                 "w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all border flex items-center justify-between group",
                                                 isSelected
                                                   ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                                                  : "bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:bg-blue-50"
+                                                  : "bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:bg-blue-50",
                                               )}
                                             >
                                               <span>{per.label}</span>
@@ -356,13 +335,11 @@ export function WorkRegistration({
                               <div className="mb-6 min-h-[48px] p-4 bg-gray-50 rounded-lg border border-dashed border-gray-300 flex flex-wrap gap-2 items-center">
                                 {field.value.length === 0 && (
                                   <span className="text-sm text-gray-400 flex items-center gap-1">
-                                    <Smile className="w-4 h-4" />{" "}
-                                    選択されたタグはここに表示されます
+                                    <Smile className="w-4 h-4" /> 選択されたタグはここに表示されます
                                   </span>
                                 )}
                                 {field.value.map((tag, idx) => {
-                                  const isOfficial =
-                                    OFFICIAL_TAGS.includes(tag);
+                                  const isOfficial = OFFICIAL_TAGS.includes(tag);
                                   return (
                                     <span
                                       key={idx}
@@ -370,30 +347,20 @@ export function WorkRegistration({
                                         "inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium animate-in fade-in zoom-in duration-200",
                                         isOfficial
                                           ? "bg-blue-100 text-blue-700"
-                                          : "bg-emerald-100 text-emerald-700"
+                                          : "bg-emerald-100 text-emerald-700",
                                       )}
                                     >
-                                      {isOfficial && (
-                                        <BadgeCheck className="w-3 h-3" />
-                                      )}
-                                      {!isOfficial && (
-                                        <Users className="w-3 h-3" />
-                                      )}
+                                      {isOfficial && <BadgeCheck className="w-3 h-3" />}
+                                      {!isOfficial && <Users className="w-3 h-3" />}
                                       {tag}
                                       <button
                                         type="button"
-                                        onClick={() =>
-                                          toggleTag(
-                                            tag,
-                                            field.value,
-                                            field.onChange
-                                          )
-                                        }
+                                        onClick={() => toggleTag(tag, field.value, field.onChange)}
                                         className={cn(
                                           "rounded-full p-0.5 transition-colors",
                                           isOfficial
                                             ? "hover:bg-blue-200 hover:text-blue-900"
-                                            : "hover:bg-emerald-200 hover:text-emerald-900"
+                                            : "hover:bg-emerald-200 hover:text-emerald-900",
                                         )}
                                       >
                                         <X className="w-3 h-3" />
@@ -416,22 +383,17 @@ export function WorkRegistration({
                                 {!isOfficialExpanded && (
                                   <div className="flex flex-wrap gap-2 mb-4">
                                     {popularOfficialTags.map((tag) => {
-                                      const isSelected =
-                                        field.value.includes(tag);
+                                      const isSelected = field.value.includes(tag);
                                       return (
                                         <button
                                           key={tag}
                                           type="button"
                                           onClick={() =>
-                                            toggleTag(
-                                              tag,
-                                              field.value,
-                                              field.onChange
-                                            )
+                                            toggleTag(tag, field.value, field.onChange)
                                           }
                                           className={cn(
                                             "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                            getTagStyle(tag, isSelected)
+                                            getTagStyle(tag, isSelected),
                                           )}
                                         >
                                           {isSelected ? "✓ " : "+ "}
@@ -448,9 +410,7 @@ export function WorkRegistration({
                                       <Input
                                         placeholder="公式タグを検索..."
                                         value={officialSearchQuery}
-                                        onChange={(e) =>
-                                          setOfficialSearchQuery(e.target.value)
-                                        }
+                                        onChange={(e) => setOfficialSearchQuery(e.target.value)}
                                         className="bg-white pl-10"
                                         autoFocus
                                       />
@@ -458,22 +418,17 @@ export function WorkRegistration({
                                     <div className="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto">
                                       {filteredOfficialTags.length > 0 ? (
                                         filteredOfficialTags.map((tag) => {
-                                          const isSelected =
-                                            field.value.includes(tag);
+                                          const isSelected = field.value.includes(tag);
                                           return (
                                             <button
                                               key={tag}
                                               type="button"
                                               onClick={() =>
-                                                toggleTag(
-                                                  tag,
-                                                  field.value,
-                                                  field.onChange
-                                                )
+                                                toggleTag(tag, field.value, field.onChange)
                                               }
                                               className={cn(
                                                 "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                                getTagStyle(tag, isSelected)
+                                                getTagStyle(tag, isSelected),
                                               )}
                                             >
                                               {isSelected ? "✓ " : "+ "}
@@ -492,12 +447,10 @@ export function WorkRegistration({
                                 <Button
                                   type="button"
                                   variant="outline"
-                                  onClick={() =>
-                                    setIsOfficialExpanded(!isOfficialExpanded)
-                                  }
+                                  onClick={() => setIsOfficialExpanded(!isOfficialExpanded)}
                                   className={cn(
                                     "w-full text-blue-600 border-blue-200 hover:bg-blue-50 hover:border-blue-300",
-                                    isOfficialExpanded && "bg-blue-50"
+                                    isOfficialExpanded && "bg-blue-50",
                                   )}
                                 >
                                   <LayoutGrid className="w-4 h-4 mr-2" />
@@ -525,22 +478,17 @@ export function WorkRegistration({
                                 {!isUserExpanded && (
                                   <div className="flex flex-wrap gap-2 mb-4">
                                     {popularUserTags.map((tag) => {
-                                      const isSelected =
-                                        field.value.includes(tag);
+                                      const isSelected = field.value.includes(tag);
                                       return (
                                         <button
                                           key={tag}
                                           type="button"
                                           onClick={() =>
-                                            toggleTag(
-                                              tag,
-                                              field.value,
-                                              field.onChange
-                                            )
+                                            toggleTag(tag, field.value, field.onChange)
                                           }
                                           className={cn(
                                             "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                            getTagStyle(tag, isSelected)
+                                            getTagStyle(tag, isSelected),
                                           )}
                                         >
                                           {isSelected ? "✓ " : "+ "}
@@ -558,16 +506,11 @@ export function WorkRegistration({
                                         <Input
                                           placeholder="タグを検索 または 作成..."
                                           value={userSearchQuery}
-                                          onChange={(e) =>
-                                            setUserSearchQuery(e.target.value)
-                                          }
+                                          onChange={(e) => setUserSearchQuery(e.target.value)}
                                           onKeyDown={(e) => {
                                             if (e.key === "Enter") {
                                               e.preventDefault();
-                                              addCustomTag(
-                                                field.value,
-                                                field.onChange
-                                              );
+                                              addCustomTag(field.value, field.onChange);
                                             }
                                           }}
                                           className="bg-white pl-10"
@@ -576,12 +519,7 @@ export function WorkRegistration({
                                       </div>
                                       <Button
                                         type="button"
-                                        onClick={() =>
-                                          addCustomTag(
-                                            field.value,
-                                            field.onChange
-                                          )
-                                        }
+                                        onClick={() => addCustomTag(field.value, field.onChange)}
                                         disabled={!userSearchQuery.trim()}
                                         className="bg-emerald-600 hover:bg-emerald-700 text-white"
                                       >
@@ -590,9 +528,7 @@ export function WorkRegistration({
                                     </div>
 
                                     {userSearchQuery &&
-                                      !filteredUserTags.includes(
-                                        userSearchQuery
-                                      ) && (
+                                      !filteredUserTags.includes(userSearchQuery) && (
                                         <div className="mb-3 text-xs text-emerald-600 font-bold px-1 animate-in fade-in">
                                           <span className="bg-emerald-100 px-2 py-1 rounded">
                                             「{userSearchQuery}
@@ -604,22 +540,17 @@ export function WorkRegistration({
                                     <div className="flex flex-wrap gap-2 max-h-[300px] overflow-y-auto">
                                       {filteredUserTags.length > 0 ? (
                                         filteredUserTags.map((tag) => {
-                                          const isSelected =
-                                            field.value.includes(tag);
+                                          const isSelected = field.value.includes(tag);
                                           return (
                                             <button
                                               key={tag}
                                               type="button"
                                               onClick={() =>
-                                                toggleTag(
-                                                  tag,
-                                                  field.value,
-                                                  field.onChange
-                                                )
+                                                toggleTag(tag, field.value, field.onChange)
                                               }
                                               className={cn(
                                                 "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                                getTagStyle(tag, isSelected)
+                                                getTagStyle(tag, isSelected),
                                               )}
                                             >
                                               {isSelected ? "✓ " : "+ "}
@@ -638,12 +569,10 @@ export function WorkRegistration({
                                 <Button
                                   type="button"
                                   variant="outline"
-                                  onClick={() =>
-                                    setIsUserExpanded(!isUserExpanded)
-                                  }
+                                  onClick={() => setIsUserExpanded(!isUserExpanded)}
                                   className={cn(
                                     "w-full text-emerald-600 border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300",
-                                    isUserExpanded && "bg-emerald-50"
+                                    isUserExpanded && "bg-emerald-50",
                                   )}
                                 >
                                   <LayoutGrid className="w-4 h-4 mr-2" />
@@ -706,7 +635,7 @@ export function WorkRegistration({
                                         "flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-medium rounded-sm transition-all",
                                         isActive
                                           ? "bg-white text-blue-700 shadow-sm"
-                                          : "text-gray-500 hover:text-gray-700"
+                                          : "text-gray-500 hover:text-gray-700",
                                       )}
                                     >
                                       <TypeIcon className="w-3 h-3" />
@@ -743,9 +672,7 @@ export function WorkRegistration({
                                     variant="ghost"
                                     size="icon"
                                     onClick={() => {
-                                      const newUrls = field.value.filter(
-                                        (_, i) => i !== idx
-                                      );
+                                      const newUrls = field.value.filter((_, i) => i !== idx);
                                       field.onChange(newUrls);
                                     }}
                                     className="text-gray-400 hover:text-red-500 h-11 w-11"
@@ -760,10 +687,7 @@ export function WorkRegistration({
                             type="button"
                             variant="outline"
                             onClick={() => {
-                              field.onChange([
-                                ...field.value,
-                                { type: "official", value: "" },
-                              ]);
+                              field.onChange([...field.value, { type: "official", value: "" }]);
                             }}
                             className="w-full mt-4 border-dashed text-gray-500 hover:text-blue-600 hover:border-blue-300"
                           >
@@ -773,8 +697,7 @@ export function WorkRegistration({
                       )}
                     />
                     <p className="text-xs text-gray-400 mt-3 text-center">
-                      ※
-                      アフィリエイトURLを登録した場合は、広告OFFの場合に非表示になります。
+                      ※ アフィリエイトURLを登録した場合は、広告OFFの場合に非表示になります。
                     </p>
                   </CardContent>
                 </Card>
@@ -790,16 +713,12 @@ export function WorkRegistration({
                         </div>
 
                         <div className="flex items-baseline justify-between mb-2 relative z-10">
-                          <span className="text-sm font-bold text-gray-600">
-                            消費ポイント
-                          </span>
+                          <span className="text-sm font-bold text-gray-600">消費ポイント</span>
                           <div className="flex items-baseline gap-1">
                             <span className="text-3xl font-extrabold text-blue-600">
                               {requiredPoints}
                             </span>
-                            <span className="text-sm font-bold text-blue-400">
-                              pt
-                            </span>
+                            <span className="text-sm font-bold text-blue-400">pt</span>
                           </div>
                         </div>
 
@@ -808,9 +727,7 @@ export function WorkRegistration({
                           <div
                             className={cn(
                               "flex items-center justify-between text-xs",
-                              watchedTags.length > 0
-                                ? "text-green-600 font-bold"
-                                : "text-gray-400"
+                              watchedTags.length > 0 ? "text-green-600 font-bold" : "text-gray-400",
                             )}
                           >
                             <span className="flex items-center gap-1">
@@ -828,7 +745,7 @@ export function WorkRegistration({
                               "flex items-center justify-between text-xs",
                               watchedUrls.some((u) => u.value)
                                 ? "text-green-600 font-bold"
-                                : "text-gray-400"
+                                : "text-gray-400",
                             )}
                           >
                             <span className="flex items-center gap-1">
@@ -863,9 +780,7 @@ export function WorkRegistration({
                             <Check
                               className={cn(
                                 "w-4 h-4",
-                                watchedTitle
-                                  ? "text-green-500"
-                                  : "text-gray-300"
+                                watchedTitle ? "text-green-500" : "text-gray-300",
                               )}
                             />
                             タイトル入力

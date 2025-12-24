@@ -4,13 +4,8 @@ import { UserProfile } from "./user-profile";
 import { useSchrodingerProfile } from "./user-profile.logic";
 
 export function UserProfileContainer() {
-  const {
-    quantumState,
-    currentPersona,
-    observe,
-    availablePersonas,
-    switchMask,
-  } = useSchrodingerProfile();
+  const { quantumState, currentPersona, observe, availablePersonas, switchMask } =
+    useSchrodingerProfile();
 
   return (
     <UserProfile

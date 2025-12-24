@@ -46,19 +46,13 @@ export const MOCK_USER_ANSWERS: UserValueAnswer[] = [
 ];
 
 export const fetchValues = async (): Promise<ValueItem[]> => {
-  return new Promise((resolve) =>
-    setTimeout(() => resolve(VALUES_QUESTIONS), 300)
-  );
+  return new Promise((resolve) => setTimeout(() => resolve(VALUES_QUESTIONS), 300));
 };
 
 export const fetchUserAnswers = async (): Promise<UserValueAnswer[]> => {
-  return new Promise((resolve) =>
-    setTimeout(() => resolve(MOCK_USER_ANSWERS), 400)
-  );
+  return new Promise((resolve) => setTimeout(() => resolve(MOCK_USER_ANSWERS), 400));
 };
 
-export const saveUserAnswer = async (
-  answer: UserValueAnswer
-): Promise<boolean> => {
+export const saveUserAnswer = async (answer: UserValueAnswer): Promise<boolean> => {
   return new Promise((resolve) => setTimeout(() => resolve(true), 500));
 };

@@ -3,13 +3,7 @@ import React from "react";
 // import { Slider } from '@/components/ui/slider'; // Removed as we use native input
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils"; // Assuming standard shadcn utils
 import { ValueItem, UserValueAnswer } from "../common/types";
 
@@ -70,9 +64,7 @@ export const ValuesList: React.FC<ValuesListProps> = ({
                       <div className="p-6 flex-1 space-y-2">
                         <div className="flex justify-between items-start">
                           <div>
-                            <CardTitle className="text-lg">
-                              {q.question}
-                            </CardTitle>
+                            <CardTitle className="text-lg">{q.question}</CardTitle>
                             <CardDescription>{q.description}</CardDescription>
                           </div>
                           <Button
@@ -81,7 +73,7 @@ export const ValuesList: React.FC<ValuesListProps> = ({
                             onClick={() => onPrivacyToggle(q.id)}
                             className={cn(
                               "text-slate-400 hover:text-indigo-600",
-                              !isPublic && "text-amber-500"
+                              !isPublic && "text-amber-500",
                             )}
                             title={isPublic ? "公開中" : "非公開"}
                           >
@@ -96,31 +88,22 @@ export const ValuesList: React.FC<ValuesListProps> = ({
 
                       <div className="p-6 pt-0 md:pt-6 md:w-1/2 md:border-l border-slate-100 dark:border-slate-800 space-y-4">
                         <div className="flex justify-between items-center mb-2">
-                          <span className="text-xs font-medium text-slate-400">
-                            重視しない
-                          </span>
-                          <span className="text-lg font-bold text-indigo-600">
-                            {answer}%
-                          </span>
-                          <span className="text-xs font-medium text-slate-400">
-                            重視する
-                          </span>
+                          <span className="text-xs font-medium text-slate-400">重視しない</span>
+                          <span className="text-lg font-bold text-indigo-600">{answer}%</span>
+                          <span className="text-xs font-medium text-slate-400">重視する</span>
                         </div>
                         <input
                           type="range"
                           min="0"
                           max="100"
                           value={answer}
-                          onChange={(e) =>
-                            onAnswerChange(q.id, parseInt(e.target.value))
-                          }
+                          onChange={(e) => onAnswerChange(q.id, parseInt(e.target.value))}
                           className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                         />
                         {isSaving && (
                           <div className="flex justify-end">
                             <span className="text-xs text-slate-400 flex items-center gap-1">
-                              <Loader2 className="w-3 h-3 animate-spin" />{" "}
-                              保存中
+                              <Loader2 className="w-3 h-3 animate-spin" /> 保存中
                             </span>
                           </div>
                         )}

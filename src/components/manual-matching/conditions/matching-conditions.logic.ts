@@ -25,10 +25,7 @@ export interface MatchingSettings {
 }
 
 export const DEFAULT_SETTINGS: MatchingSettings = {
-  valueImportance: VALUE_OPTIONS.reduce(
-    (acc, opt) => ({ ...acc, [opt.id]: 50 }),
-    {}
-  ),
+  valueImportance: VALUE_OPTIONS.reduce((acc, opt) => ({ ...acc, [opt.id]: 50 }), {}),
   selectedGenres: [],
   minAge: 20,
   maxAge: 40,
@@ -36,16 +33,10 @@ export const DEFAULT_SETTINGS: MatchingSettings = {
 };
 
 // Simulation Logic
-export const saveSettings = async (
-  settings: MatchingSettings
-): Promise<boolean> => {
+export const saveSettings = async (settings: MatchingSettings): Promise<boolean> => {
   return new Promise((resolve) => setTimeout(() => resolve(true), 500));
 };
 
-export const startAutoMatching = async (
-  settings: MatchingSettings
-): Promise<string> => {
-  return new Promise((resolve) =>
-    setTimeout(() => resolve("session-123"), 800)
-  );
+export const startAutoMatching = async (settings: MatchingSettings): Promise<string> => {
+  return new Promise((resolve) => setTimeout(() => resolve("session-123"), 800));
 };

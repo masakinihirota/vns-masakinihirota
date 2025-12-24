@@ -25,7 +25,5 @@ export const WorksListContainer = () => {
     router.push("/works/new");
   };
 
-  return (
-    <WorksList works={works} loading={loading} onCreateNew={handleCreateNew} />
-  );
+  return <WorksList works={works} loading={loading} onCreateNew={handleCreateNew} />;
 };

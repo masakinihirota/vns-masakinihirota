@@ -21,17 +21,12 @@ export const ValueSelectionScreen: React.FC = () => {
   // generate stable unique ids for elements to satisfy useUniqueElementIds rule
   const importantValueId = useId();
   const relatedBaseId = useId();
-  const relatedIds = Array.from({ length: 5 }).map(
-    (_, i) => `${relatedBaseId}-${i}`
-  );
+  const relatedIds = Array.from({ length: 5 }).map((_, i) => `${relatedBaseId}-${i}`);
 
   // 選択肢追加
   const handleAddChoice = () => {
     const nextNum = choices.length + 1;
-    setChoices([
-      ...choices,
-      { label: `選択肢${nextNum} (追加)`, user: "登録ユーザー名" },
-    ]);
+    setChoices([...choices, { label: `選択肢${nextNum} (追加)`, user: "登録ユーザー名" }]);
     showMessage("選択肢が追加されました！", "success");
   };
 
@@ -63,10 +58,7 @@ export const ValueSelectionScreen: React.FC = () => {
       {/* Header Section */}
       <div className="flex flex-col items-start justify-between pb-4 mb-6 border-b sm:flex-row sm:items-center">
         {/* Breadcrumbs */}
-        <nav
-          className="mb-2 text-sm text-gray-500 sm:mb-0"
-          aria-label="パンくずリスト"
-        >
+        <nav className="mb-2 text-sm text-gray-500 sm:mb-0" aria-label="パンくずリスト">
           <ol className="inline-flex p-0 list-none">
             <li className="flex items-center">
               <button
@@ -173,10 +165,7 @@ export const ValueSelectionScreen: React.FC = () => {
             name="importantValue"
             className="w-5 h-5 mr-2 text-blue-600 rounded-md form-checkbox"
           />
-          <label
-            htmlFor={importantValueId}
-            className="text-xl font-semibold text-gray-800"
-          >
+          <label htmlFor={importantValueId} className="text-xl font-semibold text-gray-800">
             お題
           </label>
         </div>
@@ -201,9 +190,7 @@ export const ValueSelectionScreen: React.FC = () => {
             >
               <div className="flex items-center">
                 <span className="mr-4 text-gray-700">{choice.label}</span>
-                {choice.user && (
-                  <span className="text-sm text-gray-500">{choice.user}</span>
-                )}
+                {choice.user && <span className="text-sm text-gray-500">{choice.user}</span>}
               </div>
               {choice.user && (
                 <button
@@ -231,13 +218,8 @@ export const ValueSelectionScreen: React.FC = () => {
       {/* Content Blocks Section */}
       <div className="flex flex-col gap-6 mb-8">
         {[1, 2].map((i) => (
-          <div
-            key={i}
-            className="p-5 bg-gray-100 border border-gray-200 rounded-lg shadow-sm"
-          >
-            <h3 className="mb-2 text-lg font-semibold text-gray-800">
-              タイトル
-            </h3>
+          <div key={i} className="p-5 bg-gray-100 border border-gray-200 rounded-lg shadow-sm">
+            <h3 className="mb-2 text-lg font-semibold text-gray-800">タイトル</h3>
             <button
               className="block mb-2 text-sm text-blue-600 break-all hover:underline bg-transparent border-none cursor-pointer"
               tabIndex={0}
@@ -252,9 +234,7 @@ export const ValueSelectionScreen: React.FC = () => {
 
       {/* Related Values Section */}
       <div className="mb-8">
-        <h2 className="mb-4 text-xl font-semibold text-gray-800">
-          関連の価値観
-        </h2>
+        <h2 className="mb-4 text-xl font-semibold text-gray-800">関連の価値観</h2>
         <div className="flex flex-wrap justify-center gap-4 sm:justify-start">
           {relatedIds.map((rid) => (
             <div

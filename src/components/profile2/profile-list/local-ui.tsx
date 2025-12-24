@@ -4,13 +4,7 @@ import React from "react";
 // --- Local UI Components (Simulating Shadcn UI) ---
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?:
-    | "default"
-    | "destructive"
-    | "outline"
-    | "secondary"
-    | "ghost"
-    | "link";
+  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
   size?: "default" | "sm" | "lg" | "icon";
 }
 
@@ -25,10 +19,8 @@ export const Button = ({
     "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
   const variants: Record<string, string> = {
     default: "bg-blue-600 text-white hover:bg-blue-700 shadow-sm",
-    destructive:
-      "bg-red-900 text-red-100 hover:bg-red-800 border border-red-800",
-    outline:
-      "border border-slate-700 bg-transparent hover:bg-slate-800 text-slate-100",
+    destructive: "bg-red-900 text-red-100 hover:bg-red-800 border border-red-800",
+    outline: "border border-slate-700 bg-transparent hover:bg-slate-800 text-slate-100",
     secondary: "bg-slate-800 text-slate-100 hover:bg-slate-700",
     ghost: "hover:bg-slate-800 text-slate-400 hover:text-slate-100",
     link: "text-blue-500 underline-offset-4 hover:underline",
@@ -70,24 +62,16 @@ interface BadgeProps {
   className?: string;
 }
 
-export const Badge = ({
-  children,
-  variant = "default",
-  className = "",
-}: BadgeProps) => {
+export const Badge = ({ children, variant = "default", className = "" }: BadgeProps) => {
   const base =
     "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
   const variants: Record<string, string> = {
-    default:
-      "border-transparent bg-blue-900 text-blue-100 hover:bg-blue-900/80",
-    secondary:
-      "border-transparent bg-slate-800 text-slate-100 hover:bg-slate-800/80",
+    default: "border-transparent bg-blue-900 text-blue-100 hover:bg-blue-900/80",
+    secondary: "border-transparent bg-slate-800 text-slate-100 hover:bg-slate-800/80",
     outline: "text-slate-100",
   };
   return (
-    <div
-      className={`${base} ${variants[variant] || variants.default} ${className}`}
-    >
+    <div className={`${base} ${variants[variant] || variants.default} ${className}`}>
       {children}
     </div>
   );
@@ -126,14 +110,7 @@ interface ModalProps {
   footer?: React.ReactNode;
 }
 
-export const Modal = ({
-  isOpen,
-  onClose,
-  title,
-  description,
-  children,
-  footer,
-}: ModalProps) => {
+export const Modal = ({ isOpen, onClose, title, description, children, footer }: ModalProps) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 text-slate-100">
@@ -142,9 +119,7 @@ export const Modal = ({
           <h2 className="text-lg font-semibold leading-none tracking-tight text-slate-100">
             {title}
           </h2>
-          {description && (
-            <p className="text-sm text-slate-400">{description}</p>
-          )}
+          {description && <p className="text-sm text-slate-400">{description}</p>}
         </div>
         <button
           onClick={onClose}

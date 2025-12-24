@@ -12,11 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import {
-  MatchingSettings,
-  VALUE_OPTIONS,
-  GENRE_OPTIONS,
-} from "./matching-conditions.logic";
+import { MatchingSettings, VALUE_OPTIONS, GENRE_OPTIONS } from "./matching-conditions.logic";
 
 interface MatchingConditionsProps {
   settings: MatchingSettings;
@@ -29,9 +25,7 @@ interface MatchingConditionsProps {
   onStartMatching: () => void;
 }
 
-export const MatchingConditions: React.FC<MatchingConditionsProps> = (
-  props
-) => {
+export const MatchingConditions: React.FC<MatchingConditionsProps> = (props) => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 md:p-12">
       <div className="max-w-3xl mx-auto space-y-8">
@@ -70,10 +64,7 @@ export const MatchingConditions: React.FC<MatchingConditionsProps> = (
                   step="10"
                   value={props.settings.valueImportance[option.id]}
                   onChange={(e) =>
-                    props.onValueImportanceChange(
-                      option.id,
-                      parseInt(e.target.value)
-                    )
+                    props.onValueImportanceChange(option.id, parseInt(e.target.value))
                   }
                   className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                 />
@@ -131,11 +122,7 @@ export const MatchingConditions: React.FC<MatchingConditionsProps> = (
 
         {/* Action Footer */}
         <div className="sticky bottom-6 flex justify-end gap-4 p-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-xl border border-slate-200 dark:border-slate-800 shadow-lg">
-          <Button
-            variant="outline"
-            onClick={props.onSave}
-            disabled={props.isSaving}
-          >
+          <Button variant="outline" onClick={props.onSave} disabled={props.isSaving}>
             <Save className="w-4 h-4 mr-2" />
             {props.isSaving ? "保存中..." : "設定を保存"}
           </Button>

@@ -11,13 +11,7 @@ import {
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
 import { Work } from "../common/types";
 
 interface WorksListProps {
@@ -43,11 +37,7 @@ const getCategoryIcon = (category: string) => {
   }
 };
 
-export const WorksList: React.FC<WorksListProps> = ({
-  works,
-  loading,
-  onCreateNew,
-}) => {
+export const WorksList: React.FC<WorksListProps> = ({ works, loading, onCreateNew }) => {
   if (loading) {
     return (
       <div className="flex justify-center p-8">
@@ -63,10 +53,7 @@ export const WorksList: React.FC<WorksListProps> = ({
           <h1 className="text-3xl font-bold mb-1">作品ライブラリ</h1>
           <p className="text-slate-500">登録済みの作品一覧</p>
         </div>
-        <Button
-          onClick={onCreateNew}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white"
-        >
+        <Button onClick={onCreateNew} className="bg-indigo-600 hover:bg-indigo-700 text-white">
           <Plus className="w-4 h-4 mr-2" />
           新規登録
         </Button>
@@ -77,16 +64,11 @@ export const WorksList: React.FC<WorksListProps> = ({
           <Card key={work.id} className="hover:shadow-md transition-shadow">
             <CardHeader className="pb-3">
               <div className="flex justify-between items-start">
-                <Badge
-                  variant="outline"
-                  className="flex items-center gap-1 mb-2"
-                >
+                <Badge variant="outline" className="flex items-center gap-1 mb-2">
                   {getCategoryIcon(work.category)}
                   <span className="capitalize">{work.category}</span>
                 </Badge>
-                <span className="text-xs text-slate-400 font-mono">
-                  {work.period}
-                </span>
+                <span className="text-xs text-slate-400 font-mono">{work.period}</span>
               </div>
               <CardTitle className="text-lg line-clamp-1" title={work.title}>
                 {work.title}
@@ -102,9 +84,7 @@ export const WorksList: React.FC<WorksListProps> = ({
               </div>
               {work.urls.length > 0 && (
                 <div className="space-y-1">
-                  <p className="text-xs text-slate-400 font-medium">
-                    関連リンク:
-                  </p>
+                  <p className="text-xs text-slate-400 font-medium">関連リンク:</p>
                   <div className="flex flex-col gap-1">
                     {work.urls.map((u, i) => (
                       <a

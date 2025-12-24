@@ -2,11 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { AutoMatching } from "./auto-matching";
-import {
-  calculateMatches,
-  MatchingScore,
-  SearchCriteria,
-} from "./auto-matching.logic";
+import { calculateMatches, MatchingScore, SearchCriteria } from "./auto-matching.logic";
 
 export const AutoMatchingContainer = () => {
   const [loading, setLoading] = useState(false);
@@ -36,7 +32,7 @@ export const AutoMatchingContainer = () => {
 
   const handleCriteriaChange = (
     key: keyof SearchCriteria,
-    value: SearchCriteria[keyof SearchCriteria]
+    value: SearchCriteria[keyof SearchCriteria],
   ) => {
     setCriteria((prev) => ({ ...prev, [key]: value }));
   };

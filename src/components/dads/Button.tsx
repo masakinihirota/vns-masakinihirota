@@ -69,46 +69,35 @@ export type ButtonProps = {
   | { asChild: true; children: React.ReactNode }
 );
 
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  (props, ref) => {
-    const {
-      asChild,
-      children,
-      className,
-      variant,
-      size = "md",
-      ...rest
-    } = props;
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+  const { asChild, children, className, variant, size = "md", ...rest } = props;
 
-    const classNames = `${buttonBaseStyle} ${buttonSizeStyle[size]} ${
-      variant ? buttonVariantStyle[variant] : ""
-    } ${className ?? ""}`;
+  const classNames = `${buttonBaseStyle} ${buttonSizeStyle[size]} ${
+    variant ? buttonVariantStyle[variant] : ""
+  } ${className ?? ""}`;
 
-    if (asChild) {
-      return (
-        <Slot className={classNames} {...rest}>
-          {children}
-        </Slot>
-      );
-    }
-
-    const handleDisabled = (
-      e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
-      e.preventDefault();
-    };
-
+  if (asChild) {
     return (
-      <button
-        className={classNames}
-        onClick={props["aria-disabled"] ? handleDisabled : props.onClick}
-        {...rest}
-        ref={ref}
-      >
+      <Slot className={classNames} {...rest}>
         {children}
-      </button>
+      </Slot>
     );
   }
-);
+
+  const handleDisabled = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+  };
+
+  return (
+    <button
+      className={classNames}
+      onClick={props["aria-disabled"] ? handleDisabled : props.onClick}
+      {...rest}
+      ref={ref}
+    >
+      {children}
+    </button>
+  );
+});
 
 Button.displayName = "Button";

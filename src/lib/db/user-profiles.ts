@@ -39,10 +39,7 @@ export async function getUserProfiles(rootAccountId: string) {
   return data as UserProfile[];
 }
 
-export async function createUserProfile(
-  rootAccountId: string,
-  data: CreateProfileData
-) {
+export async function createUserProfile(rootAccountId: string, data: CreateProfileData) {
   const supabase = await createClient();
 
   // Check limit

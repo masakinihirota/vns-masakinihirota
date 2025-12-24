@@ -11,11 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  CATEGORIES,
-  SUB_CATEGORIES,
-  TIER_NAMES,
-} from "./work-registration-form.logic";
+import { CATEGORIES, SUB_CATEGORIES, TIER_NAMES } from "./work-registration-form.logic";
 
 interface WorkRegistrationFormViewProps {
   category: string;
@@ -83,9 +79,7 @@ export const WorkRegistrationFormView = ({
                 <Checkbox
                   id={subCat}
                   checked={subCategory.includes(subCat)}
-                  onCheckedChange={(checked) =>
-                    onSubCategoryChange(subCat, checked === true)
-                  }
+                  onCheckedChange={(checked) => onSubCategoryChange(subCat, checked === true)}
                 />
                 <Label htmlFor={subCat}>{subCat}</Label>
               </div>
@@ -101,10 +95,7 @@ export const WorkRegistrationFormView = ({
 
       <div>
         <Label htmlFor="tier">評価</Label>
-        <Select
-          value={tier.toString()}
-          onValueChange={(value) => onTierChange(Number(value))}
-        >
+        <Select value={tier.toString()} onValueChange={(value) => onTierChange(Number(value))}>
           <SelectTrigger>
             <SelectValue placeholder="評価を選択" />
           </SelectTrigger>
@@ -145,12 +136,7 @@ export const WorkRegistrationFormView = ({
       <div>
         <Label>適正年齢幅</Label>
         <div className="flex space-x-4">
-          <Slider
-            defaultValue={[0, 100]}
-            max={100}
-            step={1}
-            className="w-[60%]"
-          />
+          <Slider defaultValue={[0, 100]} max={100} step={1} className="w-[60%]" />
           <div className="space-y-1">
             <p className="text-sm font-medium leading-none">
               最小年齢: <span className="text-muted-foreground">0歳</span>

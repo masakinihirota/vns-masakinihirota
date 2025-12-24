@@ -29,8 +29,7 @@ const eslintConfig = defineConfig([
         "warn",
         {
           selector: "TryStatement",
-          message:
-            "try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）",
+          message: "try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）",
         },
       ],
     },

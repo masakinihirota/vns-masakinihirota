@@ -72,24 +72,15 @@ export const getTypeColor = (type: ProfileType): string => {
   }
 };
 
-export const filterProfiles = (
-  profiles: UserProfile[],
-  query: string
-): UserProfile[] => {
+export const filterProfiles = (profiles: UserProfile[], query: string): UserProfile[] => {
   if (!query) return profiles;
   const lowerQuery = query.toLowerCase();
   return profiles.filter(
-    (p) =>
-      p.name.toLowerCase().includes(lowerQuery) ||
-      p.handle.toLowerCase().includes(lowerQuery)
+    (p) => p.name.toLowerCase().includes(lowerQuery) || p.handle.toLowerCase().includes(lowerQuery),
   );
 };
 
-export const createNewProfile = (
-  name: string,
-  handle: string,
-  type: ProfileType
-): UserProfile => {
+export const createNewProfile = (name: string, handle: string, type: ProfileType): UserProfile => {
   return {
     id: `p-${Date.now()}`,
     name,

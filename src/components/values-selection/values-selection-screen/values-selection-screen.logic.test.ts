@@ -1,8 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  generateRelatedIds,
-  INITIAL_CHOICES,
-} from "./values-selection-screen.logic";
+import { generateRelatedIds, INITIAL_CHOICES } from "./values-selection-screen.logic";
 
 describe("ValueSelectionScreen Logic", () => {
   describe("INITIAL_CHOICES", () => {

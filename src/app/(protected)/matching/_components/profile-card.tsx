@@ -6,12 +6,7 @@ import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { UserProfile } from "../_logic/mock-matching";
 
 interface ProfileCardProps {
@@ -48,18 +43,14 @@ export function ProfileCard({ profile }: ProfileCardProps) {
       <div className="absolute top-16 left-6 z-20">
         <Avatar className="w-24 h-24 border-4 border-background shadow-xl">
           <AvatarImage src={profile.avatarUrl} alt={profile.displayName} />
-          <AvatarFallback>
-            {profile.displayName.substring(0, 2).toUpperCase()}
-          </AvatarFallback>
+          <AvatarFallback>{profile.displayName.substring(0, 2).toUpperCase()}</AvatarFallback>
         </Avatar>
       </div>
 
       <CardContent className="pt-12 pb-4 flex-grow space-y-4">
         <div className="space-y-1">
           <h3 className="text-xl font-bold">{profile.displayName}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.5rem]">
-            {profile.bio}
-          </p>
+          <p className="text-sm text-muted-foreground line-clamp-2 min-h-[2.5rem]">{profile.bio}</p>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -105,9 +96,7 @@ export function ProfileCard({ profile }: ProfileCardProps) {
             >
               <div className="text-6xl filter blur-sm select-none">🎭</div>
               <div>
-                <p className="font-bold text-lg tracking-widest">
-                  UNKNOWN ENTITY
-                </p>
+                <p className="font-bold text-lg tracking-widest">UNKNOWN ENTITY</p>
                 <p className="text-xs font-mono text-muted-foreground mt-1">
                   Compatibility: {profile.compatibility}%
                 </p>

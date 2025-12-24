@@ -4,11 +4,7 @@ import { motion } from "framer-motion";
 import { Sparkles, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  findMatches,
-  activeWatchlist,
-  UserProfile,
-} from "../_logic/mock-matching";
+import { findMatches, activeWatchlist, UserProfile } from "../_logic/mock-matching";
 import { ProfileCard } from "./profile-card";
 import { SearchingEffect } from "./searching-effect";
 
@@ -58,8 +54,7 @@ export function MatchingView() {
             <div className="text-center">
               <h2 className="text-2xl font-bold mb-2">Ready to Synchronize?</h2>
               <p className="text-muted-foreground mb-8">
-                The system will analyze your values against the multiverse
-                database.
+                The system will analyze your values against the multiverse database.
               </p>
               <Button
                 size="lg"

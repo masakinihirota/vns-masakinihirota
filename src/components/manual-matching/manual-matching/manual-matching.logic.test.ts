@@ -1,10 +1,6 @@
 import { renderHook, act } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
-import {
-  useManualMatching,
-  calculateCompatibility,
-  MatchingUser,
-} from "./manual-matching.logic";
+import { useManualMatching, calculateCompatibility, MatchingUser } from "./manual-matching.logic";
 
 describe("Manual Matching Logic", () => {
   describe("calculateCompatibility", () => {

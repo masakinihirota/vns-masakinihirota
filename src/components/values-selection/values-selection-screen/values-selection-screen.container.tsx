@@ -21,10 +21,7 @@ export const ValueSelectionScreenContainer: React.FC = () => {
   // 選択肢追加
   const handleAddChoice = () => {
     const nextNum = choices.length + 1;
-    setChoices([
-      ...choices,
-      { label: `選択肢${nextNum} (追加)`, user: "登録ユーザー名" },
-    ]);
+    setChoices([...choices, { label: `選択肢${nextNum} (追加)`, user: "登録ユーザー名" }]);
     showMessage("選択肢が追加されました！", "success");
   };
 

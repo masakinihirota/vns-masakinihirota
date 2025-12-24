@@ -181,7 +181,7 @@ export const useOnboarding = () => {
 
   const toggleAvailableLanguage = (lang: string) => {
     setAvailableLanguages((prev) =>
-      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
+      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang],
     );
   };
 
@@ -205,12 +205,9 @@ export const useOnboarding = () => {
     alert("アカウント作成リクエストを送信しました（デモ）");
   };
 
-  const canSubmit =
-    isAdult && agreements.oasis && agreements.human && agreements.honesty;
+  const canSubmit = isAdult && agreements.oasis && agreements.human && agreements.honesty;
 
-  const currentDetail = culturalSphere
-    ? DETAILED_REGIONS[culturalSphere]
-    : null;
+  const currentDetail = culturalSphere ? DETAILED_REGIONS[culturalSphere] : null;
 
   return {
     state: {
