@@ -1,6 +1,12 @@
 import Image from "next/image";
 import type React from "react";
-import { Artwork, ArtworkKey, DisplayMode, FilterOption, SortOption } from "./product-list.logic";
+import {
+  Artwork,
+  ArtworkKey,
+  DisplayMode,
+  FilterOption,
+  SortOption,
+} from "./product-list.logic";
 
 interface ProductListProps {
   artworks: Artwork[];
@@ -39,7 +45,9 @@ export const ProductList: React.FC<ProductListProps> = ({
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
-        <div className="text-xl text-gray-700 dark:text-gray-300">データを読み込み中...</div>
+        <div className="text-xl text-gray-700 dark:text-gray-300">
+          データを読み込み中...
+        </div>
       </div>
     );
   }
@@ -275,7 +283,9 @@ export const ProductList: React.FC<ProductListProps> = ({
                   <h3 className="text-md font-bold text-gray-900 dark:text-white truncate">
                     {artwork.title}
                   </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">{artwork.artist}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    {artwork.artist}
+                  </p>
                 </div>
               </div>
             ))}
@@ -295,20 +305,26 @@ export const ProductList: React.FC<ProductListProps> = ({
               作品リスト
             </h1>
             <div className="flex space-x-2 rounded-full bg-gray-200 dark:bg-gray-700 p-1 flex-wrap">
-              {(["one-line", "two-line", "thumbnail"] as DisplayMode[]).map((mode) => (
-                <button
-                  key={mode}
-                  type="button"
-                  onClick={() => onDisplayModeChange(mode)}
-                  className={`px-3 py-1 text-sm font-medium rounded-full transition-colors ${
-                    displayMode === mode
-                      ? "bg-indigo-600 text-white shadow-md"
-                      : "text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
-                  }`}
-                >
-                  {mode === "one-line" ? "1行" : mode === "two-line" ? "2行" : "サムネイル"}
-                </button>
-              ))}
+              {(["one-line", "two-line", "thumbnail"] as DisplayMode[]).map(
+                (mode) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => onDisplayModeChange(mode)}
+                    className={`px-3 py-1 text-sm font-medium rounded-full transition-colors ${
+                      displayMode === mode
+                        ? "bg-indigo-600 text-white shadow-md"
+                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600"
+                    }`}
+                  >
+                    {mode === "one-line"
+                      ? "1行"
+                      : mode === "two-line"
+                        ? "2行"
+                        : "サムネイル"}
+                  </button>
+                )
+              )}
             </div>
           </div>
 
@@ -324,13 +340,17 @@ export const ProductList: React.FC<ProductListProps> = ({
                 id={filterRatingId}
                 className="rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 value={filter.rating}
-                onChange={(e) => onFilterChange({ ...filter, rating: e.target.value })}
+                onChange={(e) =>
+                  onFilterChange({ ...filter, rating: e.target.value })
+                }
               >
                 <option value="すべて">すべて</option>
                 <option value="Tier1">Tier1</option>
                 <option value="Tier2">Tier2</option>
                 <option value="Tier3">Tier3</option>
-                <option value="普通or自分に合わない">普通or自分に合わない</option>
+                <option value="普通or自分に合わない">
+                  普通or自分に合わない
+                </option>
               </select>
             </div>
             <div className="flex items-center space-x-2">

@@ -1,3 +1,4 @@
-pnpm lint:fix
-pnpm format:fix
+pnpm run lint:fast
+pnpm run format:fast
+
 pnpm run build

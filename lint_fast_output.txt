@@ -1,5 +1,0 @@
-
-> vns-masakinihirota@0.4.1 lint:fast
-> oxlint --tsconfig ./tsconfig.json --type-aware ./src
-
-Failed to find tsgolint executable. You may need to add the `oxlint-tsgolint` package to your project?

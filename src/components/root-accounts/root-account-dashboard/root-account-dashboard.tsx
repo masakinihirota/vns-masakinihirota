@@ -25,7 +25,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<RootAccount>(data);
-  const [activeTab, setActiveTab] = useState<"profile" | "security" | "audit">("profile");
+  const [activeTab, setActiveTab] = useState<"profile" | "security" | "audit">(
+    "profile"
+  );
 
   // Simulate Server Action for Update
   const handleSave = async () => {
@@ -67,7 +69,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 Authenticated as: {formData.display_id}
               </span>
               <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
-                <User size={18} className="text-slate-500 dark:text-slate-400" />
+                <User
+                  size={18}
+                  className="text-slate-500 dark:text-slate-400"
+                />
               </div>
             </div>
           </div>
@@ -293,7 +298,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           type="text"
                           disabled={!isEditing}
                           value={formData.display_name}
-                          onChange={(e) => handleChange("display_name", e.target.value)}
+                          onChange={(e) =>
+                            handleChange("display_name", e.target.value)
+                          }
                           className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
                         />
                       </div>
@@ -309,7 +316,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           type="text"
                           disabled={!isEditing}
                           value={formData.location}
-                          onChange={(e) => handleChange("location", e.target.value)}
+                          onChange={(e) =>
+                            handleChange("location", e.target.value)
+                          }
                           className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
                           placeholder="例: 東京都, 日本"
                         />
@@ -325,7 +334,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         {isEditing ? (
                           <select
                             value={formData.birth_generation}
-                            onChange={(e) => handleChange("birth_generation", e.target.value)}
+                            onChange={(e) =>
+                              handleChange("birth_generation", e.target.value)
+                            }
                             className="block w-full py-2 px-3 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
                             <option value="1960s">1960s</option>
@@ -353,7 +364,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           rows={3}
                           disabled={!isEditing}
                           value={formData.statement}
-                          onChange={(e) => handleChange("statement", e.target.value)}
+                          onChange={(e) =>
+                            handleChange("statement", e.target.value)
+                          }
                           className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
                         />
                       </div>
@@ -378,7 +391,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         {isEditing ? (
                           <select
                             value={formData.mother_tongue_code}
-                            onChange={(e) => handleChange("mother_tongue_code", e.target.value)}
+                            onChange={(e) =>
+                              handleChange("mother_tongue_code", e.target.value)
+                            }
                             className="block w-full py-2 px-3 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
                             {LANGUAGES_MOCK.map((lang) => (
@@ -390,8 +405,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         ) : (
                           <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50">
                             {
-                              LANGUAGES_MOCK.find((l) => l.id === formData.mother_tongue_code)
-                                ?.native_name
+                              LANGUAGES_MOCK.find(
+                                (l) => l.id === formData.mother_tongue_code
+                              )?.native_name
                             }
                           </div>
                         )}
@@ -406,7 +422,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         {isEditing ? (
                           <select
                             value={formData.site_language_code}
-                            onChange={(e) => handleChange("site_language_code", e.target.value)}
+                            onChange={(e) =>
+                              handleChange("site_language_code", e.target.value)
+                            }
                             className="block w-full py-2 px-3 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                           >
                             {LANGUAGES_MOCK.map((lang) => (
@@ -418,8 +436,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         ) : (
                           <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50">
                             {
-                              LANGUAGES_MOCK.find((l) => l.id === formData.site_language_code)
-                                ?.native_name
+                              LANGUAGES_MOCK.find(
+                                (l) => l.id === formData.site_language_code
+                              )?.native_name
                             }
                           </div>
                         )}
@@ -476,11 +495,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <div className="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4">
                     <div className="flex">
                       <div className="flex-shrink-0">
-                        <AlertCircle className="h-5 w-5 text-yellow-400" aria-hidden="true" />
+                        <AlertCircle
+                          className="h-5 w-5 text-yellow-400"
+                          aria-hidden="true"
+                        />
                       </div>
                       <div className="ml-3">
                         <p className="text-sm text-yellow-700 dark:text-yellow-200">
-                          2要素認証 (2FA) が未設定です。セキュリティ強化のために設定を推奨します。
+                          2要素認証 (2FA)
+                          が未設定です。セキュリティ強化のために設定を推奨します。
                         </p>
                       </div>
                     </div>

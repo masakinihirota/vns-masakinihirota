@@ -111,8 +111,10 @@ export const MOCK_ARTWORKS: Artwork[] = [
     title: "ゲルニカ",
     artist: "パブロ・ピカソ",
     year: 1937,
-    description: "スペイン内戦中のゲルニカ空爆をテーマにした反戦のメッセージが込められた作品。",
-    thumbnail_url: "https://upload.wikimedia.org/wikipedia/commons/b/b8/Guernica_Picasso.jpg",
+    description:
+      "スペイン内戦中のゲルニカ空爆をテーマにした反戦のメッセージが込められた作品。",
+    thumbnail_url:
+      "https://upload.wikimedia.org/wikipedia/commons/b/b8/Guernica_Picasso.jpg",
     is_important: true,
     rating: "Tier1",
     status: "完結",
@@ -126,14 +128,20 @@ export const MOCK_ARTWORKS: Artwork[] = [
   },
 ];
 
-export const filterArtworks = (artworks: Artwork[], filter: FilterOption): Artwork[] => {
+export const filterArtworks = (
+  artworks: Artwork[],
+  filter: FilterOption
+): Artwork[] => {
   return artworks.filter((artwork) => {
     if (filter.rating === "すべて") return true;
     return artwork.rating === filter.rating;
   });
 };
 
-export const sortArtworks = (artworks: Artwork[], sort: SortOption): Artwork[] => {
+export const sortArtworks = (
+  artworks: Artwork[],
+  sort: SortOption
+): Artwork[] => {
   const ratingOrder: Record<string, number> = {
     Tier1: 1,
     Tier2: 2,

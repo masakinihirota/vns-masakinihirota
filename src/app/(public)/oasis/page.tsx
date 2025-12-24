@@ -1,7 +1,13 @@
 import { Droplets, Heart, Globe, ShieldCheck, Users } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
 export const metadata = {
   title: "Oasis Declaration | VNS masakinihirota",
@@ -24,8 +30,8 @@ export default function OasisPage() {
             &quot;褒めるときは大きな声でみんなの前で、叱るときは二人きりで小さな声で。&quot;
           </p>
           <p className="text-sm text-muted-foreground/80">
-            Motto: When giving praise, do it loudly in front of everyone. When scolding, do it
-            quietly with just the two of you.
+            Motto: When giving praise, do it loudly in front of everyone. When
+            scolding, do it quietly with just the two of you.
           </p>
         </div>
 
@@ -48,13 +54,16 @@ export default function OasisPage() {
                     1
                   </span>
                   <div className="space-y-1">
-                    <p className="font-medium leading-none">安らぎの場所 / Sanctuary</p>
+                    <p className="font-medium leading-none">
+                      安らぎの場所 / Sanctuary
+                    </p>
                     <p className="text-muted-foreground">
                       インターネット上で翼を休める場所、砂漠の中で命の水を授かる場所を作ります。
                       <br />
                       <span className="text-xs opacity-70">
-                        Create a place where you can rest your wings on the Internet, and a place
-                        where you can receive water of life in the desert.
+                        Create a place where you can rest your wings on the
+                        Internet, and a place where you can receive water of
+                        life in the desert.
                       </span>
                     </p>
                   </div>
@@ -65,11 +74,15 @@ export default function OasisPage() {
                     2
                   </span>
                   <div className="space-y-1">
-                    <p className="font-medium leading-none">ユーザー主導 / User Sovereignty</p>
+                    <p className="font-medium leading-none">
+                      ユーザー主導 / User Sovereignty
+                    </p>
                     <p className="text-muted-foreground">
                       広告はユーザー側に主導権があります。
                       <br />
-                      <span className="text-xs opacity-70">Advertising is led by the user.</span>
+                      <span className="text-xs opacity-70">
+                        Advertising is led by the user.
+                      </span>
                     </p>
                   </div>
                 </li>
@@ -79,7 +92,9 @@ export default function OasisPage() {
                     3
                   </span>
                   <div className="space-y-1">
-                    <p className="font-medium leading-none">共通の価値観 / Shared Values</p>
+                    <p className="font-medium leading-none">
+                      共通の価値観 / Shared Values
+                    </p>
                     <p className="text-muted-foreground">
                       共通の価値観を持った人々のオアシスという場所を作ります。
                       <br />
@@ -95,12 +110,15 @@ export default function OasisPage() {
                     4
                   </span>
                   <div className="space-y-1">
-                    <p className="font-medium leading-none">相互尊重 / Mutual Respect</p>
+                    <p className="font-medium leading-none">
+                      相互尊重 / Mutual Respect
+                    </p>
                     <p className="text-muted-foreground">
                       お互いの価値観を認めるのならば、誰もが参加できます。
                       <br />
                       <span className="text-xs opacity-70">
-                        Everyone can participate if they recognize each other&apos;s values.
+                        Everyone can participate if they recognize each
+                        other&apos;s values.
                       </span>
                     </p>
                   </div>
@@ -111,7 +129,9 @@ export default function OasisPage() {
                     5
                   </span>
                   <div className="space-y-1">
-                    <p className="font-medium leading-none">優しい世界 / Gentle World</p>
+                    <p className="font-medium leading-none">
+                      優しい世界 / Gentle World
+                    </p>
                     <p className="text-muted-foreground">
                       きれいな世界、優しい世界を守り、広めます。
                       <br />
@@ -139,8 +159,8 @@ export default function OasisPage() {
             誰もが笑顔になれる場所です。
           </p>
           <p className="text-sm text-muted-foreground">
-            We aim to be a place where everyone can rest without conflict. It is a place where
-            everyone can smile.
+            We aim to be a place where everyone can rest without conflict. It is
+            a place where everyone can smile.
           </p>
         </div>
 

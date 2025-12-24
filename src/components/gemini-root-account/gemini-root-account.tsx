@@ -48,7 +48,8 @@ export const GeminiRootAccountView = ({
   }
 
   // ポイントゲージのパーセンテージを計算
-  const pointPercentage: number = (accountData.currentPoints / accountData.maxPoints) * 100;
+  const pointPercentage: number =
+    (accountData.currentPoints / accountData.maxPoints) * 100;
   // 信頼度スコアの色を決定
   const trustColor: string =
     accountData.trustScore >= 90
@@ -93,7 +94,8 @@ export const GeminiRootAccountView = ({
               href="/user-profile/manage"
               className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
             >
-              名前の管理 <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
+              名前の管理{" "}
+              <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
             </a>
           </div>
           <div className="space-y-4">
@@ -128,7 +130,8 @@ export const GeminiRootAccountView = ({
               href="/points/history"
               className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
             >
-              ポイント履歴 <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
+              ポイント履歴{" "}
+              <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
             </a>
           </div>
           <div className="space-y-6">
@@ -140,7 +143,9 @@ export const GeminiRootAccountView = ({
                 </div>
                 <p className="text-lg font-bold">
                   ${accountData.currentPoints}{" "}
-                  <span className="text-sm text-gray-400">/ ${accountData.maxPoints}</span>
+                  <span className="text-sm text-gray-400">
+                    / ${accountData.maxPoints}
+                  </span>
                 </p>
               </div>
               <div className="w-full bg-gray-700 rounded-full h-2.5">
@@ -149,7 +154,9 @@ export const GeminiRootAccountView = ({
                   style={{ width: `${pointPercentage}%` }}
                 ></div>
               </div>
-              <p className="mt-2 text-xs text-gray-500">24時間ごとにMAXの50%が補充されます。</p>
+              <p className="mt-2 text-xs text-gray-500">
+                24時間ごとにMAXの50%が補充されます。
+              </p>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -158,7 +165,9 @@ export const GeminiRootAccountView = ({
                   <p className="ml-2 text-sm text-gray-400">信頼度</p>
                 </div>
               </div>
-              <p className={`text-lg font-bold ${trustColor}`}>{accountData.trustScore}%</p>
+              <p className={`text-lg font-bold ${trustColor}`}>
+                {accountData.trustScore}%
+              </p>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center">
@@ -168,7 +177,9 @@ export const GeminiRootAccountView = ({
                 </div>
               </div>
               <p className={`text-lg font-bold ${warningStatusColor}`}>
-                {accountData.warningCount > 0 ? `${accountData.warningCount} 回` : "クリア"}
+                {accountData.warningCount > 0
+                  ? `${accountData.warningCount} 回`
+                  : "クリア"}
               </p>
             </div>
           </div>
@@ -177,7 +188,9 @@ export const GeminiRootAccountView = ({
         {/* Section C: 不変の基本情報 */}
         <section className="p-6 bg-gray-800 shadow-lg rounded-xl">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-100">不変の基本情報</h2>
+            <h2 className="text-xl font-semibold text-gray-100">
+              不変の基本情報
+            </h2>
             <button className="text-red-400 transition-colors duration-200 hover:text-red-300">
               リセット機能 (強力な警告あり)
             </button>
@@ -224,12 +237,16 @@ export const GeminiRootAccountView = ({
               href="/oauth/add"
               className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
             >
-              OAuth追加 <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
+              OAuth追加{" "}
+              <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
             </a>
           </div>
           <div className="flex items-center space-x-4">
             {accountData.oauthProviders.map((provider, index) => (
-              <div key={index} className="flex items-center space-x-2 text-gray-400">
+              <div
+                key={index}
+                className="flex items-center space-x-2 text-gray-400"
+              >
                 <LucideBadgeCheck className="w-5 h-5 text-blue-400" />
                 <p>{provider}</p>
               </div>
@@ -247,7 +264,8 @@ export const GeminiRootAccountView = ({
               href="/user-profiles/manage"
               className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
             >
-              管理画面へ <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
+              管理画面へ{" "}
+              <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
             </a>
           </div>
           <div className="flex items-center space-x-4 text-gray-400">
@@ -265,19 +283,24 @@ export const GeminiRootAccountView = ({
         {}
         <section className="p-6 bg-gray-800 shadow-lg rounded-xl">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-gray-100">グループ/それ以上のまとまり管理</h2>
+            <h2 className="text-xl font-semibold text-gray-100">
+              グループ/それ以上のまとまり管理
+            </h2>
             <a
               href="/groups/manage"
               className="text-blue-400 transition-colors duration-200 hover:text-blue-300"
             >
-              管理画面へ <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
+              管理画面へ{" "}
+              <LucideExternalLink className="inline-block w-4 h-4 ml-1" />
             </a>
           </div>
           <div className="flex items-center space-x-4 text-gray-400">
             <LucideUsers className="w-6 h-6" />
             <p className="text-sm">
               あなたは{" "}
-              <span className="text-lg font-bold text-gray-100">{accountData.groupsCount}</span>{" "}
+              <span className="text-lg font-bold text-gray-100">
+                {accountData.groupsCount}
+              </span>{" "}
               個のグループ、
               <span className="text-lg font-bold text-gray-100">
                 {accountData.alliancesCount}
