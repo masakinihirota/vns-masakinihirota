@@ -364,7 +364,7 @@ export function WorkRegistration({
                                     選択されたタグはここに表示されます
                                   </span>
                                 )}
-                                {field.value.map((tag, idx) => {
+                                {field.value.map((tag: string, idx: number) => {
                                   const isOfficial =
                                     OFFICIAL_TAGS.includes(tag);
                                   return (
@@ -689,78 +689,83 @@ export function WorkRegistration({
                       // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       render={({ field }: { field: any }) => (
                         <div className="space-y-4">
-                          {field.value.map((urlItem, idx) => (
-                            <div
-                              key={idx}
-                              className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100"
-                            >
-                              <div className="flex gap-1 bg-gray-200 p-1 rounded-md">
-                                {URL_TYPES.map((type) => {
-                                  const isActive = urlItem.type === type.id;
-                                  const TypeIcon = type.icon;
-                                  return (
-                                    <button
-                                      key={type.id}
-                                      type="button"
-                                      onClick={() => {
-                                        const newUrls = [...field.value];
-                                        newUrls[idx].type = type.id;
-                                        field.onChange(newUrls);
-                                      }}
-                                      className={cn(
-                                        "flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-medium rounded-sm transition-all",
-                                        isActive
-                                          ? "bg-white text-blue-700 shadow-sm"
-                                          : "text-gray-500 hover:text-gray-700"
-                                      )}
-                                    >
-                                      <TypeIcon className="w-3 h-3" />
-                                      {type.label === "公式サイト・情報"
-                                        ? "公式・情報"
-                                        : "購入・紹介"}
-                                    </button>
-                                  );
-                                })}
-                              </div>
-
-                              <div className="flex gap-2">
-                                <div className="relative flex-1">
-                                  <LinkIcon className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                                  <Input
-                                    value={urlItem.value}
-                                    onChange={(e) => {
-                                      const newUrls = [...field.value];
-                                      newUrls[idx].value = e.target.value;
-                                      field.onChange(newUrls);
-                                    }}
-                                    placeholder={
-                                      urlItem.type === "official"
-                                        ? "https://公式サイト..."
-                                        : "https://Amazon/BOOTH..."
-                                    }
-                                    className="pl-9 text-sm"
-                                  />
+                          {field.value.map(
+                            (
+                              urlItem: { value?: string; type?: string },
+                              idx: number
+                            ) => (
+                              <div
+                                key={idx}
+                                className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100"
+                              >
+                                <div className="flex gap-1 bg-gray-200 p-1 rounded-md">
+                                  {URL_TYPES.map((type) => {
+                                    const isActive = urlItem.type === type.id;
+                                    const TypeIcon = type.icon;
+                                    return (
+                                      <button
+                                        key={type.id}
+                                        type="button"
+                                        onClick={() => {
+                                          const newUrls = [...field.value];
+                                          newUrls[idx].type = type.id;
+                                          field.onChange(newUrls);
+                                        }}
+                                        className={cn(
+                                          "flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-medium rounded-sm transition-all",
+                                          isActive
+                                            ? "bg-white text-blue-700 shadow-sm"
+                                            : "text-gray-500 hover:text-gray-700"
+                                        )}
+                                      >
+                                        <TypeIcon className="w-3 h-3" />
+                                        {type.label === "公式サイト・情報"
+                                          ? "公式・情報"
+                                          : "購入・紹介"}
+                                      </button>
+                                    );
+                                  })}
                                 </div>
 
-                                {field.value.length > 2 && (
-                                  <Button
-                                    type="button"
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() => {
-                                      const newUrls = field.value.filter(
-                                        (_, i) => i !== idx
-                                      );
-                                      field.onChange(newUrls);
-                                    }}
-                                    className="text-gray-400 hover:text-red-500 h-11 w-11"
-                                  >
-                                    <Trash2 className="w-4 h-4" />
-                                  </Button>
-                                )}
+                                <div className="flex gap-2">
+                                  <div className="relative flex-1">
+                                    <LinkIcon className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                    <Input
+                                      value={urlItem.value}
+                                      onChange={(e) => {
+                                        const newUrls = [...field.value];
+                                        newUrls[idx].value = e.target.value;
+                                        field.onChange(newUrls);
+                                      }}
+                                      placeholder={
+                                        urlItem.type === "official"
+                                          ? "https://公式サイト..."
+                                          : "https://Amazon/BOOTH..."
+                                      }
+                                      className="pl-9 text-sm"
+                                    />
+                                  </div>
+
+                                  {field.value.length > 2 && (
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={() => {
+                                        const newUrls = field.value.filter(
+                                          (_: unknown, i: number) => i !== idx
+                                        );
+                                        field.onChange(newUrls);
+                                      }}
+                                      className="text-gray-400 hover:text-red-500 h-11 w-11"
+                                    >
+                                      <Trash2 className="w-4 h-4" />
+                                    </Button>
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            )
+                          )}
                           <Button
                             type="button"
                             variant="outline"
