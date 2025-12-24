@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import {
   Home,
   Search,
@@ -35,11 +34,23 @@ import {
   History,
   Target,
 } from "lucide-react";
+import React, {
+  useState,
+  useMemo,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 
 // --- Types ---
 
 type SlotType = "work" | "value" | "skill";
-type SectionId = "work_future" | "work_current" | "work_life" | "value" | "skill";
+type SectionId =
+  | "work_future"
+  | "work_current"
+  | "work_life"
+  | "value"
+  | "skill";
 
 interface Slot {
   id: string;
@@ -283,7 +294,11 @@ const MOCK_PROFILES: UserProfile[] = [
     bio: "フロントエンドエンジニア。UXデザインに関心があります。",
     avatarUrl: "https://placehold.co/100x100/2563eb/white?text=K",
     coverUrl: "https://placehold.co/800x200/1e293b/white?text=Cover",
-    attributes: { purpose: "技術課題解決", role: "Builder", type: "Protagonist" },
+    attributes: {
+      purpose: "技術課題解決",
+      role: "Builder",
+      type: "Protagonist",
+    },
     equippedSlots: {
       worksFuture: [],
       worksCurrent: [ITEMS.bg],
@@ -332,7 +347,8 @@ const Button = ({
       "bg-blue-600 text-white hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-500 shadow-sm",
     secondary:
       "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700",
-    ghost: "hover:bg-slate-100 text-slate-700 dark:text-slate-300 dark:hover:bg-slate-800",
+    ghost:
+      "hover:bg-slate-100 text-slate-700 dark:text-slate-300 dark:hover:bg-slate-800",
     outline:
       "border border-slate-200 bg-white hover:bg-slate-100 text-slate-900 dark:bg-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800",
     destructive:
@@ -364,7 +380,13 @@ const Textarea = ({ className = "", ...props }: any) => (
 
 // --- List Items ---
 
-const TierBadge = ({ tier, onClick }: { tier?: number; onClick?: () => void }) => {
+const TierBadge = ({
+  tier,
+  onClick,
+}: {
+  tier?: number;
+  onClick?: () => void;
+}) => {
   const colors = {
     1: "bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800",
     2: "bg-slate-100 text-slate-600 border-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:border-slate-700",
@@ -468,7 +490,11 @@ const CompactSlotItem = ({
       {isRegistered && !isEquipped ? (
         <div
           className="w-6 h-6 flex items-center justify-center text-blue-500 dark:text-blue-400"
-          title={isPackageMember ? "セットに含まれています" : "登録済み (クリックで解除)"}
+          title={
+            isPackageMember
+              ? "セットに含まれています"
+              : "登録済み (クリックで解除)"
+          }
         >
           {isPackageMember ? (
             <Layers className="w-3 h-3 opacity-50" />
@@ -514,7 +540,11 @@ const EquippedPackageItem = ({
       >
         <div className="flex items-center gap-2 overflow-hidden">
           <button className="text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300 transition-transform">
-            {isOpen ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+            {isOpen ? (
+              <ChevronDown className="w-4 h-4" />
+            ) : (
+              <ChevronRight className="w-4 h-4" />
+            )}
           </button>
 
           <div className="bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 p-1 rounded">
@@ -607,7 +637,11 @@ const GlobalNav = ({
         className="w-full h-8 p-0 text-slate-400 hover:text-white hover:bg-slate-800"
         onClick={toggleDarkMode}
       >
-        {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        {isDarkMode ? (
+          <Sun className="w-4 h-4" />
+        ) : (
+          <Moon className="w-4 h-4" />
+        )}
       </Button>
       <Button
         variant="ghost"
@@ -651,7 +685,9 @@ const ProfileListSidebar = ({ profiles, activeId, onSelect }: any) => (
             >
               {p.name}
             </div>
-            <div className="text-xs text-slate-500 dark:text-slate-500 truncate">{p.handle}</div>
+            <div className="text-xs text-slate-500 dark:text-slate-500 truncate">
+              {p.handle}
+            </div>
           </div>
         </div>
       ))}
@@ -682,11 +718,17 @@ const InventorySidebar = ({
   onRemoveItem: (itemId: string) => void;
   onUpdateTier: (itemId: string, newTier?: 1 | 2 | 3) => void;
   localTiers: Record<string, 1 | 2 | 3 | undefined>;
-  setLocalTiers: React.Dispatch<React.SetStateAction<Record<string, 1 | 2 | 3 | undefined>>>;
+  setLocalTiers: React.Dispatch<
+    React.SetStateAction<Record<string, 1 | 2 | 3 | undefined>>
+  >;
   profile: UserProfile;
 }) => {
-  const [selectedWorkCategory, setSelectedWorkCategory] = useState<string | null>(null);
-  const [expandedPackageId, setExpandedPackageId] = useState<string | null>(null);
+  const [selectedWorkCategory, setSelectedWorkCategory] = useState<
+    string | null
+  >(null);
+  const [expandedPackageId, setExpandedPackageId] = useState<string | null>(
+    null
+  );
   const [searchQuery, setSearchQuery] = useState("");
 
   const currentSlotType: SlotType = activeSectionId.startsWith("work")
@@ -694,7 +736,9 @@ const InventorySidebar = ({
     : (activeSectionId as SlotType);
 
   // Key取得ヘルパー
-  const getProfileKeys = (sectionId: SectionId): keyof UserProfile["equippedSlots"] => {
+  const getProfileKeys = (
+    sectionId: SectionId
+  ): keyof UserProfile["equippedSlots"] => {
     if (sectionId === "work_future") return "worksFuture";
     if (sectionId === "work_current") return "worksCurrent";
     if (sectionId === "work_life") return "worksLife";
@@ -722,7 +766,11 @@ const InventorySidebar = ({
     ];
     for (const key of allKeys) {
       if (profile.equippedSlots[key].some((i) => i.id === itemId)) return true;
-      if (profile.equippedPackages[key].some((pkg) => pkg.items.some((i) => i.id === itemId)))
+      if (
+        profile.equippedPackages[key].some((pkg) =>
+          pkg.items.some((i) => i.id === itemId)
+        )
+      )
         return true;
     }
     return false;
@@ -732,16 +780,18 @@ const InventorySidebar = ({
     profile.equippedPackages[currentProfileKey].some((p) => p.id === pkgId);
   // 表示中のセクションでの登録状態（チェックマーク用）
   const isItemRegisteredInCurrentSection = (itemId: string) => {
-    const isSlot = profile.equippedSlots[currentProfileKey].some((i) => i.id === itemId);
+    const isSlot = profile.equippedSlots[currentProfileKey].some(
+      (i) => i.id === itemId
+    );
     const isPkg = profile.equippedPackages[currentProfileKey].some((pkg) =>
-      pkg.items.some((i) => i.id === itemId),
+      pkg.items.some((i) => i.id === itemId)
     );
     return isSlot || isPkg;
   };
   // パッケージ内かどうか（現在のセクション）
   const isItemInPackageInCurrentSection = (itemId: string) =>
     profile.equippedPackages[currentProfileKey].some((pkg) =>
-      pkg.items.some((i) => i.id === itemId),
+      pkg.items.some((i) => i.id === itemId)
     );
 
   const getNextTier = (current?: number): 1 | 2 | 3 | undefined => {
@@ -766,7 +816,9 @@ const InventorySidebar = ({
   const handleItemRowClick = (item: Slot) => {
     if (isItemInPackageInCurrentSection(item.id)) return;
 
-    if (profile.equippedSlots[currentProfileKey].some((i) => i.id === item.id)) {
+    if (
+      profile.equippedSlots[currentProfileKey].some((i) => i.id === item.id)
+    ) {
       onRemoveItem(item.id);
     } else {
       const tierToEquip = localTiers[item.id] ?? item.tier;
@@ -784,7 +836,9 @@ const InventorySidebar = ({
       "skills",
     ];
     for (const key of allKeys) {
-      const slot = profile.equippedSlots[key].find((i) => i.id === originalItem.id);
+      const slot = profile.equippedSlots[key].find(
+        (i) => i.id === originalItem.id
+      );
       if (slot) return slot;
       const pkgItem = profile.equippedPackages[key]
         .flatMap((p) => p.items)
@@ -881,7 +935,8 @@ const InventorySidebar = ({
             <div className="flex flex-col gap-1 items-end shrink-0">
               {registered ? (
                 <div className="flex items-center gap-1 text-[10px] font-bold text-blue-600 dark:text-blue-400 px-2 h-7">
-                  <Check className="w-3 h-3" /> <span className="hidden sm:inline">Added</span>
+                  <Check className="w-3 h-3" />{" "}
+                  <span className="hidden sm:inline">Added</span>
                 </div>
               ) : (
                 <Button
@@ -1146,7 +1201,9 @@ const MainEditor = ({
   isSaving,
   isDirty,
 }: any) => {
-  const getKeys = (sectionId: SectionId): keyof UserProfile["equippedSlots"] => {
+  const getKeys = (
+    sectionId: SectionId
+  ): keyof UserProfile["equippedSlots"] => {
     if (sectionId === "work_future") return "worksFuture";
     if (sectionId === "work_current") return "worksCurrent";
     if (sectionId === "work_life") return "worksLife";
@@ -1157,7 +1214,9 @@ const MainEditor = ({
 
   const handleRemoveSlot = (slotId: string, sectionId: SectionId) => {
     const key = getKeys(sectionId);
-    const updated = profile.equippedSlots[key].filter((s: any) => s.id !== slotId);
+    const updated = profile.equippedSlots[key].filter(
+      (s: any) => s.id !== slotId
+    );
     onUpdate({
       ...profile,
       equippedSlots: { ...profile.equippedSlots, [key]: updated },
@@ -1176,7 +1235,8 @@ const MainEditor = ({
 
   const getSectionStyle = (sectionId: SectionId) => {
     const isActive = activeSection === sectionId;
-    const base = "border rounded-lg transition-all duration-200 relative overflow-hidden";
+    const base =
+      "border rounded-lg transition-all duration-200 relative overflow-hidden";
     if (isActive) {
       let colors = "";
       if (sectionId.startsWith("work")) {
@@ -1194,14 +1254,22 @@ const MainEditor = ({
     return `${base} border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 opacity-80 hover:opacity-100 hover:border-slate-300 dark:hover:border-slate-700`;
   };
 
-  const renderSectionContent = (sectionId: SectionId, title: string, icon: any) => {
+  const renderSectionContent = (
+    sectionId: SectionId,
+    title: string,
+    icon: any
+  ) => {
     const key = getKeys(sectionId);
     const packages: Package[] = profile.equippedPackages[key];
     const items: Slot[] = profile.equippedSlots[key];
-    const totalCount = packages.reduce((acc, p) => acc + p.items.length, 0) + items.length;
+    const totalCount =
+      packages.reduce((acc, p) => acc + p.items.length, 0) + items.length;
 
     return (
-      <section className={getSectionStyle(sectionId)} onClick={() => onSectionSelect(sectionId)}>
+      <section
+        className={getSectionStyle(sectionId)}
+        onClick={() => onSectionSelect(sectionId)}
+      >
         <div
           className={`px-3 py-2 flex items-center justify-between border-b ${activeSection === sectionId ? "bg-opacity-50 dark:bg-slate-900/50" : "bg-slate-100 dark:bg-slate-800"}`}
         >
@@ -1266,7 +1334,9 @@ const MainEditor = ({
       <div className="h-10 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 shrink-0">
         <div className="flex items-center gap-2">
           <Edit3 className="w-3 h-3 text-slate-400 dark:text-slate-500" />
-          <span className="font-bold text-sm text-slate-700 dark:text-slate-300">Editor</span>
+          <span className="font-bold text-sm text-slate-700 dark:text-slate-300">
+            Editor
+          </span>
         </div>
         <div className="flex gap-2 items-center">
           {isDirty && (
@@ -1283,7 +1353,11 @@ const MainEditor = ({
             onClick={onSave}
             disabled={isSaving}
           >
-            {isSaving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Save className="w-3 h-3" />}
+            {isSaving ? (
+              <Loader2 className="w-3 h-3 animate-spin" />
+            ) : (
+              <Save className="w-3 h-3" />
+            )}
             {isSaving ? "Saving" : "Save"}
           </Button>
         </div>
@@ -1294,7 +1368,11 @@ const MainEditor = ({
           <div className="bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 p-3 flex gap-4 items-start shadow-sm">
             <div className="w-16 h-16 rounded bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shrink-0 overflow-hidden relative group cursor-pointer">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={profile.avatarUrl} alt="" className="w-full h-full object-cover" />
+              <img
+                src={profile.avatarUrl}
+                alt=""
+                className="w-full h-full object-cover"
+              />
               <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100">
                 <ImageIcon className="w-4 h-4 text-white" />
               </div>
@@ -1307,7 +1385,9 @@ const MainEditor = ({
                 <Input
                   value={profile.name}
                   className="h-7 text-sm"
-                  onChange={(e: any) => onUpdate({ ...profile, name: e.target.value })}
+                  onChange={(e: any) =>
+                    onUpdate({ ...profile, name: e.target.value })
+                  }
                 />
               </div>
               <div className="space-y-1">
@@ -1317,7 +1397,9 @@ const MainEditor = ({
                 <Input
                   value={profile.bio}
                   className="h-7 text-sm"
-                  onChange={(e: any) => onUpdate({ ...profile, bio: e.target.value })}
+                  onChange={(e: any) =>
+                    onUpdate({ ...profile, bio: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -1344,9 +1426,12 @@ const MainEditor = ({
 const UserProfileApp = () => {
   const [profiles, setProfiles] = useState<UserProfile[]>(MOCK_PROFILES);
   const [activeProfileId, setActiveProfileId] = useState<string>("u1");
-  const [activeSectionId, setActiveSectionId] = useState<SectionId>("work_current");
+  const [activeSectionId, setActiveSectionId] =
+    useState<SectionId>("work_current");
   const [isDarkMode, setIsDarkMode] = useState(false);
-  const [localTiers, setLocalTiers] = useState<Record<string, 1 | 2 | 3 | undefined>>({});
+  const [localTiers, setLocalTiers] = useState<
+    Record<string, 1 | 2 | 3 | undefined>
+  >({});
   const [isSaving, setIsSaving] = useState(false);
   const [isDirty, setIsDirty] = useState(false);
 
@@ -1385,10 +1470,13 @@ const UserProfileApp = () => {
     return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [isDirty]);
 
-  const activeProfile = profiles.find((p) => p.id === activeProfileId) || profiles[0];
+  const activeProfile =
+    profiles.find((p) => p.id === activeProfileId) || profiles[0];
 
   const handleUpdateProfile = (updatedProfile: UserProfile) => {
-    setProfiles((prev) => prev.map((p) => (p.id === updatedProfile.id ? updatedProfile : p)));
+    setProfiles((prev) =>
+      prev.map((p) => (p.id === updatedProfile.id ? updatedProfile : p))
+    );
     setIsDirty(true);
   };
 
@@ -1404,7 +1492,7 @@ const UserProfileApp = () => {
     if (isDirty) {
       if (
         window.confirm(
-          "保存されていない変更があります。移動しますか？\n（未保存の変更は破棄される可能性があります）",
+          "保存されていない変更があります。移動しますか？\n（未保存の変更は破棄される可能性があります）"
         )
       ) {
         setActiveProfileId(id);
@@ -1422,7 +1510,9 @@ const UserProfileApp = () => {
     }, 800);
   };
 
-  const getKeys = (sectionId: SectionId): keyof UserProfile["equippedSlots"] => {
+  const getKeys = (
+    sectionId: SectionId
+  ): keyof UserProfile["equippedSlots"] => {
     if (sectionId === "work_future") return "worksFuture";
     if (sectionId === "work_current") return "worksCurrent";
     if (sectionId === "work_life") return "worksLife";
@@ -1432,7 +1522,9 @@ const UserProfileApp = () => {
   };
 
   const handleEquipPackage = (pkg: Package) => {
-    const currentType = activeSectionId.startsWith("work") ? "work" : activeSectionId;
+    const currentType = activeSectionId.startsWith("work")
+      ? "work"
+      : activeSectionId;
     if (pkg.type !== currentType) return;
 
     const key = getKeys(activeSectionId);
@@ -1442,19 +1534,24 @@ const UserProfileApp = () => {
     if (currentPackages.some((p: any) => p.id === pkg.id)) return;
 
     const newItemsList = currentItems.filter(
-      (item: any) => !pkg.items.some((pkgItem) => pkgItem.id === item.id),
+      (item: any) => !pkg.items.some((pkgItem) => pkgItem.id === item.id)
     );
 
     const updatedProfile = {
       ...activeProfile,
       equippedSlots: { ...activeProfile.equippedSlots, [key]: newItemsList },
-      equippedPackages: { ...activeProfile.equippedPackages, [key]: [...currentPackages, pkg] },
+      equippedPackages: {
+        ...activeProfile.equippedPackages,
+        [key]: [...currentPackages, pkg],
+      },
     };
     handleUpdateProfile(updatedProfile);
   };
 
   const handleEquipItem = (item: Slot) => {
-    const currentType = activeSectionId.startsWith("work") ? "work" : activeSectionId;
+    const currentType = activeSectionId.startsWith("work")
+      ? "work"
+      : activeSectionId;
     if (item.type !== currentType) return;
 
     const key = getKeys(activeSectionId);
@@ -1463,13 +1560,18 @@ const UserProfileApp = () => {
 
     const isAlreadyEquipped =
       currentItems.some((i: any) => i.id === item.id) ||
-      currentPackages.some((pkg: any) => pkg.items.some((pkgItem: any) => pkgItem.id === item.id));
+      currentPackages.some((pkg: any) =>
+        pkg.items.some((pkgItem: any) => pkgItem.id === item.id)
+      );
 
     if (isAlreadyEquipped) return;
 
     const updatedProfile = {
       ...activeProfile,
-      equippedSlots: { ...activeProfile.equippedSlots, [key]: [...currentItems, item] },
+      equippedSlots: {
+        ...activeProfile.equippedSlots,
+        [key]: [...currentItems, item],
+      },
     };
     handleUpdateProfile(updatedProfile);
   };
@@ -1537,7 +1639,10 @@ const UserProfileApp = () => {
   return (
     <div className={isDarkMode ? "dark" : ""}>
       <div className="flex h-screen w-full bg-slate-100 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans overflow-hidden transition-colors duration-200">
-        <GlobalNav isDarkMode={isDarkMode} toggleDarkMode={() => setIsDarkMode(!isDarkMode)} />
+        <GlobalNav
+          isDarkMode={isDarkMode}
+          toggleDarkMode={() => setIsDarkMode(!isDarkMode)}
+        />
         <ProfileListSidebar
           profiles={profiles}
           activeId={activeProfileId}

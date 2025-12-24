@@ -1,1 +1,2 @@
-pnpm lint
+pnpm run format:fast
+pnpm run lint:fast

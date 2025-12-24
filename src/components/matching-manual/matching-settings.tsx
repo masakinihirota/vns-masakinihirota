@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/display-name */
 "use client";
-import React, { useState, useCallback, useMemo } from "react";
 import {
   ChevronLeft,
   Save,
@@ -13,6 +12,7 @@ import {
   ArrowDown,
   ArrowUp,
 } from "lucide-react";
+import React, { useState, useCallback, useMemo } from "react";
 
 // --- ダミーデータ ---
 const VALUE_OPTIONS = [
@@ -31,11 +31,24 @@ const GENRE_OPTIONS = [
   "ミステリー",
 ];
 
-const SKILL_OPTIONS = ["プログラミング", "デザイン", "ライティング", "イラスト", "音楽"];
+const SKILL_OPTIONS = [
+  "プログラミング",
+  "デザイン",
+  "ライティング",
+  "イラスト",
+  "音楽",
+];
 
 const REGION_OPTIONS = ["すべて", "日本", "北米", "欧州", "その他"];
 
-const GENERATION_OPTIONS = ["すべて", "1960年代", "1970年代", "1980年代", "1990年代", "2000年代"];
+const GENERATION_OPTIONS = [
+  "すべて",
+  "1960年代",
+  "1970年代",
+  "1980年代",
+  "1990年代",
+  "2000年代",
+];
 
 // --- ヘルパーコンポーネント ---
 
@@ -47,7 +60,8 @@ const ValueBar = React.memo(({ percentage }: { percentage: number }) => {
   // 5%刻みの表示をシミュレート
   const totalBlocks = 10;
   const filledBlocks = Math.round((percentage / 100) * totalBlocks);
-  const barDisplay = "■".repeat(filledBlocks) + "□".repeat(totalBlocks - filledBlocks);
+  const barDisplay =
+    "■".repeat(filledBlocks) + "□".repeat(totalBlocks - filledBlocks);
 
   return (
     <span className="font-mono text-sm tracking-widest text-primary-600 dark:text-primary-400">
@@ -84,7 +98,10 @@ const Notification = ({
     >
       <Icon className="w-6 h-6 flex-shrink-0" />
       <p className="flex-grow text-sm font-medium">{message}</p>
-      <button onClick={onClose} className="p-1 rounded-full hover:bg-white/20 transition-colors">
+      <button
+        onClick={onClose}
+        className="p-1 rounded-full hover:bg-white/20 transition-colors"
+      >
         <X className="w-5 h-5" />
       </button>
     </div>
@@ -109,12 +126,17 @@ const MatchingSettings = () => {
                 : 50;
         return acc;
       },
-      {} as Record<string, number>,
+      {} as Record<string, number>
     );
 
     return {
       valueImportance: initialValueImportance,
-      genreFilters: ["フィクション", "ファンタジー", "ノンフィクション", "ミステリー"],
+      genreFilters: [
+        "フィクション",
+        "ファンタジー",
+        "ノンフィクション",
+        "ミステリー",
+      ],
       skillFilters: ["プログラミング", "デザイン", "イラスト"],
       regionFilter: "日本",
       generationFilter: "1980年代",
@@ -147,18 +169,21 @@ const MatchingSettings = () => {
   }, []);
 
   // チェックボックス (ジャンル/スキル) の更新ハンドラ
-  const handleCheckboxChange = useCallback((key: string, item: string, isChecked: boolean) => {
-    setSettings((prev: any) => {
-      const currentArray = prev[key];
-      const newArray = isChecked
-        ? [...currentArray, item]
-        : currentArray.filter((i: any) => i !== item);
-      return {
-        ...prev,
-        [key]: newArray,
-      };
-    });
-  }, []);
+  const handleCheckboxChange = useCallback(
+    (key: string, item: string, isChecked: boolean) => {
+      setSettings((prev: any) => {
+        const currentArray = prev[key];
+        const newArray = isChecked
+          ? [...currentArray, item]
+          : currentArray.filter((i: any) => i !== item);
+        return {
+          ...prev,
+          [key]: newArray,
+        };
+      });
+    },
+    []
+  );
 
   // 通知を閉じる
   const closeNotification = useCallback(() => {
@@ -171,7 +196,10 @@ const MatchingSettings = () => {
     closeNotification();
 
     // バリデーション: 少なくとも1つの条件を選択
-    if (settings.genreFilters.length === 0 || settings.skillFilters.length === 0) {
+    if (
+      settings.genreFilters.length === 0 ||
+      settings.skillFilters.length === 0
+    ) {
       setNotification({
         message: "⚠️ 少なくとも一つのジャンルとスキルを選択してください。",
         type: "error",
@@ -205,7 +233,10 @@ const MatchingSettings = () => {
 
     // 1. 設定を保存する (保存ロジックを再利用)
     // バリデーション
-    if (settings.genreFilters.length === 0 || settings.skillFilters.length === 0) {
+    if (
+      settings.genreFilters.length === 0 ||
+      settings.skillFilters.length === 0
+    ) {
       setNotification({
         message: "⚠️ 少なくとも一つのジャンルとスキルを選択してください。",
         type: "error",
@@ -224,7 +255,10 @@ const MatchingSettings = () => {
     try {
       // 成功シミュレーション
       // 実際はここで `/matching/results` へ遷移する
-      setNotification({ message: "マッチングを開始し、結果画面へ遷移します...", type: "success" });
+      setNotification({
+        message: "マッチングを開始し、結果画面へ遷移します...",
+        type: "success",
+      });
     } catch (error) {
       setNotification({
         message: "⚠️ マッチング処理に失敗しました。もう一度お試しください。",
@@ -239,7 +273,9 @@ const MatchingSettings = () => {
   const SectionTitle = ({ children }: { children: React.ReactNode }) => (
     <>
       <div className="flex items-center space-x-2 my-6">
-        <h2 className="text-xl font-bold text-gray-800 dark:text-white">{children}</h2>
+        <h2 className="text-xl font-bold text-gray-800 dark:text-white">
+          {children}
+        </h2>
       </div>
       <div className="h-0.5 w-full bg-primary-200 dark:bg-gray-700 -mt-2 mb-8" />
     </>
@@ -313,7 +349,9 @@ const MatchingSettings = () => {
             <input
               type="checkbox"
               checked={currentSelections.includes(item)}
-              onChange={(e) => handleCheckboxChange(stateKey, item, e.target.checked)}
+              onChange={(e) =>
+                handleCheckboxChange(stateKey, item, e.target.checked)
+              }
               className="form-checkbox h-5 w-5 text-primary-600 rounded border-gray-300 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:checked:bg-primary-600 dark:checked:border-primary-600"
             />
             <span className="ml-3 text-sm font-medium">{item}</span>
@@ -331,7 +369,10 @@ const MatchingSettings = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 dark:bg-gray-800 p-6 rounded-xl shadow-inner">
         {/* 地域ドロップダウン */}
         <div className="flex flex-col space-y-2">
-          <label htmlFor="region-select" className="font-medium text-gray-700 dark:text-gray-300">
+          <label
+            htmlFor="region-select"
+            className="font-medium text-gray-700 dark:text-gray-300"
+          >
             地域
           </label>
           <div className="relative">
@@ -393,7 +434,9 @@ const MatchingSettings = () => {
           <Menu className="w-6 h-6" />
         </button>
         <div className="hidden md:flex items-center space-x-4">
-          <span className="text-sm font-medium text-gray-600 dark:text-gray-300">ユーザー名</span>
+          <span className="text-sm font-medium text-gray-600 dark:text-gray-300">
+            ユーザー名
+          </span>
           <div className="w-8 h-8 bg-primary-200 dark:bg-primary-700 rounded-full"></div>
         </div>
       </div>
@@ -511,7 +554,9 @@ const MatchingSettings = () => {
                 onClick={handleStartMatching}
                 disabled={isSaving || isStartingMatching}
                 className={`flex items-center justify-center px-6 py-3 rounded-xl font-semibold transition-colors duration-300 shadow-lg ${
-                  isStartingMatching ? "bg-primary-700" : "bg-primary-600 hover:bg-primary-700"
+                  isStartingMatching
+                    ? "bg-primary-700"
+                    : "bg-primary-600 hover:bg-primary-700"
                 } text-white`}
               >
                 <Play className="w-5 h-5 mr-2" />

@@ -1,9 +1,13 @@
-import { render, screen } from "@testing-library/react";
-import { WorkRegistration } from "./work-registration";
-import { useForm, Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { workSchema, initialFormValues, WorkFormValues } from "./work-registration.logic";
+import { render, screen } from "@testing-library/react";
+import { useForm, Resolver } from "react-hook-form";
 import { describe, it, expect, vi } from "vitest";
+import { WorkRegistration } from "./work-registration";
+import {
+  workSchema,
+  initialFormValues,
+  WorkFormValues,
+} from "./work-registration.logic";
 
 // Wrapper component to provide form context
 const TestWrapper = () => {
@@ -33,6 +37,8 @@ describe("WorkRegistration", () => {
     expect(screen.getByText(/作品タイトル/)).toBeDefined();
     expect(screen.getByText("カテゴリを選択")).toBeDefined();
     expect(screen.getByText("制作年代・時期")).toBeDefined();
-    expect(screen.getByRole("button", { name: "この内容で登録する" })).toBeDefined();
+    expect(
+      screen.getByRole("button", { name: "この内容で登録する" })
+    ).toBeDefined();
   });
 });

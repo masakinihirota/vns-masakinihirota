@@ -1,5 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { TbUserQuestion } from "react-icons/tb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,15 +14,15 @@ import {
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { TbUserQuestion } from "react-icons/tb";
 
 /**
  * 匿名ログインフォームコンポーネント
  * ユーザー情報なしで一時的なアクセスを提供します
  */
-export function AnonymousLoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+export function AnonymousLoginForm({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,7 +44,7 @@ export function AnonymousLoginForm({ className, ...props }: React.ComponentProps
 
     // ログイン成功後にリダイレクト（保護されたルートへ）
     router.push("/home");
-    console.log("🚀 ~ handleAnonymousLogin ~ error:", error);
+    // console.log("🚀 ~ handleAnonymousLogin ~ error:", error);
   };
 
   // 匿名認証の機能リスト
@@ -78,7 +81,11 @@ export function AnonymousLoginForm({ className, ...props }: React.ComponentProps
             {features.map((feature, index) => (
               <li key={index} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
-                <span className={feature.isNegative ? "text-red-500" : "text-green-500"}>
+                <span
+                  className={
+                    feature.isNegative ? "text-red-500" : "text-green-500"
+                  }
+                >
                   {feature.value}
                 </span>
               </li>

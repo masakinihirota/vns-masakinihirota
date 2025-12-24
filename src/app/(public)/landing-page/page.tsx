@@ -1,7 +1,5 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import {
   Menu,
   X,
@@ -21,6 +19,8 @@ import {
   Search,
   CheckCircle,
 } from "lucide-react";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
 
 // 共通ボタンスタイル
 type ButtonVariant = "primary" | "secondary" | "outline" | "text" | "white";
@@ -29,14 +29,21 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
 }
 
-const Button = ({ children, variant = "primary", className = "", ...props }: ButtonProps) => {
+const Button = ({
+  children,
+  variant = "primary",
+  className = "",
+  ...props
+}: ButtonProps) => {
   const baseStyle =
     "px-6 py-3 rounded-full font-bold transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2";
   const variants: Record<ButtonVariant, string> = {
     // Primary: オアシスの青
-    primary: "bg-[#007EFE] text-white hover:bg-[#0062c4] shadow-lg hover:shadow-[#007EFE]/30",
+    primary:
+      "bg-[#007EFE] text-white hover:bg-[#0062c4] shadow-lg hover:shadow-[#007EFE]/30",
     // Secondary: 白枠線
-    secondary: "bg-transparent border-2 border-white text-white hover:bg-white/10",
+    secondary:
+      "bg-transparent border-2 border-white text-white hover:bg-white/10",
     // Outline: 青枠線
     outline:
       "bg-transparent border-2 border-[#007EFE] text-[#007EFE] hover:bg-[#007EFE] hover:text-white",
@@ -47,7 +54,10 @@ const Button = ({ children, variant = "primary", className = "", ...props }: But
   };
 
   return (
-    <button className={`${baseStyle} ${variants[variant]} ${className}`} {...props}>
+    <button
+      className={`${baseStyle} ${variants[variant]} ${className}`}
+      {...props}
+    >
       {children}
     </button>
   );
@@ -74,7 +84,9 @@ const LandingPage = () => {
       {/* 1. 最上位: HOMEへのリンク（ヘッダー） */}
       <header
         className={`fixed w-full z-50 transition-all duration-300 ${
-          scrolled ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
+          scrolled
+            ? "bg-white/90 backdrop-blur-md shadow-sm py-3"
+            : "bg-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8 flex justify-between items-center">
@@ -100,7 +112,11 @@ const LandingPage = () => {
             <Link href="/login">
               <Button
                 variant="text"
-                className={!scrolled ? "text-white hover:text-[#E6F4FB] hover:bg-white/10" : ""}
+                className={
+                  !scrolled
+                    ? "text-white hover:text-[#E6F4FB] hover:bg-white/10"
+                    : ""
+                }
               >
                 <LogIn size={18} />
                 ログイン
@@ -171,7 +187,9 @@ const LandingPage = () => {
           </h1>
 
           <div className="flex flex-col items-center gap-2 mt-4 text-[#E6F4FB] animate-fade-in-up delay-100">
-            <span className="text-xl font-medium tracking-widest">masakinihirota</span>
+            <span className="text-xl font-medium tracking-widest">
+              masakinihirota
+            </span>
             <span className="text-sm bg-white/10 px-3 py-1 rounded-full border border-white/20">
               VNS Concept
             </span>
@@ -179,12 +197,18 @@ const LandingPage = () => {
 
           <div className="flex flex-col md:flex-row gap-4 mt-8 w-full md:w-auto animate-fade-in-up delay-200">
             {/* 匿名認証リンク */}
-            <Button variant="white" className="w-full md:w-auto text-lg px-8 py-4 text-[#007EFE]">
+            <Button
+              variant="white"
+              className="w-full md:w-auto text-lg px-8 py-4 text-[#007EFE]"
+            >
               🎯 匿名で今すぐ体験する
             </Button>
             {/* ユーザー登録 */}
             <Link href="/signup">
-              <Button variant="secondary" className="w-full md:w-auto text-lg px-8 py-4">
+              <Button
+                variant="secondary"
+                className="w-full md:w-auto text-lg px-8 py-4"
+              >
                 ✈ 会員登録
               </Button>
             </Link>
@@ -275,7 +299,9 @@ const LandingPage = () => {
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-slate-800">
             登録したら何ができるの？
           </h2>
-          <p className="text-slate-500 mb-12">3つのステップで、あなたの世界が広がります。</p>
+          <p className="text-slate-500 mb-12">
+            3つのステップで、あなたの世界が広がります。
+          </p>
 
           <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
             {/* Step 1 (青) */}
@@ -287,7 +313,9 @@ const LandingPage = () => {
                 1
               </div>
               <h4 className="font-bold text-lg mb-2">プロフィール作成</h4>
-              <p className="text-sm text-slate-500">あなたの「好き」や「価値観」を登録します。</p>
+              <p className="text-sm text-slate-500">
+                あなたの「好き」や「価値観」を登録します。
+              </p>
             </div>
 
             {/* Arrow */}
@@ -329,7 +357,9 @@ const LandingPage = () => {
                 3
               </div>
               <h4 className="font-bold text-lg mb-2">パーティ結成</h4>
-              <p className="text-sm text-slate-500">共感できる仲間と深いつながりを作れます。</p>
+              <p className="text-sm text-slate-500">
+                共感できる仲間と深いつながりを作れます。
+              </p>
             </div>
           </div>
         </div>
@@ -346,7 +376,10 @@ const LandingPage = () => {
             <br />
             気に入ったら、後から本登録も可能です。
           </p>
-          <Button variant="white" className="mx-auto text-lg px-8 py-4 text-[#007EFE]">
+          <Button
+            variant="white"
+            className="mx-auto text-lg px-8 py-4 text-[#007EFE]"
+          >
             🎯 匿名で今すぐ体験する
           </Button>
         </div>
@@ -423,7 +456,9 @@ const LandingPage = () => {
                 className="flex flex-col items-start p-6 rounded-xl bg-white hover:bg-white hover:shadow-lg transition-all duration-300 border border-[#E6F4FB]"
               >
                 <feature.icon className={`w-8 h-8 mb-4 ${feature.color}`} />
-                <h3 className="font-bold text-slate-800 mb-2">{feature.title}</h3>
+                <h3 className="font-bold text-slate-800 mb-2">
+                  {feature.title}
+                </h3>
                 <p className="text-sm text-slate-600">{feature.desc}</p>
               </div>
             ))}
@@ -464,19 +499,27 @@ const LandingPage = () => {
               </div>
               masakinihirota
             </div>
-            <p className="text-sm text-slate-500">価値観でつながる、安心・安全なオアシス。</p>
+            <p className="text-sm text-slate-500">
+              価値観でつながる、安心・安全なオアシス。
+            </p>
           </div>
 
           <div className="col-span-1">
             <h4 className="font-bold text-slate-800 mb-4">理念</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/oasis" className="hover:text-[#007EFE] transition-colors">
+                <Link
+                  href="/oasis"
+                  className="hover:text-[#007EFE] transition-colors"
+                >
                   オアシス宣言
                 </Link>
               </li>
               <li>
-                <Link href="/human" className="hover:text-[#007EFE] transition-colors">
+                <Link
+                  href="/human"
+                  className="hover:text-[#007EFE] transition-colors"
+                >
                   人間宣言
                 </Link>
               </li>
@@ -487,12 +530,18 @@ const LandingPage = () => {
             <h4 className="font-bold text-slate-800 mb-4">サポート</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/report" className="hover:text-[#007EFE] transition-colors">
+                <Link
+                  href="/report"
+                  className="hover:text-[#007EFE] transition-colors"
+                >
                   お問い合わせ
                 </Link>
               </li>
               <li>
-                <Link href="/help" className="hover:text-[#007EFE] transition-colors">
+                <Link
+                  href="/help"
+                  className="hover:text-[#007EFE] transition-colors"
+                >
                   ヘルプセンター
                 </Link>
               </li>
@@ -503,12 +552,18 @@ const LandingPage = () => {
             <h4 className="font-bold text-slate-800 mb-4">法務</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="/terms" className="hover:text-[#007EFE] transition-colors">
+                <Link
+                  href="/terms"
+                  className="hover:text-[#007EFE] transition-colors"
+                >
                   利用規約
                 </Link>
               </li>
               <li>
-                <Link href="/privacy" className="hover:text-[#007EFE] transition-colors">
+                <Link
+                  href="/privacy"
+                  className="hover:text-[#007EFE] transition-colors"
+                >
                   プライバシーポリシー
                 </Link>
               </li>

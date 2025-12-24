@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { MatchingConditions } from "./matching-conditions";
 import {
@@ -8,7 +9,6 @@ import {
   saveSettings,
   startAutoMatching,
 } from "./matching-conditions.logic";
-import { useRouter } from "next/navigation";
 
 export const MatchingConditionsContainer = () => {
   const router = useRouter();

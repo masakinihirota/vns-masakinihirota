@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
@@ -17,13 +16,25 @@ const createEmptyGrid = () =>
     .fill(0)
     .map(() => Array(9).fill(""));
 
-export function MandalaChart({ initialData, onChange, readOnly = false }: MandalaChartProps) {
+export function MandalaChart({
+  initialData,
+  onChange,
+  readOnly = false,
+}: MandalaChartProps) {
   // Initialize with initialData or empty grid
-  const [chartData, setChartData] = useState<string[][]>(initialData || createEmptyGrid());
+  const [chartData, setChartData] = useState<string[][]>(
+    initialData || createEmptyGrid()
+  );
 
-  const handleCellChange = (rowIndex: number, colIndex: number, value: string) => {
+  const handleCellChange = (
+    rowIndex: number,
+    colIndex: number,
+    value: string
+  ) => {
     const newData = chartData.map((row, rIdx) =>
-      rIdx === rowIndex ? row.map((cell, cIdx) => (cIdx === colIndex ? value : cell)) : row,
+      rIdx === rowIndex
+        ? row.map((cell, cIdx) => (cIdx === colIndex ? value : cell))
+        : row
     );
     setChartData(newData);
     onChange?.(newData);
@@ -55,14 +66,16 @@ export function MandalaChart({ initialData, onChange, readOnly = false }: Mandal
               <CardContent className="p-1 md:p-2">
                 <Input
                   value={cell}
-                  onChange={(e) => handleCellChange(rowIndex, colIndex, e.target.value)}
+                  onChange={(e) =>
+                    handleCellChange(rowIndex, colIndex, e.target.value)
+                  }
                   className="h-8 md:h-10 text-xs md:text-sm text-center border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
                   placeholder={readOnly ? "" : "Add text..."}
                   readOnly={readOnly}
                 />
               </CardContent>
             </Card>
-          )),
+          ))
         )}
       </div>
     </div>

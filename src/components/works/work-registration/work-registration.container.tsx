@@ -1,7 +1,9 @@
 "use client";
 
-import { useForm, useWatch, Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useMemo } from "react";
+import { useForm, useWatch, Resolver } from "react-hook-form";
+import { WorkRegistration } from "./work-registration";
 import {
   WorkFormValues,
   dummyFormValues,
@@ -11,8 +13,6 @@ import {
   DISCOUNT_TAGS,
   DISCOUNT_URL,
 } from "./work-registration.logic";
-import { WorkRegistration } from "./work-registration";
-import { useState, useMemo } from "react";
 
 export function WorkRegistrationContainer() {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,7 +30,7 @@ export function WorkRegistrationContainer() {
     // watchedTags might be undefined initially or if fields are unregistered
     if (watchedTags && watchedTags.length > 0) points -= DISCOUNT_TAGS;
     // watchedUrls might be undefined
-    if (watchedUrls && watchedUrls.some((u: { value?: string }) => u.value?.trim() !== ""))
+    if (watchedUrls && watchedUrls.some((u) => u.value?.trim() !== ""))
       points -= DISCOUNT_URL;
     return Math.max(0, points);
   }, [watchedTags, watchedUrls]);
@@ -44,9 +44,9 @@ export function WorkRegistrationContainer() {
     };
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log("Form Submitted:", submissionData);
+    // console.log("Form Submitted:", submissionData);
     alert(
-      `登録完了！\n消費ポイント: ${requiredPoints}pt\n${JSON.stringify(submissionData, null, 2)}`,
+      `登録完了！\n消費ポイント: ${requiredPoints}pt\n${JSON.stringify(submissionData, null, 2)}`
     );
     setIsSubmitting(false);
   };

@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { ManualMatchingConsole } from "./manual-matching-console";
 import { UserProfile, MatchRecord } from "../common/types";
+import { ManualMatchingConsole } from "./manual-matching-console";
 import {
   fetchSubjects,
   fetchCandidates,
@@ -15,8 +15,11 @@ export const ManualMatchingConsoleContainer = () => {
   const [candidates, setCandidates] = useState<UserProfile[]>([]);
 
   // State: Selection
-  const [selectedSubject, setSelectedSubject] = useState<UserProfile | null>(null);
-  const [selectedCandidate, setSelectedCandidate] = useState<UserProfile | null>(null);
+  const [selectedSubject, setSelectedSubject] = useState<UserProfile | null>(
+    null
+  );
+  const [selectedCandidate, setSelectedCandidate] =
+    useState<UserProfile | null>(null);
 
   // State: UI
   const [loadingSubjects, setLoadingSubjects] = useState(true);
@@ -35,7 +38,7 @@ export const ManualMatchingConsoleContainer = () => {
         .catch((e) => console.error(e))
         .finally(() => setLoadingSubjects(false));
     };
-    load();
+    void load();
   }, []);
 
   // Fetch candidates when subject selected
@@ -51,7 +54,7 @@ export const ManualMatchingConsoleContainer = () => {
         .catch((e) => console.error(e))
         .finally(() => setLoadingCandidates(false));
     };
-    load();
+    void load();
   }, [selectedSubject]);
 
   // Dark mode toggle
@@ -91,7 +94,7 @@ export const ManualMatchingConsoleContainer = () => {
     new Promise((resolve) => setTimeout(resolve, 1000))
       .then(() => {
         alert(
-          `マッチング成功!\n${selectedSubject?.name} さんと ${selectedCandidate?.name} さんをマッチングしました。`,
+          `マッチング成功!\n${selectedSubject?.name} さんと ${selectedCandidate?.name} さんをマッチングしました。`
         );
         setIsMatchModalOpen(false);
         setMatchComment("");

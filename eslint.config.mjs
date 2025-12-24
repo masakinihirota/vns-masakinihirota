@@ -1,8 +1,8 @@
-import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import prettierConfig from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
+import { defineConfig, globalIgnores } from "eslint/config";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -29,7 +29,8 @@ const eslintConfig = defineConfig([
         "warn",
         {
           selector: "TryStatement",
-          message: "try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）",
+          message:
+            "try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）",
         },
       ],
     },

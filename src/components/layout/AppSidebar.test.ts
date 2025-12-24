@@ -1,18 +1,21 @@
-import { describe, it, expect } from "vitest";
 import { Home } from "lucide-react";
+import { describe, it, expect } from "vitest";
+import { ICON_MAP, iconFor } from "@/config/menu-icons";
 import manifest from "@/config/routes.manifest.json";
 import {
-  ICON_MAP,
   toSidebarUrl,
-  iconFor,
   mapPathToFeature,
   getMenuItemsWithState,
 } from "./AppSidebar";
 
 describe("AppSidebar manifest integration", () => {
   it("should have icon mapping for each visible menu route in manifest", () => {
-    const visiblePaths = manifest.filter((r) => r.visibleInMenu).map((r) => r.path);
-    const missing = visiblePaths.filter((p) => !Object.prototype.hasOwnProperty.call(ICON_MAP, p));
+    const visiblePaths = manifest
+      .filter((r) => r.visibleInMenu)
+      .map((r) => r.path);
+    const missing = visiblePaths.filter(
+      (p) => !Object.prototype.hasOwnProperty.call(ICON_MAP, p)
+    );
     expect(missing).toEqual([]);
   });
 

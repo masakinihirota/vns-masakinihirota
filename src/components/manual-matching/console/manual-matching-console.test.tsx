@@ -1,12 +1,15 @@
-import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
 import { ManualMatchingConsole } from "./manual-matching-console";
-import { MOCK_SUBJECTS, MOCK_CANDIDATES } from "./manual-matching-console.logic";
+import {
+  MOCK_SUBJECTS,
+  MOCK_CANDIDATES,
+} from "./manual-matching-console.logic";
 
 // Mock Lucide icons to prevent rendering issues
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 vi.mock("lucide-react", async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual = await importOriginal<typeof import("lucide-react")>();
   return {
     ...(actual as any), // eslint-disable-line @typescript-eslint/no-explicit-any
     User: () => <div data-testid="icon-user">UserIcon</div>,
@@ -77,7 +80,7 @@ describe("ManualMatchingConsole UI", () => {
         selectedSubject={selectedSubject}
         selectedCandidate={selectedCandidate}
         comparisonData={comparisonData}
-      />,
+      />
     );
 
     expect(screen.getByText(/価値観・作品マッチング/)).toBeInTheDocument();

@@ -6,7 +6,9 @@ import { QUESTIONS } from "./vote-match.logic";
 
 export const VoteMatchContainer = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState<(string | null)[]>(new Array(QUESTIONS.length).fill(null));
+  const [answers, setAnswers] = useState<(string | null)[]>(
+    new Array(QUESTIONS.length).fill(null)
+  );
   const showNextButton =
     currentQuestion < QUESTIONS.length - 1 && answers[currentQuestion] !== null;
 

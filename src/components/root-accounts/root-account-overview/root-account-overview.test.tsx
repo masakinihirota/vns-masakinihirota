@@ -20,7 +20,10 @@ describe("RootAccountOverview", () => {
   });
 
   it("renders suspended status correctly", () => {
-    const suspendedAccount: RootAccount = { ...mockRootAccount, status: "suspended" };
+    const suspendedAccount: RootAccount = {
+      ...mockRootAccount,
+      status: "suspended",
+    };
     render(<RootAccountOverview rootAccount={suspendedAccount} />);
     expect(screen.getByText("Suspended")).toBeInTheDocument();
   });

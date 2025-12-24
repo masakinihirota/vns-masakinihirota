@@ -3,7 +3,11 @@ export const metadata = {
   description: "Manage your root account status and points.",
 };
 
-export default function RootAccountLayout({ children }: { children: React.ReactNode }) {
+export default function RootAccountLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="container mx-auto py-6 space-y-6">
       <div className="flex flex-col gap-2">

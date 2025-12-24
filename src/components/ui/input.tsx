@@ -1,5 +1,4 @@
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
 
 function Input({ className, type, ...props }: React.ComponentProps<"input">) {
@@ -13,7 +12,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
         "aria-invalid:border-error-1 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
         "hover:[&:read-write:not([aria-disabled=true])]:border-black",
         "read-only:border-dashed",
-        className,
+        className
       )}
       {...props}
     />

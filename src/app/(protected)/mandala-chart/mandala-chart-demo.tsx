@@ -1,17 +1,21 @@
 "use client";
 
 import { useState } from "react";
-
-import MandalaChart from "./mandala-chart";
-
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import MandalaChart from "./mandala-chart";
 
 export default function MandalaChartDemo() {
   const [chartData, setChartData] = useState<string[][]>(() =>
     Array(9)
       .fill(0)
-      .map(() => Array(9).fill("")),
+      .map(() => Array(9).fill(""))
   );
 
   // Example data for demonstration
@@ -46,7 +50,7 @@ export default function MandalaChartDemo() {
     setChartData(
       Array(9)
         .fill(0)
-        .map(() => Array(9).fill("")),
+        .map(() => Array(9).fill(""))
     );
   };
 

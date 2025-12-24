@@ -1,0 +1,31 @@
+{
+  "$schema": "https://docs.oxc.rs/schemas/oxlintrc.json",
+  "plugins": ["typescript", "oxc"],
+  "rules": {
+    "eqeqeq": [
+      "error",
+      "always",
+      {
+        "null": "ignore"
+      }
+    ],
+    "no-console": [
+      "error",
+      {
+        "allow": ["info", "warn", "error"]
+      }
+    ],
+    "no-debugger": "error",
+    "no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "typescript/no-floating-promises": "error",
+    "typescript/no-namespace": "off",
+    "import/no-cycle": "error"
+  }
+}

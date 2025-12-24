@@ -1,7 +1,15 @@
+import {
+  Plus,
+  Search,
+  Shield,
+  User,
+  Terminal,
+  Clock,
+  AlertTriangle,
+} from "lucide-react";
 import React from "react";
-import { Plus, Search, Shield, User, Terminal, Clock, AlertTriangle } from "lucide-react";
-import { Button, Card, Badge, Input, Label, Modal } from "./local-ui";
 import { ActionMenu } from "./components/action-menu";
+import { Button, Card, Badge, Input, Label, Modal } from "./local-ui";
 import { UserProfile, getTypeColor } from "./profile-list.logic";
 
 interface ProfileListViewProps {
@@ -47,7 +55,7 @@ export const ProfileListView: React.FC<ProfileListViewProps> = ({
   const filteredProfiles = profiles.filter(
     (p) =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.handle.toLowerCase().includes(searchQuery.toLowerCase()),
+      p.handle.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -99,7 +107,9 @@ export const ProfileListView: React.FC<ProfileListViewProps> = ({
             placeholder="Search profiles..."
             className="bg-slate-900 border-slate-800"
             value={searchQuery}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSearchQuery(e.target.value)
+            }
           />
         </div>
 
@@ -130,7 +140,9 @@ export const ProfileListView: React.FC<ProfileListViewProps> = ({
                       <h3 className="font-bold text-slate-100 leading-tight group-hover:text-blue-400 transition-colors">
                         {profile.name}
                       </h3>
-                      <p className="text-xs font-mono text-slate-500 mt-1">{profile.handle}</p>
+                      <p className="text-xs font-mono text-slate-500 mt-1">
+                        {profile.handle}
+                      </p>
                     </div>
                   </div>
 
@@ -156,7 +168,9 @@ export const ProfileListView: React.FC<ProfileListViewProps> = ({
                 </div>
 
                 {/* Bio */}
-                <p className="text-sm text-slate-400 line-clamp-3 leading-relaxed">{profile.bio}</p>
+                <p className="text-sm text-slate-400 line-clamp-3 leading-relaxed">
+                  {profile.bio}
+                </p>
               </div>
 
               {/* Footer */}
@@ -221,7 +235,9 @@ export const ProfileListView: React.FC<ProfileListViewProps> = ({
               placeholder="Ex: Ghost Unit"
               className="col-span-3"
               value={newName}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewName(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setNewName(e.target.value)
+              }
               autoFocus
             />
           </div>
@@ -234,7 +250,9 @@ export const ProfileListView: React.FC<ProfileListViewProps> = ({
               placeholder="@handle"
               className="col-span-3"
               value={newHandle}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewHandle(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setNewHandle(e.target.value)
+              }
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">

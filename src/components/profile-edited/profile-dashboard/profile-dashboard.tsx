@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Plus,
   MoreVertical,
@@ -12,19 +11,10 @@ import {
   Search,
   AlertTriangle,
 } from "lucide-react";
+import React from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Label } from "@/components/ui/label";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   Dialog,
   DialogContent,
@@ -33,8 +23,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
-import { UserProfile, getTypeColor, PROFILE_TYPES, ProfileType } from "./profile-dashboard.logic";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  UserProfile,
+  getTypeColor,
+  PROFILE_TYPES,
+  ProfileType,
+} from "./profile-dashboard.logic";
 
 interface ProfileDashboardProps {
   filteredProfiles: UserProfile[];
@@ -153,7 +157,9 @@ export const ProfileDashboard = ({
                       <h3 className="font-bold text-slate-100 leading-tight group-hover:text-blue-400 transition-colors">
                         {profile.name}
                       </h3>
-                      <p className="text-xs font-mono text-slate-500 mt-1">{profile.handle}</p>
+                      <p className="text-xs font-mono text-slate-500 mt-1">
+                        {profile.handle}
+                      </p>
                     </div>
                   </div>
 
@@ -175,7 +181,11 @@ export const ProfileDashboard = ({
                       <DropdownMenuLabel className="text-xs font-semibold text-slate-400">
                         Actions
                       </DropdownMenuLabel>
-                      <DropdownMenuItem onClick={() => alert(`Navigating to edit: ${profile.id}`)}>
+                      <DropdownMenuItem
+                        onClick={() =>
+                          alert(`Navigating to edit: ${profile.id}`)
+                        }
+                      >
                         <Edit3 className="mr-2 h-4 w-4" /> Edit Config
                       </DropdownMenuItem>
                       <DropdownMenuItem onClick={() => onDuplicate(profile)}>
@@ -209,7 +219,9 @@ export const ProfileDashboard = ({
                 </div>
 
                 {/* Bio */}
-                <p className="text-sm text-slate-400 line-clamp-3 leading-relaxed">{profile.bio}</p>
+                <p className="text-sm text-slate-400 line-clamp-3 leading-relaxed">
+                  {profile.bio}
+                </p>
               </div>
 
               {/* Footer */}
@@ -313,7 +325,10 @@ export const ProfileDashboard = ({
             >
               Cancel
             </Button>
-            <Button onClick={onCreate} className="bg-blue-600 hover:bg-blue-700">
+            <Button
+              onClick={onCreate}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
               Create Profile
             </Button>
           </DialogFooter>
@@ -321,7 +336,10 @@ export const ProfileDashboard = ({
       </Dialog>
 
       {/* Delete Alert Dialog */}
-      <Dialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
+      <Dialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+      >
         <DialogContent className="max-w-md bg-slate-900 border-slate-800 text-slate-100">
           <DialogHeader>
             <DialogTitle>Are you absolutely sure?</DialogTitle>

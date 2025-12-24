@@ -1,8 +1,5 @@
 "use client";
 
-import * as React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   ChevronRight,
   MoreHorizontal,
@@ -11,8 +8,15 @@ import {
   ChevronsUpDown,
   type LucideIcon,
 } from "lucide-react";
-
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import * as React from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,12 +42,13 @@ import {
   SidebarRail,
   useSidebar,
 } from "@/components/ui/sidebar";
-import routesManifest from "@/config/routes.manifest.json";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { getMenuItemState, getMenuUnlockTip, MenuItemState } from "@/lib/tutorial/tutorial";
 import { iconFor } from "@/config/menu-icons";
-export { iconFor } from "@/config/menu-icons";
-export { ICON_MAP } from "@/config/menu-icons";
+import routesManifest from "@/config/routes.manifest.json";
+import {
+  getMenuItemState,
+  getMenuUnlockTip,
+  MenuItemState,
+} from "@/lib/tutorial/tutorial";
 
 /**
  * 左サイドメニュー要件定義書に基づくメニュー構成
@@ -124,7 +129,7 @@ export type MenuItemWithState = {
  */
 export const getMenuItemsWithState = (
   items: { title: string; url: string; icon: LucideIcon }[],
-  currentLevel: number,
+  currentLevel: number
 ): MenuItemWithState[] => {
   return items
     .map((item) => {
@@ -154,29 +159,49 @@ const manifestRoutes: RouteEntry[] = routesManifest as RouteEntry[];
 const mainMenuItems = manifestRoutes
   .filter((r) => r.visibleInMenu && r.group === "main")
   .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-  .map((r) => ({ title: r.label, url: toSidebarUrl(r.path), icon: iconFor(r.path) }));
+  .map((r) => ({
+    title: r.label,
+    url: toSidebarUrl(r.path),
+    icon: iconFor(r.path),
+  }));
 
 // 集団系メニュー（第2グループ）
 const groupMenuItems = manifestRoutes
   .filter((r) => r.visibleInMenu && r.group === "group")
   .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-  .map((r) => ({ title: r.label, url: toSidebarUrl(r.path), icon: iconFor(r.path) }));
+  .map((r) => ({
+    title: r.label,
+    url: toSidebarUrl(r.path),
+    icon: iconFor(r.path),
+  }));
 
 // 登録系メニュー（第3グループ）
 const registrationMenuItems = manifestRoutes
   .filter((r) => r.visibleInMenu && r.group === "registration")
   .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-  .map((r) => ({ title: r.label, url: toSidebarUrl(r.path), icon: iconFor(r.path) }));
+  .map((r) => ({
+    title: r.label,
+    url: toSidebarUrl(r.path),
+    icon: iconFor(r.path),
+  }));
 
 const moreMenuItems = manifestRoutes
   .filter((r) => r.visibleInMenu && r.group === "more")
   .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-  .map((r) => ({ title: r.label, url: toSidebarUrl(r.path), icon: iconFor(r.path) }));
+  .map((r) => ({
+    title: r.label,
+    url: toSidebarUrl(r.path),
+    icon: iconFor(r.path),
+  }));
 
 const footerMenuItems = manifestRoutes
   .filter((r) => r.visibleInMenu && r.group === "footer")
   .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-  .map((r) => ({ title: r.label, url: toSidebarUrl(r.path), icon: iconFor(r.path) }));
+  .map((r) => ({
+    title: r.label,
+    url: toSidebarUrl(r.path),
+    icon: iconFor(r.path),
+  }));
 
 // (footerMenuItems is built from the manifest above)
 
@@ -268,7 +293,10 @@ function NavGroup({
             <NavItem
               key={item.url}
               item={item}
-              isActive={currentPath === item.url || currentPath.startsWith(item.url + "/")}
+              isActive={
+                currentPath === item.url ||
+                currentPath.startsWith(item.url + "/")
+              }
               state={item.state}
               tip={item.tip}
               isNew={isNew}
@@ -298,7 +326,7 @@ function NavMore({
   const hasActiveItem = itemsWithState.some(
     (item) =>
       item.state === "unlocked" &&
-      (currentPath === item.url || currentPath.startsWith(item.url + "/")),
+      (currentPath === item.url || currentPath.startsWith(item.url + "/"))
   );
 
   // 表示できる項目がない場合は非表示
@@ -309,7 +337,11 @@ function NavMore({
   return (
     <SidebarGroup>
       <SidebarMenu>
-        <Collapsible asChild defaultOpen={hasActiveItem} className="group/collapsible">
+        <Collapsible
+          asChild
+          defaultOpen={hasActiveItem}
+          className="group/collapsible"
+        >
           <SidebarMenuItem>
             <CollapsibleTrigger asChild>
               <SidebarMenuButton tooltip="もっと見る">
@@ -324,7 +356,8 @@ function NavMore({
                   const feature = mapPathToFeature(item.url);
                   const isNew = newlyUnlockedFeatures.includes(feature);
                   const isActive =
-                    currentPath === item.url || currentPath.startsWith(item.url + "/");
+                    currentPath === item.url ||
+                    currentPath.startsWith(item.url + "/");
                   const isGrayed = item.state === "grayed";
 
                   if (isGrayed) {
@@ -336,7 +369,9 @@ function NavMore({
                           title={item.tip || `${item.title}（解放条件未達成）`}
                         >
                           <item.icon className="size-4 text-muted-foreground" />
-                          <span className="text-muted-foreground">{item.title}</span>
+                          <span className="text-muted-foreground">
+                            {item.title}
+                          </span>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     );
@@ -345,7 +380,10 @@ function NavMore({
                   return (
                     <SidebarMenuSubItem key={item.url}>
                       <SidebarMenuSubButton asChild isActive={isActive}>
-                        <Link href={item.url} aria-current={isActive ? "page" : undefined}>
+                        <Link
+                          href={item.url}
+                          aria-current={isActive ? "page" : undefined}
+                        >
                           <item.icon className="size-4" />
                           <span>{item.title}</span>
                           {isNew && <span className="ml-auto text-xs">🆕</span>}
@@ -392,7 +430,9 @@ function NavUser({
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                <span className="truncate text-xs text-muted-foreground">
+                  {user.email}
+                </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -413,7 +453,9 @@ function NavUser({
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs text-muted-foreground">{user.email}</span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    {user.email}
+                  </span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -479,7 +521,9 @@ export function AppSidebar({
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">masakinihirota</span>
-                  <span className="truncate text-xs text-muted-foreground">VNS Platform</span>
+                  <span className="truncate text-xs text-muted-foreground">
+                    VNS Platform
+                  </span>
                 </div>
               </Link>
             </SidebarMenuButton>
