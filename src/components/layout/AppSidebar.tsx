@@ -42,6 +42,8 @@ import routesManifest from "@/config/routes.manifest.json";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getMenuItemState, getMenuUnlockTip, MenuItemState } from "@/lib/tutorial/tutorial";
 import { iconFor } from "@/config/menu-icons";
+export { iconFor } from "@/config/menu-icons";
+export { ICON_MAP } from "@/config/menu-icons";
 
 /**
  * 左サイドメニュー要件定義書に基づくメニュー構成

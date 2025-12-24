@@ -94,7 +94,7 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
                   <label className="text-sm font-medium leading-none">希望職種</label>
                   <Select
                     value={criteria.role}
-                    onValueChange={(val) => onCriteriaChange("role", val)}
+                    onValueChange={(val: string) => onCriteriaChange("role", val)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="職種を選択" />

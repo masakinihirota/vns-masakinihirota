@@ -162,7 +162,8 @@ export function WorkRegistration({
                     <FormField
                       control={form.control}
                       name="title"
-                      render={({ field }) => (
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      render={({ field }: { field: any }) => (
                         <FormItem>
                           <Label htmlFor="title" className="text-lg font-bold mb-2 block">
                             作品タイトル <span className="text-red-500">*</span>
@@ -188,7 +189,8 @@ export function WorkRegistration({
                     <FormField
                       control={form.control}
                       name="category"
-                      render={({ field }) => (
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      render={({ field }: { field: any }) => (
                         <FormItem>
                           <Label className="flex items-center gap-2 mb-4 font-bold text-gray-700">
                             <Folder className="w-5 h-5 text-blue-600" />
@@ -233,7 +235,8 @@ export function WorkRegistration({
                     <FormField
                       control={form.control}
                       name="period"
-                      render={({ field }) => (
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      render={({ field }: { field: any }) => (
                         <FormItem>
                           <Label className="flex items-center gap-2 mb-4 font-bold text-gray-700">
                             <Calendar className="w-5 h-5 text-blue-600" />
@@ -321,7 +324,8 @@ export function WorkRegistration({
                     <FormField
                       control={form.control}
                       name="tags"
-                      render={({ field }) => (
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      render={({ field }: { field: any }) => (
                         <FormItem>
                           <Label className="flex items-center gap-2 mb-4 font-bold text-gray-700">
                             <Tag className="w-5 h-5 text-blue-600" />
@@ -339,7 +343,7 @@ export function WorkRegistration({
                                     <Smile className="w-4 h-4" /> 選択されたタグはここに表示されます
                                   </span>
                                 )}
-                                {field.value.map((tag, idx) => {
+                                {field.value.map((tag: string, idx: number) => {
                                   const isOfficial = OFFICIAL_TAGS.includes(tag);
                                   return (
                                     <span
@@ -611,78 +615,83 @@ export function WorkRegistration({
                     <FormField
                       control={form.control}
                       name="urls"
-                      render={({ field }) => (
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      render={({ field }: { field: any }) => (
                         <div className="space-y-4">
-                          {field.value.map((urlItem, idx) => (
-                            <div
-                              key={idx}
-                              className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100"
-                            >
-                              <div className="flex gap-1 bg-gray-200 p-1 rounded-md">
-                                {URL_TYPES.map((type) => {
-                                  const isActive = urlItem.type === type.id;
-                                  const TypeIcon = type.icon;
-                                  return (
-                                    <button
-                                      key={type.id}
-                                      type="button"
-                                      onClick={() => {
-                                        const newUrls = [...field.value];
-                                        newUrls[idx].type = type.id;
-                                        field.onChange(newUrls);
-                                      }}
-                                      className={cn(
-                                        "flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-medium rounded-sm transition-all",
-                                        isActive
-                                          ? "bg-white text-blue-700 shadow-sm"
-                                          : "text-gray-500 hover:text-gray-700",
-                                      )}
-                                    >
-                                      <TypeIcon className="w-3 h-3" />
-                                      {type.label === "公式サイト・情報"
-                                        ? "公式・情報"
-                                        : "購入・紹介"}
-                                    </button>
-                                  );
-                                })}
-                              </div>
-
-                              <div className="flex gap-2">
-                                <div className="relative flex-1">
-                                  <LinkIcon className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                                  <Input
-                                    value={urlItem.value}
-                                    onChange={(e) => {
-                                      const newUrls = [...field.value];
-                                      newUrls[idx].value = e.target.value;
-                                      field.onChange(newUrls);
-                                    }}
-                                    placeholder={
-                                      urlItem.type === "official"
-                                        ? "https://公式サイト..."
-                                        : "https://Amazon/BOOTH..."
-                                    }
-                                    className="pl-9 text-sm"
-                                  />
+                          {field.value.map(
+                            (urlItem: { type: string; value?: string }, idx: number) => (
+                              <div
+                                key={idx}
+                                className="flex flex-col gap-2 p-3 bg-gray-50 rounded-lg border border-gray-100"
+                              >
+                                <div className="flex gap-1 bg-gray-200 p-1 rounded-md">
+                                  {URL_TYPES.map((type) => {
+                                    const isActive = urlItem.type === type.id;
+                                    const TypeIcon = type.icon;
+                                    return (
+                                      <button
+                                        key={type.id}
+                                        type="button"
+                                        onClick={() => {
+                                          const newUrls = [...field.value];
+                                          newUrls[idx].type = type.id;
+                                          field.onChange(newUrls);
+                                        }}
+                                        className={cn(
+                                          "flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-medium rounded-sm transition-all",
+                                          isActive
+                                            ? "bg-white text-blue-700 shadow-sm"
+                                            : "text-gray-500 hover:text-gray-700",
+                                        )}
+                                      >
+                                        <TypeIcon className="w-3 h-3" />
+                                        {type.label === "公式サイト・情報"
+                                          ? "公式・情報"
+                                          : "購入・紹介"}
+                                      </button>
+                                    );
+                                  })}
                                 </div>
 
-                                {field.value.length > 2 && (
-                                  <Button
-                                    type="button"
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() => {
-                                      const newUrls = field.value.filter((_, i) => i !== idx);
-                                      field.onChange(newUrls);
-                                    }}
-                                    className="text-gray-400 hover:text-red-500 h-11 w-11"
-                                  >
-                                    <Trash2 className="w-4 h-4" />
-                                  </Button>
-                                )}
+                                <div className="flex gap-2">
+                                  <div className="relative flex-1">
+                                    <LinkIcon className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                                    <Input
+                                      value={urlItem.value}
+                                      onChange={(e) => {
+                                        const newUrls = [...field.value];
+                                        newUrls[idx].value = e.target.value;
+                                        field.onChange(newUrls);
+                                      }}
+                                      placeholder={
+                                        urlItem.type === "official"
+                                          ? "https://公式サイト..."
+                                          : "https://Amazon/BOOTH..."
+                                      }
+                                      className="pl-9 text-sm"
+                                    />
+                                  </div>
+
+                                  {field.value.length > 2 && (
+                                    <Button
+                                      type="button"
+                                      variant="ghost"
+                                      size="icon"
+                                      onClick={() => {
+                                        const newUrls = field.value.filter(
+                                          (_: unknown, i: number) => i !== idx,
+                                        );
+                                        field.onChange(newUrls);
+                                      }}
+                                      className="text-gray-400 hover:text-red-500 h-11 w-11"
+                                    >
+                                      <Trash2 className="w-4 h-4" />
+                                    </Button>
+                                  )}
+                                </div>
                               </div>
-                            </div>
-                          ))}
+                            ),
+                          )}
                           <Button
                             type="button"
                             variant="outline"
@@ -743,13 +752,13 @@ export function WorkRegistration({
                           <div
                             className={cn(
                               "flex items-center justify-between text-xs",
-                              watchedUrls.some((u) => u.value)
+                              watchedUrls.some((u: { value?: string }) => u.value)
                                 ? "text-green-600 font-bold"
                                 : "text-gray-400",
                             )}
                           >
                             <span className="flex items-center gap-1">
-                              {watchedUrls.some((u) => u.value) ? (
+                              {watchedUrls.some((u: { value?: string }) => u.value) ? (
                                 <Check className="w-3 h-3" />
                               ) : (
                                 <div className="w-3 h-3 border rounded-full border-gray-300" />
