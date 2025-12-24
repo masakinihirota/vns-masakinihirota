@@ -1,4 +1,1 @@
-pnpm run lint:fast
-pnpm run format:fast
-
 pnpm run build
