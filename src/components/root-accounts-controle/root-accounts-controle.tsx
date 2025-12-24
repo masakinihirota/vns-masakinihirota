@@ -87,12 +87,9 @@ export const RootAccountsControlView = ({
           </h2>
           <div className="space-y-4">
             <div className="flex justify-between items-center mb-4">
-              <span className="font-semibold text-gray-600">
-                作成済みユーザープロフィール数
-              </span>
+              <span className="font-semibold text-gray-600">作成済みユーザープロフィール数</span>
               <span className="text-gray-800">
-                {profileManagement.createdProfiles} /{" "}
-                {profileManagement.maxProfiles}
+                {profileManagement.createdProfiles} / {profileManagement.maxProfiles}
               </span>
             </div>
 
@@ -111,15 +108,12 @@ export const RootAccountsControlView = ({
                     className="w-12 h-12 rounded-full border-2 border-indigo-400 object-cover"
                   />
                   <div className="ml-4 flex-grow">
-                    {editingProfileId === profile.id &&
-                    profile.type === "multiple" ? (
+                    {editingProfileId === profile.id && profile.type === "multiple" ? (
                       <div className="flex items-center space-x-2">
                         <input
                           type="text"
                           value={newProfileName}
-                          onChange={(e) =>
-                            onNewProfileNameChange(e.target.value)
-                          }
+                          onChange={(e) => onNewProfileNameChange(e.target.value)}
                           className="flex-grow p-1 border rounded-md text-sm text-gray-800"
                         />
                         <button
@@ -171,15 +165,11 @@ export const RootAccountsControlView = ({
                       </div>
                     ) : (
                       <div className="flex items-center space-x-2">
-                        <div className="font-bold text-lg text-gray-800">
-                          {profile.name}
-                        </div>
+                        <div className="font-bold text-lg text-gray-800">{profile.name}</div>
                         {profile.type === "multiple" && (
                           <button
                             type="button"
-                            onClick={() =>
-                              onEditClick(profile.id, profile.name)
-                            }
+                            onClick={() => onEditClick(profile.id, profile.name)}
                             className="text-gray-500 hover:text-indigo-500"
                           >
                             <svg
@@ -203,9 +193,7 @@ export const RootAccountsControlView = ({
                         )}
                       </div>
                     )}
-                    <div className="text-sm text-gray-500">
-                      目的: {profile.purpose}
-                    </div>
+                    <div className="text-sm text-gray-500">目的: {profile.purpose}</div>
                     {profile.type === "single" && (
                       <div className="text-xs text-red-500 font-bold mt-1">
                         ※1ルートアカウントにつき1つのみ
@@ -225,18 +213,17 @@ export const RootAccountsControlView = ({
             <button
               type="button"
               className={`w-full font-bold py-3 px-4 rounded-lg shadow transition-colors mt-4 ${
-                profileManagement.createdProfiles >=
-                  profileManagement.maxProfiles || hasMatrimonyProfile
+                profileManagement.createdProfiles >= profileManagement.maxProfiles ||
+                hasMatrimonyProfile
                   ? "bg-gray-400 cursor-not-allowed"
                   : "bg-indigo-500 hover:bg-indigo-600"
               }`}
               disabled={
-                profileManagement.createdProfiles >=
-                  profileManagement.maxProfiles || hasMatrimonyProfile
+                profileManagement.createdProfiles >= profileManagement.maxProfiles ||
+                hasMatrimonyProfile
               }
             >
-              新しいプロフィールを作成 ({profileManagement.creationCost} pt
-              消費)
+              新しいプロフィールを作成 ({profileManagement.creationCost} pt 消費)
             </button>
             {hasMatrimonyProfile && (
               <div className="text-center text-red-500 mt-2 text-sm font-bold">
@@ -252,26 +239,14 @@ export const RootAccountsControlView = ({
             ポイント管理
           </h2>
           <div className="space-y-2">
-            <DataItem
-              label="総ポイント"
-              value={`${rootAccount.totalPoints} pt`}
-            />
-            <DataItem
-              label="最大ポイント"
-              value={`${rootAccount.maxPoints} pt`}
-            />
+            <DataItem label="総ポイント" value={`${rootAccount.totalPoints} pt`} />
+            <DataItem label="最大ポイント" value={`${rootAccount.maxPoints} pt`} />
             <DataItem
               label="消費済みポイント合計"
               value={`${rootAccount.totalConsumedPoints} pt`}
             />
-            <DataItem
-              label="活動ポイント"
-              value={`${rootAccount.activityPoints} pt`}
-            />
-            <DataItem
-              label="クリックポイント"
-              value={`${rootAccount.clickPoints} pt`}
-            />
+            <DataItem label="活動ポイント" value={`${rootAccount.activityPoints} pt`} />
+            <DataItem label="クリックポイント" value={`${rootAccount.clickPoints} pt`} />
             <DataItem
               label="最終ポイント回復日時"
               value={
@@ -294,10 +269,7 @@ export const RootAccountsControlView = ({
               value={rootAccount.trustScore}
               tooltip="ユーザーの活動や行動履歴に基づいて算出される、アカウントの信頼性を示す指標です。"
             />
-            <DataItem
-              label="OAuthプロバイダー"
-              value={rootAccount.oauthProviders.join(", ")}
-            />
+            <DataItem label="OAuthプロバイダー" value={rootAccount.oauthProviders.join(", ")} />
             <DataItem label="OAuth認証数" value={rootAccount.oauthCount} />
             <DataItem label="警告回数" value={rootAccount.warningCount} />
             <DataItem
@@ -311,23 +283,16 @@ export const RootAccountsControlView = ({
             <DataItem
               label="招待日時"
               value={
-                rootAccount.invitedAt
-                  ? new Date(rootAccount.invitedAt).toLocaleString()
-                  : "N/A"
+                rootAccount.invitedAt ? new Date(rootAccount.invitedAt).toLocaleString() : "N/A"
               }
             />
             <DataItem
               label="確認日時"
               value={
-                rootAccount.confirmedAt
-                  ? new Date(rootAccount.confirmedAt).toLocaleString()
-                  : "N/A"
+                rootAccount.confirmedAt ? new Date(rootAccount.confirmedAt).toLocaleString() : "N/A"
               }
             />
-            <DataItem
-              label="リセット回数"
-              value={profileManagement.resetCount}
-            />
+            <DataItem label="リセット回数" value={profileManagement.resetCount} />
           </div>
         </div>
 
@@ -339,10 +304,7 @@ export const RootAccountsControlView = ({
           <div className="space-y-4">
             <DataItem label="ID" value={rootAccount.id} />
             <DataItem label="Auth User ID" value={rootAccount.authUserId} />
-            <DataItem
-              label="作成日時"
-              value={new Date(rootAccount.createdAt).toLocaleString()}
-            />
+            <DataItem label="作成日時" value={new Date(rootAccount.createdAt).toLocaleString()} />
             <DataItem
               label="最終更新日時"
               value={new Date(rootAccount.updatedAt).toLocaleString()}
@@ -357,10 +319,7 @@ export const RootAccountsControlView = ({
                 </span>
               }
             />
-            <DataItem
-              label="認証済み"
-              value={rootAccount.isVerified ? "はい" : "いいえ"}
-            />
+            <DataItem label="認証済み" value={rootAccount.isVerified ? "はい" : "いいえ"} />
             <DataItem
               label="匿名初期認証"
               value={rootAccount.isAnonymousInitialAuth ? "はい" : "いいえ"}

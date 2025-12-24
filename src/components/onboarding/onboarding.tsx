@@ -1,20 +1,9 @@
 "use client";
 
-import {
-  ChevronDown,
-  Globe,
-  Languages,
-  MapPin,
-  MessageCircle,
-} from "lucide-react";
+import { ChevronDown, Globe, Languages, MapPin, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import React from "react";
-import {
-  useOnboarding,
-  CULTURAL_SPHERES,
-  GENERATIONS,
-  LANGUAGE_OPTIONS,
-} from "./onboarding.logic";
+import { useOnboarding, CULTURAL_SPHERES, GENERATIONS, LANGUAGE_OPTIONS } from "./onboarding.logic";
 
 export function Onboarding() {
   const { state, actions } = useOnboarding();
@@ -35,10 +24,7 @@ export function Onboarding() {
       <main className="container mx-auto p-4">
         <div className="flex justify-center items-center min-h-[80vh]">
           <div className="w-full max-w-4xl bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 p-6">
-            <form
-              onSubmit={actions.handleSubmit}
-              className="space-y-12 max-w-3xl mx-auto py-8"
-            >
+            <form onSubmit={actions.handleSubmit} className="space-y-12 max-w-3xl mx-auto py-8">
               {/* Form Header */}
               <div className="space-y-4 text-center">
                 <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-50">
@@ -64,8 +50,7 @@ export function Onboarding() {
                       label: "エリア 1",
                       color: "bg-blue-50 text-blue-500",
                       image: "/world/area1.svg",
-                      rounded:
-                        "rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:rounded-b-none",
+                      rounded: "rounded-t-xl md:rounded-l-xl md:rounded-tr-none md:rounded-b-none",
                       width: 310,
                       height: 400,
                     },
@@ -83,8 +68,7 @@ export function Onboarding() {
                       label: "エリア 3",
                       color: "bg-orange-50 text-orange-500",
                       image: "/world/area3.svg",
-                      rounded:
-                        "rounded-b-xl md:rounded-r-xl md:rounded-bl-none md:rounded-t-none",
+                      rounded: "rounded-b-xl md:rounded-r-xl md:rounded-bl-none md:rounded-t-none",
                       width: 310,
                       height: 400,
                     },
@@ -95,10 +79,7 @@ export function Onboarding() {
                       onMouseEnter={() => setHoveredArea(area.id)}
                       onMouseLeave={() => setHoveredArea(null)}
                       style={{
-                        flexGrow:
-                          hoveredArea === area.id
-                            ? area.width * 1.15
-                            : area.width,
+                        flexGrow: hoveredArea === area.id ? area.width * 1.15 : area.width,
                         aspectRatio: `${area.width}/${area.height}`,
                       }}
                       className={`
@@ -212,9 +193,8 @@ export function Onboarding() {
                       </div>
 
                       {state.selectedCountry &&
-                        state.currentDetail.countries.find(
-                          (c) => c.name === state.selectedCountry
-                        )?.regions && (
+                        state.currentDetail.countries.find((c) => c.name === state.selectedCountry)
+                          ?.regions && (
                           <div className="space-y-1 animate-in fade-in slide-in-from-left-2">
                             <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
                               都道府県 / Prefecture
@@ -222,9 +202,7 @@ export function Onboarding() {
                             <div className="relative">
                               <select
                                 value={state.selectedRegion}
-                                onChange={(e) =>
-                                  actions.setSelectedRegion(e.target.value)
-                                }
+                                onChange={(e) => actions.setSelectedRegion(e.target.value)}
                                 className="appearance-none w-full h-12 px-4 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-yellow-600"
                               >
                                 <option value="" disabled>
@@ -269,9 +247,7 @@ export function Onboarding() {
                         }
                       `}
                     >
-                      <div className="text-slate-700 dark:text-slate-200 text-sm">
-                        {gen}
-                      </div>
+                      <div className="text-slate-700 dark:text-slate-200 text-sm">{gen}</div>
                     </div>
                   ))}
                 </div>
@@ -412,15 +388,9 @@ export function Onboarding() {
                           <input
                             id={`agree-${item.key}`}
                             type="checkbox"
-                            checked={
-                              state.agreements[
-                                item.key as keyof typeof state.agreements
-                              ]
-                            }
+                            checked={state.agreements[item.key as keyof typeof state.agreements]}
                             onChange={() =>
-                              actions.toggleAgreement(
-                                item.key as keyof typeof state.agreements
-                              )
+                              actions.toggleAgreement(item.key as keyof typeof state.agreements)
                             }
                             className="h-5 w-5 rounded border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-50 focus:ring-slate-900 dark:focus:ring-slate-50 bg-white dark:bg-slate-700"
                           />
@@ -432,9 +402,7 @@ export function Onboarding() {
                           >
                             {item.label}
                           </label>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">
-                            {item.desc}
-                          </p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">{item.desc}</p>
                         </div>
                       </div>
                     ))}

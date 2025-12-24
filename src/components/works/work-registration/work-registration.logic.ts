@@ -130,7 +130,7 @@ export const workSchema = z.object({
       z.object({
         type: z.string(),
         value: z.string().optional(), // 空文字も許容して、submit時にfilterする方針か、あるいはurl形式チェックするか
-      })
+      }),
     )
     .default([]),
   tags: z.array(z.string()).default([]),
@@ -160,11 +160,5 @@ export const dummyFormValues: WorkFormValues = {
     { type: "official", value: "http://steinsgate.jp/" },
     { type: "affiliate", value: "https://www.amazon.co.jp/dp/B00XXX" },
   ],
-  tags: [
-    "ゲーム化",
-    "アニメ化",
-    "神作",
-    "伏線回収",
-    "エル・プサイ・コングルゥ",
-  ],
+  tags: ["ゲーム化", "アニメ化", "神作", "伏線回収", "エル・プサイ・コングルゥ"],
 };

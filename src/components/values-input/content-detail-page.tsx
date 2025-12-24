@@ -4,13 +4,7 @@ import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const tags = ["タグ1", "タグ2", "タグ3"];
-const choices = [
-  "選択肢1",
-  "選択肢2",
-  "選択肢3",
-  "選択肢4(追加)",
-  "選択肢5(追加)",
-];
+const choices = ["選択肢1", "選択肢2", "選択肢3", "選択肢4(追加)", "選択肢5(追加)"];
 const cards = [
   { title: "タイトル", url: "URL", comment: "コメント" },
   { title: "タイトル", url: "URL", comment: "コメント" },
@@ -47,9 +41,7 @@ export default function ContentDetailPage() {
       <div className="flex justify-between items-center mb-2">
         <div className="flex gap-6">
           <div>
-            <div className="text-xs text-gray-500 dark:text-gray-400">
-              カテゴリ
-            </div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">カテゴリ</div>
             <div className="font-semibold">基本</div>
           </div>
           <div>
@@ -57,19 +49,14 @@ export default function ContentDetailPage() {
             <div className="font-semibold">001-0001</div>
           </div>
         </div>
-        <div className="text-xs text-gray-500 dark:text-gray-400">
-          作った人(管理人、ユーザー)
-        </div>
+        <div className="text-xs text-gray-500 dark:text-gray-400">作った人(管理人、ユーザー)</div>
       </div>
       {/* お題・タグ */}
       <div className="mb-2">
         <div className="text-xs text-gray-500 dark:text-gray-400">お題</div>
         <div className="flex gap-2 mt-1">
           {tags.map((tag) => (
-            <span
-              key={tag}
-              className="bg-gray-100 dark:bg-gray-800 rounded px-2 py-1 text-xs"
-            >
+            <span key={tag} className="bg-gray-100 dark:bg-gray-800 rounded px-2 py-1 text-xs">
               {tag}
             </span>
           ))}
@@ -100,20 +87,14 @@ export default function ContentDetailPage() {
         {cards.map((card, i) => (
           <div key={i} className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
             <div className="font-semibold mb-1">{card.title}</div>
-            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">
-              {card.url}
-            </div>
-            <div className="text-xs text-gray-600 dark:text-gray-300">
-              {card.comment}
-            </div>
+            <div className="text-xs text-blue-600 dark:text-blue-400 mb-1">{card.url}</div>
+            <div className="text-xs text-gray-600 dark:text-gray-300">{card.comment}</div>
           </div>
         ))}
       </div>
       {/* 関連の価値観 */}
       <div className="mb-4">
-        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-          関連の価値観
-        </div>
+        <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">関連の価値観</div>
         <div className="flex gap-3">
           {values.map((v) => (
             <span

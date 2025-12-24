@@ -3,20 +3,11 @@
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
-export function GitHubLoginForm({
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) {
+export function GitHubLoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -61,20 +52,14 @@ export function GitHubLoginForm({
             <FaGithub className="h-6 w-6 text-white" />
             GitHub認証
           </CardTitle>
-          <CardDescription className="text-gray-300">
-            必要なもの: GitHubアカウント
-          </CardDescription>
+          <CardDescription className="text-gray-300">必要なもの: GitHubアカウント</CardDescription>
         </CardHeader>
         <CardContent>
           <ul className="space-y-1 text-sm">
             {features.map((feature, index) => (
               <li key={index} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
-                <span
-                  className={
-                    feature.isNegative ? "text-red-500" : "text-green-500"
-                  }
-                >
+                <span className={feature.isNegative ? "text-red-500" : "text-green-500"}>
                   {feature.value}
                 </span>
               </li>
@@ -83,9 +68,7 @@ export function GitHubLoginForm({
           <form onSubmit={handleSocialLogin} className="mt-6">
             <div className="flex flex-col gap-6">
               {error && (
-                <p className="text-sm text-red-400 bg-red-900/30 p-3 rounded-md">
-                  {error}
-                </p>
+                <p className="text-sm text-red-400 bg-red-900/30 p-3 rounded-md">{error}</p>
               )}
               <Button
                 type="submit"

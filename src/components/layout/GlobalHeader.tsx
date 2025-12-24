@@ -17,12 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 /**
  * ヘッダーメニュー要件定義書に基づく機能:
@@ -57,9 +52,9 @@ const mockPoints = 1250;
 function HeaderSearch() {
   const router = useRouter();
   const [query, setQuery] = React.useState("");
-  const [results, setResults] = React.useState<
-    Array<{ id: string; title: string; type: string }>
-  >([]);
+  const [results, setResults] = React.useState<Array<{ id: string; title: string; type: string }>>(
+    [],
+  );
   const [isOpen, setIsOpen] = React.useState(false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -67,10 +62,7 @@ function HeaderSearch() {
   // 外側クリックで閉じる
   React.useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(event.target as Node)
-      ) {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
     }
@@ -131,16 +123,12 @@ function HeaderSearch() {
             <Link
               key={result.id}
               href={
-                result.type === "work"
-                  ? `/home/works/${result.id}`
-                  : `/home/profiles/${result.id}`
+                result.type === "work" ? `/home/works/${result.id}` : `/home/profiles/${result.id}`
               }
               className="flex items-center gap-3 px-4 py-2 hover:bg-accent hover:text-accent-foreground"
               onClick={() => setIsOpen(false)}
             >
-              <span className="text-xs text-muted-foreground uppercase">
-                {result.type}
-              </span>
+              <span className="text-xs text-muted-foreground uppercase">{result.type}</span>
               <span className="text-sm">{result.title}</span>
             </Link>
           ))}
@@ -173,9 +161,7 @@ function AdToggle() {
           aria-label={adsEnabled ? "広告ON" : "広告OFF"}
           className="h-9 w-9"
         >
-          <Megaphone
-            className={`h-4 w-4 ${adsEnabled ? "" : "text-muted-foreground"}`}
-          />
+          <Megaphone className={`h-4 w-4 ${adsEnabled ? "" : "text-muted-foreground"}`} />
         </Button>
       </TooltipTrigger>
       <TooltipContent>
@@ -251,9 +237,7 @@ function PointsDisplay() {
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors"
         >
           <Coins className="h-4 w-4" />
-          <span className="text-sm font-medium">
-            {mockPoints.toLocaleString()}
-          </span>
+          <span className="text-sm font-medium">{mockPoints.toLocaleString()}</span>
         </Link>
       </TooltipTrigger>
       <TooltipContent>
@@ -301,17 +285,12 @@ function NotificationBell() {
             }`}
           >
             <span className="text-sm">{notification.title}</span>
-            <span className="text-xs text-muted-foreground">
-              {notification.time}
-            </span>
+            <span className="text-xs text-muted-foreground">{notification.time}</span>
           </DropdownMenuItem>
         ))}
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link
-            href="/home/notifications"
-            className="w-full text-center text-sm text-primary"
-          >
+          <Link href="/home/notifications" className="w-full text-center text-sm text-primary">
             すべての通知を見る
           </Link>
         </DropdownMenuItem>

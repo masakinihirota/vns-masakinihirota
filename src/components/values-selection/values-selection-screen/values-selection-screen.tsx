@@ -94,9 +94,7 @@ export const ValueSelectionScreen: React.FC<ValueSelectionScreenProps> = ({
               </svg>
             </li>
             <li className="flex items-center">
-              <span className="text-gray-500 dark:text-gray-400">
-                現在のお題
-              </span>
+              <span className="text-gray-500 dark:text-gray-400">現在のお題</span>
             </li>
           </ol>
         </nav>
@@ -123,23 +121,15 @@ export const ValueSelectionScreen: React.FC<ValueSelectionScreenProps> = ({
       <div className="mb-8">
         <div className="grid grid-cols-1 pb-4 text-sm text-gray-600 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700 sm:grid-cols-3 gap-y-2 sm:gap-y-0 sm:gap-x-4">
           <div className="flex items-center">
-            <span className="mr-2 font-semibold text-gray-800 dark:text-gray-200">
-              カテゴリ
-            </span>
+            <span className="mr-2 font-semibold text-gray-800 dark:text-gray-200">カテゴリ</span>
             <span className="text-gray-700 dark:text-gray-300">基本</span>
           </div>
           <div className="flex items-center">
-            <span className="mr-2 font-semibold text-gray-800 dark:text-gray-200">
-              番号
-            </span>
-            <span className="text-gray-700 dark:text-gray-300">
-              ００１−０００１
-            </span>
+            <span className="mr-2 font-semibold text-gray-800 dark:text-gray-200">番号</span>
+            <span className="text-gray-700 dark:text-gray-300">００１−０００１</span>
           </div>
           <div className="flex items-center">
-            <span className="mr-2 font-semibold text-gray-800 dark:text-gray-200">
-              作った人
-            </span>
+            <span className="mr-2 font-semibold text-gray-800 dark:text-gray-200">作った人</span>
             <span className="text-gray-700 dark:text-gray-300">システム</span>
           </div>
         </div>
@@ -181,13 +171,9 @@ export const ValueSelectionScreen: React.FC<ValueSelectionScreenProps> = ({
               className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-md bg-gray-50 dark:bg-gray-700"
             >
               <div className="flex items-center">
-                <span className="mr-4 text-gray-700 dark:text-gray-200">
-                  {choice.label}
-                </span>
+                <span className="mr-4 text-gray-700 dark:text-gray-200">{choice.label}</span>
                 {choice.user && (
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {choice.user}
-                  </span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">{choice.user}</span>
                 )}
               </div>
               {choice.user && (

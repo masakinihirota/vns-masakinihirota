@@ -30,9 +30,7 @@ export const VoteMatchView = ({
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader className="bg-primary text-primary-foreground">
-        <CardTitle className="text-2xl font-bold text-center">
-          衆議院選2024 ボートマッチ
-        </CardTitle>
+        <CardTitle className="text-2xl font-bold text-center">衆議院選2024 ボートマッチ</CardTitle>
       </CardHeader>
       <CardContent className="p-6">
         <Progress value={progress} className="mb-4" />
@@ -40,9 +38,7 @@ export const VoteMatchView = ({
           {currentQuestion + 1} / {totalQuestions}
         </p>
         <h2 className="text-4xl font-bold mb-4 text-center">Q{question.id}</h2>
-        <h3 className="text-xl font-semibold mb-4 text-center">
-          {question.category}
-        </h3>
+        <h3 className="text-xl font-semibold mb-4 text-center">{question.category}</h3>
         <p className="text-lg mb-6 text-center">{question.text}</p>
         <div className="space-y-4 mb-6">
           {question.choices.map((choice, index) => (
@@ -57,11 +53,7 @@ export const VoteMatchView = ({
           ))}
         </div>
         <div className="flex justify-between">
-          <Button
-            onClick={onPrevious}
-            disabled={currentQuestion === 0}
-            variant="outline"
-          >
+          <Button onClick={onPrevious} disabled={currentQuestion === 0} variant="outline">
             <ChevronLeft className="mr-2 h-4 w-4" /> 前へ
           </Button>
           {showNextButton && (

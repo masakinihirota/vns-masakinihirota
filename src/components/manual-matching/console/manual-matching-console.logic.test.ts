@@ -44,13 +44,9 @@ describe("Manual Matching Console Logic", () => {
     const result = calculateComparison(subject, candidate);
 
     // Assert
-    expect(result.subjectUniqueWorks.some((w) => w.title === "ONE PIECE")).toBe(
-      true
+    expect(result.subjectUniqueWorks.some((w) => w.title === "ONE PIECE")).toBe(true);
+    expect(result.candidateUniqueWorks.some((w) => w.title === "グレイテスト・ショーマン")).toBe(
+      true,
     );
-    expect(
-      result.candidateUniqueWorks.some(
-        (w) => w.title === "グレイテスト・ショーマン"
-      )
-    ).toBe(true);
   });
 });

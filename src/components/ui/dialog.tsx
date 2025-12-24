@@ -4,21 +4,15 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-function Dialog({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Root>) {
+function Dialog({ ...props }: React.ComponentProps<typeof DialogPrimitive.Root>) {
   return <DialogPrimitive.Root {...props} />;
 }
 
-function DialogTrigger({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
+function DialogTrigger({ ...props }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
   return <DialogPrimitive.Trigger {...props} />;
 }
 
-function DialogPortal({
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Portal>) {
+function DialogPortal({ ...props }: React.ComponentProps<typeof DialogPrimitive.Portal>) {
   return <DialogPrimitive.Portal {...props} />;
 }
 
@@ -30,7 +24,7 @@ function DialogOverlay({
     <DialogPrimitive.Overlay
       className={cn(
         "fixed inset-0 z-50 bg-black/50 data-[state=open]:fade-in data-[state=closed]:fade-out",
-        className
+        className,
       )}
       {...props}
     />
@@ -48,7 +42,7 @@ function DialogContent({
       <DialogPrimitive.Content
         className={cn(
           "fixed z-50 grid w-full gap-4 rounded-b-lg bg-background p-6 shadow-lg sm:max-w-lg sm:rounded-lg",
-          className
+          className,
         )}
         {...props}
       >
@@ -60,30 +54,15 @@ function DialogContent({
 }
 
 function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div className={cn("flex flex-col space-y-1.5", className)} {...props} />
-  );
+  return <div className={cn("flex flex-col space-y-1.5", className)} {...props} />;
 }
 
 function DialogFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      className={cn("flex items-center justify-end space-x-2", className)}
-      {...props}
-    />
-  );
+  return <div className={cn("flex items-center justify-end space-x-2", className)} {...props} />;
 }
 
-function DialogTitle({
-  className,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Title>) {
-  return (
-    <DialogPrimitive.Title
-      className={cn("text-lg font-semibold", className)}
-      {...props}
-    />
-  );
+function DialogTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>) {
+  return <DialogPrimitive.Title className={cn("text-lg font-semibold", className)} {...props} />;
 }
 
 function DialogDescription({

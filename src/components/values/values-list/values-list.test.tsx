@@ -40,9 +40,6 @@ describe("ValuesList UI", () => {
     render(<ValuesList {...mockProps} />);
     const sliders = screen.getAllByRole("slider");
     fireEvent.change(sliders[0], { target: { value: "80" } });
-    expect(mockProps.onAnswerChange).toHaveBeenCalledWith(
-      VALUES_QUESTIONS[0].id,
-      80
-    );
+    expect(mockProps.onAnswerChange).toHaveBeenCalledWith(VALUES_QUESTIONS[0].id, 80);
   });
 });

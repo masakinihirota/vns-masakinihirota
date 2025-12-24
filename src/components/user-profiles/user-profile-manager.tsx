@@ -161,9 +161,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {Icon && (
-        <Icon className={`mr-2 h-4 w-4 ${size === "icon" ? "mr-0" : ""}`} />
-      )}
+      {Icon && <Icon className={`mr-2 h-4 w-4 ${size === "icon" ? "mr-0" : ""}`} />}
       {children}
     </button>
   );
@@ -183,12 +181,10 @@ const Badge = ({
       "border-transparent bg-slate-900 text-slate-50 hover:bg-slate-900/80 dark:bg-slate-50 dark:text-slate-900",
     secondary:
       "border-transparent bg-slate-100 text-slate-900 hover:bg-slate-100/80 dark:bg-slate-800 dark:text-slate-50",
-    outline:
-      "text-slate-950 dark:text-slate-50 border-slate-200 dark:border-slate-800",
+    outline: "text-slate-950 dark:text-slate-50 border-slate-200 dark:border-slate-800",
     leader:
       "border-transparent bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300",
-    member:
-      "border-transparent bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
+    member: "border-transparent bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300",
   };
 
   return (
@@ -227,13 +223,7 @@ const Input = ({
   </div>
 );
 
-const Card = ({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) => (
+const Card = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <div
     className={`rounded-lg border border-slate-200 bg-white text-slate-950 shadow-sm dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50 ${className}`}
   >
@@ -261,11 +251,7 @@ const Avatar = ({
       className={`relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800 ${className}`}
     >
       {src ? (
-        <img
-          src={src}
-          alt={name}
-          className="aspect-square h-full w-full object-cover"
-        />
+        <img src={src} alt={name} className="aspect-square h-full w-full object-cover" />
       ) : (
         <div className="flex h-full w-full items-center justify-center rounded-full bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400 font-medium text-sm">
           {initials}
@@ -360,9 +346,7 @@ export default function UserProfileManager() {
   };
 
   const handleUpdate = (updatedProfile: Profile) => {
-    setProfiles(
-      profiles.map((p) => (p.id === updatedProfile.id ? updatedProfile : p))
-    );
+    setProfiles(profiles.map((p) => (p.id === updatedProfile.id ? updatedProfile : p)));
     setSelectedProfile(null);
   };
 
@@ -374,9 +358,7 @@ export default function UserProfileManager() {
       <div className="max-w-7xl mx-auto space-y-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">
-              ユーザープロフィール管理
-            </h1>
+            <h1 className="text-3xl font-bold tracking-tight">ユーザープロフィール管理</h1>
           </div>
           <div className="flex items-center gap-3">
             <Button
@@ -385,11 +367,7 @@ export default function UserProfileManager() {
               onClick={() => setIsDarkMode(!isDarkMode)}
               className="rounded-full"
             >
-              {isDarkMode ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
+              {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
             <Button className="gap-2">
               <Plus className="h-4 w-4" /> 新規プロフィール
@@ -460,10 +438,7 @@ export default function UserProfileManager() {
                 <tbody className="[&_tr:last-child]:border-0">
                   {filteredProfiles.length === 0 ? (
                     <tr>
-                      <td
-                        colSpan={6}
-                        className="h-24 text-center text-slate-500"
-                      >
+                      <td colSpan={6} className="h-24 text-center text-slate-500">
                         プロフィールが見つかりませんでした。
                       </td>
                     </tr>
@@ -481,10 +456,7 @@ export default function UserProfileManager() {
                         </td>
                         <td className="p-4 align-middle">
                           <div className="flex items-center gap-3">
-                            <Avatar
-                              name={profile.displayName}
-                              src={profile.avatar}
-                            />
+                            <Avatar name={profile.displayName} src={profile.avatar} />
                             <div className="flex flex-col">
                               <span className="font-semibold text-slate-900 dark:text-slate-100">
                                 {profile.displayName}
@@ -496,17 +468,9 @@ export default function UserProfileManager() {
                           </div>
                         </td>
                         <td className="p-4 align-middle">
-                          <Badge
-                            variant={
-                              profile.role === "リーダー" ? "leader" : "member"
-                            }
-                          >
-                            {profile.role === "リーダー" && (
-                              <Shield className="w-3 h-3 mr-1" />
-                            )}
-                            {profile.role === "メンバー" && (
-                              <Users className="w-3 h-3 mr-1" />
-                            )}
+                          <Badge variant={profile.role === "リーダー" ? "leader" : "member"}>
+                            {profile.role === "リーダー" && <Shield className="w-3 h-3 mr-1" />}
+                            {profile.role === "メンバー" && <Users className="w-3 h-3 mr-1" />}
                             {profile.role}
                           </Badge>
                         </td>
@@ -558,24 +522,15 @@ export default function UserProfileManager() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-xl font-semibold">プロフィール編集</h2>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setSelectedProfile(null)}
-                >
+                <Button variant="ghost" size="icon" onClick={() => setSelectedProfile(null)}>
                   <XCircle className="h-5 w-5" />
                 </Button>
               </div>
 
               <div className="flex items-center gap-4 mb-6 p-4 bg-slate-50 dark:bg-slate-900 rounded-lg">
-                <Avatar
-                  name={selectedProfile.displayName}
-                  className="h-16 w-16 text-xl"
-                />
+                <Avatar name={selectedProfile.displayName} className="h-16 w-16 text-xl" />
                 <div className="flex-1">
-                  <h3 className="text-sm font-medium text-slate-500 mb-1">
-                    アバター設定
-                  </h3>
+                  <h3 className="text-sm font-medium text-slate-500 mb-1">アバター設定</h3>
                   <div className="flex gap-2">
                     <Button variant="outline" size="xs">
                       画像をアップロード
@@ -590,9 +545,7 @@ export default function UserProfileManager() {
               <div className="space-y-6">
                 {/* 1. 基本情報 */}
                 <div className="space-y-4">
-                  <h3 className="text-sm font-semibold text-slate-500 border-b pb-2">
-                    基本情報
-                  </h3>
+                  <h3 className="text-sm font-semibold text-slate-500 border-b pb-2">基本情報</h3>
                   <div className="grid gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">
@@ -628,18 +581,14 @@ export default function UserProfileManager() {
                           className="flex h-10 w-full rounded-r-md border border-slate-200 bg-white px-3 py-2 text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-800 dark:bg-slate-950 dark:focus-visible:ring-slate-300"
                         />
                       </div>
-                      <p className="text-xs text-slate-500">
-                        半角英数字のみ使用可能です。
-                      </p>
+                      <p className="text-xs text-slate-500">半角英数字のみ使用可能です。</p>
                     </div>
                   </div>
                 </div>
 
                 {/* 2. 属性設定 */}
                 <div className="space-y-4">
-                  <h3 className="text-sm font-semibold text-slate-500 border-b pb-2">
-                    属性設定
-                  </h3>
+                  <h3 className="text-sm font-semibold text-slate-500 border-b pb-2">属性設定</h3>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div className="space-y-2">
@@ -688,11 +637,10 @@ export default function UserProfileManager() {
                       種類 <span className="text-red-500">*</span>
                     </label>
                     <div className="flex flex-wrap gap-2">
-                      {["本人", "インタビュー", "他人視点", "AI", "架空"].map(
-                        (type) => (
-                          <label
-                            key={type}
-                            className={`
+                      {["本人", "インタビュー", "他人視点", "AI", "架空"].map((type) => (
+                        <label
+                          key={type}
+                          className={`
                            flex items-center gap-2 px-3 py-2 rounded-md border cursor-pointer text-sm transition-all
                            ${
                              selectedProfile.type === type
@@ -700,39 +648,33 @@ export default function UserProfileManager() {
                                : "border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-900"
                            }
                          `}
-                          >
-                            <input
-                              type="radio"
-                              name="profileType"
-                              value={type}
-                              checked={selectedProfile.type === type}
-                              onChange={(e) =>
-                                setSelectedProfile({
-                                  ...selectedProfile,
-                                  type: e.target.value,
-                                })
-                              }
-                              className="sr-only"
-                            />
-                            {type}
-                          </label>
-                        )
-                      )}
+                        >
+                          <input
+                            type="radio"
+                            name="profileType"
+                            value={type}
+                            checked={selectedProfile.type === type}
+                            onChange={(e) =>
+                              setSelectedProfile({
+                                ...selectedProfile,
+                                type: e.target.value,
+                              })
+                            }
+                            className="sr-only"
+                          />
+                          {type}
+                        </label>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="flex justify-end gap-3 mt-8 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <Button
-                  variant="outline"
-                  onClick={() => setSelectedProfile(null)}
-                >
+                <Button variant="outline" onClick={() => setSelectedProfile(null)}>
                   キャンセル
                 </Button>
-                <Button onClick={() => handleUpdate(selectedProfile)}>
-                  保存して閉じる
-                </Button>
+                <Button onClick={() => handleUpdate(selectedProfile)}>保存して閉じる</Button>
               </div>
             </div>
           </Card>

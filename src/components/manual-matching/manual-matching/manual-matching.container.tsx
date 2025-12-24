@@ -5,8 +5,7 @@ import { ManualMatching } from "./manual-matching";
 import { useManualMatching } from "./manual-matching.logic";
 
 export const ManualMatchingContainer = () => {
-  const { candidates, currentUser, toggleWatch, toggleFollow } =
-    useManualMatching();
+  const { candidates, currentUser, toggleWatch, toggleFollow } = useManualMatching();
 
   return (
     <ManualMatching
