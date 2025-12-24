@@ -1,8 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { INITIAL_PROFILES, UserProfile, UserProfileAttributes } from "./profile-list.logic";
 import { ProfileListView } from "./profile-list";
+import {
+  INITIAL_PROFILES,
+  UserProfile,
+  UserProfileAttributes,
+} from "./profile-list.logic";
 
 export const ProfileListContainer = () => {
   const [profiles, setProfiles] = useState<UserProfile[]>(INITIAL_PROFILES);

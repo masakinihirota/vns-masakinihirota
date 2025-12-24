@@ -1,7 +1,13 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 type Route = {
   title: string;
@@ -55,21 +61,41 @@ export default function Home() {
     {
       title: "Recently Added / Drafts",
       routes: [
-        { title: "Profile 2", path: "/profile2", desc: "Alternative Profile Page" },
-        { title: "User Profiles", path: "/user-profiles", desc: "User Profile List" },
+        {
+          title: "Profile 2",
+          path: "/profile2",
+          desc: "Alternative Profile Page",
+        },
+        {
+          title: "User Profiles",
+          path: "/user-profiles",
+          desc: "User Profile List",
+        },
         {
           title: "User Edited Profiles",
           path: "/user-edited-userprofiles",
           desc: "User Profile Edit Interface",
         },
-        { title: "Values Input", path: "/values-input", desc: "Values Input Screen" },
-        { title: "Valus Screen", path: "/valus-screen", desc: "Values UI Screen" },
+        {
+          title: "Values Input",
+          path: "/values-input",
+          desc: "Values Input Screen",
+        },
+        {
+          title: "Valus Screen",
+          path: "/valus-screen",
+          desc: "Values UI Screen",
+        },
         {
           title: "Matching Manual (Alt)",
           path: "/matching-manual",
           desc: "Alternative Manual Matching",
         },
-        { title: "Matching / Auto", path: "/matching/auto", desc: "Sub-route: Auto Matching" },
+        {
+          title: "Matching / Auto",
+          path: "/matching/auto",
+          desc: "Sub-route: Auto Matching",
+        },
         {
           title: "Matching / Manual",
           path: "/matching/manual",
@@ -80,33 +106,73 @@ export default function Home() {
     {
       title: "Core Functionality",
       routes: [
-        { title: "Home (Protected)", path: "/home", desc: "Authenticated User Dashboard" },
-        { title: "Matching (Hub)", path: "/matching", desc: "Matching Entry / Top" },
-        { title: "Works Directory", path: "/works", desc: "List of Registered Works" },
-        { title: "Product List", path: "/product-list", desc: "Product List Demo" },
+        {
+          title: "Home (Protected)",
+          path: "/home",
+          desc: "Authenticated User Dashboard",
+        },
+        {
+          title: "Matching (Hub)",
+          path: "/matching",
+          desc: "Matching Entry / Top",
+        },
+        {
+          title: "Works Directory",
+          path: "/works",
+          desc: "List of Registered Works",
+        },
+        {
+          title: "Product List",
+          path: "/product-list",
+          desc: "Product List Demo",
+        },
       ],
     },
     {
       title: "Account & Profile",
       routes: [
-        { title: "Root Accounts", path: "/root-accounts", desc: "Root Account Management (Old?)" },
+        {
+          title: "Root Accounts",
+          path: "/root-accounts",
+          desc: "Root Account Management (Old?)",
+        },
         { title: "Profile", path: "/profile", desc: "User Profile View" },
-        { title: "Profile Edited", path: "/profile-edited", desc: "Profile Edit Flow" },
-        { title: "Onboarding", path: "/onboarding", desc: "User Onboarding Flow" },
+        {
+          title: "Profile Edited",
+          path: "/profile-edited",
+          desc: "Profile Edit Flow",
+        },
+        {
+          title: "Onboarding",
+          path: "/onboarding",
+          desc: "User Onboarding Flow",
+        },
         { title: "Login", path: "/login", desc: "Login Page" },
       ],
     },
     {
       title: "Values & Matching Tools",
       routes: [
-        { title: "Values Registration", path: "/values", desc: "Register Personal Values" },
-        { title: "Values Selection", path: "/values-selection", desc: "Select Important Values" },
+        {
+          title: "Values Registration",
+          path: "/values",
+          desc: "Register Personal Values",
+        },
+        {
+          title: "Values Selection",
+          path: "/values-selection",
+          desc: "Select Important Values",
+        },
         {
           title: "Auto Matching",
           path: "/auto-matching",
           desc: "Automated Matching Implementation",
         },
-        { title: "Manual Matching", path: "/manual-matching", desc: "Manual Matching Console" },
+        {
+          title: "Manual Matching",
+          path: "/manual-matching",
+          desc: "Manual Matching Console",
+        },
         {
           title: "Matching Conditions",
           path: "/manual-matching/conditions",
@@ -116,14 +182,32 @@ export default function Home() {
     },
     {
       title: "Legacy / Other",
-      routes: [{ title: "New Work (Old)", path: "/works/new", desc: "Previous Work Registration" }],
+      routes: [
+        {
+          title: "New Work (Old)",
+          path: "/works/new",
+          desc: "Previous Work Registration",
+        },
+      ],
     },
     {
       title: "Public / Static",
       routes: [
-        { title: "Landing Page", path: "/landing-page", desc: "VNS Landing Page" },
-        { title: "Oasis Declaration", path: "/oasis", desc: "Project Philosophy" },
-        { title: "Human Declaration", path: "/human", desc: "Human Nature Declaration" },
+        {
+          title: "Landing Page",
+          path: "/landing-page",
+          desc: "VNS Landing Page",
+        },
+        {
+          title: "Oasis Declaration",
+          path: "/oasis",
+          desc: "Project Philosophy",
+        },
+        {
+          title: "Human Declaration",
+          path: "/human",
+          desc: "Human Nature Declaration",
+        },
       ],
     },
   ];
@@ -136,13 +220,19 @@ export default function Home() {
             VNS Development Portal
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            Central hub for UI/UX verification, new feature testing, and page navigation.
+            Central hub for UI/UX verification, new feature testing, and page
+            navigation.
           </p>
           <div className="flex gap-4">
             <Button asChild size="lg" className="rounded-full px-8">
               <Link href="/login">Log in / Auth</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full px-8"
+            >
               <Link
                 href="https://github.com/masakinihirota/vns-masakinihirota"
                 target="_blank"

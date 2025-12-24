@@ -1,18 +1,30 @@
-import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
 import { ManualMatching } from "./manual-matching";
 import { Candidate, CURRENT_USER } from "./manual-matching.logic";
 
 // Mock data
 const mockCandidates: Candidate[] = [
   {
-    user: { id: "c1", name: "Alice", avatarSrc: "", bio: "Bio A", tags: ["Tag1"] },
+    user: {
+      id: "c1",
+      name: "Alice",
+      avatarSrc: "",
+      bio: "Bio A",
+      tags: ["Tag1"],
+    },
     compatibility: 80,
     isWatched: false,
     isFollowed: false,
   },
   {
-    user: { id: "c2", name: "Bob", avatarSrc: "", bio: "Bio B", tags: ["Tag2"] },
+    user: {
+      id: "c2",
+      name: "Bob",
+      avatarSrc: "",
+      bio: "Bio B",
+      tags: ["Tag2"],
+    },
     compatibility: 40,
     isWatched: true, // Already watched
     isFollowed: false,
@@ -30,7 +42,7 @@ describe("ManualMatching UI", () => {
         candidates={mockCandidates}
         onToggleWatch={mockToggleWatch}
         onToggleFollow={mockToggleFollow}
-      />,
+      />
     );
     expect(screen.getByText("Alice")).toBeInTheDocument();
     expect(screen.getByText("Bob")).toBeInTheDocument();
@@ -44,7 +56,7 @@ describe("ManualMatching UI", () => {
         candidates={mockCandidates}
         onToggleWatch={mockToggleWatch}
         onToggleFollow={mockToggleFollow}
-      />,
+      />
     );
 
     // Alice is not watched, button should say "Watch" (or icon)
@@ -61,7 +73,7 @@ describe("ManualMatching UI", () => {
         candidates={mockCandidates}
         onToggleWatch={mockToggleWatch}
         onToggleFollow={mockToggleFollow}
-      />,
+      />
     );
 
     // Bob is watched, button text might change or look different. checking for text "Unwatch" or "Watching" logic would differ based on implementation.

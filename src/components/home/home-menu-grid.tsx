@@ -1,10 +1,9 @@
 "use client";
 
 import Link from "next/link";
-
-import routesManifest from "@/config/routes.manifest.json";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { iconFor as getIcon } from "@/config/menu-icons";
+import routesManifest from "@/config/routes.manifest.json";
 
 // Basic implementation of toSidebarUrl
 const toUrl = (manifestPath: string) => {
@@ -50,7 +49,11 @@ export function HomeMenuGrid() {
               {routes.map((route) => {
                 const Icon = getIcon(route.path);
                 return (
-                  <Link key={route.path} href={toUrl(route.path)} className="block group">
+                  <Link
+                    key={route.path}
+                    href={toUrl(route.path)}
+                    className="block group"
+                  >
                     <Card className="h-full hover:shadow-md transition-shadow hover:border-blue-200">
                       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-base font-medium group-hover:text-blue-600 transition-colors">

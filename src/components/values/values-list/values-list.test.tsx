@@ -1,11 +1,11 @@
-import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
 import { ValuesList } from "./values-list";
 import { VALUES_QUESTIONS } from "./values-list.logic";
 
 // Mock Lucide icons
 vi.mock("lucide-react", async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual = await importOriginal<typeof import("lucide-react")>();
   return {
     ...actual,
     Lock: () => <div>Lock</div>,
@@ -40,6 +40,9 @@ describe("ValuesList UI", () => {
     render(<ValuesList {...mockProps} />);
     const sliders = screen.getAllByRole("slider");
     fireEvent.change(sliders[0], { target: { value: "80" } });
-    expect(mockProps.onAnswerChange).toHaveBeenCalledWith(VALUES_QUESTIONS[0].id, 80);
+    expect(mockProps.onAnswerChange).toHaveBeenCalledWith(
+      VALUES_QUESTIONS[0].id,
+      80
+    );
   });
 });

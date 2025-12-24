@@ -42,7 +42,7 @@ export const ProductListContainer: React.FC = () => {
           setLoading(false);
         });
     };
-    fetchArtworks();
+    void fetchArtworks();
   }, []);
 
   // Handlers

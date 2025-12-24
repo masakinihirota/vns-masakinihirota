@@ -19,12 +19,12 @@ export const GeminiRootAccountContainer = () => {
       setLoading(false);
     };
 
-    fetchDummyData();
+    void fetchDummyData();
   }, []);
 
   const handleCopyId = (): void => {
     if (accountData) {
-      navigator.clipboard.writeText(accountData.id);
+      void navigator.clipboard.writeText(accountData.id);
       // alert('IDをクリップボードにコピーしました！');
     }
   };

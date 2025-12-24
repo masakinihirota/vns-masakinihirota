@@ -1,6 +1,6 @@
-import routesManifest from "@/config/routes.manifest.json";
-import { ICON_MAP } from "./AppSidebar";
 import { describe, it, expect } from "vitest";
+import { ICON_MAP } from "@/config/menu-icons";
+import routesManifest from "@/config/routes.manifest.json";
 
 describe("ICON_MAP coverage", () => {
   it("has an explicit entry for every manifest route visibleInMenu", () => {

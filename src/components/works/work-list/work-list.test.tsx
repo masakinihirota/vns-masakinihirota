@@ -1,11 +1,11 @@
-import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi } from "vitest";
 import { WorksList } from "./work-list";
 import { MOCK_WORKS } from "./work-list.logic";
 
 // Mock Lucide icons
 vi.mock("lucide-react", async (importOriginal) => {
-  const actual = await importOriginal();
+  const actual = await importOriginal<typeof import("lucide-react")>();
   return {
     ...actual,
     Plus: () => <div>Plus</div>,

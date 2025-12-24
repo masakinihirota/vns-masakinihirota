@@ -14,7 +14,7 @@ export const WorkRegistrationFormContainer = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // フォームの送信処理をここに実装
-    console.log("フォームが送信されました");
+    // console.log("フォームが送信されました");
   };
 
   const handleAddTag = () => {

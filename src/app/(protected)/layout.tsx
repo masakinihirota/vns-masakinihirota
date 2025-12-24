@@ -1,11 +1,15 @@
-import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/layout/AppSidebar";
-import { GlobalHeader } from "@/components/layout/GlobalHeader";
-import { Footer } from "@/components/layout/footer";
-import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
+import { AppSidebar } from "@/components/layout/AppSidebar";
+import { Footer } from "@/components/layout/footer";
+import { GlobalHeader } from "@/components/layout/GlobalHeader";
+import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
+import { createClient } from "@/lib/supabase/server";
 
-export default async function AuthLayout({ children }: { children: React.ReactNode }) {
+export default async function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   // 認証チェック
   const supabase = await createClient();
   const {

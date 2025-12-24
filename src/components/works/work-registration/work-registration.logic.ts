@@ -1,4 +1,3 @@
-import { z } from "zod";
 import {
   Monitor,
   BookOpen,
@@ -8,6 +7,7 @@ import {
   Globe,
   ShoppingCart,
 } from "lucide-react";
+import { z } from "zod";
 
 // --- Constants ---
 export const BASE_POINTS = 100;
@@ -37,7 +37,10 @@ export const PERIOD_GROUPS = [
     id: "present",
     label: "今・2020年代",
     items: [
-      { id: "current_ongoing", label: "現在連載・放送中・新発売 (約1週間〜1ヶ月以内)" },
+      {
+        id: "current_ongoing",
+        label: "現在連載・放送中・新発売 (約1週間〜1ヶ月以内)",
+      },
       { id: "recent_3months", label: "今期・放送中 (約3ヶ月以内)" },
       { id: "recent_6months", label: "半年以内" },
       { id: "recent_1year", label: "今年 (1年以内)" },
@@ -127,7 +130,7 @@ export const workSchema = z.object({
       z.object({
         type: z.string(),
         value: z.string().optional(), // 空文字も許容して、submit時にfilterする方針か、あるいはurl形式チェックするか
-      }),
+      })
     )
     .default([]),
   tags: z.array(z.string()).default([]),
@@ -157,5 +160,11 @@ export const dummyFormValues: WorkFormValues = {
     { type: "official", value: "http://steinsgate.jp/" },
     { type: "affiliate", value: "https://www.amazon.co.jp/dp/B00XXX" },
   ],
-  tags: ["ゲーム化", "アニメ化", "神作", "伏線回収", "エル・プサイ・コングルゥ"],
+  tags: [
+    "ゲーム化",
+    "アニメ化",
+    "神作",
+    "伏線回収",
+    "エル・プサイ・コングルゥ",
+  ],
 };
