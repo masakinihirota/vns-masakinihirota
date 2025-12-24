@@ -11,7 +11,7 @@ create table if not exists public.user_profiles (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
 
-  constraint role_type_check check (role_type in ('leader', 'member', 'admin', 'moderator')) -- Adding basic check
+  constraint role_type_check check (role_type in ('leader', 'member', 'admin', 'mediator')) -- Adding basic check
 );
 
 create index idx_user_profiles_root_account_id on public.user_profiles(root_account_id);
