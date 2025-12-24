@@ -58,8 +58,12 @@ export function SearchingEffect() {
       </div>
 
       <div className="text-center space-y-2">
-        <h3 className="text-2xl font-bold tracking-widest animate-pulse text-primary">SEARCHING</h3>
-        <p className="text-muted-foreground font-mono text-sm max-w-xs mx-auto h-6">{text}</p>
+        <h3 className="text-2xl font-bold tracking-widest animate-pulse text-primary">
+          SEARCHING
+        </h3>
+        <p className="text-muted-foreground font-mono text-sm max-w-xs mx-auto h-6">
+          {text}
+        </p>
       </div>
 
       <div className="grid grid-cols-5 gap-1 opacity-50">

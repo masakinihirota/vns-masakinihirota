@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { filterArtworks, sortArtworks, MOCK_ARTWORKS } from "./product-list.logic";
+import {
+  filterArtworks,
+  sortArtworks,
+  MOCK_ARTWORKS,
+} from "./product-list.logic";
 
 describe("ProductList Logic", () => {
   describe("filterArtworks", () => {
@@ -44,7 +48,9 @@ describe("ProductList Logic", () => {
       // 少なくともソート前後で順序が変わるか、あるいは期待した順序になっているか
       // ここでは具体的な期待値と比較する
       const titles = result.map((a) => a.title);
-      expect(titles).toEqual([...titles].sort((a, b) => a.localeCompare(b, "ja")));
+      expect(titles).toEqual(
+        [...titles].sort((a, b) => a.localeCompare(b, "ja"))
+      );
     });
 
     it("target_ageでソートできる", () => {

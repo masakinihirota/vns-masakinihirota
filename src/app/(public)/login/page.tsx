@@ -16,7 +16,9 @@ export default function Page() {
         </p>
         <p className="text-sm text-gray-400">ログインしていません</p>
         <div className="mt-4 p-4 border border-gray-700 rounded bg-gray-900 inline-block">
-          <p className="text-xs text-gray-400 mb-2">DADS Component Verification</p>
+          <p className="text-xs text-gray-400 mb-2">
+            DADS Component Verification
+          </p>
           <div className="flex gap-2 justify-center">
             <DadsButton variant="solid-fill" size="sm">
               Solid Fill
@@ -28,7 +30,9 @@ export default function Page() {
         </div>
       </div>
 
-      <h1 className="text-2xl font-bold mb-8">ユーザーの認証方法を選択してください</h1>
+      <h1 className="text-2xl font-bold mb-8">
+        ユーザーの認証方法を選択してください
+      </h1>
 
       {/* ログインフォーム */}
       <div className="flex flex-col md:flex-row gap-6 w-full max-w-5xl justify-center">
@@ -37,7 +41,10 @@ export default function Page() {
         <GitHubLoginForm className="flex-1 min-w-0" />
       </div>
 
-      <Link href="/" className="text-sm text-blue-500 mt-8 hover:text-blue-400 transition-colors">
+      <Link
+        href="/"
+        className="text-sm text-blue-500 mt-8 hover:text-blue-400 transition-colors"
+      >
         TOPページに戻る
       </Link>
     </div>

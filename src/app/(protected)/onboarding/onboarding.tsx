@@ -1,4 +1,10 @@
-import { ChevronDown, Globe, Languages, MapPin, MessageCircle } from "lucide-react";
+import {
+  ChevronDown,
+  Globe,
+  Languages,
+  MapPin,
+  MessageCircle,
+} from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -54,7 +60,10 @@ const PREFECTURES = [
 ];
 
 // 文化圏ごとの詳細設定データ
-const DETAILED_REGIONS: Record<string, { countries: { name: string; regions?: string[] }[] }> = {
+const DETAILED_REGIONS: Record<
+  string,
+  { countries: { name: string; regions?: string[] }[] }
+> = {
   japanese: {
     countries: [{ name: "日本 (Japan)", regions: PREFECTURES }],
   },
@@ -151,7 +160,7 @@ export default function App() {
 
   const toggleAvailableLanguage = (lang: string) => {
     setAvailableLanguages((prev) =>
-      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang],
+      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
     );
   };
 
@@ -175,7 +184,9 @@ export default function App() {
     alert("アカウント作成リクエストを送信しました（デモ）");
   };
 
-  const currentDetail = culturalSphere ? DETAILED_REGIONS[culturalSphere] : null;
+  const currentDetail = culturalSphere
+    ? DETAILED_REGIONS[culturalSphere]
+    : null;
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900">
@@ -192,10 +203,15 @@ export default function App() {
       <main className="container mx-auto p-4">
         <div className="flex justify-center items-center min-h-[80vh]">
           <div className="w-full max-w-4xl bg-white rounded-lg shadow-sm border border-slate-200 p-6">
-            <form onSubmit={handleSubmit} className="space-y-12 max-w-3xl mx-auto py-8">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-12 max-w-3xl mx-auto py-8"
+            >
               {/* Form Header */}
               <div className="space-y-4 text-center">
-                <h1 className="text-3xl font-bold text-slate-900">ルートアカウント作成</h1>
+                <h1 className="text-3xl font-bold text-slate-900">
+                  ルートアカウント作成
+                </h1>
                 <p className="text-slate-500">
                   VNSプラットフォームへようこそ。アカウントの基本情報を登録してください。
                 </p>
@@ -253,7 +269,9 @@ export default function App() {
                           />
                         </div>
                       </div>
-                      <div className="text-center font-semibold text-slate-700">{area.label}</div>
+                      <div className="text-center font-semibold text-slate-700">
+                        {area.label}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -293,8 +311,12 @@ export default function App() {
                       <div className="mb-2 p-2 rounded-full bg-slate-100 text-slate-500">
                         <Languages className="w-5 h-5" />
                       </div>
-                      <div className="font-semibold text-slate-700 text-sm">{sphere.label}</div>
-                      <div className="text-xs text-slate-400 mt-1 text-balance">{sphere.en}</div>
+                      <div className="font-semibold text-slate-700 text-sm">
+                        {sphere.label}
+                      </div>
+                      <div className="text-xs text-slate-400 mt-1 text-balance">
+                        {sphere.en}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -305,7 +327,9 @@ export default function App() {
                     <div className="flex items-start gap-3 mb-4">
                       <MapPin className="w-5 h-5 text-yellow-600 mt-0.5 shrink-0" />
                       <div>
-                        <h3 className="font-semibold text-slate-800">詳細地域の設定</h3>
+                        <h3 className="font-semibold text-slate-800">
+                          詳細地域の設定
+                        </h3>
                         <p className="text-sm text-slate-600 mt-1">
                           ※利用者数の多い文化圏については、より詳細な地域設定が可能です。
                         </p>
@@ -340,8 +364,9 @@ export default function App() {
                       </div>
 
                       {selectedCountry &&
-                        currentDetail.countries.find((c) => c.name === selectedCountry)
-                          ?.regions && (
+                        currentDetail.countries.find(
+                          (c) => c.name === selectedCountry
+                        )?.regions && (
                           <div className="space-y-1 animate-in fade-in slide-in-from-left-2">
                             <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
                               都道府県 / Prefecture
@@ -349,7 +374,9 @@ export default function App() {
                             <div className="relative">
                               <select
                                 value={selectedRegion}
-                                onChange={(e) => setSelectedRegion(e.target.value)}
+                                onChange={(e) =>
+                                  setSelectedRegion(e.target.value)
+                                }
                                 className="appearance-none w-full h-12 px-4 bg-white border border-slate-300 rounded-lg text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400"
                               >
                                 <option value="" disabled>
@@ -535,8 +562,14 @@ export default function App() {
                           <input
                             id={`agree-${item.key}`}
                             type="checkbox"
-                            checked={agreements[item.key as keyof typeof agreements]}
-                            onChange={() => toggleAgreement(item.key as keyof typeof agreements)}
+                            checked={
+                              agreements[item.key as keyof typeof agreements]
+                            }
+                            onChange={() =>
+                              toggleAgreement(
+                                item.key as keyof typeof agreements
+                              )
+                            }
                             className="h-5 w-5 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
                           />
                         </div>
@@ -560,12 +593,18 @@ export default function App() {
                 <button
                   type="submit"
                   disabled={
-                    !isAdult || !agreements.oasis || !agreements.human || !agreements.honesty
+                    !isAdult ||
+                    !agreements.oasis ||
+                    !agreements.human ||
+                    !agreements.honesty
                   }
                   className={`
                     w-full min-h-14 px-4 py-3 rounded-lg font-medium transition-all shadow-sm text-lg
                     ${
-                      !isAdult || !agreements.oasis || !agreements.human || !agreements.honesty
+                      !isAdult ||
+                      !agreements.oasis ||
+                      !agreements.human ||
+                      !agreements.honesty
                         ? "bg-slate-200 text-slate-400 cursor-not-allowed"
                         : "bg-slate-900 hover:bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-900"
                     }

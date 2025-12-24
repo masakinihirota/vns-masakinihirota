@@ -193,7 +193,9 @@ export default function ValuesScreen() {
       return cats.map((cat) => {
         if (cat.id === categoryId) {
           // 選択されたカテゴリとその子要素すべてを更新
-          const updateChildren = (children?: ValueCategory[]): ValueCategory[] | undefined => {
+          const updateChildren = (
+            children?: ValueCategory[]
+          ): ValueCategory[] | undefined => {
             if (!children) return undefined;
             return children.map((child) => ({
               ...child,
@@ -277,7 +279,9 @@ export default function ValuesScreen() {
             <Switch
               id={category.id}
               checked={category.isEnabled}
-              onCheckedChange={(checked) => toggleCategory(category.id, checked)}
+              onCheckedChange={(checked) =>
+                toggleCategory(category.id, checked)
+              }
             />
             <Label
               htmlFor={category.id}
@@ -296,7 +300,9 @@ export default function ValuesScreen() {
 
         {hasChildren && category.isExpanded && (
           <div className="space-y-1">
-            {category.children!.map((child) => renderCategory(child, level + 1))}
+            {category.children!.map((child) =>
+              renderCategory(child, level + 1)
+            )}
           </div>
         )}
       </div>
@@ -324,7 +330,9 @@ export default function ValuesScreen() {
             カテゴリをオンにすると、そのカテゴリの価値観の質問が答えられるようになります
           </p>
           <div className="text-sm text-muted-foreground">
-            現在有効: <span className="font-semibold text-primary">{enabledCount}</span> カテゴリ
+            現在有効:{" "}
+            <span className="font-semibold text-primary">{enabledCount}</span>{" "}
+            カテゴリ
           </div>
         </div>
 
@@ -356,8 +364,12 @@ export default function ValuesScreen() {
                 <li>
                   上位カテゴリをオンにすると、その下のすべてのカテゴリも自動的にオンになります
                 </li>
-                <li>個別にオフにしたい場合は、該当するカテゴリを直接オフにしてください</li>
-                <li>マッチング時は、オンになっているカテゴリの価値観が比較対象になります</li>
+                <li>
+                  個別にオフにしたい場合は、該当するカテゴリを直接オフにしてください
+                </li>
+                <li>
+                  マッチング時は、オンになっているカテゴリの価値観が比較対象になります
+                </li>
               </ul>
             </div>
           </CardContent>

@@ -40,22 +40,29 @@ export function RootAccountOverview({ rootAccount }: RootAccountOverviewProps) {
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-xl font-bold">Root Account</CardTitle>
         <Badge variant={getStatusColor(rootAccount.status)}>
-          {rootAccount.status.charAt(0).toUpperCase() + rootAccount.status.slice(1)}
+          {rootAccount.status.charAt(0).toUpperCase() +
+            rootAccount.status.slice(1)}
         </Badge>
       </CardHeader>
       <CardContent>
         <div className="grid gap-4 py-4">
           <div className="flex flex-col gap-1">
             <span className="text-sm text-muted-foreground">Total Points</span>
-            <span className="text-2xl font-bold">{rootAccount.points.toLocaleString()} pt</span>
+            <span className="text-2xl font-bold">
+              {rootAccount.points.toLocaleString()} pt
+            </span>
           </div>
           <div className="flex flex-col gap-1">
-            <span className="text-sm text-muted-foreground">Account Created</span>
+            <span className="text-sm text-muted-foreground">
+              Account Created
+            </span>
             <span>Created: {formatDate(rootAccount.createdAt)}</span>
           </div>
           {rootAccount.lastRotatedAt && (
             <div className="flex flex-col gap-1">
-              <span className="text-sm text-muted-foreground">Last Rotated</span>
+              <span className="text-sm text-muted-foreground">
+                Last Rotated
+              </span>
               <span>{formatDate(rootAccount.lastRotatedAt)}</span>
             </div>
           )}

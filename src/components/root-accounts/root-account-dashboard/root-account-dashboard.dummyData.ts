@@ -10,7 +10,8 @@ export const dummyRootAccountData: RootAccount = {
   id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
   display_id: "root_user_001",
   display_name: "Kento Tanaka",
-  statement: "フルスタックエンジニアを目指して学習中です。主にNext.jsとSupabaseを使用しています。",
+  statement:
+    "フルスタックエンジニアを目指して学習中です。主にNext.jsとSupabaseを使用しています。",
   mother_tongue_code: "ja",
   site_language_code: "en",
   location: "東京都",

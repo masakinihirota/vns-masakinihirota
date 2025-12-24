@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { ValueItem, UserValueAnswer } from "../common/types";
 import { ValuesList } from "./values-list";
-import { fetchValues, fetchUserAnswers, saveUserAnswer } from "./values-list.logic";
+import {
+  fetchValues,
+  fetchUserAnswers,
+  saveUserAnswer,
+} from "./values-list.logic";
 
 export const ValuesListContainer = () => {
   const [questions, setQuestions] = useState<ValueItem[]>([]);
@@ -14,7 +18,10 @@ export const ValuesListContainer = () => {
       await Promise.all([fetchValues(), fetchUserAnswers()])
         .then(([qData, aData]) => {
           setQuestions(qData);
-          const answersMap = aData.reduce((acc, curr) => ({ ...acc, [curr.questionId]: curr }), {});
+          const answersMap = aData.reduce(
+            (acc, curr) => ({ ...acc, [curr.questionId]: curr }),
+            {}
+          );
           setAnswers(answersMap);
         })
         .catch((e) => console.error(e))

@@ -74,7 +74,8 @@ const MOCK_SUBJECTS: UserProfile[] = [
     income: "600-800万円",
     hobbies: ["映画鑑賞", "キャンプ"],
     bio: "都内でエンジニアをしています。休日はカフェ巡りやキャンプに行くのが好きです。",
-    photoUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Kenta&backgroundColor=b6e3f4",
+    photoUrl:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=Kenta&backgroundColor=b6e3f4",
     tags: ["初婚", "土日休み"],
     matchStatus: "searching",
     manualPriority: 1,
@@ -84,7 +85,12 @@ const MOCK_SUBJECTS: UserProfile[] = [
       { category: "movie", title: "インセプション" },
       { category: "game", title: "ゼルダの伝説" },
     ],
-    values: ["仕事より家庭優先", "隠し事はしない", "週末はアクティブに", "金銭感覚は堅実"],
+    values: [
+      "仕事より家庭優先",
+      "隠し事はしない",
+      "週末はアクティブに",
+      "金銭感覚は堅実",
+    ],
   },
   {
     id: "sub-002",
@@ -96,7 +102,8 @@ const MOCK_SUBJECTS: UserProfile[] = [
     income: "500-700万円",
     hobbies: ["ヨガ", "旅行"],
     bio: "仕事も落ち着いてきたので、将来を見据えたパートナーを探しています。",
-    photoUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Misaki&backgroundColor=ffdfbf",
+    photoUrl:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=Misaki&backgroundColor=ffdfbf",
     tags: ["初婚", "ペット可"],
     matchStatus: "searching",
     manualPriority: 2,
@@ -105,7 +112,12 @@ const MOCK_SUBJECTS: UserProfile[] = [
       { category: "book", title: "ハリー・ポッター" },
       { category: "comic", title: "スラムダンク" },
     ],
-    values: ["一人の時間も大切", "食の好みが合う", "ありがとうを言葉にする", "記念日を祝う"],
+    values: [
+      "一人の時間も大切",
+      "食の好みが合う",
+      "ありがとうを言葉にする",
+      "記念日を祝う",
+    ],
   },
 ];
 
@@ -120,7 +132,8 @@ const MOCK_CANDIDATES: UserProfile[] = [
     income: "400-600万円",
     hobbies: ["美術館巡り", "カフェ"],
     bio: "デザイン関係の仕事をしています。感性が合う方とお話したいです。",
-    photoUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Mai&backgroundColor=ffdfbf",
+    photoUrl:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=Mai&backgroundColor=ffdfbf",
     tags: ["初婚", "インドア派"],
     matchStatus: "searching",
     compatibilityScore: 88,
@@ -130,7 +143,12 @@ const MOCK_CANDIDATES: UserProfile[] = [
       { category: "movie", title: "グレイテスト・ショーマン" },
       { category: "game", title: "あつまれ どうぶつの森" },
     ],
-    values: ["仕事より家庭優先", "嘘をつかない", "週末はのんびり", "記念日を祝う"], // Match partial
+    values: [
+      "仕事より家庭優先",
+      "嘘をつかない",
+      "週末はのんびり",
+      "記念日を祝う",
+    ], // Match partial
   },
   {
     id: "cand-102",
@@ -142,7 +160,8 @@ const MOCK_CANDIDATES: UserProfile[] = [
     income: "500-600万円",
     hobbies: ["料理", "ランニング"],
     bio: "明るい性格と言われます。一緒に美味しいご飯を食べられる人が好きです。",
-    photoUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Yuko&backgroundColor=ffdfbf",
+    photoUrl:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=Yuko&backgroundColor=ffdfbf",
     tags: ["初婚", "料理好き"],
     matchStatus: "searching",
     compatibilityScore: 92,
@@ -152,7 +171,12 @@ const MOCK_CANDIDATES: UserProfile[] = [
       { category: "game", title: "ゼルダの伝説" }, // Match with Kenta
       { category: "movie", title: "ジブリ作品" },
     ],
-    values: ["週末はアクティブに", "金銭感覚は堅実", "隠し事はしない", "食事が楽しみ"], // High match with Kenta
+    values: [
+      "週末はアクティブに",
+      "金銭感覚は堅実",
+      "隠し事はしない",
+      "食事が楽しみ",
+    ], // High match with Kenta
   },
   {
     id: "cand-103",
@@ -164,7 +188,8 @@ const MOCK_CANDIDATES: UserProfile[] = [
     income: "500-700万円",
     hobbies: ["読書", "ドライブ"],
     bio: "真面目な性格です。安定した家庭を築きたいと思っています。",
-    photoUrl: "https://api.dicebear.com/7.x/avataaars/svg?seed=Koji&backgroundColor=b6e3f4",
+    photoUrl:
+      "https://api.dicebear.com/7.x/avataaars/svg?seed=Koji&backgroundColor=b6e3f4",
     tags: ["初婚", "誠実"],
     matchStatus: "searching",
     compatibilityScore: 75,
@@ -216,10 +241,14 @@ const Badge = ({
   const variants = {
     default:
       "bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200 border-indigo-200",
-    secondary: "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border-slate-200",
-    outline: "bg-transparent text-slate-600 dark:text-slate-400 border-slate-300",
-    destructive: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 border-red-200",
-    success: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 border-green-200",
+    secondary:
+      "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-200 border-slate-200",
+    outline:
+      "bg-transparent text-slate-600 dark:text-slate-400 border-slate-300",
+    destructive:
+      "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200 border-red-200",
+    success:
+      "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200 border-green-200",
   };
   return (
     <span
@@ -261,7 +290,9 @@ const UserCard = ({
         />
         <div className="flex-1 min-w-0">
           <div className="flex justify-between items-start">
-            <h4 className="font-bold text-slate-900 dark:text-slate-100 truncate">{user.name}</h4>
+            <h4 className="font-bold text-slate-900 dark:text-slate-100 truncate">
+              {user.name}
+            </h4>
             {user.compatibilityScore && (
               <span
                 className={`text-xs font-bold ${user.compatibilityScore > 90 ? "text-green-600" : "text-slate-500"}`}
@@ -315,8 +346,11 @@ export default function ManualMatchingConsole() {
   const [candidates, setCandidates] = useState<UserProfile[]>([]);
 
   // State: Selection
-  const [selectedSubject, setSelectedSubject] = useState<UserProfile | null>(null);
-  const [selectedCandidate, setSelectedCandidate] = useState<UserProfile | null>(null);
+  const [selectedSubject, setSelectedSubject] = useState<UserProfile | null>(
+    null
+  );
+  const [selectedCandidate, setSelectedCandidate] =
+    useState<UserProfile | null>(null);
 
   // State: Loading & UI
   const [isLoadingSubjects, setIsLoadingSubjects] = useState(true);
@@ -330,7 +364,9 @@ export default function ManualMatchingConsole() {
     const fetchSubjects = async () => {
       setIsLoadingSubjects(true);
       try {
-        const { data } = await supabase.from("match_candidates_view").select("*");
+        const { data } = await supabase
+          .from("match_candidates_view")
+          .select("*");
         if (data) setSubjects(data);
       } catch (error) {
         console.error("Failed to fetch subjects", error);
@@ -357,7 +393,7 @@ export default function ManualMatchingConsole() {
           const filtered = data.filter(
             (c) =>
               (selectedSubject.gender === "male" && c.gender === "female") ||
-              (selectedSubject.gender === "female" && c.gender === "male"),
+              (selectedSubject.gender === "female" && c.gender === "male")
           );
           setCandidates(filtered);
         }
@@ -385,27 +421,35 @@ export default function ManualMatchingConsole() {
 
     // Common works
     const commonWorks = selectedSubject.favoriteWorks.filter((sWork) =>
-      selectedCandidate.favoriteWorks.some((cWork) => cWork.title === sWork.title),
+      selectedCandidate.favoriteWorks.some(
+        (cWork) => cWork.title === sWork.title
+      )
     );
 
     const subjectUniqueWorks = selectedSubject.favoriteWorks.filter(
-      (sWork) => !selectedCandidate.favoriteWorks.some((cWork) => cWork.title === sWork.title),
+      (sWork) =>
+        !selectedCandidate.favoriteWorks.some(
+          (cWork) => cWork.title === sWork.title
+        )
     );
 
     const candidateUniqueWorks = selectedCandidate.favoriteWorks.filter(
-      (cWork) => !selectedSubject.favoriteWorks.some((sWork) => sWork.title === cWork.title),
+      (cWork) =>
+        !selectedSubject.favoriteWorks.some(
+          (sWork) => sWork.title === cWork.title
+        )
     );
 
     // Common values
     const commonValues = selectedSubject.values.filter((sVal) =>
-      selectedCandidate.values.includes(sVal),
+      selectedCandidate.values.includes(sVal)
     );
 
     const subjectUniqueValues = selectedSubject.values.filter(
-      (sVal) => !selectedCandidate.values.includes(sVal),
+      (sVal) => !selectedCandidate.values.includes(sVal)
     );
     const candidateUniqueValues = selectedCandidate.values.filter(
-      (cVal) => !selectedSubject.values.includes(cVal),
+      (cVal) => !selectedSubject.values.includes(cVal)
     );
 
     return {
@@ -431,7 +475,7 @@ export default function ManualMatchingConsole() {
         created_at: new Date().toISOString(),
       });
       alert(
-        `マッチング成功!\n${selectedSubject.name} さんと ${selectedCandidate.name} さんをマッチングしました。`,
+        `マッチング成功!\n${selectedSubject.name} さんと ${selectedCandidate.name} さんをマッチングしました。`
       );
       setIsMatchModalOpen(false);
       setMatchComment("");
@@ -453,7 +497,9 @@ export default function ManualMatchingConsole() {
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold">
             M
           </div>
-          <h1 className="text-lg font-bold tracking-tight">Manual Matching Console</h1>
+          <h1 className="text-lg font-bold tracking-tight">
+            Manual Matching Console
+          </h1>
           <Badge variant="secondary" className="ml-2">
             Deep Match Mode
           </Badge>
@@ -575,7 +621,9 @@ export default function ManualMatchingConsole() {
                   </div>
                   <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
                   <div className="flex flex-col">
-                    <span className="text-xs text-slate-500">一致した価値観</span>
+                    <span className="text-xs text-slate-500">
+                      一致した価値観
+                    </span>
                     <span className="text-lg font-bold text-green-600">
                       {comparisonData.commonValues.length}{" "}
                       <span className="text-xs text-slate-400">個</span>
@@ -599,15 +647,21 @@ export default function ManualMatchingConsole() {
                       src={selectedSubject.photoUrl}
                       className="w-20 h-20 rounded-full object-cover border-2 border-blue-500 mb-2"
                     />
-                    <div className="font-bold text-sm">{selectedSubject.name}</div>
+                    <div className="font-bold text-sm">
+                      {selectedSubject.name}
+                    </div>
                   </div>
-                  <div className="text-slate-300 dark:text-slate-700 text-2xl font-light">×</div>
+                  <div className="text-slate-300 dark:text-slate-700 text-2xl font-light">
+                    ×
+                  </div>
                   <div className="text-center">
                     <img
                       src={selectedCandidate.photoUrl}
                       className="w-20 h-20 rounded-full object-cover border-2 border-pink-500 mb-2"
                     />
-                    <div className="font-bold text-sm">{selectedCandidate.name}</div>
+                    <div className="font-bold text-sm">
+                      {selectedCandidate.name}
+                    </div>
                   </div>
                 </div>
 
@@ -656,7 +710,9 @@ export default function ManualMatchingConsole() {
                             key={i}
                             className="inline-flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-sm text-slate-600 dark:text-slate-300"
                           >
-                            <span className="opacity-50">{getCategoryIcon(work.category)}</span>
+                            <span className="opacity-50">
+                              {getCategoryIcon(work.category)}
+                            </span>
                             {work.title}
                           </span>
                         ))}
@@ -674,7 +730,9 @@ export default function ManualMatchingConsole() {
                             key={i}
                             className="inline-flex items-center gap-1.5 px-2 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-sm text-slate-600 dark:text-slate-300"
                           >
-                            <span className="opacity-50">{getCategoryIcon(work.category)}</span>
+                            <span className="opacity-50">
+                              {getCategoryIcon(work.category)}
+                            </span>
                             {work.title}
                           </span>
                         ))}
@@ -692,7 +750,9 @@ export default function ManualMatchingConsole() {
                   <div className="flex flex-col gap-6">
                     {/* Matched Values */}
                     <div className="flex items-start">
-                      <div className="w-24 text-xs font-bold text-green-600 pt-2">一致</div>
+                      <div className="w-24 text-xs font-bold text-green-600 pt-2">
+                        一致
+                      </div>
                       <div className="flex-1 flex flex-wrap gap-2">
                         {comparisonData.commonValues.length > 0 ? (
                           comparisonData.commonValues.map((val, i) => (
@@ -754,12 +814,20 @@ export default function ManualMatchingConsole() {
                   </h3>
                   <div className="grid grid-cols-2 gap-4 text-sm bg-white dark:bg-slate-900 p-4 border rounded-lg">
                     <div className="text-right border-r pr-4">
-                      <div className="text-slate-500">{selectedSubject.occupation}</div>
-                      <div className="text-slate-500">{selectedSubject.income}</div>
+                      <div className="text-slate-500">
+                        {selectedSubject.occupation}
+                      </div>
+                      <div className="text-slate-500">
+                        {selectedSubject.income}
+                      </div>
                     </div>
                     <div className="pl-4">
-                      <div className="text-slate-500">{selectedCandidate.occupation}</div>
-                      <div className="text-slate-500">{selectedCandidate.income}</div>
+                      <div className="text-slate-500">
+                        {selectedCandidate.occupation}
+                      </div>
+                      <div className="text-slate-500">
+                        {selectedCandidate.income}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -783,9 +851,13 @@ export default function ManualMatchingConsole() {
             <div className="p-6 space-y-4">
               <p className="text-slate-600 dark:text-slate-300">
                 共通の作品{" "}
-                <strong className="text-indigo-600">{comparisonData?.commonWorks.length}件</strong>
+                <strong className="text-indigo-600">
+                  {comparisonData?.commonWorks.length}件
+                </strong>
                 、 一致する価値観{" "}
-                <strong className="text-green-600">{comparisonData?.commonValues.length}個</strong>
+                <strong className="text-green-600">
+                  {comparisonData?.commonValues.length}個
+                </strong>
                 <br />
                 このペアリングを確定しますか？
               </p>

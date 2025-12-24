@@ -33,7 +33,9 @@ describe("ProductList UI", () => {
     render(<ProductList {...mockProps} />);
     expect(screen.getByText("星月夜")).toBeInTheDocument();
     expect(screen.getByText("モナ・リザ")).toBeInTheDocument();
-    expect(screen.getByText("フィンセント・ファン・ゴッホ")).toBeInTheDocument();
+    expect(
+      screen.getByText("フィンセント・ファン・ゴッホ")
+    ).toBeInTheDocument();
   });
 
   it("表示モード変更ハンドラが呼ばれること", () => {

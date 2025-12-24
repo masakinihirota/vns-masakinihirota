@@ -100,7 +100,9 @@ const UserCard = ({
         />
         <div className="flex-1 min-w-0">
           <div className="flex justify-between items-start">
-            <h4 className="font-bold text-slate-900 dark:text-slate-100 truncate">{user.name}</h4>
+            <h4 className="font-bold text-slate-900 dark:text-slate-100 truncate">
+              {user.name}
+            </h4>
             {user.compatibilityScore && (
               <span
                 className={`text-xs font-bold ${user.compatibilityScore > 90 ? "text-green-600" : "text-slate-500"}`}
@@ -124,7 +126,9 @@ const UserCard = ({
   );
 };
 
-export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (props) => {
+export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (
+  props
+) => {
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300 bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       {/* Header */}
@@ -133,7 +137,9 @@ export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (prop
           <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center text-white font-bold">
             M
           </div>
-          <h1 className="text-lg font-bold tracking-tight">Manual Matching Console</h1>
+          <h1 className="text-lg font-bold tracking-tight">
+            Manual Matching Console
+          </h1>
           <Badge variant="secondary" className="ml-2">
             Deep Match Mode
           </Badge>
@@ -190,7 +196,10 @@ export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (prop
               <Button variant="outline" size="sm" className="flex-1 text-xs">
                 全表示
               </Button>
-              <Button size="sm" className="flex-1 text-xs bg-indigo-600 hover:bg-indigo-700">
+              <Button
+                size="sm"
+                className="flex-1 text-xs bg-indigo-600 hover:bg-indigo-700"
+              >
                 作品一致
               </Button>
             </div>
@@ -219,7 +228,9 @@ export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (prop
 
         {/* Column 3: Value & Work Comparison */}
         <section className="flex-1 flex flex-col bg-white dark:bg-slate-950 overflow-y-auto">
-          {!props.selectedSubject || !props.selectedCandidate || !props.comparisonData ? (
+          {!props.selectedSubject ||
+          !props.selectedCandidate ||
+          !props.comparisonData ? (
             <div className="flex-1 flex flex-col items-center justify-center text-slate-400 opacity-60">
               <div className="w-24 h-24 bg-slate-100 dark:bg-slate-900 rounded-full flex items-center justify-center mb-4">
                 <Sparkles className="w-10 h-10 text-slate-300 dark:text-slate-700" />
@@ -243,7 +254,9 @@ export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (prop
                   </div>
                   <div className="h-8 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
                   <div className="flex flex-col">
-                    <span className="text-xs text-slate-500">一致した価値観</span>
+                    <span className="text-xs text-slate-500">
+                      一致した価値観
+                    </span>
                     <span className="text-lg font-bold text-green-600">
                       {props.comparisonData.commonValues.length}{" "}
                       <span className="text-xs text-slate-400">個</span>
@@ -271,9 +284,13 @@ export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (prop
                       height={80}
                       unoptimized
                     />
-                    <div className="font-bold text-sm">{props.selectedSubject.name}</div>
+                    <div className="font-bold text-sm">
+                      {props.selectedSubject.name}
+                    </div>
                   </div>
-                  <div className="text-slate-300 dark:text-slate-700 text-2xl font-light">×</div>
+                  <div className="text-slate-300 dark:text-slate-700 text-2xl font-light">
+                    ×
+                  </div>
                   <div className="text-center">
                     <Image
                       src={props.selectedCandidate.photoUrl}
@@ -283,7 +300,9 @@ export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (prop
                       height={80}
                       unoptimized
                     />
-                    <div className="font-bold text-sm">{props.selectedCandidate.name}</div>
+                    <div className="font-bold text-sm">
+                      {props.selectedCandidate.name}
+                    </div>
                   </div>
                 </div>
 
@@ -330,7 +349,9 @@ export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (prop
                   <div className="flex flex-col gap-6">
                     {/* Matched Values */}
                     <div className="flex items-start">
-                      <div className="w-24 text-xs font-bold text-green-600 pt-2">一致</div>
+                      <div className="w-24 text-xs font-bold text-green-600 pt-2">
+                        一致
+                      </div>
                       <div className="flex-1 flex flex-wrap gap-2">
                         {props.comparisonData.commonValues.length > 0 ? (
                           props.comparisonData.commonValues.map((val, i) => (
@@ -357,59 +378,61 @@ export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (prop
       </main>
 
       {/* Match Modal */}
-      {props.isMatchModalOpen && props.selectedSubject && props.selectedCandidate && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-          <Card className="w-full max-w-lg animate-in fade-in zoom-in duration-200">
-            <div className="p-6 border-b border-slate-200 dark:border-slate-800">
-              <h2 className="text-xl font-bold flex items-center gap-2">
-                <CheckCircle2 className="text-indigo-600" />
-                マッチングの確定
-              </h2>
-            </div>
-            <div className="p-6 space-y-4">
-              <p className="text-slate-600 dark:text-slate-300">
-                共通の作品{" "}
-                <strong className="text-indigo-600">
-                  {props.comparisonData?.commonWorks.length}件
-                </strong>
-                、 一致する価値観{" "}
-                <strong className="text-green-600">
-                  {props.comparisonData?.commonValues.length}個
-                </strong>
-                <br />
-                このペアリングを確定しますか？
-              </p>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
-                  コンシェルジュコメント
-                </label>
-                <textarea
-                  className="w-full p-3 border border-slate-300 dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 focus:ring-2 focus:ring-indigo-500 outline-none text-sm h-24 resize-none"
-                  placeholder="「〇〇（作品名）の話で盛り上がれそうです」など..."
-                  value={props.matchComment}
-                  onChange={(e) => props.onMatchCommentChange(e.target.value)}
-                />
+      {props.isMatchModalOpen &&
+        props.selectedSubject &&
+        props.selectedCandidate && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+            <Card className="w-full max-w-lg animate-in fade-in zoom-in duration-200">
+              <div className="p-6 border-b border-slate-200 dark:border-slate-800">
+                <h2 className="text-xl font-bold flex items-center gap-2">
+                  <CheckCircle2 className="text-indigo-600" />
+                  マッチングの確定
+                </h2>
               </div>
-            </div>
-            <div className="p-4 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
-              <Button
-                variant="outline"
-                onClick={props.onCloseMatchModal}
-                disabled={props.isProcessingMatch}
-              >
-                キャンセル
-              </Button>
-              <Button
-                onClick={props.onExecuteMatch}
-                disabled={props.isProcessingMatch}
-                className="bg-indigo-600 hover:bg-indigo-700"
-              >
-                {props.isProcessingMatch ? "処理中..." : "確定する"}
-              </Button>
-            </div>
-          </Card>
-        </div>
-      )}
+              <div className="p-6 space-y-4">
+                <p className="text-slate-600 dark:text-slate-300">
+                  共通の作品{" "}
+                  <strong className="text-indigo-600">
+                    {props.comparisonData?.commonWorks.length}件
+                  </strong>
+                  、 一致する価値観{" "}
+                  <strong className="text-green-600">
+                    {props.comparisonData?.commonValues.length}個
+                  </strong>
+                  <br />
+                  このペアリングを確定しますか？
+                </p>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                    コンシェルジュコメント
+                  </label>
+                  <textarea
+                    className="w-full p-3 border border-slate-300 dark:border-slate-700 rounded-md bg-white dark:bg-slate-950 focus:ring-2 focus:ring-indigo-500 outline-none text-sm h-24 resize-none"
+                    placeholder="「〇〇（作品名）の話で盛り上がれそうです」など..."
+                    value={props.matchComment}
+                    onChange={(e) => props.onMatchCommentChange(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="p-4 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
+                <Button
+                  variant="outline"
+                  onClick={props.onCloseMatchModal}
+                  disabled={props.isProcessingMatch}
+                >
+                  キャンセル
+                </Button>
+                <Button
+                  onClick={props.onExecuteMatch}
+                  disabled={props.isProcessingMatch}
+                  className="bg-indigo-600 hover:bg-indigo-700"
+                >
+                  {props.isProcessingMatch ? "処理中..." : "確定する"}
+                </Button>
+              </div>
+            </Card>
+          </div>
+        )}
     </div>
   );
 };

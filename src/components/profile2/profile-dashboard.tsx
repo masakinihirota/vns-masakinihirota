@@ -94,8 +94,10 @@ const Button = ({
     "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
   const variants: any = {
     default: "bg-blue-600 text-white hover:bg-blue-700 shadow-sm",
-    destructive: "bg-red-900 text-red-100 hover:bg-red-800 border border-red-800",
-    outline: "border border-slate-700 bg-transparent hover:bg-slate-800 text-slate-100",
+    destructive:
+      "bg-red-900 text-red-100 hover:bg-red-800 border border-red-800",
+    outline:
+      "border border-slate-700 bg-transparent hover:bg-slate-800 text-slate-100",
     secondary: "bg-slate-800 text-slate-100 hover:bg-slate-700",
     ghost: "hover:bg-slate-800 text-slate-400 hover:text-slate-100",
     link: "text-blue-500 underline-offset-4 hover:underline",
@@ -108,7 +110,10 @@ const Button = ({
   };
 
   return (
-    <button className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`} {...props}>
+    <button
+      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      {...props}
+    >
       {children}
     </button>
   );
@@ -126,11 +131,17 @@ const Badge = ({ children, variant = "default", className = "" }: any) => {
   const base =
     "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2";
   const variants: any = {
-    default: "border-transparent bg-blue-900 text-blue-100 hover:bg-blue-900/80",
-    secondary: "border-transparent bg-slate-800 text-slate-100 hover:bg-slate-800/80",
+    default:
+      "border-transparent bg-blue-900 text-blue-100 hover:bg-blue-900/80",
+    secondary:
+      "border-transparent bg-slate-800 text-slate-100 hover:bg-slate-800/80",
     outline: "text-slate-100",
   };
-  return <div className={`${base} ${variants[variant]} ${className}`}>{children}</div>;
+  return (
+    <div className={`${base} ${variants[variant]} ${className}`}>
+      {children}
+    </div>
+  );
 };
 
 const Input = ({ className = "", ...props }: any) => (
@@ -150,7 +161,14 @@ const Label = ({ children, className = "", ...props }: any) => (
 );
 
 // Custom Modal (Dialog substitute)
-const Modal = ({ isOpen, onClose, title, description, children, footer }: any) => {
+const Modal = ({
+  isOpen,
+  onClose,
+  title,
+  description,
+  children,
+  footer,
+}: any) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
@@ -159,7 +177,9 @@ const Modal = ({ isOpen, onClose, title, description, children, footer }: any) =
           <h2 className="text-lg font-semibold leading-none tracking-tight text-slate-100">
             {title}
           </h2>
-          {description && <p className="text-sm text-slate-400">{description}</p>}
+          {description && (
+            <p className="text-sm text-slate-400">{description}</p>
+          )}
         </div>
         <button
           onClick={onClose}
@@ -206,7 +226,9 @@ const ActionMenu = ({ onEdit, onDuplicate, onDelete }: any) => {
 
       {isOpen && (
         <div className="absolute right-0 top-8 z-10 w-48 overflow-hidden rounded-md border border-slate-800 bg-slate-900 p-1 shadow-md animate-in fade-in zoom-in-95 duration-100">
-          <div className="px-2 py-1.5 text-xs font-semibold text-slate-400">Actions</div>
+          <div className="px-2 py-1.5 text-xs font-semibold text-slate-400">
+            Actions
+          </div>
           <button
             onClick={onEdit}
             className="relative flex w-full cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-slate-800 hover:text-slate-100 text-slate-300"
@@ -311,7 +333,7 @@ export default function ProfileDashboard() {
   const filteredProfiles = profiles.filter(
     (p) =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.handle.toLowerCase().includes(searchQuery.toLowerCase()),
+      p.handle.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -390,7 +412,9 @@ export default function ProfileDashboard() {
                       <h3 className="font-bold text-slate-100 leading-tight group-hover:text-blue-400 transition-colors">
                         {profile.name}
                       </h3>
-                      <p className="text-xs font-mono text-slate-500 mt-1">{profile.handle}</p>
+                      <p className="text-xs font-mono text-slate-500 mt-1">
+                        {profile.handle}
+                      </p>
                     </div>
                   </div>
 
@@ -416,7 +440,9 @@ export default function ProfileDashboard() {
                 </div>
 
                 {/* Bio */}
-                <p className="text-sm text-slate-400 line-clamp-3 leading-relaxed">{profile.bio}</p>
+                <p className="text-sm text-slate-400 line-clamp-3 leading-relaxed">
+                  {profile.bio}
+                </p>
               </div>
 
               {/* Footer */}

@@ -2,14 +2,20 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { MandalaChart } from "./mandala-chart";
 
 export function MandalaChartContainer() {
   const [chartData, setChartData] = useState<string[][]>(() =>
     Array(9)
       .fill(0)
-      .map(() => Array(9).fill("")),
+      .map(() => Array(9).fill(""))
   );
 
   // Example data for demonstration
@@ -44,7 +50,7 @@ export function MandalaChartContainer() {
     setChartData(
       Array(9)
         .fill(0)
-        .map(() => Array(9).fill("")),
+        .map(() => Array(9).fill(""))
     );
   };
 

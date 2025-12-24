@@ -19,7 +19,10 @@ import { cn } from "@/lib/utils";
  * 匿名ログインフォームコンポーネント
  * ユーザー情報なしで一時的なアクセスを提供します
  */
-export function AnonymousLoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+export function AnonymousLoginForm({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -78,7 +81,11 @@ export function AnonymousLoginForm({ className, ...props }: React.ComponentProps
             {features.map((feature, index) => (
               <li key={index} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
-                <span className={feature.isNegative ? "text-red-500" : "text-green-500"}>
+                <span
+                  className={
+                    feature.isNegative ? "text-red-500" : "text-green-500"
+                  }
+                >
                   {feature.value}
                 </span>
               </li>

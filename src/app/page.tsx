@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 type Route = {
   title: string;
@@ -214,13 +220,19 @@ export default function Home() {
             VNS Development Portal
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl">
-            Central hub for UI/UX verification, new feature testing, and page navigation.
+            Central hub for UI/UX verification, new feature testing, and page
+            navigation.
           </p>
           <div className="flex gap-4">
             <Button asChild size="lg" className="rounded-full px-8">
               <Link href="/login">Log in / Auth</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="rounded-full px-8">
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="rounded-full px-8"
+            >
               <Link
                 href="https://github.com/masakinihirota/vns-masakinihirota"
                 target="_blank"

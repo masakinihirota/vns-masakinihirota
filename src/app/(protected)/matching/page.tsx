@@ -1,7 +1,13 @@
 import { Sparkles, Users } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export const metadata = {
   title: "Matching Selection | VNS masakinihirota",
@@ -34,7 +40,8 @@ export default function MatchingSelectionPage() {
           </CardHeader>
           <CardContent className="text-center pt-4 pb-8">
             <p className="mb-6 text-sm text-muted-foreground/80">
-              Let the algorithm find your soul echoes. Best for effortless discovery.
+              Let the algorithm find your soul echoes. Best for effortless
+              discovery.
             </p>
             <Button asChild size="lg" className="w-full text-lg">
               <Link href="/matching/auto">Start Auto Match</Link>
@@ -55,9 +62,15 @@ export default function MatchingSelectionPage() {
           </CardHeader>
           <CardContent className="text-center pt-4 pb-8">
             <p className="mb-6 text-sm text-muted-foreground/80">
-              Browse profiles and select who you want to observe. Best for curated connections.
+              Browse profiles and select who you want to observe. Best for
+              curated connections.
             </p>
-            <Button asChild size="lg" variant="secondary" className="w-full text-lg">
+            <Button
+              asChild
+              size="lg"
+              variant="secondary"
+              className="w-full text-lg"
+            >
               <Link href="/matching/manual">Browse Profiles</Link>
             </Button>
           </CardContent>
