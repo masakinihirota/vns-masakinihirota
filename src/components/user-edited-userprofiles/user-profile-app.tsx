@@ -450,9 +450,10 @@ const CompactSlotItem = ({
         dark:border-slate-800
         ${isEquipped ? "bg-white dark:bg-slate-900" : ""}
         ${onClick ? "cursor-pointer" : ""}
-        ${isRegistered
-          ? "bg-blue-50 dark:bg-blue-900/20 text-slate-600 dark:text-slate-300"
-          : "hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300"
+        ${
+          isRegistered
+            ? "bg-blue-50 dark:bg-blue-900/20 text-slate-600 dark:text-slate-300"
+            : "hover:bg-slate-50 dark:hover:bg-slate-800/50 text-slate-700 dark:text-slate-300"
         }
       `}
     >
@@ -666,9 +667,10 @@ const ProfileListSidebar = ({ profiles, activeId, onSelect }: any) => (
           onClick={() => onSelect(p.id)}
           className={`
             flex items-center gap-2 p-2 rounded-md cursor-pointer border transition-colors
-            ${p.id === activeId
-              ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800"
-              : "bg-white dark:bg-slate-900 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800"
+            ${
+              p.id === activeId
+                ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800"
+                : "bg-white dark:bg-slate-900 border-transparent hover:bg-slate-100 dark:hover:bg-slate-800"
             }
           `}
         >
@@ -898,9 +900,10 @@ const InventorySidebar = ({
         key={pkg.id}
         className={`
           border rounded-lg overflow-hidden shadow-sm transition-all
-          ${registered
-            ? "bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800"
-            : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700"
+          ${
+            registered
+              ? "bg-blue-50/50 dark:bg-blue-900/10 border-blue-200 dark:border-blue-800"
+              : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 hover:border-blue-300 dark:hover:border-blue-700"
           }
         `}
       >

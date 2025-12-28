@@ -1,30 +1,13 @@
 ---
 description: Review DBスキーマ
-tools:
-  [
-    "serena/*",
-    "context7/*",
-    "Postgres(LOCAL-supabase)/*",
-    "supabase/execute_sql",
-    "supabase/list_tables",
-    "supabase/search_docs",
-    "supabase/generate_typescript_types",
-    "sequentialthinking/*",
-    "fetch",
-    "runCommands",
-    "runSubagent",
-    "changes",
-    "problems",
-  ]
 ---
 
 # Supabase DBレビュー（簡易版）
 
-現在利用しているSupabaseのDB全体を対象に、Drizzle ORMのスキーマとの整合性を確認します。
+現在利用しているSupabaseのDBを対象にレビューします。
 
 ## 事前準備
 
-- Drizzleスキーマ: `drizzle/schema` 配下
 - Supabase実スキーマ: Postgres(LOCAL-supabase)でのクエリ、`supabase/` 配下ツール、必要なら`supabase/migrations`
 - 追加情報: serena系ツールで差分・問題を確認
 
@@ -39,8 +22,7 @@ tools:
 
 ## 差異・未使用の洗い出し
 
-- Supabaseに存在するがDrizzleで管理していない要素
-- Drizzleで定義済みだがSupabaseで欠落している要素
+- Supabaseに存在するが設計書にない要素、またはその逆。
 - 参照実績が確認できないテーブル/カラムと、その調査結果
 - 追加が必要と思われる制約・コメント・インデックス・RLS/RBAC
 - マイグレーションの抜け漏れや適用順の不整合が疑われる箇所

@@ -1,5 +1,5 @@
 ---
-description:
+description: formatとlintツールでのチェック 最後にbuildが通るかをチェックする
 ---
 
 pnpm run lint:fast
