@@ -14,6 +14,7 @@ import {
   CULTURAL_SPHERES,
   GENERATIONS,
   LANGUAGE_OPTIONS,
+  CORE_ACTIVITY_HOURS,
 } from "./onboarding.logic";
 
 export function Onboarding() {
@@ -347,11 +348,111 @@ export function Onboarding() {
                 </div>
               </div>
 
-              {/* Step 5: Agreements */}
-              <div className="space-y-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+              {/* Step 5: Activity Settings */}
+              <div className="space-y-6">
                 <label className="flex items-center gap-2 text-slate-800 dark:text-slate-200 leading-none font-medium text-lg">
                   <span className="bg-slate-900 dark:bg-slate-50 text-white dark:text-slate-900 text-xs px-2 py-1 rounded-full">
                     Step 5
+                  </span>
+                  活動設定 (Activity Settings)
+                </label>
+
+                {/* Core Activity Time */}
+                <div className="space-y-2 pl-2">
+                  <label className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                    コア活動時間 (Core Activity Time)
+                  </label>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-2">
+                    主に活動する時間帯（UTC基準）を設定してください。マッチングの参考にされます。
+                  </p>
+                  <div className="flex items-center gap-3">
+                    <div className="relative w-32">
+                      <select
+                        value={state.coreActivityStart}
+                        onChange={(e) =>
+                          actions.setCoreActivityStart(e.target.value)
+                        }
+                        className="appearance-none w-full h-10 px-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-yellow-600 font-mono text-center"
+                      >
+                        {CORE_ACTIVITY_HOURS.map((t) => (
+                          <option key={t} value={t}>
+                            {t}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
+                    </div>
+                    <span className="text-slate-400">〜</span>
+                    <div className="relative w-32">
+                      <select
+                        value={state.coreActivityEnd}
+                        onChange={(e) =>
+                          actions.setCoreActivityEnd(e.target.value)
+                        }
+                        className="appearance-none w-full h-10 px-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-800 dark:text-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 dark:focus:ring-yellow-600 font-mono text-center"
+                      >
+                        {CORE_ACTIVITY_HOURS.map((t) => (
+                          <option key={t} value={t}>
+                            {t}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 dark:text-slate-500 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* AI Translation */}
+                <div className="space-y-2 pl-2">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <label className="text-sm font-semibold text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                        リアルタイムAI翻訳 (AI Translation)
+                        <span className="bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-[10px] px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">
+                          Recommended
+                        </span>
+                      </label>
+                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-lg">
+                        有効にすると、異なる言語圏のユーザーとの会話がリアルタイムで翻訳されます。
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      role="switch"
+                      aria-checked={state.useAiTranslation}
+                      onClick={() =>
+                        actions.setUseAiTranslation(!state.useAiTranslation)
+                      }
+                      className={`
+                        relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2
+                        ${
+                          state.useAiTranslation
+                            ? "bg-slate-900 dark:bg-slate-100"
+                            : "bg-slate-200 dark:bg-slate-700"
+                        }
+                      `}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={`
+                          pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white dark:bg-slate-900 shadow ring-0 transition duration-200 ease-in-out
+                          ${
+                            state.useAiTranslation
+                              ? "translate-x-5"
+                              : "translate-x-0"
+                          }
+                        `}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Step 6: Agreements */}
+              <div className="space-y-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+                <label className="flex items-center gap-2 text-slate-800 dark:text-slate-200 leading-none font-medium text-lg">
+                  <span className="bg-slate-900 dark:bg-slate-50 text-white dark:text-slate-900 text-xs px-2 py-1 rounded-full">
+                    Step 6
                   </span>
                   確認事項 (Confirmation)
                 </label>

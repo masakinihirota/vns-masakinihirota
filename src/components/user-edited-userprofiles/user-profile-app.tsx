@@ -140,7 +140,7 @@ const ITEMS: Record<string, Slot> = {
     id: "w-m5",
     type: "work",
     category: "漫画",
-    title: "SPY×FAMILY",
+    title: "SPYxFAMILY",
     author: "遠藤 達哉",
     tier: 3,
   },

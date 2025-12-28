@@ -148,6 +148,11 @@ export interface Agreements {
   honesty: boolean;
 }
 
+export const CORE_ACTIVITY_HOURS = Array.from(
+  { length: 24 },
+  (_, i) => i.toString().padStart(2, "0") + ":00"
+);
+
 export const useOnboarding = () => {
   const [selectedArea, setSelectedArea] = useState<string | null>(null);
   const [culturalSphere, setCulturalSphere] = useState<string>("");
@@ -160,6 +165,11 @@ export const useOnboarding = () => {
   // 言語設定用のState
   const [nativeLanguage, setNativeLanguage] = useState<string>("");
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([]);
+
+  // 活動設定用のState
+  const [coreActivityStart, setCoreActivityStart] = useState<string>("09:00");
+  const [coreActivityEnd, setCoreActivityEnd] = useState<string>("18:00");
+  const [useAiTranslation, setUseAiTranslation] = useState<boolean>(true);
 
   // 同意事項用のState
   const [isAdult, setIsAdult] = useState(false);
@@ -199,6 +209,9 @@ export const useOnboarding = () => {
       selectedRegion,
       nativeLanguage,
       availableLanguages,
+      coreActivityStart,
+      coreActivityEnd,
+      useAiTranslation,
       isAdult,
       agreements,
     }); */
@@ -221,6 +234,9 @@ export const useOnboarding = () => {
       selectedRegion,
       nativeLanguage,
       availableLanguages,
+      coreActivityStart,
+      coreActivityEnd,
+      useAiTranslation,
       isAdult,
       agreements,
       currentDetail,
@@ -233,6 +249,9 @@ export const useOnboarding = () => {
       setSelectedCountry,
       setSelectedRegion,
       setNativeLanguage,
+      setCoreActivityStart,
+      setCoreActivityEnd,
+      setUseAiTranslation,
       setIsAdult,
       toggleAvailableLanguage,
       toggleAgreement,
