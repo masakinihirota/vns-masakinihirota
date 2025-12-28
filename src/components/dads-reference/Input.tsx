@@ -8,11 +8,11 @@
  * DADSのスタイルトークンを適用してください。
  */
 
-import { type ComponentProps, forwardRef } from 'react';
+import { type ComponentProps, forwardRef } from "react";
 
-export type InputBlockSize = 'lg' | 'md' | 'sm';
+export type InputBlockSize = "lg" | "md" | "sm";
 
-export type InputProps = ComponentProps<'input'> & {
+export type InputProps = ComponentProps<"input"> & {
   /** エラー状態かどうか */
   isError?: boolean;
   /** 入力フィールドの高さ */
@@ -42,7 +42,7 @@ export type InputProps = ComponentProps<'input'> & {
  * ```
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { className, readOnly, isError, blockSize = 'lg', ...rest } = props;
+  const { className, readOnly, isError, blockSize = "lg", ...rest } = props;
 
   return (
     <input
@@ -54,15 +54,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         focus:outline focus:outline-4 focus:outline-black focus:outline-offset-[calc(2/16*1rem)] focus:ring-[calc(2/16*1rem)] focus:ring-accent-yellow
         read-only:border-dashed
         aria-disabled:border-solid-gray-300 aria-disabled:!border-solid aria-disabled:bg-solid-gray-50 aria-disabled:text-solid-gray-420 aria-disabled:pointer-events-none aria-disabled:forced-colors:text-[GrayText] aria-disabled:forced-colors:border-[GrayText]
-        ${className ?? ''}
+        ${className ?? ""}
       `}
       aria-invalid={isError || undefined}
       data-size={blockSize}
-      readOnly={props['aria-disabled'] ? true : readOnly}
+      readOnly={props["aria-disabled"] ? true : readOnly}
       ref={ref}
       {...rest}
     />
   );
 });
 
-Input.displayName = 'Input';
+Input.displayName = "Input";

@@ -8,11 +8,11 @@
  * DADSのスタイルトークンを適用してください。
  */
 
-import { type ComponentProps, forwardRef } from 'react';
+import { type ComponentProps, forwardRef } from "react";
 
-export type RadioSize = 'sm' | 'md' | 'lg';
+export type RadioSize = "sm" | "md" | "lg";
 
-export type RadioProps = Omit<ComponentProps<'input'>, 'size'> & {
+export type RadioProps = Omit<ComponentProps<"input">, "size"> & {
   /** ラジオボタンのサイズ */
   size?: RadioSize;
   /** エラー状態かどうか */
@@ -47,9 +47,11 @@ export type RadioProps = Omit<ComponentProps<'input'>, 'size'> & {
  * ```
  */
 export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
-  const { children, isError, onClick, size = 'sm', ...rest } = props;
+  const { children, isError, onClick, size = "sm", ...rest } = props;
 
-  const handleDisabled = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+  const handleDisabled = (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>
+  ) => {
     e.preventDefault();
   };
 
@@ -77,7 +79,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
         `}
         ref={ref}
         type="radio"
-        onClick={props['aria-disabled'] ? handleDisabled : onClick}
+        onClick={props["aria-disabled"] ? handleDisabled : onClick}
         data-size={size}
         data-error={isError || null}
         {...rest}
@@ -103,4 +105,4 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   );
 });
 
-Radio.displayName = 'Radio';
+Radio.displayName = "Radio";

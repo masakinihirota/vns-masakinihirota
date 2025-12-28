@@ -8,11 +8,11 @@
  * DADSのスタイルトークンを適用してください。
  */
 
-import { type ComponentProps, forwardRef } from 'react';
+import { type ComponentProps, forwardRef } from "react";
 
-export type CheckboxSize = 'sm' | 'md' | 'lg';
+export type CheckboxSize = "sm" | "md" | "lg";
 
-export type CheckboxProps = Omit<ComponentProps<'input'>, 'size'> & {
+export type CheckboxProps = Omit<ComponentProps<"input">, "size"> & {
   /** チェックボックスのサイズ */
   size?: CheckboxSize;
   /** エラー状態かどうか */
@@ -44,24 +44,27 @@ export type CheckboxProps = Omit<ComponentProps<'input'>, 'size'> & {
  * </fieldset>
  * ```
  */
-export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
-  const { children, isError, onClick, size = 'sm', ...rest } = props;
+export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
+  (props, ref) => {
+    const { children, isError, onClick, size = "sm", ...rest } = props;
 
-  const handleDisabled = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-    e.preventDefault();
-  };
+    const handleDisabled = (
+      e: React.MouseEvent<HTMLInputElement, MouseEvent>
+    ) => {
+      e.preventDefault();
+    };
 
-  const checkbox = (
-    <span
-      className={`
+    const checkbox = (
+      <span
+        className={`
         flex items-center justify-center shrink-0 rounded-[calc(1/8*100%)]
         data-[size=sm]:size-6 data-[size=md]:size-8 data-[size=lg]:size-11
         has-[input:hover:not(:focus):not([aria-disabled="true"])]:bg-solid-gray-420
       `}
-      data-size={size}
-    >
-      <input
-        className={`
+        data-size={size}
+      >
+        <input
+          className={`
           peer appearance-none cursor-pointer rounded-[calc(1/8*100%)] border-2 border-solid-gray-600 bg-white
           before:hidden before:h-[calc(12/16*1rem)] before:w-[calc(6/16*1rem)] before:-translate-y-[calc(2/16*1rem)] before:rotate-45 before:border-b-[calc(3/16*1rem)] before:border-r-[calc(3/16*1rem)] before:border-white
           checked:border-blue-900 checked:bg-blue-900 checked:before:block
@@ -72,32 +75,33 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref)
           aria-disabled:!border-solid-gray-300 aria-disabled:!bg-solid-gray-50 aria-disabled:checked:!bg-solid-gray-300 aria-disabled:indeterminate:!bg-solid-gray-300 aria-disabled:before:border-solid-gray-50
           forced-colors:!border-[ButtonText] forced-colors:checked:!bg-[Highlight] forced-colors:checked:!border-[Highlight] forced-colors:indeterminate:!bg-[Highlight] forced-colors:indeterminate:!border-[Highlight] forced-colors:before:!bg-[HighlightText] forced-colors:aria-disabled:!border-[GrayText] forced-colors:aria-disabled:checked:!bg-[GrayText]
         `}
-        onClick={props['aria-disabled'] ? handleDisabled : onClick}
-        ref={ref}
-        type="checkbox"
-        data-size={size}
-        data-error={isError || null}
-        {...rest}
-      />
-    </span>
-  );
+          onClick={props["aria-disabled"] ? handleDisabled : onClick}
+          ref={ref}
+          type="checkbox"
+          data-size={size}
+          data-error={isError || null}
+          {...rest}
+        />
+      </span>
+    );
 
-  return children ? (
-    <label
-      className="flex w-fit items-start py-2 data-[size=sm]:gap-1 data-[size=md]:gap-2 data-[size=lg]:gap-2"
-      data-size={size}
-    >
-      {checkbox}
-      <span
-        className="text-solid-gray-800 data-[size=sm]:pt-px data-[size=sm]:text-dns-16N-130 data-[size=md]:pt-1 data-[size=md]:text-dns-16N-130 data-[size=lg]:pt-2.5 data-[size=lg]:text-dns-17N-130"
+    return children ? (
+      <label
+        className="flex w-fit items-start py-2 data-[size=sm]:gap-1 data-[size=md]:gap-2 data-[size=lg]:gap-2"
         data-size={size}
       >
-        {children}
-      </span>
-    </label>
-  ) : (
-    checkbox
-  );
-});
+        {checkbox}
+        <span
+          className="text-solid-gray-800 data-[size=sm]:pt-px data-[size=sm]:text-dns-16N-130 data-[size=md]:pt-1 data-[size=md]:text-dns-16N-130 data-[size=lg]:pt-2.5 data-[size=lg]:text-dns-17N-130"
+          data-size={size}
+        >
+          {children}
+        </span>
+      </label>
+    ) : (
+      checkbox
+    );
+  }
+);
 
-Checkbox.displayName = 'Checkbox';
+Checkbox.displayName = "Checkbox";

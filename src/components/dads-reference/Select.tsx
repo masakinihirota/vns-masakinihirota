@@ -8,11 +8,11 @@
  * DADSのスタイルトークンを適用してください。
  */
 
-import { type ComponentProps, forwardRef } from 'react';
+import { type ComponentProps, forwardRef } from "react";
 
-export type SelectBlockSize = 'lg' | 'md' | 'sm';
+export type SelectBlockSize = "lg" | "md" | "sm";
 
-export type SelectProps = ComponentProps<'select'> & {
+export type SelectProps = ComponentProps<"select"> & {
   /** エラー状態かどうか */
   isError?: boolean;
   /** セレクトボックスの高さ */
@@ -43,12 +43,13 @@ export type SelectProps = ComponentProps<'select'> & {
  * </Select>
  * ```
  */
-export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-  const { className, isError, blockSize = 'lg', children, ...rest } = props;
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(
+  (props, ref) => {
+    const { className, isError, blockSize = "lg", children, ...rest } = props;
 
-  return (
-    <select
-      className={`
+    return (
+      <select
+        className={`
         w-full appearance-none rounded-8 border bg-white px-4 py-3 pr-10 border-solid-gray-600 text-oln-16N-100 text-solid-gray-800
         bg-no-repeat bg-[right_1rem_center]
         bg-[url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cpath d='M12 15.375L6 9.375L7.4 7.975L12 12.575L16.6 7.975L18 9.375L12 15.375Z' fill='%231A1A1C'/%3E%3C/svg%3E")]
@@ -57,16 +58,17 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) =>
         aria-[invalid=true]:border-error-1 aria-[invalid=true]:hover:border-red-1000
         focus:outline focus:outline-4 focus:outline-black focus:outline-offset-[calc(2/16*1rem)] focus:ring-[calc(2/16*1rem)] focus:ring-accent-yellow
         aria-disabled:border-solid-gray-300 aria-disabled:bg-solid-gray-50 aria-disabled:text-solid-gray-420 aria-disabled:pointer-events-none aria-disabled:forced-colors:text-[GrayText] aria-disabled:forced-colors:border-[GrayText]
-        ${className ?? ''}
+        ${className ?? ""}
       `}
-      aria-invalid={isError || undefined}
-      data-size={blockSize}
-      ref={ref}
-      {...rest}
-    >
-      {children}
-    </select>
-  );
-});
+        aria-invalid={isError || undefined}
+        data-size={blockSize}
+        ref={ref}
+        {...rest}
+      >
+        {children}
+      </select>
+    );
+  }
+);
 
-Select.displayName = 'Select';
+Select.displayName = "Select";

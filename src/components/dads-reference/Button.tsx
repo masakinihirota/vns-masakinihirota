@@ -8,13 +8,13 @@
  * DADSのスタイルトークンを適用してください。
  */
 
-import { type ComponentProps, forwardRef } from 'react';
+import { type ComponentProps, forwardRef } from "react";
 
 // Slot コンポーネントは @radix-ui/react-slot から import
 // import { Slot } from '@radix-ui/react-slot';
 
-export type ButtonVariant = 'solid-fill' | 'outline' | 'text';
-export type ButtonSize = 'lg' | 'md' | 'sm' | 'xs';
+export type ButtonVariant = "solid-fill" | "outline" | "text";
+export type ButtonSize = "lg" | "md" | "sm" | "xs";
 
 /**
  * ボタンの基本スタイル
@@ -34,7 +34,7 @@ export const buttonBaseStyle = `
  * - text: テキストボタン（補助的なアクション向け）
  */
 export const buttonVariantStyle: { [key in ButtonVariant]: string } = {
-  'solid-fill': `
+  "solid-fill": `
     border-4
     border-double
     border-transparent
@@ -84,10 +84,10 @@ export const buttonVariantStyle: { [key in ButtonVariant]: string } = {
  * - xs: 極小サイズ（インラインアクション向け）
  */
 export const buttonSizeStyle: { [key in ButtonSize]: string } = {
-  lg: 'min-w-[calc(136/16*1rem)] min-h-14 rounded-8 px-4 py-3 text-oln-16B-100',
-  md: 'min-w-24 min-h-12 rounded-8 px-4 py-2 text-oln-16B-100',
-  sm: 'relative min-w-20 min-h-9 rounded-6 px-3 py-0.5 text-oln-16B-100 after:absolute after:inset-x-0 after:-inset-y-full after:m-auto after:h-[44px]',
-  xs: 'relative min-w-18 min-h-7 rounded-4 px-2 py-0.5 text-oln-14B-100 after:absolute after:inset-x-0 after:-inset-y-full after:m-auto after:h-[44px]',
+  lg: "min-w-[calc(136/16*1rem)] min-h-14 rounded-8 px-4 py-3 text-oln-16B-100",
+  md: "min-w-24 min-h-12 rounded-8 px-4 py-2 text-oln-16B-100",
+  sm: "relative min-w-20 min-h-9 rounded-6 px-3 py-0.5 text-oln-16B-100 after:absolute after:inset-x-0 after:-inset-y-full after:m-auto after:h-[44px]",
+  xs: "relative min-w-18 min-h-7 rounded-4 px-2 py-0.5 text-oln-14B-100 after:absolute after:inset-x-0 after:-inset-y-full after:m-auto after:h-[44px]",
 };
 
 export type ButtonProps = {
@@ -99,8 +99,8 @@ export type ButtonProps = {
    * これにより、スクリーンリーダーでも要素にフォーカスでき、
    * なぜ無効なのかを伝えられる
    */
-  'aria-disabled'?: boolean;
-} & ComponentProps<'button'>;
+  "aria-disabled"?: boolean;
+} & ComponentProps<"button">;
 
 /**
  * DADSボタンコンポーネント
@@ -117,28 +117,38 @@ export type ButtonProps = {
  * </Button>
  * ```
  */
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
-  const { children, className, variant = 'solid-fill', size, ...rest } = props;
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (props, ref) => {
+    const {
+      children,
+      className,
+      variant = "solid-fill",
+      size,
+      ...rest
+    } = props;
 
-  const classNames = `${buttonBaseStyle} ${buttonSizeStyle[size]} ${
-    variant ? buttonVariantStyle[variant] : ''
-  } ${className ?? ''}`;
+    const classNames = `${buttonBaseStyle} ${buttonSizeStyle[size]} ${
+      variant ? buttonVariantStyle[variant] : ""
+    } ${className ?? ""}`;
 
-  // aria-disabled 時はクリックイベントを無効化
-  const handleDisabled = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    e.preventDefault();
-  };
+    // aria-disabled 時はクリックイベントを無効化
+    const handleDisabled = (
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+      e.preventDefault();
+    };
 
-  return (
-    <button
-      className={classNames}
-      onClick={props['aria-disabled'] ? handleDisabled : props.onClick}
-      {...rest}
-      ref={ref}
-    >
-      {children}
-    </button>
-  );
-});
+    return (
+      <button
+        className={classNames}
+        onClick={props["aria-disabled"] ? handleDisabled : props.onClick}
+        {...rest}
+        ref={ref}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
-Button.displayName = 'Button';
+Button.displayName = "Button";

@@ -8,11 +8,11 @@
  * DADSのスタイルトークンを適用してください。
  */
 
-import type { ComponentProps } from 'react';
+import type { ComponentProps } from "react";
 
-export type LabelSize = 'lg' | 'md' | 'sm';
+export type LabelSize = "lg" | "md" | "sm";
 
-export type LabelProps = ComponentProps<'label'> & {
+export type LabelProps = ComponentProps<"label"> & {
   /** ラベルのフォントサイズ */
   size?: LabelSize;
 };
@@ -35,14 +35,14 @@ export type LabelProps = ComponentProps<'label'> & {
  * ```
  */
 export const Label = (props: LabelProps) => {
-  const { children, className, size = 'md', ...rest } = props;
+  const { children, className, size = "md", ...rest } = props;
 
   return (
     <label
       className={`
         text-solid-gray-800
         data-[size=sm]:text-std-16B-170 data-[size=md]:text-std-17B-170 data-[size=lg]:text-std-18B-160
-        ${className ?? ''}
+        ${className ?? ""}
       `}
       data-size={size}
       {...rest}
