@@ -554,10 +554,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                               </span>
                             )}
                             <span
-                              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
+                              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                                profile.role_type === "leader"
                                   ? "bg-purple-100 text-purple-800"
                                   : "bg-blue-100 text-blue-800"
-                                }`}
+                              }`}
                             >
                               {profile.role_type}
                             </span>
