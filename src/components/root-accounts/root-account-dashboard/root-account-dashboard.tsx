@@ -61,7 +61,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 font-sans">
       {/* Top Navigation Mock */}
       <nav className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-indigo-600 rounded-md flex items-center justify-center text-white font-bold">
@@ -86,7 +86,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
         </div>
       </nav>
 
-      <main className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      <main className="w-full py-8 px-4 sm:px-6 lg:px-8">
         {/* Page Header */}
         <div className="mb-8">
           <div className="flex md:items-center justify-between flex-col md:flex-row gap-4">
@@ -554,11 +554,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                               </span>
                             )}
                             <span
-                              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                                profile.role_type === "leader"
+                              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
                                   ? "bg-purple-100 text-purple-800"
                                   : "bg-blue-100 text-blue-800"
-                              }`}
+                                }`}
                             >
                               {profile.role_type}
                             </span>
@@ -690,7 +689,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       </main>
 
       {/* Footer / Debug Info */}
-      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-slate-400 dark:text-slate-500">
+      <footer className="w-full px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-slate-400 dark:text-slate-500">
         <p>Root Account System v1.0.0-prototype</p>
         <p className="mt-1">Schema Version: 0100-100-4-extended</p>
       </footer>

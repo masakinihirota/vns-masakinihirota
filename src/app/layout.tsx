@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,22 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+
+        {/* WUUNU SNIPPET - DON'T CHANGE THIS (START) */}
+        {process.env.NODE_ENV !== "production" && (
+          <>
+            <Script id="wuunu-ws" strategy="afterInteractive">
+              {`window.__WUUNU_WS__ = "http://127.0.0.1:63286/?token=52dd8de44f2d8bf61de5dab956cc547bec1a082ff777e5a3";`}
+            </Script>
+            <Script
+              id="wuunu-widget"
+              src="https://cdn.jsdelivr.net/npm/@wuunu/widget@0.1.21"
+              strategy="afterInteractive"
+              crossOrigin="anonymous"
+            />
+          </>
+        )}
+        {/* WUUNU SNIPPET - DON'T CHANGE THIS (END) */}
       </body>
     </html>
   );
