@@ -1,5 +1,6 @@
 "use client";
 
+import * as Slider from "@radix-ui/react-slider";
 import {
   User,
   MapPin,
@@ -12,10 +13,10 @@ import {
   AlertCircle,
   Terminal,
   Clock,
+  Plus,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import * as Slider from "@radix-ui/react-slider";
 import {
   LANGUAGES_MOCK,
   COUNTRIES_MOCK,
@@ -48,6 +49,23 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   const [formData, setFormData] = useState<RootAccount>(data);
   const [selectedArea, setSelectedArea] = useState<number | null>(null);
   const [isEditingCoreHours, setIsEditingCoreHours] = useState(false);
+  const [isEditingLanguages, setIsEditingLanguages] = useState(false);
+  const [isEditingCountries, setIsEditingCountries] = useState(false);
+  const [generationHistory, setGenerationHistory] = useState<
+    { from: string; to: string; at: string }[]
+  >([]);
+
+  const generationOptions = [
+    "1980-1984",
+    "1985-1989",
+    "1990-1994",
+    "1995-1999",
+    "2000-2004",
+    "2005-2009",
+    "2010-2014",
+    "2015-2019",
+    "2020-2024",
+  ];
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [profiles, setProfiles] =
@@ -56,8 +74,24 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   // 日またぎ用の状態（翌日の終了時刻を保持）
   const [nextDayEndHour, setNextDayEndHour] = useState<number>(0);
 
-  const handleChange = (field: keyof RootAccount, value: string | number) => {
+  const handleChange = <K extends keyof RootAccount>(
+    field: K,
+    value: RootAccount[K]
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleGenerationChange = (newValue: string) => {
+    if (newValue === formData.birth_generation) return;
+    setGenerationHistory((prev) => [
+      ...prev,
+      {
+        from: formData.birth_generation || "未設定",
+        to: newValue || "未設定",
+        at: new Date().toISOString(),
+      },
+    ]);
+    handleChange("birth_generation", newValue);
   };
 
   return (
@@ -187,8 +221,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </p>
               </div>
               <button className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                <User size={14} />
-                新規作成
+                <Edit3 size={14} />
+                編集
               </button>
             </div>
 
@@ -214,10 +248,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           </span>
                         )}
                         <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
-                            ? "bg-purple-100 text-purple-800"
-                            : "bg-blue-100 text-blue-800"
-                            }`}
+                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                            profile.role_type === "leader"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-blue-100 text-blue-800"
+                          }`}
                         >
                           {profile.role_type}
                         </span>
@@ -240,6 +275,13 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </div>
               )}
             </div>
+
+            <div className="mt-4 flex justify-center">
+              <button className="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-md text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700">
+                <Plus size={16} />
+                新規作成
+              </button>
+            </div>
           </div>
 
           {/* VNS管理国一覧セクション */}
@@ -254,7 +296,20 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   このアカウントが管理しているVNS内の国・地域
                 </p>
               </div>
+              <button
+                onClick={() => setIsEditingCountries((prev) => !prev)}
+                className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+              >
+                {isEditingCountries ? <Save size={14} /> : <Edit3 size={14} />}
+                {isEditingCountries ? "保存" : "編集"}
+              </button>
             </div>
+
+            {isEditingCountries && (
+              <div className="mb-4 text-xs text-slate-600 dark:text-slate-300 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-md px-3 py-2">
+                国・地域の管理を編集モードに切り替えました。ここで登録・解除の操作ができます（実装予定）。
+              </div>
+            )}
 
             <div className="space-y-4">
               {COUNTRIES_MOCK.map((country) => (
@@ -323,16 +378,19 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     relative cursor-pointer rounded-lg overflow-hidden
                     transition-all duration-300 ease-in-out
                     hover:-translate-y-2 hover:shadow-xl
-                    ${selectedArea === areaNum
-                      ? 'ring-4 ring-indigo-500 shadow-lg scale-105'
-                      : 'ring-1 ring-slate-200 dark:ring-slate-700'
+                    ${
+                      selectedArea === areaNum
+                        ? "ring-4 ring-indigo-500 shadow-lg scale-105"
+                        : "ring-1 ring-slate-200 dark:ring-slate-700"
                     }
                   `}
                 >
-                  <div className={`
+                  <div
+                    className={`
                     bg-slate-100 dark:bg-slate-800 p-4
-                    ${selectedArea === areaNum ? 'opacity-100' : 'opacity-75'}
-                  `}>
+                    ${selectedArea === areaNum ? "opacity-100" : "opacity-75"}
+                  `}
+                  >
                     <Image
                       src={`/world/area${areaNum}.svg`}
                       alt={`エリア ${areaNum}`}
@@ -342,11 +400,13 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       priority={areaNum === 1}
                     />
                   </div>
-                  <div className={`
+                  <div
+                    className={`
                     absolute bottom-0 left-0 right-0
                     bg-gradient-to-t from-slate-900/90 to-transparent
                     p-4 text-white
-                  `}>
+                  `}
+                  >
                     <h4 className="text-lg font-semibold">エリア {areaNum}</h4>
                     {selectedArea === areaNum && (
                       <p className="text-xs text-slate-200">選択中</p>
@@ -359,7 +419,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             {selectedArea && (
               <div className="mt-6 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800">
                 <p className="text-sm text-indigo-900 dark:text-indigo-100">
-                  <span className="font-semibold">エリア {selectedArea}</span> が選択されています
+                  <span className="font-semibold">エリア {selectedArea}</span>{" "}
+                  が選択されています
                 </p>
               </div>
             )}
@@ -395,7 +456,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   </label>
                   <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                     {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
-                    {timeToHours(formData.core_hours_end) < 24 || nextDayEndHour === 0
+                    {timeToHours(formData.core_hours_end) < 24 ||
+                    nextDayEndHour === 0
                       ? hoursToTime(timeToHours(formData.core_hours_end))
                       : "24:00"}
                   </span>
@@ -410,9 +472,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         Math.min(timeToHours(formData.core_hours_end), 24),
                       ]}
                       onValueChange={(values) => {
-                        handleChange("core_hours_start", hoursToTime(values[0]));
+                        handleChange(
+                          "core_hours_start",
+                          hoursToTime(values[0])
+                        );
                         if (values[1] < 24) {
-                          handleChange("core_hours_end", hoursToTime(values[1]));
+                          handleChange(
+                            "core_hours_end",
+                            hoursToTime(values[1])
+                          );
                           setNextDayEndHour(0); // 24時未満なら翌日スライダーをリセット
                         } else {
                           handleChange("core_hours_end", hoursToTime(24));
@@ -450,7 +518,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <div className="h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg">
                     <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
                       {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
-                      {timeToHours(formData.core_hours_end) < 24 || nextDayEndHour === 0
+                      {timeToHours(formData.core_hours_end) < 24 ||
+                      nextDayEndHour === 0
                         ? hoursToTime(timeToHours(formData.core_hours_end))
                         : "24:00"}
                     </span>
@@ -515,8 +584,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             {/* 活動時間の説明 */}
             <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <p className="text-sm text-blue-900 dark:text-blue-100">
-                <span className="font-semibold">合計活動時間:</span>{" "}
-                {(() => {
+                <span className="font-semibold">合計活動時間:</span> {(() => {
                   const start = timeToHours(formData.core_hours_start);
                   const end = timeToHours(formData.core_hours_end);
                   const total =
@@ -563,7 +631,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         活動時間の警告
                       </p>
                       <p className="text-sm text-amber-800 dark:text-amber-200 mt-1">
-                        合計活動時間が8時間を超えています（{total.toFixed(1)}時間）。
+                        合計活動時間が8時間を超えています（{total.toFixed(1)}
+                        時間）。
                         長時間の活動は健康に影響を与える可能性があります。適度な休憩を取ることをお勧めします。
                       </p>
                     </div>
@@ -620,16 +689,52 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       </div>
                     </div>
 
-                    {/* Generation (New Field) */}
-                    {/* Generation */}
-                    <div className="sm:col-span-3">
+                    <div className="sm:col-span-6">
                       <label className="block text-sm font-medium text-slate-700 flex items-center gap-1">
                         <Activity size={14} /> 生誕世代 (Generation)
                       </label>
                       <div className="mt-1">
-                        <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50">
-                          {formData.birth_generation}
-                        </div>
+                        <select
+                          value={formData.birth_generation}
+                          onChange={(e) => handleGenerationChange(e.target.value)}
+                          className="block w-full rounded-md sm:text-sm p-2 border bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-50 focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                          <option value="">選択してください</option>
+                          {generationOptions.map((range) => (
+                            <option key={range} value={range}>
+                              {range}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        5年区切りで選択できます。近い年代を選んでください。
+                      </p>
+                      <div className="mt-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-3">
+                        <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                          生誕世代の変更履歴
+                        </p>
+                        {generationHistory.length > 0 ? (
+                          <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300">
+                            {generationHistory
+                              .slice()
+                              .reverse()
+                              .map((entry, idx) => (
+                                <li key={`${entry.at}-${idx}`} className="flex justify-between gap-2">
+                                  <span>
+                                    {entry.from} → {entry.to}
+                                  </span>
+                                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                                    {new Date(entry.at).toLocaleString("ja-JP")}
+                                  </span>
+                                </li>
+                              ))}
+                          </ul>
+                        ) : (
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
+                            変更履歴はまだありません
+                          </p>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -639,75 +744,114 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
                 {/* Language Settings */}
                 <section>
-                  <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 mb-4 flex items-center gap-2">
-                    <Globe size={20} className="text-slate-400" />
-                    言語設定
-                  </h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 flex items-center gap-2">
+                      <Globe size={20} className="text-slate-400" />
+                      言語設定
+                    </h3>
+                    <button
+                      onClick={() => setIsEditingLanguages((prev) => !prev)}
+                      className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    >
+                      {isEditingLanguages ? <Save size={14} /> : <Edit3 size={14} />}
+                      {isEditingLanguages ? "保存" : "編集"}
+                    </button>
+                  </div>
+                  {isEditingLanguages && (
+                    <div className="mb-4 text-xs text-slate-600 dark:text-slate-300 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-md px-3 py-2">
+                      言語設定を編集モードに切り替えました。母語や使用言語の追加・削除、AI翻訳の切替を行えます（実装予定）。
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     <div className="sm:col-span-3">
                       <label className="block text-sm font-medium text-slate-700">
-                        母国語 (Mother Tongue)
+                        母語 (複数選択可)
                       </label>
-                      <div className="mt-1">
-                        <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50">
-                          {
-                            LANGUAGES_MOCK.find(
-                              (l) => l.id === formData.mother_tongue_code
-                            )?.native_name
-                          }
-                        </div>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {formData.mother_tongue_codes.length > 0 ? (
+                          formData.mother_tongue_codes.map((code) => {
+                            const lang = LANGUAGES_MOCK.find((l) => l.id === code);
+                            return (
+                              <span
+                                key={code}
+                                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100 border border-indigo-100 dark:border-indigo-800"
+                              >
+                                <span className="font-semibold">{lang?.native_name ?? code}</span>
+                                <span className="ml-1 text-[11px] text-slate-500 dark:text-slate-300">
+                                  {lang?.name ?? "Unknown"}
+                                </span>
+                              </span>
+                            );
+                          })
+                        ) : (
+                          <span className="text-xs text-slate-500 dark:text-slate-400">
+                            登録されている母語はありません
+                          </span>
+                        )}
                       </div>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        バイリンガルや多言語話者にも対応できるよう、複数の母語を保持できます。
+                      </p>
                     </div>
 
                     <div className="sm:col-span-3">
                       <label className="block text-sm font-medium text-slate-700">
-                        サイト表示言語 (Site Language)
+                        使用できる言語 (複数選択可)
                       </label>
-                      <div className="mt-1">
-                        <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50">
-                          {
-                            LANGUAGES_MOCK.find(
-                              (l) => l.id === formData.site_language_code
-                            )?.native_name
-                          }
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {formData.available_language_codes.length > 0 ? (
+                          formData.available_language_codes.map((code) => {
+                            const lang = LANGUAGES_MOCK.find((l) => l.id === code);
+                            return (
+                              <span
+                                key={code}
+                                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100 border border-emerald-100 dark:border-emerald-800"
+                              >
+                                <span className="font-semibold">{lang?.native_name ?? code}</span>
+                                <span className="ml-1 text-[11px] text-slate-500 dark:text-slate-300">
+                                  {lang?.name ?? "Unknown"}
+                                </span>
+                              </span>
+                            );
+                          })
+                        ) : (
+                          <span className="text-xs text-slate-500 dark:text-slate-400">
+                            使用可能な言語はまだ登録されていません
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        UI表示やコミュニケーションで使用する言語を複数登録できます。
+                      </p>
+                    </div>
+
+                    <div className="sm:col-span-6">
+                      <div className="flex items-start justify-between bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+                        <div>
+                          <p className="text-sm font-medium text-slate-900 dark:text-slate-50">
+                            AI翻訳を利用する
+                          </p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                            有効にすると、コミュニケーション時にAIによる自動翻訳を適用します。
+                          </p>
                         </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={formData.uses_ai_translation}
+                            onChange={(e) =>
+                              handleChange("uses_ai_translation", e.target.checked)
+                            }
+                          />
+                          <span className="relative inline-flex items-center w-11 h-6 rounded-full bg-slate-200 dark:bg-slate-700 transition-colors peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 peer-checked:bg-indigo-600 peer-checked:[&>span]:translate-x-5">
+                            <span className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white dark:bg-slate-900 shadow transition-transform" />
+                          </span>
+                        </label>
                       </div>
                     </div>
                   </div>
                 </section>
-
-                <hr className="border-slate-200 dark:border-slate-800 my-6" />
-
-                {/* AI Settings */}
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="ai_translation"
-                      name="ai_translation"
-                      type="checkbox"
-                      disabled={true}
-                      checked={formData.uses_ai_translation}
-                      onChange={(e) =>
-                        handleChange(
-                          "uses_ai_translation",
-                          e.target.checked ? "true" : "false"
-                        )
-                      }
-                      className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                    />
-                  </div>
-                  <div className="ml-2 text-sm">
-                    <label
-                      htmlFor="ai_translation"
-                      className="font-medium text-slate-700 dark:text-slate-300"
-                    >
-                      AI自動翻訳を利用する
-                    </label>
-                    <p className="text-slate-500 dark:text-slate-400">
-                      チェックすると、コミュニケーション時にAIによる自動翻訳が有効になります。
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
 
