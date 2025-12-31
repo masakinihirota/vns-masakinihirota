@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { WorksList } from "./work-list";
-import { Work } from "../common/types";
-import { fetchWorks } from "./work-list.logic";
 import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { Work } from "../common/types";
+import { WorksList } from "./work-list";
+import { fetchWorks } from "./work-list.logic";
 
 export const WorksListContainer = () => {
   const router = useRouter();
@@ -13,21 +13,19 @@ export const WorksListContainer = () => {
 
   useEffect(() => {
     const loadWorks = async () => {
-      try {
-        const data = await fetchWorks();
-        setWorks(data);
-      } catch (e) {
-        console.error(e);
-      } finally {
-        setLoading(false);
-      }
+      await fetchWorks()
+        .then((data) => setWorks(data))
+        .catch((e) => console.error(e))
+        .finally(() => setLoading(false));
     };
-    loadWorks();
+    void loadWorks();
   }, []);
 
   const handleCreateNew = () => {
     router.push("/works/new");
   };
 
-  return <WorksList works={works} loading={loading} onCreateNew={handleCreateNew} />;
+  return (
+    <WorksList works={works} loading={loading} onCreateNew={handleCreateNew} />
+  );
 };

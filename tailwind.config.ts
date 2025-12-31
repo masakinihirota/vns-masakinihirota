@@ -1,6 +1,6 @@
-import type { Config } from "tailwindcss";
 // @ts-expect-error Type declaration file resolution failure for this package
 import tailwindThemePlugin from "@digital-go-jp/tailwind-theme-plugin";
+import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [

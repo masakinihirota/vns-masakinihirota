@@ -25,7 +25,9 @@ interface ProfileListContainerProps {
  * - aria-describedby でサポートテキストを紐付け
  * - コントラスト比 4.5:1 以上を確保
  */
-export const ProfileListContainer = ({ profiles }: ProfileListContainerProps) => {
+export const ProfileListContainer = ({
+  profiles,
+}: ProfileListContainerProps) => {
   const [searchText, setSearchText] = useState("");
   const [selectedRole, setSelectedRole] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
@@ -109,7 +111,11 @@ export const ProfileListContainer = ({ profiles }: ProfileListContainerProps) =>
       </div>
 
       {/* 結果表示 */}
-      <div className="text-sm text-gray-600 px-4" role="status" aria-live="polite">
+      <div
+        className="text-sm text-gray-600 px-4"
+        role="status"
+        aria-live="polite"
+      >
         {filteredAndSortedProfiles.length}件 / {profiles.length}件
       </div>
 

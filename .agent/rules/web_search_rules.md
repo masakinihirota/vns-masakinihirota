@@ -10,3 +10,5 @@ trigger: always_on
 - 質問で止めず、想定される意図を網羅して答える
 - 出力はMarkdownで、定義→要点→比較→具体例の順に整理
   </web_search_rules>
+
+Next.jsでの表示コンポーネントは、ダークモードに対応する。

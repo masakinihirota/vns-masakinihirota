@@ -1,6 +1,10 @@
-import { describe, it, expect } from "vitest";
 import { renderHook, act } from "@testing-library/react";
-import { useManualMatching, calculateCompatibility, MatchingUser } from "./manual-matching.logic";
+import { describe, it, expect } from "vitest";
+import {
+  useManualMatching,
+  calculateCompatibility,
+  MatchingUser,
+} from "./manual-matching.logic";
 
 describe("Manual Matching Logic", () => {
   describe("calculateCompatibility", () => {
@@ -23,8 +27,20 @@ describe("Manual Matching Logic", () => {
     });
 
     it("should return 0% when no tags match", () => {
-      const userA: MatchingUser = { id: "1", name: "A", tags: ["music"], avatarSrc: "", bio: "" };
-      const userB: MatchingUser = { id: "2", name: "B", tags: ["sport"], avatarSrc: "", bio: "" };
+      const userA: MatchingUser = {
+        id: "1",
+        name: "A",
+        tags: ["music"],
+        avatarSrc: "",
+        bio: "",
+      };
+      const userB: MatchingUser = {
+        id: "2",
+        name: "B",
+        tags: ["sport"],
+        avatarSrc: "",
+        bio: "",
+      };
       expect(calculateCompatibility(userA, userB)).toBe(0);
     });
 

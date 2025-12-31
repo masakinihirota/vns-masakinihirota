@@ -1,7 +1,13 @@
+import { Baby, Footprints, RefreshCcw, HandHeart, History } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Baby, Footprints, RefreshCcw, HandHeart, History } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 
 export const metadata = {
   title: "Human Declaration | VNS masakinihirota",
@@ -36,7 +42,9 @@ export default function HumanPage() {
                 <Footprints className="size-5 text-secondary" />
                 <span>Declaration</span>
               </CardTitle>
-              <CardDescription>不完全であることを認め、変化と成長を肯定する宣言。</CardDescription>
+              <CardDescription>
+                不完全であることを認め、変化と成長を肯定する宣言。
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-8">
               <ul className="grid gap-6">
@@ -45,13 +53,15 @@ export default function HumanPage() {
                     I
                   </span>
                   <div className="space-y-1">
-                    <p className="font-medium leading-none">失敗と再挑戦 / Trial & Error</p>
+                    <p className="font-medium leading-none">
+                      失敗と再挑戦 / Trial & Error
+                    </p>
                     <p className="text-muted-foreground">
                       人は間違いを犯したり、再挑戦することが出来る。それを認めて欲しい。
                       <br />
                       <span className="text-xs opacity-70">
-                        Humans make mistakes and have the right to try again. We seek recognition of
-                        this truth.
+                        Humans make mistakes and have the right to try again. We
+                        seek recognition of this truth.
                       </span>
                     </p>
                   </div>
@@ -62,13 +72,16 @@ export default function HumanPage() {
                     II
                   </span>
                   <div className="space-y-1">
-                    <p className="font-medium leading-none">成長と学習 / Growth & Learning</p>
+                    <p className="font-medium leading-none">
+                      成長と学習 / Growth & Learning
+                    </p>
                     <p className="text-muted-foreground">
                       人は成長する生き物であり、失敗を通じて学び、次に活かすことができる。そのための環境を整えて欲しい。
                       <br />
                       <span className="text-xs opacity-70">
-                        Humans are beings that grow, learning from failure to shape the future. We
-                        desire an environment that nurtures this growth.
+                        Humans are beings that grow, learning from failure to
+                        shape the future. We desire an environment that nurtures
+                        this growth.
                       </span>
                     </p>
                   </div>
@@ -79,12 +92,15 @@ export default function HumanPage() {
                     III
                   </span>
                   <div className="space-y-1">
-                    <p className="font-medium leading-none">変化の肯定 / Embracing Change</p>
+                    <p className="font-medium leading-none">
+                      変化の肯定 / Embracing Change
+                    </p>
                     <p className="text-muted-foreground">
                       一度言ったことを撤回したり、考えを変えることは悪いことではない。
                       <br />
                       <span className="text-xs opacity-70">
-                        It is not wrong to retract words or change one&apos;s mind.
+                        It is not wrong to retract words or change one&apos;s
+                        mind.
                       </span>
                     </p>
                   </div>
@@ -95,13 +111,15 @@ export default function HumanPage() {
                     IV
                   </span>
                   <div className="space-y-1">
-                    <p className="font-medium leading-none">過去と現在 / Past & Present</p>
+                    <p className="font-medium leading-none">
+                      過去と現在 / Past & Present
+                    </p>
                     <p className="text-muted-foreground">
                       過去に発言したことは過去の自分、現在発言したことは現在の自分。
                       <br />
                       <span className="text-xs opacity-70">
-                        Past words belong to the past self; current words belong to the current
-                        self.
+                        Past words belong to the past self; current words belong
+                        to the current self.
                       </span>
                     </p>
                   </div>
@@ -118,7 +136,9 @@ export default function HumanPage() {
             <History className="size-6" />
             <HandHeart className="size-6" />
           </div>
-          <p className="text-lg font-medium">それが人間であり、人間宣言の内容です。</p>
+          <p className="text-lg font-medium">
+            それが人間であり、人間宣言の内容です。
+          </p>
           <p className="text-sm text-muted-foreground">
             This is the essence of being human. This is our Human Declaration.
           </p>

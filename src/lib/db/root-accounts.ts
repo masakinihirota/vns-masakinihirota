@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/server";
 import { cache } from "react";
+import { createClient } from "@/lib/supabase/server";
 
 export type RootAccount = {
   id: string;

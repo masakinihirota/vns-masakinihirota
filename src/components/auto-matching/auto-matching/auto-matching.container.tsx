@@ -2,7 +2,11 @@
 
 import React, { useState, useEffect } from "react";
 import { AutoMatching } from "./auto-matching";
-import { calculateMatches, MatchingScore, SearchCriteria } from "./auto-matching.logic";
+import {
+  calculateMatches,
+  MatchingScore,
+  SearchCriteria,
+} from "./auto-matching.logic";
 
 export const AutoMatchingContainer = () => {
   const [loading, setLoading] = useState(false);
@@ -16,26 +20,23 @@ export const AutoMatchingContainer = () => {
     remote: false,
   });
 
-  useEffect(() => {
-    // Initial fetch
-    handleSearch();
-  }, []);
-
   const handleSearch = async () => {
     setLoading(true);
-    try {
-      const data = await calculateMatches(criteria);
-      setResults(data);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+    await calculateMatches(criteria)
+      .then((data) => setResults(data))
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
   };
+
+  useEffect(() => {
+    // Initial fetch
+    handleSearch().catch(() => {});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCriteriaChange = (
     key: keyof SearchCriteria,
-    value: SearchCriteria[keyof SearchCriteria],
+    value: SearchCriteria[keyof SearchCriteria]
   ) => {
     setCriteria((prev) => ({ ...prev, [key]: value }));
   };

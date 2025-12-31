@@ -1,13 +1,22 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/client";
-import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/client";
+import { cn } from "@/lib/utils";
 
-export function GoogleLoginForm({ className, ...props }: React.ComponentPropsWithoutRef<"div">) {
+export function GoogleLoginForm({
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div">) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,14 +61,20 @@ export function GoogleLoginForm({ className, ...props }: React.ComponentPropsWit
             <FcGoogle className="h-6 w-6" />
             Google認証
           </CardTitle>
-          <CardDescription className="text-gray-300">必要なもの: Googleアカウント</CardDescription>
+          <CardDescription className="text-gray-300">
+            必要なもの: Googleアカウント
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <ul className="space-y-1 text-sm">
             {features.map((feature, index) => (
               <li key={index} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
-                <span className={feature.isNegative ? "text-red-500" : "text-green-500"}>
+                <span
+                  className={
+                    feature.isNegative ? "text-red-500" : "text-green-500"
+                  }
+                >
                   {feature.value}
                 </span>
               </li>
@@ -68,7 +83,9 @@ export function GoogleLoginForm({ className, ...props }: React.ComponentPropsWit
           <form onSubmit={handleSocialLogin} className="mt-6">
             <div className="flex flex-col gap-6">
               {error && (
-                <p className="text-sm text-red-400 bg-red-900/30 p-3 rounded-md">{error}</p>
+                <p className="text-sm text-red-400 bg-red-900/30 p-3 rounded-md">
+                  {error}
+                </p>
               )}
               <Button
                 type="submit"

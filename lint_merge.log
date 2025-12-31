@@ -1,0 +1,749 @@
+
+> vns-masakinihirota@0.4.1 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  ! eslint(no-unused-vars): Parameter 'answer' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/values/values-list/values-list.logic.ts:61:3]
+ 60 | export const saveUserAnswer = async (
+ 61 |   answer: UserValueAnswer
+    :   ^^^|^^
+    :      `-- 'answer' is declared here
+ 62 | ): Promise<boolean> => {
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'MOCK_USER_ANSWERS' is imported but never used.
+   ,-[src/components/values/values-list/values-list.logic.test.ts:4:3]
+ 3 |   VALUES_QUESTIONS,
+ 4 |   MOCK_USER_ANSWERS,
+   :   ^^^^^^^^|^^^^^^^^
+   :           `-- 'MOCK_USER_ANSWERS' is imported here
+ 5 |   fetchValues,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'fireEvent' is imported but never used.
+   ,-[src/components/manual-matching/console/manual-matching-console.test.tsx:1:26]
+ 1 | import { render, screen, fireEvent } from "@testing-library/react";
+   :                          ^^^^|^^^^
+   :                              `-- 'fireEvent' is imported here
+ 2 | import { describe, it, expect, vi } from "vitest";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Save' is imported but never used.
+   ,-[src/components/values/values-list/values-list.tsx:1:33]
+ 1 | import { Lock, Unlock, Loader2, Save } from "lucide-react";
+   :                                 ^^|^
+   :                                   `-- 'Save' is imported here
+ 2 | import React from "react";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Badge' is imported but never used.
+   ,-[src/components/values/values-list/values-list.tsx:4:10]
+ 3 | // import { Slider } from '@/components/ui/slider'; // Removed as we use native input
+ 4 | import { Badge } from "@/components/ui/badge";
+   :          ^^|^^
+   :            `-- 'Badge' is imported here
+ 5 | import { Button } from "@/components/ui/button";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'CardHeader' is imported but never used.
+   ,-[src/components/values/values-list/values-list.tsx:8:3]
+ 7 |   Card,
+ 8 |   CardHeader,
+   :   ^^^^^|^^^^
+   :        `-- 'CardHeader' is imported here
+ 9 |   CardTitle,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'CardContent' is imported but never used.
+    ,-[src/components/values/values-list/values-list.tsx:11:3]
+ 10 |   CardDescription,
+ 11 |   CardContent,
+    :   ^^^^^|^^^^^
+    :        `-- 'CardContent' is imported here
+ 12 | } from "@/components/ui/card";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Work' is imported but never used.
+   ,-[src/components/manual-matching/console/manual-matching-console.logic.ts:1:23]
+ 1 | import { UserProfile, Work } from "../common/types";
+   :                       ^^|^
+   :                         `-- 'Work' is imported here
+ 2 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'LucideIcon' is imported but never used.
+   ,-[src/components/profile-edited/profile-dashboard/profile-dashboard.logic.ts:1:10]
+ 1 | import { LucideIcon } from "lucide-react";
+   :          ^^^^^|^^^^
+   :               `-- 'LucideIcon' is imported here
+ 2 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'MatchRecord' is imported but never used.
+   ,-[src/components/manual-matching/console/manual-matching-console.container.tsx:4:23]
+ 3 | import React, { useState, useEffect, useMemo } from "react";
+ 4 | import { UserProfile, MatchRecord } from "../common/types";
+   :                       ^^^^^|^^^^^
+   :                            `-- 'MatchRecord' is imported here
+ 5 | import { ManualMatchingConsole } from "./manual-matching-console";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'vi' is imported but never used.
+   ,-[src/components/onboarding/onboarding.logic.test.ts:2:32]
+ 1 | import { renderHook, act } from "@testing-library/react";
+ 2 | import { describe, it, expect, vi } from "vitest";
+   :                                ^|
+   :                                 `-- 'vi' is imported here
+ 3 | import { useOnboarding } from "./onboarding.logic";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'CardDescription' is imported but never used.
+    ,-[src/components/works/work-list/work-list.tsx:19:3]
+ 18 |   CardContent,
+ 19 |   CardDescription,
+    :   ^^^^^^^|^^^^^^^
+    :          `-- 'CardDescription' is imported here
+ 20 | } from "@/components/ui/card";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useEffect' is imported but never used.
+   ,-[src/components/mandala-chart/mandala-chart/mandala-chart.tsx:3:10]
+ 2 | 
+ 3 | import { useEffect, useState } from "react";
+   :          ^^^^|^^^^
+   :              `-- 'useEffect' is imported here
+ 4 | import { Card, CardContent } from "@/components/ui/card";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ArrowUp' is imported but never used.
+    ,-[src/components/matching-manual/matching-settings.tsx:13:3]
+ 12 |   ArrowDown,
+ 13 |   ArrowUp,
+    :   ^^^|^^^
+    :      `-- 'ArrowUp' is imported here
+ 14 | } from "lucide-react";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useMemo' is imported but never used.
+    ,-[src/components/matching-manual/matching-settings.tsx:15:40]
+ 14 | } from "lucide-react";
+ 15 | import React, { useState, useCallback, useMemo } from "react";
+    :                                        ^^^|^^^
+    :                                           `-- 'useMemo' is imported here
+ 16 | 
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Catch parameter 'error' is caught but never used. Unused caught errors should start with a '_'.
+     ,-[src/components/matching-manual/matching-settings.tsx:219:14]
+ 218 |       // throw new Error("保存失敗");
+ 219 |     } catch (error) {
+     :              ^^|^^
+     :                `-- 'error' is declared here
+ 220 |       setNotification({
+     `----
+  help: Consider handling this error.
+
+  ! eslint(no-unused-vars): Catch parameter 'error' is caught but never used. Unused caught errors should start with a '_'.
+     ,-[src/components/matching-manual/matching-settings.tsx:262:14]
+ 261 |       });
+ 262 |     } catch (error) {
+     :              ^^|^^
+     :                `-- 'error' is declared here
+ 263 |       setNotification({
+     `----
+  help: Consider handling this error.
+
+  ! eslint(no-unused-vars): Parameter 'href' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/matching-manual/matching-settings.tsx:458:5]
+ 457 |     active,
+ 458 |     href,
+     :     ^^|^
+     :       `-- 'href' is declared here
+ 459 |   }: {
+     `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'Separator' is imported but never used.
+    ,-[src/components/manual-matching/conditions/matching-conditions.tsx:14:10]
+ 13 | } from "@/components/ui/select";
+ 14 | import { Separator } from "@/components/ui/separator";
+    :          ^^^^|^^^^
+    :              `-- 'Separator' is imported here
+ 15 | import {
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useState' is imported but never used.
+   ,-[src/components/manual-matching/conditions/matching-conditions.logic.ts:1:10]
+ 1 | import { useState } from "react";
+   :          ^^^^|^^^
+   :              `-- 'useState' is imported here
+ 2 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'settings' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/manual-matching/conditions/matching-conditions.logic.ts:40:3]
+ 39 | export const saveSettings = async (
+ 40 |   settings: MatchingSettings
+    :   ^^^^|^^^
+    :       `-- 'settings' is declared here
+ 41 | ): Promise<boolean> => {
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Parameter 'settings' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/manual-matching/conditions/matching-conditions.logic.ts:46:3]
+ 45 | export const startAutoMatching = async (
+ 46 |   settings: MatchingSettings
+    :   ^^^^|^^^
+    :       `-- 'settings' is declared here
+ 47 | ): Promise<string> => {
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'useEffect' is imported but never used.
+   ,-[src/app/(protected)/mandala-chart/mandala-chart.tsx:3:10]
+ 2 | 
+ 3 | import { useEffect, useState } from "react";
+   :          ^^^^|^^^^
+   :              `-- 'useEffect' is imported here
+ 4 | import { Card, CardContent } from "@/components/ui/card";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'onTagsChange' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/work-registration-form/work-registration-form.tsx:46:3]
+ 45 |   onTierChange,
+ 46 |   onTagsChange, // Currently unused in view logic but passed if needed for deletions
+    :   ^^^^^^|^^^^^
+    :         `-- 'onTagsChange' is declared here
+ 47 |   onNewTagChange,
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'XCircle' is imported but never used.
+   ,-[src/components/matching-manual/manual-matching-console.tsx:8:3]
+ 7 |   CheckCircle2,
+ 8 |   XCircle,
+   :   ^^^|^^^
+   :      `-- 'XCircle' is imported here
+ 9 |   ArrowRightLeft,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ArrowRightLeft' is imported but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:9:3]
+  8 |   XCircle,
+  9 |   ArrowRightLeft,
+    :   ^^^^^^^|^^^^^^
+    :          `-- 'ArrowRightLeft' is imported here
+ 10 |   MoreHorizontal,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'MoreHorizontal' is imported but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:10:3]
+  9 |   ArrowRightLeft,
+ 10 |   MoreHorizontal,
+    :   ^^^^^^^|^^^^^^
+    :          `-- 'MoreHorizontal' is imported here
+ 11 |   Calendar,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Calendar' is imported but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:11:3]
+ 10 |   MoreHorizontal,
+ 11 |   Calendar,
+    :   ^^^^|^^^
+    :       `-- 'Calendar' is imported here
+ 12 |   MapPin,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'MapPin' is imported but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:12:3]
+ 11 |   Calendar,
+ 12 |   MapPin,
+    :   ^^^|^^
+    :      `-- 'MapPin' is imported here
+ 13 |   Briefcase,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Briefcase' is imported but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:13:3]
+ 12 |   MapPin,
+ 13 |   Briefcase,
+    :   ^^^^|^^^^
+    :       `-- 'Briefcase' is imported here
+ 14 |   Heart,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'AlertCircle' is imported but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:15:3]
+ 14 |   Heart,
+ 15 |   AlertCircle,
+    :   ^^^^^|^^^^^
+    :        `-- 'AlertCircle' is imported here
+ 16 |   Moon,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Check' is imported but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:19:3]
+ 18 |   Loader2,
+ 19 |   Check,
+    :   ^^|^^
+    :     `-- 'Check' is imported here
+ 20 |   BookOpen,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Type alias 'MatchRecord' is declared but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:56:6]
+ 55 | 
+ 56 | type MatchRecord = {
+    :      ^^^^^|^^^^^
+    :           `-- 'MatchRecord' is declared here
+ 57 |   id: string;
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Parameter 'query' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/matching-manual/manual-matching-console.tsx:210:22]
+ 209 |     return {
+ 210 |       select: async (query: string = "*") => {
+     :                      ^^^^^^^^^|^^^^^^^^^
+     :                               `-- 'query' is declared here
+ 211 |         await new Promise((resolve) => setTimeout(resolve, 400));
+     `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'LayoutGrid' is imported but never used.
+    ,-[src/components/profile2/profile-dashboard.tsx:14:3]
+ 13 |   Search,
+ 14 |   LayoutGrid,
+    :   ^^^^^|^^^^
+    :        `-- 'LayoutGrid' is imported here
+ 15 |   List,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'List' is imported but never used.
+    ,-[src/components/profile2/profile-dashboard.tsx:15:3]
+ 14 |   LayoutGrid,
+ 15 |   List,
+    :   ^^|^
+    :     `-- 'List' is imported here
+ 16 |   AlertTriangle,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Info' is imported but never used.
+    ,-[src/components/user-edited-userprofiles/user-profile-app.tsx:26:3]
+ 25 |   Trash2,
+ 26 |   Info,
+    :   ^^|^
+    :     `-- 'Info' is imported here
+ 27 |   Moon,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Trophy' is imported but never used.
+    ,-[src/components/user-edited-userprofiles/user-profile-app.tsx:30:3]
+ 29 |   Check,
+ 30 |   Trophy,
+    :   ^^^|^^
+    :      `-- 'Trophy' is imported here
+ 31 |   Loader2,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'Textarea' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/user-edited-userprofiles/user-profile-app.tsx:374:7]
+ 373 | 
+ 374 | const Textarea = ({ className = "", ...props }: any) => (
+     :       ^^^^|^^^
+     :           `-- 'Textarea' is declared here
+ 375 |   <textarea
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'vi' is imported but never used.
+   ,-[src/components/auto-matching/auto-matching/auto-matching.logic.test.ts:1:32]
+ 1 | import { describe, it, expect, vi } from "vitest";
+   :                                ^|
+   :                                 `-- 'vi' is imported here
+ 2 | import { calculateMatches, SearchCriteria } from "./auto-matching.logic";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'results' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/auto-matching/auto-matching/auto-matching.logic.test.ts:43:11]
+ 42 | 
+ 43 |     const results = await calculateMatches(criteria);
+    :           ^^^|^^^
+    :              `-- 'results' is declared here
+ 44 |     // c1 (max 800) は条件厳しい
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Parameter 'table' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/user-profiles/user-profile-manager.tsx:108:10]
+ 107 | const supabase = {
+ 108 |   from: (table: string) => ({
+     :          ^^|^^
+     :            `-- 'table' is declared here
+ 109 |     select: async () => {
+     `----
+  help: Consider removing this parameter.
+
+  x typescript(TS7006): Parameter 'tag' implicitly has an 'any' type.
+     ,-[src/components/works/work-registration/work-registration.tsx:367:51]
+ 366 |                                 )}
+ 367 |                                 {field.value.map((tag, idx) => {
+     :                                                   ^^^
+ 368 |                                   const isOfficial =
+     `----
+
+  x typescript(TS7006): Parameter 'idx' implicitly has an 'any' type.
+     ,-[src/components/works/work-registration/work-registration.tsx:367:56]
+ 366 |                                 )}
+ 367 |                                 {field.value.map((tag, idx) => {
+     :                                                        ^^^
+ 368 |                                   const isOfficial =
+     `----
+
+  x typescript(TS7006): Parameter 'urlItem' implicitly has an 'any' type.
+     ,-[src/components/works/work-registration/work-registration.tsx:692:45]
+ 691 |                         <div className="space-y-4">
+ 692 |                           {field.value.map((urlItem, idx) => (
+     :                                             ^^^^^^^
+ 693 |                             <div
+     `----
+
+  x typescript(TS7006): Parameter 'idx' implicitly has an 'any' type.
+     ,-[src/components/works/work-registration/work-registration.tsx:692:54]
+ 691 |                         <div className="space-y-4">
+ 692 |                           {field.value.map((urlItem, idx) => (
+     :                                                      ^^^
+ 693 |                             <div
+     `----
+
+  x typescript(TS7006): Parameter '_' implicitly has an 'any' type.
+     ,-[src/components/works/work-registration/work-registration.tsx:752:42]
+ 751 |                                       const newUrls = field.value.filter(
+ 752 |                                         (_, i) => i !== idx
+     :                                          ^
+ 753 |                                       );
+     `----
+
+  x typescript(TS7006): Parameter 'i' implicitly has an 'any' type.
+     ,-[src/components/works/work-registration/work-registration.tsx:752:45]
+ 751 |                                       const newUrls = field.value.filter(
+ 752 |                                         (_, i) => i !== idx
+     :                                             ^
+ 753 |                                       );
+     `----
+
+  ! typescript-eslint(no-redundant-type-constituents): 'never' is overridden by other types in this union type.
+    ,-[src/types/types_db.ts:63:7]
+ 62 |   DefaultSchemaTableNameOrOptions extends
+ 63 |     | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    :       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 64 |     | { schema: keyof DatabaseWithoutInternals },
+    `----
+
+  ! typescript-eslint(no-redundant-type-constituents): 'never' is overridden by other types in this union type.
+    ,-[src/types/types_db.ts:92:7]
+ 91 |   DefaultSchemaTableNameOrOptions extends
+ 92 |     | keyof DefaultSchema["Tables"]
+    :       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 93 |     | { schema: keyof DatabaseWithoutInternals },
+    `----
+
+  ! typescript-eslint(no-redundant-type-constituents): 'never' is overridden by other types in this union type.
+     ,-[src/types/types_db.ts:117:7]
+ 116 |   DefaultSchemaTableNameOrOptions extends
+ 117 |     | keyof DefaultSchema["Tables"]
+     :       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 118 |     | { schema: keyof DatabaseWithoutInternals },
+     `----
+
+  ! typescript-eslint(no-redundant-type-constituents): 'never' is overridden by other types in this union type.
+     ,-[src/types/types_db.ts:142:7]
+ 141 |   DefaultSchemaEnumNameOrOptions extends
+ 142 |     | keyof DefaultSchema["Enums"]
+     :       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 143 |     | { schema: keyof DatabaseWithoutInternals },
+     `----
+
+  ! typescript-eslint(no-redundant-type-constituents): 'never' is overridden by other types in this union type.
+     ,-[src/types/types_db.ts:159:7]
+ 158 |   PublicCompositeTypeNameOrOptions extends
+ 159 |     | never
+     :       ^^^^^
+ 160 |     | { schema: keyof DatabaseWithoutInternals },
+     `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/skeleton.tsx:1:20]
+ 1 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 2 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/components/ui/button' or its corresponding type declarations.
+   ,-[src/components/ui/sidebar.tsx:7:24]
+ 6 | import * as React from "react";
+ 7 | import { Button } from "@/components/ui/button";
+   :                        ^^^^^^^^^^^^^^^^^^^^^^^^
+ 8 | import { Input } from "@/components/ui/input";
+   `----
+
+  x typescript(TS2307): Cannot find module '@/components/ui/input' or its corresponding type declarations.
+   ,-[src/components/ui/sidebar.tsx:8:23]
+ 7 | import { Button } from "@/components/ui/button";
+ 8 | import { Input } from "@/components/ui/input";
+   :                       ^^^^^^^^^^^^^^^^^^^^^^^
+ 9 | import { Separator } from "@/components/ui/separator";
+   `----
+
+  x typescript(TS2307): Cannot find module '@/components/ui/separator' or its corresponding type declarations.
+    ,-[src/components/ui/sidebar.tsx:9:27]
+  8 | import { Input } from "@/components/ui/input";
+  9 | import { Separator } from "@/components/ui/separator";
+    :                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 10 | import {
+    `----
+
+  x typescript(TS2307): Cannot find module '@/components/ui/sheet' or its corresponding type declarations.
+    ,-[src/components/ui/sidebar.tsx:16:8]
+ 15 |   SheetTitle,
+ 16 | } from "@/components/ui/sheet";
+    :        ^^^^^^^^^^^^^^^^^^^^^^^
+ 17 | import { Skeleton } from "@/components/ui/skeleton";
+    `----
+
+  x typescript(TS2307): Cannot find module '@/components/ui/skeleton' or its corresponding type declarations.
+    ,-[src/components/ui/sidebar.tsx:17:26]
+ 16 | } from "@/components/ui/sheet";
+ 17 | import { Skeleton } from "@/components/ui/skeleton";
+    :                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 18 | import {
+    `----
+
+  x typescript(TS2307): Cannot find module '@/components/ui/tooltip' or its corresponding type declarations.
+    ,-[src/components/ui/sidebar.tsx:23:8]
+ 22 |   TooltipTrigger,
+ 23 | } from "@/components/ui/tooltip";
+    :        ^^^^^^^^^^^^^^^^^^^^^^^^^
+ 24 | import { useIsMobile } from "@/hooks/use-mobile";
+    `----
+
+  x typescript(TS2307): Cannot find module '@/hooks/use-mobile' or its corresponding type declarations.
+    ,-[src/components/ui/sidebar.tsx:24:29]
+ 23 | } from "@/components/ui/tooltip";
+ 24 | import { useIsMobile } from "@/hooks/use-mobile";
+    :                             ^^^^^^^^^^^^^^^^^^^^
+ 25 | import { cn } from "@/lib/utils";
+    `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+    ,-[src/components/ui/sidebar.tsx:25:20]
+ 24 | import { useIsMobile } from "@/hooks/use-mobile";
+ 25 | import { cn } from "@/lib/utils";
+    :                    ^^^^^^^^^^^^^
+ 26 | 
+    `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/sheet.tsx:6:20]
+ 5 | import * as React from "react";
+ 6 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 7 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/separator.tsx:5:20]
+ 4 | import * as React from "react";
+ 5 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 6 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/select.tsx:6:20]
+ 5 | import * as React from "react";
+ 6 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 7 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/table.tsx:4:20]
+ 3 | import * as React from "react";
+ 4 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 5 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/switch.tsx:5:20]
+ 4 | import * as React from "react";
+ 5 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 6 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/slider.tsx:5:20]
+ 4 | import * as React from "react";
+ 5 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 6 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/textarea.tsx:2:20]
+ 1 | import * as React from "react";
+ 2 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 3 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/tabs.tsx:5:20]
+ 4 | import * as React from "react";
+ 5 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 6 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/tooltip.tsx:5:20]
+ 4 | import * as React from "react";
+ 5 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 6 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/progress.tsx:5:20]
+ 4 | import * as React from "react";
+ 5 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 6 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/button.tsx:4:20]
+ 3 | import * as React from "react";
+ 4 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 5 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/breadcrumb.tsx:4:20]
+ 3 | import * as React from "react";
+ 4 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 5 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/dialog.tsx:5:20]
+ 4 | import * as React from "react";
+ 5 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 6 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/checkbox.tsx:6:20]
+ 5 | import * as React from "react";
+ 6 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 7 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/dropdown-menu.tsx:6:20]
+ 5 | import * as React from "react";
+ 6 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 7 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/components/ui/label' or its corresponding type declarations.
+    ,-[src/components/ui/form.tsx:14:23]
+ 13 | } from "react-hook-form";
+ 14 | import { Label } from "@/components/ui/label";
+    :                       ^^^^^^^^^^^^^^^^^^^^^^^
+ 15 | import { cn } from "@/lib/utils";
+    `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+    ,-[src/components/ui/form.tsx:15:20]
+ 14 | import { Label } from "@/components/ui/label";
+ 15 | import { cn } from "@/lib/utils";
+    :                    ^^^^^^^^^^^^^
+ 16 | 
+    `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/input.tsx:2:20]
+ 1 | import * as React from "react";
+ 2 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 3 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/label.tsx:5:20]
+ 4 | import * as React from "react";
+ 5 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 6 | 
+   `----
+
+  x typescript(TS2307): Cannot find module '@/lib/utils' or its corresponding type declarations.
+   ,-[src/components/ui/alert-dialog.tsx:5:20]
+ 4 | import * as React from "react";
+ 5 | import { cn } from "@/lib/utils";
+   :                    ^^^^^^^^^^^^^
+ 6 | 
+   `----
+
+  ! typescript-eslint(no-redundant-type-constituents): 'any' overrides all other types in this union type.
+     ,-[src/components/ui/sidebar.tsx:508:22]
+ 507 |   isActive?: boolean;
+ 508 |   tooltip?: string | React.ComponentProps<typeof TooltipContent>;
+     :                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 509 | } & VariantProps<typeof sidebarMenuButtonVariants>) {
+     `----
+
+Found 48 warnings and 35 errors.
+Finished in 2.5s on 220 files using 12 threads.
+ ELIFECYCLE  Command failed with exit code 1.

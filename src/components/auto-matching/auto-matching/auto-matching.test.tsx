@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { describe, it, expect, vi, beforeAll } from "vitest";
 import { AutoMatching } from "./auto-matching";
 import { SearchCriteria, MatchingScore } from "./auto-matching.logic";
 
@@ -52,7 +52,12 @@ describe("AutoMatching UI", () => {
         candidate_id: "c1",
         score: 0.9,
         rank: 1,
-        explanation: { skill_match: 90, salary_match: 100, location_match: 100, tags: [] },
+        explanation: {
+          skill_match: 90,
+          salary_match: 100,
+          location_match: 100,
+          tags: [],
+        },
         candidate: {
           id: "c1",
           name: "Test Candidate",

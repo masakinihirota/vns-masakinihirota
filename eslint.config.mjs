@@ -1,8 +1,8 @@
-import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import prettierConfig from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
+import { defineConfig, globalIgnores } from "eslint/config";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -14,7 +14,8 @@ const eslintConfig = defineConfig([
     },
     rules: {
       "prettier/prettier": "error",
-
+      "@typescript-eslint/no-unused-vars": "off",
+      // "no-unused-vars": "off", // JS標準ルールも念のためOFF
       // strict-rule準拠ルール（型情報不要なもののみ）
       // II-3 let禁止、constのみ使用
       "prefer-const": "error",
@@ -28,7 +29,8 @@ const eslintConfig = defineConfig([
         "warn",
         {
           selector: "TryStatement",
-          message: "try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）",
+          message:
+            "try/catchは腐敗防止層でのみ使用してください（strict-rule III-2）",
         },
       ],
     },

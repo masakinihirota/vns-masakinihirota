@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react";
-import { useOnboarding } from "./onboarding.logic";
 import { describe, it, expect, vi } from "vitest";
+import { useOnboarding } from "./onboarding.logic";
 
 describe("useOnboarding", () => {
   it("should initialize with default values", () => {

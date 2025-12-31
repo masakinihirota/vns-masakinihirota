@@ -68,7 +68,10 @@ const DUMMY_CANDIDATES_DATA: MatchingUser[] = [
 
 // --- Utilities ---
 
-export const calculateCompatibility = (userA: MatchingUser, userB: MatchingUser): number => {
+export const calculateCompatibility = (
+  userA: MatchingUser,
+  userB: MatchingUser
+): number => {
   const setA = new Set(userA.tags);
   const setB = new Set(userB.tags);
 
@@ -97,13 +100,17 @@ export const useManualMatching = () => {
 
   const toggleWatch = (userId: string) => {
     setCandidates((prev) =>
-      prev.map((c) => (c.user.id === userId ? { ...c, isWatched: !c.isWatched } : c)),
+      prev.map((c) =>
+        c.user.id === userId ? { ...c, isWatched: !c.isWatched } : c
+      )
     );
   };
 
   const toggleFollow = (userId: string) => {
     setCandidates((prev) =>
-      prev.map((c) => (c.user.id === userId ? { ...c, isFollowed: !c.isFollowed } : c)),
+      prev.map((c) =>
+        c.user.id === userId ? { ...c, isFollowed: !c.isFollowed } : c
+      )
     );
   };
 

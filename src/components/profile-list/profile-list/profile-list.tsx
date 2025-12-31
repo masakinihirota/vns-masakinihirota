@@ -31,7 +31,12 @@ export interface ProfileListProps {
  * - Tailwind CSS標準クラスのみを使用（DADS準拠）
  * - フォーカス時は黄色のリング（ring-yellow-400）が表示されます
  */
-export const ProfileList = ({ name, role, bio, avatarUrl }: ProfileListProps) => {
+export const ProfileList = ({
+  name,
+  role,
+  bio,
+  avatarUrl,
+}: ProfileListProps) => {
   const initials = name
     .split(" ")
     .map((n) => n[0])
@@ -56,7 +61,9 @@ export const ProfileList = ({ name, role, bio, avatarUrl }: ProfileListProps) =>
         <div className="text-xs text-gray-600">{role}</div>
       </div>
       <div className="flex-1 min-w-0">
-        <p className="text-sm text-gray-600 leading-normal line-clamp-2">{bio}</p>
+        <p className="text-sm text-gray-600 leading-normal line-clamp-2">
+          {bio}
+        </p>
       </div>
     </div>
   );

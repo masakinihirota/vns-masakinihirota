@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { Onboarding } from "./onboarding";
 import { describe, it, expect } from "vitest";
+import { Onboarding } from "./onboarding";
 
 describe("Onboarding UI", () => {
   it("renders the onboarding form", () => {
@@ -20,7 +20,9 @@ describe("Onboarding UI", () => {
 
   it("disables submit button initially", () => {
     render(<Onboarding />);
-    const submitButton = screen.getByRole("button", { name: "アカウントを作成する" });
+    const submitButton = screen.getByRole("button", {
+      name: "アカウントを作成する",
+    });
     expect(submitButton).toBeDisabled();
   });
 });

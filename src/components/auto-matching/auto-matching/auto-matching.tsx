@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Search,
   Filter,
@@ -15,10 +14,11 @@ import {
   AlertCircle,
   ArrowUpDown,
 } from "lucide-react";
+import React from "react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -35,7 +35,7 @@ interface AutoMatchingProps {
   darkMode: boolean;
   onCriteriaChange: (
     key: keyof SearchCriteria,
-    value: SearchCriteria[keyof SearchCriteria],
+    value: SearchCriteria[keyof SearchCriteria]
   ) => void;
   onSearch: () => void;
   onToggleDarkMode: () => void;
@@ -61,15 +61,26 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
             <Settings className="w-5 h-5 text-white" />
           </div>
           <h1 className="text-xl font-bold tracking-tight">
-            Auto Match <span className="text-slate-400 font-normal text-sm ml-2">v0.1.0</span>
+            Auto Match{" "}
+            <span className="text-slate-400 font-normal text-sm ml-2">
+              v0.1.0
+            </span>
           </h1>
         </div>
         <div className="flex items-center gap-4">
           <div className="text-sm text-muted-foreground hidden md:block">
             システム稼働中 | DB接続: 正常
           </div>
-          <Button variant="ghost" className="rounded-full w-10 h-10 p-0" onClick={onToggleDarkMode}>
-            {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          <Button
+            variant="ghost"
+            className="rounded-full w-10 h-10 p-0"
+            onClick={onToggleDarkMode}
+          >
+            {darkMode ? (
+              <Sun className="w-5 h-5" />
+            ) : (
+              <Moon className="w-5 h-5" />
+            )}
           </Button>
           <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 border flex items-center justify-center">
             <User className="w-5 h-5 text-slate-500" />
@@ -87,29 +98,45 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
                   <Filter className="w-5 h-5" />
                   マッチング条件
                 </CardTitle>
-                <p className="text-sm text-muted-foreground">候補者の絞り込み条件を設定</p>
+                <p className="text-sm text-muted-foreground">
+                  候補者の絞り込み条件を設定
+                </p>
               </CardHeader>
               <CardContent className="space-y-6 pt-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium leading-none">希望職種</label>
+                  <label className="text-sm font-medium leading-none">
+                    希望職種
+                  </label>
                   <Select
                     value={criteria.role}
-                    onValueChange={(val: string) => onCriteriaChange("role", val)}
+                    onValueChange={(val: string) =>
+                      onCriteriaChange("role", val)
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="職種を選択" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Frontend Engineer">Frontend Engineer</SelectItem>
-                      <SelectItem value="Backend Engineer">Backend Engineer</SelectItem>
-                      <SelectItem value="Fullstack Engineer">Fullstack Engineer</SelectItem>
-                      <SelectItem value="UI/UX Designer">UI/UX Designer</SelectItem>
+                      <SelectItem value="Frontend Engineer">
+                        Frontend Engineer
+                      </SelectItem>
+                      <SelectItem value="Backend Engineer">
+                        Backend Engineer
+                      </SelectItem>
+                      <SelectItem value="Fullstack Engineer">
+                        Fullstack Engineer
+                      </SelectItem>
+                      <SelectItem value="UI/UX Designer">
+                        UI/UX Designer
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium leading-none">勤務地 / エリア</label>
+                  <label className="text-sm font-medium leading-none">
+                    勤務地 / エリア
+                  </label>
                   <Input
                     value={criteria.location}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -121,7 +148,9 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
 
                 <div className="space-y-2">
                   <div className="flex justify-between">
-                    <label className="text-sm font-medium leading-none">最低年収</label>
+                    <label className="text-sm font-medium leading-none">
+                      最低年収
+                    </label>
                     <span className="text-sm text-muted-foreground font-mono">
                       {criteria.min_salary} 万円
                     </span>
@@ -131,7 +160,9 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
                     min={300}
                     max={1500}
                     value={criteria.min_salary}
-                    onChange={(e) => onCriteriaChange("min_salary", parseInt(e.target.value))}
+                    onChange={(e) =>
+                      onCriteriaChange("min_salary", parseInt(e.target.value))
+                    }
                     className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer dark:bg-slate-700 accent-blue-600"
                   />
                 </div>
@@ -141,7 +172,9 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
                     type="checkbox"
                     id="remote"
                     checked={criteria.remote}
-                    onChange={(e) => onCriteriaChange("remote", e.target.checked)}
+                    onChange={(e) =>
+                      onCriteriaChange("remote", e.target.checked)
+                    }
                     className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
                   />
                   <label
@@ -153,7 +186,11 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
                 </div>
 
                 <div className="pt-4">
-                  <Button className="w-full" onClick={onSearch} disabled={loading}>
+                  <Button
+                    className="w-full"
+                    onClick={onSearch}
+                    disabled={loading}
+                  >
                     {loading ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -182,7 +219,8 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
                 </span>
               </p>
               <p className="text-xs text-muted-foreground">
-                Server Actionにより、セキュアな環境でマッチングスコアが計算されます。
+                Server
+                Actionにより、セキュアな環境でマッチングスコアが計算されます。
               </p>
             </div>
           </aside>
@@ -191,7 +229,9 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
           <section className="flex-1 space-y-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold tracking-tight">マッチング結果</h2>
+                <h2 className="text-2xl font-bold tracking-tight">
+                  マッチング結果
+                </h2>
                 <p className="text-muted-foreground">
                   AIスコアリングによる推奨候補者リスト ({results.length}名)
                 </p>
@@ -266,14 +306,21 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
                                 {result.candidate.location}
                               </p>
                             </div>
-                            <Button variant="outline" className="hidden md:flex">
+                            <Button
+                              variant="outline"
+                              className="hidden md:flex"
+                            >
                               詳細プロフィール
                             </Button>
                           </div>
 
                           <div className="flex flex-wrap gap-2 mt-2">
                             {result.candidate.skills.map((skill) => (
-                              <Badge key={skill} variant="secondary" className="font-normal">
+                              <Badge
+                                key={skill}
+                                variant="secondary"
+                                className="font-normal"
+                              >
                                 {skill}
                               </Badge>
                             ))}
@@ -283,12 +330,15 @@ export const AutoMatching: React.FC<AutoMatchingProps> = ({
                             <div className="flex items-center text-muted-foreground">
                               <DollarSign className="w-4 h-4 mr-1.5 text-slate-400" />
                               <span>
-                                希望: {result.candidate.min_salary}~{result.candidate.max_salary}万
+                                希望: {result.candidate.min_salary}~
+                                {result.candidate.max_salary}万
                               </span>
                             </div>
                             <div className="flex items-center text-muted-foreground">
                               <Star className="w-4 h-4 mr-1.5 text-slate-400" />
-                              <span>経験: {result.candidate.experience_years}年</span>
+                              <span>
+                                経験: {result.candidate.experience_years}年
+                              </span>
                             </div>
                             <div className="flex items-center text-muted-foreground md:col-span-1 col-span-2">
                               <AlertCircle className="w-4 h-4 mr-1.5 text-blue-500" />

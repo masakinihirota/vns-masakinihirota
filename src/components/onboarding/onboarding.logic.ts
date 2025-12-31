@@ -80,8 +80,16 @@ export const CULTURAL_SPHERES: CulturalSphere[] = [
   { id: "french", label: "フランス語文化圏", en: "French" },
   { id: "german", label: "ドイツ語文化圏", en: "German" },
   { id: "korean", label: "韓国語文化圏", en: "Korean" },
-  { id: "chinese_traditional", label: "中国語文化圏 (繁体字)", en: "Chinese (Traditional)" },
-  { id: "chinese_simplified", label: "中国語文化圏 (簡体字)", en: "Chinese (Simplified)" },
+  {
+    id: "chinese_traditional",
+    label: "中国語文化圏 (繁体字)",
+    en: "Chinese (Traditional)",
+  },
+  {
+    id: "chinese_simplified",
+    label: "中国語文化圏 (簡体字)",
+    en: "Chinese (Simplified)",
+  },
   { id: "spanish", label: "スペイン語文化圏", en: "Spanish" },
   { id: "italian", label: "イタリア語文化圏", en: "Italian" },
   { id: "portuguese", label: "ポルトガル語文化圏", en: "Portuguese" },
@@ -140,6 +148,11 @@ export interface Agreements {
   honesty: boolean;
 }
 
+export const CORE_ACTIVITY_HOURS = Array.from(
+  { length: 24 },
+  (_, i) => i.toString().padStart(2, "0") + ":00"
+);
+
 export const useOnboarding = () => {
   const [selectedArea, setSelectedArea] = useState<string | null>(null);
   const [culturalSphere, setCulturalSphere] = useState<string>("");
@@ -152,6 +165,11 @@ export const useOnboarding = () => {
   // 言語設定用のState
   const [nativeLanguage, setNativeLanguage] = useState<string>("");
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([]);
+
+  // 活動設定用のState
+  const [coreActivityStart, setCoreActivityStart] = useState<string>("09:00");
+  const [coreActivityEnd, setCoreActivityEnd] = useState<string>("18:00");
+  const [useAiTranslation, setUseAiTranslation] = useState<boolean>(true);
 
   // 同意事項用のState
   const [isAdult, setIsAdult] = useState(false);
@@ -173,7 +191,7 @@ export const useOnboarding = () => {
 
   const toggleAvailableLanguage = (lang: string) => {
     setAvailableLanguages((prev) =>
-      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang],
+      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
     );
   };
 
@@ -183,7 +201,7 @@ export const useOnboarding = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log({
+    /* console.log({
       selectedArea,
       culturalSphere,
       birthGeneration,
@@ -191,15 +209,21 @@ export const useOnboarding = () => {
       selectedRegion,
       nativeLanguage,
       availableLanguages,
+      coreActivityStart,
+      coreActivityEnd,
+      useAiTranslation,
       isAdult,
       agreements,
-    });
+    }); */
     alert("アカウント作成リクエストを送信しました（デモ）");
   };
 
-  const canSubmit = isAdult && agreements.oasis && agreements.human && agreements.honesty;
+  const canSubmit =
+    isAdult && agreements.oasis && agreements.human && agreements.honesty;
 
-  const currentDetail = culturalSphere ? DETAILED_REGIONS[culturalSphere] : null;
+  const currentDetail = culturalSphere
+    ? DETAILED_REGIONS[culturalSphere]
+    : null;
 
   return {
     state: {
@@ -210,6 +234,9 @@ export const useOnboarding = () => {
       selectedRegion,
       nativeLanguage,
       availableLanguages,
+      coreActivityStart,
+      coreActivityEnd,
+      useAiTranslation,
       isAdult,
       agreements,
       currentDetail,
@@ -222,6 +249,9 @@ export const useOnboarding = () => {
       setSelectedCountry,
       setSelectedRegion,
       setNativeLanguage,
+      setCoreActivityStart,
+      setCoreActivityEnd,
+      setUseAiTranslation,
       setIsAdult,
       toggleAvailableLanguage,
       toggleAgreement,
