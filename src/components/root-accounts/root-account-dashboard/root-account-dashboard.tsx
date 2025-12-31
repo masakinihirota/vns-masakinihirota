@@ -1,5 +1,6 @@
 "use client";
 
+import * as Slider from "@radix-ui/react-slider";
 import {
   User,
   MapPin,
@@ -10,12 +11,20 @@ import {
   Save,
   CreditCard,
   AlertCircle,
-  Terminal,
+  Clock,
+  Plus,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import {
+  normalizeRootAccountData,
+  timeToHours,
+  hoursToTime,
+} from "@/lib/root-account-utils";
+import {
   LANGUAGES_MOCK,
+  COUNTRIES_MOCK,
   dummyUserProfileList,
 } from "./root-account-dashboard.dummyData";
 import {
@@ -28,33 +37,139 @@ interface RootAccountDashboardProps {
 }
 
 export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
+  // データの正規化（旧スキーマからの変換対応）
+  const normalizedData = normalizeRootAccountData(data);
+
+  const [formData, setFormData] = useState<RootAccount>(normalizedData);
+  const [originalData, setOriginalData] = useState<RootAccount>(normalizedData);
+  const [selectedArea, setSelectedArea] = useState<number | null>(null);
+
+  // 編集モード
   const [isEditing, setIsEditing] = useState(false);
+  const [isEditingCoreHours, setIsEditingCoreHours] = useState(false);
+  const [isEditingLanguages, setIsEditingLanguages] = useState(false);
+  const [isEditingCountries, setIsEditingCountries] = useState(false);
+
+  // ローディング状態
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState<RootAccount>(data);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [profiles, setProfiles] =
-    useState<UserProfileSummary[]>(dummyUserProfileList);
+  const [generationHistory, setGenerationHistory] = useState<
+    { from: string; to: string; at: string }[]
+  >([]);
 
-  // Simulate Server Action for Update
-  const handleSave = async () => {
-    setIsLoading(true);
-    // Mimic network delay and optimistic UI update
-    setTimeout(() => {
-      setIsLoading(false);
-      setIsEditing(false);
-      // In a real app, this would trigger a toast notification based on Chapter 4 requirements
-      alert("更新が完了しました (Server Action Mock)");
-    }, 1000);
+  const generationOptions = [
+    "1980-1984",
+    "1985-1989",
+    "1990-1994",
+    "1995-1999",
+    "2000-2004",
+    "2005-2009",
+    "2010-2014",
+    "2015-2019",
+    "2020-2024",
+  ];
+
+  const [profiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
+
+  // 日またぎ用の状態（翌日の終了時刻を保持）
+  const [nextDayEndHour, setNextDayEndHour] = useState<number>(0);
+
+  // 画像エラー状態
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+
+  const handleChange = <K extends keyof RootAccount>(
+    field: K,
+    value: RootAccount[K]
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  const handleGenerationChange = (newValue: string) => {
+    if (newValue === formData.birth_generation) return;
+    setGenerationHistory((prev) => [
+      ...prev,
+      {
+        from: formData.birth_generation || "未設定",
+        to: newValue || "未設定",
+        at: new Date().toISOString(),
+      },
+    ]);
+    handleChange("birth_generation", newValue);
+  };
+
+  // 保存処理（API実装予定）
+  const handleSave = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: 実際のAPI呼び出しを実装
+      // await updateRootAccount(formData);
+
+      // 保存成功後、元データを更新
+      setOriginalData(formData);
+      setIsEditing(false);
+      alert("変更を保存しました");
+    } catch (error) {
+      console.error("保存エラー:", error);
+      alert("保存に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // キャンセル処理
   const handleCancel = () => {
-    setFormData(data); // Reset changes to initial data
+    setFormData(originalData);
     setIsEditing(false);
   };
 
-  const handleChange = (field: keyof RootAccount, value: string | number) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  // 言語設定の保存
+  const handleSaveLanguages = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: 実際のAPI呼び出しを実装
+
+      setOriginalData(formData);
+      setIsEditingLanguages(false);
+      alert("言語設定を保存しました");
+    } catch (error) {
+      console.error("保存エラー:", error);
+      alert("保存に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // コア活動時間の保存
+  const handleSaveCoreHours = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: 実際のAPI呼び出しを実装
+
+      setOriginalData(formData);
+      setIsEditingCoreHours(false);
+      alert("活動時間を保存しました");
+    } catch (error) {
+      console.error("保存エラー:", error);
+      alert("保存に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // VNS管理国の保存
+  const handleSaveCountries = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: 実際のAPI呼び出しを実装
+
+      setIsEditingCountries(false);
+      alert("管理国設定を保存しました");
+    } catch (error) {
+      console.error("保存エラー:", error);
+      alert("保存に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -104,14 +219,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <button
                     onClick={handleCancel}
                     disabled={isLoading}
-                    className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
                   >
+                    <X size={16} className="inline mr-1" />
                     キャンセル
                   </button>
                   <button
                     onClick={handleSave}
                     disabled={isLoading}
-                    className="flex items-center gap-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    className="flex items-center gap-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
                   >
                     {isLoading ? (
                       <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -217,8 +333,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </p>
               </div>
               <button className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                <User size={14} />
-                新規作成
+                <Edit3 size={14} />
+                編集
               </button>
             </div>
 
@@ -244,10 +360,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           </span>
                         )}
                         <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
+                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                            profile.role_type === "leader"
                               ? "bg-purple-100 text-purple-800"
                               : "bg-blue-100 text-blue-800"
-                            }`}
+                          }`}
                         >
                           {profile.role_type}
                         </span>
@@ -270,6 +387,397 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </div>
               )}
             </div>
+
+            <div className="mt-4 flex justify-center">
+              <button className="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-md text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700">
+                <Plus size={16} />
+                新規作成
+              </button>
+            </div>
+          </div>
+
+          {/* VNS管理国一覧セクション */}
+          <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 flex items-center gap-2">
+                  <Globe size={20} className="text-slate-400" />
+                  VNS 管理国一覧
+                </h3>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  このアカウントが管理しているVNS内の国・地域
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  if (isEditingCountries) {
+                    void handleSaveCountries();
+                  } else {
+                    setIsEditingCountries(true);
+                  }
+                }}
+                disabled={isLoading}
+                className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+              >
+                {isEditingCountries ? <Save size={14} /> : <Edit3 size={14} />}
+                {isEditingCountries ? "保存" : "編集"}
+              </button>
+            </div>
+
+            {isEditingCountries && (
+              <div className="mb-4 text-xs text-slate-600 dark:text-slate-300 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-md px-3 py-2">
+                国・地域の管理を編集モードに切り替えました。ここで登録・解除の操作ができます（実装予定）。
+              </div>
+            )}
+
+            <div className="space-y-4">
+              {COUNTRIES_MOCK.map((country) => (
+                <div
+                  key={country.code}
+                  className="bg-slate-50 dark:bg-slate-800/50 overflow-hidden shadow-sm rounded-lg border border-slate-200 dark:border-slate-700 p-4"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3 flex-1 min-w-0">
+                      <span className="text-3xl" aria-hidden>
+                        {country.flag}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="flex items-center space-x-2">
+                          <h4 className="text-sm font-medium text-slate-900 dark:text-white truncate">
+                            {country.name}
+                          </h4>
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100">
+                            {country.code}
+                          </span>
+                          <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-100">
+                            {country.region}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 truncate">
+                          管理中の国 / VNS domain
+                        </p>
+                      </div>
+                    </div>
+                    <div>
+                      <button className="text-xs text-indigo-600 hover:text-indigo-500 font-medium">
+                        詳細
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {COUNTRIES_MOCK.length === 0 && (
+                <div className="text-center py-4 text-sm text-slate-500">
+                  管理中の国はまだ登録されていません
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* 世界地図セクション */}
+          <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 flex items-center gap-2">
+                  <MapPin size={20} className="text-slate-400" />
+                  現在地・居住地
+                </h3>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  活動エリアを選択してください
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[1, 2, 3].map((areaNum) => (
+                <div
+                  key={areaNum}
+                  onClick={() => setSelectedArea(areaNum)}
+                  className={`
+                    relative cursor-pointer rounded-lg overflow-hidden
+                    transition-all duration-300 ease-in-out
+                    hover:-translate-y-2 hover:shadow-xl
+                    ${
+                      selectedArea === areaNum
+                        ? "ring-4 ring-indigo-500 shadow-lg scale-105"
+                        : "ring-1 ring-slate-200 dark:ring-slate-700"
+                    }
+                  `}
+                >
+                  <div
+                    className={`
+                    bg-slate-100 dark:bg-slate-800 p-4
+                    ${selectedArea === areaNum ? "opacity-100" : "opacity-75"}
+                  `}
+                  >
+                    {imageErrors.has(areaNum) ? (
+                      <div className="w-full h-48 flex items-center justify-center text-slate-400">
+                        <div className="text-center">
+                          <MapPin size={48} className="mx-auto mb-2" />
+                          <p className="text-sm">地図画像を読み込めません</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <Image
+                        src={`/world/area${areaNum}.svg`}
+                        alt={`エリア ${areaNum}`}
+                        width={400}
+                        height={300}
+                        className="w-full h-auto"
+                        priority={areaNum === 1}
+                        onError={() => {
+                          setImageErrors((prev) => new Set(prev).add(areaNum));
+                        }}
+                      />
+                    )}
+                  </div>
+                  <div
+                    className={`
+                    absolute bottom-0 left-0 right-0
+                    bg-gradient-to-t from-slate-900/90 to-transparent
+                    p-4 text-white
+                  `}
+                  >
+                    <h4 className="text-lg font-semibold">エリア {areaNum}</h4>
+                    {selectedArea === areaNum && (
+                      <p className="text-xs text-slate-200">選択中</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {selectedArea && (
+              <div className="mt-6 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-lg border border-indigo-200 dark:border-indigo-800">
+                <p className="text-sm text-indigo-900 dark:text-indigo-100">
+                  <span className="font-semibold">エリア {selectedArea}</span>{" "}
+                  が選択されています
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* コア活動時間セクション */}
+          <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
+            <div className="flex justify-between items-center mb-6">
+              <div>
+                <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 flex items-center gap-2">
+                  <Clock size={20} className="text-slate-400" />
+                  コア活動時間（24時間制）
+                </h3>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  主な活動時間を選択してください（UTC）。0時をまたぐことも可能です。
+                </p>
+              </div>
+              <button
+                onClick={() => {
+                  if (isEditingCoreHours) {
+                    void handleSaveCoreHours();
+                  } else {
+                    setIsEditingCoreHours(true);
+                  }
+                }}
+                disabled={isLoading}
+                className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+              >
+                {isEditingCoreHours ? <Save size={14} /> : <Edit3 size={14} />}
+                {isEditingCoreHours ? "保存" : "編集"}
+              </button>
+            </div>
+
+            <div className="space-y-8">
+              {/* メインスライダー（当日の活動時間） */}
+              <div>
+                <div className="flex justify-between items-center mb-3">
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                    当日の活動時間
+                  </label>
+                  <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
+                    {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
+                    {timeToHours(formData.core_hours_end) < 24 ||
+                    nextDayEndHour === 0
+                      ? hoursToTime(timeToHours(formData.core_hours_end))
+                      : "24:00"}
+                  </span>
+                </div>
+
+                {isEditingCoreHours ? (
+                  <>
+                    <Slider.Root
+                      className="relative flex items-center select-none touch-none w-full h-5"
+                      value={[
+                        timeToHours(formData.core_hours_start),
+                        Math.min(timeToHours(formData.core_hours_end), 24),
+                      ]}
+                      onValueChange={(values) => {
+                        handleChange(
+                          "core_hours_start",
+                          hoursToTime(values[0])
+                        );
+                        if (values[1] < 24) {
+                          handleChange(
+                            "core_hours_end",
+                            hoursToTime(values[1])
+                          );
+                          setNextDayEndHour(0); // 24時未満なら翌日スライダーをリセット
+                        } else {
+                          handleChange("core_hours_end", hoursToTime(24));
+                        }
+                      }}
+                      min={0}
+                      max={24}
+                      step={0.5}
+                      minStepsBetweenThumbs={1}
+                      aria-label="Core activity hours"
+                    >
+                      <Slider.Track className="relative grow rounded-full h-3 bg-slate-200 dark:bg-slate-700">
+                        <Slider.Range className="absolute h-full rounded-full bg-indigo-500" />
+                      </Slider.Track>
+                      <Slider.Thumb
+                        className="block w-6 h-6 bg-white dark:bg-slate-800 border-2 border-indigo-500 rounded-full shadow-lg cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                        aria-label="Start time"
+                      />
+                      <Slider.Thumb
+                        className="block w-6 h-6 bg-white dark:bg-slate-800 border-2 border-indigo-500 rounded-full shadow-lg cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                        aria-label="End time (same day)"
+                      />
+                    </Slider.Root>
+
+                    {/* 時間軸ラベル */}
+                    <div className="flex justify-between mt-2 text-xs text-slate-500 dark:text-slate-400">
+                      <span>0時</span>
+                      <span>6時</span>
+                      <span>12時</span>
+                      <span>18時</span>
+                      <span>24時</span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg">
+                    <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
+                      {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
+                      {timeToHours(formData.core_hours_end) < 24 ||
+                      nextDayEndHour === 0
+                        ? hoursToTime(timeToHours(formData.core_hours_end))
+                        : "24:00"}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* 翌日スライダー（上のスライダーが24時の時のみ有効） */}
+              {timeToHours(formData.core_hours_end) >= 24 && (
+                <div>
+                  <div className="flex justify-between items-center mb-3">
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                      翌日の終了時間
+                    </label>
+                    <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">
+                      翌日 {hoursToTime(nextDayEndHour)}
+                    </span>
+                  </div>
+
+                  {isEditingCoreHours ? (
+                    <>
+                      <Slider.Root
+                        className="relative flex items-center select-none touch-none w-full h-5"
+                        value={[nextDayEndHour]}
+                        onValueChange={(values) => {
+                          setNextDayEndHour(values[0]);
+                        }}
+                        min={0}
+                        max={24}
+                        step={0.5}
+                        aria-label="Next day end time"
+                      >
+                        <Slider.Track className="relative grow rounded-full h-3 bg-slate-200 dark:bg-slate-700">
+                          <Slider.Range className="absolute h-full rounded-full bg-emerald-500" />
+                        </Slider.Track>
+                        <Slider.Thumb
+                          className="block w-6 h-6 bg-white dark:bg-slate-800 border-2 border-emerald-500 rounded-full shadow-lg cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                          aria-label="Next day end time"
+                        />
+                      </Slider.Root>
+
+                      {/* 時間軸ラベル */}
+                      <div className="flex justify-between mt-2 text-xs text-slate-500 dark:text-slate-400">
+                        <span>0時</span>
+                        <span>6時</span>
+                        <span>12時</span>
+                        <span>18時</span>
+                        <span>24時</span>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="h-12 flex items-center justify-center bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                      <span className="text-xl font-bold text-emerald-900 dark:text-emerald-50">
+                        翌日 {hoursToTime(nextDayEndHour)}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* 活動時間の説明 */}
+            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <p className="text-sm text-blue-900 dark:text-blue-100">
+                <span className="font-semibold">合計活動時間:</span> {(() => {
+                  const start = timeToHours(formData.core_hours_start);
+                  const end = timeToHours(formData.core_hours_end);
+                  const total =
+                    end >= 24 && nextDayEndHour > 0
+                      ? 24 - start + nextDayEndHour
+                      : end >= start
+                        ? end - start
+                        : 24 - start + end;
+
+                  if (end >= 24 && nextDayEndHour > 0) {
+                    return `${hoursToTime(start)}～翌日${hoursToTime(
+                      nextDayEndHour
+                    )} (${total.toFixed(1)}時間)`;
+                  } else if (end >= start) {
+                    return `${hoursToTime(start)}～${hoursToTime(end)} (${total.toFixed(
+                      1
+                    )}時間)`;
+                  } else {
+                    return `${hoursToTime(start)}～翌日${hoursToTime(end)} (${total.toFixed(
+                      1
+                    )}時間)`;
+                  }
+                })()}
+              </p>
+            </div>
+
+            {/* 8時間超過警告 */}
+            {(() => {
+              const start = timeToHours(formData.core_hours_start);
+              const end = timeToHours(formData.core_hours_end);
+              const total =
+                end >= 24 && nextDayEndHour > 0
+                  ? 24 - start + nextDayEndHour
+                  : end >= start
+                    ? end - start
+                    : 24 - start + end;
+
+              return total > 8 ? (
+                <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-300 dark:border-amber-700">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-semibold text-amber-900 dark:text-amber-100">
+                        活動時間の警告
+                      </p>
+                      <p className="text-sm text-amber-800 dark:text-amber-200 mt-1">
+                        合計活動時間が8時間を超えています（{total.toFixed(1)}
+                        時間）。
+                        長時間の活動は健康に影響を与える可能性があります。適度な休憩を取ることをお勧めします。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ) : null;
+            })()}
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -314,132 +822,66 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           onChange={(e) =>
                             handleChange("display_name", e.target.value)
                           }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${
+                            isEditing
+                              ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                              : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
+                          }`}
                         />
                       </div>
                     </div>
 
-                    {/* Location (New Field) */}
                     <div className="sm:col-span-6">
-                      <label className="block text-sm font-medium text-slate-700 flex items-center gap-1">
-                        <MapPin size={14} /> 居住地 (Location)
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          type="text"
-                          disabled={!isEditing}
-                          value={formData.location}
-                          onChange={(e) =>
-                            handleChange("location", e.target.value)
-                          }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
-                          placeholder="例: 東京都, 日本"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Generation (New Field) */}
-                    {/* Generation */}
-                    <div className="sm:col-span-3">
                       <label className="block text-sm font-medium text-slate-700 flex items-center gap-1">
                         <Activity size={14} /> 生誕世代 (Generation)
                       </label>
                       <div className="mt-1">
-                        {isEditing ? (
-                          <select
-                            value={formData.birth_generation}
-                            onChange={(e) =>
-                              handleChange("birth_generation", e.target.value)
-                            }
-                            className="block w-full py-2 px-3 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                          >
-                            <option value="1960s">1960s</option>
-                            <option value="1970s">1970s</option>
-                            <option value="1980s">1980s</option>
-                            <option value="1990s">1990s</option>
-                            <option value="2000s">2000s</option>
-                            <option value="2010s">2010s</option>
-                          </select>
+                        <select
+                          value={formData.birth_generation}
+                          onChange={(e) =>
+                            handleGenerationChange(e.target.value)
+                          }
+                          className="block w-full rounded-md sm:text-sm p-2 border bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-50 focus:ring-indigo-500 focus:border-indigo-500"
+                        >
+                          <option value="">選択してください</option>
+                          {generationOptions.map((range) => (
+                            <option key={range} value={range}>
+                              {range}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        5年区切りで選択できます。近い年代を選んでください。
+                      </p>
+                      <div className="mt-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-3">
+                        <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 mb-2">
+                          生誕世代の変更履歴
+                        </p>
+                        {generationHistory.length > 0 ? (
+                          <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300">
+                            {generationHistory
+                              .slice()
+                              .reverse()
+                              .map((entry, idx) => (
+                                <li
+                                  key={`${entry.at}-${idx}`}
+                                  className="flex justify-between gap-2"
+                                >
+                                  <span>
+                                    {entry.from} → {entry.to}
+                                  </span>
+                                  <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                                    {new Date(entry.at).toLocaleString("ja-JP")}
+                                  </span>
+                                </li>
+                              ))}
+                          </ul>
                         ) : (
-                          <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50">
-                            {formData.birth_generation}
-                          </div>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">
+                            変更履歴はまだありません
+                          </p>
                         )}
-                      </div>
-                    </div>
-
-                    {/* Culture Code */}
-                    <div className="sm:col-span-3">
-                      <label className="block text-sm font-medium text-slate-700">
-                        活動文化圏 (Culture Sphere)
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          type="text"
-                          disabled={!isEditing}
-                          value={formData.activity_culture_code}
-                          onChange={(e) =>
-                            handleChange(
-                              "activity_culture_code",
-                              e.target.value
-                            )
-                          }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Core Hours Start */}
-                    <div className="sm:col-span-3">
-                      <label className="block text-sm font-medium text-slate-700">
-                        コア活動開始 (UTC)
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          type="time"
-                          disabled={!isEditing}
-                          value={formData.core_hours_start}
-                          onChange={(e) =>
-                            handleChange("core_hours_start", e.target.value)
-                          }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Core Hours End */}
-                    <div className="sm:col-span-3">
-                      <label className="block text-sm font-medium text-slate-700">
-                        コア活動終了 (UTC)
-                      </label>
-                      <div className="mt-1">
-                        <input
-                          type="time"
-                          disabled={!isEditing}
-                          value={formData.core_hours_end}
-                          onChange={(e) =>
-                            handleChange("core_hours_end", e.target.value)
-                          }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
-                        />
-                      </div>
-                    </div>
-
-                    {/* Statement */}
-                    <div className="sm:col-span-6">
-                      <label className="block text-sm font-medium text-slate-700">
-                        自己紹介 (Statement)
-                      </label>
-                      <div className="mt-1">
-                        <textarea
-                          rows={3}
-                          disabled={!isEditing}
-                          value={formData.statement}
-                          onChange={(e) =>
-                            handleChange("statement", e.target.value)
-                          }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
-                        />
                       </div>
                     </div>
                   </div>
@@ -449,107 +891,136 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
                 {/* Language Settings */}
                 <section>
-                  <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 mb-4 flex items-center gap-2">
-                    <Globe size={20} className="text-slate-400" />
-                    言語設定
-                  </h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 flex items-center gap-2">
+                      <Globe size={20} className="text-slate-400" />
+                      言語設定
+                    </h3>
+                    <button
+                      onClick={() => {
+                        if (isEditingLanguages) {
+                          void handleSaveLanguages();
+                        } else {
+                          setIsEditingLanguages(true);
+                        }
+                      }}
+                      disabled={isLoading}
+                      className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+                    >
+                      {isEditingLanguages ? (
+                        <Save size={14} />
+                      ) : (
+                        <Edit3 size={14} />
+                      )}
+                      {isEditingLanguages ? "保存" : "編集"}
+                    </button>
+                  </div>
+                  {isEditingLanguages && (
+                    <div className="mb-4 text-xs text-slate-600 dark:text-slate-300 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-md px-3 py-2">
+                      言語設定を編集モードに切り替えました。母語や使用言語の追加・削除、AI翻訳の切替を行えます（実装予定）。
+                    </div>
+                  )}
                   <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     <div className="sm:col-span-3">
                       <label className="block text-sm font-medium text-slate-700">
-                        母国語 (Mother Tongue)
+                        母語 (複数選択可)
                       </label>
-                      <div className="mt-1">
-                        {isEditing ? (
-                          <select
-                            value={formData.mother_tongue_code}
-                            onChange={(e) =>
-                              handleChange("mother_tongue_code", e.target.value)
-                            }
-                            className="block w-full py-2 px-3 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                          >
-                            {LANGUAGES_MOCK.map((lang) => (
-                              <option key={lang.id} value={lang.id}>
-                                {lang.native_name} ({lang.name})
-                              </option>
-                            ))}
-                          </select>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {formData.mother_tongue_codes.length > 0 ? (
+                          formData.mother_tongue_codes.map((code) => {
+                            const lang = LANGUAGES_MOCK.find(
+                              (l) => l.id === code
+                            );
+                            return (
+                              <span
+                                key={code}
+                                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100 border border-indigo-100 dark:border-indigo-800"
+                              >
+                                <span className="font-semibold">
+                                  {lang?.native_name ?? code}
+                                </span>
+                                <span className="ml-1 text-[11px] text-slate-500 dark:text-slate-300">
+                                  {lang?.name ?? "Unknown"}
+                                </span>
+                              </span>
+                            );
+                          })
                         ) : (
-                          <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50">
-                            {
-                              LANGUAGES_MOCK.find(
-                                (l) => l.id === formData.mother_tongue_code
-                              )?.native_name
-                            }
-                          </div>
+                          <span className="text-xs text-slate-500 dark:text-slate-400">
+                            登録されている母語はありません
+                          </span>
                         )}
                       </div>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        バイリンガルや多言語話者にも対応できるよう、複数の母語を保持できます。
+                      </p>
                     </div>
 
                     <div className="sm:col-span-3">
                       <label className="block text-sm font-medium text-slate-700">
-                        サイト表示言語 (Site Language)
+                        使用できる言語 (複数選択可)
                       </label>
-                      <div className="mt-1">
-                        {isEditing ? (
-                          <select
-                            value={formData.site_language_code}
-                            onChange={(e) =>
-                              handleChange("site_language_code", e.target.value)
-                            }
-                            className="block w-full py-2 px-3 border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                          >
-                            {LANGUAGES_MOCK.map((lang) => (
-                              <option key={lang.id} value={lang.id}>
-                                {lang.native_name} ({lang.name})
-                              </option>
-                            ))}
-                          </select>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {formData.available_language_codes.length > 0 ? (
+                          formData.available_language_codes.map((code) => {
+                            const lang = LANGUAGES_MOCK.find(
+                              (l) => l.id === code
+                            );
+                            return (
+                              <span
+                                key={code}
+                                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100 border border-emerald-100 dark:border-emerald-800"
+                              >
+                                <span className="font-semibold">
+                                  {lang?.native_name ?? code}
+                                </span>
+                                <span className="ml-1 text-[11px] text-slate-500 dark:text-slate-300">
+                                  {lang?.name ?? "Unknown"}
+                                </span>
+                              </span>
+                            );
+                          })
                         ) : (
-                          <div className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50">
-                            {
-                              LANGUAGES_MOCK.find(
-                                (l) => l.id === formData.site_language_code
-                              )?.native_name
-                            }
-                          </div>
+                          <span className="text-xs text-slate-500 dark:text-slate-400">
+                            使用可能な言語はまだ登録されていません
+                          </span>
                         )}
+                      </div>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        UI表示やコミュニケーションで使用する言語を複数登録できます。
+                      </p>
+                    </div>
+
+                    <div className="sm:col-span-6">
+                      <div className="flex items-start justify-between bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+                        <div>
+                          <p className="text-sm font-medium text-slate-900 dark:text-slate-50">
+                            AI翻訳を利用する
+                          </p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                            有効にすると、コミュニケーション時にAIによる自動翻訳を適用します。
+                          </p>
+                        </div>
+                        <label className="relative inline-flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={formData.uses_ai_translation}
+                            onChange={(e) =>
+                              handleChange(
+                                "uses_ai_translation",
+                                e.target.checked
+                              )
+                            }
+                          />
+                          <span className="relative inline-flex items-center w-11 h-6 rounded-full bg-slate-200 dark:bg-slate-700 transition-colors peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 peer-checked:bg-indigo-600 peer-checked:[&>span]:translate-x-5">
+                            <span className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white dark:bg-slate-900 shadow transition-transform" />
+                          </span>
+                        </label>
                       </div>
                     </div>
                   </div>
                 </section>
-
-                <hr className="border-slate-200 dark:border-slate-800 my-6" />
-
-                {/* AI Settings */}
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="ai_translation"
-                      name="ai_translation"
-                      type="checkbox"
-                      disabled={!isEditing}
-                      checked={formData.uses_ai_translation}
-                      onChange={(e) =>
-                        handleChange(
-                          "uses_ai_translation",
-                          e.target.checked ? "true" : "false"
-                        )
-                      }
-                      className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                    />
-                  </div>
-                  <div className="ml-2 text-sm">
-                    <label
-                      htmlFor="ai_translation"
-                      className="font-medium text-slate-700 dark:text-slate-300"
-                    >
-                      AI自動翻訳を利用する
-                    </label>
-                    <p className="text-slate-500 dark:text-slate-400">
-                      チェックすると、コミュニケーション時にAIによる自動翻訳が有効になります。
-                    </p>
-                  </div>
-                </div>
               </div>
             </div>
 

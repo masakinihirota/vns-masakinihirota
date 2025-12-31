@@ -52,34 +52,34 @@ src/
  * @description Supabase profiles テーブルと互換
  */
 export type MockUser = {
-  id: string           // UUID形式
-  created_at: string   // ISO 8601形式 (例: "2024-01-15T09:00:00Z")
-  updated_at: string   // ISO 8601形式
-  display_name: string
-  avatar_url: string | null
-  bio: string | null
+  id: string; // UUID形式
+  created_at: string; // ISO 8601形式 (例: "2024-01-15T09:00:00Z")
+  updated_at: string; // ISO 8601形式
+  display_name: string;
+  avatar_url: string | null;
+  bio: string | null;
   // Supabaseのauth.usersとの外部キー想定
-}
+};
 
 /**
  * コミュニティ型
  * @description Supabase communities テーブルと互換
  */
 export type MockCommunity = {
-  id: string           // UUID形式
-  created_at: string
-  updated_at: string
-  name: string
-  description: string | null
-  owner_id: string     // MockUser.id への外部キー
-  member_count: number
-  is_public: boolean
-}
+  id: string; // UUID形式
+  created_at: string;
+  updated_at: string;
+  name: string;
+  description: string | null;
+  owner_id: string; // MockUser.id への外部キー
+  member_count: number;
+  is_public: boolean;
+};
 ```
 
 ```typescript
 // src/lib/mock-data/users.ts
-import type { MockUser } from './types'
+import type { MockUser } from "./types";
 
 /**
  * ユーザーモックデータ
@@ -95,24 +95,24 @@ export const mockUsers: MockUser[] = [
     bio: "VNSコミュニティの創設メンバーです。",
   },
   // ... 他のユーザー
-]
+];
 
 /**
  * 現在のログインユーザー（モック）
  */
-export const mockCurrentUser: MockUser = mockUsers[0]
+export const mockCurrentUser: MockUser = mockUsers[0];
 ```
 
 ### 3. コンポーネントでのモックデータ使用
 
 ```tsx
 // src/app/(10-community)/community/page.tsx
-import { mockCommunities } from '@/lib/mock-data'
-import { CommunityCard } from './_components/community-card'
+import { mockCommunities } from "@/lib/mock-data";
+import { CommunityCard } from "./_components/community-card";
 
 export default function CommunityPage() {
   // 将来: const { data: communities } = await supabase.from('communities').select('*')
-  const communities = mockCommunities
+  const communities = mockCommunities;
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -120,7 +120,7 @@ export default function CommunityPage() {
         <CommunityCard key={community.id} community={community} />
       ))}
     </div>
-  )
+  );
 }
 ```
 
@@ -320,9 +320,7 @@ export default function CommunityPage() {
   <SheetTrigger asChild>
     <Button variant="outline">詳細を編集</Button>
   </SheetTrigger>
-  <SheetContent>
-    {/* メイン画面を見ながら編集できる */}
-  </SheetContent>
+  <SheetContent>{/* メイン画面を見ながら編集できる */}</SheetContent>
 </Sheet>
 ```
 
@@ -486,17 +484,19 @@ export default function CommunityPage() {
 <Input
   type="email"
   onChange={(e) => {
-    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value)
-    setEmailError(!isValid)
+    const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+    setEmailError(!isValid);
   }}
   aria-invalid={emailError}
   aria-describedby="email-error"
-/>
-{emailError && (
-  <p id="email-error" className="text-sm text-destructive">
-    有効なメールアドレスを入力してください
-  </p>
-)}
+/>;
+{
+  emailError && (
+    <p id="email-error" className="text-sm text-destructive">
+      有効なメールアドレスを入力してください
+    </p>
+  );
+}
 ```
 
 ---

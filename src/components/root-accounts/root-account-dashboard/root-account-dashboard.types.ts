@@ -13,8 +13,8 @@ export interface RootAccount {
   display_id: string;
   display_name: string;
   statement: string;
-  mother_tongue_code: string;
-  site_language_code: string;
+  mother_tongue_codes: string[];
+  available_language_codes: string[];
   // Basic Attributes
   location: string;
   birth_generation: string;
