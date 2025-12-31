@@ -138,7 +138,7 @@ focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-accent-yellow
 
 ```tsx
 // 例: Shadcn/UIのButtonをプロジェクトスタイルで上書き
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 <Button
   className="bg-brand-primary text-white text-oln-16B-100 rounded-8 min-h-14 px-4 py-3
@@ -149,7 +149,7 @@ import { Button } from '@/components/ui/button';
              focus-visible:ring-[calc(2/16*1rem)] focus-visible:ring-accent-yellow"
 >
   送信する
-</Button>
+</Button>;
 ```
 
 ### 新規コンポーネント作成時
@@ -162,7 +162,12 @@ import { Button } from '@/components/ui/button';
 ### フォーム要素の実装パターン
 
 ```tsx
-import { Label, SupportText, ErrorText, Input } from '@/components/dads-reference';
+import {
+  Label,
+  SupportText,
+  ErrorText,
+  Input,
+} from "@/components/dads-reference";
 
 // フォームフィールドの基本構成
 const FormField = () => {
@@ -182,9 +187,7 @@ const FormField = () => {
         メールアドレス
         <RequirementBadge>※必須</RequirementBadge>
       </Label>
-      <SupportText id={supportTextId}>
-        確認メールを送信します
-      </SupportText>
+      <SupportText id={supportTextId}>確認メールを送信します</SupportText>
       <Input
         id={formId}
         name="email"

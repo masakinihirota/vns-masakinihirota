@@ -67,9 +67,7 @@ const [recentCommunities, setRecentCommunities] = useLocalStorage<string[]>(
     <DropdownMenuTrigger asChild>
       <Button variant="ghost">その他</Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent>
-      {/* 低頻度の機能 */}
-    </DropdownMenuContent>
+    <DropdownMenuContent>{/* 低頻度の機能 */}</DropdownMenuContent>
   </DropdownMenu>
 </nav>
 ```
@@ -154,11 +152,12 @@ const [recentCommunities, setRecentCommunities] = useLocalStorage<string[]>(
     <ContextMenuItem onClick={() => router.push(`/community/${community.id}`)}>
       詳細を見る
     </ContextMenuItem>
-    <ContextMenuItem onClick={() => onEdit(community.id)}>
-      編集
-    </ContextMenuItem>
+    <ContextMenuItem onClick={() => onEdit(community.id)}>編集</ContextMenuItem>
     <ContextMenuSeparator />
-    <ContextMenuItem className="text-destructive" onClick={() => onDelete(community.id)}>
+    <ContextMenuItem
+      className="text-destructive"
+      onClick={() => onDelete(community.id)}
+    >
       削除
     </ContextMenuItem>
   </ContextMenuContent>
