@@ -14,8 +14,14 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import { LANGUAGES_MOCK, dummyUserProfileList } from "./root-account-dashboard.dummyData";
-import { RootAccount, UserProfileSummary } from "./root-account-dashboard.types";
+import {
+  LANGUAGES_MOCK,
+  dummyUserProfileList,
+} from "./root-account-dashboard.dummyData";
+import {
+  RootAccount,
+  UserProfileSummary,
+} from "./root-account-dashboard.types";
 
 interface RootAccountDashboardProps {
   data: RootAccount;
@@ -27,7 +33,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   const [formData, setFormData] = useState<RootAccount>(data);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [profiles, setProfiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
+  const [profiles, setProfiles] =
+    useState<UserProfileSummary[]>(dummyUserProfileList);
 
   // Simulate Server Action for Update
   const handleSave = async () => {
@@ -225,7 +232,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
         {/* Main Content Single Page Layout */}
         <div className="space-y-8">
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column: Basic Info & AI Settings */}
             <div className="space-y-8">
@@ -333,7 +339,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           disabled={!isEditing}
                           value={formData.activity_culture_code}
                           onChange={(e) =>
-                            handleChange("activity_culture_code", e.target.value)
+                            handleChange(
+                              "activity_culture_code",
+                              e.target.value
+                            )
                           }
                           className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
                         />
@@ -481,7 +490,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       disabled={!isEditing}
                       checked={formData.uses_ai_translation}
                       onChange={(e) =>
-                        handleChange("uses_ai_translation", e.target.checked ? "true" : "false")
+                        handleChange(
+                          "uses_ai_translation",
+                          e.target.checked ? "true" : "false"
+                        )
                       }
                       className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
                     />
@@ -541,8 +553,13 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                                 Inactive
                               </span>
                             )}
-                            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === 'leader' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
-                              }`}>
+                            <span
+                              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                                profile.role_type === "leader"
+                                  ? "bg-purple-100 text-purple-800"
+                                  : "bg-blue-100 text-blue-800"
+                              }`}
+                            >
                               {profile.role_type}
                             </span>
                           </div>
@@ -551,7 +568,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           </p>
                         </div>
                         <div>
-                          <button className="text-xs text-indigo-600 hover:text-indigo-500 font-medium">詳細</button>
+                          <button className="text-xs text-indigo-600 hover:text-indigo-500 font-medium">
+                            詳細
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -586,11 +605,17 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         />
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-slate-900 dark:text-slate-50">Google Account</p>
-                        <p className="text-xs text-slate-500">連絡先のみ (認証不可)</p>
+                        <p className="text-sm font-medium text-slate-900 dark:text-slate-50">
+                          Google Account
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          連絡先のみ (認証不可)
+                        </p>
                       </div>
                     </div>
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">連携中</span>
+                    <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">
+                      連携中
+                    </span>
                   </div>
 
                   {/* 2FA Note */}
@@ -603,32 +628,50 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   {/* Last Audit Log */}
                   <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
                     <div className="flex justify-between items-center mb-2">
-                      <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">直近のイベント</h4>
-                      <button className="text-xs text-indigo-600 hover:text-indigo-500">全ログを表示</button>
+                      <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                        直近のイベント
+                      </h4>
+                      <button className="text-xs text-indigo-600 hover:text-indigo-500">
+                        全ログを表示
+                      </button>
                     </div>
                     <div className="text-xs text-slate-500">
                       <div className="flow-root">
                         <ul role="list" className="-mb-8">
                           {[
-                            { event: "LOGIN", date: "2024-05-20 09:30", status: "Success" },
-                            { event: "PROFILE_UPDATE", date: "2024-05-19 18:45", status: "Success" },
+                            {
+                              event: "LOGIN",
+                              date: "2024-05-20 09:30",
+                              status: "Success",
+                            },
+                            {
+                              event: "PROFILE_UPDATE",
+                              date: "2024-05-19 18:45",
+                              status: "Success",
+                            },
                           ].map((event, eventIdx) => (
                             <li key={eventIdx}>
                               <div className="relative pb-4">
                                 {eventIdx !== 1 ? (
-                                  <span className="absolute top-4 left-2 -ml-px h-full w-0.5 bg-slate-200" aria-hidden="true" />
+                                  <span
+                                    className="absolute top-4 left-2 -ml-px h-full w-0.5 bg-slate-200"
+                                    aria-hidden="true"
+                                  />
                                 ) : null}
                                 <div className="relative flex space-x-3">
                                   <div>
-                                    <span className="h-4 w-4 rounded-full bg-green-500 flex items-center justify-center ring-4 ring-white dark:ring-slate-900">
-                                    </span>
+                                    <span className="h-4 w-4 rounded-full bg-green-500 flex items-center justify-center ring-4 ring-white dark:ring-slate-900"></span>
                                   </div>
                                   <div className="min-w-0 flex-1 flex justify-between space-x-4">
                                     <div>
-                                      <p className="text-xs text-slate-500">{event.event}</p>
+                                      <p className="text-xs text-slate-500">
+                                        {event.event}
+                                      </p>
                                     </div>
                                     <div className="text-right text-xs whitespace-nowrap text-slate-500">
-                                      <time dateTime={event.date}>{event.date}</time>
+                                      <time dateTime={event.date}>
+                                        {event.date}
+                                      </time>
                                     </div>
                                   </div>
                                 </div>

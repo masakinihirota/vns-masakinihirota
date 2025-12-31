@@ -1,4 +1,8 @@
-import { Language, RootAccount, UserProfileSummary } from "./root-account-dashboard.types";
+import {
+  Language,
+  RootAccount,
+  UserProfileSummary,
+} from "./root-account-dashboard.types";
 
 export const LANGUAGES_MOCK: Language[] = [
   { id: "ja", name: "Japanese", native_name: "日本語" },
