@@ -49,7 +49,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     const { children, isError, onClick, size = "sm", ...rest } = props;
 
     const handleDisabled = (
-      e: React.MouseEvent<HTMLInputElement, MouseEvent>,
+      e: React.MouseEvent<HTMLInputElement, MouseEvent>
     ) => {
       e.preventDefault();
     };
@@ -101,7 +101,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
     ) : (
       checkbox
     );
-  },
+  }
 );
 
 Checkbox.displayName = "Checkbox";

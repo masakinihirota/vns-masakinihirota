@@ -130,7 +130,7 @@ export const MOCK_ARTWORKS: Artwork[] = [
 
 export const filterArtworks = (
   artworks: Artwork[],
-  filter: FilterOption,
+  filter: FilterOption
 ): Artwork[] => {
   return artworks.filter((artwork) => {
     if (filter.rating === "すべて") return true;
@@ -140,7 +140,7 @@ export const filterArtworks = (
 
 export const sortArtworks = (
   artworks: Artwork[],
-  sort: SortOption,
+  sort: SortOption
 ): Artwork[] => {
   const ratingOrder: Record<string, number> = {
     Tier1: 1,

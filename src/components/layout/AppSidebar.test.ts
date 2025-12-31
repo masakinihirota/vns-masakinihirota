@@ -14,7 +14,7 @@ describe("AppSidebar manifest integration", () => {
       .filter((r) => r.visibleInMenu)
       .map((r) => r.path);
     const missing = visiblePaths.filter(
-      (p) => !Object.prototype.hasOwnProperty.call(ICON_MAP, p),
+      (p) => !Object.prototype.hasOwnProperty.call(ICON_MAP, p)
     );
     expect(missing).toEqual([]);
   });

@@ -30,7 +30,7 @@ function DialogOverlay({
     <DialogPrimitive.Overlay
       className={cn(
         "fixed inset-0 z-50 bg-black/50 data-[state=open]:fade-in data-[state=closed]:fade-out",
-        className,
+        className
       )}
       {...props}
     />
@@ -48,7 +48,7 @@ function DialogContent({
       <DialogPrimitive.Content
         className={cn(
           "fixed z-50 grid w-full gap-4 rounded-b-lg bg-background p-6 shadow-lg sm:max-w-lg sm:rounded-lg",
-          className,
+          className
         )}
         {...props}
       >

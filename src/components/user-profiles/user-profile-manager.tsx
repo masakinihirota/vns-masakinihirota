@@ -361,7 +361,7 @@ export default function UserProfileManager() {
 
   const handleUpdate = (updatedProfile: Profile) => {
     setProfiles(
-      profiles.map((p) => (p.id === updatedProfile.id ? updatedProfile : p)),
+      profiles.map((p) => (p.id === updatedProfile.id ? updatedProfile : p))
     );
     setSelectedProfile(null);
   };
@@ -716,7 +716,7 @@ export default function UserProfileManager() {
                             />
                             {type}
                           </label>
-                        ),
+                        )
                       )}
                     </div>
                   </div>

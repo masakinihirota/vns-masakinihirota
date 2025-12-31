@@ -24,7 +24,7 @@ export const RootAccountsControlContainer = () => {
       return;
     }
     const updatedProfiles = profiles.map((p) =>
-      p.id === profileId ? { ...p, name: newProfileName } : p,
+      p.id === profileId ? { ...p, name: newProfileName } : p
     );
     setProfiles(updatedProfiles);
     setEditingProfileId(null);

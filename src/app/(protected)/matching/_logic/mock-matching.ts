@@ -92,7 +92,7 @@ export const findMatches = async (): Promise<UserProfile[]> => {
 
 // Simulate adding to watchlist (automatically for top matches)
 export const activeWatchlist = async (
-  profiles: UserProfile[],
+  profiles: UserProfile[]
 ): Promise<UserProfile[]> => {
   // In this requirement, we automatically add ALL found matches (top 10) to watchlist
   // Real implementation would call an API

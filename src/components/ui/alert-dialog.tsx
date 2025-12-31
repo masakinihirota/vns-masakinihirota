@@ -57,7 +57,7 @@ function AlertDialogContent({
       <AlertDialogPrimitive.Content
         className={cn(
           "fixed z-50 grid w-full gap-4 rounded-b-lg bg-background p-6 shadow-lg sm:max-w-lg sm:rounded-lg",
-          className,
+          className
         )}
         {...props}
       >

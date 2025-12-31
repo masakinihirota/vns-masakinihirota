@@ -42,7 +42,7 @@ describe("ManualMatching UI", () => {
         candidates={mockCandidates}
         onToggleWatch={mockToggleWatch}
         onToggleFollow={mockToggleFollow}
-      />,
+      />
     );
     expect(screen.getByText("Alice")).toBeInTheDocument();
     expect(screen.getByText("Bob")).toBeInTheDocument();
@@ -56,7 +56,7 @@ describe("ManualMatching UI", () => {
         candidates={mockCandidates}
         onToggleWatch={mockToggleWatch}
         onToggleFollow={mockToggleFollow}
-      />,
+      />
     );
 
     // Alice is not watched, button should say "Watch" (or icon)
@@ -73,7 +73,7 @@ describe("ManualMatching UI", () => {
         candidates={mockCandidates}
         onToggleWatch={mockToggleWatch}
         onToggleFollow={mockToggleFollow}
-      />,
+      />
     );
 
     // Bob is watched, button text might change or look different. checking for text "Unwatch" or "Watching" logic would differ based on implementation.

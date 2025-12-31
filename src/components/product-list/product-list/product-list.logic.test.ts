@@ -49,7 +49,7 @@ describe("ProductList Logic", () => {
       // ここでは具体的な期待値と比較する
       const titles = result.map((a) => a.title);
       expect(titles).toEqual(
-        [...titles].sort((a, b) => a.localeCompare(b, "ja")),
+        [...titles].sort((a, b) => a.localeCompare(b, "ja"))
       );
     });
 

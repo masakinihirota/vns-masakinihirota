@@ -73,7 +73,7 @@ export const hoursToTime = (hours: number): string => {
 export function calculateTotalCoreHours(
   start: string,
   end: string,
-  nextDayEndHour: number = 0,
+  nextDayEndHour: number = 0
 ): number {
   const startHours = timeToHours(start);
   const endHours = timeToHours(end);

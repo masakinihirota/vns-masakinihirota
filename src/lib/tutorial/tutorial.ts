@@ -2,7 +2,7 @@ export type MenuItemState = "locked" | "unlocked" | "grayed" | "hidden";
 
 export const getMenuItemState = (
   _feature: string,
-  _currentLevel: number,
+  _currentLevel: number
 ): MenuItemState => {
   // Stub implementation: everything is unlocked for now
   // Suppress unused vars

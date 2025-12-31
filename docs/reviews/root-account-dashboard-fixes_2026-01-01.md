@@ -42,6 +42,7 @@ export function normalizeRootAccountData(data: any): RootAccount {
 **修正ファイル**: [src/components/root-accounts/root-account-dashboard/root-account-dashboard.tsx](src/components/root-accounts/root-account-dashboard/root-account-dashboard.tsx)
 
 #### 復元した機能:
+
 - ✅ プロフィール編集ボタン
 - ✅ 変更を保存ボタン
 - ✅ キャンセルボタン
@@ -49,6 +50,7 @@ export function normalizeRootAccountData(data: any): RootAccount {
 - ✅ ローディング状態管理
 
 #### 追加した状態:
+
 ```typescript
 const [isEditing, setIsEditing] = useState(false);
 const [originalData, setOriginalData] = useState<RootAccount>(normalizedData);
@@ -56,6 +58,7 @@ const [isLoading, setIsLoading] = useState(false);
 ```
 
 #### 実装した処理:
+
 ```typescript
 const handleSave = async () => {
   // API呼び出し（実装予定）
@@ -74,6 +77,7 @@ const handleCancel = () => {
 以下のセクションに保存処理を実装しました：
 
 #### 言語設定
+
 ```typescript
 const handleSaveLanguages = async () => {
   // 母語・使用可能言語の保存
@@ -81,6 +85,7 @@ const handleSaveLanguages = async () => {
 ```
 
 #### コア活動時間
+
 ```typescript
 const handleSaveCoreHours = async () => {
   // 活動時間の保存
@@ -88,6 +93,7 @@ const handleSaveCoreHours = async () => {
 ```
 
 #### VNS管理国
+
 ```typescript
 const handleSaveCountries = async () => {
   // 管理国設定の保存
@@ -95,6 +101,7 @@ const handleSaveCountries = async () => {
 ```
 
 **保存ボタンの動作**:
+
 - 編集モード時: 保存処理を実行
 - 非編集モード時: 編集モードに切り替え
 - ローディング中: ボタンを無効化
@@ -102,6 +109,7 @@ const handleSaveCountries = async () => {
 ### 4. 世界地図画像のフォールバック処理
 
 #### 実装内容:
+
 ```typescript
 const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 
@@ -112,6 +120,7 @@ const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 ```
 
 画像読み込み失敗時に、フォールバック表示を行います：
+
 ```
 📍 地図画像を読み込めません
 ```
@@ -119,12 +128,14 @@ const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
 ### 5. 不要なESLint警告の修正
 
 #### 修正前:
+
 ```typescript
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const [profiles, setProfiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
 ```
 
 #### 修正後:
+
 ```typescript
 const [profiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
 ```
@@ -134,7 +145,8 @@ const [profiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
 ### 6. テストファイルの作成
 
 #### ユーティリティ関数のテスト
-**ファイル**: [src/lib/__tests__/root-account-utils.test.ts](src/lib/__tests__/root-account-utils.test.ts)
+
+**ファイル**: [src/lib/**tests**/root-account-utils.test.ts](src/lib/__tests__/root-account-utils.test.ts)
 
 ```
 ✓ normalizeRootAccountData (3 tests)
@@ -146,9 +158,11 @@ const [profiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
 **合計**: 13 テスト / 13 成功
 
 #### コンポーネントのテスト
-**ファイル**: [src/components/root-accounts/root-account-dashboard/__tests__/root-account-dashboard.test.tsx](src/components/root-accounts/root-account-dashboard/__tests__/root-account-dashboard.test.tsx)
+
+**ファイル**: [src/components/root-accounts/root-account-dashboard/**tests**/root-account-dashboard.test.tsx](src/components/root-accounts/root-account-dashboard/__tests__/root-account-dashboard.test.tsx)
 
 テスト項目:
+
 - レンダリング
 - 旧スキーマのデータ正規化
 - 編集機能（編集モード、キャンセル、保存）
@@ -160,12 +174,12 @@ const [profiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
 
 ## 📊 変更ファイル一覧
 
-| ファイル | 変更内容 | 状態 |
-|---------|---------|------|
-| `src/lib/root-account-utils.ts` | 新規作成 | ✅ |
-| `src/lib/__tests__/root-account-utils.test.ts` | 新規作成 | ✅ |
-| `src/components/root-accounts/root-account-dashboard/root-account-dashboard.tsx` | 編集機能復元、保存処理追加 | ✅ |
-| `src/components/root-accounts/root-account-dashboard/__tests__/root-account-dashboard.test.tsx` | 新規作成 | ✅ |
+| ファイル                                                                                        | 変更内容                   | 状態 |
+| ----------------------------------------------------------------------------------------------- | -------------------------- | ---- |
+| `src/lib/root-account-utils.ts`                                                                 | 新規作成                   | ✅   |
+| `src/lib/__tests__/root-account-utils.test.ts`                                                  | 新規作成                   | ✅   |
+| `src/components/root-accounts/root-account-dashboard/root-account-dashboard.tsx`                | 編集機能復元、保存処理追加 | ✅   |
+| `src/components/root-accounts/root-account-dashboard/__tests__/root-account-dashboard.test.tsx` | 新規作成                   | ✅   |
 
 ---
 

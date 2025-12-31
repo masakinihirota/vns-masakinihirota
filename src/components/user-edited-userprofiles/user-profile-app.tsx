@@ -727,7 +727,7 @@ const InventorySidebar = ({
     string | null
   >(null);
   const [expandedPackageId, setExpandedPackageId] = useState<string | null>(
-    null,
+    null
   );
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -737,7 +737,7 @@ const InventorySidebar = ({
 
   // Key取得ヘルパー
   const getProfileKeys = (
-    sectionId: SectionId,
+    sectionId: SectionId
   ): keyof UserProfile["equippedSlots"] => {
     if (sectionId === "work_future") return "worksFuture";
     if (sectionId === "work_current") return "worksCurrent";
@@ -768,7 +768,7 @@ const InventorySidebar = ({
       if (profile.equippedSlots[key].some((i) => i.id === itemId)) return true;
       if (
         profile.equippedPackages[key].some((pkg) =>
-          pkg.items.some((i) => i.id === itemId),
+          pkg.items.some((i) => i.id === itemId)
         )
       )
         return true;
@@ -781,17 +781,17 @@ const InventorySidebar = ({
   // 表示中のセクションでの登録状態（チェックマーク用）
   const isItemRegisteredInCurrentSection = (itemId: string) => {
     const isSlot = profile.equippedSlots[currentProfileKey].some(
-      (i) => i.id === itemId,
+      (i) => i.id === itemId
     );
     const isPkg = profile.equippedPackages[currentProfileKey].some((pkg) =>
-      pkg.items.some((i) => i.id === itemId),
+      pkg.items.some((i) => i.id === itemId)
     );
     return isSlot || isPkg;
   };
   // パッケージ内かどうか（現在のセクション）
   const isItemInPackageInCurrentSection = (itemId: string) =>
     profile.equippedPackages[currentProfileKey].some((pkg) =>
-      pkg.items.some((i) => i.id === itemId),
+      pkg.items.some((i) => i.id === itemId)
     );
 
   const getNextTier = (current?: number): 1 | 2 | 3 | undefined => {
@@ -837,7 +837,7 @@ const InventorySidebar = ({
     ];
     for (const key of allKeys) {
       const slot = profile.equippedSlots[key].find(
-        (i) => i.id === originalItem.id,
+        (i) => i.id === originalItem.id
       );
       if (slot) return slot;
       const pkgItem = profile.equippedPackages[key]
@@ -1202,7 +1202,7 @@ const MainEditor = ({
   isDirty,
 }: any) => {
   const getKeys = (
-    sectionId: SectionId,
+    sectionId: SectionId
   ): keyof UserProfile["equippedSlots"] => {
     if (sectionId === "work_future") return "worksFuture";
     if (sectionId === "work_current") return "worksCurrent";
@@ -1215,7 +1215,7 @@ const MainEditor = ({
   const handleRemoveSlot = (slotId: string, sectionId: SectionId) => {
     const key = getKeys(sectionId);
     const updated = profile.equippedSlots[key].filter(
-      (s: any) => s.id !== slotId,
+      (s: any) => s.id !== slotId
     );
     onUpdate({
       ...profile,
@@ -1257,7 +1257,7 @@ const MainEditor = ({
   const renderSectionContent = (
     sectionId: SectionId,
     title: string,
-    icon: any,
+    icon: any
   ) => {
     const key = getKeys(sectionId);
     const packages: Package[] = profile.equippedPackages[key];
@@ -1475,7 +1475,7 @@ const UserProfileApp = () => {
 
   const handleUpdateProfile = (updatedProfile: UserProfile) => {
     setProfiles((prev) =>
-      prev.map((p) => (p.id === updatedProfile.id ? updatedProfile : p)),
+      prev.map((p) => (p.id === updatedProfile.id ? updatedProfile : p))
     );
     setIsDirty(true);
   };
@@ -1492,7 +1492,7 @@ const UserProfileApp = () => {
     if (isDirty) {
       if (
         window.confirm(
-          "保存されていない変更があります。移動しますか？\n（未保存の変更は破棄される可能性があります）",
+          "保存されていない変更があります。移動しますか？\n（未保存の変更は破棄される可能性があります）"
         )
       ) {
         setActiveProfileId(id);
@@ -1511,7 +1511,7 @@ const UserProfileApp = () => {
   };
 
   const getKeys = (
-    sectionId: SectionId,
+    sectionId: SectionId
   ): keyof UserProfile["equippedSlots"] => {
     if (sectionId === "work_future") return "worksFuture";
     if (sectionId === "work_current") return "worksCurrent";
@@ -1534,7 +1534,7 @@ const UserProfileApp = () => {
     if (currentPackages.some((p: any) => p.id === pkg.id)) return;
 
     const newItemsList = currentItems.filter(
-      (item: any) => !pkg.items.some((pkgItem) => pkgItem.id === item.id),
+      (item: any) => !pkg.items.some((pkgItem) => pkgItem.id === item.id)
     );
 
     const updatedProfile = {
@@ -1561,7 +1561,7 @@ const UserProfileApp = () => {
     const isAlreadyEquipped =
       currentItems.some((i: any) => i.id === item.id) ||
       currentPackages.some((pkg: any) =>
-        pkg.items.some((pkgItem: any) => pkgItem.id === item.id),
+        pkg.items.some((pkgItem: any) => pkgItem.id === item.id)
       );
 
     if (isAlreadyEquipped) return;

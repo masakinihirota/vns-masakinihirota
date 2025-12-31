@@ -80,14 +80,14 @@ export function WorkRegistration({
   const filteredOfficialTags = useMemo(() => {
     if (!officialSearchQuery) return OFFICIAL_TAGS;
     return OFFICIAL_TAGS.filter((tag) =>
-      tag.toLowerCase().includes(officialSearchQuery.toLowerCase()),
+      tag.toLowerCase().includes(officialSearchQuery.toLowerCase())
     );
   }, [officialSearchQuery]);
 
   const filteredUserTags = useMemo(() => {
     if (!userSearchQuery) return USER_TAGS;
     return USER_TAGS.filter((tag) =>
-      tag.toLowerCase().includes(userSearchQuery.toLowerCase()),
+      tag.toLowerCase().includes(userSearchQuery.toLowerCase())
     );
   }, [userSearchQuery]);
 
@@ -105,7 +105,7 @@ export function WorkRegistration({
   const toggleTag = (
     tagToToggle: string,
     currentTags: string[],
-    onChange: (tags: string[]) => void,
+    onChange: (tags: string[]) => void
   ) => {
     if (currentTags.includes(tagToToggle)) {
       onChange(currentTags.filter((t) => t !== tagToToggle));
@@ -116,7 +116,7 @@ export function WorkRegistration({
 
   const addCustomTag = (
     currentTags: string[],
-    onChange: (tags: string[]) => void,
+    onChange: (tags: string[]) => void
   ) => {
     const newTag = userSearchQuery.trim();
     if (!newTag) return;
@@ -217,7 +217,7 @@ export function WorkRegistration({
                                       "flex flex-col items-center justify-center gap-2 p-3 rounded-xl border transition-all",
                                       isSelected
                                         ? "border-blue-600 bg-blue-50 text-blue-700 ring-1 ring-blue-600"
-                                        : "border-gray-200 hover:border-blue-300 hover:bg-gray-50 text-gray-600",
+                                        : "border-gray-200 hover:border-blue-300 hover:bg-gray-50 text-gray-600"
                                     )}
                                   >
                                     <Icon
@@ -225,7 +225,7 @@ export function WorkRegistration({
                                         "w-6 h-6",
                                         isSelected
                                           ? "text-blue-600"
-                                          : "text-gray-400",
+                                          : "text-gray-400"
                                       )}
                                     />
                                     <span className="text-sm font-bold">
@@ -261,7 +261,7 @@ export function WorkRegistration({
                                   ? isPastExpanded
                                   : true;
                                 const selectedItemInGroup = group.items.find(
-                                  (item) => item.id === field.value,
+                                  (item) => item.id === field.value
                                 );
 
                                 return (
@@ -312,7 +312,7 @@ export function WorkRegistration({
                                                 "w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-all border flex items-center justify-between group",
                                                 isSelected
                                                   ? "bg-blue-600 text-white border-blue-600 shadow-md"
-                                                  : "bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:bg-blue-50",
+                                                  : "bg-white text-gray-600 border-gray-200 hover:border-blue-300 hover:bg-blue-50"
                                               )}
                                             >
                                               <span>{per.label}</span>
@@ -374,7 +374,7 @@ export function WorkRegistration({
                                         "inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium animate-in fade-in zoom-in duration-200",
                                         isOfficial
                                           ? "bg-blue-100 text-blue-700"
-                                          : "bg-emerald-100 text-emerald-700",
+                                          : "bg-emerald-100 text-emerald-700"
                                       )}
                                     >
                                       {isOfficial && (
@@ -390,14 +390,14 @@ export function WorkRegistration({
                                           toggleTag(
                                             tag,
                                             field.value,
-                                            field.onChange,
+                                            field.onChange
                                           )
                                         }
                                         className={cn(
                                           "rounded-full p-0.5 transition-colors",
                                           isOfficial
                                             ? "hover:bg-blue-200 hover:text-blue-900"
-                                            : "hover:bg-emerald-200 hover:text-emerald-900",
+                                            : "hover:bg-emerald-200 hover:text-emerald-900"
                                         )}
                                       >
                                         <X className="w-3 h-3" />
@@ -430,12 +430,12 @@ export function WorkRegistration({
                                             toggleTag(
                                               tag,
                                               field.value,
-                                              field.onChange,
+                                              field.onChange
                                             )
                                           }
                                           className={cn(
                                             "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                            getTagStyle(tag, isSelected),
+                                            getTagStyle(tag, isSelected)
                                           )}
                                         >
                                           {isSelected ? "✓ " : "+ "}
@@ -472,12 +472,12 @@ export function WorkRegistration({
                                                 toggleTag(
                                                   tag,
                                                   field.value,
-                                                  field.onChange,
+                                                  field.onChange
                                                 )
                                               }
                                               className={cn(
                                                 "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                                getTagStyle(tag, isSelected),
+                                                getTagStyle(tag, isSelected)
                                               )}
                                             >
                                               {isSelected ? "✓ " : "+ "}
@@ -501,7 +501,7 @@ export function WorkRegistration({
                                   }
                                   className={cn(
                                     "w-full text-blue-600 border-blue-200 hover:bg-blue-50 hover:border-blue-300",
-                                    isOfficialExpanded && "bg-blue-50",
+                                    isOfficialExpanded && "bg-blue-50"
                                   )}
                                 >
                                   <LayoutGrid className="w-4 h-4 mr-2" />
@@ -539,12 +539,12 @@ export function WorkRegistration({
                                             toggleTag(
                                               tag,
                                               field.value,
-                                              field.onChange,
+                                              field.onChange
                                             )
                                           }
                                           className={cn(
                                             "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                            getTagStyle(tag, isSelected),
+                                            getTagStyle(tag, isSelected)
                                           )}
                                         >
                                           {isSelected ? "✓ " : "+ "}
@@ -570,7 +570,7 @@ export function WorkRegistration({
                                               e.preventDefault();
                                               addCustomTag(
                                                 field.value,
-                                                field.onChange,
+                                                field.onChange
                                               );
                                             }
                                           }}
@@ -583,7 +583,7 @@ export function WorkRegistration({
                                         onClick={() =>
                                           addCustomTag(
                                             field.value,
-                                            field.onChange,
+                                            field.onChange
                                           )
                                         }
                                         disabled={!userSearchQuery.trim()}
@@ -595,7 +595,7 @@ export function WorkRegistration({
 
                                     {userSearchQuery &&
                                       !filteredUserTags.includes(
-                                        userSearchQuery,
+                                        userSearchQuery
                                       ) && (
                                         <div className="mb-3 text-xs text-emerald-600 font-bold px-1 animate-in fade-in">
                                           <span className="bg-emerald-100 px-2 py-1 rounded">
@@ -618,12 +618,12 @@ export function WorkRegistration({
                                                 toggleTag(
                                                   tag,
                                                   field.value,
-                                                  field.onChange,
+                                                  field.onChange
                                                 )
                                               }
                                               className={cn(
                                                 "text-xs px-3 py-1.5 rounded-full transition-all border",
-                                                getTagStyle(tag, isSelected),
+                                                getTagStyle(tag, isSelected)
                                               )}
                                             >
                                               {isSelected ? "✓ " : "+ "}
@@ -647,7 +647,7 @@ export function WorkRegistration({
                                   }
                                   className={cn(
                                     "w-full text-emerald-600 border-emerald-200 hover:bg-emerald-50 hover:border-emerald-300",
-                                    isUserExpanded && "bg-emerald-50",
+                                    isUserExpanded && "bg-emerald-50"
                                   )}
                                 >
                                   <LayoutGrid className="w-4 h-4 mr-2" />
@@ -692,7 +692,7 @@ export function WorkRegistration({
                           {field.value.map(
                             (
                               urlItem: { value?: string; type?: string },
-                              idx: number,
+                              idx: number
                             ) => (
                               <div
                                 key={idx}
@@ -715,7 +715,7 @@ export function WorkRegistration({
                                           "flex-1 flex items-center justify-center gap-1 py-1.5 text-xs font-medium rounded-sm transition-all",
                                           isActive
                                             ? "bg-white text-blue-700 shadow-sm"
-                                            : "text-gray-500 hover:text-gray-700",
+                                            : "text-gray-500 hover:text-gray-700"
                                         )}
                                       >
                                         <TypeIcon className="w-3 h-3" />
@@ -753,7 +753,7 @@ export function WorkRegistration({
                                       size="icon"
                                       onClick={() => {
                                         const newUrls = field.value.filter(
-                                          (_: unknown, i: number) => i !== idx,
+                                          (_: unknown, i: number) => i !== idx
                                         );
                                         field.onChange(newUrls);
                                       }}
@@ -764,7 +764,7 @@ export function WorkRegistration({
                                   )}
                                 </div>
                               </div>
-                            ),
+                            )
                           )}
                           <Button
                             type="button"
@@ -820,7 +820,7 @@ export function WorkRegistration({
                               "flex items-center justify-between text-xs",
                               watchedTags.length > 0
                                 ? "text-green-600 font-bold"
-                                : "text-gray-400",
+                                : "text-gray-400"
                             )}
                           >
                             <span className="flex items-center gap-1">
@@ -837,15 +837,15 @@ export function WorkRegistration({
                             className={cn(
                               "flex items-center justify-between text-xs",
                               watchedUrls.some(
-                                (u: { value?: string }) => u.value,
+                                (u: { value?: string }) => u.value
                               )
                                 ? "text-green-600 font-bold"
-                                : "text-gray-400",
+                                : "text-gray-400"
                             )}
                           >
                             <span className="flex items-center gap-1">
                               {watchedUrls.some(
-                                (u: { value?: string }) => u.value,
+                                (u: { value?: string }) => u.value
                               ) ? (
                                 <Check className="w-3 h-3" />
                               ) : (
@@ -879,7 +879,7 @@ export function WorkRegistration({
                                 "w-4 h-4",
                                 watchedTitle
                                   ? "text-green-500"
-                                  : "text-gray-300",
+                                  : "text-gray-300"
                               )}
                             />
                             タイトル入力

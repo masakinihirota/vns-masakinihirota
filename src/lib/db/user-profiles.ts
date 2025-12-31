@@ -41,7 +41,7 @@ export async function getUserProfiles(rootAccountId: string) {
 
 export async function createUserProfile(
   rootAccountId: string,
-  data: CreateProfileData,
+  data: CreateProfileData
 ) {
   const supabase = await createClient();
 

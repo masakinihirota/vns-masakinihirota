@@ -50,7 +50,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref) => {
   const { children, isError, onClick, size = "sm", ...rest } = props;
 
   const handleDisabled = (
-    e: React.MouseEvent<HTMLInputElement, MouseEvent>,
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>
   ) => {
     e.preventDefault();
   };

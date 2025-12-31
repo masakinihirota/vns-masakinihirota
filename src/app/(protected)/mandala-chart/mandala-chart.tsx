@@ -22,18 +22,18 @@ export default function MandalaChart({
 }: MandalaChartProps) {
   // Initialize with initialData or empty grid
   const [chartData, setChartData] = useState<string[][]>(
-    initialData || createEmptyGrid(),
+    initialData || createEmptyGrid()
   );
 
   const handleCellChange = (
     rowIndex: number,
     colIndex: number,
-    value: string,
+    value: string
   ) => {
     const newData = chartData.map((row, rIdx) =>
       rIdx === rowIndex
         ? row.map((cell, cIdx) => (cIdx === colIndex ? value : cell))
-        : row,
+        : row
     );
     setChartData(newData);
     onChange?.(newData);
@@ -74,7 +74,7 @@ export default function MandalaChart({
                 />
               </CardContent>
             </Card>
-          )),
+          ))
         )}
       </div>
     </div>

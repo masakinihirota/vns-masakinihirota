@@ -39,7 +39,7 @@ function TableRow({
     <tr
       className={cn(
         "transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
-        className,
+        className
       )}
       {...props}
     />
@@ -54,7 +54,7 @@ function TableHead({
     <th
       className={cn(
         "h-10 px-2 text-left align-middle font-medium text-muted-foreground",
-        className,
+        className
       )}
       {...props}
     />

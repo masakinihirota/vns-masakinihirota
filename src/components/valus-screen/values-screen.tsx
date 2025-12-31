@@ -194,7 +194,7 @@ export default function ValuesScreen() {
         if (cat.id === categoryId) {
           // 選択されたカテゴリとその子要素すべてを更新
           const updateChildren = (
-            children?: ValueCategory[],
+            children?: ValueCategory[]
           ): ValueCategory[] | undefined => {
             if (!children) return undefined;
             return children.map((child) => ({
@@ -301,7 +301,7 @@ export default function ValuesScreen() {
         {hasChildren && category.isExpanded && (
           <div className="space-y-1">
             {category.children!.map((child) =>
-              renderCategory(child, level + 1),
+              renderCategory(child, level + 1)
             )}
           </div>
         )}

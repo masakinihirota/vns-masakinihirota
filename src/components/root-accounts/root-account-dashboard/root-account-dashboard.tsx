@@ -11,13 +11,17 @@ import {
   Save,
   CreditCard,
   AlertCircle,
-  Terminal,
   Clock,
   Plus,
   X,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import {
+  normalizeRootAccountData,
+  timeToHours,
+  hoursToTime,
+} from "@/lib/root-account-utils";
 import {
   LANGUAGES_MOCK,
   COUNTRIES_MOCK,
@@ -27,11 +31,6 @@ import {
   RootAccount,
   UserProfileSummary,
 } from "./root-account-dashboard.types";
-import {
-  normalizeRootAccountData,
-  timeToHours,
-  hoursToTime,
-} from "@/lib/root-account-utils";
 
 interface RootAccountDashboardProps {
   data: RootAccount;
@@ -80,7 +79,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
   const handleChange = <K extends keyof RootAccount>(
     field: K,
-    value: RootAccount[K],
+    value: RootAccount[K]
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -104,7 +103,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     try {
       // TODO: 実際のAPI呼び出しを実装
       // await updateRootAccount(formData);
-      console.log("保存データ:", formData);
 
       // 保存成功後、元データを更新
       setOriginalData(formData);
@@ -129,10 +127,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     setIsLoading(true);
     try {
       // TODO: 実際のAPI呼び出しを実装
-      console.log("言語設定保存:", {
-        mother_tongue_codes: formData.mother_tongue_codes,
-        available_language_codes: formData.available_language_codes,
-      });
+
       setOriginalData(formData);
       setIsEditingLanguages(false);
       alert("言語設定を保存しました");
@@ -149,10 +144,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     setIsLoading(true);
     try {
       // TODO: 実際のAPI呼び出しを実装
-      console.log("活動時間保存:", {
-        core_hours_start: formData.core_hours_start,
-        core_hours_end: formData.core_hours_end,
-      });
+
       setOriginalData(formData);
       setIsEditingCoreHours(false);
       alert("活動時間を保存しました");
@@ -169,7 +161,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     setIsLoading(true);
     try {
       // TODO: 実際のAPI呼び出しを実装
-      console.log("管理国保存");
+
       setIsEditingCountries(false);
       alert("管理国設定を保存しました");
     } catch (error) {
@@ -418,7 +410,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               <button
                 onClick={() => {
                   if (isEditingCountries) {
-                    handleSaveCountries();
+                    void handleSaveCountries();
                   } else {
                     setIsEditingCountries(true);
                   }
@@ -578,7 +570,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               <button
                 onClick={() => {
                   if (isEditingCoreHours) {
-                    handleSaveCoreHours();
+                    void handleSaveCoreHours();
                   } else {
                     setIsEditingCoreHours(true);
                   }
@@ -618,12 +610,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       onValueChange={(values) => {
                         handleChange(
                           "core_hours_start",
-                          hoursToTime(values[0]),
+                          hoursToTime(values[0])
                         );
                         if (values[1] < 24) {
                           handleChange(
                             "core_hours_end",
-                            hoursToTime(values[1]),
+                            hoursToTime(values[1])
                           );
                           setNextDayEndHour(0); // 24時未満なら翌日スライダーをリセット
                         } else {
@@ -728,8 +720,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             {/* 活動時間の説明 */}
             <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <p className="text-sm text-blue-900 dark:text-blue-100">
-                <span className="font-semibold">合計活動時間:</span>{" "}
-                {(() => {
+                <span className="font-semibold">合計活動時間:</span> {(() => {
                   const start = timeToHours(formData.core_hours_start);
                   const end = timeToHours(formData.core_hours_end);
                   const total =
@@ -741,15 +732,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
                   if (end >= 24 && nextDayEndHour > 0) {
                     return `${hoursToTime(start)}～翌日${hoursToTime(
-                      nextDayEndHour,
+                      nextDayEndHour
                     )} (${total.toFixed(1)}時間)`;
                   } else if (end >= start) {
                     return `${hoursToTime(start)}～${hoursToTime(end)} (${total.toFixed(
-                      1,
+                      1
                     )}時間)`;
                   } else {
                     return `${hoursToTime(start)}～翌日${hoursToTime(end)} (${total.toFixed(
-                      1,
+                      1
                     )}時間)`;
                   }
                 })()}
@@ -905,7 +896,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     <button
                       onClick={() => {
                         if (isEditingLanguages) {
-                          handleSaveLanguages();
+                          void handleSaveLanguages();
                         } else {
                           setIsEditingLanguages(true);
                         }
@@ -935,7 +926,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         {formData.mother_tongue_codes.length > 0 ? (
                           formData.mother_tongue_codes.map((code) => {
                             const lang = LANGUAGES_MOCK.find(
-                              (l) => l.id === code,
+                              (l) => l.id === code
                             );
                             return (
                               <span
@@ -970,7 +961,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         {formData.available_language_codes.length > 0 ? (
                           formData.available_language_codes.map((code) => {
                             const lang = LANGUAGES_MOCK.find(
-                              (l) => l.id === code,
+                              (l) => l.id === code
                             );
                             return (
                               <span
@@ -1015,7 +1006,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                             onChange={(e) =>
                               handleChange(
                                 "uses_ai_translation",
-                                e.target.checked,
+                                e.target.checked
                               )
                             }
                           />

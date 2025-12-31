@@ -347,7 +347,7 @@ export default function ManualMatchingConsole() {
 
   // State: Selection
   const [selectedSubject, setSelectedSubject] = useState<UserProfile | null>(
-    null,
+    null
   );
   const [selectedCandidate, setSelectedCandidate] =
     useState<UserProfile | null>(null);
@@ -393,7 +393,7 @@ export default function ManualMatchingConsole() {
           const filtered = data.filter(
             (c) =>
               (selectedSubject.gender === "male" && c.gender === "female") ||
-              (selectedSubject.gender === "female" && c.gender === "male"),
+              (selectedSubject.gender === "female" && c.gender === "male")
           );
           setCandidates(filtered);
         }
@@ -422,34 +422,34 @@ export default function ManualMatchingConsole() {
     // Common works
     const commonWorks = selectedSubject.favoriteWorks.filter((sWork) =>
       selectedCandidate.favoriteWorks.some(
-        (cWork) => cWork.title === sWork.title,
-      ),
+        (cWork) => cWork.title === sWork.title
+      )
     );
 
     const subjectUniqueWorks = selectedSubject.favoriteWorks.filter(
       (sWork) =>
         !selectedCandidate.favoriteWorks.some(
-          (cWork) => cWork.title === sWork.title,
-        ),
+          (cWork) => cWork.title === sWork.title
+        )
     );
 
     const candidateUniqueWorks = selectedCandidate.favoriteWorks.filter(
       (cWork) =>
         !selectedSubject.favoriteWorks.some(
-          (sWork) => sWork.title === cWork.title,
-        ),
+          (sWork) => sWork.title === cWork.title
+        )
     );
 
     // Common values
     const commonValues = selectedSubject.values.filter((sVal) =>
-      selectedCandidate.values.includes(sVal),
+      selectedCandidate.values.includes(sVal)
     );
 
     const subjectUniqueValues = selectedSubject.values.filter(
-      (sVal) => !selectedCandidate.values.includes(sVal),
+      (sVal) => !selectedCandidate.values.includes(sVal)
     );
     const candidateUniqueValues = selectedCandidate.values.filter(
-      (cVal) => !selectedSubject.values.includes(cVal),
+      (cVal) => !selectedSubject.values.includes(cVal)
     );
 
     return {
@@ -475,7 +475,7 @@ export default function ManualMatchingConsole() {
         created_at: new Date().toISOString(),
       });
       alert(
-        `マッチング成功!\n${selectedSubject.name} さんと ${selectedCandidate.name} さんをマッチングしました。`,
+        `マッチング成功!\n${selectedSubject.name} さんと ${selectedCandidate.name} さんをマッチングしました。`
       );
       setIsMatchModalOpen(false);
       setMatchComment("");

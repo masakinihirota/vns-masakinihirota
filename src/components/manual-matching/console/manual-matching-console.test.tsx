@@ -80,7 +80,7 @@ describe("ManualMatchingConsole UI", () => {
         selectedSubject={selectedSubject}
         selectedCandidate={selectedCandidate}
         comparisonData={comparisonData}
-      />,
+      />
     );
 
     expect(screen.getByText(/価値観・作品マッチング/)).toBeInTheDocument();
