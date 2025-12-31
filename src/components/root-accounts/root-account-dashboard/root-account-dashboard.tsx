@@ -178,33 +178,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             </div>
           </div>
 
-          {/* Status Card */}
-          <div className="bg-white dark:bg-slate-900 overflow-hidden shadow rounded-lg p-5 border-l-4 border-blue-500">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <Shield className="h-6 w-6 text-blue-400" />
-              </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-slate-500 dark:text-slate-400 truncate">
-                    アカウント状態
-                  </dt>
-                  <dd className="flex items-center gap-2 mt-1">
-                    {formData.status === "active" ? (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                        有効 (Active)
-                      </span>
-                    ) : (
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-100">
-                        {formData.status}
-                      </span>
-                    )}
-                  </dd>
-                </dl>
-              </div>
-            </div>
-          </div>
-
           {/* Warnings Card - Adjusted to include Trust Duration */}
           <div className="bg-white dark:bg-slate-900 overflow-hidden shadow rounded-lg p-5 border-l-4 border-amber-500">
             <div className="flex items-center">
@@ -232,6 +205,73 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
         {/* Main Content Single Page Layout */}
         <div className="space-y-8">
+          {/* My Profiles - Full Width */}
+          <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50">
+                  千の仮面 (My Profiles)
+                </h3>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  このルートアカウントに紐づくユーザープロフィールの一覧です。
+                </p>
+              </div>
+              <button className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                <User size={14} />
+                新規作成
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              {profiles.map((profile) => (
+                <div
+                  key={profile.id}
+                  className="bg-slate-50 dark:bg-slate-800/50 overflow-hidden shadow-sm rounded-lg border border-slate-200 dark:border-slate-700 p-4"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 truncate">
+                      <div className="flex items-center space-x-3">
+                        <h3 className="text-gray-900 dark:text-white text-sm font-medium truncate">
+                          {profile.display_name}
+                        </h3>
+                        {profile.is_active ? (
+                          <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full">
+                            Active
+                          </span>
+                        ) : (
+                          <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-gray-100 rounded-full">
+                            Inactive
+                          </span>
+                        )}
+                        <span
+                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-blue-100 text-blue-800"
+                            }`}
+                        >
+                          {profile.role_type}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-gray-500 dark:text-gray-400 text-xs truncate">
+                        {profile.purpose}
+                      </p>
+                    </div>
+                    <div>
+                      <button className="text-xs text-indigo-600 hover:text-indigo-500 font-medium">
+                        詳細
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              {profiles.length === 0 && (
+                <div className="text-center py-4 text-sm text-slate-500">
+                  プロフィールはまだありません
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Left Column: Basic Info & AI Settings */}
             <div className="space-y-8">
@@ -513,76 +553,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               </div>
             </div>
 
-            {/* Right Column: Profiles & Security & Audit */}
+            {/* Right Column: Security & Audit */}
             <div className="space-y-8">
-              {/* My Profiles */}
-              <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <div>
-                    <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50">
-                      千の仮面 (My Profiles)
-                    </h3>
-                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-                      このルートアカウントに紐づくユーザープロフィールの一覧です。
-                    </p>
-                  </div>
-                  <button className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-                    <User size={14} />
-                    新規作成
-                  </button>
-                </div>
-
-                <div className="space-y-4">
-                  {profiles.map((profile) => (
-                    <div
-                      key={profile.id}
-                      className="bg-slate-50 dark:bg-slate-800/50 overflow-hidden shadow-sm rounded-lg border border-slate-200 dark:border-slate-700 p-4"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1 truncate">
-                          <div className="flex items-center space-x-3">
-                            <h3 className="text-gray-900 dark:text-white text-sm font-medium truncate">
-                              {profile.display_name}
-                            </h3>
-                            {profile.is_active ? (
-                              <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full">
-                                Active
-                              </span>
-                            ) : (
-                              <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-gray-100 rounded-full">
-                                Inactive
-                              </span>
-                            )}
-                            <span
-                              className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                                profile.role_type === "leader"
-                                  ? "bg-purple-100 text-purple-800"
-                                  : "bg-blue-100 text-blue-800"
-                              }`}
-                            >
-                              {profile.role_type}
-                            </span>
-                          </div>
-                          <p className="mt-1 text-gray-500 dark:text-gray-400 text-xs truncate">
-                            {profile.purpose}
-                          </p>
-                        </div>
-                        <div>
-                          <button className="text-xs text-indigo-600 hover:text-indigo-500 font-medium">
-                            詳細
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  {profiles.length === 0 && (
-                    <div className="text-center py-4 text-sm text-slate-500">
-                      プロフィールはまだありません
-                    </div>
-                  )}
-                </div>
-              </div>
-
               {/* Security & Audit Compact */}
               <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
                 <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 mb-4 flex items-center gap-2">
