@@ -248,11 +248,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           </span>
                         )}
                         <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                            profile.role_type === "leader"
-                              ? "bg-purple-100 text-purple-800"
-                              : "bg-blue-100 text-blue-800"
-                          }`}
+                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
+                            ? "bg-purple-100 text-purple-800"
+                            : "bg-blue-100 text-blue-800"
+                            }`}
                         >
                           {profile.role_type}
                         </span>
@@ -378,10 +377,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     relative cursor-pointer rounded-lg overflow-hidden
                     transition-all duration-300 ease-in-out
                     hover:-translate-y-2 hover:shadow-xl
-                    ${
-                      selectedArea === areaNum
-                        ? "ring-4 ring-indigo-500 shadow-lg scale-105"
-                        : "ring-1 ring-slate-200 dark:ring-slate-700"
+                    ${selectedArea === areaNum
+                      ? "ring-4 ring-indigo-500 shadow-lg scale-105"
+                      : "ring-1 ring-slate-200 dark:ring-slate-700"
                     }
                   `}
                 >
@@ -457,7 +455,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                     {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                     {timeToHours(formData.core_hours_end) < 24 ||
-                    nextDayEndHour === 0
+                      nextDayEndHour === 0
                       ? hoursToTime(timeToHours(formData.core_hours_end))
                       : "24:00"}
                   </span>
@@ -519,7 +517,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
                       {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                       {timeToHours(formData.core_hours_end) < 24 ||
-                      nextDayEndHour === 0
+                        nextDayEndHour === 0
                         ? hoursToTime(timeToHours(formData.core_hours_end))
                         : "24:00"}
                     </span>
@@ -696,7 +694,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       <div className="mt-1">
                         <select
                           value={formData.birth_generation}
-                          onChange={(e) => handleGenerationChange(e.target.value)}
+                          onChange={(e) =>
+                            handleGenerationChange(e.target.value)
+                          }
                           className="block w-full rounded-md sm:text-sm p-2 border bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-50 focus:ring-indigo-500 focus:border-indigo-500"
                         >
                           <option value="">選択してください</option>
@@ -720,7 +720,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                               .slice()
                               .reverse()
                               .map((entry, idx) => (
-                                <li key={`${entry.at}-${idx}`} className="flex justify-between gap-2">
+                                <li
+                                  key={`${entry.at}-${idx}`}
+                                  className="flex justify-between gap-2"
+                                >
                                   <span>
                                     {entry.from} → {entry.to}
                                   </span>
@@ -753,7 +756,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       onClick={() => setIsEditingLanguages((prev) => !prev)}
                       className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                     >
-                      {isEditingLanguages ? <Save size={14} /> : <Edit3 size={14} />}
+                      {isEditingLanguages ? (
+                        <Save size={14} />
+                      ) : (
+                        <Edit3 size={14} />
+                      )}
                       {isEditingLanguages ? "保存" : "編集"}
                     </button>
                   </div>
@@ -770,13 +777,17 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       <div className="mt-2 flex flex-wrap gap-2">
                         {formData.mother_tongue_codes.length > 0 ? (
                           formData.mother_tongue_codes.map((code) => {
-                            const lang = LANGUAGES_MOCK.find((l) => l.id === code);
+                            const lang = LANGUAGES_MOCK.find(
+                              (l) => l.id === code
+                            );
                             return (
                               <span
                                 key={code}
                                 className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-50 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-100 border border-indigo-100 dark:border-indigo-800"
                               >
-                                <span className="font-semibold">{lang?.native_name ?? code}</span>
+                                <span className="font-semibold">
+                                  {lang?.native_name ?? code}
+                                </span>
                                 <span className="ml-1 text-[11px] text-slate-500 dark:text-slate-300">
                                   {lang?.name ?? "Unknown"}
                                 </span>
@@ -801,13 +812,17 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       <div className="mt-2 flex flex-wrap gap-2">
                         {formData.available_language_codes.length > 0 ? (
                           formData.available_language_codes.map((code) => {
-                            const lang = LANGUAGES_MOCK.find((l) => l.id === code);
+                            const lang = LANGUAGES_MOCK.find(
+                              (l) => l.id === code
+                            );
                             return (
                               <span
                                 key={code}
                                 className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-100 border border-emerald-100 dark:border-emerald-800"
                               >
-                                <span className="font-semibold">{lang?.native_name ?? code}</span>
+                                <span className="font-semibold">
+                                  {lang?.native_name ?? code}
+                                </span>
                                 <span className="ml-1 text-[11px] text-slate-500 dark:text-slate-300">
                                   {lang?.name ?? "Unknown"}
                                 </span>
@@ -841,7 +856,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                             className="sr-only peer"
                             checked={formData.uses_ai_translation}
                             onChange={(e) =>
-                              handleChange("uses_ai_translation", e.target.checked)
+                              handleChange(
+                                "uses_ai_translation",
+                                e.target.checked
+                              )
                             }
                           />
                           <span className="relative inline-flex items-center w-11 h-6 rounded-full bg-slate-200 dark:bg-slate-700 transition-colors peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 peer-checked:bg-indigo-600 peer-checked:[&>span]:translate-x-5">
