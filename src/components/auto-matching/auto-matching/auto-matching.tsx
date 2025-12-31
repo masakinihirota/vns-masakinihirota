@@ -35,7 +35,7 @@ interface AutoMatchingProps {
   darkMode: boolean;
   onCriteriaChange: (
     key: keyof SearchCriteria,
-    value: SearchCriteria[keyof SearchCriteria]
+    value: SearchCriteria[keyof SearchCriteria],
   ) => void;
   onSearch: () => void;
   onToggleDarkMode: () => void;

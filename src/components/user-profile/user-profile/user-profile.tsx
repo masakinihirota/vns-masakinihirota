@@ -43,7 +43,7 @@ export function UserProfile({
       <div
         className={cn(
           "absolute inset-0 transition-colors duration-700",
-          currentTheme
+          currentTheme,
         )}
       >
         {/* Quantum Noise / Glitch Overlay (Active during 'observing' or 'unobserved') */}
@@ -59,7 +59,7 @@ export function UserProfile({
                   "object-contain transition-opacity duration-300",
                   quantumState === "observing"
                     ? "opacity-50 blur-sm"
-                    : "opacity-100"
+                    : "opacity-100",
                 )}
               />
             </div>
@@ -67,7 +67,7 @@ export function UserProfile({
               className={cn(
                 "text-2xl font-bold tracking-widest text-white transition-all",
                 quantumState === "observing" &&
-                  "animate-bounce text-red-500 blur-[1px]"
+                  "animate-bounce text-red-500 blur-[1px]",
               )}
             >
               {quantumState === "observing" ? "OBSERVING..." : "UNOBSERVED"}
@@ -82,7 +82,7 @@ export function UserProfile({
         <div
           className={cn(
             "relative z-10 p-6 h-full flex flex-col transition-opacity duration-500",
-            quantumState === "collapsed" ? "opacity-100" : "opacity-0"
+            quantumState === "collapsed" ? "opacity-100" : "opacity-0",
           )}
         >
           {/* Avatar Area */}
@@ -128,7 +128,7 @@ export function UserProfile({
                     "relative w-10 h-10 rounded-full border-2 overflow-hidden transition-transform hover:scale-110 focus:outline-none focus:ring-2 ring-offset-2",
                     currentPersona?.id === persona.id
                       ? "ring-2 ring-offset-2 ring-current scale-110"
-                      : "opacity-60 hover:opacity-100 border-transparent"
+                      : "opacity-60 hover:opacity-100 border-transparent",
                   )}
                   title={persona.name}
                 >

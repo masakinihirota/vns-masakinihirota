@@ -160,7 +160,7 @@ export default function App() {
 
   const toggleAvailableLanguage = (lang: string) => {
     setAvailableLanguages((prev) =>
-      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
+      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang],
     );
   };
 
@@ -365,7 +365,7 @@ export default function App() {
 
                       {selectedCountry &&
                         currentDetail.countries.find(
-                          (c) => c.name === selectedCountry
+                          (c) => c.name === selectedCountry,
                         )?.regions && (
                           <div className="space-y-1 animate-in fade-in slide-in-from-left-2">
                             <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
@@ -567,7 +567,7 @@ export default function App() {
                             }
                             onChange={() =>
                               toggleAgreement(
-                                item.key as keyof typeof agreements
+                                item.key as keyof typeof agreements,
                               )
                             }
                             className="h-5 w-5 rounded border-slate-300 text-slate-900 focus:ring-slate-900"

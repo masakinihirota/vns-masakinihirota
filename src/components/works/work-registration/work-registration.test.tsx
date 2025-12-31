@@ -38,7 +38,7 @@ describe("WorkRegistration", () => {
     expect(screen.getByText("カテゴリを選択")).toBeDefined();
     expect(screen.getByText("制作年代・時期")).toBeDefined();
     expect(
-      screen.getByRole("button", { name: "この内容で登録する" })
+      screen.getByRole("button", { name: "この内容で登録する" }),
     ).toBeDefined();
   });
 });

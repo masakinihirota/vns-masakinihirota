@@ -81,7 +81,7 @@ export const ValuesList: React.FC<ValuesListProps> = ({
                             onClick={() => onPrivacyToggle(q.id)}
                             className={cn(
                               "text-slate-400 hover:text-indigo-600",
-                              !isPublic && "text-amber-500"
+                              !isPublic && "text-amber-500",
                             )}
                             title={isPublic ? "公開中" : "非公開"}
                           >

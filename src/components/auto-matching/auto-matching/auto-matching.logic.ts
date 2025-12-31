@@ -87,7 +87,7 @@ export const DUMMY_CANDIDATES: MatchingProfile[] = [
 ];
 
 export const calculateMatches = async (
-  criteria: SearchCriteria
+  criteria: SearchCriteria,
 ): Promise<MatchingScore[]> => {
   // Simulating API latency
   await new Promise((resolve) => setTimeout(resolve, 800));

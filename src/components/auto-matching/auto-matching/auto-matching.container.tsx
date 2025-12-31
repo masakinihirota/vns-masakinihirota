@@ -36,7 +36,7 @@ export const AutoMatchingContainer = () => {
 
   const handleCriteriaChange = (
     key: keyof SearchCriteria,
-    value: SearchCriteria[keyof SearchCriteria]
+    value: SearchCriteria[keyof SearchCriteria],
   ) => {
     setCriteria((prev) => ({ ...prev, [key]: value }));
   };

@@ -323,7 +323,7 @@ export const ProductList: React.FC<ProductListProps> = ({
                         ? "2行"
                         : "サムネイル"}
                   </button>
-                )
+                ),
               )}
             </div>
           </div>

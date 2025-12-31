@@ -45,12 +45,12 @@ describe("Manual Matching Console Logic", () => {
 
     // Assert
     expect(result.subjectUniqueWorks.some((w) => w.title === "ONE PIECE")).toBe(
-      true
+      true,
     );
     expect(
       result.candidateUniqueWorks.some(
-        (w) => w.title === "グレイテスト・ショーマン"
-      )
+        (w) => w.title === "グレイテスト・ショーマン",
+      ),
     ).toBe(true);
   });
 });

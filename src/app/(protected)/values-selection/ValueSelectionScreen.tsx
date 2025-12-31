@@ -22,7 +22,7 @@ export const ValueSelectionScreen: React.FC = () => {
   const importantValueId = useId();
   const relatedBaseId = useId();
   const relatedIds = Array.from({ length: 5 }).map(
-    (_, i) => `${relatedBaseId}-${i}`
+    (_, i) => `${relatedBaseId}-${i}`,
   );
 
   // 選択肢追加

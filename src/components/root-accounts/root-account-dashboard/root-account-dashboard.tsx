@@ -14,6 +14,7 @@ import {
   Terminal,
   Clock,
   Plus,
+  X,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -26,31 +27,33 @@ import {
   RootAccount,
   UserProfileSummary,
 } from "./root-account-dashboard.types";
+import {
+  normalizeRootAccountData,
+  timeToHours,
+  hoursToTime,
+} from "@/lib/root-account-utils";
 
 interface RootAccountDashboardProps {
   data: RootAccount;
 }
 
-// 時間文字列をアワー値に変換（例："09:30" → 9.5）
-const timeToHours = (time: string): number => {
-  if (!time) return 0;
-  const [hours, minutes] = time.split(":").map(Number);
-  return hours + minutes / 60;
-};
-
-// アワー値を時間文字列に変換（例：9.5 → "09:30"）
-const hoursToTime = (hours: number): string => {
-  const h = Math.floor(hours);
-  const m = Math.round((hours - h) * 60);
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
-};
-
 export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
-  const [formData, setFormData] = useState<RootAccount>(data);
+  // データの正規化（旧スキーマからの変換対応）
+  const normalizedData = normalizeRootAccountData(data);
+
+  const [formData, setFormData] = useState<RootAccount>(normalizedData);
+  const [originalData, setOriginalData] = useState<RootAccount>(normalizedData);
   const [selectedArea, setSelectedArea] = useState<number | null>(null);
+
+  // 編集モード
+  const [isEditing, setIsEditing] = useState(false);
   const [isEditingCoreHours, setIsEditingCoreHours] = useState(false);
   const [isEditingLanguages, setIsEditingLanguages] = useState(false);
   const [isEditingCountries, setIsEditingCountries] = useState(false);
+
+  // ローディング状態
+  const [isLoading, setIsLoading] = useState(false);
+
   const [generationHistory, setGenerationHistory] = useState<
     { from: string; to: string; at: string }[]
   >([]);
@@ -67,16 +70,17 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     "2020-2024",
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [profiles, setProfiles] =
-    useState<UserProfileSummary[]>(dummyUserProfileList);
+  const [profiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
 
   // 日またぎ用の状態（翌日の終了時刻を保持）
   const [nextDayEndHour, setNextDayEndHour] = useState<number>(0);
 
+  // 画像エラー状態
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+
   const handleChange = <K extends keyof RootAccount>(
     field: K,
-    value: RootAccount[K]
+    value: RootAccount[K],
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -92,6 +96,88 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       },
     ]);
     handleChange("birth_generation", newValue);
+  };
+
+  // 保存処理（API実装予定）
+  const handleSave = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: 実際のAPI呼び出しを実装
+      // await updateRootAccount(formData);
+      console.log("保存データ:", formData);
+
+      // 保存成功後、元データを更新
+      setOriginalData(formData);
+      setIsEditing(false);
+      alert("変更を保存しました");
+    } catch (error) {
+      console.error("保存エラー:", error);
+      alert("保存に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // キャンセル処理
+  const handleCancel = () => {
+    setFormData(originalData);
+    setIsEditing(false);
+  };
+
+  // 言語設定の保存
+  const handleSaveLanguages = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: 実際のAPI呼び出しを実装
+      console.log("言語設定保存:", {
+        mother_tongue_codes: formData.mother_tongue_codes,
+        available_language_codes: formData.available_language_codes,
+      });
+      setOriginalData(formData);
+      setIsEditingLanguages(false);
+      alert("言語設定を保存しました");
+    } catch (error) {
+      console.error("保存エラー:", error);
+      alert("保存に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // コア活動時間の保存
+  const handleSaveCoreHours = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: 実際のAPI呼び出しを実装
+      console.log("活動時間保存:", {
+        core_hours_start: formData.core_hours_start,
+        core_hours_end: formData.core_hours_end,
+      });
+      setOriginalData(formData);
+      setIsEditingCoreHours(false);
+      alert("活動時間を保存しました");
+    } catch (error) {
+      console.error("保存エラー:", error);
+      alert("保存に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // VNS管理国の保存
+  const handleSaveCountries = async () => {
+    setIsLoading(true);
+    try {
+      // TODO: 実際のAPI呼び出しを実装
+      console.log("管理国保存");
+      setIsEditingCountries(false);
+      alert("管理国設定を保存しました");
+    } catch (error) {
+      console.error("保存エラー:", error);
+      alert("保存に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -134,6 +220,40 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                 ユーザープロファイル、セキュリティ設定、および監査ログの確認
               </p>
+            </div>
+            <div className="flex items-center gap-3">
+              {isEditing ? (
+                <>
+                  <button
+                    onClick={handleCancel}
+                    disabled={isLoading}
+                    className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                  >
+                    <X size={16} className="inline mr-1" />
+                    キャンセル
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    disabled={isLoading}
+                    className="flex items-center gap-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                  >
+                    {isLoading ? (
+                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <Save size={16} />
+                    )}
+                    変更を保存
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700"
+                >
+                  <Edit3 size={16} />
+                  プロフィール編集
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -249,8 +369,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         )}
                         <span
                           className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
-                            ? "bg-purple-100 text-purple-800"
-                            : "bg-blue-100 text-blue-800"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-blue-100 text-blue-800"
                             }`}
                         >
                           {profile.role_type}
@@ -296,8 +416,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </p>
               </div>
               <button
-                onClick={() => setIsEditingCountries((prev) => !prev)}
-                className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                onClick={() => {
+                  if (isEditingCountries) {
+                    handleSaveCountries();
+                  } else {
+                    setIsEditingCountries(true);
+                  }
+                }}
+                disabled={isLoading}
+                className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
               >
                 {isEditingCountries ? <Save size={14} /> : <Edit3 size={14} />}
                 {isEditingCountries ? "保存" : "編集"}
@@ -389,14 +516,26 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     ${selectedArea === areaNum ? "opacity-100" : "opacity-75"}
                   `}
                   >
-                    <Image
-                      src={`/world/area${areaNum}.svg`}
-                      alt={`エリア ${areaNum}`}
-                      width={400}
-                      height={300}
-                      className="w-full h-auto"
-                      priority={areaNum === 1}
-                    />
+                    {imageErrors.has(areaNum) ? (
+                      <div className="w-full h-48 flex items-center justify-center text-slate-400">
+                        <div className="text-center">
+                          <MapPin size={48} className="mx-auto mb-2" />
+                          <p className="text-sm">地図画像を読み込めません</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <Image
+                        src={`/world/area${areaNum}.svg`}
+                        alt={`エリア ${areaNum}`}
+                        width={400}
+                        height={300}
+                        className="w-full h-auto"
+                        priority={areaNum === 1}
+                        onError={() => {
+                          setImageErrors((prev) => new Set(prev).add(areaNum));
+                        }}
+                      />
+                    )}
                   </div>
                   <div
                     className={`
@@ -437,8 +576,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </p>
               </div>
               <button
-                onClick={() => setIsEditingCoreHours(!isEditingCoreHours)}
-                className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                onClick={() => {
+                  if (isEditingCoreHours) {
+                    handleSaveCoreHours();
+                  } else {
+                    setIsEditingCoreHours(true);
+                  }
+                }}
+                disabled={isLoading}
+                className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
               >
                 {isEditingCoreHours ? <Save size={14} /> : <Edit3 size={14} />}
                 {isEditingCoreHours ? "保存" : "編集"}
@@ -472,12 +618,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       onValueChange={(values) => {
                         handleChange(
                           "core_hours_start",
-                          hoursToTime(values[0])
+                          hoursToTime(values[0]),
                         );
                         if (values[1] < 24) {
                           handleChange(
                             "core_hours_end",
-                            hoursToTime(values[1])
+                            hoursToTime(values[1]),
                           );
                           setNextDayEndHour(0); // 24時未満なら翌日スライダーをリセット
                         } else {
@@ -582,7 +728,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             {/* 活動時間の説明 */}
             <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <p className="text-sm text-blue-900 dark:text-blue-100">
-                <span className="font-semibold">合計活動時間:</span> {(() => {
+                <span className="font-semibold">合計活動時間:</span>{" "}
+                {(() => {
                   const start = timeToHours(formData.core_hours_start);
                   const end = timeToHours(formData.core_hours_end);
                   const total =
@@ -594,15 +741,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
                   if (end >= 24 && nextDayEndHour > 0) {
                     return `${hoursToTime(start)}～翌日${hoursToTime(
-                      nextDayEndHour
+                      nextDayEndHour,
                     )} (${total.toFixed(1)}時間)`;
                   } else if (end >= start) {
                     return `${hoursToTime(start)}～${hoursToTime(end)} (${total.toFixed(
-                      1
+                      1,
                     )}時間)`;
                   } else {
                     return `${hoursToTime(start)}～翌日${hoursToTime(end)} (${total.toFixed(
-                      1
+                      1,
                     )}時間)`;
                   }
                 })()}
@@ -677,12 +824,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       <div className="mt-1">
                         <input
                           type="text"
-                          disabled={true}
+                          disabled={!isEditing}
                           value={formData.display_name}
                           onChange={(e) =>
                             handleChange("display_name", e.target.value)
                           }
-                          className="block w-full rounded-md sm:text-sm p-2 border bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing
+                              ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                              : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
+                            }`}
                         />
                       </div>
                     </div>
@@ -753,8 +903,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       言語設定
                     </h3>
                     <button
-                      onClick={() => setIsEditingLanguages((prev) => !prev)}
-                      className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                      onClick={() => {
+                        if (isEditingLanguages) {
+                          handleSaveLanguages();
+                        } else {
+                          setIsEditingLanguages(true);
+                        }
+                      }}
+                      disabled={isLoading}
+                      className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
                     >
                       {isEditingLanguages ? (
                         <Save size={14} />
@@ -778,7 +935,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         {formData.mother_tongue_codes.length > 0 ? (
                           formData.mother_tongue_codes.map((code) => {
                             const lang = LANGUAGES_MOCK.find(
-                              (l) => l.id === code
+                              (l) => l.id === code,
                             );
                             return (
                               <span
@@ -813,7 +970,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         {formData.available_language_codes.length > 0 ? (
                           formData.available_language_codes.map((code) => {
                             const lang = LANGUAGES_MOCK.find(
-                              (l) => l.id === code
+                              (l) => l.id === code,
                             );
                             return (
                               <span
@@ -858,7 +1015,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                             onChange={(e) =>
                               handleChange(
                                 "uses_ai_translation",
-                                e.target.checked
+                                e.target.checked,
                               )
                             }
                           />

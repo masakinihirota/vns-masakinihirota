@@ -127,7 +127,7 @@ const UserCard = ({
 };
 
 export const ManualMatchingConsole: React.FC<ManualMatchingConsoleProps> = (
-  props
+  props,
 ) => {
   return (
     <div className="min-h-screen flex flex-col transition-colors duration-300 bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100">

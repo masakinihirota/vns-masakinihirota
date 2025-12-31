@@ -34,7 +34,7 @@ describe("ProductList UI", () => {
     expect(screen.getByText("星月夜")).toBeInTheDocument();
     expect(screen.getByText("モナ・リザ")).toBeInTheDocument();
     expect(
-      screen.getByText("フィンセント・ファン・ゴッホ")
+      screen.getByText("フィンセント・ファン・ゴッホ"),
     ).toBeInTheDocument();
   });
 

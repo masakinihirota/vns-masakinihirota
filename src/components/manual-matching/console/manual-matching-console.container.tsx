@@ -16,7 +16,7 @@ export const ManualMatchingConsoleContainer = () => {
 
   // State: Selection
   const [selectedSubject, setSelectedSubject] = useState<UserProfile | null>(
-    null
+    null,
   );
   const [selectedCandidate, setSelectedCandidate] =
     useState<UserProfile | null>(null);
@@ -94,7 +94,7 @@ export const ManualMatchingConsoleContainer = () => {
     new Promise((resolve) => setTimeout(resolve, 1000))
       .then(() => {
         alert(
-          `マッチング成功!\n${selectedSubject?.name} さんと ${selectedCandidate?.name} さんをマッチングしました。`
+          `マッチング成功!\n${selectedSubject?.name} さんと ${selectedCandidate?.name} さんをマッチングしました。`,
         );
         setIsMatchModalOpen(false);
         setMatchComment("");

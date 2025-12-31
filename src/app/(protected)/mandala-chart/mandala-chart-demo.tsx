@@ -15,7 +15,7 @@ export default function MandalaChartDemo() {
   const [chartData, setChartData] = useState<string[][]>(() =>
     Array(9)
       .fill(0)
-      .map(() => Array(9).fill(""))
+      .map(() => Array(9).fill("")),
   );
 
   // Example data for demonstration
@@ -50,7 +50,7 @@ export default function MandalaChartDemo() {
     setChartData(
       Array(9)
         .fill(0)
-        .map(() => Array(9).fill(""))
+        .map(() => Array(9).fill("")),
     );
   };
 

@@ -129,7 +129,7 @@ export type MenuItemWithState = {
  */
 export const getMenuItemsWithState = (
   items: { title: string; url: string; icon: LucideIcon }[],
-  currentLevel: number
+  currentLevel: number,
 ): MenuItemWithState[] => {
   return items
     .map((item) => {
@@ -326,7 +326,7 @@ function NavMore({
   const hasActiveItem = itemsWithState.some(
     (item) =>
       item.state === "unlocked" &&
-      (currentPath === item.url || currentPath.startsWith(item.url + "/"))
+      (currentPath === item.url || currentPath.startsWith(item.url + "/")),
   );
 
   // 表示できる項目がない場合は非表示

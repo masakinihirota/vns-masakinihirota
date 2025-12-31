@@ -30,7 +30,7 @@ interface MatchingConditionsProps {
 }
 
 export const MatchingConditions: React.FC<MatchingConditionsProps> = (
-  props
+  props,
 ) => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6 md:p-12">
@@ -72,7 +72,7 @@ export const MatchingConditions: React.FC<MatchingConditionsProps> = (
                   onChange={(e) =>
                     props.onValueImportanceChange(
                       option.id,
-                      parseInt(e.target.value)
+                      parseInt(e.target.value),
                     )
                   }
                   className="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"

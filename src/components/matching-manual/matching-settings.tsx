@@ -126,7 +126,7 @@ const MatchingSettings = () => {
                 : 50;
         return acc;
       },
-      {} as Record<string, number>
+      {} as Record<string, number>,
     );
 
     return {
@@ -182,7 +182,7 @@ const MatchingSettings = () => {
         };
       });
     },
-    []
+    [],
   );
 
   // 通知を閉じる

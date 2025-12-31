@@ -130,7 +130,7 @@ export const workSchema = z.object({
       z.object({
         type: z.string(),
         value: z.string().optional(), // 空文字も許容して、submit時にfilterする方針か、あるいはurl形式チェックするか
-      })
+      }),
     )
     .default([]),
   tags: z.array(z.string()).default([]),

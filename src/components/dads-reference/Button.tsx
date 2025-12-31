@@ -133,7 +133,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     // aria-disabled 時はクリックイベントを無効化
     const handleDisabled = (
-      e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => {
       e.preventDefault();
     };
@@ -148,7 +148,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

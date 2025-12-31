@@ -214,7 +214,7 @@ export function Onboarding() {
 
                       {state.selectedCountry &&
                         state.currentDetail.countries.find(
-                          (c) => c.name === state.selectedCountry
+                          (c) => c.name === state.selectedCountry,
                         )?.regions && (
                           <div className="space-y-1 animate-in fade-in slide-in-from-left-2">
                             <label className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
@@ -520,7 +520,7 @@ export function Onboarding() {
                             }
                             onChange={() =>
                               actions.toggleAgreement(
-                                item.key as keyof typeof state.agreements
+                                item.key as keyof typeof state.agreements,
                               )
                             }
                             className="h-5 w-5 rounded border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-50 focus:ring-slate-900 dark:focus:ring-slate-50 bg-white dark:bg-slate-700"

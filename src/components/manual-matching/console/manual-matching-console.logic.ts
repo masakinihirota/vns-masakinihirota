@@ -121,32 +121,32 @@ export const MOCK_CANDIDATES: UserProfile[] = [
 // Logic
 export const calculateComparison = (
   subject: UserProfile,
-  candidate: UserProfile
+  candidate: UserProfile,
 ) => {
   // Implement standard intersection logic
   const commonWorks = subject.favoriteWorks.filter((sWork) =>
-    candidate.favoriteWorks.some((cWork) => cWork.title === sWork.title)
+    candidate.favoriteWorks.some((cWork) => cWork.title === sWork.title),
   );
 
   const subjectUniqueWorks = subject.favoriteWorks.filter(
     (sWork) =>
-      !candidate.favoriteWorks.some((cWork) => cWork.title === sWork.title)
+      !candidate.favoriteWorks.some((cWork) => cWork.title === sWork.title),
   );
 
   const candidateUniqueWorks = candidate.favoriteWorks.filter(
     (cWork) =>
-      !subject.favoriteWorks.some((sWork) => sWork.title === cWork.title)
+      !subject.favoriteWorks.some((sWork) => sWork.title === cWork.title),
   );
 
   const commonValues = subject.values.filter((sVal) =>
-    candidate.values.includes(sVal)
+    candidate.values.includes(sVal),
   );
 
   const subjectUniqueValues = subject.values.filter(
-    (sVal) => !candidate.values.includes(sVal)
+    (sVal) => !candidate.values.includes(sVal),
   );
   const candidateUniqueValues = candidate.values.filter(
-    (cVal) => !subject.values.includes(cVal)
+    (cVal) => !subject.values.includes(cVal),
   );
 
   return {
@@ -161,19 +161,19 @@ export const calculateComparison = (
 
 export const fetchSubjects = async (): Promise<UserProfile[]> => {
   return new Promise((resolve) =>
-    setTimeout(() => resolve(MOCK_SUBJECTS), 400)
+    setTimeout(() => resolve(MOCK_SUBJECTS), 400),
   );
 };
 
 export const fetchCandidates = async (
-  subjectGender: string
+  subjectGender: string,
 ): Promise<UserProfile[]> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const filtered = MOCK_CANDIDATES.filter(
         (c) =>
           (subjectGender === "male" && c.gender === "female") ||
-          (subjectGender === "female" && c.gender === "male")
+          (subjectGender === "female" && c.gender === "male"),
       );
       resolve(filtered);
     }, 400);

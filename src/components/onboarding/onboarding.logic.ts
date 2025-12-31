@@ -150,7 +150,7 @@ export interface Agreements {
 
 export const CORE_ACTIVITY_HOURS = Array.from(
   { length: 24 },
-  (_, i) => i.toString().padStart(2, "0") + ":00"
+  (_, i) => i.toString().padStart(2, "0") + ":00",
 );
 
 export const useOnboarding = () => {
@@ -191,7 +191,7 @@ export const useOnboarding = () => {
 
   const toggleAvailableLanguage = (lang: string) => {
     setAvailableLanguages((prev) =>
-      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
+      prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang],
     );
   };
 

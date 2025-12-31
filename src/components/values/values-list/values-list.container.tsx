@@ -20,7 +20,7 @@ export const ValuesListContainer = () => {
           setQuestions(qData);
           const answersMap = aData.reduce(
             (acc, curr) => ({ ...acc, [curr.questionId]: curr }),
-            {}
+            {},
           );
           setAnswers(answersMap);
         })

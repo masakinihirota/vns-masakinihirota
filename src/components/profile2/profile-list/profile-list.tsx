@@ -55,7 +55,7 @@ export const ProfileListView: React.FC<ProfileListViewProps> = ({
   const filteredProfiles = profiles.filter(
     (p) =>
       p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.handle.toLowerCase().includes(searchQuery.toLowerCase())
+      p.handle.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
