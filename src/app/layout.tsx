@@ -42,7 +42,7 @@ export default function RootLayout({
         {process.env.NODE_ENV !== "production" && (
           <>
             <Script id="wuunu-ws" strategy="afterInteractive">
-              {`window.__WUUNU_WS__ = "http://127.0.0.1:63286/?token=52dd8de44f2d8bf61de5dab956cc547bec1a082ff777e5a3";`}
+              {`window.__WUUNU_WS__ = "http://127.0.0.1:54156/?token=c220b295efe82326b80348f696ee538c78e374db63d6277c";`}
             </Script>
             <Script
               id="wuunu-widget"
