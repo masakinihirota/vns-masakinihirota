@@ -248,10 +248,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           </span>
                         )}
                         <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
-                            ? "bg-purple-100 text-purple-800"
-                            : "bg-blue-100 text-blue-800"
-                            }`}
+                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                            profile.role_type === "leader"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-blue-100 text-blue-800"
+                          }`}
                         >
                           {profile.role_type}
                         </span>
@@ -377,9 +378,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     relative cursor-pointer rounded-lg overflow-hidden
                     transition-all duration-300 ease-in-out
                     hover:-translate-y-2 hover:shadow-xl
-                    ${selectedArea === areaNum
-                      ? "ring-4 ring-indigo-500 shadow-lg scale-105"
-                      : "ring-1 ring-slate-200 dark:ring-slate-700"
+                    ${
+                      selectedArea === areaNum
+                        ? "ring-4 ring-indigo-500 shadow-lg scale-105"
+                        : "ring-1 ring-slate-200 dark:ring-slate-700"
                     }
                   `}
                 >
@@ -455,7 +457,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                     {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                     {timeToHours(formData.core_hours_end) < 24 ||
-                      nextDayEndHour === 0
+                    nextDayEndHour === 0
                       ? hoursToTime(timeToHours(formData.core_hours_end))
                       : "24:00"}
                   </span>
@@ -517,7 +519,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
                       {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                       {timeToHours(formData.core_hours_end) < 24 ||
-                        nextDayEndHour === 0
+                      nextDayEndHour === 0
                         ? hoursToTime(timeToHours(formData.core_hours_end))
                         : "24:00"}
                     </span>
