@@ -10,6 +10,20 @@ export const LANGUAGES_MOCK: Language[] = [
   { id: "es", name: "Spanish", native_name: "Español" },
 ];
 
+// VNS masakinihirota 管理国リスト
+export const COUNTRIES_MOCK = [
+  { code: "NVA", name: "ノヴァリア連邦", flag: "🏛️", region: "中央大陸" },
+  { code: "AEG", name: "エーギル王国", flag: "⚓", region: "海洋諸島" },
+  { code: "SLV", name: "シルヴァニア公国", flag: "🌲", region: "北部森林地帯" },
+  { code: "IGN", name: "イグニス帝国", flag: "🔥", region: "南部火山地域" },
+  { code: "AQU", name: "アクアティカ自治領", flag: "💧", region: "東部水郷地帯" },
+  { code: "TER", name: "テラノヴァ共和国", flag: "⛰️", region: "西部山岳地帯" },
+  { code: "LUX", name: "ルクスブルク自由都市", flag: "✨", region: "中央都市圏" },
+  { code: "UMB", name: "アンブラ連合", flag: "🌙", region: "北西部暗黒地域" },
+  { code: "AUR", name: "オーロラ共和国", flag: "🌅", region: "極北地域" },
+  { code: "VER", name: "ヴェルダント同盟", flag: "🍃", region: "南東部緑地帯" },
+];
+
 export const dummyRootAccountData: RootAccount = {
   id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
   display_id: "root_user_001",
