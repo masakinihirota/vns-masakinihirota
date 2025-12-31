@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import { LANGUAGES_MOCK } from "./root-account-dashboard.dummyData";
-import { RootAccount } from "./root-account-dashboard.types";
+import { LANGUAGES_MOCK, dummyUserProfileList } from "./root-account-dashboard.dummyData";
+import { RootAccount, UserProfileSummary } from "./root-account-dashboard.types";
 
 interface RootAccountDashboardProps {
   data: RootAccount;
@@ -25,9 +25,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<RootAccount>(data);
-  const [activeTab, setActiveTab] = useState<"profile" | "security" | "audit">(
-    "profile"
-  );
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [profiles, setProfiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
 
   // Simulate Server Action for Update
   const handleSave = async () => {
@@ -198,7 +198,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             </div>
           </div>
 
-          {/* Warnings Card */}
+          {/* Warnings Card - Adjusted to include Trust Duration */}
           <div className="bg-white dark:bg-slate-900 overflow-hidden shadow rounded-lg p-5 border-l-4 border-amber-500">
             <div className="flex items-center">
               <div className="flex-shrink-0">
@@ -207,11 +207,14 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               <div className="ml-5 w-0 flex-1">
                 <dl>
                   <dt className="text-sm font-medium text-slate-500 dark:text-slate-400 truncate">
-                    警告カウント
+                    信頼継続日数 / 警告
                   </dt>
-                  <dd>
+                  <dd className="flex items-baseline gap-2">
                     <div className="text-2xl font-bold text-slate-900 dark:text-slate-50">
-                      {formData.warning_count}
+                      {formData.trust_duration_days}日
+                    </div>
+                    <div className="text-xs text-slate-500">
+                      (警告: {formData.warning_count})
                     </div>
                   </dd>
                 </dl>
@@ -220,49 +223,13 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
           </div>
         </div>
 
-        {/* Main Content Tabs */}
-        <div className="bg-white dark:bg-slate-900 shadow rounded-lg min-h-[500px]">
-          <div className="border-b border-slate-200 dark:border-slate-800">
-            <nav className="-mb-px flex space-x-8 px-6" aria-label="Tabs">
-              <button
-                onClick={() => setActiveTab("profile")}
-                className={`${
-                  activeTab === "profile"
-                    ? "border-indigo-500 text-indigo-600"
-                    : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
-                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
-              >
-                <User size={16} />
-                基本情報 (Profile)
-              </button>
-              <button
-                onClick={() => setActiveTab("security")}
-                className={`${
-                  activeTab === "security"
-                    ? "border-indigo-500 text-indigo-600"
-                    : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
-                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
-              >
-                <Shield size={16} />
-                セキュリティ & 連携
-              </button>
-              <button
-                onClick={() => setActiveTab("audit")}
-                className={`${
-                  activeTab === "audit"
-                    ? "border-indigo-500 text-indigo-600"
-                    : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
-                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
-              >
-                <Terminal size={16} />
-                監査ログ (Audit)
-              </button>
-            </nav>
-          </div>
+        {/* Main Content Single Page Layout */}
+        <div className="space-y-8">
 
-          <div className="p-6">
-            {activeTab === "profile" && (
-              <div className="space-y-8 animate-in fade-in duration-300">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Column: Basic Info & AI Settings */}
+            <div className="space-y-8">
+              <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
                 {/* Basic Info Section */}
                 <section>
                   <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 mb-4 flex items-center gap-2">
@@ -271,7 +238,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   </h3>
                   <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     {/* Display ID */}
-                    <div className="sm:col-span-3">
+                    <div className="sm:col-span-6">
                       <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
                         Display ID
                       </label>
@@ -289,7 +256,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     </div>
 
                     {/* Display Name */}
-                    <div className="sm:col-span-3">
+                    <div className="sm:col-span-6">
                       <label className="block text-sm font-medium text-slate-700">
                         表示名 (Display Name)
                       </label>
@@ -307,7 +274,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     </div>
 
                     {/* Location (New Field) */}
-                    <div className="sm:col-span-3">
+                    <div className="sm:col-span-6">
                       <label className="block text-sm font-medium text-slate-700 flex items-center gap-1">
                         <MapPin size={14} /> 居住地 (Location)
                       </label>
@@ -326,6 +293,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     </div>
 
                     {/* Generation (New Field) */}
+                    {/* Generation */}
                     <div className="sm:col-span-3">
                       <label className="block text-sm font-medium text-slate-700 flex items-center gap-1">
                         <Activity size={14} /> 生誕世代 (Generation)
@@ -354,6 +322,60 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       </div>
                     </div>
 
+                    {/* Culture Code */}
+                    <div className="sm:col-span-3">
+                      <label className="block text-sm font-medium text-slate-700">
+                        活動文化圏 (Culture Sphere)
+                      </label>
+                      <div className="mt-1">
+                        <input
+                          type="text"
+                          disabled={!isEditing}
+                          value={formData.activity_culture_code}
+                          onChange={(e) =>
+                            handleChange("activity_culture_code", e.target.value)
+                          }
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Core Hours Start */}
+                    <div className="sm:col-span-3">
+                      <label className="block text-sm font-medium text-slate-700">
+                        コア活動開始 (UTC)
+                      </label>
+                      <div className="mt-1">
+                        <input
+                          type="time"
+                          disabled={!isEditing}
+                          value={formData.core_hours_start}
+                          onChange={(e) =>
+                            handleChange("core_hours_start", e.target.value)
+                          }
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Core Hours End */}
+                    <div className="sm:col-span-3">
+                      <label className="block text-sm font-medium text-slate-700">
+                        コア活動終了 (UTC)
+                      </label>
+                      <div className="mt-1">
+                        <input
+                          type="time"
+                          disabled={!isEditing}
+                          value={formData.core_hours_end}
+                          onChange={(e) =>
+                            handleChange("core_hours_end", e.target.value)
+                          }
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100" : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"}`}
+                        />
+                      </div>
+                    </div>
+
                     {/* Statement */}
                     <div className="sm:col-span-6">
                       <label className="block text-sm font-medium text-slate-700">
@@ -374,7 +396,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   </div>
                 </section>
 
-                <hr className="border-slate-200 dark:border-slate-800" />
+                <hr className="border-slate-200 dark:border-slate-800 my-6" />
 
                 {/* Language Settings */}
                 <section>
@@ -446,175 +468,180 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     </div>
                   </div>
                 </section>
-              </div>
-            )}
 
-            {/* Security Tab (Placeholder based on Chapter 5 ACCOUNT_PROVIDERS) */}
-            {activeTab === "security" && (
-              <div className="space-y-6 animate-in fade-in duration-300">
-                <section>
-                  <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 mb-4">
-                    認証プロバイダ連携
-                  </h3>
-                  <div className="bg-slate-50 dark:bg-slate-800 rounded-md p-4 border border-slate-200 dark:border-slate-700">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-white dark:bg-slate-700 rounded-full border border-slate-200 dark:border-slate-600 flex items-center justify-center shadow-sm">
-                          <Image
-                            src="https://www.google.com/favicon.ico"
-                            alt="Google"
-                            width={20}
-                            height={20}
-                            className="w-5 h-5"
-                            unoptimized
-                          />
-                        </div>
-                        <div>
-                          <p className="text-sm font-medium text-slate-900 dark:text-slate-50">
-                            Google Account
-                          </p>
-                          <p className="text-xs text-slate-500 dark:text-slate-400">
-                            user@example.com
-                          </p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100">
-                          連携中
-                        </span>
-                        <span className="text-xs text-slate-400">Primary</span>
-                      </div>
-                    </div>
+                <hr className="border-slate-200 dark:border-slate-800 my-6" />
+
+                {/* AI Settings */}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center h-5">
+                    <input
+                      id="ai_translation"
+                      name="ai_translation"
+                      type="checkbox"
+                      disabled={!isEditing}
+                      checked={formData.uses_ai_translation}
+                      onChange={(e) =>
+                        handleChange("uses_ai_translation", e.target.checked ? "true" : "false")
+                      }
+                      className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                    />
                   </div>
-                </section>
-
-                <section>
-                  <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 mb-4">
-                    アカウントセキュリティ
-                  </h3>
-                  <div className="bg-yellow-50 dark:bg-yellow-900/30 border-l-4 border-yellow-400 p-4">
-                    <div className="flex">
-                      <div className="flex-shrink-0">
-                        <AlertCircle
-                          className="h-5 w-5 text-yellow-400"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="ml-3">
-                        <p className="text-sm text-yellow-700 dark:text-yellow-200">
-                          2要素認証 (2FA)
-                          が未設定です。セキュリティ強化のために設定を推奨します。
-                        </p>
-                      </div>
-                    </div>
+                  <div className="ml-2 text-sm">
+                    <label
+                      htmlFor="ai_translation"
+                      className="font-medium text-slate-700 dark:text-slate-300"
+                    >
+                      AI自動翻訳を利用する
+                    </label>
+                    <p className="text-slate-500 dark:text-slate-400">
+                      チェックすると、コミュニケーション時にAIによる自動翻訳が有効になります。
+                    </p>
                   </div>
-                </section>
+                </div>
               </div>
-            )}
+            </div>
 
-            {/* Audit Tab (Based on Chapter 9: Logs & Audit) */}
-            {activeTab === "audit" && (
-              <div className="space-y-6 animate-in fade-in duration-300">
+            {/* Right Column: Profiles & Security & Audit */}
+            <div className="space-y-8">
+              {/* My Profiles */}
+              <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50">
-                    最近の認証イベント (AUTH_EVENTS)
-                  </h3>
-                  <button className="text-sm text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300">
-                    全ログを表示
+                  <div>
+                    <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50">
+                      千の仮面 (My Profiles)
+                    </h3>
+                    <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                      このルートアカウントに紐づくユーザープロフィールの一覧です。
+                    </p>
+                  </div>
+                  <button className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                    <User size={14} />
+                    新規作成
                   </button>
                 </div>
 
-                <div className="flex flex-col">
-                  <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                    <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                      <div className="shadow overflow-hidden border-b border-slate-200 dark:border-slate-800 sm:rounded-lg">
-                        <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
-                          <thead className="bg-slate-50 dark:bg-slate-900">
-                            <tr>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider"
-                              >
-                                日時
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider"
-                              >
-                                イベント
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider"
-                              >
-                                IPアドレス
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wider"
-                              >
-                                ステータス
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="bg-white dark:bg-slate-900 divide-y divide-slate-200 dark:divide-slate-800">
-                            {[
-                              {
-                                date: "2024-05-20 09:30:00",
-                                event: "LOGIN",
-                                ip: "192.168.1.1",
-                                status: "Success",
-                              },
-                              {
-                                date: "2024-05-19 18:45:12",
-                                event: "PROFILE_UPDATE",
-                                ip: "192.168.1.1",
-                                status: "Success",
-                              },
-                              {
-                                date: "2024-05-18 10:15:00",
-                                event: "LOGIN",
-                                ip: "192.168.1.1",
-                                status: "Success",
-                              },
-                              {
-                                date: "2024-05-15 14:20:55",
-                                event: "LOGIN_FAILED",
-                                ip: "203.0.113.42",
-                                status: "Failed",
-                              },
-                            ].map((log, idx) => (
-                              <tr key={idx}>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                  {log.date}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900 dark:text-slate-100">
-                                  {log.event}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500 dark:text-slate-400">
-                                  {log.ip}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap">
-                                  {log.status === "Success" ? (
-                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                      Success
+                <div className="space-y-4">
+                  {profiles.map((profile) => (
+                    <div
+                      key={profile.id}
+                      className="bg-slate-50 dark:bg-slate-800/50 overflow-hidden shadow-sm rounded-lg border border-slate-200 dark:border-slate-700 p-4"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1 truncate">
+                          <div className="flex items-center space-x-3">
+                            <h3 className="text-gray-900 dark:text-white text-sm font-medium truncate">
+                              {profile.display_name}
+                            </h3>
+                            {profile.is_active ? (
+                              <span className="flex-shrink-0 inline-block px-2 py-0.5 text-green-800 text-xs font-medium bg-green-100 rounded-full">
+                                Active
+                              </span>
+                            ) : (
+                              <span className="flex-shrink-0 inline-block px-2 py-0.5 text-gray-800 text-xs font-medium bg-gray-100 rounded-full">
+                                Inactive
+                              </span>
+                            )}
+                            <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === 'leader' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
+                              }`}>
+                              {profile.role_type}
+                            </span>
+                          </div>
+                          <p className="mt-1 text-gray-500 dark:text-gray-400 text-xs truncate">
+                            {profile.purpose}
+                          </p>
+                        </div>
+                        <div>
+                          <button className="text-xs text-indigo-600 hover:text-indigo-500 font-medium">詳細</button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                  {profiles.length === 0 && (
+                    <div className="text-center py-4 text-sm text-slate-500">
+                      プロフィールはまだありません
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Security & Audit Compact */}
+              <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
+                <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 mb-4 flex items-center gap-2">
+                  <Shield size={20} className="text-slate-400" />
+                  セキュリティ & 連携
+                </h3>
+
+                <div className="space-y-4">
+                  {/* Provider */}
+                  <div className="bg-slate-50 dark:bg-slate-800 rounded-md p-3 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-white dark:bg-slate-700 rounded-full border border-slate-200 dark:border-slate-600 flex items-center justify-center shadow-sm">
+                        <Image
+                          src="https://www.google.com/favicon.ico"
+                          alt="Google"
+                          width={16}
+                          height={16}
+                          className="w-4 h-4"
+                          unoptimized
+                        />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-slate-900 dark:text-slate-50">Google Account</p>
+                        <p className="text-xs text-slate-500">連絡先のみ (認証不可)</p>
+                      </div>
+                    </div>
+                    <span className="text-xs bg-green-100 text-green-800 px-2 py-0.5 rounded">連携中</span>
+                  </div>
+
+                  {/* 2FA Note */}
+                  <div className="bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-400 p-3">
+                    <p className="text-xs text-yellow-700 dark:text-yellow-200">
+                      2要素認証 (2FA) は現在サポート外です。
+                    </p>
+                  </div>
+
+                  {/* Last Audit Log */}
+                  <div className="mt-6 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <div className="flex justify-between items-center mb-2">
+                      <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">直近のイベント</h4>
+                      <button className="text-xs text-indigo-600 hover:text-indigo-500">全ログを表示</button>
+                    </div>
+                    <div className="text-xs text-slate-500">
+                      <div className="flow-root">
+                        <ul role="list" className="-mb-8">
+                          {[
+                            { event: "LOGIN", date: "2024-05-20 09:30", status: "Success" },
+                            { event: "PROFILE_UPDATE", date: "2024-05-19 18:45", status: "Success" },
+                          ].map((event, eventIdx) => (
+                            <li key={eventIdx}>
+                              <div className="relative pb-4">
+                                {eventIdx !== 1 ? (
+                                  <span className="absolute top-4 left-2 -ml-px h-full w-0.5 bg-slate-200" aria-hidden="true" />
+                                ) : null}
+                                <div className="relative flex space-x-3">
+                                  <div>
+                                    <span className="h-4 w-4 rounded-full bg-green-500 flex items-center justify-center ring-4 ring-white dark:ring-slate-900">
                                     </span>
-                                  ) : (
-                                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                                      Failed
-                                    </span>
-                                  )}
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                                  </div>
+                                  <div className="min-w-0 flex-1 flex justify-between space-x-4">
+                                    <div>
+                                      <p className="text-xs text-slate-500">{event.event}</p>
+                                    </div>
+                                    <div className="text-right text-xs whitespace-nowrap text-slate-500">
+                                      <time dateTime={event.date}>{event.date}</time>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </main>
