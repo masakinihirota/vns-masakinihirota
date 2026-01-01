@@ -26,12 +26,7 @@ export default function Home() {
     {
       title: "🔥 New & Experimental (Check These!)",
       routes: [
-        {
-          title: "Root Accounts Control",
-          path: "/root-accounts-controle",
-          desc: "New Root Account Control UI",
-          badge: "New",
-        },
+
         {
           title: "Gemini Root Account",
           path: "/gemini-root-account",

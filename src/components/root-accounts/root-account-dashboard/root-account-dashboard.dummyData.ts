@@ -53,6 +53,12 @@ export const dummyRootAccountData: RootAccount = {
   uses_ai_translation: true,
   level: 12,
   total_points: 3450,
+  auto_recovery_max_points: 2000,
+  total_consumed_points: 12500,
+  consumed_points_click: 4500,
+  consumed_points_activity: 8000,
+  daily_recovery_rate: 0.5,
+  last_recovery_at: "2025-08-22T17:00:00Z",
   trust_duration_days: 45, // Initial 30 + 15 days active
   warning_count: 0,
   status: "active",

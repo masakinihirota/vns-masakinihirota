@@ -29,6 +29,13 @@ export interface RootAccount {
   // Gamification & Trust
   level: number;
   total_points: number;
+  // Point Management Extended
+  auto_recovery_max_points: number;
+  total_consumed_points: number;
+  consumed_points_click: number;
+  consumed_points_activity: number;
+  daily_recovery_rate: number;
+  last_recovery_at: string;
   trust_duration_days: number; // 初期30からスタート
   warning_count: number;
   status: FileStatusEnum;
