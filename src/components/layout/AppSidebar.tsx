@@ -461,15 +461,6 @@ function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem asChild>
-                <Link href="/home/root-accounts">
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  既存のアカウントを追加
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
               {footerMenuItems.map((item) => (
                 <DropdownMenuItem key={item.url} asChild>
                   <Link href={item.url}>
