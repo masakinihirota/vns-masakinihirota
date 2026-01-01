@@ -25,6 +25,11 @@ import {
 import Image from "next/image";
 import React, { useState } from "react";
 import {
+  CONSTELLATIONS,
+  generateAnonymousName,
+  getZodiacSymbol,
+} from "@/lib/anonymous-name-generator";
+import {
   normalizeRootAccountData,
   timeToHours,
   hoursToTime,
@@ -39,11 +44,6 @@ import {
   UserProfileSummary,
   Award,
 } from "./root-account-dashboard.types";
-import {
-  CONSTELLATIONS,
-  generateAnonymousName,
-  getZodiacSymbol,
-} from "@/lib/anonymous-name-generator";
 
 interface RootAccountDashboardProps {
   data: RootAccount;
@@ -105,8 +105,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     "2015-2020",
     "2020-2026",
   ];
-
-
 
   const [profiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
 
@@ -233,10 +231,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
       // 無効化されている場合はデータをクリアする
       if (!isSubCoreHourEnabled) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
           core_hours_2_start: undefined,
-          core_hours_2_end: undefined
+          core_hours_2_end: undefined,
         }));
       }
 
@@ -289,7 +287,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 {(() => {
                   const symbol = getZodiacSymbol(formData.zodiac_sign);
                   return symbol ? (
-                    <span className="text-xl leading-none select-none" role="img" aria-label={formData.zodiac_sign}>
+                    <span
+                      className="text-xl leading-none select-none"
+                      role="img"
+                      aria-label={formData.zodiac_sign}
+                    >
                       {symbol}
                     </span>
                   ) : (
@@ -390,13 +392,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               </div>
             </div>
           </div>
-
-
         </div>
 
         {/* Main Content Single Page Layout */}
         <div className="space-y-8">
-
           {/* My Profiles - Full Width */}
           <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
             <div className="flex justify-between items-center mb-4">
@@ -436,10 +435,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           </span>
                         )}
                         <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
-                            ? "bg-purple-100 text-purple-800"
-                            : "bg-blue-100 text-blue-800"
-                            }`}
+                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                            profile.role_type === "leader"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-blue-100 text-blue-800"
+                          }`}
                         >
                           {profile.role_type}
                         </span>
@@ -573,9 +573,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 disabled={isLoading || selectedArea === originalArea}
                 className={`
                   flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white
-                  ${selectedArea !== originalArea
-                    ? "bg-indigo-600 hover:bg-indigo-700"
-                    : "bg-slate-300 dark:bg-slate-700 cursor-not-allowed"
+                  ${
+                    selectedArea !== originalArea
+                      ? "bg-indigo-600 hover:bg-indigo-700"
+                      : "bg-slate-300 dark:bg-slate-700 cursor-not-allowed"
                   }
                 `}
               >
@@ -593,9 +594,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     relative cursor-pointer rounded-lg overflow-hidden
                     transition-all duration-300 ease-in-out
                     hover:-translate-y-2 hover:shadow-xl
-                    ${selectedArea === areaNum
-                      ? "ring-4 ring-indigo-500 shadow-lg scale-105"
-                      : "ring-1 ring-slate-200 dark:ring-slate-700"
+                    ${
+                      selectedArea === areaNum
+                        ? "ring-4 ring-indigo-500 shadow-lg scale-105"
+                        : "ring-1 ring-slate-200 dark:ring-slate-700"
                     }
                   `}
                 >
@@ -698,7 +700,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
                 <div className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-xl shadow-2xl flex flex-col max-h-[80vh]">
                   <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
-                    <h3 className="text-lg font-bold">エリア変更履歴（全件）</h3>
+                    <h3 className="text-lg font-bold">
+                      エリア変更履歴（全件）
+                    </h3>
                     <button
                       onClick={() => setShowAllHistory(false)}
                       className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
@@ -777,7 +781,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                     {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                     {timeToHours(formData.core_hours_end) < 24 ||
-                      nextDayEndHour === 0
+                    nextDayEndHour === 0
                       ? hoursToTime(timeToHours(formData.core_hours_end))
                       : "24:00"}
                   </span>
@@ -839,7 +843,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
                       {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                       {timeToHours(formData.core_hours_end) < 24 ||
-                        nextDayEndHour === 0
+                      nextDayEndHour === 0
                         ? hoursToTime(timeToHours(formData.core_hours_end))
                         : "24:00"}
                     </span>
@@ -913,12 +917,18 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   {isSubCoreHourEnabled ? (
                     <div className="flex items-center gap-4">
                       <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
-                        {formData.core_hours_2_start && formData.core_hours_2_end ? (
+                        {formData.core_hours_2_start &&
+                        formData.core_hours_2_end ? (
                           <>
-                            {hoursToTime(timeToHours(formData.core_hours_2_start))} ～{" "}
+                            {hoursToTime(
+                              timeToHours(formData.core_hours_2_start)
+                            )}{" "}
+                            ～{" "}
                             {timeToHours(formData.core_hours_2_end) < 24 ||
-                              nextDayEndHour2 === 0
-                              ? hoursToTime(timeToHours(formData.core_hours_2_end))
+                            nextDayEndHour2 === 0
+                              ? hoursToTime(
+                                  timeToHours(formData.core_hours_2_end)
+                                )
                               : "24:00"}
                           </>
                         ) : (
@@ -966,12 +976,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       value={
                         formData.core_hours_2_start && formData.core_hours_2_end
                           ? [
-                            timeToHours(formData.core_hours_2_start),
-                            Math.min(
-                              timeToHours(formData.core_hours_2_end),
-                              24
-                            ),
-                          ]
+                              timeToHours(formData.core_hours_2_start),
+                              Math.min(
+                                timeToHours(formData.core_hours_2_end),
+                                24
+                              ),
+                            ]
                           : [21, 23] // デフォルト値
                       }
                       onValueChange={(values) => {
@@ -1044,8 +1054,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
                     <div className="mt-2 text-xs text-right text-slate-500 dark:text-slate-400">
                       <p>
-                        ※
-                        24時を超える場合は、翌日スライダーで調整してください
+                        ※ 24時を超える場合は、翌日スライダーで調整してください
                       </p>
                     </div>
                   </>
@@ -1060,24 +1069,23 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   // 表示モード
                   <div className="h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg">
                     <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
-                      {isSubCoreHourEnabled && formData.core_hours_2_start &&
-                        formData.core_hours_2_end ? (
+                      {isSubCoreHourEnabled &&
+                      formData.core_hours_2_start &&
+                      formData.core_hours_2_end ? (
                         <>
                           {hoursToTime(
                             timeToHours(formData.core_hours_2_start)
                           )}{" "}
                           ～{" "}
                           {timeToHours(formData.core_hours_2_end) < 24 ||
-                            nextDayEndHour2 === 0
+                          nextDayEndHour2 === 0
                             ? hoursToTime(
-                              timeToHours(formData.core_hours_2_end)
-                            )
+                                timeToHours(formData.core_hours_2_end)
+                              )
                             : "24:00"}
                         </>
                       ) : (
-                        <span className="text-slate-400 text-sm">
-                          設定なし
-                        </span>
+                        <span className="text-slate-400 text-sm">設定なし</span>
                       )}
                     </span>
                   </div>
@@ -1088,8 +1096,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             {/* 活動時間の説明 */}
             <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <p className="text-sm text-blue-900 dark:text-blue-100">
-                <span className="font-semibold">合計活動時間:</span>{" "}
-                {(() => {
+                <span className="font-semibold">合計活動時間:</span> {(() => {
                   const start1 = timeToHours(formData.core_hours_start);
                   const end1 = timeToHours(formData.core_hours_end);
                   const total1 =
@@ -1228,10 +1235,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           onChange={(e) =>
                             handleChange("display_name", e.target.value)
                           }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing
-                            ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-                            : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
-                            }`}
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${
+                            isEditing
+                              ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                              : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
+                          }`}
                         />
                       </div>
                     </div>
@@ -1245,7 +1253,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         <div className="block w-full rounded-md sm:text-sm p-2 border border-transparent bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed">
                           {formData.zodiac_sign ? (
                             <span className="flex items-center gap-2">
-                              <span className="text-lg leading-none">{getZodiacSymbol(formData.zodiac_sign)}</span>
+                              <span className="text-lg leading-none">
+                                {getZodiacSymbol(formData.zodiac_sign)}
+                              </span>
                               {formData.zodiac_sign}
                             </span>
                           ) : (
@@ -1269,10 +1279,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           onChange={(e) =>
                             handleGenerationChange(e.target.value)
                           }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing
-                            ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-                            : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
-                            }`}
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${
+                            isEditing
+                              ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                              : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
+                          }`}
                         >
                           <option value="">選択してください</option>
                           {generationOptions.map((range) => (
@@ -1432,7 +1443,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                             自身の語学力ではなく、AIや翻訳ツールを主に使用して活動する場合はオンにしてください。
                           </p>
                         </div>
-                        <label className={`relative inline-flex items-center ${isEditingLanguages ? "cursor-pointer" : "cursor-not-allowed opacity-60"}`}>
+                        <label
+                          className={`relative inline-flex items-center ${isEditingLanguages ? "cursor-pointer" : "cursor-not-allowed opacity-60"}`}
+                        >
                           <input
                             type="checkbox"
                             className="sr-only peer"
@@ -1666,10 +1679,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       </main>
 
       {/* Footer / Debug Info */}
-      < footer className="w-full px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-slate-400 dark:text-slate-500" >
+      <footer className="w-full px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-slate-400 dark:text-slate-500">
         <p>Root Account System v1.0.0-prototype</p>
         <p className="mt-1">Schema Version: 0100-100-4-extended</p>
-      </footer >
-    </div >
+      </footer>
+    </div>
   );
 }

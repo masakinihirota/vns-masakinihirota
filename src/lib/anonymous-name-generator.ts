@@ -54,18 +54,18 @@ export const CONSTELLATIONS = [
 
 // 星座に対応する記号マップ
 export const ZODIAC_SYMBOLS: Record<string, string> = {
-  "牡羊座": "♈",
-  "牡牛座": "♉",
-  "双子座": "♊",
-  "蟹座": "♋",
-  "獅子座": "♌",
-  "乙女座": "♍",
-  "天秤座": "♎",
-  "蠍座": "♏",
-  "射手座": "♐",
-  "山羊座": "♑",
-  "水瓶座": "♒",
-  "魚座": "♓",
+  牡羊座: "♈",
+  牡牛座: "♉",
+  双子座: "♊",
+  蟹座: "♋",
+  獅子座: "♌",
+  乙女座: "♍",
+  天秤座: "♎",
+  蠍座: "♏",
+  射手座: "♐",
+  山羊座: "♑",
+  水瓶座: "♒",
+  魚座: "♓",
 };
 
 /**
@@ -82,7 +82,8 @@ export function generateAnonymousName(zodiac: string): string {
   }
 
   const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)];
-  const randomMaterial = MATERIALS[Math.floor(Math.random() * MATERIALS.length)];
+  const randomMaterial =
+    MATERIALS[Math.floor(Math.random() * MATERIALS.length)];
 
   return `${randomColor}${randomMaterial}の${zodiac}`;
 }
