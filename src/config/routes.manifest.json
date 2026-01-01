@@ -136,7 +136,7 @@
     "path": "/root-accounts",
     "label": "ルートアカウント",
     "group": "footer",
-    "order": 30,
+    "order": 10,
     "visibleInMenu": true
   },
   {
@@ -144,13 +144,13 @@
     "label": "オアシス宣言",
     "group": "footer",
     "order": 40,
-    "visibleInMenu": true
+    "visibleInMenu": false
   },
   {
     "path": "/human",
     "label": "人間宣言",
     "group": "footer",
     "order": 50,
-    "visibleInMenu": true
+    "visibleInMenu": false
   }
 ]

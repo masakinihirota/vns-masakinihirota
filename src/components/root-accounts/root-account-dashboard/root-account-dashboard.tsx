@@ -13,7 +13,14 @@ import {
   AlertCircle,
   Clock,
   Plus,
+  Trash2,
   X,
+  AlertTriangle,
+  Trophy,
+  Star,
+  Medal,
+  Crown,
+  Gift,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -30,7 +37,13 @@ import {
 import {
   RootAccount,
   UserProfileSummary,
+  Award,
 } from "./root-account-dashboard.types";
+import {
+  CONSTELLATIONS,
+  generateAnonymousName,
+  getZodiacSymbol,
+} from "@/lib/anonymous-name-generator";
 
 interface RootAccountDashboardProps {
   data: RootAccount;
@@ -42,13 +55,29 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
   const [formData, setFormData] = useState<RootAccount>(normalizedData);
   const [originalData, setOriginalData] = useState<RootAccount>(normalizedData);
-  const [selectedArea, setSelectedArea] = useState<number | null>(null);
+  const [selectedArea, setSelectedArea] = useState<number | null>(
+    normalizedData.activity_area_id ?? null
+  );
+  const [originalArea, setOriginalArea] = useState<number | null>(
+    normalizedData.activity_area_id ?? null
+  );
+  const [areaHistory, setAreaHistory] = useState<
+    { from: number | string; to: number | string; at: string }[]
+  >([]);
+
+  // 全履歴モーダル表示用
+  const [showAllHistory, setShowAllHistory] = useState(false);
 
   // 編集モード
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingCoreHours, setIsEditingCoreHours] = useState(false);
   const [isEditingLanguages, setIsEditingLanguages] = useState(false);
   const [isEditingCountries, setIsEditingCountries] = useState(false);
+
+  // 第二コア活動時間の有効/無効状態
+  const [isSubCoreHourEnabled, setIsSubCoreHourEnabled] = useState(
+    !!(normalizedData.core_hours_2_start && normalizedData.core_hours_2_end)
+  );
 
   // ローディング状態
   const [isLoading, setIsLoading] = useState(false);
@@ -58,21 +87,32 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   >([]);
 
   const generationOptions = [
-    "1980-1984",
-    "1985-1989",
-    "1990-1994",
-    "1995-1999",
-    "2000-2004",
-    "2005-2009",
-    "2010-2014",
-    "2015-2019",
-    "2020-2024",
+    "1940-1945",
+    "1945-1950",
+    "1950-1955",
+    "1955-1960",
+    "1960-1965",
+    "1965-1970",
+    "1970-1975",
+    "1975-1980",
+    "1980-1985",
+    "1985-1990",
+    "1990-1995",
+    "1995-2000",
+    "2000-2005",
+    "2005-2010",
+    "2010-2015",
+    "2015-2020",
+    "2020-2026",
   ];
+
+
 
   const [profiles] = useState<UserProfileSummary[]>(dummyUserProfileList);
 
   // 日またぎ用の状態（翌日の終了時刻を保持）
   const [nextDayEndHour, setNextDayEndHour] = useState<number>(0);
+  const [nextDayEndHour2, setNextDayEndHour2] = useState<number>(0);
 
   // 画像エラー状態
   const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
@@ -85,15 +125,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   };
 
   const handleGenerationChange = (newValue: string) => {
-    if (newValue === formData.birth_generation) return;
-    setGenerationHistory((prev) => [
-      ...prev,
-      {
-        from: formData.birth_generation || "未設定",
-        to: newValue || "未設定",
-        at: new Date().toISOString(),
-      },
-    ]);
     handleChange("birth_generation", newValue);
   };
 
@@ -103,6 +134,18 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     try {
       // TODO: 実際のAPI呼び出しを実装
       // await updateRootAccount(formData);
+
+      // 生誕世代の履歴保存
+      if (originalData.birth_generation !== formData.birth_generation) {
+        setGenerationHistory((prev) => [
+          ...prev,
+          {
+            from: originalData.birth_generation || "未設定",
+            to: formData.birth_generation || "未設定",
+            at: new Date().toISOString(),
+          },
+        ]);
+      }
 
       // 保存成功後、元データを更新
       setOriginalData(formData);
@@ -116,10 +159,53 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     }
   };
 
-  // キャンセル処理
   const handleCancel = () => {
     setFormData(originalData);
     setIsEditing(false);
+  };
+
+  // エリア設定の保存
+  const handleSaveArea = async () => {
+    // 1日3回制限のチェック
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const todaySaves = areaHistory.filter(
+      (entry) => new Date(entry.at) >= today
+    ).length;
+
+    if (todaySaves >= 3) {
+      alert("エリアの変更は1日3回までです。明日以降に再度お試しください。");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // TODO: 実際のAPI呼び出しを実装
+
+      setAreaHistory((prev) => {
+        const newHistory = [
+          ...prev,
+          {
+            from: originalArea || "未設定",
+            to: selectedArea || "未設定",
+            at: new Date().toISOString(),
+          },
+        ];
+        // 1000件保持制限
+        return newHistory.slice(-1000);
+      });
+      setOriginalArea(selectedArea);
+      if (selectedArea) {
+        handleChange("activity_area_id", selectedArea);
+      }
+
+      alert("エリア設定を保存しました");
+    } catch (error) {
+      console.error("保存エラー:", error);
+      alert("保存に失敗しました");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // 言語設定の保存
@@ -144,6 +230,15 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     setIsLoading(true);
     try {
       // TODO: 実際のAPI呼び出しを実装
+
+      // 無効化されている場合はデータをクリアする
+      if (!isSubCoreHourEnabled) {
+        setFormData(prev => ({
+          ...prev,
+          core_hours_2_start: undefined,
+          core_hours_2_end: undefined
+        }));
+      }
 
       setOriginalData(formData);
       setIsEditingCoreHours(false);
@@ -190,11 +285,20 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               <span className="text-sm text-slate-500 dark:text-slate-400">
                 Authenticated as: {formData.display_id}
               </span>
-              <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center">
-                <User
-                  size={18}
-                  className="text-slate-500 dark:text-slate-400"
-                />
+              <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+                {(() => {
+                  const symbol = getZodiacSymbol(formData.zodiac_sign);
+                  return symbol ? (
+                    <span className="text-xl leading-none select-none" role="img" aria-label={formData.zodiac_sign}>
+                      {symbol}
+                    </span>
+                  ) : (
+                    <User
+                      size={18}
+                      className="text-slate-500 dark:text-slate-400"
+                    />
+                  );
+                })()}
               </div>
             </div>
           </div>
@@ -214,38 +318,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              {isEditing ? (
-                <>
-                  <button
-                    onClick={handleCancel}
-                    disabled={isLoading}
-                    className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                  >
-                    <X size={16} className="inline mr-1" />
-                    キャンセル
-                  </button>
-                  <button
-                    onClick={handleSave}
-                    disabled={isLoading}
-                    className="flex items-center gap-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-                  >
-                    {isLoading ? (
-                      <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <Save size={16} />
-                    )}
-                    変更を保存
-                  </button>
-                </>
-              ) : (
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-md shadow-sm text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700"
-                >
-                  <Edit3 size={16} />
-                  プロフィール編集
-                </button>
-              )}
+              {/* Profile Edit Button moved to User Attributes section */}
             </div>
           </div>
         </div>
@@ -317,10 +390,13 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               </div>
             </div>
           </div>
+
+
         </div>
 
         {/* Main Content Single Page Layout */}
         <div className="space-y-8">
+
           {/* My Profiles - Full Width */}
           <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
             <div className="flex justify-between items-center mb-4">
@@ -360,11 +436,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           </span>
                         )}
                         <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                            profile.role_type === "leader"
-                              ? "bg-purple-100 text-purple-800"
-                              : "bg-blue-100 text-blue-800"
-                          }`}
+                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
+                            ? "bg-purple-100 text-purple-800"
+                            : "bg-blue-100 text-blue-800"
+                            }`}
                         >
                           {profile.role_type}
                         </span>
@@ -417,7 +492,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   }
                 }}
                 disabled={isLoading}
-                className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+                className={`flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white disabled:opacity-50 transition-colors duration-200 ${isEditingCountries ? "bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-700" : "bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700"}`}
               >
                 {isEditingCountries ? <Save size={14} /> : <Edit3 size={14} />}
                 {isEditingCountries ? "保存" : "編集"}
@@ -472,6 +547,13 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </div>
               )}
             </div>
+
+            <div className="mt-4 flex justify-center">
+              <button className="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-md text-sm font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700">
+                <Plus size={16} />
+                新規作成
+              </button>
+            </div>
           </div>
 
           {/* 世界地図セクション */}
@@ -486,6 +568,20 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   活動エリアを選択してください
                 </p>
               </div>
+              <button
+                onClick={() => void handleSaveArea()}
+                disabled={isLoading || selectedArea === originalArea}
+                className={`
+                  flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white
+                  ${selectedArea !== originalArea
+                    ? "bg-indigo-600 hover:bg-indigo-700"
+                    : "bg-slate-300 dark:bg-slate-700 cursor-not-allowed"
+                  }
+                `}
+              >
+                <Save size={14} />
+                保存
+              </button>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -497,10 +593,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     relative cursor-pointer rounded-lg overflow-hidden
                     transition-all duration-300 ease-in-out
                     hover:-translate-y-2 hover:shadow-xl
-                    ${
-                      selectedArea === areaNum
-                        ? "ring-4 ring-indigo-500 shadow-lg scale-105"
-                        : "ring-1 ring-slate-200 dark:ring-slate-700"
+                    ${selectedArea === areaNum
+                      ? "ring-4 ring-indigo-500 shadow-lg scale-105"
+                      : "ring-1 ring-slate-200 dark:ring-slate-700"
                     }
                   `}
                 >
@@ -555,6 +650,93 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </p>
               </div>
             )}
+
+            {/* エリア変更履歴 */}
+            <div className="mt-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-3">
+              <div className="flex justify-between items-center mb-2">
+                <p className="text-xs font-semibold text-slate-700 dark:text-slate-200">
+                  エリアの変更履歴（最新5件）
+                </p>
+                {areaHistory.length > 5 && (
+                  <button
+                    onClick={() => setShowAllHistory(true)}
+                    className="text-[11px] text-indigo-600 hover:text-indigo-500 font-medium"
+                  >
+                    すべて表示
+                  </button>
+                )}
+              </div>
+              {areaHistory.length > 0 ? (
+                <ul className="space-y-1 text-xs text-slate-600 dark:text-slate-300">
+                  {areaHistory
+                    .slice()
+                    .reverse()
+                    .slice(0, 5) // 最新5件のみ表示
+                    .map((entry, idx) => (
+                      <li
+                        key={`${entry.at}-${idx}`}
+                        className="flex justify-between gap-2"
+                      >
+                        <span>
+                          エリア {entry.from} → エリア {entry.to}
+                        </span>
+                        <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                          {new Date(entry.at).toLocaleString("ja-JP")}
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              ) : (
+                <p className="text-xs text-slate-500 dark:text-slate-400">
+                  変更履歴はまだありません
+                </p>
+              )}
+            </div>
+
+            {/* 全履歴表示モーダル */}
+            {showAllHistory && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
+                <div className="bg-white dark:bg-slate-900 w-full max-w-lg rounded-xl shadow-2xl flex flex-col max-h-[80vh]">
+                  <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800">
+                    <h3 className="text-lg font-bold">エリア変更履歴（全件）</h3>
+                    <button
+                      onClick={() => setShowAllHistory(false)}
+                      className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                    >
+                      <X size={20} />
+                    </button>
+                  </div>
+                  <div className="flex-1 overflow-y-auto p-4">
+                    <ul className="space-y-3">
+                      {areaHistory
+                        .slice()
+                        .reverse()
+                        .map((entry, idx) => (
+                          <li
+                            key={`modal-${entry.at}-${idx}`}
+                            className="flex justify-between items-center p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-100 dark:border-slate-700"
+                          >
+                            <span className="text-sm">
+                              エリア {entry.from} → エリア {entry.to}
+                            </span>
+                            <span className="text-xs text-slate-500 dark:text-slate-400">
+                              {new Date(entry.at).toLocaleString("ja-JP")}
+                            </span>
+                          </li>
+                        ))}
+                    </ul>
+                  </div>
+                  <div className="p-4 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+                    <button
+                      onClick={() => setShowAllHistory(false)}
+                      className="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 rounded-md text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700"
+                    >
+                      閉じる
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* コア活動時間セクション */}
@@ -578,7 +760,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   }
                 }}
                 disabled={isLoading}
-                className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+                className={`flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white disabled:opacity-50 transition-colors duration-200 ${isEditingCoreHours ? "bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-700" : "bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700"}`}
               >
                 {isEditingCoreHours ? <Save size={14} /> : <Edit3 size={14} />}
                 {isEditingCoreHours ? "保存" : "編集"}
@@ -595,7 +777,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                     {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                     {timeToHours(formData.core_hours_end) < 24 ||
-                    nextDayEndHour === 0
+                      nextDayEndHour === 0
                       ? hoursToTime(timeToHours(formData.core_hours_end))
                       : "24:00"}
                   </span>
@@ -657,7 +839,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
                       {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                       {timeToHours(formData.core_hours_end) < 24 ||
-                      nextDayEndHour === 0
+                        nextDayEndHour === 0
                         ? hoursToTime(timeToHours(formData.core_hours_end))
                         : "24:00"}
                     </span>
@@ -717,61 +899,269 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   )}
                 </div>
               )}
+
+              {/* 第二コア活動時間 */}
+              <div className="mt-8 pt-8 border-t border-slate-200 dark:border-slate-700">
+                <div className="flex justify-between items-center mb-3">
+                  <div className="flex items-center gap-4">
+                    <label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                      第二活動時間（任意）
+                    </label>
+                  </div>
+
+                  {/* 有効時の時間表示または無効時のボタン */}
+                  {isSubCoreHourEnabled ? (
+                    <div className="flex items-center gap-4">
+                      <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
+                        {formData.core_hours_2_start && formData.core_hours_2_end ? (
+                          <>
+                            {hoursToTime(timeToHours(formData.core_hours_2_start))} ～{" "}
+                            {timeToHours(formData.core_hours_2_end) < 24 ||
+                              nextDayEndHour2 === 0
+                              ? hoursToTime(timeToHours(formData.core_hours_2_end))
+                              : "24:00"}
+                          </>
+                        ) : (
+                          <span className="text-slate-400 text-sm font-normal">
+                            設定中...
+                          </span>
+                        )}
+                      </span>
+                      {isEditingCoreHours && (
+                        <button
+                          onClick={() => setIsSubCoreHourEnabled(false)}
+                          className="text-slate-400 hover:text-red-500 transition-colors"
+                          title="削除"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    // 無効時は「追加」ボタンを表示（編集モードのみ）
+                    isEditingCoreHours && (
+                      <button
+                        onClick={() => {
+                          setIsSubCoreHourEnabled(true);
+                          // 有効化時の初期値セット (未設定の場合のみ)
+                          if (!formData.core_hours_2_start) {
+                            handleChange("core_hours_2_start", "21:00");
+                            handleChange("core_hours_2_end", "23:00");
+                          }
+                        }}
+                        className="flex items-center gap-1 text-xs text-indigo-600 hover:text-indigo-700 font-medium px-2 py-1 bg-indigo-50 hover:bg-indigo-100 rounded"
+                      >
+                        <Plus size={14} />
+                        追加する
+                      </button>
+                    )
+                  )}
+                </div>
+
+                {/* スライダー表示制御: 編集モードかつ有効な場合 */}
+                {isEditingCoreHours && isSubCoreHourEnabled ? (
+                  <>
+                    <Slider.Root
+                      className="relative flex items-center select-none touch-none w-full h-5"
+                      value={
+                        formData.core_hours_2_start && formData.core_hours_2_end
+                          ? [
+                            timeToHours(formData.core_hours_2_start),
+                            Math.min(
+                              timeToHours(formData.core_hours_2_end),
+                              24
+                            ),
+                          ]
+                          : [21, 23] // デフォルト値
+                      }
+                      onValueChange={(values) => {
+                        handleChange(
+                          "core_hours_2_start",
+                          hoursToTime(values[0])
+                        );
+                        if (values[1] < 24) {
+                          handleChange(
+                            "core_hours_2_end",
+                            hoursToTime(values[1])
+                          );
+                          setNextDayEndHour2(0);
+                        } else {
+                          handleChange("core_hours_2_end", hoursToTime(24));
+                        }
+                      }}
+                      min={0}
+                      max={24}
+                      step={0.5}
+                      minStepsBetweenThumbs={1}
+                      aria-label="Second core activity hours"
+                    >
+                      <Slider.Track className="relative grow rounded-full h-3 bg-slate-200 dark:bg-slate-700">
+                        <Slider.Range className="absolute h-full rounded-full bg-indigo-500 opacity-70" />
+                      </Slider.Track>
+                      <Slider.Thumb
+                        className="block w-6 h-6 bg-white dark:bg-slate-800 border-2 border-indigo-500 rounded-full shadow-lg cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                        aria-label="Start time 2"
+                      />
+                      <Slider.Thumb
+                        className="block w-6 h-6 bg-white dark:bg-slate-800 border-2 border-indigo-500 rounded-full shadow-lg cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                        aria-label="End time 2 (same day)"
+                      />
+                    </Slider.Root>
+
+                    {/* 第二活動時間：翌日スライダー */}
+                    {formData.core_hours_2_end &&
+                      timeToHours(formData.core_hours_2_end) >= 24 && (
+                        <div className="mt-4 pl-4 border-l-2 border-emerald-200 dark:border-emerald-800">
+                          <div className="flex justify-between items-center mb-2">
+                            <label className="text-xs font-medium text-slate-500 dark:text-slate-400">
+                              翌日の終了時間 (第二活動時間)
+                            </label>
+                            <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                              翌日 {hoursToTime(nextDayEndHour2)}
+                            </span>
+                          </div>
+                          <Slider.Root
+                            className="relative flex items-center select-none touch-none w-full h-5"
+                            value={[nextDayEndHour2]}
+                            onValueChange={(values) => {
+                              setNextDayEndHour2(values[0]);
+                            }}
+                            min={0}
+                            max={24}
+                            step={0.5}
+                            aria-label="Next day end time 2"
+                          >
+                            <Slider.Track className="relative grow rounded-full h-3 bg-slate-200 dark:bg-slate-700">
+                              <Slider.Range className="absolute h-full rounded-full bg-emerald-500" />
+                            </Slider.Track>
+                            <Slider.Thumb
+                              className="block w-6 h-6 bg-white dark:bg-slate-800 border-2 border-emerald-500 rounded-full shadow-lg cursor-grab active:cursor-grabbing focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
+                              aria-label="Next day end time 2"
+                            />
+                          </Slider.Root>
+                        </div>
+                      )}
+
+                    <div className="mt-2 text-xs text-right text-slate-500 dark:text-slate-400">
+                      <p>
+                        ※
+                        24時を超える場合は、翌日スライダーで調整してください
+                      </p>
+                    </div>
+                  </>
+                ) : isEditingCoreHours ? (
+                  // 編集モードだが無効の場合
+                  <div className="h-12 flex items-center justify-center bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-dashed border-slate-300 dark:border-slate-700">
+                    <span className="text-sm text-slate-400">
+                      第2活動時間は無効です
+                    </span>
+                  </div>
+                ) : (
+                  // 表示モード
+                  <div className="h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg">
+                    <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
+                      {isSubCoreHourEnabled && formData.core_hours_2_start &&
+                        formData.core_hours_2_end ? (
+                        <>
+                          {hoursToTime(
+                            timeToHours(formData.core_hours_2_start)
+                          )}{" "}
+                          ～{" "}
+                          {timeToHours(formData.core_hours_2_end) < 24 ||
+                            nextDayEndHour2 === 0
+                            ? hoursToTime(
+                              timeToHours(formData.core_hours_2_end)
+                            )
+                            : "24:00"}
+                        </>
+                      ) : (
+                        <span className="text-slate-400 text-sm">
+                          設定なし
+                        </span>
+                      )}
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
 
             {/* 活動時間の説明 */}
             <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
               <p className="text-sm text-blue-900 dark:text-blue-100">
-                <span className="font-semibold">合計活動時間:</span> {(() => {
-                  const start = timeToHours(formData.core_hours_start);
-                  const end = timeToHours(formData.core_hours_end);
-                  const total =
-                    end >= 24 && nextDayEndHour > 0
-                      ? 24 - start + nextDayEndHour
-                      : end >= start
-                        ? end - start
-                        : 24 - start + end;
+                <span className="font-semibold">合計活動時間:</span>{" "}
+                {(() => {
+                  const start1 = timeToHours(formData.core_hours_start);
+                  const end1 = timeToHours(formData.core_hours_end);
+                  const total1 =
+                    end1 >= 24 && nextDayEndHour > 0
+                      ? 24 - start1 + nextDayEndHour
+                      : end1 >= start1
+                        ? end1 - start1
+                        : 24 - start1 + end1;
 
-                  if (end >= 24 && nextDayEndHour > 0) {
-                    return `${hoursToTime(start)}～翌日${hoursToTime(
-                      nextDayEndHour
-                    )} (${total.toFixed(1)}時間)`;
-                  } else if (end >= start) {
-                    return `${hoursToTime(start)}～${hoursToTime(end)} (${total.toFixed(
-                      1
-                    )}時間)`;
-                  } else {
-                    return `${hoursToTime(start)}～翌日${hoursToTime(end)} (${total.toFixed(
-                      1
-                    )}時間)`;
+                  let total2 = 0;
+                  if (
+                    isSubCoreHourEnabled && // 有効な場合のみ計算
+                    formData.core_hours_2_start &&
+                    formData.core_hours_2_end
+                  ) {
+                    const start2 = timeToHours(formData.core_hours_2_start);
+                    const end2 = timeToHours(formData.core_hours_2_end);
+                    total2 =
+                      end2 >= 24 && nextDayEndHour2 > 0
+                        ? 24 - start2 + nextDayEndHour2
+                        : end2 >= start2
+                          ? end2 - start2
+                          : 24 - start2 + end2;
                   }
+
+                  const total = total1 + total2;
+                  return `${total.toFixed(1)}時間`;
                 })()}
               </p>
             </div>
 
             {/* 8時間超過警告 */}
             {(() => {
-              const start = timeToHours(formData.core_hours_start);
-              const end = timeToHours(formData.core_hours_end);
-              const total =
-                end >= 24 && nextDayEndHour > 0
-                  ? 24 - start + nextDayEndHour
-                  : end >= start
-                    ? end - start
-                    : 24 - start + end;
+              const start1 = timeToHours(formData.core_hours_start);
+              const end1 = timeToHours(formData.core_hours_end);
+              const total1 =
+                end1 >= 24 && nextDayEndHour > 0
+                  ? 24 - start1 + nextDayEndHour
+                  : end1 >= start1
+                    ? end1 - start1
+                    : 24 - start1 + end1;
 
-              return total > 8 ? (
+              let total2 = 0;
+              if (
+                isSubCoreHourEnabled && // 有効な場合のみ計算
+                formData.core_hours_2_start &&
+                formData.core_hours_2_end
+              ) {
+                const start2 = timeToHours(formData.core_hours_2_start);
+                const end2 = timeToHours(formData.core_hours_2_end);
+                total2 =
+                  end2 >= 24 && nextDayEndHour2 > 0
+                    ? 24 - start2 + nextDayEndHour2
+                    : end2 >= start2
+                      ? end2 - start2
+                      : 24 - start2 + end2;
+              }
+
+              const total = total1 + total2;
+
+              return total < 8 ? (
                 <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-300 dark:border-amber-700">
                   <div className="flex items-start gap-3">
                     <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="text-sm font-semibold text-amber-900 dark:text-amber-100">
-                        活動時間の警告
+                        活動時間が不足しています
                       </p>
                       <p className="text-sm text-amber-800 dark:text-amber-200 mt-1">
-                        合計活動時間が8時間を超えています（{total.toFixed(1)}
+                        合計活動時間が8時間を下回っています（{total.toFixed(1)}
                         時間）。
-                        長時間の活動は健康に影響を与える可能性があります。適度な休憩を取ることをお勧めします。
+                        信頼性を維持するため、8時間以上の活動を推奨します。
                       </p>
                     </div>
                   </div>
@@ -786,10 +1176,26 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
                 {/* Basic Info Section */}
                 <section>
-                  <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 mb-4 flex items-center gap-2">
-                    <User size={20} className="text-slate-400" />
-                    ユーザー属性
-                  </h3>
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 flex items-center gap-2">
+                      <User size={20} className="text-slate-400" />
+                      ユーザー属性
+                    </h3>
+                    <button
+                      onClick={() => {
+                        if (isEditing) {
+                          void handleSave();
+                        } else {
+                          setIsEditing(true);
+                        }
+                      }}
+                      disabled={isLoading}
+                      className={`flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white disabled:opacity-50 transition-colors duration-200 ${isEditing ? "bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-700" : "bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700"}`}
+                    >
+                      {isEditing ? <Save size={14} /> : <Edit3 size={14} />}
+                      {isEditing ? "保存" : "編集"}
+                    </button>
+                  </div>
                   <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     {/* Display ID */}
                     <div className="sm:col-span-6">
@@ -822,13 +1228,34 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           onChange={(e) =>
                             handleChange("display_name", e.target.value)
                           }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${
-                            isEditing
-                              ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-                              : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
-                          }`}
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing
+                            ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                            : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
+                            }`}
                         />
                       </div>
+                    </div>
+
+                    {/* Zodiac Sign (Read Only) */}
+                    <div className="sm:col-span-6">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
+                        <Star size={14} /> 星座 (Zodiac Sign)
+                      </label>
+                      <div className="mt-1">
+                        <div className="block w-full rounded-md sm:text-sm p-2 border border-transparent bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed">
+                          {formData.zodiac_sign ? (
+                            <span className="flex items-center gap-2">
+                              <span className="text-lg leading-none">{getZodiacSymbol(formData.zodiac_sign)}</span>
+                              {formData.zodiac_sign}
+                            </span>
+                          ) : (
+                            "未設定"
+                          )}
+                        </div>
+                      </div>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        アカウント作成時に設定された星座です (変更不可)
+                      </p>
                     </div>
 
                     <div className="sm:col-span-6">
@@ -838,10 +1265,14 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       <div className="mt-1">
                         <select
                           value={formData.birth_generation}
+                          disabled={!isEditing}
                           onChange={(e) =>
                             handleGenerationChange(e.target.value)
                           }
-                          className="block w-full rounded-md sm:text-sm p-2 border bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-50 focus:ring-indigo-500 focus:border-indigo-500"
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing
+                            ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                            : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
+                            }`}
                         >
                           <option value="">選択してください</option>
                           {generationOptions.map((range) => (
@@ -852,7 +1283,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         </select>
                       </div>
                       <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
-                        5年区切りで選択できます。近い年代を選んでください。
+                        編集ボタンを押して5年区切りで選択できます。近い年代を選んでください。
                       </p>
                       <div className="mt-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-3">
                         <p className="text-xs font-semibold text-slate-700 dark:text-slate-200 mb-2">
@@ -905,7 +1336,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         }
                       }}
                       disabled={isLoading}
-                      className="flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+                      className={`flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white disabled:opacity-50 transition-colors duration-200 ${isEditingLanguages ? "bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-700" : "bg-indigo-600 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700"}`}
                     >
                       {isEditingLanguages ? (
                         <Save size={14} />
@@ -995,16 +1426,17 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       <div className="flex items-start justify-between bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-4">
                         <div>
                           <p className="text-sm font-medium text-slate-900 dark:text-slate-50">
-                            AI翻訳を利用する
+                            AI・機械翻訳ツールの常時利用
                           </p>
                           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-                            有効にすると、コミュニケーション時にAIによる自動翻訳を適用します。
+                            自身の語学力ではなく、AIや翻訳ツールを主に使用して活動する場合はオンにしてください。
                           </p>
                         </div>
-                        <label className="relative inline-flex items-center cursor-pointer">
+                        <label className={`relative inline-flex items-center ${isEditingLanguages ? "cursor-pointer" : "cursor-not-allowed opacity-60"}`}>
                           <input
                             type="checkbox"
                             className="sr-only peer"
+                            disabled={!isEditingLanguages}
                             checked={formData.uses_ai_translation}
                             onChange={(e) =>
                               handleChange(
@@ -1129,14 +1561,115 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
               </div>
             </div>
           </div>
+
+          {/* Awards & Rewards Section */}
+          <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 flex items-center gap-2">
+                  <Trophy size={20} className="text-yellow-500" />
+                  アワード・報奨 (Awards & Rewards)
+                </h3>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  獲得したアワードと報奨の一覧です。
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {formData.awards && formData.awards.length > 0 ? (
+                formData.awards.map((award) => (
+                  <div
+                    key={award.id}
+                    className="flex items-start p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-200 dark:border-slate-700"
+                  >
+                    <div className="flex-shrink-0 mr-4">
+                      {award.icon_type === "trophy" && (
+                        <Trophy className="h-8 w-8 text-yellow-500" />
+                      )}
+                      {award.icon_type === "star" && (
+                        <Star className="h-8 w-8 text-indigo-500" />
+                      )}
+                      {award.icon_type === "medal" && (
+                        <Medal className="h-8 w-8 text-orange-500" />
+                      )}
+                      {award.icon_type === "crown" && (
+                        <Crown className="h-8 w-8 text-purple-500" />
+                      )}
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-slate-50">
+                        {award.title}
+                      </h4>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        {award.description}
+                      </p>
+                      <p className="mt-2 text-xs text-slate-400 dark:text-slate-500">
+                        {new Date(award.awarded_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="col-span-full text-center py-8 text-slate-500">
+                  獲得したアワードはありません
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Penalty Status Section (Moved to Bottom) */}
+          <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6 border-l-4 border-rose-500">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 flex items-center gap-2">
+                  <AlertTriangle size={20} className="text-rose-500" />
+                  ペナルティ状況 (Penalty Status)
+                </h3>
+                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                  現在のアカウントのペナルティ状況です。
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center p-4 bg-rose-50 dark:bg-rose-900/20 rounded-lg">
+              <div className="flex-1">
+                <dl className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                  <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm">
+                    <dt className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                      Total Penalties
+                    </dt>
+                    <dd className="text-2xl font-bold text-rose-600 dark:text-rose-400">
+                      {formData.penalty_status?.total_penalties ?? 0}
+                    </dd>
+                  </div>
+                  <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm">
+                    <dt className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                      Yellow Cards
+                    </dt>
+                    <dd className="text-2xl font-bold text-yellow-600 dark:text-yellow-400">
+                      {formData.penalty_status?.yellow_cards ?? 0}
+                    </dd>
+                  </div>
+                  <div className="bg-white dark:bg-slate-800 p-4 rounded-lg shadow-sm">
+                    <dt className="text-sm font-medium text-slate-500 dark:text-slate-400">
+                      Drift Count
+                    </dt>
+                    <dd className="text-2xl font-bold text-slate-600 dark:text-slate-400">
+                      {formData.penalty_status?.drift_count ?? 0}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
       {/* Footer / Debug Info */}
-      <footer className="w-full px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-slate-400 dark:text-slate-500">
+      < footer className="w-full px-4 sm:px-6 lg:px-8 py-6 text-center text-xs text-slate-400 dark:text-slate-500" >
         <p>Root Account System v1.0.0-prototype</p>
         <p className="mt-1">Schema Version: 0100-100-4-extended</p>
-      </footer>
-    </div>
+      </footer >
+    </div >
   );
 }
