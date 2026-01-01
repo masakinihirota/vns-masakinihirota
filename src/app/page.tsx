@@ -26,7 +26,6 @@ export default function Home() {
     {
       title: "🔥 New & Experimental (Check These!)",
       routes: [
-
         {
           title: "Gemini Root Account",
           path: "/gemini-root-account",
