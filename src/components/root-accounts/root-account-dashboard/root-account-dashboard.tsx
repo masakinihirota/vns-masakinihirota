@@ -804,14 +804,14 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           className="bg-slate-100 dark:bg-slate-800 block w-full border-slate-300 dark:border-slate-700 rounded-md focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm p-2 border text-slate-500 dark:text-slate-400 cursor-not-allowed"
                         />
                       </div>
-                      <p className="mt-1 text-xs text-slate-500">
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                         システム内での一意な識別子です (変更不可)
                       </p>
                     </div>
 
                     {/* Display Name */}
                     <div className="sm:col-span-6">
-                      <label className="block text-sm font-medium text-slate-700">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
                         表示名 (Display Name)
                       </label>
                       <div className="mt-1">
@@ -832,7 +832,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     </div>
 
                     <div className="sm:col-span-6">
-                      <label className="block text-sm font-medium text-slate-700 flex items-center gap-1">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1">
                         <Activity size={14} /> 生誕世代 (Generation)
                       </label>
                       <div className="mt-1">
@@ -922,7 +922,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   )}
                   <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                     <div className="sm:col-span-3">
-                      <label className="block text-sm font-medium text-slate-700">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
                         母語 (複数選択可)
                       </label>
                       <div className="mt-2 flex flex-wrap gap-2">
@@ -957,7 +957,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     </div>
 
                     <div className="sm:col-span-3">
-                      <label className="block text-sm font-medium text-slate-700">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
                         使用できる言語 (複数選択可)
                       </label>
                       <div className="mt-2 flex flex-wrap gap-2">
@@ -1013,8 +1013,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                               )
                             }
                           />
-                          <span className="relative inline-flex items-center w-11 h-6 rounded-full bg-slate-200 dark:bg-slate-700 transition-colors peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 peer-checked:bg-indigo-600 peer-checked:[&>span]:translate-x-5">
-                            <span className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white dark:bg-slate-900 shadow transition-transform" />
+                          <span className="relative inline-flex items-center w-11 h-6 rounded-full bg-slate-200 dark:bg-slate-600 transition-colors peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-indigo-500 peer-checked:bg-indigo-600 dark:peer-checked:bg-indigo-500 peer-checked:[&>span]:translate-x-5">
+                            <span className="absolute left-0.5 top-0.5 h-5 w-5 rounded-full bg-white dark:bg-white shadow transition-transform" />
                           </span>
                         </label>
                       </div>
@@ -1051,7 +1051,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         <p className="text-sm font-medium text-slate-900 dark:text-slate-50">
                           Google Account
                         </p>
-                        <p className="text-xs text-slate-500">
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
                           連絡先のみ (認証不可)
                         </p>
                       </div>
@@ -1074,7 +1074,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       <h4 className="text-sm font-medium text-slate-700 dark:text-slate-300">
                         直近のイベント
                       </h4>
-                      <button className="text-xs text-indigo-600 hover:text-indigo-500">
+                      <button className="text-xs text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
                         全ログを表示
                       </button>
                     </div>
@@ -1107,11 +1107,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                                   </div>
                                   <div className="min-w-0 flex-1 flex justify-between space-x-4">
                                     <div>
-                                      <p className="text-xs text-slate-500">
+                                      <p className="text-xs text-slate-500 dark:text-slate-400">
                                         {event.event}
                                       </p>
                                     </div>
-                                    <div className="text-right text-xs whitespace-nowrap text-slate-500">
+                                    <div className="text-right text-xs whitespace-nowrap text-slate-500 dark:text-slate-400">
                                       <time dateTime={event.date}>
                                         {event.date}
                                       </time>
