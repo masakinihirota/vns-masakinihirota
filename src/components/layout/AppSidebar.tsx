@@ -531,14 +531,7 @@ export function AppSidebar({
           newlyUnlockedFeatures={newlyUnlockedFeatures}
         />
 
-        {/* 集団系メニュー（第2グループ） */}
-        <NavGroup
-          label="集団"
-          items={groupMenuItems}
-          currentPath={pathname}
-          userLevel={userLevel}
-          newlyUnlockedFeatures={newlyUnlockedFeatures}
-        />
+
 
         {/* 登録系メニュー（第3グループ） */}
         <NavGroup
