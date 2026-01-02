@@ -43,7 +43,7 @@ export const WorkRegistrationFormView = ({
   onCategoryChange,
   onSubCategoryChange,
   onTierChange,
-  onTagsChange, // Currently unused in view logic but passed if needed for deletions
+  onTagsChange: _onTagsChange, // Currently unused in view logic but passed if needed for deletions
   onNewTagChange,
   onAddTag,
   onSubmit,

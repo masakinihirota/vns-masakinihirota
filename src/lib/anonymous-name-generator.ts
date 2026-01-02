@@ -68,24 +68,76 @@ export const ZODIAC_SYMBOLS: Record<string, string> = {
   魚座: "♓",
 };
 
+export const ZODIAC_MAPPING: Record<string, string> = {
+  aries: "牡羊座",
+  taurus: "牡牛座",
+  gemini: "双子座",
+  cancer: "蟹座",
+  leo: "獅子座",
+  virgo: "乙女座",
+  libra: "天秤座",
+  scorpio: "蠍座",
+  sagittarius: "射手座",
+  capricorn: "山羊座",
+  aquarius: "水瓶座",
+  pisces: "魚座",
+};
+
 /**
  * 星座に基づいてランダムな匿名名を生成する
  * 形式: [色][マテリアル]の[星座]
  * 例: "赤い熱狂の獅子座"
- * @param zodiac 星座名 (例: "獅子座")
+ * @param zodiac 星座名 (例: "獅子座" または "leo")
  * @returns 生成された匿名名
  */
 export function generateAnonymousName(zodiac: string): string {
-  // 星座が有効なリストにあるかチェック、なければそのまま返す（またはランダム選択）
-  if (!CONSTELLATIONS.includes(zodiac)) {
-    return zodiac; // フォールバック
+  // 英語キーの場合は日本語に変換
+  const japaneseZodiac = ZODIAC_MAPPING[zodiac.toLowerCase()] || zodiac;
+
+  // 星座が有効なリストにあるかチェック
+  if (!CONSTELLATIONS.includes(japaneseZodiac)) {
+    return japaneseZodiac; // フォールバック
   }
 
   const randomColor = COLORS[Math.floor(Math.random() * COLORS.length)];
   const randomMaterial =
     MATERIALS[Math.floor(Math.random() * MATERIALS.length)];
 
-  return `${randomColor}${randomMaterial}の${zodiac}`;
+  return `${randomColor}${randomMaterial}の${japaneseZodiac}`;
+}
+
+/**
+ * 複数のユニークな匿名名候補を生成する
+ * @param zodiac 星座名
+ * @param count 生成する数
+ * @param exclude 除外する名前のリスト
+ * @returns 生成された匿名名の配列
+ */
+export function generateUniqueCandidates(
+  zodiac: string,
+  count: number,
+  exclude: string[] = []
+): string[] {
+  const candidates: string[] = [];
+  const japaneseZodiac = ZODIAC_MAPPING[zodiac.toLowerCase()] || zodiac;
+
+  // 安全策: 無限ループ防止のための最大試行回数
+  const MAX_ATTEMPTS = 50;
+  let attempts = 0;
+
+  while (candidates.length < count && attempts < MAX_ATTEMPTS) {
+    const name = generateAnonymousName(japaneseZodiac);
+
+    // 除外リストにも、現在の候補リストにも含まれていない場合のみ追加
+    if (!exclude.includes(name) && !candidates.includes(name)) {
+      candidates.push(name);
+    }
+    attempts++;
+  }
+
+  // 万が一数が足りない場合は、重複を許容して埋める（または足りないまま返す）
+  // ここでは足りないまま返し、UI側でハンドリングする想定
+  return candidates;
 }
 
 /**

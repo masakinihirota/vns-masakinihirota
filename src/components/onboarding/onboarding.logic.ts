@@ -103,30 +103,164 @@ export const DETAILED_REGIONS: Record<
   { countries: { name: string; regions?: readonly string[] }[] }
 > = {
   japanese: {
-    countries: [{ name: "日本 (Japan)", regions: PREFECTURES }],
+    countries: [{ name: "日本", regions: PREFECTURES }],
   },
   english: {
     countries: [
-      { name: "アメリカ合衆国 (USA)" },
-      { name: "イギリス (UK)" },
-      { name: "カナダ (Canada)" },
-      { name: "オーストラリア (Australia)" },
+      { name: "アメリカ" },
+      { name: "イギリス" },
+      { name: "カナダ" },
+      { name: "オーストラリア" },
+      { name: "ニュージーランド" },
+      { name: "アイルランド" },
+      { name: "インド" },
+      { name: "シンガポール" },
+      { name: "フィリピン" },
       { name: "その他 (Others)" },
     ],
+  },
+  french: {
+    countries: [
+      { name: "フランス" },
+      { name: "カナダ" },
+      { name: "ベルギー" },
+      { name: "スイス" },
+      { name: "モナコ" },
+      { name: "コンゴ民主共和国" },
+      { name: "コートジボワール" },
+      { name: "その他 (Others)" },
+    ],
+  },
+  german: {
+    countries: [
+      { name: "ドイツ" },
+      { name: "オーストリア" },
+      { name: "スイス" },
+      { name: "リヒテンシュタイン" },
+      { name: "ルクセンブルク" },
+      { name: "その他 (Others)" },
+    ],
+  },
+  korean: {
+    countries: [
+      { name: "韓国" },
+      { name: "北朝鮮" },
+      { name: "その他 (Others)" },
+    ],
+  },
+  chinese_traditional: {
+    countries: [
+      { name: "台湾" },
+      { name: "香港" },
+      { name: "マカオ" },
+      { name: "その他 (Others)" },
+    ],
+  },
+  chinese_simplified: {
+    countries: [
+      { name: "中国" },
+      { name: "シンガポール" },
+      { name: "マレーシア" },
+      { name: "その他 (Others)" },
+    ],
+  },
+  spanish: {
+    countries: [
+      { name: "スペイン" },
+      { name: "メキシコ" },
+      { name: "アルゼンチン" },
+      { name: "コロンビア" },
+      { name: "ペルー" },
+      { name: "チリ" },
+      { name: "その他 (Others)" },
+    ],
+  },
+  italian: {
+    countries: [
+      { name: "イタリア" },
+      { name: "スイス" },
+      { name: "サンマリノ" },
+      { name: "バチカン市国" },
+      { name: "その他 (Others)" },
+    ],
+  },
+  portuguese: {
+    countries: [
+      { name: "ポルトガル" },
+      { name: "ブラジル" },
+      { name: "アンゴラ" },
+      { name: "モザンビーク" },
+      { name: "その他 (Others)" },
+    ],
+  },
+  russian: {
+    countries: [
+      { name: "ロシア" },
+      { name: "ベラルーシ" },
+      { name: "カザフスタン" },
+      { name: "キルギス" },
+      { name: "その他 (Others)" },
+    ],
+  },
+  other: {
+    countries: [{ name: "その他 (Others)" }],
   },
 };
 
 export const GENERATIONS = [
-  "1940年代以前",
-  "1950年代",
-  "1960年代",
-  "1970年代",
-  "1980年代",
-  "1990年代",
-  "2000年代",
-  "2010年代",
-  "2020年代以降",
+  "1940-1945",
+  "1945-1950",
+  "1950-1955",
+  "1955-1960",
+  "1960-1965",
+  "1965-1970",
+  "1970-1975",
+  "1975-1980",
+  "1980-1985",
+  "1985-1990",
+  "1990-1995",
+  "1995-2000",
+  "2000-2005",
+  "2005-2010",
+  "2010-2015",
+  "2015-2020",
+  "2020-2025",
+  "2025-2030",
 ] as const;
+
+// 月の地名データ
+export const MOON_LOCATIONS = [
+  "静かの海 (Mare Tranquillitatis)",
+  "ティコ・クレーター (Tycho)",
+  "コペルニクス・クレーター (Copernicus)",
+  "嵐の大洋 (Oceanus Procellarum)",
+  "雨の海 (Mare Imbrium)",
+  "危難の海 (Mare Crisium)",
+  "ケプラー・クレーター (Kepler)",
+  "アペニン山脈 (Montes Apenninus)",
+  "晴れの海 (Mare Serenitatis)",
+  "プラトン・クレーター (Plato)",
+] as const;
+
+// 火星の地名データ
+export const MARS_LOCATIONS = [
+  "オリンポス山 (Olympus Mons)",
+  "マリネリス峡谷 (Valles Marineris)",
+  "大シルチス (Syrtis Major)",
+  "タルシス三山 (Tharsis Montes)",
+  "ゲール・クレーター (Gale Crater)",
+  "イシディス平原 (Isidis Planitia)",
+  "ヘラス盆地 (Hellas Planitia)",
+  "ジェゼロ・クレーター (Jezero Crater)",
+  "ユートピア平原 (Utopia Planitia)",
+  "シドニア地域 (Cydonia)",
+] as const;
+
+export type LanguageAbilityType = "self" | "ai_assisted";
+
+export interface LanguageAbility {
+  type: LanguageAbilityType;
+}
 
 export const LANGUAGE_OPTIONS = [
   "日本語 (Japanese)",
@@ -185,7 +319,7 @@ export const useOnboarding = () => {
     setSelectedCountry("");
     setSelectedRegion("");
     if (sphereId === "japanese") {
-      setSelectedCountry("日本 (Japan)");
+      setSelectedCountry("日本");
     }
   };
 

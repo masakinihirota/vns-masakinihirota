@@ -11,8 +11,6 @@ import {
   Terminal,
   Clock,
   Search,
-  LayoutGrid,
-  List,
   AlertTriangle,
   X,
 } from "lucide-react";
@@ -532,11 +530,10 @@ export default function ProfileDashboard() {
                 <button
                   key={type}
                   onClick={() => setNewType(type)}
-                  className={`px-3 py-1 rounded text-xs border transition-all ${
-                    newType === type
+                  className={`px-3 py-1 rounded text-xs border transition-all ${newType === type
                       ? `${getTypeColor(type)} bg-slate-900`
                       : "border-slate-800 text-slate-500 hover:border-slate-600"
-                  }`}
+                    }`}
                 >
                   {type}
                 </button>

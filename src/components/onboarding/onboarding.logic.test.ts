@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { useOnboarding } from "./onboarding.logic";
 
 describe("useOnboarding", () => {

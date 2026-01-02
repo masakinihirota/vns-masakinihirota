@@ -27,6 +27,12 @@ export default function Home() {
       title: "🔥 New & Experimental (Check These!)",
       routes: [
         {
+          title: "Onboarding PC",
+          path: "/onboarding-pc",
+          desc: "Separate onboarding flow optimized for PC",
+          badge: "New",
+        },
+        {
           title: "Gemini Root Account",
           path: "/gemini-root-account",
           desc: "Gemini Style Root Account Dashboard",

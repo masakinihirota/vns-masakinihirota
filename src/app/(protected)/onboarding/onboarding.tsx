@@ -90,7 +90,7 @@ const GENERATIONS = [
   "2020年代以降",
 ];
 
-// 言語リスト（ジブリ多言語展開に基づく + 中国語分割）
+// 言語リスト（ジブリ多言語展開に基づく）
 const LANGUAGE_OPTIONS = [
   "日本語 (Japanese)",
   "英語 (English)",

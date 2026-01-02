@@ -4,7 +4,6 @@ import {
   ChevronRight,
   MoreHorizontal,
   LogOut,
-  UserPlus,
   ChevronsUpDown,
   type LucideIcon,
 } from "lucide-react";

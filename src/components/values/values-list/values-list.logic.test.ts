@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   VALUES_QUESTIONS,
-  MOCK_USER_ANSWERS,
+
   fetchValues,
   fetchUserAnswers,
 } from "./values-list.logic";

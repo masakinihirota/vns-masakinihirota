@@ -1,0 +1,105 @@
+
+> vns-masakinihirota@0.8.0 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  ! eslint(no-unused-vars): Identifier 'CardContent' is imported but never used.
+    ,-[src/components/values/values-list/values-list.tsx:10:3]
+  9 |   CardDescription,
+ 10 |   CardContent,
+    :   ^^^^^|^^^^^
+    :        `-- 'CardContent' is imported here
+ 11 | } from "@/components/ui/card";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'settings' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/manual-matching/conditions/matching-conditions.logic.ts:39:3]
+ 38 | export const saveSettings = async (
+ 39 |   settings: MatchingSettings
+    :   ^^^^|^^^
+    :       `-- 'settings' is declared here
+ 40 | ): Promise<boolean> => {
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Parameter 'settings' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/manual-matching/conditions/matching-conditions.logic.ts:45:3]
+ 44 | export const startAutoMatching = async (
+ 45 |   settings: MatchingSettings
+    :   ^^^^|^^^
+    :       `-- 'settings' is declared here
+ 46 | ): Promise<string> => {
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'Languages' is imported but never used.
+   ,-[src/components/onboarding-pc/steps/step4-language-pc.tsx:1:10]
+ 1 | import { Languages, Globe, Bot, User } from "lucide-react";
+   :          ^^^^|^^^^
+   :              `-- 'Languages' is imported here
+ 2 | import React from "react";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useEffect' is imported but never used.
+   ,-[src/components/mandala-chart/mandala-chart/mandala-chart.tsx:3:10]
+ 2 | 
+ 3 | import { useEffect, useState } from "react";
+   :          ^^^^|^^^^
+   :              `-- 'useEffect' is imported here
+ 4 | import { Card, CardContent } from "@/components/ui/card";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'vi' is imported but never used.
+   ,-[src/components/onboarding/onboarding.logic.test.ts:2:32]
+ 1 | import { renderHook, act } from "@testing-library/react";
+ 2 | import { describe, it, expect, vi } from "vitest";
+   :                                ^|
+   :                                 `-- 'vi' is imported here
+ 3 | import { useOnboarding } from "./onboarding.logic";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'user' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/app/(protected)/layout.tsx:15:13]
+ 14 |   const {
+ 15 |     data: { user },
+    :             ^^|^
+    :               `-- 'user' is declared here
+ 16 |   } = await supabase.auth.getUser();
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Type alias 'MatchRecord' is declared but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:47:6]
+ 46 | 
+ 47 | type MatchRecord = {
+    :      ^^^^^|^^^^^
+    :           `-- 'MatchRecord' is declared here
+ 48 |   id: string;
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Parameter 'query' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/matching-manual/manual-matching-console.tsx:201:22]
+ 200 |     return {
+ 201 |       select: async (query: string = "*") => {
+     :                      ^^^^^^^^^|^^^^^^^^^
+     :                               `-- 'query' is declared here
+ 202 |         await new Promise((resolve) => setTimeout(resolve, 400));
+     `----
+  help: Consider removing this parameter.
+
+  x typescript(TS2304): Cannot find name 'Heart'.
+     ,-[src/components/matching-manual/manual-matching-console.tsx:737:22]
+ 736 |                   <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+ 737 |                     <Heart size={16} /> 大切にしている価値観
+     :                      ^^^^^
+ 738 |                   </h3>
+     `----
+
+Found 9 warnings and 1 error.
+Finished in 4.1s on 251 files using 12 threads.
+ ELIFECYCLE  Command failed with exit code 1.

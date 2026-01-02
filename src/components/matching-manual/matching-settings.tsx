@@ -10,9 +10,8 @@ import {
   Menu,
   X,
   ArrowDown,
-  ArrowUp,
 } from "lucide-react";
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 
 // --- ダミーデータ ---
 const VALUE_OPTIONS = [
@@ -216,7 +215,7 @@ const MatchingSettings = () => {
       setNotification({ message: "✅ 設定を保存しました!", type: "success" });
       // 失敗シミュレーション (ランダムに失敗させることも可能だが、今回は成功とする)
       // throw new Error("保存失敗");
-    } catch (error) {
+    } catch (_error) {
       setNotification({
         message: "⚠️ 設定の保存に失敗しました。もう一度お試しください。",
         type: "error",
@@ -259,7 +258,7 @@ const MatchingSettings = () => {
         message: "マッチングを開始し、結果画面へ遷移します...",
         type: "success",
       });
-    } catch (error) {
+    } catch (_error) {
       setNotification({
         message: "⚠️ マッチング処理に失敗しました。もう一度お試しください。",
         type: "error",
@@ -340,11 +339,10 @@ const MatchingSettings = () => {
         {options.map((item) => (
           <label
             key={item}
-            className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors border-2 ${
-              currentSelections.includes(item)
+            className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors border-2 ${currentSelections.includes(item)
                 ? "bg-primary-100 dark:bg-primary-900/50 border-primary-500 text-primary-700 dark:text-primary-300 shadow-md"
                 : "bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
-            }`}
+              }`}
           >
             <input
               type="checkbox"
@@ -455,7 +453,6 @@ const MatchingSettings = () => {
   const SidebarItem = ({
     label,
     active,
-    href,
   }: {
     label: string;
     active: boolean;
@@ -463,11 +460,10 @@ const MatchingSettings = () => {
   }) => (
     <a
       href="#"
-      className={`flex items-center p-3 rounded-lg transition-colors text-sm font-medium ${
-        active
+      className={`flex items-center p-3 rounded-lg transition-colors text-sm font-medium ${active
           ? "bg-primary-100 dark:bg-primary-800 text-primary-700 dark:text-primary-200"
           : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-      }`}
+        }`}
     >
       {label}
     </a>
@@ -541,11 +537,10 @@ const MatchingSettings = () => {
               <button
                 onClick={handleSave}
                 disabled={isSaving || isStartingMatching}
-                className={`flex items-center justify-center px-6 py-3 rounded-xl font-semibold transition-colors duration-300 border-2 ${
-                  isSaving
+                className={`flex items-center justify-center px-6 py-3 rounded-xl font-semibold transition-colors duration-300 border-2 ${isSaving
                     ? "bg-gray-400 text-white"
                     : "border-primary-500 text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/50"
-                }`}
+                  }`}
               >
                 <Save className="w-5 h-5 mr-2" />
                 {isSaving ? "保存中..." : "保存する"}
@@ -553,11 +548,10 @@ const MatchingSettings = () => {
               <button
                 onClick={handleStartMatching}
                 disabled={isSaving || isStartingMatching}
-                className={`flex items-center justify-center px-6 py-3 rounded-xl font-semibold transition-colors duration-300 shadow-lg ${
-                  isStartingMatching
+                className={`flex items-center justify-center px-6 py-3 rounded-xl font-semibold transition-colors duration-300 shadow-lg ${isStartingMatching
                     ? "bg-primary-700"
                     : "bg-primary-600 hover:bg-primary-700"
-                } text-white`}
+                  } text-white`}
               >
                 <Play className="w-5 h-5 mr-2" />
                 {isStartingMatching ? "マッチング処理中..." : "マッチング開始"}

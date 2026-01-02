@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 // Types for Settings
 export const VALUE_OPTIONS = [
@@ -37,13 +36,13 @@ export const DEFAULT_SETTINGS: MatchingSettings = {
 
 // Simulation Logic
 export const saveSettings = async (
-  settings: MatchingSettings
+  _settings: MatchingSettings
 ): Promise<boolean> => {
   return new Promise((resolve) => setTimeout(() => resolve(true), 500));
 };
 
 export const startAutoMatching = async (
-  settings: MatchingSettings
+  _settings: MatchingSettings
 ): Promise<string> => {
   return new Promise((resolve) =>
     setTimeout(() => resolve("session-123"), 800)

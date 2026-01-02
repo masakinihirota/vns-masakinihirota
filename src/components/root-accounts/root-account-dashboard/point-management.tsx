@@ -4,9 +4,7 @@ import {
   Zap,
   HandHeart,
   CalendarClock,
-  Shield,
   History,
-  Info,
 } from "lucide-react";
 import React from "react";
 import { RootAccount } from "./root-account-dashboard.types";
