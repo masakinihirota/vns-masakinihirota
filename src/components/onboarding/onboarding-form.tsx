@@ -53,19 +53,21 @@ export function OnboardingForm({ userId }: OnboardingFormProps) {
             className={`flex items-center ${step < 3 ? "flex-1" : ""}`}
           >
             <div
-              className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${currentStep >= step
+              className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                currentStep >= step
                   ? "bg-indigo-600 text-white"
                   : "bg-slate-200 dark:bg-slate-700 text-slate-500"
-                }`}
+              }`}
             >
               {step}
             </div>
             {step < 3 && (
               <div
-                className={`h-1 flex-1 mx-2 ${currentStep > step
+                className={`h-1 flex-1 mx-2 ${
+                  currentStep > step
                     ? "bg-indigo-600"
                     : "bg-slate-200 dark:bg-slate-700"
-                  }`}
+                }`}
               />
             )}
           </div>

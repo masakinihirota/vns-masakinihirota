@@ -215,8 +215,8 @@ export const Step2HoursPC: React.FC<Step2HoursPCProps> = ({
                     {timeToHours(data.core_activity_2_end || "23:00") >= 24
                       ? "24:00"
                       : hoursToTime(
-                        timeToHours(data.core_activity_2_end || "23:00")
-                      )}
+                          timeToHours(data.core_activity_2_end || "23:00")
+                        )}
                   </span>
                 </div>
                 <Slider.Root
@@ -280,23 +280,26 @@ export const Step2HoursPC: React.FC<Step2HoursPCProps> = ({
 
       {/* Warning or Total */}
       <div
-        className={`p-4 rounded-lg border flex items-start gap-3 ${totalHours < 8
+        className={`p-4 rounded-lg border flex items-start gap-3 ${
+          totalHours < 8
             ? "bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800"
             : "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800"
-          }`}
+        }`}
       >
         <AlertCircle
-          className={`w-5 h-5 flex-shrink-0 mt-0.5 ${totalHours < 8
+          className={`w-5 h-5 flex-shrink-0 mt-0.5 ${
+            totalHours < 8
               ? "text-amber-600 dark:text-amber-400"
               : "text-blue-600 dark:text-blue-400"
-            }`}
+          }`}
         />
         <div>
           <p
-            className={`text-sm font-semibold ${totalHours < 8
+            className={`text-sm font-semibold ${
+              totalHours < 8
                 ? "text-amber-900 dark:text-amber-100"
                 : "text-blue-900 dark:text-blue-100"
-              }`}
+            }`}
           >
             合計活動時間: {totalHours.toFixed(1)}時間
           </p>

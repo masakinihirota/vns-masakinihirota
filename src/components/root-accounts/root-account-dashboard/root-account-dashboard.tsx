@@ -22,9 +22,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import {
-  getZodiacSymbol,
-} from "@/lib/anonymous-name-generator";
+import { getZodiacSymbol } from "@/lib/anonymous-name-generator";
 import {
   normalizeRootAccountData,
   timeToHours,
@@ -152,8 +150,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       setIsLoading(false);
     }
   };
-
-
 
   // エリア設定の保存
   const handleSaveArea = async () => {
@@ -412,10 +408,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           </span>
                         )}
                         <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
-                            ? "bg-purple-100 text-purple-800"
-                            : "bg-blue-100 text-blue-800"
-                            }`}
+                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                            profile.role_type === "leader"
+                              ? "bg-purple-100 text-purple-800"
+                              : "bg-blue-100 text-blue-800"
+                          }`}
                         >
                           {profile.role_type}
                         </span>
@@ -549,9 +546,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 disabled={isLoading || selectedArea === originalArea}
                 className={`
                   flex items-center gap-2 px-3 py-1.5 border border-transparent rounded-md shadow-sm text-xs font-medium text-white
-                  ${selectedArea !== originalArea
-                    ? "bg-indigo-600 hover:bg-indigo-700"
-                    : "bg-slate-300 dark:bg-slate-700 cursor-not-allowed"
+                  ${
+                    selectedArea !== originalArea
+                      ? "bg-indigo-600 hover:bg-indigo-700"
+                      : "bg-slate-300 dark:bg-slate-700 cursor-not-allowed"
                   }
                 `}
               >
@@ -569,9 +567,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     relative cursor-pointer rounded-lg overflow-hidden
                     transition-all duration-300 ease-in-out
                     hover:-translate-y-2 hover:shadow-xl
-                    ${selectedArea === areaNum
-                      ? "ring-4 ring-indigo-500 shadow-lg scale-105"
-                      : "ring-1 ring-slate-200 dark:ring-slate-700"
+                    ${
+                      selectedArea === areaNum
+                        ? "ring-4 ring-indigo-500 shadow-lg scale-105"
+                        : "ring-1 ring-slate-200 dark:ring-slate-700"
                     }
                   `}
                 >
@@ -755,7 +754,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                     {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                     {timeToHours(formData.core_hours_end) < 24 ||
-                      nextDayEndHour === 0
+                    nextDayEndHour === 0
                       ? hoursToTime(timeToHours(formData.core_hours_end))
                       : "24:00"}
                   </span>
@@ -817,7 +816,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
                       {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                       {timeToHours(formData.core_hours_end) < 24 ||
-                        nextDayEndHour === 0
+                      nextDayEndHour === 0
                         ? hoursToTime(timeToHours(formData.core_hours_end))
                         : "24:00"}
                     </span>
@@ -892,17 +891,17 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     <div className="flex items-center gap-4">
                       <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                         {formData.core_hours_2_start &&
-                          formData.core_hours_2_end ? (
+                        formData.core_hours_2_end ? (
                           <>
                             {hoursToTime(
                               timeToHours(formData.core_hours_2_start)
                             )}{" "}
                             ～{" "}
                             {timeToHours(formData.core_hours_2_end) < 24 ||
-                              nextDayEndHour2 === 0
+                            nextDayEndHour2 === 0
                               ? hoursToTime(
-                                timeToHours(formData.core_hours_2_end)
-                              )
+                                  timeToHours(formData.core_hours_2_end)
+                                )
                               : "24:00"}
                           </>
                         ) : (
@@ -950,12 +949,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       value={
                         formData.core_hours_2_start && formData.core_hours_2_end
                           ? [
-                            timeToHours(formData.core_hours_2_start),
-                            Math.min(
-                              timeToHours(formData.core_hours_2_end),
-                              24
-                            ),
-                          ]
+                              timeToHours(formData.core_hours_2_start),
+                              Math.min(
+                                timeToHours(formData.core_hours_2_end),
+                                24
+                              ),
+                            ]
                           : [21, 23] // デフォルト値
                       }
                       onValueChange={(values) => {
@@ -1044,18 +1043,18 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <div className="h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg">
                     <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
                       {isSubCoreHourEnabled &&
-                        formData.core_hours_2_start &&
-                        formData.core_hours_2_end ? (
+                      formData.core_hours_2_start &&
+                      formData.core_hours_2_end ? (
                         <>
                           {hoursToTime(
                             timeToHours(formData.core_hours_2_start)
                           )}{" "}
                           ～{" "}
                           {timeToHours(formData.core_hours_2_end) < 24 ||
-                            nextDayEndHour2 === 0
+                          nextDayEndHour2 === 0
                             ? hoursToTime(
-                              timeToHours(formData.core_hours_2_end)
-                            )
+                                timeToHours(formData.core_hours_2_end)
+                              )
                             : "24:00"}
                         </>
                       ) : (
@@ -1209,10 +1208,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           onChange={(e) =>
                             handleChange("display_name", e.target.value)
                           }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing
-                            ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-                            : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
-                            }`}
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${
+                            isEditing
+                              ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                              : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
+                          }`}
                         />
                       </div>
                     </div>
@@ -1252,10 +1252,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           onChange={(e) =>
                             handleGenerationChange(e.target.value)
                           }
-                          className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing
-                            ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
-                            : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
-                            }`}
+                          className={`block w-full rounded-md sm:text-sm p-2 border ${
+                            isEditing
+                              ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
+                              : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
+                          }`}
                         >
                           <option value="">選択してください</option>
                           {generationOptions.map((range) => (

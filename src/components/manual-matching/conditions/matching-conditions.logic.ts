@@ -1,4 +1,3 @@
-
 // Types for Settings
 export const VALUE_OPTIONS = [
   { id: "v1", label: "仕事より家庭優先" },

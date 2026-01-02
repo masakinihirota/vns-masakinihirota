@@ -17,9 +17,9 @@ describe("OnboardingForm", () => {
   it("オンボーディングフォームがレンダリングされること", () => {
     // ResizeObserver mock
     global.ResizeObserver = class ResizeObserver {
-      observe() { }
-      unobserve() { }
-      disconnect() { }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
     };
 
     render(<OnboardingForm userId="test-user-id" />);

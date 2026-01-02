@@ -252,9 +252,9 @@ const Avatar = ({
 }) => {
   const initials = name
     ? name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
     : "?";
   return (
     <div
@@ -694,10 +694,11 @@ export default function UserProfileManager() {
                             key={type}
                             className={`
                            flex items-center gap-2 px-3 py-2 rounded-md border cursor-pointer text-sm transition-all
-                           ${selectedProfile.type === type
-                                ? "border-slate-900 bg-slate-900 text-white dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900"
-                                : "border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-900"
-                              }
+                           ${
+                             selectedProfile.type === type
+                               ? "border-slate-900 bg-slate-900 text-white dark:border-slate-100 dark:bg-slate-100 dark:text-slate-900"
+                               : "border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-900"
+                           }
                          `}
                           >
                             <input
