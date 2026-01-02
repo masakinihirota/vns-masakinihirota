@@ -9,7 +9,6 @@ import {
   Activity,
   Edit3,
   Save,
-  CreditCard,
   AlertCircle,
   Clock,
   Plus,
@@ -20,20 +19,16 @@ import {
   Star,
   Medal,
   Crown,
-  Gift,
 } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-import {
-  CONSTELLATIONS,
-  generateAnonymousName,
-  getZodiacSymbol,
-} from "@/lib/anonymous-name-generator";
+import { getZodiacSymbol } from "@/lib/anonymous-name-generator";
 import {
   normalizeRootAccountData,
   timeToHours,
   hoursToTime,
 } from "@/lib/root-account-utils";
+import { PointManagementSection } from "./point-management";
 import {
   LANGUAGES_MOCK,
   COUNTRIES_MOCK,
@@ -42,7 +37,6 @@ import {
 import {
   RootAccount,
   UserProfileSummary,
-  Award,
 } from "./root-account-dashboard.types";
 
 interface RootAccountDashboardProps {
@@ -155,11 +149,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleCancel = () => {
-    setFormData(originalData);
-    setIsEditing(false);
   };
 
   // エリア設定の保存
@@ -348,26 +337,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
             </div>
           </div>
 
-          {/* Points Card */}
-          <div className="bg-white dark:bg-slate-900 overflow-hidden shadow rounded-lg p-5 border-l-4 border-emerald-500">
-            <div className="flex items-center">
-              <div className="flex-shrink-0">
-                <CreditCard className="h-6 w-6 text-emerald-400" />
-              </div>
-              <div className="ml-5 w-0 flex-1">
-                <dl>
-                  <dt className="text-sm font-medium text-slate-500 dark:text-slate-400 truncate">
-                    総獲得ポイント
-                  </dt>
-                  <dd>
-                    <div className="text-2xl font-bold text-slate-900 dark:text-slate-50">
-                      {formData.total_points.toLocaleString()} pt
-                    </div>
-                  </dd>
-                </dl>
-              </div>
-            </div>
-          </div>
+          {/* Points Card Removed - Replaced by PointManagementSection */}
 
           {/* Warnings Card - Adjusted to include Trust Duration */}
           <div className="bg-white dark:bg-slate-900 overflow-hidden shadow rounded-lg p-5 border-l-4 border-amber-500">
@@ -396,6 +366,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
         {/* Main Content Single Page Layout */}
         <div className="space-y-8">
+          {/* Detailed Point Management Section */}
+          <PointManagementSection data={formData} />
+
           {/* My Profiles - Full Width */}
           <div className="bg-white dark:bg-slate-900 shadow rounded-lg p-6">
             <div className="flex justify-between items-center mb-4">

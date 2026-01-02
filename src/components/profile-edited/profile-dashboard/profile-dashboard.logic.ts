@@ -1,5 +1,3 @@
-import { LucideIcon } from "lucide-react";
-
 export type ProfileType = "Main" | "Sub" | "Game" | "Work";
 
 export interface UserProfileAttributes {

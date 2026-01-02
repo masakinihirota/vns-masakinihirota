@@ -1,4 +1,4 @@
-import { UserProfile, Work } from "../common/types";
+import { UserProfile } from "../common/types";
 
 // Mock Data
 export const MOCK_SUBJECTS: UserProfile[] = [

@@ -27,9 +27,9 @@ export default function Home() {
       title: "🔥 New & Experimental (Check These!)",
       routes: [
         {
-          title: "Root Accounts Control",
-          path: "/root-accounts-controle",
-          desc: "New Root Account Control UI",
+          title: "Onboarding PC",
+          path: "/onboarding-pc",
+          desc: "Separate onboarding flow optimized for PC",
           badge: "New",
         },
         {

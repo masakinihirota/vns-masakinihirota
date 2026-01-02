@@ -1,15 +1,9 @@
-import { Lock, Unlock, Loader2, Save } from "lucide-react";
+import { Lock, Unlock, Loader2 } from "lucide-react";
 import React from "react";
 // import { Slider } from '@/components/ui/slider'; // Removed as we use native input
-import { Badge } from "@/components/ui/badge";
+// import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardTitle, CardDescription } from "@/components/ui/card";
 import { cn } from "@/lib/utils"; // Assuming standard shadcn utils
 import { ValueItem, UserValueAnswer } from "../common/types";
 

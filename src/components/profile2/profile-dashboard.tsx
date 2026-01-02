@@ -11,8 +11,6 @@ import {
   Terminal,
   Clock,
   Search,
-  LayoutGrid,
-  List,
   AlertTriangle,
   X,
 } from "lucide-react";

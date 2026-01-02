@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { Footer } from "@/components/layout/footer";
 import { GlobalHeader } from "@/components/layout/GlobalHeader";
@@ -12,10 +11,7 @@ export default async function AuthLayout({
 }) {
   // 認証チェック
   const supabase = await createClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
+  await supabase.auth.getUser();
 
   // 開発環境でも、(protected)配下は基本的に認証を求めるべきだが、
   // 開発初期の利便性のため、またはユーザー指示により調整可能。

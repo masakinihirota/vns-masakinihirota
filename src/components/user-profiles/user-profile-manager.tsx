@@ -105,7 +105,7 @@ const MOCK_PROFILES = [
 
 // --- Mock Supabase Client ---
 const supabase = {
-  from: (table: string) => ({
+  from: (_table: string) => ({
     select: async () => {
       await new Promise((resolve) => setTimeout(resolve, 800));
       return { data: MOCK_PROFILES, error: null };

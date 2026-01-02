@@ -23,11 +23,9 @@ import {
   Clapperboard,
   MonitorPlay,
   Trash2,
-  Info,
   Moon,
   Sun,
   Check,
-  Trophy,
   Loader2,
   AlertCircle,
   Clock,
@@ -367,13 +365,6 @@ const Button = ({
 const Input = ({ className = "", ...props }: any) => (
   <input
     className={`flex h-8 w-full rounded-md border border-slate-200 bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 dark:border-slate-700 dark:text-slate-200 dark:focus-visible:ring-blue-400 ${className}`}
-    {...props}
-  />
-);
-
-const Textarea = ({ className = "", ...props }: any) => (
-  <textarea
-    className={`flex min-h-[60px] w-full rounded-md border border-slate-200 bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-blue-500 dark:border-slate-700 dark:text-slate-200 dark:focus-visible:ring-blue-400 ${className}`}
     {...props}
   />
 );

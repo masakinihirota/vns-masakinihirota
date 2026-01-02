@@ -10,9 +10,8 @@ import {
   Menu,
   X,
   ArrowDown,
-  ArrowUp,
 } from "lucide-react";
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 
 // --- ダミーデータ ---
 const VALUE_OPTIONS = [
@@ -216,7 +215,7 @@ const MatchingSettings = () => {
       setNotification({ message: "✅ 設定を保存しました!", type: "success" });
       // 失敗シミュレーション (ランダムに失敗させることも可能だが、今回は成功とする)
       // throw new Error("保存失敗");
-    } catch (error) {
+    } catch (_error) {
       setNotification({
         message: "⚠️ 設定の保存に失敗しました。もう一度お試しください。",
         type: "error",
@@ -259,7 +258,7 @@ const MatchingSettings = () => {
         message: "マッチングを開始し、結果画面へ遷移します...",
         type: "success",
       });
-    } catch (error) {
+    } catch (_error) {
       setNotification({
         message: "⚠️ マッチング処理に失敗しました。もう一度お試しください。",
         type: "error",
@@ -455,7 +454,6 @@ const MatchingSettings = () => {
   const SidebarItem = ({
     label,
     active,
-    href,
   }: {
     label: string;
     active: boolean;
