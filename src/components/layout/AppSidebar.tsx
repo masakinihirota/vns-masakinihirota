@@ -531,8 +531,6 @@ export function AppSidebar({
           newlyUnlockedFeatures={newlyUnlockedFeatures}
         />
 
-
-
         {/* 登録系メニュー（第3グループ） */}
         <NavGroup
           label="登録"
