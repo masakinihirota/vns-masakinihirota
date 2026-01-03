@@ -93,10 +93,11 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                 <div
                   className={`
                                     w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-all
-                                    ${currentStep >= step
-                      ? "bg-indigo-600 text-white shadow-md ring-4 ring-indigo-50 dark:ring-indigo-900/30"
-                      : "bg-slate-100 dark:bg-slate-800 text-slate-400"
-                    }
+                                    ${
+                                      currentStep >= step
+                                        ? "bg-indigo-600 text-white shadow-md ring-4 ring-indigo-50 dark:ring-indigo-900/30"
+                                        : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                                    }
                                 `}
                 >
                   {step}

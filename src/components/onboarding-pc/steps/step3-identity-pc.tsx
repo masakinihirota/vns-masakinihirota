@@ -76,8 +76,6 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
       </div>
 
       <div className="bg-white dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
-
-
         {/* 2. Zodiac Sign & Name Selection */}
         <div className="space-y-6">
           <div>
@@ -142,10 +140,11 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
                     key={name}
                     type="button"
                     onClick={() => handleNameSelect(name)}
-                    className={`w-full p-3 rounded-lg border text-left flex items-center justify-between transition-all ${display_name === name
-                      ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500"
-                      : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300"
-                      }`}
+                    className={`w-full p-3 rounded-lg border text-left flex items-center justify-between transition-all ${
+                      display_name === name
+                        ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500"
+                        : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                    }`}
                   >
                     <span className="font-medium">{name}</span>
                     {display_name === name && (

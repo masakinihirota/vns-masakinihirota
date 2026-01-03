@@ -45,8 +45,6 @@ type UserProfile = {
   values: string[]; // e.g., "連絡はマメに", "一人の時間も大切"
 };
 
-
-
 // --- Mock Data (Updated with Works and Values) ---
 
 const MOCK_SUBJECTS: UserProfile[] = [
@@ -261,9 +259,10 @@ const UserCard = ({
       onClick={onClick}
       className={`
         relative p-4 rounded-lg border cursor-pointer transition-all duration-200
-        ${isSelected
-          ? "bg-indigo-50 border-indigo-500 shadow-md ring-1 ring-indigo-500 dark:bg-indigo-900/20 dark:border-indigo-400"
-          : "bg-white border-slate-200 hover:border-indigo-300 hover:shadow-sm dark:bg-slate-900 dark:border-slate-800 dark:hover:border-slate-700"
+        ${
+          isSelected
+            ? "bg-indigo-50 border-indigo-500 shadow-md ring-1 ring-indigo-500 dark:bg-indigo-900/20 dark:border-indigo-400"
+            : "bg-white border-slate-200 hover:border-indigo-300 hover:shadow-sm dark:bg-slate-900 dark:border-slate-800 dark:hover:border-slate-700"
         }
       `}
     >

@@ -65,10 +65,11 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
                 key={`native-${lang}`}
                 className={`
                                 flex items-center space-x-3 p-3 border rounded-lg cursor-pointer transition-all hover:shadow-md
-                                ${(nativeLanguages || []).includes(lang)
-                    ? "border-indigo-500 bg-white dark:bg-indigo-900/30 ring-2 ring-indigo-500 shadow-sm"
-                    : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-indigo-300"
-                  }
+                                ${
+                                  (nativeLanguages || []).includes(lang)
+                                    ? "border-indigo-500 bg-white dark:bg-indigo-900/30 ring-2 ring-indigo-500 shadow-sm"
+                                    : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-indigo-300"
+                                }
                             `}
               >
                 <input
@@ -108,10 +109,11 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
                 key={`avail-${lang}`}
                 className={`
                             flex items-center space-x-3 p-3 border rounded-lg cursor-pointer transition-all hover:shadow-md
-                            ${(availableLanguages || []).includes(lang)
-                    ? "border-emerald-500 bg-white dark:bg-emerald-900/30 ring-2 ring-emerald-500 shadow-sm"
-                    : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-300"
-                  }
+                            ${
+                              (availableLanguages || []).includes(lang)
+                                ? "border-emerald-500 bg-white dark:bg-emerald-900/30 ring-2 ring-emerald-500 shadow-sm"
+                                : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-300"
+                            }
                         `}
               >
                 <input
@@ -140,10 +142,11 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
             <label
               className={`
                         flex-1 p-4 border rounded-xl cursor-pointer transition-all
-                        ${uses_ai_translation === true
-                  ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 shadow-sm"
-                  : "border-slate-200 dark:border-slate-700"
-                }
+                        ${
+                          uses_ai_translation === true
+                            ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 shadow-sm"
+                            : "border-slate-200 dark:border-slate-700"
+                        }
                     `}
             >
               <div className="flex items-center mb-2">
@@ -167,10 +170,11 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
             <label
               className={`
                         flex-1 p-4 border rounded-xl cursor-pointer transition-all
-                        ${uses_ai_translation === false
-                  ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 shadow-sm"
-                  : "border-slate-200 dark:border-slate-700"
-                }
+                        ${
+                          uses_ai_translation === false
+                            ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20 shadow-sm"
+                            : "border-slate-200 dark:border-slate-700"
+                        }
                     `}
             >
               <div className="flex items-center mb-2">

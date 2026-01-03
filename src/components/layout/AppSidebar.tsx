@@ -164,8 +164,6 @@ const mainMenuItems = manifestRoutes
     icon: iconFor(r.path),
   }));
 
-
-
 // 登録系メニュー（第3グループ）
 const registrationMenuItems = manifestRoutes
   .filter((r) => r.visibleInMenu && r.group === "registration")

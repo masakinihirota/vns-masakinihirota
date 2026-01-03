@@ -28,8 +28,6 @@ describe("Step3IdentityPC", () => {
   it("renders identity fields", () => {
     render(<Step3IdentityPC {...defaultProps} />);
 
-
-
     expect(screen.getByLabelText("星座")).toBeInTheDocument();
     expect(screen.getByText("表示名 (匿名)")).toBeInTheDocument();
     expect(screen.getByLabelText("生誕世代(生まれた年)")).toBeInTheDocument();

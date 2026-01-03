@@ -2,7 +2,6 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 
-
 interface MoonMapProps {
   selectedLocation: string | undefined;
   onSelect: (location: string) => void;
