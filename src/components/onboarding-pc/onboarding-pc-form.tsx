@@ -81,7 +81,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
       <div className="w-full md:w-64 flex-shrink-0">
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg h-full sticky top-4">
           <h1 className="text-xl font-bold mb-8 text-slate-900 dark:text-white">
-            Profile Setup
+            アカウント作成
           </h1>
 
           <div className="space-y-6 relative">
@@ -93,11 +93,10 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                 <div
                   className={`
                                     w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-all
-                                    ${
-                                      currentStep >= step
-                                        ? "bg-indigo-600 text-white shadow-md ring-4 ring-indigo-50 dark:ring-indigo-900/30"
-                                        : "bg-slate-100 dark:bg-slate-800 text-slate-400"
-                                    }
+                                    ${currentStep >= step
+                      ? "bg-indigo-600 text-white shadow-md ring-4 ring-indigo-50 dark:ring-indigo-900/30"
+                      : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                    }
                                 `}
                 >
                   {step}
@@ -108,10 +107,10 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                                     ${currentStep === step ? "text-indigo-600 dark:text-indigo-400" : "text-slate-500 dark:text-slate-500"}
                                 `}
                 >
-                  {step === 1 && "Residence & Culture"}
-                  {step === 2 && "Activity Hours"}
-                  {step === 3 && "Identity"}
-                  {step === 4 && "Language"}
+                  {step === 1 && "居住地・文化圏"}
+                  {step === 2 && "活動時間"}
+                  {step === 3 && "アイデンティティ"}
+                  {step === 4 && "言語設定"}
                 </span>
               </div>
             ))}
@@ -128,9 +127,9 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
             {currentStep > 1 ? (
               <button
                 onClick={prevStep}
-                className="px-6 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="px-6 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors bg-white dark:bg-transparent"
               >
-                Back
+                戻る
               </button>
             ) : (
               <div />
@@ -141,7 +140,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                 onClick={nextStep}
                 className="px-8 py-2.5 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 transition-all transform hover:-translate-y-0.5"
               >
-                Next
+                次へ
               </button>
             ) : (
               <button
@@ -149,7 +148,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                 disabled={isSubmitting}
                 className="px-8 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 shadow-lg shadow-emerald-200 dark:shadow-emerald-900/30 transition-all transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? "Processing..." : "Complete Setup"}
+                {isSubmitting ? "処理中..." : "設定完了"}
               </button>
             )}
           </div>

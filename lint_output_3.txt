@@ -1,0 +1,47 @@
+
+> vns-masakinihirota@0.8.0 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  ! eslint(no-unused-vars): Variable 'groupMenuItems' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/layout/AppSidebar.tsx:168:7]
+ 167 | // 集団系メニュー（第2グループ）
+ 168 | const groupMenuItems = manifestRoutes
+     :       ^^^^^^^|^^^^^^
+     :              `-- 'groupMenuItems' is declared here
+ 169 |   .filter((r) => r.visibleInMenu && r.group === "group")
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'AlertCircle' is imported but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:9:3]
+  8 |   CheckCircle2,
+  9 |   AlertCircle,
+    :   ^^^^^|^^^^^
+    :        `-- 'AlertCircle' is imported here
+ 10 |   Moon,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Type alias 'MatchRecord' is declared but never used.
+    ,-[src/components/matching-manual/manual-matching-console.tsx:49:6]
+ 48 | 
+ 49 | type MatchRecord = {
+    :      ^^^^^|^^^^^
+    :           `-- 'MatchRecord' is declared here
+ 50 |   id: string;
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Parameter 'query' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/matching-manual/manual-matching-console.tsx:203:22]
+ 202 |     return {
+ 203 |       select: async (query: string = "*") => {
+     :                      ^^^^^^^^^|^^^^^^^^^
+     :                               `-- 'query' is declared here
+ 204 |         await new Promise((resolve) => setTimeout(resolve, 400));
+     `----
+  help: Consider removing this parameter.
+
+Found 4 warnings and 0 errors.
+Finished in 3.1s on 253 files using 12 threads.

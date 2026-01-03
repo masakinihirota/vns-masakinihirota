@@ -1,7 +1,7 @@
 "use strict";
 import React from "react";
 import { cn } from "@/lib/utils";
-import { MARS_LOCATIONS } from "../../onboarding/onboarding.logic";
+import { MARS_LOCATIONS } from "../onboarding.logic";
 
 interface MarsMapProps {
   selectedLocation: string | undefined;

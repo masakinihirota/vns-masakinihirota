@@ -5,7 +5,7 @@ import {
   DETAILED_REGIONS,
   MOON_LOCATIONS,
   MARS_LOCATIONS,
-} from "../../onboarding/onboarding.logic";
+} from "../onboarding.logic";
 import { MarsMap } from "./mars-map";
 import { MoonMap } from "./moon-map";
 import { ResidenceMap } from "./residence-map";

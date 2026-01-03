@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { GENERATIONS } from "../../onboarding/onboarding.logic";
+import { GENERATIONS } from "../onboarding.logic";
 import { Step3IdentityPC } from "./step3-identity-pc";
 
 // Mock generateAnonymousName if it's imported globally, or we just test the callback
@@ -28,12 +28,11 @@ describe("Step3IdentityPC", () => {
   it("renders identity fields", () => {
     render(<Step3IdentityPC {...defaultProps} />);
 
-    expect(screen.getByText("Display ID")).toBeInTheDocument();
-    expect(screen.getByDisplayValue("user-123")).toBeInTheDocument();
+
 
     expect(screen.getByLabelText("星座")).toBeInTheDocument();
     expect(screen.getByText("表示名 (匿名)")).toBeInTheDocument();
-    expect(screen.getByLabelText("生誕世代")).toBeInTheDocument();
+    expect(screen.getByLabelText("生誕世代(生まれた年)")).toBeInTheDocument();
 
     // Should show placeholder initially
     expect(
@@ -78,11 +77,12 @@ describe("Step3IdentityPC", () => {
   it("updates generation", () => {
     render(<Step3IdentityPC {...defaultProps} />);
 
-    const genSelect = screen.getByLabelText("生誕世代");
-    fireEvent.change(genSelect, { target: { value: GENERATIONS[0] } });
-
-    expect(mockUpdate).toHaveBeenCalledWith(
-      expect.objectContaining({ birth_generation: GENERATIONS[0] })
-    );
+    // Select a generation
+    fireEvent.change(screen.getByLabelText("生誕世代(生まれた年)"), {
+      target: { value: GENERATIONS[0] },
+    });
+    expect(mockUpdate).toHaveBeenCalledWith({
+      birth_generation: GENERATIONS[0],
+    });
   });
 });

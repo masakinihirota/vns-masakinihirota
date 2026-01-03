@@ -29,7 +29,7 @@ describe("useOnboarding", () => {
       result.current.actions.setCulturalSphere("japanese");
     });
 
-    expect(result.current.state.selectedCountry).toBe("日本 (Japan)");
+    expect(result.current.state.selectedCountry).toBe("日本");
   });
 
   it("should toggle available languages", () => {

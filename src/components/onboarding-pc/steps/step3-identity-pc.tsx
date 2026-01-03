@@ -1,7 +1,7 @@
 import { RefreshCcw, Check } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { generateUniqueCandidates } from "@/lib/anonymous-name-generator";
-import { GENERATIONS } from "../../onboarding/onboarding.logic";
+import { GENERATIONS } from "../onboarding.logic";
 
 interface Step3IdentityPCProps {
   data: any;
@@ -76,24 +76,10 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
       </div>
 
       <div className="bg-white dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
-        {/* 1. Display ID (Read-only) */}
-        <div>
-          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-            Display ID
-          </label>
-          <input
-            type="text"
-            value={display_id || ""}
-            readOnly
-            className="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 font-mono text-sm"
-          />
-          <p className="text-xs text-slate-500 mt-1">
-            ※システムにより自動生成されるユニークIDです。
-          </p>
-        </div>
+
 
         {/* 2. Zodiac Sign & Name Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-6">
           <div>
             <label
               htmlFor="zodiac"
@@ -134,13 +120,16 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
                 <button
                   type="button"
                   onClick={handleReloadNames}
-                  className="text-xs flex items-center gap-1 text-indigo-600 dark:text-indigo-400 hover:underline"
+                  className="px-3 py-1.5 rounded-md text-xs font-medium border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 flex items-center gap-1.5 transition-colors bg-white dark:bg-slate-800 shadow-sm"
                 >
                   <RefreshCcw size={12} />
                   候補を更新
                 </button>
               )}
             </div>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              表示される候補から、気に入った匿名アカウント名を選択してください。
+            </p>
 
             {!zodiac_sign ? (
               <div className="p-4 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 text-slate-400 text-sm text-center">
@@ -153,11 +142,10 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
                     key={name}
                     type="button"
                     onClick={() => handleNameSelect(name)}
-                    className={`w-full p-3 rounded-lg border text-left flex items-center justify-between transition-all ${
-                      display_name === name
-                        ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500"
-                        : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300"
-                    }`}
+                    className={`w-full p-3 rounded-lg border text-left flex items-center justify-between transition-all ${display_name === name
+                      ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500"
+                      : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                      }`}
                   >
                     <span className="font-medium">{name}</span>
                     {display_name === name && (
@@ -179,7 +167,7 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
             htmlFor="generation"
             className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
           >
-            生誕世代
+            生誕世代(生まれた年)
           </label>
           <select
             id="generation"
