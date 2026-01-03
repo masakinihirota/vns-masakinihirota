@@ -4,7 +4,11 @@
  */
 
 import "@testing-library/jest-dom";
-import { vi } from "vitest";
+import "vitest-axe/extend-expect";
+import { expect, vi } from "vitest";
+import * as matchers from "vitest-axe/matchers";
+
+expect.extend(matchers);
 
 // next/fontのモック
 vi.mock("next/font/google", () => ({

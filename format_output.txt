@@ -1,0 +1,14 @@
+
+> vns-masakinihirota@0.8.0 format:fast U:\2026src\vns-masakinihirota.worktrees\anti
+> oxfmt --write .
+
+
+  x Identifier expected. 'import' is a reserved word that cannot be used here.
+   ,-[src/components/profile-edit/profile-edit/profile-edit.tsx:7:3]
+ 6 |   // Film,
+ 7 |   import React from "react";
+   :   ^^^^^^
+ 8 |   // Clock,
+   `----
+Error occurred when checking code style in the above files.
+窶右LIFECYCLE窶・Command failed with exit code 2.

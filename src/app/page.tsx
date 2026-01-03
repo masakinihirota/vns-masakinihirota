@@ -27,6 +27,24 @@ export default function Home() {
       title: "🔥 New & Experimental (Check These!)",
       routes: [
         {
+          title: "User (Trash Bin)",
+          path: "/user-profiles",
+          desc: "User Profile List (Trash Bin Added)",
+          badge: "Update",
+        },
+        {
+          title: "User New",
+          path: "/user-profiles/new",
+          desc: "Create New Profile (New UI)",
+          badge: "New",
+        },
+        {
+          title: "User Edit (Demo)",
+          path: "/user-profiles/550e8400-e29b-41d4-a716-446655440000/edit",
+          desc: "Edit Profile ID:UUID (New UI)",
+          badge: "New",
+        },
+        {
           title: "Onboarding PC",
           path: "/onboarding-pc",
           desc: "Separate onboarding flow optimized for PC",
@@ -66,11 +84,7 @@ export default function Home() {
           path: "/profile2",
           desc: "Alternative Profile Page",
         },
-        {
-          title: "User Profiles",
-          path: "/user-profiles",
-          desc: "User Profile List",
-        },
+
         {
           title: "User Edited Profiles",
           path: "/user-edited-userprofiles",

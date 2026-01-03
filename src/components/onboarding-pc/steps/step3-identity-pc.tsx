@@ -12,7 +12,7 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
   data,
   onUpdate,
 }) => {
-  const { display_id, zodiac_sign, display_name, birth_generation } = data;
+  const { zodiac_sign, display_name, birth_generation } = data;
   const [candidates, setCandidates] = useState<string[]>([]);
   const [excludedNames, setExcludedNames] = useState<string[]>([]);
 
