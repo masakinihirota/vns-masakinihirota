@@ -1,0 +1,146 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mU:/2026src/vns-masakinihirota.worktrees/anti[39m
+
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+[90mstdout[2m | src/components/profile/evaluations/profile-evaluations.test.tsx[2m > [22m[2mProfileEvaluations[2m > [22m[2m繧｢繧ｯ繧ｻ繧ｷ繝薙Μ繝・ぅ驕募渚縺後↑縺・％縺ｨ
+[22m[39m[
+  {
+    "id": "empty-table-header",
+    "impact": "minor",
+    "tags": [
+      "cat.name-role-value",
+      "best-practice"
+    ],
+    "description": "Ensure table headers have discernible text",
+    "help": "Table header text should not be empty",
+    "helpUrl": "https://dequeuniversity.com/rules/axe/4.11/empty-table-header?application=axeAPI",
+    "nodes": [
+      {
+        "any": [
+          {
+            "id": "has-visible-text",
+            "data": null,
+            "relatedNodes": [],
+            "impact": "minor",
+            "message": "Element does not have text that is visible to screen readers"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "minor",
+        "html": "<th scope=\"col\" class=\"px-4 py-2 font-bold text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 w-10 text-right\"></th>",
+        "target": [
+          "div:nth-child(1) > .mb-6 > .overflow-x-auto > table > thead > .bg-slate-50.dark\\:bg-slate-800 > .w-10"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers"
+      },
+      {
+        "any": [
+          {
+            "id": "has-visible-text",
+            "data": null,
+            "relatedNodes": [],
+            "impact": "minor",
+            "message": "Element does not have text that is visible to screen readers"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "minor",
+        "html": "<th scope=\"col\" class=\"px-4 py-2 font-bold text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 w-10 text-right\"></th>",
+        "target": [
+          "div:nth-child(2) > .mb-6 > .overflow-x-auto > table > thead > .bg-slate-50.dark\\:bg-slate-800 > .w-10"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers"
+      },
+      {
+        "any": [
+          {
+            "id": "has-visible-text",
+            "data": null,
+            "relatedNodes": [],
+            "impact": "minor",
+            "message": "Element does not have text that is visible to screen readers"
+          }
+        ],
+        "all": [],
+        "none": [],
+        "impact": "minor",
+        "html": "<th scope=\"col\" class=\"px-4 py-2 font-bold text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 w-10 text-right\"></th>",
+        "target": [
+          "div:nth-child(3) > .mb-6 > .overflow-x-auto > table > thead > .bg-slate-50.dark\\:bg-slate-800 > .w-10"
+        ],
+        "failureSummary": "Fix any of the following:\n  Element does not have text that is visible to screen readers"
+      }
+    ]
+  }
+]
+
+ [31m笶ｯ[39m src/components/profile/evaluations/profile-evaluations.test.tsx [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 845[2mms[22m[39m
+[31m     [31mﾃ・[31m 繧｢繧ｯ繧ｻ繧ｷ繝薙Μ繝・ぅ驕募渚縺後↑縺・％縺ｨ[39m[33m 720[2mms[22m[39m
+     [32m笨・[39m 蛻晄悄陦ｨ遉ｺ・郁ｩ穂ｾ｡/螂ｽ縺堺ｸ謚槭・縺ｿ繝｢繝ｼ繝会ｼ峨〒Tier 1, 2, 3縺ｮ菴懷刀縺ｮ縺ｿ縺瑚｡ｨ遉ｺ縺輔ｌ縲ゝier蛻励′陦ｨ遉ｺ縺輔ｌ縺ｪ縺・％縺ｨ[32m 37[2mms[22m[39m
+     [32m笨・[39m 繝｢繝ｼ繝峨ｒ蛻・ｊ譖ｿ縺医ｋ縺ｨ縲∝・縺ｦ縺ｮ菴懷刀縺瑚｡ｨ遉ｺ縺輔ｌ縲ゝier蛻励′陦ｨ遉ｺ縺輔ｌ繧九％縺ｨ[32m 55[2mms[22m[39m
+     [32m笨・[39m 繧ｫ繝・ざ繝ｪ繧貞・繧頑崛縺医ｋ縺ｨ縲∬ｩｲ蠖薙☆繧九き繝・ざ繝ｪ縺ｮ菴懷刀縺ｮ縺ｿ縺瑚｡ｨ遉ｺ縺輔ｌ繧九％縺ｨ[32m 31[2mms[22m[39m
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Tests 1 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+
+ FAIL  src/components/profile/evaluations/profile-evaluations.test.tsx > ProfileEvaluations > 繧｢繧ｯ繧ｻ繧ｷ繝薙Μ繝・ぅ驕募渚縺後↑縺・％縺ｨ
+Error: expect(received).toHaveNoViolations(expected)
+
+Expected the HTML found at $('div:nth-child(1) > .mb-6 > .overflow-x-auto > table > thead > .bg-slate-50.dark\:bg-slate-800 > .w-10') to have no violations:
+
+<th scope="col" class="px-4 py-2 font-bold text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 w-10 text-right"></th>
+
+Received:
+
+"Table header text should not be empty (empty-table-header)"
+
+Fix any of the following:
+  Element does not have text that is visible to screen readers
+
+You can find more information on this issue here: 
+https://dequeuniversity.com/rules/axe/4.11/empty-table-header?application=axeAPI
+
+Expected the HTML found at $('div:nth-child(2) > .mb-6 > .overflow-x-auto > table > thead > .bg-slate-50.dark\:bg-slate-800 > .w-10') to have no violations:
+
+<th scope="col" class="px-4 py-2 font-bold text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 w-10 text-right"></th>
+
+Received:
+
+"Table header text should not be empty (empty-table-header)"
+
+Fix any of the following:
+  Element does not have text that is visible to screen readers
+
+You can find more information on this issue here: 
+https://dequeuniversity.com/rules/axe/4.11/empty-table-header?application=axeAPI
+
+Expected the HTML found at $('div:nth-child(3) > .mb-6 > .overflow-x-auto > table > thead > .bg-slate-50.dark\:bg-slate-800 > .w-10') to have no violations:
+
+<th scope="col" class="px-4 py-2 font-bold text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 w-10 text-right"></th>
+
+Received:
+
+"Table header text should not be empty (empty-table-header)"
+
+Fix any of the following:
+  Element does not have text that is visible to screen readers
+
+You can find more information on this issue here: 
+https://dequeuniversity.com/rules/axe/4.11/empty-table-header?application=axeAPI
+ 笶ｯ src/components/profile/evaluations/profile-evaluations.test.tsx:22:25
+     20|             console.log(JSON.stringify(results.violations, null, 2));
+     21|         }
+     22|         expect(results).toHaveNoViolations();
+       |                         ^
+     23|     });
+     24| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/1]竡ｯ
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 00:24:11
+[2m   Duration [22m 3.57s[2m (transform 141ms, setup 234ms, import 974ms, tests 845ms, environment 1.22s)[22m
+

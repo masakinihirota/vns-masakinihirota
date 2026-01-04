@@ -1,0 +1,16 @@
+
+> vns-masakinihirota@0.8.0 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  x typescript(TS2339): Property 'toHaveNoViolations' does not exist on type 'Assertion<AxeResults>'.
+    ,-[src/components/profile/evaluations/profile-evaluations.test.tsx:78:21]
+ 77 |     }
+ 78 |     expect(results).toHaveNoViolations();
+    :                     ^^^^^^^^^^^^^^^^^^
+ 79 |   });
+    `----
+
+Found 0 warnings and 1 error.
+Finished in 2.8s on 267 files using 12 threads.
+窶右LIFECYCLE窶・Command failed with exit code 1.

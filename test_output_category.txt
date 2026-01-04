@@ -1,0 +1,183 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mU:/2026src/vns-masakinihirota.worktrees/anti[39m
+
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+ [31m笶ｯ[39m src/components/profile/evaluations/profile-evaluations.test.tsx [2m([22m[2m4 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 680[2mms[22m[39m
+     [33m[2m笨・[22m[39m 繧｢繧ｯ繧ｻ繧ｷ繝薙Μ繝・ぅ驕募渚縺後↑縺・％縺ｨ [33m 582[2mms[22m[39m
+     [32m笨・[39m 蛻晄悄陦ｨ遉ｺ・郁ｩ穂ｾ｡縺ｯ螂ｽ縺堺ｸ謚槭Δ繝ｼ繝会ｼ峨〒Tier 1, 2, 3縺ｮ菴懷刀縺ｮ縺ｿ縺瑚｡ｨ遉ｺ縺輔ｌ縲ゝier蛻励′陦ｨ遉ｺ縺輔ｌ縺ｪ縺・％縺ｨ[32m 25[2mms[22m[39m
+     [32m笨・[39m 繝｢繝ｼ繝峨ｒ蛻・ｊ譖ｿ縺医ｋ縺ｨ縲∝・縺ｦ縺ｮ菴懷刀縺瑚｡ｨ遉ｺ縺輔ｌ縲ゝier蛻励′陦ｨ遉ｺ縺輔ｌ繧九％縺ｨ[32m 45[2mms[22m[39m
+[31m     [31mﾃ・[31m 繧ｫ繝・ざ繝ｪ繧貞・繧頑崛縺医ｋ縺ｨ縲∬ｩｲ蠖薙☆繧九き繝・ざ繝ｪ縺ｮ菴懷刀縺ｮ縺ｿ縺瑚｡ｨ遉ｺ縺輔ｌ縲・蜈ｨ驛ｨ'驕ｸ謚樊凾縺ｯ蜈ｨ繧ｫ繝・ざ繝ｪ縺瑚｡ｨ遉ｺ縺輔ｌ繧九％縺ｨ[39m[32m 25[2mms[22m[39m
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Tests 1 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+
+ FAIL  src/components/profile/evaluations/profile-evaluations.test.tsx > ProfileEvaluations > 繧ｫ繝・ざ繝ｪ繧貞・繧頑崛縺医ｋ縺ｨ縲∬ｩｲ蠖薙☆繧九き繝・ざ繝ｪ縺ｮ菴懷刀縺ｮ縺ｿ縺瑚｡ｨ遉ｺ縺輔ｌ縲・蜈ｨ驛ｨ'驕ｸ謚樊凾縺ｯ蜈ｨ繧ｫ繝・ざ繝ｪ縺瑚｡ｨ遉ｺ縺輔ｌ繧九％縺ｨ
+TestingLibraryElementError: Unable to find an element with the text: Manga 1 (T1). This could be because the text is broken up by multiple elements. In this case, you can provide a function for your text matcher to make your matcher more flexible.
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <section
+      class="pt-8 border-t border-slate-200 dark:border-slate-800"
+    >
+      <div
+        class="flex flex-col lg:flex-row lg:items-center justify-between mb-10 gap-6"
+      >
+        <div
+          class="space-y-4"
+        >
+          <h2
+            class="text-xs flex items-center gap-2 text-slate-400 font-black uppercase tracking-[0.2em]"
+          >
+            <svg
+              aria-hidden="true"
+              class="lucide lucide-heart text-pink-500"
+              fill="none"
+              height="14"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              width="14"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"
+              />
+            </svg>
+             [ 菴懷刀隧穂ｾ｡ ]
+          </h2>
+          <div
+            class="border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 rounded flex overflow-hidden w-fit font-mono"
+          >
+            <button
+              class="px-4 py-2 text-[10px] font-black tracking-widest flex items-center gap-2 border-r transition-colors bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-slate-700"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-list"
+                fill="none"
+                height="12"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3 5h.01"
+                />
+                <path
+                  d="M3 12h.01"
+                />
+                <path
+                  d="M3 19h.01"
+                />
+                <path
+                  d="M8 5h13"
+                />
+                <path
+                  d="M8 12h13"
+                />
+                <path
+                  d="M8 19h13"
+                />
+              </svg>
+               隧穂ｾ｡縺ｯ螂ｽ縺堺ｸ謚・[0m
+            </button>
+            <button
+              class="px-4 py-2 text-[10px] font-black tracking-widest flex items-center gap-2 transition-colors bg-transparent text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
+            >
+              <svg
+                aria-hidden="true"
+                class="lucide lucide-chart-no-axes-column"
+                fill="none"
+                height="12"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                viewBox="0 0 24 24"
+                width="12"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 21v-6"
+                />
+                <path
+                  d="M12 21V3"
+                />
+                <path
+                  d="M19 21V9"
+                />
+              </svg>
+               隧穂ｾ｡縺ｯ邨ｶ蟇ｾ逶ｸ蟇ｾ隧穂ｾ｡ Tier譁ｹ蠑・[0m
+            </button>
+          </div>
+        </div>
+        <div
+          class="flex overflow-hidden border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 rounded self-start lg:self-center"
+        >
+          <button
+            class="px-6 py-1.5 text-xs transition-colors bg-transparent text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
+          >
+            蜈ｨ驛ｨ
+          </button>
+          <button
+            class="px-6 py-1.5 text-xs transition-colors bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+          >
+            繧｢繝九Γ
+          </button>
+          <button
+            class="px-6 py-1.5 text-xs transition-colors bg-transparent text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
+          >
+            貍ｫ逕ｻ
+          </button>
+        </div>
+      </div>
+      <div
+        class="space-y-12"
+      >
+        <div>
+          <h3
+            class="text-xs font-black mb-3 flex items-center gap-2 text-blue-600 dark:text-blue-400 uppercase tracking-widest bg-blue-50 dark:bg-blue-900/20 w-fit px-2 py-0.5 rounded font-mono"
+          >
+            &gt; Now Watching (莉翫・菴懷刀)
+          </h3>
+          <div
+            class="mb-6"
+          >
+            <div
+              class="overflow-x-auto border border-slate-300 dark:border-slate-700"
+            >
+              <table
+                class="w-full text-left border-collapse text-sm"
+              >
+                <thead>
+                  <tr
+                    class="bg-slate-50 dark:bg-slate-800"
+                  >
+                    <th
+                      class=[32...
+ 笶ｯ Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:37:19
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ 笶ｯ src/components/profile/evaluations/profile-evaluations.test.tsx:83:23
+     81|         // 蛻晄悄迥ｶ諷九・縲悟・驛ｨ縲阪↑縺ｮ縺ｧ蜈ｨ縺ｦ陦ｨ遉ｺ
+     82|         expect(screen.getByText("Anime 1 (T1)")).toBeInTheDocument();
+     83|         expect(screen.getByText("Manga 1 (T1)")).toBeInTheDocument();
+       |                       ^
+     84| 
+     85|         // 繧｢繝九Γ縺ｫ蛻・ｊ譖ｿ縺・[39m
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/1]竡ｯ
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m3 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 03:49:55
+[2m   Duration [22m 3.88s[2m (transform 140ms, setup 231ms, import 1.16s, tests 680ms, environment 1.29s)[22m
+

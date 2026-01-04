@@ -9,223 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-type Route = {
-  title: string;
-  path: string;
-  desc: string;
-  badge?: string;
-};
-
-type RouteSection = {
-  title: string;
-  routes: Route[];
-};
-
 export default function Home() {
-  const routeSections: RouteSection[] = [
-    {
-      title: "🔥 New & Experimental (Check These!)",
-      routes: [
-        {
-          title: "User (Trash Bin)",
-          path: "/user-profiles",
-          desc: "User Profile List (Trash Bin Added)",
-          badge: "Update",
-        },
-        {
-          title: "User New",
-          path: "/user-profiles/new",
-          desc: "Create New Profile (New UI)",
-          badge: "New",
-        },
-        {
-          title: "User Edit (Demo)",
-          path: "/user-profiles/550e8400-e29b-41d4-a716-446655440000/edit",
-          desc: "Edit Profile ID:UUID (New UI)",
-          badge: "New",
-        },
-        {
-          title: "Onboarding PC",
-          path: "/onboarding-pc",
-          desc: "Separate onboarding flow optimized for PC",
-          badge: "New",
-        },
-        {
-          title: "Gemini Root Account",
-          path: "/gemini-root-account",
-          desc: "Gemini Style Root Account Dashboard",
-          badge: "New",
-        },
-        {
-          title: "Work Registration",
-          path: "/work-registration-form",
-          desc: "New Work Registration Form",
-          badge: "New",
-        },
-        {
-          title: "Vote Match",
-          path: "/vote-match",
-          desc: "Political/Social Vote Match UI",
-          badge: "New",
-        },
-        {
-          title: "Mandala Chart",
-          path: "/mandala-chart",
-          desc: "Mandala Chart UI Integration",
-          badge: "New",
-        },
-      ],
-    },
-    {
-      title: "Recently Added / Drafts",
-      routes: [
-        {
-          title: "Profile 2",
-          path: "/profile2",
-          desc: "Alternative Profile Page",
-        },
-
-        {
-          title: "User Edited Profiles",
-          path: "/user-edited-userprofiles",
-          desc: "User Profile Edit Interface",
-        },
-        {
-          title: "Values Input",
-          path: "/values-input",
-          desc: "Values Input Screen",
-        },
-        {
-          title: "Valus Screen",
-          path: "/valus-screen",
-          desc: "Values UI Screen",
-        },
-        {
-          title: "Matching Manual (Alt)",
-          path: "/matching-manual",
-          desc: "Alternative Manual Matching",
-        },
-        {
-          title: "Matching / Auto",
-          path: "/matching/auto",
-          desc: "Sub-route: Auto Matching",
-        },
-        {
-          title: "Matching / Manual",
-          path: "/matching/manual",
-          desc: "Sub-route: Manual Matching",
-        },
-      ],
-    },
-    {
-      title: "Core Functionality",
-      routes: [
-        {
-          title: "Home (Protected)",
-          path: "/home",
-          desc: "Authenticated User Dashboard",
-        },
-        {
-          title: "Matching (Hub)",
-          path: "/matching",
-          desc: "Matching Entry / Top",
-        },
-        {
-          title: "Works Directory",
-          path: "/works",
-          desc: "List of Registered Works",
-        },
-        {
-          title: "Product List",
-          path: "/product-list",
-          desc: "Product List Demo",
-        },
-      ],
-    },
-    {
-      title: "Account & Profile",
-      routes: [
-        {
-          title: "Root Accounts",
-          path: "/root-accounts",
-          desc: "Root Account Management (Old?)",
-        },
-        { title: "Profile", path: "/profile", desc: "User Profile View" },
-        {
-          title: "Profile Edited",
-          path: "/profile-edited",
-          desc: "Profile Edit Flow",
-        },
-        {
-          title: "Onboarding",
-          path: "/onboarding",
-          desc: "User Onboarding Flow",
-        },
-        { title: "Login", path: "/login", desc: "Login Page" },
-      ],
-    },
-    {
-      title: "Values & Matching Tools",
-      routes: [
-        {
-          title: "Values Registration",
-          path: "/values",
-          desc: "Register Personal Values",
-        },
-        {
-          title: "Values Selection",
-          path: "/values-selection",
-          desc: "Select Important Values",
-        },
-        {
-          title: "Auto Matching",
-          path: "/auto-matching",
-          desc: "Automated Matching Implementation",
-        },
-        {
-          title: "Manual Matching",
-          path: "/manual-matching",
-          desc: "Manual Matching Console",
-        },
-        {
-          title: "Matching Conditions",
-          path: "/manual-matching/conditions",
-          desc: "Algorithm Settings",
-        },
-      ],
-    },
-    {
-      title: "Legacy / Other",
-      routes: [
-        {
-          title: "New Work (Old)",
-          path: "/works/new",
-          desc: "Previous Work Registration",
-        },
-      ],
-    },
-    {
-      title: "Public / Static",
-      routes: [
-        {
-          title: "Landing Page",
-          path: "/landing-page",
-          desc: "VNS Landing Page",
-        },
-        {
-          title: "Oasis Declaration",
-          path: "/oasis",
-          desc: "Project Philosophy",
-        },
-        {
-          title: "Human Declaration",
-          path: "/human",
-          desc: "Human Nature Declaration",
-        },
-      ],
-    },
-  ];
-
   return (
     <div className="min-h-screen bg-neutral-100 p-8 dark:bg-neutral-900 font-sans">
       <main className="container mx-auto space-y-12 max-w-6xl">
@@ -259,7 +43,187 @@ export default function Home() {
         </div>
 
         <div className="space-y-10">
-          {routeSections.map((section) => (
+          {[
+            {
+              title: "🚀 Main Features (Active)",
+              routes: [
+                {
+                  title: "Home (Protected)",
+                  path: "/home",
+                  desc: "Authenticated User Dashboard",
+                  badge: "Core",
+                },
+                {
+                  title: "Onboarding PC",
+                  path: "/onboarding-pc",
+                  desc: "Separate onboarding flow optimized for PC",
+                  badge: "New",
+                },
+                {
+                  title: "User Profile List",
+                  path: "/user-profiles",
+                  desc: "User Profile List (Trash Bin Added)",
+                  badge: "Update",
+                },
+                {
+                  title: "Create New Profile",
+                  path: "/user-profiles/new",
+                  desc: "Create New Profile (New UI)",
+                  badge: "New",
+                },
+                {
+                  title: "My Profile",
+                  path: "/profile",
+                  desc: "User Profile View",
+                },
+              ],
+            },
+            {
+              title: "🧩 Matching System",
+              routes: [
+                {
+                  title: "Matching (Hub)",
+                  path: "/matching",
+                  desc: "Matching Entry / Top",
+                  badge: "Core",
+                },
+                {
+                  title: "Matching / Auto",
+                  path: "/matching/auto",
+                  desc: "Sub-route: Auto Matching",
+                },
+                {
+                  title: "Matching / Manual",
+                  path: "/matching/manual",
+                  desc: "Sub-route: Manual Matching",
+                },
+                {
+                  title: "Vote Match",
+                  path: "/vote-match",
+                  desc: "Political/Social Vote Match UI",
+                  badge: "New",
+                },
+              ],
+            },
+            {
+              title: "📚 Works & Management",
+              routes: [
+                {
+                  title: "Works Directory",
+                  path: "/works",
+                  desc: "List of Registered Works",
+                  badge: "Core",
+                },
+                {
+                  title: "Work Registration",
+                  path: "/work-registration-form",
+                  desc: "New Work Registration Form",
+                  badge: "New",
+                },
+                {
+                  title: "Root Accounts",
+                  path: "/root-accounts",
+                  desc: "Root Account Management",
+                },
+                {
+                  title: "Values Selection",
+                  path: "/values-selection",
+                  desc: "Select Important Values",
+                },
+              ],
+            },
+            {
+              title: "🧪 Experimental & Dev",
+              routes: [
+                {
+                  title: "Mandala Chart",
+                  path: "/mandala-chart",
+                  desc: "Mandala Chart UI Integration",
+                  badge: "New",
+                },
+                {
+                  title: "User Edit (Demo)",
+                  path: "/user-profiles/550e8400-e29b-41d4-a716-446655440000/edit",
+                  desc: "Edit Profile ID:UUID (Demo)",
+                },
+                {
+                  title: "Values Input",
+                  path: "/values-input",
+                  desc: "Values Input Screen",
+                },
+                {
+                  title: "Values Screen",
+                  path: "/valus-screen",
+                  desc: "Values UI Screen (Dev)",
+                },
+                {
+                  title: "User Edited Profiles",
+                  path: "/user-edited-userprofiles",
+                  desc: "User Profile Edit Interface",
+                },
+                {
+                  title: "Product List",
+                  path: "/product-list",
+                  desc: "Product List Demo",
+                },
+              ],
+            },
+            {
+              title: "🕸️ Legacy / Alternative Paths",
+              routes: [
+                {
+                  title: "Auto Matching (Old)",
+                  path: "/auto-matching",
+                  desc: "Automated Matching Implementation",
+                },
+                {
+                  title: "Manual Matching (Old)",
+                  path: "/manual-matching",
+                  desc: "Manual Matching Console",
+                },
+                {
+                  title: "Matching Conditions",
+                  path: "/manual-matching/conditions",
+                  desc: "Algorithm Settings",
+                },
+                {
+                  title: "Matching Manual (Alt)",
+                  path: "/matching-manual",
+                  desc: "Alternative Manual Matching",
+                },
+                {
+                  title: "New Work (Old)",
+                  path: "/works/new",
+                  desc: "Previous Work Registration",
+                },
+                {
+                  title: "Values Registration",
+                  path: "/values",
+                  desc: "Register Personal Values",
+                },
+              ],
+            },
+            {
+              title: "🌏 Public / Static",
+              routes: [
+                {
+                  title: "Landing Page",
+                  path: "/landing-page",
+                  desc: "VNS Landing Page",
+                },
+                {
+                  title: "Oasis Declaration",
+                  path: "/oasis",
+                  desc: "Project Philosophy",
+                },
+                {
+                  title: "Human Declaration",
+                  path: "/human",
+                  desc: "Human Nature Declaration",
+                },
+              ],
+            },
+          ].map((section) => (
             <section key={section.title} className="space-y-4">
               <div className="flex items-center gap-4">
                 <h2 className="text-2xl font-bold text-foreground border-l-4 border-indigo-500 pl-4">
@@ -286,7 +250,9 @@ export default function Home() {
                         </CardTitle>
                         {route.badge && (
                           <Badge
-                            variant="destructive"
+                            variant={
+                              route.badge === "Core" ? "default" : "destructive"
+                            }
                             className="ml-auto text-[10px] px-2 py-0.5 h-auto"
                           >
                             {route.badge}

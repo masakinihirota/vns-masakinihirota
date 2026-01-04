@@ -1,4 +1,12 @@
-import { Heart, Trash2, Activity, Star, Sparkles } from "lucide-react";
+import {
+  Heart,
+  Trash2,
+  Activity,
+  Star,
+  Sparkles,
+  List,
+  BarChart2,
+} from "lucide-react";
 import React, { useState } from "react";
 import { ProfileVariant } from "../types";
 import { MarkdownTable, TableRow } from "../ui";
@@ -17,14 +25,31 @@ type ProfileEvaluationsProps = {
   evaluations: Evaluation[];
   onAdd?: () => void;
   variant?: ProfileVariant;
+  // 以下、テスト用または外部制御用
+  selectedCategory?: string;
+  setSelectedCategory?: (category: string) => void;
+  viewMode?: "simple" | "tiered";
+  setViewMode?: (mode: "simple" | "tiered") => void;
 };
 
 export const ProfileEvaluations: React.FC<ProfileEvaluationsProps> = ({
   evaluations,
   onAdd,
   variant = "default",
+  selectedCategory: externalCategory,
+  setSelectedCategory: setExternalCategory,
+  viewMode: externalViewMode,
+  setViewMode: setExternalViewMode,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState("アニメ");
+  const [internalCategory, setInternalCategory] = useState("全部");
+  const [internalViewMode, setInternalViewMode] = useState<"simple" | "tiered">(
+    "simple"
+  );
+
+  const selectedCategory = externalCategory ?? internalCategory;
+  const setSelectedCategory = setExternalCategory ?? setInternalCategory;
+  const viewMode = externalViewMode ?? internalViewMode;
+  const setViewMode = setExternalViewMode ?? setInternalViewMode;
 
   const getTierDisplay = (tier: string) => {
     switch (tier) {
@@ -126,34 +151,55 @@ export const ProfileEvaluations: React.FC<ProfileEvaluationsProps> = ({
     colorName: string,
     emptyMsg: string
   ) => {
+    const isSimpleMode = viewMode === "simple";
+
     const filtered = evaluations
-      .filter((e) => e.status === status && e.category === selectedCategory)
+      .filter((e) => {
+        const matchesStatus = e.status === status;
+        const matchesCategory =
+          selectedCategory === "全部" || e.category === selectedCategory;
+        const matchesViewMode =
+          viewMode === "tiered" || ["tier1", "tier2", "tier3"].includes(e.tier);
+        return matchesStatus && matchesCategory && matchesViewMode;
+      })
       .sort((a, b) => a.tier.localeCompare(b.tier));
 
-    const rows: TableRow[] = filtered.map((e) => ({
-      cells: [
-        { content: getTierDisplay(e.tier), className: "text-center font-bold" },
-        { content: <span className="font-bold">{e.title}</span> },
-        {
-          content: (
-            <button className="hover:text-red-500 transition-colors">
-              <Trash2 size={14} />
-            </button>
-          ),
-          className: "text-right",
-        },
-      ],
-    }));
+    const rows: TableRow[] = filtered.map((e) => {
+      const cells = [];
+      if (!isSimpleMode) {
+        cells.push({
+          content: getTierDisplay(e.tier),
+          className: "text-center font-bold",
+        });
+      }
+      cells.push({ content: <span className="font-bold">{e.title}</span> });
+      cells.push({
+        content: (
+          <button
+            className="hover:text-red-500 transition-colors"
+            aria-label="削除"
+          >
+            <Trash2 size={14} />
+          </button>
+        ),
+        className: "text-right",
+      });
+
+      return { cells };
+    });
+
+    const headers = [];
+    if (!isSimpleMode) {
+      headers.push({ label: "Tier", className: "w-16 text-center font-mono" });
+    }
+    headers.push({ label: "作品タイトル" });
+    headers.push({ label: "操作", className: "w-10 text-right" });
 
     return (
       <div>
         <h3 className={styles.subHeader(colorName)}>{label}</h3>
         <MarkdownTable
-          headers={[
-            { label: "Tier", className: "w-16 text-center font-mono" },
-            { label: "作品タイトル" },
-            { label: "", className: "w-10 text-right" },
-          ]}
+          headers={headers}
           rows={rows}
           emptyMessage={emptyMsg}
           onAdd={onAdd}
@@ -165,13 +211,42 @@ export const ProfileEvaluations: React.FC<ProfileEvaluationsProps> = ({
 
   return (
     <section className={styles.section}>
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <h2 className={`text-xs flex items-center gap-2 ${styles.headerText}`}>
-          {styles.headerIcon} [ 作品評価 ]
-        </h2>
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-10 gap-6">
+        <div className="space-y-4">
+          <h2
+            className={`text-xs flex items-center gap-2 ${styles.headerText}`}
+          >
+            {styles.headerIcon} [ 作品評価 ]
+          </h2>
 
-        <div className={`flex overflow-hidden ${styles.tabContainer}`}>
-          {["アニメ", "漫画"].map((cat) => (
+          <div
+            className={`${styles.tabContainer} flex overflow-hidden w-fit font-mono`}
+          >
+            <button
+              onClick={() => setViewMode("simple")}
+              className={`px-4 py-2 text-[10px] font-black tracking-widest flex items-center gap-2 border-r transition-colors ${viewMode === "simple"
+                  ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-slate-700"
+                  : "bg-transparent text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700"
+                }`}
+            >
+              <List size={12} /> 評価は好き一択
+            </button>
+            <button
+              onClick={() => setViewMode("tiered")}
+              className={`px-4 py-2 text-[10px] font-black tracking-widest flex items-center gap-2 transition-colors ${viewMode === "tiered"
+                  ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
+                  : "bg-transparent text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
+                }`}
+            >
+              <BarChart2 size={12} /> 評価は絶対相対評価 Tier方式
+            </button>
+          </div>
+        </div>
+
+        <div
+          className={`flex overflow-hidden ${styles.tabContainer} self-start lg:self-center`}
+        >
+          {["全部", "アニメ", "漫画"].map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}

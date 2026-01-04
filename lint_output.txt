@@ -1,0 +1,41 @@
+
+> vns-masakinihirota@0.8.0 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/components/profile/evaluations/profile-evaluations.test.tsx:76:7]
+ 75 |     if (results.violations.length > 0) {
+ 76 |       console.log(JSON.stringify(results.violations, null, 2));
+    :       ^^^^^^^^^^^
+ 77 |     }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x typescript(TS2322): Type '{ evaluations: Evaluation[]; selectedCategory: string; setSelectedCategory: Dispatch<SetStateAction<string>>; viewMode: "simple" | "tiered"; setViewMode: Dispatch<...>; }' is not assignable to type 'IntrinsicAttributes & ProfileEvaluationsProps'.
+    ,-[src/components/profile/evaluations/profile-evaluations.test.tsx:55:7]
+ 54 |       evaluations={evaluations}
+ 55 |       selectedCategory={selectedCategory}
+    :       ^^^^^^^^^^^^^^^^
+ 56 |       setSelectedCategory={setSelectedCategory}
+    `----
+
+  x typescript(TS2322): Type '{ evaluations: Evaluation[]; selectedCategory: string; setSelectedCategory: () => void; viewMode: string; setViewMode: () => void; }' is not assignable to type 'IntrinsicAttributes & ProfileEvaluationsProps'.
+    ,-[src/components/profile/evaluations/profile-evaluations.test.tsx:68:9]
+ 67 |         evaluations={mockEvaluations}
+ 68 |         selectedCategory="蜈ｨ驛ｨ"
+    :         ^^^^^^^^^^^^^^^^
+ 69 |         setSelectedCategory={() => {}}
+    `----
+
+  x typescript(TS2339): Property 'toHaveNoViolations' does not exist on type 'Assertion<AxeResults>'.
+    ,-[src/components/profile/evaluations/profile-evaluations.test.tsx:78:21]
+ 77 |     }
+ 78 |     expect(results).toHaveNoViolations();
+    :                     ^^^^^^^^^^^^^^^^^^
+ 79 |   });
+    `----
+
+Found 0 warnings and 4 errors.
+Finished in 2.7s on 267 files using 12 threads.
+窶右LIFECYCLE窶・Command failed with exit code 1.

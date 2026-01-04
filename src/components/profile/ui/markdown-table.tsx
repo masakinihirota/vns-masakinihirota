@@ -110,6 +110,7 @@ export const MarkdownTable: React.FC<MarkdownTableProps> = ({
               {headers.map((h, i) => (
                 <th
                   key={i}
+                  scope="col"
                   className={`px-4 py-2 ${styles.headerCell} ${h.className || ""}`}
                 >
                   {h.label}

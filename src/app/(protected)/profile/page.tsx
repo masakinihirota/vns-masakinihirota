@@ -167,26 +167,6 @@ export default function ProfilePage() {
             <span>BUILD 2026.01.03</span>
             <span>MASAKINIHIROTA</span>
           </div>
-          <div className="flex gap-8">
-            <a
-              href="#"
-              className="hover:text-slate-900 transition-colors underline underline-offset-4 text-[9px]"
-            >
-              利用規約
-            </a>
-            <a
-              href="#"
-              className="hover:text-slate-900 transition-colors underline underline-offset-4 text-[9px]"
-            >
-              人間宣言
-            </a>
-            <a
-              href="#"
-              className="hover:text-slate-900 transition-colors underline underline-offset-4 text-[9px]"
-            >
-              オアシス宣言
-            </a>
-          </div>
         </footer>
       </main>
     </div>
