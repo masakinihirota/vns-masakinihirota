@@ -15,6 +15,7 @@ import {
   ExternalLink,
   Briefcase,
   Code,
+  Save,
 } from "lucide-react";
 
 import type {
@@ -45,6 +46,8 @@ export type ProfileEditProps = {
   onAddEvaluation: () => void;
   onAddValue: () => void;
   onDeleteEvaluation: (id: number) => void;
+  onBack?: () => void;
+  onSave?: () => void;
 };
 
 // --- Sub-Components (Kept internal as per sample) ---
@@ -162,6 +165,8 @@ const ProfileView = (props: ProfileEditProps) => {
     onAddWork,
     onAddEvaluation,
     onAddValue,
+    onBack,
+    mode,
   } = props;
 
   const getTierDisplay = (tier: string) => {
@@ -181,16 +186,58 @@ const ProfileView = (props: ProfileEditProps) => {
     <>
       {/* PROFILE SUMMARY */}
       <section className="py-8 border-b border-slate-200 dark:border-slate-800 mb-10">
-        <div className="space-y-8">
+        <div className="space-y-6">
+          {/* Back Button for Create Mode */}
+          {mode === "create" && onBack && (
+            <button
+              onClick={onBack}
+              className="group flex items-center gap-1 text-xs font-bold text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors w-fit"
+            >
+              <ArrowLeft
+                size={14}
+                className="group-hover:-translate-x-1 transition-transform"
+              />
+              基本設定に戻る
+            </button>
+          )}
+
           <div className="flex items-center gap-4 text-[10px] font-black text-slate-400 tracking-[0.2em] uppercase">
             <span>VNS Data Sheet</span>
             <ChevronRight size={12} />
             <span className="text-slate-900 dark:text-white">Profile View</span>
           </div>
-          <h1 className="text-4xl font-black tracking-tighter uppercase leading-none">
-            {profile.name}
-          </h1>
-          <div className="flex flex-wrap gap-10">
+
+          <div className="space-y-4">
+            <h1 className="text-4xl font-black tracking-tighter uppercase leading-none">
+              {profile.name}
+            </h1>
+
+            {/* Tags / attributes display */}
+            {(profile.role || profile.type || profile.purposes) && (
+              <div className="flex flex-wrap gap-2">
+                {profile.role && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border border-blue-200 bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:border-blue-800 dark:text-blue-300">
+                    <Briefcase size={12} /> {profile.role}
+                  </span>
+                )}
+                {profile.type && (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border border-green-200 bg-green-50 text-green-700 dark:bg-green-900/30 dark:border-green-800 dark:text-green-300">
+                    <Fingerprint size={12} /> {profile.type}
+                  </span>
+                )}
+                {profile.purposes?.map((p) => (
+                  <span
+                    key={p}
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border border-pink-200 bg-pink-50 text-pink-700 dark:bg-pink-900/30 dark:border-pink-800 dark:text-pink-300"
+                  >
+                    <Heart size={12} /> {p}
+                  </span>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="flex flex-wrap gap-10 pt-2">
             <StatBox label="信頼継続" value={`${profile.stats.trustDays}d`} />
             <StatBox label="制作作品数" value={profile.stats.works} />
             <StatBox label="総評価数" value={profile.stats.evals} />
@@ -556,6 +603,19 @@ export const ProfileEdit = (props: ProfileEditProps) => {
           </div>
         </footer>
       </main>
+
+      {/* Action Bar for Edit/Create Mode */}
+      {(props.mode === "create" || props.mode === "edit") && props.onSave && (
+        <div className="fixed bottom-8 right-8 z-50">
+          <button
+            onClick={props.onSave}
+            className="flex items-center gap-2 px-6 py-4 rounded-full bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-bold shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all"
+          >
+            <Save size={20} />
+            {props.mode === "create" ? "プロフィールを作成" : "変更を保存"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

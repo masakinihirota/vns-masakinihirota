@@ -1,6 +1,4 @@
-import { RefreshCcw, Check } from "lucide-react";
 import React, { useState, useEffect } from "react";
-import { generateUniqueCandidates } from "@/lib/anonymous-name-generator";
 import { GENERATIONS } from "../onboarding.logic";
 
 interface Step3IdentityPCProps {
@@ -12,26 +10,7 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
   data,
   onUpdate,
 }) => {
-  const { zodiac_sign, display_name, birth_generation } = data;
-  const [candidates, setCandidates] = useState<string[]>([]);
-  const [excludedNames, setExcludedNames] = useState<string[]>([]);
-
-  // Reset candidates when Zodiac changes
-  useEffect(() => {
-    if (zodiac_sign) {
-      const newCandidates = generateUniqueCandidates(zodiac_sign, 3);
-      setCandidates(newCandidates);
-      setExcludedNames(newCandidates);
-      // If current display_name is not in new candidates (e.g. switched zodiac), clear it
-      // Or if it's the first time
-      if (!newCandidates.includes(display_name)) {
-        onUpdate({ display_name: "" });
-      }
-    } else {
-      setCandidates([]);
-      setExcludedNames([]);
-    }
-  }, [zodiac_sign]);
+  const { zodiac_sign, birth_generation } = data;
 
   const handleZodiacChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sign = e.target.value;
@@ -39,25 +18,6 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
       zodiac_sign: sign,
       display_name: "", // Reset name on zodiac change
     });
-  };
-
-  const handleReloadNames = () => {
-    if (!zodiac_sign) return;
-    const newCandidates = generateUniqueCandidates(
-      zodiac_sign,
-      3,
-      excludedNames
-    );
-    setCandidates(newCandidates);
-    // Add new candidates to exclusion to prevent immediate repeat
-    // We can keep growing the list or just keep the last batch.
-    // User request: "直近で表示したものが被らないように" (Prevent overlap with recently displayed)
-    // So keeping the last displayed batch in exclusion is sufficient.
-    setExcludedNames(newCandidates);
-  };
-
-  const handleNameSelect = (name: string) => {
-    onUpdate({ display_name: name });
   };
 
   const handleGenerationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -76,7 +36,7 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
       </div>
 
       <div className="bg-white dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
-        {/* 2. Zodiac Sign & Name Selection */}
+        {/* 2. Zodiac Sign */}
         <div className="space-y-6">
           <div>
             <label
@@ -108,55 +68,8 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
             </select>
           </div>
 
-          {/* Anonymous Name Selection */}
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-                表示名 (匿名)
-              </label>
-              {candidates.length > 0 && (
-                <button
-                  type="button"
-                  onClick={handleReloadNames}
-                  className="px-3 py-1.5 rounded-md text-xs font-medium border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 flex items-center gap-1.5 transition-colors bg-white dark:bg-slate-800 shadow-sm"
-                >
-                  <RefreshCcw size={12} />
-                  候補を更新
-                </button>
-              )}
-            </div>
-            <p className="text-sm text-slate-600 dark:text-slate-400">
-              表示される候補から、気に入った匿名アカウント名を選択してください。
-            </p>
-
-            {!zodiac_sign ? (
-              <div className="p-4 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 text-slate-400 text-sm text-center">
-                星座を選択すると候補が表示されます
-              </div>
-            ) : (
-              <div className="space-y-2">
-                {candidates.map((name) => (
-                  <button
-                    key={name}
-                    type="button"
-                    onClick={() => handleNameSelect(name)}
-                    className={`w-full p-3 rounded-lg border text-left flex items-center justify-between transition-all ${
-                      display_name === name
-                        ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500"
-                        : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300"
-                    }`}
-                  >
-                    <span className="font-medium">{name}</span>
-                    {display_name === name && (
-                      <Check
-                        size={16}
-                        className="text-indigo-600 dark:text-indigo-400"
-                      />
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
+          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg text-sm text-slate-500">
+            ルートアカウントに名前は不要です。星座のみ設定してください。
           </div>
         </div>
 
@@ -166,7 +79,10 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
             htmlFor="generation"
             className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
           >
-            生誕世代(生まれた年)
+            生誕世代(生まれた年){" "}
+            <span className="text-xs text-slate-500 font-normal ml-2">
+              ※5年毎
+            </span>
           </label>
           <select
             id="generation"

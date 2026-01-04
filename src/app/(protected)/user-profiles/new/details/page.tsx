@@ -1,9 +1,9 @@
-import { ProfileEditContainer } from "@/components/profile-edit";
+import { ProfileCreationStep2 } from "@/components/user-profiles/new";
 
 export default function ProfileCreateDetailsPage({
   searchParams,
 }: {
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  return <ProfileEditContainer profileId="new" initialData={searchParams} />;
+  return <ProfileCreationStep2 initialData={searchParams} />;
 }

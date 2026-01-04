@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { ProfileEdit } from "./profile-edit";
 import {
@@ -17,6 +18,7 @@ export const ProfileEditContainer = ({
   profileId: string;
   initialData?: { [key: string]: string | string[] | undefined };
 }) => {
+  const router = useRouter();
   const isNew = profileId === "new";
 
   const [currentPage, setCurrentPage] = useState<"profile" | "portfolio">(
@@ -66,6 +68,22 @@ export const ProfileEditContainer = ({
     }
   };
 
+  const handleBack = () => {
+    router.back();
+  };
+
+  const handleSave = () => {
+    // 開発モードまたはデモ用のモック保存処理
+    if (process.env.NODE_ENV === "development" || isNew) {
+      alert(
+        "【開発モード】プロフィールを保存しました（モック）\n\n※実際のデータベースには保存されていませんが、一覧へ戻ります。"
+      );
+      router.push("/user-profiles");
+    } else {
+      alert("保存機能は未実装です");
+    }
+  };
+
   return (
     <ProfileEdit
       mode={isNew ? "create" : "edit"}
@@ -83,6 +101,8 @@ export const ProfileEditContainer = ({
       onAddEvaluation={handleAddEvaluation}
       onAddValue={handleAddValue}
       onDeleteEvaluation={handleDeleteEvaluation}
+      onBack={handleBack}
+      onSave={handleSave}
     />
   );
 };

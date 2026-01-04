@@ -4,9 +4,14 @@ import { createClient } from "@/lib/supabase/server";
 
 export default async function ProfileCreationPage() {
   const supabase = await createClient();
-  const {
+  let {
     data: { user },
   } = await supabase.auth.getUser();
+
+  // 開発環境: ログインしていない場合はモックユーザーを使用
+  if (!user && process.env.NODE_ENV === "development") {
+    user = { id: "mock-dev-user-id" } as any;
+  }
 
   if (!user) {
     // Handle no user case if strictly protected, though middleware usually handles this
@@ -36,18 +41,23 @@ export default async function ProfileCreationPage() {
 
   let existingProfiles: any[] = [];
 
-  try {
-    const { data: rootAccount } = await supabase
-      .from("root_accounts")
-      .select("id")
-      .eq("user_id", user.id)
-      .single();
+  // モックユーザーの場合はDB問い合わせをスキップ
+  if (user.id === "mock-dev-user-id") {
+    console.info("Using mock user, skipping DB fetch");
+  } else {
+    try {
+      const { data: rootAccount } = await supabase
+        .from("root_accounts")
+        .select("id")
+        .eq("user_id", user.id)
+        .single();
 
-    if (rootAccount) {
-      existingProfiles = await getUserProfiles(rootAccount.id);
+      if (rootAccount) {
+        existingProfiles = await getUserProfiles(rootAccount.id);
+      }
+    } catch (e) {
+      console.warn("Could not fetch existing profiles for validation", e);
     }
-  } catch (e) {
-    console.warn("Could not fetch existing profiles for validation", e);
   }
 
   return (

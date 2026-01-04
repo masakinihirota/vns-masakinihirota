@@ -1,0 +1,2258 @@
+
+> vns-masakinihirota@0.8.0 test
+> vitest --run components/onboarding-pc/steps/step1-residence-pc.test.tsx
+
+
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mU:/2026src/vns-masakinihirota.worktrees/anti[39m
+
+ [31m笶ｯ[39m src/components/onboarding-pc/steps/step1-residence-pc.test.tsx [2m([22m[2m6 tests[22m[2m | [22m[31m4 failed[39m[2m)[22m[33m 4273[2mms[22m[39m
+[31m     [31mﾃ・[31m render all fields correctly[39m[33m 1699[2mms[22m[39m
+[31m     [31mﾃ・[31m updates residence area on selection[39m[33m 1226[2mms[22m[39m
+[31m     [31mﾃ・[31m toggles residence area selection (deselects when clicked again)[39m[33m 1195[2mms[22m[39m
+     [32m笨・[39m updates cultural sphere and resets child fields[32m 84[2mms[22m[39m
+[31m     [31mﾃ・[31m shows prefecture input only when Japan is selected[39m[32m 39[2mms[22m[39m
+     [32m笨・[39m updates moon and mars locations[32m 27[2mms[22m[39m
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Tests 4 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+
+ FAIL  src/components/onboarding-pc/steps/step1-residence-pc.test.tsx > Step1ResidencePC > render all fields correctly
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Select Area 1"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "菴丞ｱ・・譁・喧蝨剰ｨｭ螳・:
+  <h2
+    class="text-xl font-bold text-slate-900 dark:text-white mb-4"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "Select Area 1 (Americas)":
+  <button
+    aria-label="Select Area 1 (Americas)"
+    aria-pressed="false"
+    class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+    type="button"
+  />
+
+  Name "Select Area 2 (EMEA)":
+  <button
+    aria-label="Select Area 2 (EMEA)"
+    aria-pressed="false"
+    class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+    type="button"
+  />
+
+  Name "Select Area 3 (APAC)":
+  <button
+    aria-label="Select Area 3 (APAC)"
+    aria-pressed="false"
+    class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+    type="button"
+  />
+
+  --------------------------------------------------
+  img:
+
+  Name "Area 1 (Americas)":
+  <img
+    alt="Area 1 (Americas)"
+    class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+    src="/world/area1.svg"
+  />
+
+  Name "Area 2 (EMEA)":
+  <img
+    alt="Area 2 (EMEA)"
+    class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+    src="/world/area2.svg"
+  />
+
+  Name "Area 3 (APAC)":
+  <img
+    alt="Area 3 (APAC)"
+    class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+    src="/world/area3.svg"
+  />
+
+  Name "Moon Map":
+  <img
+    alt="Moon Map"
+    class="w-full h-full object-contain"
+    src="/star/moon.svg"
+  />
+
+  Name "Mars Map":
+  <img
+    alt="Mars Map"
+    class="w-full h-full object-contain"
+    src="/star/mars.svg"
+  />
+
+  --------------------------------------------------
+  combobox:
+
+  Name "譛磯擇諡轤ｹ繧帝∈謚・:
+  <select
+    aria-label="譛磯擇諡轤ｹ繧帝∈謚・
+    class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+  />
+
+  Name "轣ｫ譏滓侠轤ｹ繧帝∈謚・:
+  <select
+    aria-label="轣ｫ譏滓侠轤ｹ繧帝∈謚・
+    class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+  />
+
+  Name "譁・喧蝨・:
+  <select
+    aria-label="譁・喧蝨・
+    class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+    id="culture_sphere"
+  />
+
+  --------------------------------------------------
+  option:
+
+  Name "譛ｪ驕ｸ謚・(Select location)":
+  <option
+    value=""
+  />
+
+  Name "髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)":
+  <option
+    value="髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)"
+  />
+
+  Name "繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)":
+  <option
+    value="繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)"
+  />
+
+  Name "繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)":
+  <option
+    value="繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)"
+  />
+
+  Name "蠏舌・螟ｧ豢・(Oceanus Procellarum)":
+  <option
+    value="蠏舌・螟ｧ豢・(Oceanus Procellarum)"
+  />
+
+  Name "髮ｨ縺ｮ豬ｷ (Mare Imbrium)":
+  <option
+    value="髮ｨ縺ｮ豬ｷ (Mare Imbrium)"
+  />
+
+  Name "蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)":
+  <option
+    value="蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)"
+  />
+
+  Name "繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)":
+  <option
+    value="繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)"
+  />
+
+  Name "繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)":
+  <option
+    value="繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)"
+  />
+
+  Name "譎ｴ繧後・豬ｷ (Mare Serenitatis)":
+  <option
+    value="譎ｴ繧後・豬ｷ (Mare Serenitatis)"
+  />
+
+  Name "繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)":
+  <option
+    value="繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)"
+  />
+
+  Name "譛ｪ驕ｸ謚・(Select location)":
+  <option
+    value=""
+  />
+
+  Name "繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)":
+  <option
+    value="繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)"
+  />
+
+  Name "繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)":
+  <option
+    value="繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)"
+  />
+
+  Name "螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)":
+  <option
+    value="螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)"
+  />
+
+  Name "繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)":
+  <option
+    value="繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)"
+  />
+
+  Name "繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)":
+  <option
+    value="繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)"
+  />
+
+  Name "繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)":
+  <option
+    value="繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)"
+  />
+
+  Name "繝倥Λ繧ｹ逶・慍 (Hellas Planitia)":
+  <option
+    value="繝倥Λ繧ｹ逶・慍 (Hellas Planitia)"
+  />
+
+  Name "繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)":
+  <option
+    value="繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)"
+  />
+
+  Name "繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)":
+  <option
+    value="繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)"
+  />
+
+  Name "繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)":
+  <option
+    value="繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)"
+  />
+
+  Name "驕ｸ謚槭＠縺ｦ縺上□縺輔＞":
+  <option
+    value=""
+  />
+
+  Name "譌･譛ｬ隱樊枚蛹門恟":
+  <option
+    value="japanese"
+  />
+
+  Name "闍ｱ隱樊枚蛹門恟":
+  <option
+    value="english"
+  />
+
+  Name "繝輔Λ繝ｳ繧ｹ隱樊枚蛹門恟":
+  <option
+    value="french"
+  />
+
+  Name "繝峨う繝・ｪ樊枚蛹門恟":
+  <option
+    value="german"
+  />
+
+  Name "髻灘嵜隱樊枚蛹門恟":
+  <option
+    value="korean"
+  />
+
+  Name "荳ｭ蝗ｽ隱樊枚蛹門恟 (郢∽ｽ灘ｭ・":
+  <option
+    value="chinese_traditional"
+  />
+
+  Name "荳ｭ蝗ｽ隱樊枚蛹門恟 (邁｡菴灘ｭ・":
+  <option
+    value="chinese_simplified"
+  />
+
+  Name "繧ｹ繝壹う繝ｳ隱樊枚蛹門恟":
+  <option
+    value="spanish"
+  />
+
+  Name "繧､繧ｿ繝ｪ繧｢隱樊枚蛹門恟":
+  <option
+    value="italian"
+  />
+
+  Name "繝昴Ν繝医ぎ繝ｫ隱樊枚蛹門恟":
+  <option
+    value="portuguese"
+  />
+
+  Name "繝ｭ繧ｷ繧｢隱樊枚蛹門恟":
+  <option
+    value="russian"
+  />
+
+  Name "縺昴・莉悶・譁・喧蝨・:
+  <option
+    value="other"
+  />
+
+  --------------------------------------------------
+  textbox:
+
+  Name "蟾・蝨ｰ蝓・(Region/State)":
+  <input
+    class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white disabled:opacity-50 disabled:bg-slate-100 dark:disabled:bg-slate-900 disabled:cursor-not-allowed"
+    disabled=""
+    id="region"
+    placeholder="蟾槭・蝨ｰ蝓溷錐繧貞・蜉・
+    type="text"
+    value=""
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-8"
+    >
+      <h2
+        class="text-xl font-bold text-slate-900 dark:text-white mb-4"
+      >
+        菴丞ｱ・・譁・喧蝨剰ｨｭ螳・[0m
+      </h2>
+      <div>
+        <label
+          class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+        >
+          螻・ｽ上お繝ｪ繧｢ (Earth)
+        </label>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-[1000px] mx-auto mb-4"
+        >
+          <button
+            aria-label="Select Area 1 (Americas)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 1 (Americas)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area1.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 1 (Americas)
+            </div>
+          </button>
+          <button
+            aria-label="Select Area 2 (EMEA)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 2 (EMEA)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area2.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 2 (EMEA)
+            </div>
+          </button>
+          <button
+            aria-label="Select Area 3 (APAC)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 3 (APAC)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area3.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 3 (APAC)
+            </div>
+          </button>
+        </div>
+        <div
+          class="text-xs text-slate-500 text-right"
+        >
+          Selected Area:
+           
+          None
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-8"
+      >
+        <div>
+          <label
+            class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+          >
+            譛磯擇諡轤ｹ (Moon - Optional)
+          </label>
+          <div
+            class="relative w-full aspect-square max-w-[400px] mx-auto mb-2"
+          >
+            <div
+              class="relative w-full pb-[100%]"
+            >
+              <div
+                class="absolute inset-0"
+              >
+                <img
+                  alt="Moon Map"
+                  class="w-full h-full object-contain"
+                  src="/star/moon.svg"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-2"
+          >
+            <select
+              aria-label="譛磯擇諡轤ｹ繧帝∈謚・
+              class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+            >
+              <option
+                value=""
+              >
+                譛ｪ驕ｸ謚・(Select location)
+              </option>
+              <option
+                value="髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)"
+              >
+                髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)
+              </option>
+              <option
+                value="繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)"
+              >
+                繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)
+              </option>
+              <option
+                value="繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)"
+              >
+                繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)
+              </option>
+              <option
+                value="蠏舌・螟ｧ豢・(Oceanus Procellarum)"
+              >
+                蠏舌・螟ｧ豢・(Oceanus Procellarum)
+              </option>
+              <option
+                value="髮ｨ縺ｮ豬ｷ (Mare Imbrium)"
+              >
+                髮ｨ縺ｮ豬ｷ (Mare Imbrium)
+              </option>
+              <option
+                value="蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)"
+              >
+                蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)
+              </option>
+              <option
+                value="繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)"
+              >
+                繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)
+              </option>
+              <option
+                value="繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)"
+              >
+                繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)
+              </option>
+              <option
+                value="譎ｴ繧後・豬ｷ (Mare Serenitatis)"
+              >
+                譎ｴ繧後・豬ｷ (Mare Serenitatis)
+              </option>
+              <option
+                value="繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)"
+              >
+                繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)
+              </option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label
+            class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+          >
+            轣ｫ譏滓侠轤ｹ (Mars - Optional)
+          </label>
+          <div
+            class="relative w-full pb-[100%] max-w-[400px] mx-auto mb-2"
+          >
+            <div
+              class="absolute inset-0"
+            >
+              <img
+                alt="Mars Map"
+                class="w-full h-full object-contain"
+                src="/star/mars.svg"
+              />
+            </div>
+          </div>
+          <div
+            class="mt-2"
+          >
+            <select
+              aria-label="轣ｫ譏滓侠轤ｹ繧帝∈謚・
+              class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+            >
+              <option
+                value=""
+              >
+                譛ｪ驕ｸ謚・(Select location)
+              </option>
+              <option
+                value="繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)"
+              >
+                繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)
+              </option>
+              <option
+                value="繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)"
+              >
+                繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)
+              </option>
+              <option
+                value="螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)"
+              >
+                螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)
+              </option>
+              <option
+                value="繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)"
+              >
+                繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)
+              </option>
+              <option
+                value="繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)"
+              >
+                繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)
+              </option>
+              <option
+                value="繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)"
+              >
+                繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)
+              </option>
+              <option
+                value="繝倥Λ繧ｹ逶・慍 (Hellas Planitia)"
+              >
+                繝倥Λ繧ｹ逶・慍 (Hellas Planitia)
+              </option>
+              <option
+                value="繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)"
+              >
+                繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)
+              </option>
+              <option
+                value="繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)"
+              >
+                繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)
+              </option>
+              <option
+                value="繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)"
+              >
+                繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label
+          class="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+          for="culture_sphere"
+        >
+          菴上ｓ縺ｧ縺・ｋ譁・喧蝨・[0m
+        </label>
+        <select
+          aria-label="譁・喧蝨・
+          class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+          id="culture_sphere"
+        >
+          <option
+            value=""
+          >
+            驕ｸ謚槭＠縺ｦ縺上□縺輔＞
+          </option>
+          <option
+            value="japanese"
+          >
+            譌･譛ｬ隱樊枚蛹門恟
+          </option>
+          <option
+            value="english"
+          >
+            闍ｱ隱樊枚蛹門恟
+          </option>
+          <option
+            value="french"
+          >
+            繝輔Λ繝ｳ繧ｹ隱樊枚蛹門恟
+          </option>
+          <option
+            value="german"
+          >
+            繝峨う繝・ｪ樊枚蛹門恟
+          </option>
+          <option
+            value="korean"
+          >
+            髻灘嵜隱樊枚蛹門恟
+          </option>
+          <option
+            value="chinese_traditional"
+          >
+            荳ｭ蝗ｽ隱樊枚蛹門恟 (郢∽ｽ灘ｭ・
+          </option>
+          <option
+            value="chinese_simplified"
+          >
+            荳ｭ蝗ｽ隱樊枚蛹門恟 (邁｡菴灘ｭ・
+          </option>
+          <option
+            value="spanish"
+          >
+            繧ｹ繝壹う繝ｳ隱樊枚蛹門恟
+          </option>
+          <option
+            value="italian"
+          >
+            繧､繧ｿ繝ｪ繧｢隱樊枚蛹門恟
+          </option>
+          <option
+            value="portuguese"
+          >
+            繝昴Ν繝医ぎ繝ｫ隱樊枚蛹門恟
+          </option>
+          <option
+            value="russian"
+          >
+            繝ｭ繧ｷ繧｢隱樊枚蛹門恟
+          </option>
+          <option
+            value="other"
+          >
+            縺昴・莉悶・譁・喧蝨・[0m
+          </option>
+        </select>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        <div>
+          <label
+            class="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+          >
+            蝗ｽ
+          </label>
+          <div
+            class="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-400"
+            id="country"
+          >
+            譁・喧蝨上ｒ驕ｸ謚槭＠縺ｦ縺上□縺輔＞
+          </div>
+        </div>
+        <div>
+          <label
+            class="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+            for="region"
+          >
+            蟾・蝨ｰ蝓・(Region/State)
+          </label>
+          <div
+            class="space-y-2"
+          >
+            <input
+              class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white disabled:opacity-50 disabled:bg-slate-100 dark:disabled:bg-slate-900 disabled:cursor-not-allowed"
+              disabled=""
+              id="region"
+              placeholder="蟾槭・蝨ｰ蝓溷錐繧貞・蜉・
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ 笶ｯ Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:37:19
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ 笶ｯ src/components/onboarding-pc/steps/step1-residence-pc.test.tsx:20:14
+     18|     // Map areas should be accessible buttons
+     19|     expect(
+     20|       screen.getByRole("button", { name: "Select Area 1" })
+       |              ^
+     21|     ).toBeInTheDocument();
+     22|     expect(
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/4]竡ｯ
+
+ FAIL  src/components/onboarding-pc/steps/step1-residence-pc.test.tsx > Step1ResidencePC > updates residence area on selection
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Select Area 1"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "菴丞ｱ・・譁・喧蝨剰ｨｭ螳・:
+  <h2
+    class="text-xl font-bold text-slate-900 dark:text-white mb-4"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "Select Area 1 (Americas)":
+  <button
+    aria-label="Select Area 1 (Americas)"
+    aria-pressed="false"
+    class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+    type="button"
+  />
+
+  Name "Select Area 2 (EMEA)":
+  <button
+    aria-label="Select Area 2 (EMEA)"
+    aria-pressed="false"
+    class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+    type="button"
+  />
+
+  Name "Select Area 3 (APAC)":
+  <button
+    aria-label="Select Area 3 (APAC)"
+    aria-pressed="false"
+    class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+    type="button"
+  />
+
+  --------------------------------------------------
+  img:
+
+  Name "Area 1 (Americas)":
+  <img
+    alt="Area 1 (Americas)"
+    class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+    src="/world/area1.svg"
+  />
+
+  Name "Area 2 (EMEA)":
+  <img
+    alt="Area 2 (EMEA)"
+    class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+    src="/world/area2.svg"
+  />
+
+  Name "Area 3 (APAC)":
+  <img
+    alt="Area 3 (APAC)"
+    class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+    src="/world/area3.svg"
+  />
+
+  Name "Moon Map":
+  <img
+    alt="Moon Map"
+    class="w-full h-full object-contain"
+    src="/star/moon.svg"
+  />
+
+  Name "Mars Map":
+  <img
+    alt="Mars Map"
+    class="w-full h-full object-contain"
+    src="/star/mars.svg"
+  />
+
+  --------------------------------------------------
+  combobox:
+
+  Name "譛磯擇諡轤ｹ繧帝∈謚・:
+  <select
+    aria-label="譛磯擇諡轤ｹ繧帝∈謚・
+    class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+  />
+
+  Name "轣ｫ譏滓侠轤ｹ繧帝∈謚・:
+  <select
+    aria-label="轣ｫ譏滓侠轤ｹ繧帝∈謚・
+    class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+  />
+
+  Name "譁・喧蝨・:
+  <select
+    aria-label="譁・喧蝨・
+    class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+    id="culture_sphere"
+  />
+
+  --------------------------------------------------
+  option:
+
+  Name "譛ｪ驕ｸ謚・(Select location)":
+  <option
+    value=""
+  />
+
+  Name "髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)":
+  <option
+    value="髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)"
+  />
+
+  Name "繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)":
+  <option
+    value="繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)"
+  />
+
+  Name "繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)":
+  <option
+    value="繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)"
+  />
+
+  Name "蠏舌・螟ｧ豢・(Oceanus Procellarum)":
+  <option
+    value="蠏舌・螟ｧ豢・(Oceanus Procellarum)"
+  />
+
+  Name "髮ｨ縺ｮ豬ｷ (Mare Imbrium)":
+  <option
+    value="髮ｨ縺ｮ豬ｷ (Mare Imbrium)"
+  />
+
+  Name "蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)":
+  <option
+    value="蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)"
+  />
+
+  Name "繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)":
+  <option
+    value="繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)"
+  />
+
+  Name "繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)":
+  <option
+    value="繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)"
+  />
+
+  Name "譎ｴ繧後・豬ｷ (Mare Serenitatis)":
+  <option
+    value="譎ｴ繧後・豬ｷ (Mare Serenitatis)"
+  />
+
+  Name "繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)":
+  <option
+    value="繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)"
+  />
+
+  Name "譛ｪ驕ｸ謚・(Select location)":
+  <option
+    value=""
+  />
+
+  Name "繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)":
+  <option
+    value="繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)"
+  />
+
+  Name "繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)":
+  <option
+    value="繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)"
+  />
+
+  Name "螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)":
+  <option
+    value="螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)"
+  />
+
+  Name "繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)":
+  <option
+    value="繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)"
+  />
+
+  Name "繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)":
+  <option
+    value="繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)"
+  />
+
+  Name "繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)":
+  <option
+    value="繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)"
+  />
+
+  Name "繝倥Λ繧ｹ逶・慍 (Hellas Planitia)":
+  <option
+    value="繝倥Λ繧ｹ逶・慍 (Hellas Planitia)"
+  />
+
+  Name "繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)":
+  <option
+    value="繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)"
+  />
+
+  Name "繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)":
+  <option
+    value="繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)"
+  />
+
+  Name "繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)":
+  <option
+    value="繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)"
+  />
+
+  Name "驕ｸ謚槭＠縺ｦ縺上□縺輔＞":
+  <option
+    value=""
+  />
+
+  Name "譌･譛ｬ隱樊枚蛹門恟":
+  <option
+    value="japanese"
+  />
+
+  Name "闍ｱ隱樊枚蛹門恟":
+  <option
+    value="english"
+  />
+
+  Name "繝輔Λ繝ｳ繧ｹ隱樊枚蛹門恟":
+  <option
+    value="french"
+  />
+
+  Name "繝峨う繝・ｪ樊枚蛹門恟":
+  <option
+    value="german"
+  />
+
+  Name "髻灘嵜隱樊枚蛹門恟":
+  <option
+    value="korean"
+  />
+
+  Name "荳ｭ蝗ｽ隱樊枚蛹門恟 (郢∽ｽ灘ｭ・":
+  <option
+    value="chinese_traditional"
+  />
+
+  Name "荳ｭ蝗ｽ隱樊枚蛹門恟 (邁｡菴灘ｭ・":
+  <option
+    value="chinese_simplified"
+  />
+
+  Name "繧ｹ繝壹う繝ｳ隱樊枚蛹門恟":
+  <option
+    value="spanish"
+  />
+
+  Name "繧､繧ｿ繝ｪ繧｢隱樊枚蛹門恟":
+  <option
+    value="italian"
+  />
+
+  Name "繝昴Ν繝医ぎ繝ｫ隱樊枚蛹門恟":
+  <option
+    value="portuguese"
+  />
+
+  Name "繝ｭ繧ｷ繧｢隱樊枚蛹門恟":
+  <option
+    value="russian"
+  />
+
+  Name "縺昴・莉悶・譁・喧蝨・:
+  <option
+    value="other"
+  />
+
+  --------------------------------------------------
+  textbox:
+
+  Name "蟾・蝨ｰ蝓・(Region/State)":
+  <input
+    class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white disabled:opacity-50 disabled:bg-slate-100 dark:disabled:bg-slate-900 disabled:cursor-not-allowed"
+    disabled=""
+    id="region"
+    placeholder="蟾槭・蝨ｰ蝓溷錐繧貞・蜉・
+    type="text"
+    value=""
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-8"
+    >
+      <h2
+        class="text-xl font-bold text-slate-900 dark:text-white mb-4"
+      >
+        菴丞ｱ・・譁・喧蝨剰ｨｭ螳・[0m
+      </h2>
+      <div>
+        <label
+          class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+        >
+          螻・ｽ上お繝ｪ繧｢ (Earth)
+        </label>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-[1000px] mx-auto mb-4"
+        >
+          <button
+            aria-label="Select Area 1 (Americas)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 1 (Americas)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area1.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 1 (Americas)
+            </div>
+          </button>
+          <button
+            aria-label="Select Area 2 (EMEA)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 2 (EMEA)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area2.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 2 (EMEA)
+            </div>
+          </button>
+          <button
+            aria-label="Select Area 3 (APAC)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 3 (APAC)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area3.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 3 (APAC)
+            </div>
+          </button>
+        </div>
+        <div
+          class="text-xs text-slate-500 text-right"
+        >
+          Selected Area:
+           
+          None
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-8"
+      >
+        <div>
+          <label
+            class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+          >
+            譛磯擇諡轤ｹ (Moon - Optional)
+          </label>
+          <div
+            class="relative w-full aspect-square max-w-[400px] mx-auto mb-2"
+          >
+            <div
+              class="relative w-full pb-[100%]"
+            >
+              <div
+                class="absolute inset-0"
+              >
+                <img
+                  alt="Moon Map"
+                  class="w-full h-full object-contain"
+                  src="/star/moon.svg"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-2"
+          >
+            <select
+              aria-label="譛磯擇諡轤ｹ繧帝∈謚・
+              class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+            >
+              <option
+                value=""
+              >
+                譛ｪ驕ｸ謚・(Select location)
+              </option>
+              <option
+                value="髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)"
+              >
+                髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)
+              </option>
+              <option
+                value="繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)"
+              >
+                繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)
+              </option>
+              <option
+                value="繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)"
+              >
+                繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)
+              </option>
+              <option
+                value="蠏舌・螟ｧ豢・(Oceanus Procellarum)"
+              >
+                蠏舌・螟ｧ豢・(Oceanus Procellarum)
+              </option>
+              <option
+                value="髮ｨ縺ｮ豬ｷ (Mare Imbrium)"
+              >
+                髮ｨ縺ｮ豬ｷ (Mare Imbrium)
+              </option>
+              <option
+                value="蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)"
+              >
+                蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)
+              </option>
+              <option
+                value="繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)"
+              >
+                繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)
+              </option>
+              <option
+                value="繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)"
+              >
+                繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)
+              </option>
+              <option
+                value="譎ｴ繧後・豬ｷ (Mare Serenitatis)"
+              >
+                譎ｴ繧後・豬ｷ (Mare Serenitatis)
+              </option>
+              <option
+                value="繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)"
+              >
+                繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)
+              </option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label
+            class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+          >
+            轣ｫ譏滓侠轤ｹ (Mars - Optional)
+          </label>
+          <div
+            class="relative w-full pb-[100%] max-w-[400px] mx-auto mb-2"
+          >
+            <div
+              class="absolute inset-0"
+            >
+              <img
+                alt="Mars Map"
+                class="w-full h-full object-contain"
+                src="/star/mars.svg"
+              />
+            </div>
+          </div>
+          <div
+            class="mt-2"
+          >
+            <select
+              aria-label="轣ｫ譏滓侠轤ｹ繧帝∈謚・
+              class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+            >
+              <option
+                value=""
+              >
+                譛ｪ驕ｸ謚・(Select location)
+              </option>
+              <option
+                value="繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)"
+              >
+                繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)
+              </option>
+              <option
+                value="繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)"
+              >
+                繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)
+              </option>
+              <option
+                value="螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)"
+              >
+                螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)
+              </option>
+              <option
+                value="繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)"
+              >
+                繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)
+              </option>
+              <option
+                value="繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)"
+              >
+                繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)
+              </option>
+              <option
+                value="繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)"
+              >
+                繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)
+              </option>
+              <option
+                value="繝倥Λ繧ｹ逶・慍 (Hellas Planitia)"
+              >
+                繝倥Λ繧ｹ逶・慍 (Hellas Planitia)
+              </option>
+              <option
+                value="繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)"
+              >
+                繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)
+              </option>
+              <option
+                value="繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)"
+              >
+                繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)
+              </option>
+              <option
+                value="繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)"
+              >
+                繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label
+          class="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+          for="culture_sphere"
+        >
+          菴上ｓ縺ｧ縺・ｋ譁・喧蝨・[0m
+        </label>
+        <select
+          aria-label="譁・喧蝨・
+          class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+          id="culture_sphere"
+        >
+          <option
+            value=""
+          >
+            驕ｸ謚槭＠縺ｦ縺上□縺輔＞
+          </option>
+          <option
+            value="japanese"
+          >
+            譌･譛ｬ隱樊枚蛹門恟
+          </option>
+          <option
+            value="english"
+          >
+            闍ｱ隱樊枚蛹門恟
+          </option>
+          <option
+            value="french"
+          >
+            繝輔Λ繝ｳ繧ｹ隱樊枚蛹門恟
+          </option>
+          <option
+            value="german"
+          >
+            繝峨う繝・ｪ樊枚蛹門恟
+          </option>
+          <option
+            value="korean"
+          >
+            髻灘嵜隱樊枚蛹門恟
+          </option>
+          <option
+            value="chinese_traditional"
+          >
+            荳ｭ蝗ｽ隱樊枚蛹門恟 (郢∽ｽ灘ｭ・
+          </option>
+          <option
+            value="chinese_simplified"
+          >
+            荳ｭ蝗ｽ隱樊枚蛹門恟 (邁｡菴灘ｭ・
+          </option>
+          <option
+            value="spanish"
+          >
+            繧ｹ繝壹う繝ｳ隱樊枚蛹門恟
+          </option>
+          <option
+            value="italian"
+          >
+            繧､繧ｿ繝ｪ繧｢隱樊枚蛹門恟
+          </option>
+          <option
+            value="portuguese"
+          >
+            繝昴Ν繝医ぎ繝ｫ隱樊枚蛹門恟
+          </option>
+          <option
+            value="russian"
+          >
+            繝ｭ繧ｷ繧｢隱樊枚蛹門恟
+          </option>
+          <option
+            value="other"
+          >
+            縺昴・莉悶・譁・喧蝨・[0m
+          </option>
+        </select>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        <div>
+          <label
+            class="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+          >
+            蝗ｽ
+          </label>
+          <div
+            class="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-400"
+            id="country"
+          >
+            譁・喧蝨上ｒ驕ｸ謚槭＠縺ｦ縺上□縺輔＞
+          </div>
+        </div>
+        <div>
+          <label
+            class="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+            for="region"
+          >
+            蟾・蝨ｰ蝓・(Region/State)
+          </label>
+          <div
+            class="space-y-2"
+          >
+            <input
+              class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white disabled:opacity-50 disabled:bg-slate-100 dark:disabled:bg-slate-900 disabled:cursor-not-allowed"
+              disabled=""
+              id="region"
+              placeholder="蟾槭・蝨ｰ蝓溷錐繧貞・蜉・
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ 笶ｯ Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:37:19
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ 笶ｯ src/components/onboarding-pc/steps/step1-residence-pc.test.tsx:49:32
+     47| 
+     48|     // Target map area via accessible role
+     49|     const area1Button = screen.getByRole("button", { name: "Select Are窶ｦ
+       |                                ^
+     50|     fireEvent.click(area1Button);
+     51| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[2/4]竡ｯ
+
+ FAIL  src/components/onboarding-pc/steps/step1-residence-pc.test.tsx > Step1ResidencePC > toggles residence area selection (deselects when clicked again)
+TestingLibraryElementError: Unable to find an accessible element with the role "button" and name "Select Area 1"
+
+Here are the accessible roles:
+
+  heading:
+
+  Name "菴丞ｱ・・譁・喧蝨剰ｨｭ螳・:
+  <h2
+    class="text-xl font-bold text-slate-900 dark:text-white mb-4"
+  />
+
+  --------------------------------------------------
+  button:
+
+  Name "Select Area 1 (Americas)":
+  <button
+    aria-label="Select Area 1 (Americas)"
+    aria-pressed="true"
+    class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 ring-4 ring-indigo-500 ring-offset-4 dark:ring-offset-slate-900 shadow-2xl scale-[1.02] z-10 opacity-100"
+    type="button"
+  />
+
+  Name "Select Area 2 (EMEA)":
+  <button
+    aria-label="Select Area 2 (EMEA)"
+    aria-pressed="false"
+    class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+    type="button"
+  />
+
+  Name "Select Area 3 (APAC)":
+  <button
+    aria-label="Select Area 3 (APAC)"
+    aria-pressed="false"
+    class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+    type="button"
+  />
+
+  --------------------------------------------------
+  img:
+
+  Name "Area 1 (Americas)":
+  <img
+    alt="Area 1 (Americas)"
+    class="w-full h-full object-cover transition-all duration-300 brightness-110"
+    src="/world/area1.svg"
+  />
+
+  Name "Area 2 (EMEA)":
+  <img
+    alt="Area 2 (EMEA)"
+    class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+    src="/world/area2.svg"
+  />
+
+  Name "Area 3 (APAC)":
+  <img
+    alt="Area 3 (APAC)"
+    class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+    src="/world/area3.svg"
+  />
+
+  Name "Moon Map":
+  <img
+    alt="Moon Map"
+    class="w-full h-full object-contain"
+    src="/star/moon.svg"
+  />
+
+  Name "Mars Map":
+  <img
+    alt="Mars Map"
+    class="w-full h-full object-contain"
+    src="/star/mars.svg"
+  />
+
+  --------------------------------------------------
+  combobox:
+
+  Name "譛磯擇諡轤ｹ繧帝∈謚・:
+  <select
+    aria-label="譛磯擇諡轤ｹ繧帝∈謚・
+    class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+  />
+
+  Name "轣ｫ譏滓侠轤ｹ繧帝∈謚・:
+  <select
+    aria-label="轣ｫ譏滓侠轤ｹ繧帝∈謚・
+    class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+  />
+
+  Name "譁・喧蝨・:
+  <select
+    aria-label="譁・喧蝨・
+    class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+    id="culture_sphere"
+  />
+
+  --------------------------------------------------
+  option:
+
+  Name "譛ｪ驕ｸ謚・(Select location)":
+  <option
+    value=""
+  />
+
+  Name "髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)":
+  <option
+    value="髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)"
+  />
+
+  Name "繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)":
+  <option
+    value="繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)"
+  />
+
+  Name "繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)":
+  <option
+    value="繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)"
+  />
+
+  Name "蠏舌・螟ｧ豢・(Oceanus Procellarum)":
+  <option
+    value="蠏舌・螟ｧ豢・(Oceanus Procellarum)"
+  />
+
+  Name "髮ｨ縺ｮ豬ｷ (Mare Imbrium)":
+  <option
+    value="髮ｨ縺ｮ豬ｷ (Mare Imbrium)"
+  />
+
+  Name "蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)":
+  <option
+    value="蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)"
+  />
+
+  Name "繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)":
+  <option
+    value="繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)"
+  />
+
+  Name "繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)":
+  <option
+    value="繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)"
+  />
+
+  Name "譎ｴ繧後・豬ｷ (Mare Serenitatis)":
+  <option
+    value="譎ｴ繧後・豬ｷ (Mare Serenitatis)"
+  />
+
+  Name "繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)":
+  <option
+    value="繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)"
+  />
+
+  Name "譛ｪ驕ｸ謚・(Select location)":
+  <option
+    value=""
+  />
+
+  Name "繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)":
+  <option
+    value="繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)"
+  />
+
+  Name "繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)":
+  <option
+    value="繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)"
+  />
+
+  Name "螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)":
+  <option
+    value="螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)"
+  />
+
+  Name "繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)":
+  <option
+    value="繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)"
+  />
+
+  Name "繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)":
+  <option
+    value="繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)"
+  />
+
+  Name "繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)":
+  <option
+    value="繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)"
+  />
+
+  Name "繝倥Λ繧ｹ逶・慍 (Hellas Planitia)":
+  <option
+    value="繝倥Λ繧ｹ逶・慍 (Hellas Planitia)"
+  />
+
+  Name "繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)":
+  <option
+    value="繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)"
+  />
+
+  Name "繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)":
+  <option
+    value="繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)"
+  />
+
+  Name "繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)":
+  <option
+    value="繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)"
+  />
+
+  Name "驕ｸ謚槭＠縺ｦ縺上□縺輔＞":
+  <option
+    value=""
+  />
+
+  Name "譌･譛ｬ隱樊枚蛹門恟":
+  <option
+    value="japanese"
+  />
+
+  Name "闍ｱ隱樊枚蛹門恟":
+  <option
+    value="english"
+  />
+
+  Name "繝輔Λ繝ｳ繧ｹ隱樊枚蛹門恟":
+  <option
+    value="french"
+  />
+
+  Name "繝峨う繝・ｪ樊枚蛹門恟":
+  <option
+    value="german"
+  />
+
+  Name "髻灘嵜隱樊枚蛹門恟":
+  <option
+    value="korean"
+  />
+
+  Name "荳ｭ蝗ｽ隱樊枚蛹門恟 (郢∽ｽ灘ｭ・":
+  <option
+    value="chinese_traditional"
+  />
+
+  Name "荳ｭ蝗ｽ隱樊枚蛹門恟 (邁｡菴灘ｭ・":
+  <option
+    value="chinese_simplified"
+  />
+
+  Name "繧ｹ繝壹う繝ｳ隱樊枚蛹門恟":
+  <option
+    value="spanish"
+  />
+
+  Name "繧､繧ｿ繝ｪ繧｢隱樊枚蛹門恟":
+  <option
+    value="italian"
+  />
+
+  Name "繝昴Ν繝医ぎ繝ｫ隱樊枚蛹門恟":
+  <option
+    value="portuguese"
+  />
+
+  Name "繝ｭ繧ｷ繧｢隱樊枚蛹門恟":
+  <option
+    value="russian"
+  />
+
+  Name "縺昴・莉悶・譁・喧蝨・:
+  <option
+    value="other"
+  />
+
+  --------------------------------------------------
+  textbox:
+
+  Name "蟾・蝨ｰ蝓・(Region/State)":
+  <input
+    class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white disabled:opacity-50 disabled:bg-slate-100 dark:disabled:bg-slate-900 disabled:cursor-not-allowed"
+    disabled=""
+    id="region"
+    placeholder="蟾槭・蝨ｰ蝓溷錐繧貞・蜉・
+    type="text"
+    value=""
+  />
+
+  --------------------------------------------------
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-8"
+    >
+      <h2
+        class="text-xl font-bold text-slate-900 dark:text-white mb-4"
+      >
+        菴丞ｱ・・譁・喧蝨剰ｨｭ螳・[0m
+      </h2>
+      <div>
+        <label
+          class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+        >
+          螻・ｽ上お繝ｪ繧｢ (Earth)
+        </label>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-[1000px] mx-auto mb-4"
+        >
+          <button
+            aria-label="Select Area 1 (Americas)"
+            aria-pressed="true"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 ring-4 ring-indigo-500 ring-offset-4 dark:ring-offset-slate-900 shadow-2xl scale-[1.02] z-10 opacity-100"
+            type="button"
+          >
+            <div
+              class="absolute top-2 right-2 z-20 bg-indigo-600 text-white rounded-full p-1 shadow-lg animate-in fade-in zoom-in duration-200"
+            >
+              <svg
+                class="h-6 w-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  clip-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  fill-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 1 (Americas)"
+                class="w-full h-full object-cover transition-all duration-300 brightness-110"
+                src="/world/area1.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-indigo-600 text-white"
+            >
+              Area 1 (Americas)
+            </div>
+          </button>
+          <button
+            aria-label="Select Area 2 (EMEA)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 2 (EMEA)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area2.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 2 (EMEA)
+            </div>
+          </button>
+          <button
+            aria-label="Select Area 3 (APAC)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 3 (APAC)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area3.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 3 (APAC)
+            </div>
+          </button>
+        </div>
+        <div
+          class="text-xs text-slate-500 text-right"
+        >
+          Selected Area:
+           
+          Area 1
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-8"
+      >
+        <div>
+          <label
+            class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+          >
+            譛磯擇諡轤ｹ (Moon - Optional)
+          </label>
+          <div
+            class="relative w-full aspect-square max-w-[400px] mx-auto mb-2"
+          >
+            <div
+              class="relative w-full pb-[100%]"
+            >
+              <div
+                class="absolute inset-0"
+              >
+                <img
+                  alt="Moon Map"
+                  class="w-full h-full object-contain"
+                  src="/star/moon.svg"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-2"
+          >
+            <select
+              aria-label="譛磯擇諡轤ｹ繧帝∈謚・
+              class="w-full text-xs p-2 rounded border border-slate-300 da...
+ 笶ｯ Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:37:19
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:76:38
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ 笶ｯ src/components/onboarding-pc/steps/step1-residence-pc.test.tsx:66:32
+     64| 
+     65|     // Target map area via accessible role
+     66|     const area1Button = screen.getByRole("button", { name: "Select Are窶ｦ
+       |                                ^
+     67|     fireEvent.click(area1Button);
+     68| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[3/4]竡ｯ
+
+ FAIL  src/components/onboarding-pc/steps/step1-residence-pc.test.tsx > Step1ResidencePC > shows prefecture input only when Japan is selected
+TestingLibraryElementError: Unable to find a label with the text of: 蟾・蝨ｰ蝓・
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <div
+      class="space-y-8"
+    >
+      <h2
+        class="text-xl font-bold text-slate-900 dark:text-white mb-4"
+      >
+        菴丞ｱ・・譁・喧蝨剰ｨｭ螳・[0m
+      </h2>
+      <div>
+        <label
+          class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+        >
+          螻・ｽ上お繝ｪ繧｢ (Earth)
+        </label>
+        <div
+          class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full max-w-[1000px] mx-auto mb-4"
+        >
+          <button
+            aria-label="Select Area 1 (Americas)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 1 (Americas)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area1.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 1 (Americas)
+            </div>
+          </button>
+          <button
+            aria-label="Select Area 2 (EMEA)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 2 (EMEA)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area2.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 2 (EMEA)
+            </div>
+          </button>
+          <button
+            aria-label="Select Area 3 (APAC)"
+            aria-pressed="false"
+            class="relative group transition-all duration-300 ease-in-out transform rounded-xl overflow-hidden bg-white dark:bg-slate-800 hover:-translate-y-1 hover:shadow-lg opacity-80 hover:opacity-100"
+            type="button"
+          >
+            <div
+              class="relative w-full aspect-[3/4]"
+            >
+              <img
+                alt="Area 3 (APAC)"
+                class="w-full h-full object-cover transition-all duration-300 grayscale-[0.5] group-hover:grayscale-0"
+                src="/world/area3.svg"
+              />
+            </div>
+            <div
+              class="absolute bottom-0 left-0 right-0 py-3 text-center text-sm font-bold transition-colors bg-slate-50/90 dark:bg-slate-900/90 text-slate-500 group-hover:text-slate-900 dark:group-hover:text-white backdrop-blur-sm"
+            >
+              Area 3 (APAC)
+            </div>
+          </button>
+        </div>
+        <div
+          class="text-xs text-slate-500 text-right"
+        >
+          Selected Area:
+           
+          None
+        </div>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-8"
+      >
+        <div>
+          <label
+            class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+          >
+            譛磯擇諡轤ｹ (Moon - Optional)
+          </label>
+          <div
+            class="relative w-full aspect-square max-w-[400px] mx-auto mb-2"
+          >
+            <div
+              class="relative w-full pb-[100%]"
+            >
+              <div
+                class="absolute inset-0"
+              >
+                <img
+                  alt="Moon Map"
+                  class="w-full h-full object-contain"
+                  src="/star/moon.svg"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="mt-2"
+          >
+            <select
+              aria-label="譛磯擇諡轤ｹ繧帝∈謚・
+              class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+            >
+              <option
+                value=""
+              >
+                譛ｪ驕ｸ謚・(Select location)
+              </option>
+              <option
+                value="髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)"
+              >
+                髱吶°縺ｮ豬ｷ (Mare Tranquillitatis)
+              </option>
+              <option
+                value="繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)"
+              >
+                繝・ぅ繧ｳ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Tycho)
+              </option>
+              <option
+                value="繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)"
+              >
+                繧ｳ繝壹Ν繝九け繧ｹ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Copernicus)
+              </option>
+              <option
+                value="蠏舌・螟ｧ豢・(Oceanus Procellarum)"
+              >
+                蠏舌・螟ｧ豢・(Oceanus Procellarum)
+              </option>
+              <option
+                value="髮ｨ縺ｮ豬ｷ (Mare Imbrium)"
+              >
+                髮ｨ縺ｮ豬ｷ (Mare Imbrium)
+              </option>
+              <option
+                value="蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)"
+              >
+                蜊ｱ髮｣縺ｮ豬ｷ (Mare Crisium)
+              </option>
+              <option
+                value="繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)"
+              >
+                繧ｱ繝励Λ繝ｼ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Kepler)
+              </option>
+              <option
+                value="繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)"
+              >
+                繧｢繝壹ル繝ｳ螻ｱ閼・(Montes Apenninus)
+              </option>
+              <option
+                value="譎ｴ繧後・豬ｷ (Mare Serenitatis)"
+              >
+                譎ｴ繧後・豬ｷ (Mare Serenitatis)
+              </option>
+              <option
+                value="繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)"
+              >
+                繝励Λ繝医Φ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Plato)
+              </option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label
+            class="block text-sm font-medium mb-4 text-slate-700 dark:text-slate-300"
+          >
+            轣ｫ譏滓侠轤ｹ (Mars - Optional)
+          </label>
+          <div
+            class="relative w-full pb-[100%] max-w-[400px] mx-auto mb-2"
+          >
+            <div
+              class="absolute inset-0"
+            >
+              <img
+                alt="Mars Map"
+                class="w-full h-full object-contain"
+                src="/star/mars.svg"
+              />
+            </div>
+          </div>
+          <div
+            class="mt-2"
+          >
+            <select
+              aria-label="轣ｫ譏滓侠轤ｹ繧帝∈謚・
+              class="w-full text-xs p-2 rounded border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+            >
+              <option
+                value=""
+              >
+                譛ｪ驕ｸ謚・(Select location)
+              </option>
+              <option
+                value="繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)"
+              >
+                繧ｪ繝ｪ繝ｳ繝昴せ螻ｱ (Olympus Mons)
+              </option>
+              <option
+                value="繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)"
+              >
+                繝槭Μ繝阪Μ繧ｹ蟲｡隹ｷ (Valles Marineris)
+              </option>
+              <option
+                value="螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)"
+              >
+                螟ｧ繧ｷ繝ｫ繝√せ (Syrtis Major)
+              </option>
+              <option
+                value="繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)"
+              >
+                繧ｿ繝ｫ繧ｷ繧ｹ荳牙ｱｱ (Tharsis Montes)
+              </option>
+              <option
+                value="繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)"
+              >
+                繧ｲ繝ｼ繝ｫ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Gale Crater)
+              </option>
+              <option
+                value="繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)"
+              >
+                繧､繧ｷ繝・ぅ繧ｹ蟷ｳ蜴・(Isidis Planitia)
+              </option>
+              <option
+                value="繝倥Λ繧ｹ逶・慍 (Hellas Planitia)"
+              >
+                繝倥Λ繧ｹ逶・慍 (Hellas Planitia)
+              </option>
+              <option
+                value="繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)"
+              >
+                繧ｸ繧ｧ繧ｼ繝ｭ繝ｻ繧ｯ繝ｬ繝ｼ繧ｿ繝ｼ (Jezero Crater)
+              </option>
+              <option
+                value="繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)"
+              >
+                繝ｦ繝ｼ繝医ヴ繧｢蟷ｳ蜴・(Utopia Planitia)
+              </option>
+              <option
+                value="繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)"
+              >
+                繧ｷ繝峨ル繧｢蝨ｰ蝓・(Cydonia)
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div>
+        <label
+          class="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+          for="culture_sphere"
+        >
+          菴上ｓ縺ｧ縺・ｋ譁・喧蝨・[0m
+        </label>
+        <select
+          aria-label="譁・喧蝨・
+          class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+          id="culture_sphere"
+        >
+          <option
+            value=""
+          >
+            驕ｸ謚槭＠縺ｦ縺上□縺輔＞
+          </option>
+          <option
+            value="japanese"
+          >
+            譌･譛ｬ隱樊枚蛹門恟
+          </option>
+          <option
+            value="english"
+          >
+            闍ｱ隱樊枚蛹門恟
+          </option>
+          <option
+            value="french"
+          >
+            繝輔Λ繝ｳ繧ｹ隱樊枚蛹門恟
+          </option>
+          <option
+            value="german"
+          >
+            繝峨う繝・ｪ樊枚蛹門恟
+          </option>
+          <option
+            value="korean"
+          >
+            髻灘嵜隱樊枚蛹門恟
+          </option>
+          <option
+            value="chinese_traditional"
+          >
+            荳ｭ蝗ｽ隱樊枚蛹門恟 (郢∽ｽ灘ｭ・
+          </option>
+          <option
+            value="chinese_simplified"
+          >
+            荳ｭ蝗ｽ隱樊枚蛹門恟 (邁｡菴灘ｭ・
+          </option>
+          <option
+            value="spanish"
+          >
+            繧ｹ繝壹う繝ｳ隱樊枚蛹門恟
+          </option>
+          <option
+            value="italian"
+          >
+            繧､繧ｿ繝ｪ繧｢隱樊枚蛹門恟
+          </option>
+          <option
+            value="portuguese"
+          >
+            繝昴Ν繝医ぎ繝ｫ隱樊枚蛹門恟
+          </option>
+          <option
+            value="russian"
+          >
+            繝ｭ繧ｷ繧｢隱樊枚蛹門恟
+          </option>
+          <option
+            value="other"
+          >
+            縺昴・莉悶・譁・喧蝨・[0m
+          </option>
+        </select>
+      </div>
+      <div
+        class="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        <div>
+          <label
+            class="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+          >
+            蝗ｽ
+          </label>
+          <div
+            class="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 text-slate-400"
+            id="country"
+          >
+            譁・喧蝨上ｒ驕ｸ謚槭＠縺ｦ縺上□縺輔＞
+          </div>
+        </div>
+        <div>
+          <label
+            class="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+            for="region"
+          >
+            蟾・蝨ｰ蝓・(Region/State)
+          </label>
+          <div
+            class="space-y-2"
+          >
+            <input
+              class="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white disabled:opacity-50 disabled:bg-slate-100 dark:disabled:bg-slate-900 disabled:cursor-not-allowed"
+              disabled=""
+              id="region"
+              placeholder="蟾槭・蝨ｰ蝓溷錐繧貞・蜉・
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+ 笶ｯ Object.getElementError node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/config.js:37:19
+ 笶ｯ getAllByLabelText node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/queries/label-text.js:111:38
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:52:17
+ 笶ｯ node_modules/.pnpm/@testing-library+dom@10.4.1/node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ 笶ｯ src/components/onboarding-pc/steps/step1-residence-pc.test.tsx:94:19
+     92| 
+     93|     // Initial: Not Japan (default "蟾・蝨ｰ蝓・)
+     94|     expect(screen.getByLabelText("蟾・蝨ｰ蝓・)).toBeInTheDocument();
+       |                   ^
+     95|     expect(screen.queryByLabelText("驛ｽ驕灘ｺ懃恁")).not.toBeInTheDocument();
+     96| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[4/4]竡ｯ
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m4 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (6)[39m
+[2m   Start at [22m 19:23:21
+[2m   Duration [22m 7.48s[2m (transform 256ms, setup 396ms, import 642ms, tests 4.27s, environment 1.73s)[22m
+

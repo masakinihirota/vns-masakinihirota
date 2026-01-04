@@ -90,7 +90,7 @@ export const Step2HoursPC: React.FC<Step2HoursPCProps> = ({
     <div className="space-y-8 animate-in fade-in duration-500">
       <div>
         <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-          アクティブ時間（連絡OK）
+          アクティブ時間（コアタイム、連絡OKな時間帯）
         </h2>
         <p className="text-slate-600 dark:text-slate-400">
           主に活動する時間帯を設定してください。マッチング等の参考にされます。

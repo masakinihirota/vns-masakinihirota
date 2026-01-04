@@ -27,7 +27,6 @@ import {
   normalizeRootAccountData,
   timeToHours,
   hoursToTime,
-  calculateTotalCoreHours,
   AREA_DEFINITIONS,
 } from "../../../lib/root-account-utils";
 import { PointManagementSection } from "./point-management";
@@ -159,8 +158,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
   // エリア設定の保存
   const handleSaveArea = async (
     targetArea: number = selectedArea || 0,
-    targetStart: string = formData.core_hours_start,
-    targetEnd: string = formData.core_hours_end
+    _targetStart: string = formData.core_hours_start,
+    _targetEnd: string = formData.core_hours_end
   ) => {
     // クールダウン中は実行しない（念のため）
     if (cooldownRemaining > 0) return;
@@ -625,7 +624,6 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
                     let newStart = formData.core_hours_start;
                     let newEnd = formData.core_hours_end;
-                    let newNextDayEnd = nextDayEndHour;
 
                     if (def?.defaultCoreHours) {
                       newStart = def.defaultCoreHours.start;
@@ -638,7 +636,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       handleChange("core_hours_end", newEnd);
 
                       // エリア変更時は必ずリセット
-                      newNextDayEnd = 0;
+
                       setNextDayEndHour(0);
                     }
 
