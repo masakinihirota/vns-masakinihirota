@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { GENERATIONS } from "../onboarding.logic";
 
 interface Step3IdentityPCProps {
