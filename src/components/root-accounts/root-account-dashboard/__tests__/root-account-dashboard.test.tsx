@@ -119,7 +119,7 @@ describe("RootAccountDashboard", () => {
 
       const editButtons = screen.getAllByRole("button", { name: /編集/i });
       const coreHoursEditButton = editButtons.find((btn) =>
-        btn.closest("div")?.textContent?.includes("コア活動時間")
+        btn.closest("div")?.textContent?.includes("アクティブ時間")
       );
 
       expect(coreHoursEditButton).toBeDefined();
@@ -133,8 +133,10 @@ describe("RootAccountDashboard", () => {
       // 画像要素を取得してエラーをトリガー
       const images = screen.getAllByRole("img");
       const worldMapImage = images.find((img) =>
-        img.getAttribute("alt")?.includes("エリア")
+        img.getAttribute("alt")?.includes("北米")
       );
+
+      expect(worldMapImage).toBeDefined();
 
       if (worldMapImage) {
         fireEvent.error(worldMapImage);
@@ -157,6 +159,36 @@ describe("RootAccountDashboard", () => {
 
       // 履歴が表示されることを確認
       expect(screen.getByText(/変更履歴/i)).toBeInTheDocument();
+    });
+    it("エリアを選択すると推奨コアタイムが自動設定される", () => {
+      render(<RootAccountDashboard data={dummyRootAccountData} />);
+
+      // Area 1 (North America) selected -> 16:00 - 24:00 UTC
+      const nyArea = screen
+        .getAllByText(/アメリカ/i)
+        .find((el) => el.closest("div"));
+      if (nyArea) {
+        fireEvent.click(nyArea);
+        expect(screen.getByText("16:00 ～ 24:00")).toBeInTheDocument();
+      }
+
+      // Area 2 (Europe/Africa) selected -> 08:00 - 16:00 UTC
+      const londonArea = screen
+        .getAllByText(/イギリス/i)
+        .find((el) => el.closest("div"));
+      if (londonArea) {
+        fireEvent.click(londonArea);
+        expect(screen.getByText("08:00 ～ 16:00")).toBeInTheDocument();
+      }
+
+      // Area 3 (Asia/Oceania) selected -> 00:00 - 08:00 UTC
+      const tokyoArea = screen
+        .getAllByText(/日本/i)
+        .find((el) => el.closest("div"));
+      if (tokyoArea) {
+        fireEvent.click(tokyoArea);
+        expect(screen.getByText("00:00 ～ 08:00")).toBeInTheDocument();
+      }
     });
   });
 });

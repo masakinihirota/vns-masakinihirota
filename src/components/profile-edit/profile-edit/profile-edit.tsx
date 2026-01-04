@@ -240,7 +240,8 @@ const ProfileView = (props: ProfileEditProps) => {
               ],
             }))}
             onAdd={onAddWork}
-            addLabel="作品を追加"
+            addLabel="自身が制作した作品を追加"
+            emptyMessage="作品が登録されていません"
           />
         </section>
 
@@ -303,6 +304,11 @@ const ProfileView = (props: ProfileEditProps) => {
                 now: "text-blue-600",
                 future: "text-orange-600",
                 life: "text-purple-600",
+              };
+              const addLabels = {
+                now: "現在見ている、読んでいる作品を追加",
+                future: "視聴予定・期待している作品を追加",
+                life: "人生で深く心を動かされた作品を追加",
               };
               return (
                 <div key={status}>
@@ -375,7 +381,8 @@ const ProfileView = (props: ProfileEditProps) => {
                         ],
                       }))}
                     onAdd={onAddEvaluation}
-                    addLabel="作品を追加"
+                    addLabel={addLabels[status]}
+                    emptyMessage="作品が登録されていません"
                   />
                 </div>
               );
@@ -425,6 +432,8 @@ const ProfileView = (props: ProfileEditProps) => {
               ],
             }))}
             onAdd={onAddValue}
+            addLabel="新しく価値観に答える"
+            emptyMessage="価値観に答えていません"
           />
         </section>
       </div>

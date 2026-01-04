@@ -4,10 +4,12 @@ description: formatとlintツールでのチェック 最後にbuildが通るか
 
 pnpm run lint:fast
 pnpm run format:fast
-を行ってエラーがあれば修正を行い、
-pnpm run format:fast:fix
+を行ってエラーがあれば修正を行います。
+自動修正のために以下を実行してください：
+pnpm run lint:fast:fix
+（※ format:fast は実行時に自動修正(write)されます）
 
-それでエラーが修正できなかったら、
+それでもエラーが修正できなかったら、
 更に現在のエージェントが修正を行います。
 修正が終わったら再び
 pnpm run lint:fast
@@ -19,4 +21,6 @@ pnpm run format:fast
 pnpm run build が通るかをチェックします。
 チェックが通らなかったらエラーを修正します。
 
-終わったらレビューを行ってください。
+終わったらレビューを行い、問題なければコミットしてください。
+commitが失敗したらエラーの原因を突き止めて修正します。
+そして最後にcommitを行います。

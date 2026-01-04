@@ -529,9 +529,24 @@ export default function UserProfileManager() {
                   value={roleFilter}
                   onChange={(e) => setRoleFilter(e.target.value)}
                 >
-                  <option value="all">すべての役割</option>
-                  <option value="リーダー">リーダー</option>
-                  <option value="メンバー">メンバー</option>
+                  <option
+                    value="all"
+                    className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50"
+                  >
+                    すべての役割
+                  </option>
+                  <option
+                    value="リーダー"
+                    className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50"
+                  >
+                    リーダー
+                  </option>
+                  <option
+                    value="メンバー"
+                    className="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50"
+                  >
+                    メンバー
+                  </option>
                 </select>
               </div>
             </div>

@@ -10,7 +10,13 @@ import {
   type UserProfile,
 } from "./profile-edit.logic";
 
-export const ProfileEditContainer = ({ profileId }: { profileId: string }) => {
+export const ProfileEditContainer = ({
+  profileId,
+  initialData,
+}: {
+  profileId: string;
+  initialData?: { [key: string]: string | string[] | undefined };
+}) => {
   const isNew = profileId === "new";
 
   const [currentPage, setCurrentPage] = useState<"profile" | "portfolio">(
@@ -22,7 +28,18 @@ export const ProfileEditContainer = ({ profileId }: { profileId: string }) => {
   // State initialization
   const [profile, _setProfile] = useState<UserProfile>(
     isNew
-      ? createInitialProfile()
+      ? {
+          ...createInitialProfile(),
+          name: (initialData?.display_name as string) || "New User",
+          format: (initialData?.profile_format as string) || "profile",
+          role: (initialData?.role as string) || "member",
+          purposes: Array.isArray(initialData?.purposes)
+            ? initialData.purposes
+            : typeof initialData?.purposes === "string"
+              ? [initialData.purposes]
+              : ["work"],
+          type: (initialData?.profile_type as string) || "self",
+        }
       : {
           name: "マサキ・ニヒロタ", // Mock data for existing profile
           stats: { works: 12, evals: 145, trustDays: 420, points: 12500 },

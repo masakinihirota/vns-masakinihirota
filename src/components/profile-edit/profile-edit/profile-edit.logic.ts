@@ -6,6 +6,12 @@ export type UserProfile = {
     trustDays: number;
     points: number;
   };
+  // New fields for creation flow
+  format?: string;
+  role?: string;
+  purposes?: string[];
+  type?: string;
+  avatarUrl?: string;
 };
 
 export type UserWork = {
@@ -38,6 +44,10 @@ export type UserValue = {
 export const createInitialProfile = (): UserProfile => ({
   name: "New User",
   stats: { works: 0, evals: 0, trustDays: 0, points: 0 },
+  format: "profile",
+  role: "member",
+  purposes: ["work"],
+  type: "self",
 });
 
 export const MOCK_WORKS: UserWork[] = [

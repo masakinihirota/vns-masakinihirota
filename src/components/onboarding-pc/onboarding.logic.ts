@@ -266,14 +266,14 @@ export const LANGUAGE_OPTIONS = [
   "日本語 (Japanese)",
   "英語 (English)",
   "フランス語 (French)",
-  "ドイツ語 (German)",
-  "韓国語 (Korean)",
   "中国語 (繁体字) (Chinese Traditional)",
   "中国語 (簡体字) (Chinese Simplified)",
   "スペイン語 (Spanish)",
-  "イタリア語 (Italian)",
   "ポルトガル語 (Portuguese)",
+  "韓国語 (Korean)",
   "ロシア語 (Russian)",
+  "イタリア語 (Italian)",
+  "ドイツ語 (German)",
 ] as const;
 
 export interface Agreements {
