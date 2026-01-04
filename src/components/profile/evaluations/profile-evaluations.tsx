@@ -224,19 +224,21 @@ export const ProfileEvaluations: React.FC<ProfileEvaluationsProps> = ({
           >
             <button
               onClick={() => setViewMode("simple")}
-              className={`px-4 py-2 text-[10px] font-black tracking-widest flex items-center gap-2 border-r transition-colors ${viewMode === "simple"
+              className={`px-4 py-2 text-[10px] font-black tracking-widest flex items-center gap-2 border-r transition-colors ${
+                viewMode === "simple"
                   ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 border-slate-700"
                   : "bg-transparent text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 border-slate-300 dark:border-slate-700"
-                }`}
+              }`}
             >
               <List size={12} /> 評価は好き一択
             </button>
             <button
               onClick={() => setViewMode("tiered")}
-              className={`px-4 py-2 text-[10px] font-black tracking-widest flex items-center gap-2 transition-colors ${viewMode === "tiered"
+              className={`px-4 py-2 text-[10px] font-black tracking-widest flex items-center gap-2 transition-colors ${
+                viewMode === "tiered"
                   ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900"
                   : "bg-transparent text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800"
-                }`}
+              }`}
             >
               <BarChart2 size={12} /> 評価は絶対相対評価 Tier方式
             </button>
