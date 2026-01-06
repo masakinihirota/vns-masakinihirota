@@ -52,7 +52,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       alert("PCオンボーディング完了！ (デモ)");
-      router.push("/root-accounts");
+      router.push("/beginning-country");
     } catch (e) {
       console.error(e);
       alert("エラーが発生しました");

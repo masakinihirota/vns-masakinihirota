@@ -1,0 +1,16 @@
+
+> vns-masakinihirota@0.8.0 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  x typescript(TS2322): Type '{ userId: string; zodiacSign: string; }' is not assignable to type 'IntrinsicAttributes & BeginningCountryContainerProps'.
+   ,-[src/app/(protected)/beginning-country/page.tsx:8:13]
+ 7 |         <BeginningCountry.BeginningCountryContainer
+ 8 |             userId="mock-user-id"
+   :             ^^^^^^
+ 9 |             zodiacSign="Scorpio"
+   `----
+
+Found 0 warnings and 1 error.
+Finished in 4.7s on 274 files using 12 threads.
+ ELIFECYCLE  Command failed with exit code 1.

@@ -3,39 +3,24 @@
 > oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
 
 
-  x eslint(no-console): Unexpected console statement.
-    ,-[src/components/profile/evaluations/profile-evaluations.test.tsx:76:7]
- 75 |     if (results.violations.length > 0) {
- 76 |       console.log(JSON.stringify(results.violations, null, 2));
-    :       ^^^^^^^^^^^
- 77 |     }
+  ! eslint(no-unused-vars): Identifier 'CardDescription' is imported but never used.
+    ,-[src/app/page.tsx:9:3]
+  8 |   CardContent,
+  9 |   CardDescription,
+    :   ^^^^^^^|^^^^^^^
+    :          `-- 'CardDescription' is imported here
+ 10 |   CardHeader,
     `----
-  help: Supported methods are: info, warn, error.
+  help: Consider removing this import.
 
-  x typescript(TS2322): Type '{ evaluations: Evaluation[]; selectedCategory: string; setSelectedCategory: Dispatch<SetStateAction<string>>; viewMode: "simple" | "tiered"; setViewMode: Dispatch<...>; }' is not assignable to type 'IntrinsicAttributes & ProfileEvaluationsProps'.
-    ,-[src/components/profile/evaluations/profile-evaluations.test.tsx:55:7]
- 54 |       evaluations={evaluations}
- 55 |       selectedCategory={selectedCategory}
-    :       ^^^^^^^^^^^^^^^^
- 56 |       setSelectedCategory={setSelectedCategory}
-    `----
+  x typescript(TS2307): Cannot find module 'sonner' or its corresponding type declarations.
+   ,-[src/components/onboarding/mode-selection/mode-selection/mode-selection.container.tsx:8:23]
+ 7 | import { createClient } from "@/lib/supabase/client";
+ 8 | import { toast } from "sonner";
+   :                       ^^^^^^^^
+ 9 | 
+   `----
 
-  x typescript(TS2322): Type '{ evaluations: Evaluation[]; selectedCategory: string; setSelectedCategory: () => void; viewMode: string; setViewMode: () => void; }' is not assignable to type 'IntrinsicAttributes & ProfileEvaluationsProps'.
-    ,-[src/components/profile/evaluations/profile-evaluations.test.tsx:68:9]
- 67 |         evaluations={mockEvaluations}
- 68 |         selectedCategory="蜈ｨ驛ｨ"
-    :         ^^^^^^^^^^^^^^^^
- 69 |         setSelectedCategory={() => {}}
-    `----
-
-  x typescript(TS2339): Property 'toHaveNoViolations' does not exist on type 'Assertion<AxeResults>'.
-    ,-[src/components/profile/evaluations/profile-evaluations.test.tsx:78:21]
- 77 |     }
- 78 |     expect(results).toHaveNoViolations();
-    :                     ^^^^^^^^^^^^^^^^^^
- 79 |   });
-    `----
-
-Found 0 warnings and 4 errors.
-Finished in 2.7s on 267 files using 12 threads.
-窶右LIFECYCLE窶・Command failed with exit code 1.
+Found 1 warning and 1 error.
+Finished in 3.3s on 284 files using 12 threads.
+ ELIFECYCLE  Command failed with exit code 1.

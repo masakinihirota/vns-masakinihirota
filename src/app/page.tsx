@@ -1,286 +1,331 @@
+"use client";
+
+import {
+  Sparkles,
+  Home as HomeIcon,
+  Zap,
+  Handshake,
+  PenTool,
+  FlaskConical,
+  Globe,
+  ChevronRight,
+  Settings2,
+  ArrowRight,
+} from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
+  const sections = [
+    {
+      title: "🌸 始まりの儀式",
+      description: "オンボーディング・アカウント管理",
+      color: "from-pink-500/20 to-rose-500/20",
+      icon: <Sparkles className="text-pink-500" size={24} />,
+      routes: [
+        {
+          title: "始まりの国",
+          path: "/beginning-country",
+          desc: "プロフィールの作成、または幽霊として観測を始める儀式ページ。",
+          badge: "New",
+        },
+        {
+          title: "Root Accounts",
+          path: "/root-accounts",
+          desc: "ルートアカウントの詳細設定・属性管理・言語設定。",
+        },
+        {
+          title: "Onboarding PC",
+          path: "/onboarding-pc",
+          desc: "PC向けに最適化された新規登録・初期設定フロー。",
+        },
+        {
+          title: "体験モード選択",
+          path: "/onboarding/mode-selection",
+          desc: "ゲーミフィケーションかスタンダードかを選択（新規）。",
+          badge: "New",
+        },
+      ],
+    },
+    {
+      title: "🏠 拠点と自己",
+      description: "ダッシュボード・プロフィール関連",
+      color: "from-blue-500/20 to-indigo-500/20",
+      icon: <HomeIcon className="text-blue-500" size={24} />,
+      routes: [
+        {
+          title: "メインダッシュボード",
+          path: "/home",
+          desc: "システム全体の中心となるポータル画面。",
+          badge: "Core",
+        },
+        {
+          title: "マイプロフィール",
+          path: "/profile",
+          desc: "既存のプロフィール情報の閲覧、作品の評価確認。",
+        },
+        {
+          title: "仮面一覧 (Profiles)",
+          path: "/user-profiles",
+          desc: "作成済みのプロフィール（仮面）の一覧、ゴミ箱機能。",
+        },
+        {
+          title: "プロフィールのテーマ選定",
+          path: "/profile-theme",
+          desc: "各プロフィールに適用するデザイン・着せ替え設定。",
+        },
+        {
+          title: "新規プロフィールの作成",
+          path: "/user-profiles/new",
+          desc: "新しいプロフィール（仮面）の受肉（作成）。",
+        },
+      ],
+    },
+    {
+      title: "🤝 縁結びの杜",
+      description: "マッチング・相性診断システム",
+      color: "from-emerald-500/20 to-teal-500/20",
+      icon: <Handshake className="text-emerald-500" size={24} />,
+      routes: [
+        {
+          title: "マッチングハブ",
+          path: "/matching",
+          desc: "マッチングシステムのメインエントランス。",
+          badge: "Core",
+        },
+        {
+          title: "自動マッチング",
+          path: "/matching/auto",
+          desc: "アルゴリズムに基づく最適な対象との自動照合。",
+        },
+        {
+          title: "手動マッチング",
+          path: "/matching/manual",
+          desc: "条件を指定して自ら縁を探す能動的な照合。",
+        },
+        {
+          title: "投票マッチ (Vote Match)",
+          path: "/vote-match",
+          desc: "政治・社会制度などへの投票に基づく相性算出。",
+          badge: "New",
+        },
+      ],
+    },
+    {
+      title: "🎨 創造と価値",
+      description: "作品登録・価値観・思考の整理",
+      color: "from-amber-500/20 to-orange-500/20",
+      icon: <PenTool className="text-amber-500" size={24} />,
+      routes: [
+        {
+          title: "登録済み作品一覧",
+          path: "/works",
+          desc: "システムに登録されている全ての作品データのディレクトリ。",
+        },
+        {
+          title: "作品の新規登録",
+          path: "/work-registration-form",
+          desc: "新しい作品（コンテンツ）を世界に刻むためのフォーム。",
+        },
+        {
+          title: "価値観の選定",
+          path: "/values-selection",
+          desc: "自身にとって重要な5つの価値観を選択する画面。",
+        },
+      ],
+    },
+    {
+      title: "🛠️ 道具と工房",
+      description: "思考・計画・自己分析ツール群",
+      color: "from-cyan-500/20 to-sky-500/20",
+      icon: <Settings2 className="text-cyan-500" size={24} />,
+      routes: [
+        {
+          title: "曼荼羅チャート",
+          path: "/tools/mandala-chart",
+          desc: "深層心理や思考を81マスのグリッドで展開・整理（新装版）。",
+          badge: "New",
+        },
+      ],
+    },
+    {
+      title: "🧪 実験室",
+      description: "開発中・検証用のUI/UXパーツ",
+      color: "from-purple-500/20 to-fuchsia-500/20",
+      icon: <FlaskConical className="text-purple-500" size={24} />,
+      routes: [
+        {
+          title: "プロダクトリスト(Demo)",
+          path: "/product-list",
+          desc: "Shop機能等のための製品一覧表示デモ。",
+        },
+        {
+          title: "価値観入力 (Legacy)",
+          path: "/values-input",
+          desc: "以前の価値観入力インターフェース。",
+        },
+        {
+          title: "価値観UI検証",
+          path: "/valus-screen",
+          desc: "特殊な価値観表示アニメーションの検証。",
+        },
+        {
+          title: "プロフィール編集(API連動)",
+          path: "/user-edited-userprofiles",
+          desc: "複雑な属性編集のプロトタイプ。",
+        },
+      ],
+    },
+    {
+      title: "🏛️ 公共・アーカイブ",
+      description: "宣言・哲学・レガシー機能",
+      color: "from-zinc-500/20 to-slate-500/20",
+      icon: <Globe className="text-zinc-500" size={24} />,
+      routes: [
+        {
+          title: "ランディングページ",
+          path: "/landing-page",
+          desc: "VNSプロジェクト全体のトップビューページ。",
+        },
+        {
+          title: "オアシス宣言",
+          path: "/oasis",
+          desc: "本プロジェクトが掲げる哲学とオアシス思想の解説。",
+        },
+        {
+          title: "人間性宣言",
+          path: "/human",
+          desc: "AI時代における人間性の定義に関するマニフェスト。",
+        },
+        {
+          title: "旧マッチングシステム",
+          path: "/auto-matching",
+          desc: "自動マッチングの初期実装アーカイブ。",
+        },
+      ],
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-neutral-100 p-8 dark:bg-neutral-900 font-sans">
-      <main className="container mx-auto space-y-12 max-w-6xl">
-        <div className="flex flex-col items-center gap-6 text-center py-8">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-            VNS Development Portal
-          </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">
-            Central hub for UI/UX verification, new feature testing, and page
-            navigation.
+    <div className="min-h-screen bg-neutral-100 p-8 dark:bg-[#020204] font-sans transition-colors duration-500">
+      <main className="container mx-auto space-y-16 max-w-7xl">
+        {/* ヒーローセクション */}
+        <section className="flex flex-col items-center gap-8 text-center py-16 relative">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full pointer-events-none" />
+          <div className="flex items-center space-x-4 mb-4">
+            <div className="w-16 h-16 bg-indigo-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-indigo-500/40 rotate-12 hover:rotate-0 transition-transform duration-500">
+              <Zap className="text-white" size={32} />
+            </div>
+            <h1 className="text-5xl md:text-7xl font-[900] tracking-tighter italic uppercase text-neutral-900 dark:text-white">
+              VNS <span className="text-indigo-500">Portal</span>
+            </h1>
+          </div>
+          <p className="text-xl text-neutral-500 dark:text-zinc-400 max-w-2xl font-medium leading-relaxed">
+            価値観マッチングサイト「VNS」の開発・検証用ポータル。
+            <br />
+            全ての機能へのアクセスと検証をここから開始します。
           </p>
-          <div className="flex gap-4">
-            <Button asChild size="lg" className="rounded-full px-8">
-              <Link href="/login">Log in / Auth</Link>
+          <div className="flex gap-6 mt-4">
+            <Button
+              asChild
+              size="lg"
+              className="rounded-2xl px-12 py-8 text-lg font-black bg-indigo-600 hover:bg-indigo-700 shadow-xl shadow-indigo-600/20 transition-all hover:scale-105 active:scale-95"
+            >
+              <Link href="/login">AUTH CONSOLE</Link>
             </Button>
             <Button
               asChild
               variant="outline"
               size="lg"
-              className="rounded-full px-8"
+              className="rounded-2xl px-12 py-8 text-lg font-bold border-2 border-neutral-200 dark:border-zinc-800 transition-all hover:bg-neutral-50 dark:hover:bg-zinc-900"
             >
               <Link
                 href="https://github.com/masakinihirota/vns-masakinihirota"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="flex items-center space-x-3"
               >
-                View Repository
+                <span>REPOSITORY</span>
+                <ChevronRight size={20} />
               </Link>
             </Button>
           </div>
-        </div>
+        </section>
 
-        <div className="space-y-10">
-          {[
-            {
-              title: "🚀 Main Features (Active)",
-              routes: [
-                {
-                  title: "Home (Protected)",
-                  path: "/home",
-                  desc: "Authenticated User Dashboard",
-                  badge: "Core",
-                },
-                {
-                  title: "Onboarding PC",
-                  path: "/onboarding-pc",
-                  desc: "Separate onboarding flow optimized for PC",
-                  badge: "New",
-                },
-                {
-                  title: "User Profile List",
-                  path: "/user-profiles",
-                  desc: "User Profile List (Trash Bin Added)",
-                  badge: "Update",
-                },
-                {
-                  title: "Create New Profile",
-                  path: "/user-profiles/new",
-                  desc: "Create New Profile (New UI)",
-                  badge: "New",
-                },
-                {
-                  title: "My Profile",
-                  path: "/profile",
-                  desc: "User Profile View",
-                },
-              ],
-            },
-            {
-              title: "🧩 Matching System",
-              routes: [
-                {
-                  title: "Matching (Hub)",
-                  path: "/matching",
-                  desc: "Matching Entry / Top",
-                  badge: "Core",
-                },
-                {
-                  title: "Matching / Auto",
-                  path: "/matching/auto",
-                  desc: "Sub-route: Auto Matching",
-                },
-                {
-                  title: "Matching / Manual",
-                  path: "/matching/manual",
-                  desc: "Sub-route: Manual Matching",
-                },
-                {
-                  title: "Vote Match",
-                  path: "/vote-match",
-                  desc: "Political/Social Vote Match UI",
-                  badge: "New",
-                },
-              ],
-            },
-            {
-              title: "📚 Works & Management",
-              routes: [
-                {
-                  title: "Works Directory",
-                  path: "/works",
-                  desc: "List of Registered Works",
-                  badge: "Core",
-                },
-                {
-                  title: "Work Registration",
-                  path: "/work-registration-form",
-                  desc: "New Work Registration Form",
-                  badge: "New",
-                },
-                {
-                  title: "Root Accounts",
-                  path: "/root-accounts",
-                  desc: "Root Account Management",
-                },
-                {
-                  title: "Values Selection",
-                  path: "/values-selection",
-                  desc: "Select Important Values",
-                },
-              ],
-            },
-            {
-              title: "🧪 Experimental & Dev",
-              routes: [
-                {
-                  title: "Mandala Chart",
-                  path: "/mandala-chart",
-                  desc: "Mandala Chart UI Integration",
-                  badge: "New",
-                },
-                {
-                  title: "User Edit (Demo)",
-                  path: "/user-profiles/550e8400-e29b-41d4-a716-446655440000/edit",
-                  desc: "Edit Profile ID:UUID (Demo)",
-                },
-                {
-                  title: "Values Input",
-                  path: "/values-input",
-                  desc: "Values Input Screen",
-                },
-                {
-                  title: "Values Screen",
-                  path: "/valus-screen",
-                  desc: "Values UI Screen (Dev)",
-                },
-                {
-                  title: "User Edited Profiles",
-                  path: "/user-edited-userprofiles",
-                  desc: "User Profile Edit Interface",
-                },
-                {
-                  title: "Product List",
-                  path: "/product-list",
-                  desc: "Product List Demo",
-                },
-              ],
-            },
-            {
-              title: "🕸️ Legacy / Alternative Paths",
-              routes: [
-                {
-                  title: "Auto Matching (Old)",
-                  path: "/auto-matching",
-                  desc: "Automated Matching Implementation",
-                },
-                {
-                  title: "Manual Matching (Old)",
-                  path: "/manual-matching",
-                  desc: "Manual Matching Console",
-                },
-                {
-                  title: "Matching Conditions",
-                  path: "/manual-matching/conditions",
-                  desc: "Algorithm Settings",
-                },
-                {
-                  title: "Matching Manual (Alt)",
-                  path: "/matching-manual",
-                  desc: "Alternative Manual Matching",
-                },
-                {
-                  title: "New Work (Old)",
-                  path: "/works/new",
-                  desc: "Previous Work Registration",
-                },
-                {
-                  title: "Values Registration",
-                  path: "/values",
-                  desc: "Register Personal Values",
-                },
-              ],
-            },
-            {
-              title: "🌏 Public / Static",
-              routes: [
-                {
-                  title: "Landing Page",
-                  path: "/landing-page",
-                  desc: "VNS Landing Page",
-                },
-                {
-                  title: "Oasis Declaration",
-                  path: "/oasis",
-                  desc: "Project Philosophy",
-                },
-                {
-                  title: "Human Declaration",
-                  path: "/human",
-                  desc: "Human Nature Declaration",
-                },
-              ],
-            },
-          ].map((section) => (
-            <section key={section.title} className="space-y-4">
-              <div className="flex items-center gap-4">
-                <h2 className="text-2xl font-bold text-foreground border-l-4 border-indigo-500 pl-4">
-                  {section.title}
-                </h2>
-                <div className="h-px bg-border flex-grow"></div>
+        {/* グリッドセクション */}
+        <div className="space-y-24 pb-32">
+          {sections.map((section, idx) => (
+            <section
+              key={idx}
+              className="space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-1000"
+              style={{ animationDelay: `${idx * 150}ms` }}
+            >
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-neutral-200 dark:border-zinc-800 pb-8">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4">
+                    <div
+                      className={`p-3 rounded-2xl bg-gradient-to-br ${section.color}`}
+                    >
+                      {section.icon}
+                    </div>
+                    <h2 className="text-4xl font-black tracking-tighter text-neutral-900 dark:text-white uppercase italic">
+                      {section.title}
+                    </h2>
+                  </div>
+                  <p className="text-lg text-neutral-500 dark:text-zinc-400 font-medium">
+                    {section.description}
+                  </p>
+                </div>
+                <div className="hidden md:block">
+                  <Badge
+                    variant="outline"
+                    className="text-xs font-bold tracking-widest uppercase border-neutral-300 dark:border-zinc-700 text-neutral-400"
+                  >
+                    Category 0{idx + 1}
+                  </Badge>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {section.routes.map((route) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {section.routes.map((route, rIdx) => (
                   <Card
-                    key={route.path}
-                    className="group hover:shadow-lg transition-all duration-300 hover:border-indigo-200 dark:hover:border-indigo-800"
+                    key={rIdx}
+                    className="group relative overflow-hidden border-none bg-white dark:bg-[#09090b] shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 rounded-[2.5rem]"
                   >
-                    <CardHeader className="pb-3">
-                      <div className="flex justify-between items-start gap-2">
-                        <CardTitle className="text-base font-semibold">
-                          <Link
-                            href={route.path}
-                            className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors"
-                          >
-                            {route.title}
-                          </Link>
+                    <div
+                      className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${section.color} opacity-0 group-hover:opacity-100 blur-3xl transition-opacity duration-500`}
+                    />
+
+                    <CardHeader className="relative z-10 p-8">
+                      <div className="flex justify-between items-start mb-4">
+                        <CardTitle className="text-2xl font-black tracking-tight text-neutral-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors duration-300">
+                          {route.title}
                         </CardTitle>
                         {route.badge && (
-                          <Badge
-                            variant={
-                              route.badge === "Core" ? "default" : "destructive"
-                            }
-                            className="ml-auto text-[10px] px-2 py-0.5 h-auto"
-                          >
+                          <Badge className="bg-indigo-600 text-white font-black rounded-full px-4 py-1 text-[10px] tracking-widest uppercase shadow-lg shadow-indigo-600/30">
                             {route.badge}
                           </Badge>
                         )}
                       </div>
-                      <CardDescription
-                        className="text-xs font-mono text-muted-foreground/70 truncate"
-                        title={route.path}
-                      >
-                        {route.path}
-                      </CardDescription>
                     </CardHeader>
-                    <CardContent>
-                      <p className="text-sm text-muted-foreground mb-4 min-h-[40px]">
+
+                    <CardContent className="relative z-10 p-8 pt-0">
+                      <p className="text-base text-neutral-500 dark:text-zinc-500 font-medium leading-relaxed mb-8 min-h-[60px]">
                         {route.desc}
                       </p>
                       <Button
                         asChild
-                        variant="secondary"
-                        size="sm"
-                        className="w-full justify-between group-hover:bg-indigo-50 dark:group-hover:bg-indigo-950/30 transition-colors"
+                        variant="ghost"
+                        className="w-full flex justify-between bg-neutral-50 dark:bg-zinc-950/50 hover:bg-indigo-600 hover:text-white dark:hover:bg-indigo-600 rounded-2xl py-6 px-6 font-black transition-all group"
                       >
                         <Link href={route.path}>
-                          Open Page{" "}
-                          <span className="group-hover:translate-x-1 transition-transform">
-                            &rarr;
-                          </span>
+                          <span>OPEN PAGE</span>
+                          <ArrowRight
+                            size={20}
+                            className="group-hover:translate-x-2 transition-transform duration-300"
+                          />
                         </Link>
                       </Button>
                     </CardContent>
