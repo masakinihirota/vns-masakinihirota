@@ -77,9 +77,15 @@ export default function Home() {
           desc: "各プロフィールに適用するデザイン・着せ替え設定。",
         },
         {
-          title: "新規プロフィールの作成",
+          title: "新規プロフィールの作成 (Wizard)",
           path: "/user-profiles/new",
-          desc: "新しいプロフィール（仮面）の受肉（作成）。",
+          desc: "新しいプロフィール（仮面）の受肉（作成）。ウィザード形式。",
+          badge: "New",
+        },
+        {
+          title: "新規作成 (Legacy)",
+          path: "/user-profiles/new-legacy",
+          desc: "従来のプロフィール作成フォーム（参照用）。",
         },
       ],
     },
