@@ -237,9 +237,11 @@ export function BeginningCountry({
                   <p className="text-zinc-300 text-lg leading-relaxed max-w-4xl font-medium px-8">
                     そして、私はこの始まりの国を治める女王です。アカウントを作ったばかりのあなたは、まだ形を持たない「幽霊」の状態なのです。
                     <br />
-                    現在、眺めること(ウォッチ)はできますが、この世界で誰かと繋がったり、イベントに参加したりするには「仮面（プロフィール）」を作る必要があります。
+                    現在、この世界を眺めること(ウォッチ)はできますが、誰かと繋がったり、活動に参加したりするには「仮面（プロフィール）」を作る必要があります。
                     <br />
-                    この世界で誰かと繋がったり、参加したりするには「仮面（プロフィール）」を完成させて被らなければなりません。
+                    <span className="text-indigo-400 font-bold">
+                      プロフィール作成（オアシス宣言への同意）を完了しない限り、この世界では「見て回るだけ」の観測者として過ごすことになります。
+                    </span>
                     <br />
                     選択肢は３つ、これからどうするか決めてくださいね。
                   </p>
@@ -319,7 +321,11 @@ export function BeginningCountry({
                         ゲーミフィケーションを中止して自分で行動を決める
                       </p>
                       <p className="text-zinc-600 text-base leading-relaxed font-medium">
-                        ※一旦はレベルの制限をなくし自由に行動と選択ができます。ただしプロフィールを作らないと見て回るだけしか出来ないのは同じです。
+                        ※レベル制限をなくし自由に行動できますが、プロフィール作成（オアシス宣言への同意）がない限り、
+                        <span className="text-zinc-500 font-bold">
+                          「見て回るだけ」しかできない
+                        </span>
+                        のは変わりません。
                       </p>
                     </div>
                     <ChevronRight
@@ -419,7 +425,10 @@ export function BeginningCountry({
                         <span className="text-indigo-300 font-bold">
                           「観測者」
                         </span>
-                        としての滞在です。
+                        としての滞在であり、
+                        <span className="text-red-400/80 font-bold">
+                          サイト内を見て回ることしかできません。
+                        </span>
                         <br />
                         誰かを応援したり、マッチングで繋がったり、イベントや国の活動に直接参加するには、
                         <br />
@@ -429,7 +438,7 @@ export function BeginningCountry({
                         >
                           ユーザープロフィール（仮面）
                         </span>
-                        を完成させて装着する必要があります。
+                        を完成させて（オアシス宣言に同意して）装着する必要があります。
                       </p>
                     </div>
                   </div>

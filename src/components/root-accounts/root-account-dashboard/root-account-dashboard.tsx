@@ -1530,6 +1530,26 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                       )}
                     </div>
                   </div>
+
+                  {/* Amazon Associate ID */}
+                  {formData.amazon_associate_tag && (
+                    <div className="sm:col-span-6">
+                      <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+                        Amazon アソシエイトID
+                      </label>
+                      <div className="mt-1">
+                        <input
+                          type="text"
+                          disabled={true} // 登録後の変更は不可
+                          value={formData.amazon_associate_tag}
+                          className="bg-slate-50 dark:bg-slate-900 border-transparent text-slate-500 dark:text-slate-400 block w-full rounded-md sm:text-sm p-2 border cursor-not-allowed"
+                        />
+                      </div>
+                      <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                        Amazonアフィリエイトリンクの生成に使用されるIDです（変更不可）。
+                      </p>
+                    </div>
+                  )}
                 </div>
               </section>
 

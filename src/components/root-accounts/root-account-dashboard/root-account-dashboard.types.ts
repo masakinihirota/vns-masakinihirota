@@ -38,6 +38,7 @@ export interface RootAccount {
   last_recovery_at: string;
   trust_duration_days: number; // 初期30からスタート
   warning_count: number;
+  amazon_associate_tag?: string; // 追加: AmazonアソシエイトID
   status: FileStatusEnum;
   penalty_status: PenaltyStatus;
   awards: Award[];

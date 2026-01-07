@@ -32,6 +32,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
     uses_ai_translation: false,
     display_id: `user-${userId.substring(0, 8)}`, // Mock display ID
     nativeLanguages: [],
+    amazon_associate_tag: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 

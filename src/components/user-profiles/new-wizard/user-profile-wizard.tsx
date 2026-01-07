@@ -165,7 +165,13 @@ export const UserProfileWizard: React.FC = () => {
   const isStepComplete = () => {
     if (currentStep === 4) {
       // Are all required "Basic of Basics" questions answered?
-      return BASIC_VALUE_QUESTIONS.every((q) => !!formData.basicValues[q.id]);
+      const allAnswered = BASIC_VALUE_QUESTIONS.every(
+        (q) => !!formData.basicValues[q.id]
+      );
+      // Specifically check for Oasis Declaration agreement
+      const isOasisAgreed =
+        formData.basicValues["oasis"] === "同意して遵守する";
+      return allAnswered && isOasisAgreed;
     }
     return true;
   };

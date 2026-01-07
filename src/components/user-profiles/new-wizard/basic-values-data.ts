@@ -16,7 +16,7 @@ export const BASIC_VALUE_QUESTIONS: BasicValueQuestion[] = [
     title: "オアシス宣言",
     tier: 1,
     description:
-      "「褒めるときは大きな声でみんなの前で、叱るときは二人きりで小さな声で」というモットーや、安心安全な場所を作るための宣言に同意しますか？",
+      "本サービスにおけるコミュニティ運営の基本理念。誹謗中傷のない、安心・安全なインターネット上の「オアシス」を目指す宣言です。安心安全な場所を作るための宣言に同意しますか？",
     options: ["同意して遵守する", "同意できない（利用しない）"],
     tags: ["system", "safety"],
     externalLink: "/help/glossary#oasis",

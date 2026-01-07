@@ -109,13 +109,14 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
                       onClick={() => updateBasicValue(q.id, opt)}
                       className={`
                         px-4 py-2 rounded-xl text-sm font-medium border transition-all
-                        ${isSelected
-                          ? isRejectOption
-                            ? "bg-red-600 text-white border-red-600 shadow-md transform scale-105"
-                            : "bg-teal-600 text-white border-teal-600 shadow-md transform scale-105"
-                          : isRejectOption
-                            ? "bg-red-50 text-red-600 border-red-200 hover:border-red-400 hover:bg-red-100/50"
-                            : "bg-slate-50 text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-white"
+                        ${
+                          isSelected
+                            ? isRejectOption
+                              ? "bg-red-600 text-white border-red-600 shadow-md transform scale-105"
+                              : "bg-teal-600 text-white border-teal-600 shadow-md transform scale-105"
+                            : isRejectOption
+                              ? "bg-red-50 text-red-600 border-red-200 hover:border-red-400 hover:bg-red-100/50"
+                              : "bg-slate-50 text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-white"
                         }
                       `}
                     >
@@ -141,7 +142,8 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
                         プロフィールの作成および保存はできません
                       </p>
                       <p className="text-xs text-red-600 leading-relaxed">
-                        オアシス宣言に同意いただけない場合、VNSの機能（コミュニティ、仮面の作成など）を利用することができず、入力したプロフィール情報は保存されません。
+                        オアシス宣言に同意いただけない場合、masakinihirotaの機能（コミュニティ、仮面の作成、マーケットなど）を利用することができず、サイト内を
+                        <b>見て回る（観測・ウォッチ）のみ</b>の制限となります。
                       </p>
                     </div>
                   </div>

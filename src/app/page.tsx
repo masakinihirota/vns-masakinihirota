@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Settings2,
   ArrowRight,
+  Book,
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -21,7 +22,7 @@ export default function Home() {
   const sections = [
     {
       title: "🌸 始まりの儀式",
-      description: "オンボーディング・アカウント管理",
+      description: "オンボーディング・プロジェクトへの参加",
       color: "from-pink-500/20 to-rose-500/20",
       icon: <Sparkles className="text-pink-500" size={24} />,
       routes: [
@@ -29,7 +30,11 @@ export default function Home() {
           title: "始まりの国",
           path: "/beginning-country",
           desc: "プロフィールの作成、または幽霊として観測を始める儀式ページ。",
-          badge: "New",
+        },
+        {
+          title: "体験モード選択",
+          path: "/onboarding/mode-selection",
+          desc: "ゲーミフィケーションかスタンダードかを選択。",
         },
         {
           title: "Root Accounts",
@@ -41,17 +46,11 @@ export default function Home() {
           path: "/onboarding-pc",
           desc: "PC向けに最適化された新規登録・初期設定フロー。",
         },
-        {
-          title: "体験モード選択",
-          path: "/onboarding/mode-selection",
-          desc: "ゲーミフィケーションかスタンダードかを選択（新規）。",
-          badge: "New",
-        },
       ],
     },
     {
       title: "🏠 拠点と自己",
-      description: "ダッシュボード・プロフィール関連",
+      description: "ダッシュボード・プロフィール（仮面）管理",
       color: "from-blue-500/20 to-indigo-500/20",
       icon: <HomeIcon className="text-blue-500" size={24} />,
       routes: [
@@ -72,15 +71,15 @@ export default function Home() {
           desc: "作成済みのプロフィール（仮面）の一覧、ゴミ箱機能。",
         },
         {
-          title: "プロフィールのテーマ選定",
-          path: "/profile-theme",
-          desc: "各プロフィールに適用するデザイン・着せ替え設定。",
-        },
-        {
           title: "新規プロフィールの作成 (Wizard)",
           path: "/user-profiles/new",
           desc: "新しいプロフィール（仮面）の受肉（作成）。ウィザード形式。",
           badge: "New",
+        },
+        {
+          title: "プロフィールのテーマ選定",
+          path: "/profile-theme",
+          desc: "各プロフィールに適用するデザイン・着せ替え設定。",
         },
         {
           title: "新規作成 (Legacy)",
@@ -115,7 +114,6 @@ export default function Home() {
           title: "投票マッチ (Vote Match)",
           path: "/vote-match",
           desc: "政治・社会制度などへの投票に基づく相性算出。",
-          badge: "New",
         },
       ],
     },
@@ -157,6 +155,32 @@ export default function Home() {
       ],
     },
     {
+      title: "📚 ドキュメント & ヘルプ",
+      description: "VNSの哲学・用語集・サポート",
+      color: "from-teal-500/20 to-emerald-500/20",
+      icon: <Book className="text-teal-600" size={24} />,
+      routes: [
+        {
+          title: "ヘルプセンター",
+          path: "/help",
+          desc: "ドキュメントとサポートの総合案内ポータル。",
+          badge: "New",
+        },
+        {
+          title: "用語集 (Glossary)",
+          path: "/help/glossary",
+          desc: "オアシス宣言、人間宣言など根幹概念の解説。",
+          badge: "Update",
+        },
+        {
+          title: "よくある質問 (FAQ)",
+          path: "/help/faq",
+          desc: "基本的な使い方や困った時の解決方法。",
+          badge: "New",
+        },
+      ],
+    },
+    {
       title: "🧪 実験室",
       description: "開発中・検証用のUI/UXパーツ",
       color: "from-purple-500/20 to-fuchsia-500/20",
@@ -177,16 +201,11 @@ export default function Home() {
           path: "/valus-screen",
           desc: "特殊な価値観表示アニメーションの検証。",
         },
-        {
-          title: "プロフィール編集(API連動)",
-          path: "/user-edited-userprofiles",
-          desc: "複雑な属性編集のプロトタイプ。",
-        },
       ],
     },
     {
-      title: "🏛️ 公共・アーカイブ",
-      description: "宣言・哲学・レガシー機能",
+      title: "🏛️ アーカイブ",
+      description: "旧機能・レガシーページ",
       color: "from-zinc-500/20 to-slate-500/20",
       icon: <Globe className="text-zinc-500" size={24} />,
       routes: [
@@ -196,19 +215,14 @@ export default function Home() {
           desc: "VNSプロジェクト全体のトップビューページ。",
         },
         {
-          title: "オアシス宣言",
+          title: "オアシス宣言 (Old)",
           path: "/oasis",
-          desc: "本プロジェクトが掲げる哲学とオアシス思想の解説。",
+          desc: "旧形式のオアシス宣言ページ。",
         },
         {
-          title: "人間性宣言",
+          title: "人間性宣言 (Old)",
           path: "/human",
-          desc: "AI時代における人間性の定義に関するマニフェスト。",
-        },
-        {
-          title: "旧マッチングシステム",
-          path: "/auto-matching",
-          desc: "自動マッチングの初期実装アーカイブ。",
+          desc: "旧形式の人間性宣言ページ。",
         },
       ],
     },
