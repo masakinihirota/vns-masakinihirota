@@ -99,21 +99,30 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
               </div>
 
               <div className="flex flex-wrap gap-2">
-                {q.options.map((opt) => (
-                  <button
-                    key={opt}
-                    onClick={() => updateBasicValue(q.id, opt)}
-                    className={`
-                      px-4 py-2 rounded-xl text-sm font-medium border transition-all
-                      ${formData.basicValues[q.id] === opt
-                        ? "bg-teal-600 text-white border-teal-600 shadow-md transform scale-105"
-                        : "bg-slate-50 text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-white"
-                      }
-                    `}
-                  >
-                    {opt}
-                  </button>
-                ))}
+                {q.options.map((opt) => {
+                  const isSelected = formData.basicValues[q.id] === opt;
+                  const isRejectOption = opt === "同意できない（利用しない）";
+
+                  return (
+                    <button
+                      key={opt}
+                      onClick={() => updateBasicValue(q.id, opt)}
+                      className={`
+                        px-4 py-2 rounded-xl text-sm font-medium border transition-all
+                        ${isSelected
+                          ? isRejectOption
+                            ? "bg-red-600 text-white border-red-600 shadow-md transform scale-105"
+                            : "bg-teal-600 text-white border-teal-600 shadow-md transform scale-105"
+                          : isRejectOption
+                            ? "bg-red-50 text-red-600 border-red-200 hover:border-red-400 hover:bg-red-100/50"
+                            : "bg-slate-50 text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-white"
+                        }
+                      `}
+                    >
+                      {opt}
+                    </button>
+                  );
+                })}
               </div>
 
               {!formData.basicValues[q.id] && (
@@ -122,6 +131,21 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
                   回答を選択してください（必須）
                 </p>
               )}
+
+              {q.id === "oasis" &&
+                formData.basicValues[q.id] === "同意できない（利用しない）" && (
+                  <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3 animate-in fade-in zoom-in duration-300">
+                    <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                    <div className="space-y-1">
+                      <p className="text-sm font-bold text-red-700">
+                        プロフィールの作成および保存はできません
+                      </p>
+                      <p className="text-xs text-red-600 leading-relaxed">
+                        オアシス宣言に同意いただけない場合、VNSの機能（コミュニティ、仮面の作成など）を利用することができず、入力したプロフィール情報は保存されません。
+                      </p>
+                    </div>
+                  </div>
+                )}
             </div>
           ))}
         </div>
