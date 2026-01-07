@@ -17,9 +17,9 @@ export const BASIC_VALUE_QUESTIONS: BasicValueQuestion[] = [
     tier: 1,
     description:
       "「褒めるときは大きな声でみんなの前で、叱るときは二人きりで小さな声で」というモットーや、安心安全な場所を作るための宣言に同意しますか？",
-    options: ["同意して守る", "同意しない", "わからない", "答えない"],
+    options: ["同意して遵守する", "同意できない（利用しない）"],
     tags: ["system", "safety"],
-    externalLink: "https://github.com/masakinihirota/vns-masakinihirota-design/blob/main/0010%20%E5%85%A8%E4%BD%93/0002-%E3%82%AA%E3%82%A2%E3%82%B7%E3%82%B9%E5%AE%A3%E8%A8%80.md",
+    externalLink: "/help/glossary#oasis",
   },
 
   // 2. 人間宣言 (定義の修正)
@@ -33,7 +33,7 @@ export const BASIC_VALUE_QUESTIONS: BasicValueQuestion[] = [
       "「人は完璧ではなく間違いを犯す生き物であり、そこから立ち直り再挑戦（リスタート）することができる」という考え方を認めますか？",
     options: ["認める（寛容）", "認めない（厳格）", "わからない", "答えない"],
     tags: ["system", "forgiveness"],
-    externalLink: "https://github.com/masakinihirota/vns-masakinihirota-design/blob/main/0010%20%E5%85%A8%E4%BD%93/0003-%E4%BA%BA%E9%96%93%E5%AE%A3%E8%A8%80.md",
+    externalLink: "/help/glossary#human",
   },
 
   // 3. 千の仮面 (新規追加: 元のhumanの記述を分離)
@@ -51,6 +51,7 @@ export const BASIC_VALUE_QUESTIONS: BasicValueQuestion[] = [
       "答えない",
     ],
     tags: ["system", "identity"],
+    externalLink: "/help/glossary#thousand-masks",
   },
 
   // 4. シュレディンガーの猫主義 (新規追加: VNSの核となる思想)
@@ -68,6 +69,7 @@ export const BASIC_VALUE_QUESTIONS: BasicValueQuestion[] = [
       "答えない",
     ],
     tags: ["system", "philosophy"],
+    externalLink: "/help/glossary#schrodinger-cat",
   },
 
   // 5. 平和への希求
