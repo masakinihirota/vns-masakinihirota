@@ -1,4 +1,4 @@
-import { Sparkles, Info, AlertCircle } from "lucide-react";
+import { Sparkles, Info, AlertCircle, ExternalLink } from "lucide-react";
 import React from "react";
 import { BASIC_VALUE_QUESTIONS } from "./basic-values-data";
 import { WizardFormData } from "./types";
@@ -40,12 +40,12 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
       <div className="bg-teal-50 border border-teal-100 rounded-xl p-6">
         <h3 className="text-teal-900 font-bold flex items-center gap-2 mb-2">
           <Info className="w-5 h-5 text-teal-600" />
-          価値観の登録:基礎
+          価値観の登録: 基本中の基本
         </h3>
         <p className="text-teal-800 text-sm leading-relaxed">
-          あなたの思考回路の「土台」を確認する質問です。
+          あなたの思考回路の「土台」を確認する、VNSの根幹となる質問です。
           <br />
-          初回作成時に回答していただいております。回答内容はシステム内で安全に管理され、マッチングの最も重要な指標となります。
+          これらの回答内容はシステム内で安全に管理され、マッチングの最も重要な指標となります。
         </p>
       </div>
 
@@ -55,7 +55,7 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
             <Sparkles className="w-6 h-6 text-teal-600" />
           </div>
           <h2 className="text-2xl font-bold text-slate-800">
-            価値観のお題（基礎）
+            価値観のお題（基本）
           </h2>
         </div>
 
@@ -67,10 +67,21 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
             >
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <div className="flex items-center gap-3 mb-2">
+                  <div className="flex items-center gap-3 flex-wrap mb-2">
                     <h3 className="text-lg font-bold text-slate-800">
                       {q.title}
                     </h3>
+                    {q.externalLink && (
+                      <a
+                        href={q.externalLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1.5 text-slate-400 hover:text-teal-600 hover:bg-teal-50 rounded-full transition-all"
+                        title="用語集で詳しく見る"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    )}
                     {q.tier && (
                       <span
                         className={`text-[10px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${getTierColor(q.tier)}`}

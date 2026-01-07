@@ -752,36 +752,41 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 space-y-1.5 bg-slate-50/50">
-            {paginatedWorks.map((work: { title: string; category: string; genres: string[] }, idx: number) => (
-              <button
-                key={`${work.title}-${idx}`}
-                onClick={() => handleSelectAdd(work)}
-                className="w-full flex items-center justify-between p-3.5 bg-white hover:shadow-md hover:ring-2 hover:ring-pink-100 rounded-xl group transition-all text-left border border-slate-100"
-              >
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm text-slate-700 font-bold group-hover:text-pink-600 tracking-tight">
-                    {work.title}
-                  </span>
-                  {work.genres && (
-                    <div className="flex flex-wrap gap-1">
-                      {work.genres.slice(0, 3).map((g: string) => (
-                        <span key={g} className="text-[9px] text-slate-400">
-                          {g}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-[10px] font-black text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full group-hover:bg-pink-100 group-hover:text-pink-600 transition-colors">
-                    {work.category}
-                  </span>
-                  <div className="bg-slate-100 p-1.5 rounded-full group-hover:bg-pink-500 group-hover:text-white transition-all transform group-hover:rotate-90">
-                    <Plus className="w-3 h-3" />
+            {paginatedWorks.map(
+              (
+                work: { title: string; category: string; genres: string[] },
+                idx: number
+              ) => (
+                <button
+                  key={`${work.title}-${idx}`}
+                  onClick={() => handleSelectAdd(work)}
+                  className="w-full flex items-center justify-between p-3.5 bg-white hover:shadow-md hover:ring-2 hover:ring-pink-100 rounded-xl group transition-all text-left border border-slate-100"
+                >
+                  <div className="flex flex-col gap-1">
+                    <span className="text-sm text-slate-700 font-bold group-hover:text-pink-600 tracking-tight">
+                      {work.title}
+                    </span>
+                    {work.genres && (
+                      <div className="flex flex-wrap gap-1">
+                        {work.genres.slice(0, 3).map((g: string) => (
+                          <span key={g} className="text-[9px] text-slate-400">
+                            {g}
+                          </span>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                </div>
-              </button>
-            ))}
+                  <div className="flex items-center gap-3">
+                    <span className="text-[10px] font-black text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full group-hover:bg-pink-100 group-hover:text-pink-600 transition-colors">
+                      {work.category}
+                    </span>
+                    <div className="bg-slate-100 p-1.5 rounded-full group-hover:bg-pink-500 group-hover:text-white transition-all transform group-hover:rotate-90">
+                      <Plus className="w-3 h-3" />
+                    </div>
+                  </div>
+                </button>
+              )
+            )}
             {filteredRegisteredWorks.length === 0 && (
               <div className="py-20 text-center flex flex-col items-center gap-3">
                 <div className="p-4 bg-slate-100 rounded-full">
