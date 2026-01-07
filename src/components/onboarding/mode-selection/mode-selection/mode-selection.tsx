@@ -118,6 +118,10 @@ export const ModeSelection: React.FC<ModeSelectionProps> = ({
                 <CheckCircle2 size={16} className="text-blue-700" />
                 最短ルートでの目的達成
               </li>
+              <li className="flex items-center gap-2 text-xs text-muted-foreground mt-4 pt-4 border-t border-blue-500/10">
+                <CheckCircle2 size={14} />
+                ※ホーム画面やヘッダーからいつでもヘルプやチュートリアルを確認できます。
+              </li>
             </ul>
           </CardContent>
           <div className="p-6 pt-0 mt-auto">

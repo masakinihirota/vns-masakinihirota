@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, Bell, Sun, Moon, Globe, Megaphone, Coins } from "lucide-react";
+import { Search, Bell, Sun, Moon, Globe, Megaphone, Coins, HelpCircle } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -296,9 +296,8 @@ function NotificationBell() {
         {mockNotifications.map((notification) => (
           <DropdownMenuItem
             key={notification.id}
-            className={`flex flex-col items-start gap-1 ${
-              !notification.read ? "bg-accent/50" : ""
-            }`}
+            className={`flex flex-col items-start gap-1 ${!notification.read ? "bg-accent/50" : ""
+              }`}
           >
             <span className="text-sm">{notification.title}</span>
             <span className="text-xs text-muted-foreground">
@@ -317,6 +316,25 @@ function NotificationBell() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+// ヘルプボタン
+function HelpButton() {
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button variant="ghost" size="icon" className="h-9 w-9" asChild>
+          <Link href="/tutorial">
+            <HelpCircle className="h-4 w-4" />
+            <span className="sr-only">ヘルプ・チュートリアル</span>
+          </Link>
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>
+        <p>ヘルプ・チュートリアル</p>
+      </TooltipContent>
+    </Tooltip>
   );
 }
 
@@ -340,6 +358,7 @@ export function GlobalHeader() {
           <AdToggle />
           <LanguageToggle />
           <ThemeToggle />
+          <HelpButton />
           <Separator orientation="vertical" className="mx-2 h-4" />
           <PointsDisplay />
           <NotificationBell />
