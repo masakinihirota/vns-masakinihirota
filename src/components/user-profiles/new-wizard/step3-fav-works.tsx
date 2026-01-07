@@ -522,12 +522,6 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
     });
   };
 
-  // Reset filters when category changes
-  React.useEffect(() => {
-    setSelectedGenre("すべて");
-    setCurrentPage(1);
-  }, [selectedCategory, searchTerm]);
-
   const filteredRegisteredWorks = REGISTERED_WORKS.filter((w) => {
     const matchesSearch =
       w.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -542,6 +536,24 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
   });
 
   const totalPages = Math.ceil(filteredRegisteredWorks.length / ITEMS_PER_PAGE);
+
+  // Reset current page when filters change
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchTerm, selectedGenre]);
+
+  // Reset genre when category changes
+  React.useEffect(() => {
+    setSelectedGenre("すべて");
+  }, [selectedCategory]);
+
+  // Adjust current page if it becomes out of bounds due to items being selected
+  React.useEffect(() => {
+    if (totalPages > 0 && currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
+
   const paginatedWorks = filteredRegisteredWorks.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
@@ -740,7 +752,7 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 space-y-1.5 bg-slate-50/50">
-            {paginatedWorks.map((work, idx) => (
+            {paginatedWorks.map((work: { title: string; category: string; genres: string[] }, idx: number) => (
               <button
                 key={`${work.title}-${idx}`}
                 onClick={() => handleSelectAdd(work)}
@@ -752,7 +764,7 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
                   </span>
                   {work.genres && (
                     <div className="flex flex-wrap gap-1">
-                      {work.genres.slice(0, 3).map((g) => (
+                      {work.genres.slice(0, 3).map((g: string) => (
                         <span key={g} className="text-[9px] text-slate-400">
                           {g}
                         </span>
