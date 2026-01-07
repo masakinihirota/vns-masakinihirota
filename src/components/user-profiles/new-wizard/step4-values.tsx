@@ -69,7 +69,7 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
                 <div>
                   <div className="flex items-center gap-3 mb-2">
                     <h3 className="text-lg font-bold text-slate-800">
-                      #### {q.title}
+                      {q.title}
                     </h3>
                     {q.tier && (
                       <span
@@ -94,10 +94,9 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
                     onClick={() => updateBasicValue(q.id, opt)}
                     className={`
                       px-4 py-2 rounded-xl text-sm font-medium border transition-all
-                      ${
-                        formData.basicValues[q.id] === opt
-                          ? "bg-teal-600 text-white border-teal-600 shadow-md transform scale-105"
-                          : "bg-slate-50 text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-white"
+                      ${formData.basicValues[q.id] === opt
+                        ? "bg-teal-600 text-white border-teal-600 shadow-md transform scale-105"
+                        : "bg-slate-50 text-slate-600 border-slate-200 hover:border-teal-300 hover:bg-white"
                       }
                     `}
                   >
