@@ -11,6 +11,7 @@ import {
   Undo2,
   ArrowRight,
   ShieldCheck,
+  AlertCircle,
   Lock,
   Ghost,
   Sparkles,
@@ -660,6 +661,70 @@ export function BeginningCountry({
                       ]}
                     />
                   </section>
+
+                  {/* 04. Amazon Associate ID */}
+                  <section className="space-y-6 pt-12 border-t border-zinc-900">
+                    <div className="flex items-center space-x-4">
+                      <span className="w-2.5 h-6 bg-indigo-500 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.8)]" />
+                      <label className="text-lg font-black text-zinc-500 uppercase tracking-widest leading-none">
+                        04. 収益化の設定（任意）
+                      </label>
+                    </div>
+
+                    <div className="bg-zinc-900/30 border-2 border-zinc-900 rounded-[3rem] p-10 space-y-8">
+                      <div className="space-y-4">
+                        <label
+                          htmlFor="amazon-id"
+                          className="block text-xl font-bold text-zinc-300"
+                        >
+                          AmazonアソシエイトID
+                        </label>
+                        <input
+                          type="text"
+                          id="amazon-id"
+                          placeholder="example-22"
+                          className="w-full p-8 rounded-[2rem] bg-zinc-950 border-2 border-zinc-800 text-2xl font-bold text-white focus:border-indigo-500 outline-none transition-all placeholder:text-zinc-700"
+                          value={formData.amazon_associate_tag || ""}
+                          onChange={(e) =>
+                            onUpdateForm({
+                              amazon_associate_tag: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+
+                      <div className="space-y-6">
+                        <p className="text-lg text-zinc-500 font-medium leading-relaxed">
+                          あなたの活動を収益化するためのIDを入力します。
+                          <br />
+                          <span className="text-rose-500 font-black">
+                            ※システム上、一度登録したIDを後から変更することはできません。
+                          </span>
+                        </p>
+
+                        <div className="p-8 rounded-[2rem] bg-amber-500/5 border-2 border-amber-500/20 flex items-start space-x-6">
+                          <AlertCircle
+                            size={32}
+                            className="text-amber-500 shrink-0 mt-1"
+                          />
+                          <div className="text-lg text-amber-200/70 space-y-4">
+                            <p className="font-black text-amber-400">
+                              重要：Amazonアソシエイト規約への対応
+                            </p>
+                            <p className="leading-relaxed">
+                              報酬を正しく受け取るために、Amazonの管理画面で「Webサイト情報の登録」に本サイトのURLを追加してください。
+                            </p>
+                            <div className="bg-black/40 p-4 rounded-xl font-mono text-white select-all break-all">
+                              https://vns-masakinihirota.com
+                            </div>
+                            <p className="text-sm italic">
+                              ※本サイトのフッターには、規約に基づく関係性の開示声明を自動的に表示します。
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
             )}
@@ -699,6 +764,12 @@ export function BeginningCountry({
                         <span className="bg-zinc-800 text-zinc-400 text-xl px-8 py-3 rounded-full border-2 border-zinc-700 font-black uppercase tracking-widest">
                           {formData.role}
                         </span>
+                        {formData.amazon_associate_tag && (
+                          <div className="flex items-center gap-2 bg-amber-500/10 text-amber-500 text-xl px-8 py-3 rounded-full border-2 border-amber-500/20 font-black">
+                            <ShoppingBag size={24} />
+                            <span>{formData.amazon_associate_tag}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>

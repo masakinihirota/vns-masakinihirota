@@ -10,6 +10,7 @@ export interface BeginningCountryFormData {
   format: string;
   role: string;
   purpose: string[];
+  amazon_associate_tag?: string;
 }
 
 /**
