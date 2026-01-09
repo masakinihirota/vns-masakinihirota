@@ -1,0 +1,32 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mU:/2026src/vns-masakinihirota.worktrees/anti[39m
+
+ [31m笶ｯ[39m src/components/mandala-chart/mandala-chart/mandala-chart.logic.test.ts [2m([22m[2m3 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 9[2mms[22m[39m
+[31m     [31mﾃ・[31m 譁ｰ繝輔か繝ｼ繝槭ャ繝医・ Markdown 縺九ｉ繧ｰ繝ｪ繝・ラ繧偵ヱ繝ｼ繧ｹ縺ｧ縺阪ｋ[39m[32m 6[2mms[22m[39m
+     [32m笨・[39m 繧ｰ繝ｪ繝・ラ縺九ｉ譁ｰ繝輔か繝ｼ繝槭ャ繝医・ Markdown 繧堤函謌舌〒縺阪ｋ[32m 1[2mms[22m[39m
+     [32m笨・[39m 逶ｸ莠貞､画鋤縺ｧ繝・・繧ｿ縺御ｿ晄戟縺輔ｌ繧・(Round trip)[32m 0[2mms[22m[39m
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Tests 1 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+
+ FAIL  src/components/mandala-chart/mandala-chart/mandala-chart.logic.test.ts > MandalaChart Logic (9-block format) > 譁ｰ繝輔か繝ｼ繝槭ャ繝医・ Markdown 縺九ｉ繧ｰ繝ｪ繝・ラ繧偵ヱ繝ｼ繧ｹ縺ｧ縺阪ｋ
+AssertionError: expected '莉穂ｺ九・豺ｱ謗倥ｊ' to be '莉穂ｺ・ // Object.is equality
+
+Expected: "莉穂ｺ・
+Received: "莉穂ｺ・[7m縺ｮ豺ｱ謗倥ｊ"
+
+ 笶ｯ src/components/mandala-chart/mandala-chart/mandala-chart.logic.test.ts:31:26
+     29|     // Block 4 (笘・
+     30|     expect(blocks[4][4]).toBe("莠ｺ逕溘・逶ｮ讓・);
+     31|     expect(blocks[4][0]).toBe("莉穂ｺ・);
+       |                          ^
+     32|     expect(blocks[4][1]).toBe("蛛･蠎ｷ");
+     33| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/1]竡ｯ
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m2 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 19:02:04
+[2m   Duration [22m 1.87s[2m (transform 68ms, setup 225ms, import 34ms, tests 9ms, environment 1.11s)[22m
+

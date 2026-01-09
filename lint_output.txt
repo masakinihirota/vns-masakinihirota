@@ -1,0 +1,116 @@
+
+  ! eslint(no-unused-vars): Identifier 'Sparkles' is imported but never used.
+   ,-[src/app/page.tsx:4:3]
+ 3 | import {
+ 4 |   Sparkles,
+   :   ^^^^|^^^
+   :       `-- 'Sparkles' is imported here
+ 5 |   Home as HomeIcon,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Globe' is imported but never used.
+    ,-[src/app/page.tsx:10:3]
+  9 |   FlaskConical,
+ 10 |   Globe,
+    :   ^^|^^
+    :     `-- 'Globe' is imported here
+ 11 |   ChevronRight,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Settings2' is imported but never used.
+    ,-[src/app/page.tsx:12:3]
+ 11 |   ChevronRight,
+ 12 |   Settings2,
+    :   ^^^^|^^^^
+    :       `-- 'Settings2' is imported here
+ 13 |   ArrowRight,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'index' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/mandala-chart/mandala-editor/components/mandala-block.tsx:21:3]
+ 20 |   block,
+ 21 |   index,
+    :   ^^|^^
+    :     `-- 'index' is declared here
+ 22 |   isCenterBlock,
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'Download' is imported but never used.
+   ,-[src/components/mandala-chart/mandala-chart/mandala-chart.container.tsx:3:16]
+ 2 | 
+ 3 | import { Grid, Download, Trash2, Layout } from "lucide-react";
+   :                ^^^^|^^^
+   :                    `-- 'Download' is imported here
+ 4 | import { useState } from "react";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Type alias 'GridValue' is declared but never used.
+    ,-[src/components/mandala-chart/mandala-chart/mandala-chart.logic.ts:20:6]
+ 19 | 
+ 20 | type GridValue = string[][]; // 9x9 grid
+    :      ^^^^|^^^^
+    :          `-- 'GridValue' is declared here
+ 21 | 
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'MandalaData' is imported but never used.
+    ,-[src/components/mandala-chart/mandala-editor/mandala-editor.container.tsx:9:3]
+  8 |   SKELETON_MARKDOWN,
+  9 |   MandalaData,
+    :   ^^^^^|^^^^^
+    :        `-- 'MandalaData' is imported here
+ 10 |   INITIAL_MD,
+    `----
+  help: Consider removing this import.
+
+  x typescript(TS2305): Module '"vitest-axe"' has no exported member 'toHaveNoViolations'.
+   ,-[src/components/mandala-chart/mandala-editor/components/mandala-cell.test.tsx:3:15]
+ 2 | import { describe, it, expect, vi } from "vitest";
+ 3 | import { axe, toHaveNoViolations } from "vitest-axe";
+   :               ^^^^^^^^^^^^^^^^^^
+ 4 | import { MandalaCell } from "./mandala-cell";
+   `----
+
+  x typescript(TS2739): Type '{ markdown: string; setMarkdown: Mock<Procedure>; data: MandalaData; copied: boolean; onCopy: Mock<Procedure>; onReset: Mock<Procedure>; onClearBlock: Mock<...>; onCellEdit: Mock<...>; }' is missing the following properties from type 'MandalaEditorProps': displayMode, fitMode, onFitModeChange, onDisplayModeChange
+    ,-[src/components/mandala-chart/mandala-editor/mandala-editor.test.tsx:52:13]
+ 51 |   it("繧ｿ繧､繝医Ν縺瑚｡ｨ遉ｺ縺輔ｌ繧九％縺ｨ", () => {
+ 52 |     render(<MandalaEditor {...defaultProps} />);
+    :             ^^^^^^^^^^^^^
+ 53 |     expect(screen.getByText("Mandala Markdown Editor")).toBeInTheDocument();
+    `----
+
+  x typescript(TS2739): Type '{ markdown: string; setMarkdown: Mock<Procedure>; data: MandalaData; copied: boolean; onCopy: Mock<Procedure>; onReset: Mock<Procedure>; onClearBlock: Mock<...>; onCellEdit: Mock<...>; }' is missing the following properties from type 'MandalaEditorProps': displayMode, fitMode, onFitModeChange, onDisplayModeChange
+    ,-[src/components/mandala-chart/mandala-editor/mandala-editor.test.tsx:57:13]
+ 56 |   it("Markdown蜈･蜉帙お繝ｪ繧｢縺悟ｭ伜惠縺吶ｋ縺薙→", () => {
+ 57 |     render(<MandalaEditor {...defaultProps} />);
+    :             ^^^^^^^^^^^^^
+ 58 |     // react-simple-code-editor 縺ｯ蜀・Κ縺ｮtextarea縺ｫid繧剃ｻ倅ｸ弱〒縺阪ｋ
+    `----
+
+  x typescript(TS2739): Type '{ markdown: string; setMarkdown: Mock<Procedure>; data: MandalaData; copied: boolean; onCopy: Mock<Procedure>; onReset: Mock<Procedure>; onClearBlock: Mock<...>; onCellEdit: Mock<...>; }' is missing the following properties from type 'MandalaEditorProps': displayMode, fitMode, onFitModeChange, onDisplayModeChange
+    ,-[src/components/mandala-chart/mandala-editor/mandala-editor.test.tsx:65:35]
+ 64 |   it("繧｢繧ｯ繧ｻ繧ｷ繝薙Μ繝・ぅ驕募渚縺後↑縺・％縺ｨ", async () => {
+ 65 |     const { container } = render(<MandalaEditor {...defaultProps} />);
+    :                                   ^^^^^^^^^^^^^
+ 66 |     const results = await axe(container);
+    `----
+
+  x typescript-eslint(no-floating-promises): Promises must be awaited.
+    ,-[src/components/mandala-chart/mandala-editor/mandala-editor.container.tsx:44:5]
+ 43 |       const handleCopy = useCallback(() => {
+ 44 | ,->     navigator.clipboard.writeText(markdown).then(() => {
+ 45 | |         setCopied(true);
+ 46 | |         setTimeout(() => setCopied(false), 2000);
+ 47 | `->     });
+ 48 |       }, [markdown]);
+    `----
+  help: The promise must end with a call to .catch, or end with a call to .then with a rejection handler, or be explicitly marked as ignored with the `void` operator.
+
+Found 7 warnings and 5 errors.
+Finished in 2.9s on 320 files using 12 threads.

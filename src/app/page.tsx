@@ -1,15 +1,12 @@
 "use client";
 
 import {
-  Sparkles,
   Home as HomeIcon,
   Zap,
   Handshake,
   PenTool,
   FlaskConical,
-  Globe,
   ChevronRight,
-  Settings2,
   ArrowRight,
   Book,
 } from "lucide-react";
@@ -22,7 +19,7 @@ export default function Home() {
   const sections = [
     {
       title: "🚀 開発中・ピックアップ",
-      description: "現在アクティブに開発・検証されている機能",
+      description: "現在アクティブに開発・検証されている最新機能",
       color: "from-indigo-500/20 to-purple-500/20",
       icon: <Zap className="text-indigo-500" size={24} />,
       routes: [
@@ -34,74 +31,50 @@ export default function Home() {
         },
         {
           title: "曼荼羅チャート",
-          path: "/tools/mandala-chart",
-          desc: "深層心理や思考を81マスのグリッドで展開・整理（新装版）。",
+          path: "/mandala-chart",
+          desc: "深層心理や思考を81マスのグリッドで整理（プロフェッショナル版）。",
           badge: "New",
         },
         {
-          title: "新規プロフィールの作成 (Wizard)",
+          title: "新規プロフィールの作成",
           path: "/user-profiles/new",
-          desc: "新しいプロフィール（仮面）の受肉（作成）。ウィザード形式。",
+          desc: "新しいプロフィール（仮面）を受肉するウィザード形式の作成フロー。",
           badge: "New",
         },
         {
           title: "体験モード選択",
           path: "/onboarding/mode-selection",
-          desc: "ゲーミフィケーションかスタンダードかを選択。",
+          desc: "ゲーミフィケーションかスタンダードか、体験の質を選択。",
           badge: "Update",
         },
-        {
-          title: "ヘルプセンター",
-          path: "/help",
-          desc: "ドキュメントとサポートの総合案内ポータル。",
-          badge: "New",
-        },
       ],
     },
     {
-      title: "🌸 始まりの儀式",
-      description: "オンボーディング・プロジェクトへの参加",
-      color: "from-pink-500/20 to-rose-500/20",
-      icon: <Sparkles className="text-pink-500" size={24} />,
-      routes: [
-        {
-          title: "Root Accounts",
-          path: "/root-accounts",
-          desc: "ルートアカウントの詳細設定・属性管理・言語設定。",
-        },
-        {
-          title: "Onboarding PC",
-          path: "/onboarding-pc",
-          desc: "PC向けに最適化された新規登録・初期設定フロー。",
-        },
-      ],
-    },
-    {
-      title: "🏠 拠点と自己",
-      description: "ダッシュボード・プロフィール（仮面）管理",
+      title: "🏠 アカウントとプロフィール",
+      description: "自己の管理と拠点の構築",
       color: "from-blue-500/20 to-indigo-500/20",
       icon: <HomeIcon className="text-blue-500" size={24} />,
       routes: [
         {
           title: "メインダッシュボード",
           path: "/home",
-          desc: "システム全体の中心となるポータル画面。",
+          desc: "VNSシステム全体の中心となるポータル画面。",
           badge: "Core",
         },
         {
           title: "マイプロフィール",
           path: "/profile",
-          desc: "既存のプロフィール情報の閲覧、作品の評価確認。",
+          desc: "現在のプロフィール情報の閲覧、作品の評価・相性確認。",
         },
         {
           title: "仮面一覧 (Profiles)",
           path: "/user-profiles",
-          desc: "作成済みのプロフィール（仮面）の一覧、ゴミ箱機能。",
+          desc: "作成済みのプロフィール（仮面）の一覧管理。",
         },
         {
-          title: "プロフィールのテーマ選定",
-          path: "/profile-theme",
-          desc: "各プロフィールに適用するデザイン・着せ替え設定。",
+          title: "ルートアカウント",
+          path: "/root-accounts",
+          desc: "アカウント全体の属性管理・セキュリティ設定。",
         },
       ],
     },
@@ -130,13 +103,13 @@ export default function Home() {
         {
           title: "投票マッチ (Vote Match)",
           path: "/vote-match",
-          desc: "政治・社会制度などへの投票に基づく相性算出。",
+          desc: "社会・政治的価値観に基づく相性算出。",
         },
       ],
     },
     {
-      title: "🎨 創造と価値",
-      description: "作品登録・価値観・思考の整理",
+      title: "🎨 創造と価値観",
+      description: "作品登録・思考の整理",
       color: "from-amber-500/20 to-orange-500/20",
       icon: <PenTool className="text-amber-500" size={24} />,
       routes: [
@@ -149,35 +122,17 @@ export default function Home() {
         {
           title: "価値観の選定",
           path: "/values-selection",
-          desc: "自身にとって重要な5つの価値観を選択する画面。",
+          desc: "自分にとって重要な5つの価値観を定義する。",
         },
         {
-          title: "登録済み作品一覧",
+          title: "作品登録 / 一覧",
           path: "/works",
-          desc: "システムに登録されている全ての作品データのディレクトリ。",
-        },
-        {
-          title: "作品の新規登録",
-          path: "/work-registration-form",
-          desc: "新しい作品（コンテンツ）を世界に刻むためのフォーム。",
+          desc: "全ての作品データのディレクトリと新規登録フォーム。",
         },
       ],
     },
     {
-      title: "🛠️ 道具と工房",
-      description: "思考・計画・自己分析ツール群",
-      color: "from-cyan-500/20 to-sky-500/20",
-      icon: <Settings2 className="text-cyan-500" size={24} />,
-      routes: [
-        {
-          title: "曼荼羅チャート",
-          path: "/tools/mandala-chart",
-          desc: "81マスのグリッドで思考を展開、ピックアップセクションよりアクセス可能。",
-        },
-      ],
-    },
-    {
-      title: "📚 ドキュメント & ヘルプ",
+      title: "📚 ヘルプとドキュメント",
       description: "VNSの哲学・用語集・サポート",
       color: "from-teal-500/20 to-emerald-500/20",
       icon: <Book className="text-teal-600" size={24} />,
@@ -186,11 +141,12 @@ export default function Home() {
           title: "ヘルプセンター",
           path: "/help",
           desc: "ドキュメントとサポートの総合案内ポータル。",
+          badge: "Support",
         },
         {
           title: "用語集 (Glossary)",
           path: "/help/glossary",
-          desc: "オアシス宣言、人間宣言など根幹概念の解説。",
+          desc: "オアシス宣言など根幹概念の解説。",
         },
         {
           title: "よくある質問 (FAQ)",
@@ -200,38 +156,20 @@ export default function Home() {
       ],
     },
     {
-      title: "🧪 実験室 / Lab",
-      description: "開発中・検証用のUI/UXパーツ",
-      color: "from-purple-500/20 to-fuchsia-500/20",
-      icon: <FlaskConical className="text-purple-500" size={24} />,
-      routes: [
-        {
-          title: "プロダクトリスト(Demo)",
-          path: "/product-list",
-          desc: "Shop機能等のための製品一覧表示デモ。",
-        },
-        {
-          title: "価値観入力 (Legacy)",
-          path: "/values-input",
-          desc: "以前の価値観入力インターフェース。",
-        },
-        {
-          title: "価値観UI検証",
-          path: "/valus-screen",
-          desc: "特殊な価値観表示アニメーションの検証。",
-        },
-      ],
-    },
-    {
-      title: "🏛️ アーカイブ",
-      description: "旧機能・レガシーページ",
+      title: "🧪 ラボ & アーカイブ",
+      description: "実験的機能とレガシーページ",
       color: "from-zinc-500/20 to-slate-500/20",
-      icon: <Globe className="text-zinc-500" size={24} />,
+      icon: <FlaskConical className="text-zinc-500" size={24} />,
       routes: [
         {
-          title: "新規作成 (Legacy)",
-          path: "/user-profiles/new-legacy",
-          desc: "従来のプロフィール作成フォーム（参照用）。",
+          title: "プロダクトリスト",
+          path: "/product-list",
+          desc: "Shop機能等のための製品表示デモ。",
+        },
+        {
+          title: "旧 曼荼羅チャート",
+          path: "/tools/mandala-chart",
+          desc: "旧形式の曼荼羅チャート（互換用）。",
         },
         {
           title: "ランディングページ",
@@ -239,14 +177,9 @@ export default function Home() {
           desc: "VNSプロジェクト全体のトップビューページ。",
         },
         {
-          title: "オアシス宣言 (Old)",
-          path: "/oasis",
-          desc: "旧形式のオアシス宣言ページ。",
-        },
-        {
-          title: "人間性宣言 (Old)",
-          path: "/human",
-          desc: "旧形式の人間性宣言ページ。",
+          title: "レガシー・プロフィール",
+          path: "/user-profiles/new-legacy",
+          desc: "従来のプロフィール作成フォーム（参照用）。",
         },
       ],
     },

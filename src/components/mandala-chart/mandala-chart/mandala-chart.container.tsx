@@ -1,47 +1,38 @@
 "use client";
 
+import { Grid, Trash2, Layout } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { MandalaChart } from "./mandala-chart";
 
 export function MandalaChartContainer() {
   const [chartData, setChartData] = useState<string[][]>(() =>
     Array(9)
-      .fill(0)
+      .fill(null)
       .map(() => Array(9).fill(""))
   );
 
-  // Example data for demonstration
   const loadExampleData = () => {
     const exampleData = Array(9)
       .fill(null)
       .map(() => Array(9).fill(""));
 
-    // Center theme
-    exampleData[4][4] = "Personal Growth";
+    // Block 4: Center theme
+    exampleData[4][4] = "人生の目的：豊かな人生を送る";
+    exampleData[4][0] = "健康";
+    exampleData[4][1] = "仕事";
+    exampleData[4][2] = "趣味";
+    exampleData[4][3] = "家族";
+    exampleData[4][5] = "学び";
+    exampleData[4][6] = "貢献";
+    exampleData[4][7] = "お金";
+    exampleData[4][8] = "遊び";
 
-    // Main topics
-    exampleData[1][4] = "Career";
-    exampleData[4][1] = "Health";
-    exampleData[7][4] = "Relationships";
-    exampleData[4][7] = "Finance";
-
-    // Subtopics for Career
-    exampleData[0][3] = "Skills";
-    exampleData[0][4] = "Goals";
-    exampleData[0][5] = "Network";
-    exampleData[1][3] = "Learning";
-    exampleData[1][5] = "Projects";
-    exampleData[2][3] = "Mentors";
-    exampleData[2][4] = "Promotion";
-    exampleData[2][5] = "Balance";
+    // Block 0: 健康
+    exampleData[0][4] = "健康";
+    exampleData[0][0] = "早寝早起き";
+    exampleData[0][1] = "週3回のランニング";
+    exampleData[0][2] = "自炊を増やす";
 
     setChartData(exampleData);
   };
@@ -49,30 +40,38 @@ export function MandalaChartContainer() {
   const clearData = () => {
     setChartData(
       Array(9)
-        .fill(0)
+        .fill(null)
         .map(() => Array(9).fill(""))
     );
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
-      <CardHeader>
-        <CardTitle>Mandala Chart</CardTitle>
-        <CardDescription>
-          A visual brainstorming tool to organize your ideas and goals
-        </CardDescription>
-        <div className="flex gap-2 mt-2">
-          <Button onClick={loadExampleData} variant="outline">
-            Load Example
+    <div className="w-full max-w-[1400px] mx-auto space-y-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-800 dark:text-zinc-200 flex items-center gap-2">
+            <Layout className="text-indigo-600" size={28} />
+            Mandala Goal Chart (Split Mode)
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-zinc-400">
+            Markdownで思考し、マンダラ図で俯瞰する
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <Button onClick={loadExampleData} variant="outline" className="gap-2">
+            <Grid size={16} /> 構成案を読み込む
           </Button>
-          <Button onClick={clearData} variant="outline">
-            Clear
+          <Button
+            onClick={clearData}
+            variant="ghost"
+            className="text-red-500 hover:text-red-600 hover:bg-red-50 gap-2"
+          >
+            <Trash2 size={16} /> 初期化
           </Button>
         </div>
-      </CardHeader>
-      <CardContent>
-        <MandalaChart initialData={chartData} onChange={setChartData} />
-      </CardContent>
-    </Card>
+      </div>
+
+      <MandalaChart initialData={chartData} onChange={setChartData} />
+    </div>
   );
 }
