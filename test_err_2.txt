@@ -1,0 +1,40 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mU:/2026src/vns-masakinihirota.worktrees/anti[39m
+
+ [31mﾃ・[39m src/components/user-profiles/new-wizard/step3-fav-works.test.tsx[2m:21:5[22m[2m > [22mStep3FavWorks 髢｢騾｣繧ｨ繝ｳ繝・ぅ繝・ぅ縺ｫ繧医ｋ謚ｽ蜃ｺ繝・せ繝・[2m > [22m迚ｹ螳壹・菴懷ｮｶ・井ｺ穂ｸ企寇蠖ｦ・峨ｒ驕ｸ謚槭☆繧九→縲・未騾｣菴懷刀縺瑚｡ｨ遉ｺ縺輔ｌ繧・[33m 639[2mms[22m[39m
+[31m   竊・Button with text "莠穂ｸ企寇蠖ｦ" not found[39m
+ [31mﾃ・[39m src/components/user-profiles/new-wizard/step3-fav-works.test.tsx[2m:40:5[22m[2m > [22mStep3FavWorks 髢｢騾｣繧ｨ繝ｳ繝・ぅ繝・ぅ縺ｫ繧医ｋ謚ｽ蜃ｺ繝・せ繝・[2m > [22m迚ｹ螳壹・繧ｹ繧ｿ繧ｸ繧ｪ・井ｺｬ驛ｽ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ・峨ｒ驕ｸ謚槭☆繧九→縲・未騾｣繧｢繝九Γ縺瑚｡ｨ遉ｺ縺輔ｌ繧・[33m 326[2mms[22m[39m
+[31m   竊・Button with text "莠ｬ驛ｽ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ" not found[39m
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Tests 2 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+
+ FAIL  src/components/user-profiles/new-wizard/step3-fav-works.test.tsx:21:5 > Step3FavWorks 髢｢騾｣繧ｨ繝ｳ繝・ぅ繝・ぅ縺ｫ繧医ｋ謚ｽ蜃ｺ繝・せ繝・[2m > 迚ｹ螳壹・菴懷ｮｶ・井ｺ穂ｸ企寇蠖ｦ・峨ｒ驕ｸ謚槭☆繧九→縲・未騾｣菴懷刀縺瑚｡ｨ遉ｺ縺輔ｌ繧・Error: Button with text "莠穂ｸ企寇蠖ｦ" not found
+ 笶ｯ getButtonByText src/components/user-profiles/new-wizard/step3-fav-works.test.tsx:17:28
+     15|         const buttons = screen.getAllByRole("button");
+     16|         const button = buttons.find(b => b.textContent === text);
+     17|         if (!button) throw new Error(`Button with text "${text}" not f窶ｦ
+       |                            ^
+     18|         return button;
+     19|     };
+ 笶ｯ src/components/user-profiles/new-wizard/step3-fav-works.test.tsx:29:27
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/2]竡ｯ
+
+ FAIL  src/components/user-profiles/new-wizard/step3-fav-works.test.tsx:40:5 > Step3FavWorks 髢｢騾｣繧ｨ繝ｳ繝・ぅ繝・ぅ縺ｫ繧医ｋ謚ｽ蜃ｺ繝・せ繝・[2m > 迚ｹ螳壹・繧ｹ繧ｿ繧ｸ繧ｪ・井ｺｬ驛ｽ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ・峨ｒ驕ｸ謚槭☆繧九→縲・未騾｣繧｢繝九Γ縺瑚｡ｨ遉ｺ縺輔ｌ繧・Error: Button with text "莠ｬ驛ｽ繧｢繝九Γ繝ｼ繧ｷ繝ｧ繝ｳ" not found
+ 笶ｯ getButtonByText src/components/user-profiles/new-wizard/step3-fav-works.test.tsx:17:28
+     15|         const buttons = screen.getAllByRole("button");
+     16|         const button = buttons.find(b => b.textContent === text);
+     17|         if (!button) throw new Error(`Button with text "${text}" not f窶ｦ
+       |                            ^
+     18|         return button;
+     19|     };
+ 笶ｯ src/components/user-profiles/new-wizard/step3-fav-works.test.tsx:48:27
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[2/2]竡ｯ
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[90m (2)[39m
+[2m   Start at [22m 06:42:42
+[2m   Duration [22m 3.12s[2m (transform 132ms, setup 219ms, import 440ms, tests 968ms, environment 1.05s)[22m
+

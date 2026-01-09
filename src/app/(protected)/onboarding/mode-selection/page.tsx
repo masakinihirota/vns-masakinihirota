@@ -3,7 +3,7 @@ import * as Onboarding from "@/components/onboarding/mode-selection";
 
 /**
  * 経験モード選択ページ
- * ルートアカウント作成直後に、ゲーミフィケーション・モードかスタンダード・モードかを選択する。
+ * ルートアカウント作成直後に、ゲーミフィケーション・モードか通常モードかを選択する。
  */
 export default function ModeSelectionPage() {
   return (

@@ -1,9 +1,9 @@
+import "vitest-axe/extend-expect";
 import { render, screen, fireEvent } from "@testing-library/react";
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { Step3FavWorks } from "./step3-fav-works";
-import "vitest-axe/extend-expect";
 
 describe("Step3FavWorks タグフィルタリングのテスト", () => {
   const mockProps = {

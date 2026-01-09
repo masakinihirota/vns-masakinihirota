@@ -523,7 +523,11 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
                 </span>
               </h3>
               <p className="text-[10px] text-slate-400 leading-tight">
-                絶対相対評価のため、リストの中から<span className="text-pink-500 font-bold">「特に好きな作品（Tier1）」</span>を星（★）で選んでください。
+                絶対相対評価のため、リストの中から
+                <span className="text-pink-500 font-bold">
+                  「特に好きな作品（Tier1）」
+                </span>
+                を星（★）で選んでください。
               </p>
             </div>
             {favWorks.length === 0 && (
@@ -576,8 +580,16 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
                     <button
                       onClick={() => toggleBestWork(work.id)}
                       className={`p-2 rounded-lg transition-all ${work.isBest ? "text-yellow-500 bg-yellow-50 shadow-inner" : "text-slate-300 hover:text-yellow-400 hover:bg-slate-50"}`}
-                      aria-label={work.isBest ? "Tier1から外す" : "Tier1（最も好きな作品）に設定"}
-                      title={work.isBest ? "Tier1から外す" : "Tier1（最も好きな作品）に設定"}
+                      aria-label={
+                        work.isBest
+                          ? "Tier1から外す"
+                          : "Tier1（最も好きな作品）に設定"
+                      }
+                      title={
+                        work.isBest
+                          ? "Tier1から外す"
+                          : "Tier1（最も好きな作品）に設定"
+                      }
                     >
                       <Star
                         className={`w-5 h-5 ${work.isBest ? "fill-current" : ""}`}

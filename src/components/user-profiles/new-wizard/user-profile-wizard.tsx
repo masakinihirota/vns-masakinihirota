@@ -57,6 +57,7 @@ export const UserProfileWizard: React.FC = () => {
     role: "Leader", // Fixed
     type: "SELF",
     purposes: [],
+    customName: "", // 新規追加
     displayName: initialSuggestions[0], // Pre-pick first one
     zodiac: defaultZodiac.jp,
     nameSuggestions: initialSuggestions,

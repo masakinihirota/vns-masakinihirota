@@ -3,14 +3,15 @@ CREATE TYPE public.follow_status AS ENUM ('watch', 'follow');
 CREATE TYPE public.alliance_status AS ENUM ('requested', 'pre_partner', 'partner');
 
 -- Create follows table (One-way relationships: Watch, Follow)
+-- Relationships are now profile-to-profile (thousand masks)
 CREATE TABLE public.follows (
-    follower_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-    followed_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    follower_profile_id UUID NOT NULL REFERENCES public.user_profiles(id) ON DELETE CASCADE,
+    followed_profile_id UUID NOT NULL REFERENCES public.user_profiles(id) ON DELETE CASCADE,
     status public.follow_status NOT NULL DEFAULT 'follow',
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
-    CONSTRAINT follows_pkey PRIMARY KEY (follower_id, followed_id),
-    CONSTRAINT follows_self_check CHECK (follower_id != followed_id)
+    CONSTRAINT follows_pkey PRIMARY KEY (follower_profile_id, followed_profile_id),
+    CONSTRAINT follows_self_check CHECK (follower_profile_id != followed_profile_id)
 );
 
 -- Enable RLS for follows
@@ -18,38 +19,63 @@ ALTER TABLE public.follows ENABLE ROW LEVEL SECURITY;
 
 -- RLS Policies for follows
 
--- 1. SELECT: Users can see who they follow/watch.
-CREATE POLICY "Users can view their own follows and watches"
+-- 1. SELECT: Users can see who their profiles follow/watch.
+CREATE POLICY "Users can view their own profiles' follows and watches"
     ON public.follows FOR SELECT
-    USING (auth.uid() = follower_id);
+    USING (
+        follower_profile_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        )
+    );
 
--- 2. SELECT: Users can see who follows them (BUT NOT who watches them).
--- Watch status is stealth.
-CREATE POLICY "Users can view their followers (excluding watches)"
+-- 2. SELECT: Users can see who follows their profiles (BUT NOT who watches them).
+CREATE POLICY "Users can view their profiles' followers (excluding watches)"
     ON public.follows FOR SELECT
-    USING (auth.uid() = followed_id AND status = 'follow');
+    USING (
+        followed_profile_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        ) AND status = 'follow'
+    );
 
--- 3. INSERT: Users can create their own follows/watches.
-CREATE POLICY "Users can create their own follows"
+-- 3. INSERT: Users can create follows/watches for their own profiles.
+CREATE POLICY "Users can create follows for their own profiles"
     ON public.follows FOR INSERT
-    WITH CHECK (auth.uid() = follower_id);
+    WITH CHECK (
+        follower_profile_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        )
+    );
 
--- 4. UPDATE: Users can update their own follows/watches.
-CREATE POLICY "Users can update their own follows"
+-- 4. UPDATE: Users can update follows for their own profiles.
+CREATE POLICY "Users can update follows for their own profiles"
     ON public.follows FOR UPDATE
-    USING (auth.uid() = follower_id);
+    USING (
+        follower_profile_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        )
+    );
 
--- 5. DELETE: Users can delete their own follows/watches.
-CREATE POLICY "Users can delete their own follows"
+-- 5. DELETE: Users can delete follows for their own profiles.
+CREATE POLICY "Users can delete follows for their own profiles"
     ON public.follows FOR DELETE
-    USING (auth.uid() = follower_id);
+    USING (
+        follower_profile_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        )
+    );
 
 
 -- Create alliances table (Two-way relationships: Pre-Partner, Partner)
+-- Relationships are now profile-to-profile
 CREATE TABLE public.alliances (
     id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
-    user_a_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-    user_b_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    profile_a_id UUID NOT NULL REFERENCES public.user_profiles(id) ON DELETE CASCADE,
+    profile_b_id UUID NOT NULL REFERENCES public.user_profiles(id) ON DELETE CASCADE,
     status public.alliance_status NOT NULL DEFAULT 'requested',
     expires_at TIMESTAMPTZ, -- For pre-partner expiration
     metadata JSONB DEFAULT '{}'::jsonb, -- Store history, context, drift logs
@@ -57,8 +83,8 @@ CREATE TABLE public.alliances (
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
     -- Ensure A < B to prevent duplicate pairs (A-B and B-A)
-    CONSTRAINT alliances_user_order_check CHECK (user_a_id < user_b_id),
-    CONSTRAINT alliances_unique_pair UNIQUE (user_a_id, user_b_id)
+    CONSTRAINT alliances_profile_order_check CHECK (profile_a_id < profile_b_id),
+    CONSTRAINT alliances_unique_pair UNIQUE (profile_a_id, profile_b_id)
 );
 
 -- Enable RLS for alliances
@@ -67,34 +93,68 @@ ALTER TABLE public.alliances ENABLE ROW LEVEL SECURITY;
 -- RLS Policies for alliances
 
 -- 1. SELECT: Involved users can view the alliance.
-CREATE POLICY "Users can view their own alliances"
+CREATE POLICY "Users can view their own profiles' alliances"
     ON public.alliances FOR SELECT
-    USING (auth.uid() = user_a_id OR auth.uid() = user_b_id);
+    USING (
+        profile_a_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        ) OR
+        profile_b_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        )
+    );
 
--- 2. INSERT: Any user can initiate a request (logic should handle validation).
--- Note: Ideally creating a request needs only one signature, but enforcing A < B means
--- the initiator might be B. So we allow if auth.uid is either A or B.
-CREATE POLICY "Users can initiate alliances"
+-- 2. INSERT: Users can initiate alliances for their own profiles.
+CREATE POLICY "Users can initiate alliances for their own profiles"
     ON public.alliances FOR INSERT
-    WITH CHECK (auth.uid() = user_a_id OR auth.uid() = user_b_id);
+    WITH CHECK (
+        profile_a_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        ) OR
+        profile_b_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        )
+    );
 
--- 3. UPDATE: Involved users can update (e.g., accept request, change status).
-CREATE POLICY "Users can update their own alliances"
+-- 3. UPDATE: Involved users can update.
+CREATE POLICY "Users can update their own profiles' alliances"
     ON public.alliances FOR UPDATE
-    USING (auth.uid() = user_a_id OR auth.uid() = user_b_id);
+    USING (
+        profile_a_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        ) OR
+        profile_b_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        )
+    );
 
--- 4. DELETE: Involved users can dissolve the alliance.
-CREATE POLICY "Users can delete their own alliances"
+-- 4. DELETE: Involved users can dissolve.
+CREATE POLICY "Users can delete their own profiles' alliances"
     ON public.alliances FOR DELETE
-    USING (auth.uid() = user_a_id OR auth.uid() = user_b_id);
+    USING (
+        profile_a_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        ) OR
+        profile_b_id IN (
+            SELECT id FROM public.user_profiles
+            WHERE root_account_id IN (SELECT id FROM public.root_accounts WHERE auth_user_id = auth.uid())
+        )
+    );
 
 -- Indexes for performance
-CREATE INDEX idx_follows_follower ON public.follows(follower_id);
-CREATE INDEX idx_follows_followed ON public.follows(followed_id);
-CREATE INDEX idx_alliances_user_a ON public.alliances(user_a_id);
-CREATE INDEX idx_alliances_user_b ON public.alliances(user_b_id);
+CREATE INDEX idx_follows_follower_profile ON public.follows(follower_profile_id);
+CREATE INDEX idx_follows_followed_profile ON public.follows(followed_profile_id);
+CREATE INDEX idx_alliances_profile_a ON public.alliances(profile_a_id);
+CREATE INDEX idx_alliances_profile_b ON public.alliances(profile_b_id);
 
--- Validations and Triggers (Optional but recommended for timestamps)
+-- Validations and Triggers
 CREATE OR REPLACE FUNCTION public.update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN

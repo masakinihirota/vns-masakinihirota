@@ -147,6 +147,9 @@ export const GENRE_MAP: Record<string, string[]> = {
     "異世界",
     "青春",
   ],
+  作家: [],
+  スタジオ: [],
+  監督: [],
 };
 
 export const PURPOSES: PurposeOption[] = [
@@ -168,6 +171,9 @@ export const PURPOSES: PurposeOption[] = [
 export const WORK_CATEGORIES = [
   "漫画",
   "アニメ",
+  "作家",
+  "スタジオ",
+  "監督",
   "映画",
   "小説",
   "ゲーム",

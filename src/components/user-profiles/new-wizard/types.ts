@@ -38,7 +38,8 @@ export interface WizardFormData {
   role: string;
   type: string;
   purposes: string[];
-  displayName: string;
+  customName: string; // 自由に設定可能な名前
+  displayName: string; // 星座ネーム
   zodiac: string; // From root account
   nameSuggestions: string[]; // Current candidates
   ownWorks: WorkItem[];

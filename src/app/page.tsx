@@ -21,21 +21,49 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 export default function Home() {
   const sections = [
     {
-      title: "🌸 始まりの儀式",
-      description: "オンボーディング・プロジェクトへの参加",
-      color: "from-pink-500/20 to-rose-500/20",
-      icon: <Sparkles className="text-pink-500" size={24} />,
+      title: "🚀 開発中・ピックアップ",
+      description: "現在アクティブに開発・検証されている機能",
+      color: "from-indigo-500/20 to-purple-500/20",
+      icon: <Zap className="text-indigo-500" size={24} />,
       routes: [
         {
           title: "始まりの国",
           path: "/beginning-country",
           desc: "プロフィールの作成、または幽霊として観測を始める儀式ページ。",
+          badge: "PickUp",
+        },
+        {
+          title: "曼荼羅チャート",
+          path: "/tools/mandala-chart",
+          desc: "深層心理や思考を81マスのグリッドで展開・整理（新装版）。",
+          badge: "New",
+        },
+        {
+          title: "新規プロフィールの作成 (Wizard)",
+          path: "/user-profiles/new",
+          desc: "新しいプロフィール（仮面）の受肉（作成）。ウィザード形式。",
+          badge: "New",
         },
         {
           title: "体験モード選択",
           path: "/onboarding/mode-selection",
           desc: "ゲーミフィケーションかスタンダードかを選択。",
+          badge: "Update",
         },
+        {
+          title: "ヘルプセンター",
+          path: "/help",
+          desc: "ドキュメントとサポートの総合案内ポータル。",
+          badge: "New",
+        },
+      ],
+    },
+    {
+      title: "🌸 始まりの儀式",
+      description: "オンボーディング・プロジェクトへの参加",
+      color: "from-pink-500/20 to-rose-500/20",
+      icon: <Sparkles className="text-pink-500" size={24} />,
+      routes: [
         {
           title: "Root Accounts",
           path: "/root-accounts",
@@ -71,20 +99,9 @@ export default function Home() {
           desc: "作成済みのプロフィール（仮面）の一覧、ゴミ箱機能。",
         },
         {
-          title: "新規プロフィールの作成 (Wizard)",
-          path: "/user-profiles/new",
-          desc: "新しいプロフィール（仮面）の受肉（作成）。ウィザード形式。",
-          badge: "New",
-        },
-        {
           title: "プロフィールのテーマ選定",
           path: "/profile-theme",
           desc: "各プロフィールに適用するデザイン・着せ替え設定。",
-        },
-        {
-          title: "新規作成 (Legacy)",
-          path: "/user-profiles/new-legacy",
-          desc: "従来のプロフィール作成フォーム（参照用）。",
         },
       ],
     },
@@ -124,6 +141,17 @@ export default function Home() {
       icon: <PenTool className="text-amber-500" size={24} />,
       routes: [
         {
+          title: "価値観リスト",
+          path: "/values",
+          desc: "登録されている価値観の一覧と詳細。",
+          badge: "New",
+        },
+        {
+          title: "価値観の選定",
+          path: "/values-selection",
+          desc: "自身にとって重要な5つの価値観を選択する画面。",
+        },
+        {
           title: "登録済み作品一覧",
           path: "/works",
           desc: "システムに登録されている全ての作品データのディレクトリ。",
@@ -132,11 +160,6 @@ export default function Home() {
           title: "作品の新規登録",
           path: "/work-registration-form",
           desc: "新しい作品（コンテンツ）を世界に刻むためのフォーム。",
-        },
-        {
-          title: "価値観の選定",
-          path: "/values-selection",
-          desc: "自身にとって重要な5つの価値観を選択する画面。",
         },
       ],
     },
@@ -149,8 +172,7 @@ export default function Home() {
         {
           title: "曼荼羅チャート",
           path: "/tools/mandala-chart",
-          desc: "深層心理や思考を81マスのグリッドで展開・整理（新装版）。",
-          badge: "New",
+          desc: "81マスのグリッドで思考を展開、ピックアップセクションよりアクセス可能。",
         },
       ],
     },
@@ -164,24 +186,21 @@ export default function Home() {
           title: "ヘルプセンター",
           path: "/help",
           desc: "ドキュメントとサポートの総合案内ポータル。",
-          badge: "New",
         },
         {
           title: "用語集 (Glossary)",
           path: "/help/glossary",
           desc: "オアシス宣言、人間宣言など根幹概念の解説。",
-          badge: "Update",
         },
         {
           title: "よくある質問 (FAQ)",
           path: "/help/faq",
           desc: "基本的な使い方や困った時の解決方法。",
-          badge: "New",
         },
       ],
     },
     {
-      title: "🧪 実験室",
+      title: "🧪 実験室 / Lab",
       description: "開発中・検証用のUI/UXパーツ",
       color: "from-purple-500/20 to-fuchsia-500/20",
       icon: <FlaskConical className="text-purple-500" size={24} />,
@@ -209,6 +228,11 @@ export default function Home() {
       color: "from-zinc-500/20 to-slate-500/20",
       icon: <Globe className="text-zinc-500" size={24} />,
       routes: [
+        {
+          title: "新規作成 (Legacy)",
+          path: "/user-profiles/new-legacy",
+          desc: "従来のプロフィール作成フォーム（参照用）。",
+        },
         {
           title: "ランディングページ",
           path: "/landing-page",

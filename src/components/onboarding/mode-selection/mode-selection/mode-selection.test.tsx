@@ -29,11 +29,11 @@ describe("ModeSelection UI", () => {
     expect(onSelect).toHaveBeenCalledWith(true);
   });
 
-  it("スタンダード・モードを選択したときに onSelect(false) が呼ばれること", () => {
+  it("通常モードを選択したときに onSelect(false) が呼ばれること", () => {
     const onSelect = vi.fn();
     render(<ModeSelection onSelect={onSelect} />);
 
-    const button = screen.getByRole("button", { name: "効率的に利用する" });
+    const button = screen.getByRole("button", { name: "すぐにはじめる" });
     fireEvent.click(button);
 
     expect(onSelect).toHaveBeenCalledWith(false);

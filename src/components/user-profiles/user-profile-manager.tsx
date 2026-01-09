@@ -34,6 +34,7 @@ import React, { useState, useEffect } from "react";
 
 type Profile = {
   id: string;
+  customName?: string;
   displayName: string;
   username: string;
   role: string;
@@ -707,16 +708,18 @@ export default function UserProfileManager() {
                       </div>
 
                       <Avatar
-                        name={profile.displayName}
+                        name={profile.customName || profile.displayName}
                         src={profile.avatar}
                         className="h-8 w-8"
                       />
                       <div className="min-w-0">
-                        <div className="font-semibold text-sm truncate">
-                          {profile.displayName}
+                        <div className="font-semibold text-sm truncate flex items-center gap-1">
+                          {profile.customName || profile.displayName}
                         </div>
                         <div className="text-xs text-slate-500 truncate">
-                          @{profile.username}
+                          {profile.customName
+                            ? `@${profile.displayName}`
+                            : `@${profile.username}`}
                         </div>
                       </div>
                     </div>

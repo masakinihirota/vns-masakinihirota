@@ -60,11 +60,11 @@ export const ModeSelection: React.FC<ModeSelectionProps> = ({
             <ul className="space-y-2 text-sm text-foreground font-medium mb-6">
               <li className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-pink-700" />
-                案内キャラ（シュレディンガーちゃん等）が登場
+                導き手のキャラクター（シュレディンガーちゃん等）が登場
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-pink-700" />
-                RPG的なLvアップ演出とバッジ収集
+                RPG的なレベルアップ等
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 size={16} className="text-pink-700" />
@@ -98,9 +98,9 @@ export const ModeSelection: React.FC<ModeSelectionProps> = ({
             <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-2">
               <Zap className="text-blue-600" size={24} />
             </div>
-            <CardTitle className="text-2xl">スタンダード・モード</CardTitle>
+            <CardTitle className="text-2xl">通常モード</CardTitle>
             <CardDescription className="text-foreground/80 font-medium">
-              案内キャラや装飾を省き、効率的に機能を利用します。
+              すぐに自由に始められる
             </CardDescription>
           </CardHeader>
 
@@ -130,7 +130,7 @@ export const ModeSelection: React.FC<ModeSelectionProps> = ({
               onClick={() => onSelect(false)}
               disabled={isSaving}
             >
-              効率的に利用する
+              すぐにはじめる
             </Button>
           </div>
         </Card>

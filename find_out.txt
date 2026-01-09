@@ -1,0 +1,14 @@
+
+ RUN  v4.0.15 U:/2026src/vns-masakinihirota.worktrees/anti
+
+stdout | src/components/user-profiles/new-wizard/find.test.tsx:14:5 > Find Author > check for author text
+RESULT_FOUND_AUTHOR: [33mtrue[39m
+RESULT_TABS: [{"tab":"縺吶∋縺ｦ","found":true},{"tab":"繧｢繝九Γ","found":true},{"tab":"貍ｫ逕ｻ","found":true}]
+
+ 笨・src/components/user-profiles/new-wizard/find.test.tsx (1 test) 289ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  06:39:49
+   Duration  2.17s (transform 117ms, setup 190ms, import 371ms, tests 289ms, environment 953ms)
+

@@ -144,9 +144,12 @@ export const Step5Confirm: React.FC<Step5ConfirmProps> = ({ formData }) => {
                             className={`text-[10px] px-3 py-1.5 rounded-xl border flex items-center gap-1.5 font-bold transition-all ${w.isBest ? "bg-yellow-50 border-yellow-200 text-yellow-800 shadow-sm shadow-yellow-100 select-none" : "bg-white border-slate-200 text-slate-500"}`}
                           >
                             {w.isBest && (
-                              <Star className="w-3 h-3 fill-current" />
+                              <Star className="w-3 h-3 fill-current text-yellow-500" />
                             )}
-                            {w.title}
+                            <span className="opacity-60 font-black text-[8px] uppercase">
+                              {w.category}
+                            </span>
+                            <span>{w.title}</span>
                           </span>
                         ))}
                       </div>
