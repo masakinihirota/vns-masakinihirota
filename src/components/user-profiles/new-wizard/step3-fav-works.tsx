@@ -463,6 +463,13 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
         </div>
         <h2 className="text-2xl font-bold text-slate-800">好きな作品の登録</h2>
       </div>
+      <p className="text-slate-500 text-sm -mt-4 leading-relaxed">
+        <span className="hidden lg:inline">右側の候補リスト</span>
+        <span className="lg:hidden">下側の候補リスト</span>
+        から作品を選んで、あなたの「好き」を
+        <span className="hidden lg:inline">左側の</span>
+        リストに集めてください。
+      </p>
 
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8 min-h-0">
         {/* LEFT: Selected List & Manual Input */}
@@ -474,6 +481,7 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
             </h3>
             <div className="flex flex-col sm:flex-row gap-2">
               <select
+                aria-label="作品カテゴリ"
                 className="p-2 border border-slate-300 rounded-lg bg-slate-50 text-sm"
                 value={manualCategory}
                 onChange={(e) =>
@@ -488,6 +496,7 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
               </select>
               <input
                 type="text"
+                aria-label="作品タイトル"
                 placeholder="作品タイトル"
                 className="flex-1 p-2 border border-slate-300 rounded-lg text-sm"
                 value={manualTitle}
@@ -513,9 +522,19 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
               </span>
             </h3>
             {favWorks.length === 0 && (
-              <div className="text-center py-12 bg-slate-50 rounded-xl border border-slate-200 border-dashed text-slate-400 text-sm">
-                <Heart className="w-8 h-8 mx-auto mb-2 opacity-20" />
-                <p>右のリストから選ぶか、手動で追加してください</p>
+              <div className="text-center py-12 bg-white rounded-2xl border-2 border-slate-100 border-dashed text-slate-400 shadow-inner group">
+                <div className="relative mb-4">
+                  <Heart className="w-12 h-12 mx-auto text-pink-100 group-hover:text-pink-200 transition-colors animate-pulse" />
+                  <Heart className="w-6 h-6 absolute top-0 right-1/2 translate-x-6 text-pink-200 opacity-50" />
+                </div>
+                <p className="font-bold text-slate-600 mb-1">
+                  あなたの「好き」をここに集めましょう
+                </p>
+                <p className="text-xs text-slate-400">
+                  <span className="hidden lg:inline">右側</span>
+                  <span className="lg:hidden">下側</span>
+                  の候補リストにある作品の「＋」ボタンを押して追加してください
+                </p>
               </div>
             )}
             <div className="space-y-2">
@@ -572,8 +591,11 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
           </div>
         </div>
 
-        {/* RIGHT: Selectable List */}
         <div className="lg:col-span-5 flex flex-col gap-4 min-h-0">
+          <div className="flex items-center gap-2 mb-1">
+            <div className="w-1.5 h-6 bg-pink-500 rounded-full" />
+            <h3 className="font-bold text-slate-700">作品を探す（ここから選択）</h3>
+          </div>
           <div className="flex flex-col gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
             {/* Search */}
             <div className="relative">

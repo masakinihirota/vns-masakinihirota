@@ -1,7 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import React from "react";
 import { describe, it, expect, vi } from "vitest";
+import { axe } from "vitest-axe";
 import { Step3FavWorks } from "./step3-fav-works";
+import "vitest-axe/extend-expect";
 
 describe("Step3FavWorks タグフィルタリングのテスト", () => {
   const mockProps = {
@@ -48,5 +50,11 @@ describe("Step3FavWorks タグフィルタリングのテスト", () => {
     ).toBeInTheDocument();
     // ドラマ以外の「千と千尋の神隠し」などは非表示になるはず
     expect(screen.queryByText(/千と千尋の神隠し/)).not.toBeInTheDocument();
+  });
+
+  it("should have no accessibility violations", async () => {
+    const { container } = render(<Step3FavWorks {...mockProps} />);
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 });
