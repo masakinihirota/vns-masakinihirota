@@ -515,12 +515,17 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
 
           {/* Selected List */}
           <div className="space-y-3">
-            <h3 className="text-sm font-bold text-slate-600 flex items-center gap-2">
-              登録済みリスト
-              <span className="bg-slate-100 text-slate-400 text-[10px] px-2 py-0.5 rounded-full">
-                {favWorks.length}
-              </span>
-            </h3>
+            <div className="flex flex-col gap-1">
+              <h3 className="text-sm font-bold text-slate-600 flex items-center gap-2">
+                登録済みリスト
+                <span className="bg-slate-100 text-slate-400 text-[10px] px-2 py-0.5 rounded-full">
+                  {favWorks.length}
+                </span>
+              </h3>
+              <p className="text-[10px] text-slate-400 leading-tight">
+                絶対相対評価のため、リストの中から<span className="text-pink-500 font-bold">「特に好きな作品（Tier1）」</span>を星（★）で選んでください。
+              </p>
+            </div>
             {favWorks.length === 0 && (
               <div className="text-center py-12 bg-white rounded-2xl border-2 border-slate-100 border-dashed text-slate-400 shadow-inner group">
                 <div className="relative mb-4">
@@ -571,7 +576,8 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
                     <button
                       onClick={() => toggleBestWork(work.id)}
                       className={`p-2 rounded-lg transition-all ${work.isBest ? "text-yellow-500 bg-yellow-50 shadow-inner" : "text-slate-300 hover:text-yellow-400 hover:bg-slate-50"}`}
-                      title={work.isBest ? "ベストから外す" : "ベストに設定"}
+                      aria-label={work.isBest ? "Tier1から外す" : "Tier1（最も好きな作品）に設定"}
+                      title={work.isBest ? "Tier1から外す" : "Tier1（最も好きな作品）に設定"}
                     >
                       <Star
                         className={`w-5 h-5 ${work.isBest ? "fill-current" : ""}`}
@@ -594,7 +600,9 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
         <div className="lg:col-span-5 flex flex-col gap-4 min-h-0">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-1.5 h-6 bg-pink-500 rounded-full" />
-            <h3 className="font-bold text-slate-700">作品を探す（ここから選択）</h3>
+            <h3 className="font-bold text-slate-700">
+              作品を探す（ここから選択）
+            </h3>
           </div>
           <div className="flex flex-col gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
             {/* Search */}
