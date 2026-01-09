@@ -6,15 +6,10 @@ import {
   Quote,
   Sparkles,
   ShieldCheck,
-  Globe,
   Users,
   Search,
   Zap,
-  Heart,
   Briefcase,
-  GraduationCap,
-  MapPin,
-  Scale,
 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";

@@ -3,33 +3,138 @@ import React, { useState } from "react";
 import { WORK_CATEGORIES, GENRE_MAP } from "./constants";
 import { FavWorkItem } from "./types";
 
-interface Step3FavWorksProps {
-  favWorks: FavWorkItem[];
-  addFavWork: (
-    isManual: boolean,
-    data: {
-      category: string;
-      selectedTitle: string;
-      title: string;
-      genres?: string[];
-    }
-  ) => void;
-  toggleBestWork: (id: number) => void;
-  removeFavWork: (id: number) => void;
-}
-
 // Mock data for registered work list
 const REGISTERED_WORKS = [
-  // アニメ (50)
+  // 漫画
+  { title: "SLAM DUNK", category: "漫画", genres: ["スポーツ", "学園"] },
+  { title: "バガボンド", category: "漫画", genres: ["時代劇", "アクション"] },
+  { title: "MONSTER", category: "漫画", genres: ["サスペンス", "ミステリー"] },
+  { title: "20世紀少年", category: "漫画", genres: ["SF", "サスペンス"] },
+  {
+    title: "ジョジョの奇妙な冒険",
+    category: "漫画",
+    genres: ["アクション", "ファンタジー"],
+  },
+  { title: "3月のライオン", category: "漫画", genres: ["将棋", "ドラマ"] },
+  { title: "ハチミツとクローバー", category: "漫画", genres: ["恋愛", "芸大"] },
+  {
+    title: "HUNTER×HUNTER",
+    category: "漫画",
+    genres: ["冒険", "ファンタジー"],
+  },
+  { title: "幽☆遊☆白書", category: "漫画", genres: ["アクション", "オカルト"] },
+  {
+    title: "ONE PIECE",
+    category: "漫画",
+    genres: ["少年漫画", "アクション", "ファンタジー"],
+  },
+  {
+    title: "NARUTO -ナルト-",
+    category: "漫画",
+    genres: ["少年漫画", "アクション", "ファンタジー"],
+  },
+  {
+    title: "BLEACH",
+    category: "漫画",
+    genres: ["少年漫画", "アクション", "ファンタジー"],
+  },
+  {
+    title: "DRAGON BALL",
+    category: "漫画",
+    genres: ["少年漫画", "アクション", "ファンタジー"],
+  },
+  {
+    title: "るろうに剣心 -明治剣客浪漫譚-",
+    category: "漫画",
+    genres: ["少年漫画", "アクション", "歴史"],
+  },
+  {
+    title: "DEATH NOTE",
+    category: "漫画",
+    genres: ["少年漫画", "サスペンス", "ファンタジー"],
+  },
+  {
+    title: "バクマン。",
+    category: "漫画",
+    genres: ["少年漫画", "青春", "ドラマ"],
+  },
+  {
+    title: "ハイキュー!!",
+    category: "漫画",
+    genres: ["少年漫画", "スポーツ", "青春"],
+  },
+  {
+    title: "僕のヒーローアカデミア",
+    category: "漫画",
+    genres: ["少年漫画", "アクション", "学園"],
+  },
+  {
+    title: "ブラッククローバー",
+    category: "漫画",
+    genres: ["少年漫画", "アクション", "ファンタジー"],
+  },
+  {
+    title: "ワールドトリガー",
+    category: "漫画",
+    genres: ["少年漫画", "アクション", "SF"],
+  },
+  {
+    title: "キングダム",
+    category: "漫画",
+    genres: ["青年漫画", "アクション", "歴史"],
+  },
+  {
+    title: "ゴールデンカムイ",
+    category: "漫画",
+    genres: ["青年漫画", "アドベンチャー", "歴史"],
+  },
+  {
+    title: "月刊少女野崎くん",
+    category: "漫画",
+    genres: ["少女漫画", "ギャグ", "日常"],
+  },
+  { title: "よつばと！", category: "漫画", genres: ["日常", "コメディ"] },
+
+  // アニメ
+  {
+    title: "ヴァイオレット・エヴァーガーデン",
+    category: "アニメ",
+    genres: ["ドラマ", "ファンタジー"],
+  },
+  {
+    title: "響け！ユーフォニアム",
+    category: "アニメ",
+    genres: ["音楽", "学園"],
+  },
+  {
+    title: "千と千尋の神隠し",
+    category: "アニメ",
+    genres: ["ファンタジー", "冒険"],
+  },
+  {
+    title: "となりのトトロ",
+    category: "アニメ",
+    genres: ["ファンタジー", "ファミリー"],
+  },
+  { title: "君の名は。", category: "アニメ", genres: ["恋愛", "SF"] },
+  { title: "天気の子", category: "アニメ", genres: ["ドラマ", "ファンタジー"] },
+  { title: "パプリカ", category: "アニメ", genres: ["SF", "ミステリー"] },
+  { title: "四畳半神話大系", category: "アニメ", genres: ["コメディ", "日常"] },
   {
     title: "新世紀エヴァンゲリオン",
     category: "アニメ",
-    genres: ["SF", "アクション", "メンタル"],
+    genres: ["SF", "メカ"],
+  },
+  { title: "鬼滅の刃", category: "アニメ", genres: ["アクション", "時代劇"] },
+  {
+    title: "呪術廻戦",
+    category: "アニメ",
+    genres: ["アクション", "ダーク・ファンタジー"],
   },
   {
     title: "鋼の錬金術師 FULLMETAL ALCHEMIST",
     category: "アニメ",
-    genres: ["アクション", "ファンタジー", "ドラマ"],
+    genres: ["アクション", "ファンタジー"],
   },
   {
     title: "進撃の巨人",
@@ -72,16 +177,6 @@ const REGISTERED_WORKS = [
     genres: ["学園", "SF", "コメディ"],
   },
   {
-    title: "呪術廻戦",
-    category: "アニメ",
-    genres: ["アクション", "ファンタジー", "ホラー"],
-  },
-  {
-    title: "鬼滅の刃",
-    category: "アニメ",
-    genres: ["アクション", "ファンタジー", "歴史"],
-  },
-  {
     title: "チェンソーマン",
     category: "アニメ",
     genres: ["アクション", "ホラー", "ファンタジー"],
@@ -115,16 +210,6 @@ const REGISTERED_WORKS = [
     title: "リコリス・リコイル",
     category: "アニメ",
     genres: ["アクション", "日常"],
-  },
-  {
-    title: "ヴァイオレット・エヴァーガーデン",
-    category: "アニメ",
-    genres: ["ドラマ", "青春"],
-  },
-  {
-    title: "あの日見た花の名前を僕達はまだ知らない。",
-    category: "アニメ",
-    genres: ["日常", "青春", "ファンタジー"],
   },
   {
     title: "四月は君の嘘",
@@ -167,11 +252,6 @@ const REGISTERED_WORKS = [
     title: "無職転生 ～異世界行ったら本気だす～",
     category: "アニメ",
     genres: ["ファンタジー", "冒険", "青春"],
-  },
-  {
-    title: "響け！ユーフォニアム",
-    category: "アニメ",
-    genres: ["音楽", "学園", "青春"],
   },
   { title: "氷菓", category: "アニメ", genres: ["ミステリー", "学園", "日常"] },
   {
@@ -242,243 +322,25 @@ const REGISTERED_WORKS = [
     category: "アニメ",
     genres: ["スポーツ", "青春"],
   },
-  {
-    title: "天元突破グレンラガン",
-    category: "アニメ",
-    genres: ["SF", "アクション"],
-  },
-
-  // 漫画 (50)
-  {
-    title: "ONE PIECE",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "ファンタジー"],
-  },
-  {
-    title: "HUNTER×HUNTER",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "ファンタジー"],
-  },
-  {
-    title: "NARUTO -ナルト-",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "ファンタジー"],
-  },
-  {
-    title: "BLEACH",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "ファンタジー"],
-  },
-  {
-    title: "DRAGON BALL",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "ファンタジー"],
-  },
-  {
-    title: "ジョジョの奇妙な冒険",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "超常能力"],
-  },
-  {
-    title: "SLAM DUNK",
-    category: "漫画",
-    genres: ["少年漫画", "スポーツ", "学園"],
-  },
-  {
-    title: "幽☆遊☆白書",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "ファンタジー"],
-  },
-  {
-    title: "るろうに剣心 -明治剣客浪漫譚-",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "歴史"],
-  },
-  {
-    title: "DEATH NOTE",
-    category: "漫画",
-    genres: ["少年漫画", "サスペンス", "ファンタジー"],
-  },
-  {
-    title: "バクマン。",
-    category: "漫画",
-    genres: ["少年漫画", "青春", "ドラマ"],
-  },
-  {
-    title: "鋼の錬金術師",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "ファンタジー"],
-  },
-  { title: "銀魂", category: "漫画", genres: ["少年漫画", "ギャグ", "時代劇"] },
-  {
-    title: "ハイキュー!!",
-    category: "漫画",
-    genres: ["少年漫画", "スポーツ", "青春"],
-  },
-  {
-    title: "僕のヒーローアカデミア",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "学園"],
-  },
-  {
-    title: "ブラッククローバー",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "ファンタジー"],
-  },
-  {
-    title: "ワールドトリガー",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "SF"],
-  },
-  {
-    title: "キングダム",
-    category: "漫画",
-    genres: ["青年漫画", "アクション", "歴史"],
-  },
-  {
-    title: "ゴールデンカムイ",
-    category: "漫画",
-    genres: ["青年漫画", "アドベンチャー", "歴史"],
-  },
-  {
-    title: "月刊少女野崎くん",
-    category: "漫画",
-    genres: ["少女漫画", "ギャグ", "日常"],
-  },
-  { title: "よつばと！", category: "漫画", genres: ["日常", "コメディ"] },
-  {
-    title: "3月のライオン",
-    category: "漫画",
-    genres: ["青年漫画", "ドラマ", "将棋"],
-  },
-  {
-    title: "ハチミツとクローバー",
-    category: "漫画",
-    genres: ["少女漫画", "青春", "ドラマ"],
-  },
-  {
-    title: "ちはやふる",
-    category: "漫画",
-    genres: ["少女漫画", "スポーツ", "学園"],
-  },
-  { title: "宇宙兄弟", category: "漫画", genres: ["青年漫画", "SF", "ドラマ"] },
-  {
-    title: "リアル",
-    category: "漫画",
-    genres: ["青年漫画", "スポーツ", "ドラマ"],
-  },
-  {
-    title: "バガボンド",
-    category: "漫画",
-    genres: ["青年漫画", "アクション", "歴史"],
-  },
-  {
-    title: "ヴィンランド・サガ",
-    category: "漫画",
-    genres: ["青年漫画", "アクション", "歴史"],
-  },
-  {
-    title: "ベルセルク",
-    category: "漫画",
-    genres: ["青年漫画", "アクション", "ファンタジー"],
-  },
-  {
-    title: "MONSTER",
-    category: "漫画",
-    genres: ["青年漫画", "サスペンス", "ドラマ"],
-  },
-  {
-    title: "20世紀少年",
-    category: "漫画",
-    genres: ["青年漫画", "SF", "サスペンス"],
-  },
-  {
-    title: "おやすみプンプン",
-    category: "漫画",
-    genres: ["青年漫画", "ドラマ"],
-  },
-  {
-    title: "宝石の国",
-    category: "漫画",
-    genres: ["青年漫画", "アクション", "ファンタジー"],
-  },
-  {
-    title: "ブルーピリオド",
-    category: "漫画",
-    genres: ["青年漫画", "学園", "ドラマ"],
-  },
-  {
-    title: "アオアシ",
-    category: "漫画",
-    genres: ["青年漫画", "スポーツ", "青春"],
-  },
-  {
-    title: "ブルーロック",
-    category: "漫画",
-    genres: ["少年漫画", "スポーツ", "アクション"],
-  },
-  {
-    title: "チ。―地球の運動について―",
-    category: "漫画",
-    genres: ["青年漫画", "歴史", "ドラマ"],
-  },
-  { title: "ルックバック", category: "漫画", genres: ["ドラマ", "青春"] },
-  {
-    title: "スキップとローファー",
-    category: "漫画",
-    genres: ["青年漫画", "日常", "学園"],
-  },
-  {
-    title: "違国日記",
-    category: "漫画",
-    genres: ["女性漫画", "日常", "ドラマ"],
-  },
-  {
-    title: "その着せ替え人形は恋をする",
-    category: "漫画",
-    genres: ["青年漫画", "恋愛", "日常"],
-  },
-  {
-    title: "古見さんは、コミュ症です。",
-    category: "漫画",
-    genres: ["少年漫画", "学園", "コメディ"],
-  },
-  {
-    title: "かぐや様は告らせたい",
-    category: "漫画",
-    genres: ["青年漫画", "恋愛", "学園"],
-  },
-  {
-    title: "五等分の花嫁",
-    category: "漫画",
-    genres: ["少年漫画", "恋愛", "学園"],
-  },
-  {
-    title: "僕の心のヤバイやつ",
-    category: "漫画",
-    genres: ["少年漫画", "恋愛", "学園"],
-  },
-  {
-    title: "正反対な君と僕",
-    category: "漫画",
-    genres: ["少年漫画", "恋愛", "学園"],
-  },
-  {
-    title: "ダンダダン",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "オカルト"],
-  },
-  {
-    title: "怪獣8号",
-    category: "漫画",
-    genres: ["少年漫画", "アクション", "SF"],
-  },
-  {
-    title: "あかね噺",
-    category: "漫画",
-    genres: ["少年漫画", "ドラマ", "落語"],
-  },
 ];
+
+interface Step3FavWorksProps {
+  favWorks: FavWorkItem[];
+  addFavWork: (
+    isManual: boolean,
+    data: {
+      category: string;
+      selectedTitle: string;
+      title: string;
+      genres?: string[];
+    }
+  ) => void;
+  toggleBestWork: (id: number) => void;
+  removeFavWork: (id: number) => void;
+}
+
+const ALLOWED_CATEGORIES = ["漫画", "アニメ"] as const;
+type AllowedCategory = (typeof ALLOWED_CATEGORIES)[number];
 
 export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
   favWorks,
@@ -487,14 +349,20 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
   removeFavWork,
 }) => {
   const [manualTitle, setManualTitle] = useState("");
-  const [manualCategory, setManualCategory] = useState(
-    WORK_CATEGORIES[0] as string
+  // Filter WORK_CATEGORIES to only include "漫画" and "アニメ"
+  const allowedManualCategories = (
+    WORK_CATEGORIES as unknown as string[]
+  ).filter((c): c is AllowedCategory =>
+    (ALLOWED_CATEGORIES as unknown as string[]).includes(c)
+  );
+  const [manualCategory, setManualCategory] = useState<AllowedCategory>(
+    allowedManualCategories[0] || "漫画"
   );
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<
-    "すべて" | "アニメ" | "漫画"
-  >("すべて");
-  const [selectedGenre, setSelectedGenre] = useState<string>("すべて");
+  const [mainTab, setMainTab] = useState<"すべて" | "アニメ" | "漫画">(
+    "すべて"
+  );
+  const [selectedTag, setSelectedTag] = useState<string>("すべて");
   const [currentPage, setCurrentPage] = useState(1);
   const ITEMS_PER_PAGE = 15;
 
@@ -523,16 +391,32 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
   };
 
   const filteredRegisteredWorks = REGISTERED_WORKS.filter((w) => {
+    // 1. Tab filter (Scope)
+    const isInScope = mainTab === "すべて" || mainTab === w.category;
+
+    if (!isInScope) return false;
+
+    // 2. Search filter
     const matchesSearch =
       w.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       w.category.includes(searchTerm);
-    const matchesCategory =
-      selectedCategory === "すべて" || w.category === selectedCategory;
-    const matchesGenre =
-      selectedGenre === "すべて" ||
-      (w.genres && w.genres.includes(selectedGenre));
+
+    // 3. Tag filter
+    let matchesTag = false;
+    if (selectedTag === "すべて") {
+      matchesTag = true;
+    } else if (
+      (ALLOWED_CATEGORIES as unknown as string[]).includes(selectedTag)
+    ) {
+      // It's a category tag
+      matchesTag = w.category === selectedTag;
+    } else {
+      // It's a genre tag
+      matchesTag = w.genres?.includes(selectedTag) || false;
+    }
+
     const notSelected = !favWorks.some((f) => f.title === w.title);
-    return matchesSearch && matchesCategory && matchesGenre && notSelected;
+    return matchesSearch && matchesTag && notSelected;
   });
 
   const totalPages = Math.ceil(filteredRegisteredWorks.length / ITEMS_PER_PAGE);
@@ -540,12 +424,12 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
   // Reset current page when filters change
   React.useEffect(() => {
     setCurrentPage(1);
-  }, [selectedCategory, searchTerm, selectedGenre]);
+  }, [mainTab, searchTerm, selectedTag]);
 
-  // Reset genre when category changes
+  // Reset tag when tab changes
   React.useEffect(() => {
-    setSelectedGenre("すべて");
-  }, [selectedCategory]);
+    setSelectedTag("すべて");
+  }, [mainTab]);
 
   // Adjust current page if it becomes out of bounds due to items being selected
   React.useEffect(() => {
@@ -559,8 +443,17 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
     currentPage * ITEMS_PER_PAGE
   );
 
-  const availableGenres =
-    selectedCategory !== "すべて" ? GENRE_MAP[selectedCategory] : [];
+  const availableTags = React.useMemo(() => {
+    const tags = ["すべて"];
+    if (mainTab === "すべて") {
+      tags.push("アニメ", "漫画");
+    } else if (mainTab === "アニメ") {
+      tags.push("アニメ", ...(GENRE_MAP["アニメ"] || []));
+    } else if (mainTab === "漫画") {
+      tags.push("漫画", ...(GENRE_MAP["漫画"] || []));
+    }
+    return tags;
+  }, [mainTab]);
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 h-full flex flex-col">
@@ -577,15 +470,17 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
           {/* Manual Input */}
           <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
             <h3 className="text-sm font-bold text-slate-600 mb-3">
-              ない場合は手動で追加
+              右のリストにない場合は手動で追加してください。
             </h3>
             <div className="flex flex-col sm:flex-row gap-2">
               <select
                 className="p-2 border border-slate-300 rounded-lg bg-slate-50 text-sm"
                 value={manualCategory}
-                onChange={(e) => setManualCategory(e.target.value)}
+                onChange={(e) =>
+                  setManualCategory(e.target.value as AllowedCategory)
+                }
               >
-                {["漫画", "アニメ"].map((c) => (
+                {allowedManualCategories.map((c) => (
                   <option key={c} value={c}>
                     {c}
                   </option>
@@ -656,18 +551,19 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => toggleBestWork(work.id)}
-                      className={`flex items-center gap-1 text-xs px-3 py-1.5 rounded-lg font-bold transition-all ${work.isBest ? "bg-yellow-100 text-yellow-700 shadow-sm" : "text-slate-400 hover:text-yellow-500 bg-slate-50 hover:bg-yellow-50/50"}`}
+                      className={`p-2 rounded-lg transition-all ${work.isBest ? "text-yellow-500 bg-yellow-50 shadow-inner" : "text-slate-300 hover:text-yellow-400 hover:bg-slate-50"}`}
+                      title={work.isBest ? "ベストから外す" : "ベストに設定"}
                     >
                       <Star
-                        className={`w-3.5 h-3.5 ${work.isBest ? "fill-yellow-500" : ""}`}
+                        className={`w-5 h-5 ${work.isBest ? "fill-current" : ""}`}
                       />
-                      {work.isBest ? "Best" : "Set Best"}
                     </button>
                     <button
                       onClick={() => removeFavWork(work.id)}
-                      className="text-slate-300 hover:text-red-500 p-2 hover:bg-red-50 rounded-lg transition-colors"
+                      className="p-2 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all"
+                      title="削除"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
@@ -676,117 +572,85 @@ export const Step3FavWorks: React.FC<Step3FavWorksProps> = ({
           </div>
         </div>
 
-        {/* RIGHT: Search & Pick List */}
-        <div className="lg:col-span-5 flex flex-col bg-slate-50 rounded-2xl border border-slate-200 overflow-hidden h-[600px] lg:h-auto shadow-inner">
-          <div className="p-5 bg-white border-b border-slate-200 space-y-4">
-            {/* Category Tabs (Larger) */}
-            <div className="flex gap-1.5 p-1.5 bg-slate-100 rounded-xl">
-              {(["すべて", "アニメ", "漫画"] as const).map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`flex-1 py-2.5 px-3 text-sm font-bold rounded-lg transition-all ${selectedCategory === cat ? "bg-white text-pink-600 shadow-md transform scale-[1.02]" : "text-slate-500 hover:text-slate-800 hover:bg-slate-200/50"}`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            {/* Genre Chips (Filtering) */}
-            {availableGenres.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 scroll-smooth max-h-32 overflow-y-auto pr-1">
-                <button
-                  onClick={() => setSelectedGenre("すべて")}
-                  className={`px-3 py-1 text-xs font-bold rounded-full border transition-all ${selectedGenre === "すべて" ? "bg-pink-600 border-pink-600 text-white" : "bg-white border-slate-200 text-slate-500 hover:border-pink-300 hover:text-pink-600"}`}
-                >
-                  すべて
-                </button>
-                {availableGenres.map((genre) => (
-                  <button
-                    key={genre}
-                    onClick={() => setSelectedGenre(genre)}
-                    className={`px-3 py-1 text-xs font-bold rounded-full border transition-all ${selectedGenre === genre ? "bg-pink-600 border-pink-600 text-white shadow-sm" : "bg-white border-slate-200 text-slate-500 hover:border-pink-300 hover:text-pink-600"}`}
-                  >
-                    {genre}
-                  </button>
-                ))}
-              </div>
-            )}
-
+        {/* RIGHT: Selectable List */}
+        <div className="lg:col-span-5 flex flex-col gap-4 min-h-0">
+          <div className="flex flex-col gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+            {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3.5 top-3 w-4 h-4 text-slate-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
-                placeholder="登録済み作品を検索..."
-                className="w-full pl-10 p-2.5 border border-slate-300 rounded-xl text-sm bg-slate-50 focus:bg-white transition-all outline-none focus:ring-4 focus:ring-pink-100 focus:border-pink-300"
+                placeholder="候補から検索..."
+                className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-pink-500 outline-none transition-all"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
 
-            {totalPages > 1 && (
-              <div className="flex items-center justify-between pt-1">
+            {/* Main Tabs */}
+            <div className="flex bg-white p-1 rounded-lg border border-slate-200">
+              {["すべて", "アニメ", "漫画"].map((tab) => (
                 <button
-                  onClick={() =>
-                    setCurrentPage((p: number) => Math.max(1, p - 1))
-                  }
-                  disabled={currentPage === 1}
-                  className="px-3 py-1 text-[11px] font-black text-slate-400 hover:text-pink-600 disabled:opacity-20 transition-colors uppercase tracking-widest"
+                  key={tab}
+                  data-testid={`tab-${tab}`}
+                  onClick={() => setMainTab(tab as any)}
+                  className={`flex-1 py-1.5 text-xs font-bold rounded-md transition-all ${mainTab === tab ? "bg-slate-800 text-white shadow-sm" : "text-slate-500 hover:text-slate-800"}`}
                 >
-                  Prev
+                  {tab}
                 </button>
-                <span className="text-[11px] font-black text-pink-600/50 bg-pink-50 px-3 py-1 rounded-full uppercase tracking-widest">
-                  Page {currentPage} / {totalPages}
-                </span>
-                <button
-                  onClick={() =>
-                    setCurrentPage((p: number) => Math.min(totalPages, p + 1))
-                  }
-                  disabled={currentPage === totalPages}
-                  className="px-3 py-1 text-[11px] font-black text-slate-400 hover:text-pink-600 disabled:opacity-20 transition-colors uppercase tracking-widest"
-                >
-                  Next
-                </button>
+              ))}
+            </div>
+
+            {/* Tag Chips (Filtering) */}
+            {availableTags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 scroll-smooth max-h-32 overflow-y-auto pr-1">
+                {availableTags.map((tag) => (
+                  <button
+                    key={tag}
+                    onClick={() => setSelectedTag(tag)}
+                    data-testid={`tag-${tag}`}
+                    className={`px-3 py-1 text-xs font-bold rounded-full border transition-all ${selectedTag === tag ? "bg-pink-600 border-pink-600 text-white shadow-sm" : "bg-white border-slate-200 text-slate-500 hover:border-pink-300 hover:text-pink-600"}`}
+                  >
+                    {tag}
+                  </button>
+                ))}
               </div>
             )}
           </div>
 
-          <div className="flex-1 overflow-y-auto p-3 space-y-1.5 bg-slate-50/50">
-            {paginatedWorks.map(
-              (
-                work: { title: string; category: string; genres: string[] },
-                idx: number
-              ) => (
-                <button
-                  key={`${work.title}-${idx}`}
-                  onClick={() => handleSelectAdd(work)}
-                  className="w-full flex items-center justify-between p-3.5 bg-white hover:shadow-md hover:ring-2 hover:ring-pink-100 rounded-xl group transition-all text-left border border-slate-100"
-                >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-sm text-slate-700 font-bold group-hover:text-pink-600 tracking-tight">
-                      {work.title}
-                    </span>
-                    {work.genres && (
-                      <div className="flex flex-wrap gap-1">
-                        {work.genres.slice(0, 3).map((g: string) => (
-                          <span key={g} className="text-[9px] text-slate-400">
-                            {g}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-[10px] font-black text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full group-hover:bg-pink-100 group-hover:text-pink-600 transition-colors">
-                      {work.category}
-                    </span>
-                    <div className="bg-slate-100 p-1.5 rounded-full group-hover:bg-pink-500 group-hover:text-white transition-all transform group-hover:rotate-90">
-                      <Plus className="w-3 h-3" />
+          {/* Registered Works List */}
+          <div className="flex-1 overflow-y-auto pr-2 space-y-2 min-h-0">
+            {paginatedWorks.map((work) => (
+              <button
+                key={work.title}
+                onClick={() => handleSelectAdd(work)}
+                className="w-full flex items-center justify-between p-3 bg-white rounded-xl border border-slate-100 hover:border-pink-300 hover:shadow-md transition-all group text-left"
+              >
+                <div className="flex flex-col gap-1">
+                  <span className="font-bold text-slate-700 group-hover:text-pink-600 transition-colors">
+                    {work.title}
+                  </span>
+                  {work.genres && (
+                    <div className="flex flex-wrap gap-1">
+                      {work.genres.slice(0, 3).map((g) => (
+                        <span key={g} className="text-[9px] text-slate-400">
+                          {g}
+                        </span>
+                      ))}
                     </div>
+                  )}
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-[10px] font-black text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full group-hover:bg-pink-100 group-hover:text-pink-600 transition-colors">
+                    {work.category}
+                  </span>
+                  <div className="bg-slate-100 p-1.5 rounded-full group-hover:bg-pink-500 group-hover:text-white transition-all transform group-hover:rotate-90">
+                    <Plus className="w-3 h-3" />
                   </div>
-                </button>
-              )
-            )}
+                </div>
+              </button>
+            ))}
+
             {filteredRegisteredWorks.length === 0 && (
               <div className="py-20 text-center flex flex-col items-center gap-3">
                 <div className="p-4 bg-slate-100 rounded-full">

@@ -160,7 +160,7 @@ export const Step1Identity: React.FC<Step1IdentityProps> = ({
             <Smile className="w-6 h-6 text-purple-600" />
           </div>
           <h2 className="text-2xl font-bold text-slate-800">
-            4. 匿名表示名 (Identity)
+            4. 匿名IDの選択 (Identity)
           </h2>
         </div>
 
@@ -170,11 +170,15 @@ export const Step1Identity: React.FC<Step1IdentityProps> = ({
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="w-4 h-4 text-purple-500" />
                 <h3 className="font-bold text-slate-700">
-                  星座匿名ネームの選択
+                  星座匿名ネームの決定
                 </h3>
               </div>
               <p className="text-sm text-slate-500 mb-6 leading-relaxed">
-                あなたの星座に基づいた匿名の名前候補です。3つの中から選ぶか、更新ボタンで新しい候補を表示できます。
+                あなたの星座に基づいた匿名の名前候補です。この名前が初期の識別子（ID）として使用されます。
+                <br />
+                <span className="text-indigo-600 font-bold">
+                  ※「自由な名前」は作成後のプロフィール編集画面からいつでも設定可能です。
+                </span>
               </p>
 
               <div className="grid grid-cols-1 gap-3 mb-6">
@@ -210,14 +214,18 @@ export const Step1Identity: React.FC<Step1IdentityProps> = ({
 
             <div className="md:w-64 bg-slate-50 rounded-xl p-5 border border-slate-100">
               <h4 className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">
-                現在の選択
+                プレビュー (初期)
               </h4>
-              <div className="text-lg font-bold text-slate-800 break-words leading-tight bg-white p-3 rounded-lg border border-slate-200 shadow-sm min-h-[60px] flex items-center">
-                {formData.displayName || "未選択"}
+              <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm min-h-[80px] flex flex-col justify-center">
+                <div className="text-lg font-black text-slate-900 break-words leading-tight">
+                  {formData.displayName || "未選択"}
+                </div>
               </div>
-              <div className="mt-4 flex items-center gap-2 text-[10px] text-slate-400 font-medium">
-                <Shield className="w-3 h-3" />
-                価値観オアシスの匿名IDとして使用されます
+              <div className="mt-4 flex items-center gap-2 text-[10px] text-slate-400 font-medium leading-tight">
+                <Shield className="w-4 h-4 shrink-0" />
+                <div>
+                  初期IDとして使用されます。作成後に名前のカスタマイズが可能です
+                </div>
               </div>
             </div>
           </div>
