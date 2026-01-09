@@ -53,6 +53,14 @@ export const USER_TYPES: UserTypeOption[] = [
       "デザインの確認や動作テストのために、AIが架空のプロフィール（作品、価値観、設定）を自動生成してプロフィール項目を埋めます。",
     icon: <Monitor className="w-6 h-6" />,
   },
+  {
+    id: "CORPORATION",
+    title: "法人 (CORPORATION)",
+    subtitle: "企業・団体としての「仮面」を作成します。",
+    description:
+      "株式会社、合同会社、有限会社、NPO法人などのプロフィールを作成します。組織としての活動実績や理念を登録するのに適しています。",
+    icon: <Briefcase className="w-6 h-6" />,
+  },
 ];
 
 export const ZODIAC_DATA = [
