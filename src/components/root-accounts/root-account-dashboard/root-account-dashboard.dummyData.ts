@@ -61,6 +61,7 @@ export const dummyRootAccountData: RootAccount = {
   last_recovery_at: "2025-08-22T17:00:00Z",
   trust_duration_days: 45, // Initial 30 + 15 days active
   warning_count: 0,
+  amazon_associate_tag: "masakinihirota-22",
   status: "active",
   penalty_status: {
     total_penalties: 2,

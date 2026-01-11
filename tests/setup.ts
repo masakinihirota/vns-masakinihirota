@@ -4,7 +4,17 @@
  */
 
 import "@testing-library/jest-dom";
-import { vi } from "vitest";
+import "vitest-axe/extend-expect";
+import { expect, vi } from "vitest";
+import { type AxeMatchers } from "vitest-axe";
+import * as matchers from "vitest-axe/matchers";
+
+expect.extend(matchers);
+
+declare module "vitest" {
+  export interface Assertion<T = any> extends AxeMatchers {}
+  export interface AsymmetricMatchersContaining extends AxeMatchers {}
+}
 
 // next/fontのモック
 vi.mock("next/font/google", () => ({

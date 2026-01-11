@@ -17,13 +17,13 @@ describe("Step1ResidencePC", () => {
     expect(screen.getByText("居住エリア (Earth)")).toBeInTheDocument();
     // Map areas should be accessible buttons
     expect(
-      screen.getByRole("button", { name: "Select Area 1" })
+      screen.getByRole("button", { name: "Select Area 1 (Americas)" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Select Area 2" })
+      screen.getByRole("button", { name: "Select Area 2 (EMEA)" })
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: "Select Area 3" })
+      screen.getByRole("button", { name: "Select Area 3 (APAC)" })
     ).toBeInTheDocument();
 
     // 2. Cultural Sphere
@@ -36,7 +36,7 @@ describe("Step1ResidencePC", () => {
     expect(screen.getByText("国")).toBeInTheDocument();
 
     // 4. Region Label (Default "州/地域")
-    expect(screen.getByLabelText("州/地域")).toBeInTheDocument();
+    expect(screen.getByLabelText(/州\/地域/)).toBeInTheDocument();
 
     // Check fallback text for country detail
     expect(screen.getByText("文化圏を選択してください")).toBeInTheDocument();
@@ -46,7 +46,9 @@ describe("Step1ResidencePC", () => {
     render(<Step1ResidencePC {...defaultProps} />);
 
     // Target map area via accessible role
-    const area1Button = screen.getByRole("button", { name: "Select Area 1" });
+    const area1Button = screen.getByRole("button", {
+      name: "Select Area 1 (Americas)",
+    });
     fireEvent.click(area1Button);
 
     expect(mockUpdate).toHaveBeenCalledWith(
@@ -63,7 +65,9 @@ describe("Step1ResidencePC", () => {
     render(<Step1ResidencePC {...props} />);
 
     // Target map area via accessible role
-    const area1Button = screen.getByRole("button", { name: "Select Area 1" });
+    const area1Button = screen.getByRole("button", {
+      name: "Select Area 1 (Americas)",
+    });
     fireEvent.click(area1Button);
 
     // Should call update with null/undefined to clear selection
@@ -87,11 +91,11 @@ describe("Step1ResidencePC", () => {
     );
   });
 
-  it("shows prefecture input only when Japan is selected", () => {
+  it("shows correct input type based on country", () => {
     const { rerender } = render(<Step1ResidencePC {...defaultProps} />);
 
     // Initial: Not Japan (default "州/地域")
-    expect(screen.getByLabelText("州/地域")).toBeInTheDocument();
+    expect(screen.getByLabelText(/州\/地域/)).toBeInTheDocument();
     expect(screen.queryByLabelText("都道府県")).not.toBeInTheDocument();
 
     // Select Japan
@@ -106,7 +110,7 @@ describe("Step1ResidencePC", () => {
     const prefSelect = screen.getByLabelText("都道府県");
     expect(prefSelect.tagName).toBe("SELECT");
 
-    // Mock update to "USA"
+    // Mock update to "USA" (Now implies SELECT due to US_STATES)
     rerender(
       <Step1ResidencePC
         {...defaultProps}
@@ -114,9 +118,23 @@ describe("Step1ResidencePC", () => {
       />
     );
 
-    // Should see input for region with label "州/地域"
-    const prefInput = screen.getByLabelText("州/地域");
-    expect(prefInput.tagName).toBe("INPUT");
+    // Should see select for region with label "州/地域..."
+    const usaSelect = screen.getByLabelText(/州\/地域/);
+    expect(usaSelect.tagName).toBe("SELECT");
+
+    // Mock update to "Singapore" (No regions defined -> INPUT)
+    rerender(
+      <Step1ResidencePC
+        {...defaultProps}
+        data={{
+          activity_culture_code: "english",
+          selectedCountry: "シンガポール",
+        }}
+      />
+    );
+
+    const sgInput = screen.getByLabelText(/州\/地域/);
+    expect(sgInput.tagName).toBe("INPUT");
   });
 
   it("updates moon and mars locations", () => {

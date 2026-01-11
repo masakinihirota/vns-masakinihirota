@@ -1,6 +1,130 @@
-import { Globe, Bot, User } from "lucide-react";
-import React from "react";
-import { LANGUAGE_OPTIONS } from "../../onboarding/onboarding.logic";
+import { Globe, Bot, User, Check, ChevronDown, ChevronUp } from "lucide-react";
+import React, { useState } from "react";
+
+const LanguageList = ({
+  languages,
+  selected,
+  onToggle,
+  colorClass,
+}: {
+  languages: readonly string[];
+  selected: string[];
+  onToggle: (lang: string) => void;
+  colorClass: "indigo" | "emerald";
+}) => {
+  const [showAll, setShowAll] = useState(false);
+
+  // Show language if:
+  // 1. It is a major language (index < 5)
+  // 2. OR showAll is true
+  // 3. OR it is selected
+  const displayedLanguages = languages.filter((lang, index) => {
+    const isMajor = index < 5;
+    const isSelected = selected.includes(lang);
+    return isMajor || showAll || isSelected;
+  });
+
+  // Calculate if there are any hidden languages remaining to show "Show More"
+  // Used to toggle button visibility
+  const hasHiddenLanguages = languages.some((lang, index) => {
+    const isMajor = index < 5;
+    const isSelected = selected.includes(lang);
+    return !(isMajor || showAll || isSelected); // If it's NOT (major or showAll or selected), it's hidden.
+  });
+
+  // For "Show More" count, we just show total count of "Others" or similar?
+  // User asked for "Close" to hide unselected ones.
+  // We can stick to simple "Show All" toggle, but the list content is dynamic.
+
+  const getStyles = (isSelected: boolean) => {
+    if (colorClass === "indigo") {
+      return isSelected
+        ? "border-indigo-500 bg-white dark:bg-indigo-900/30 ring-2 ring-indigo-500 shadow-sm"
+        : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-indigo-300 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/20";
+    } else {
+      return isSelected
+        ? "border-emerald-500 bg-white dark:bg-emerald-900/30 ring-2 ring-emerald-500 shadow-sm"
+        : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-300 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20";
+    }
+  };
+
+  const getTextColor = (isSelected: boolean) => {
+    if (colorClass === "indigo") {
+      return isSelected
+        ? "text-indigo-700 dark:text-indigo-300"
+        : "text-slate-700 dark:text-slate-300";
+    } else {
+      return isSelected
+        ? "text-emerald-700 dark:text-emerald-300"
+        : "text-slate-700 dark:text-slate-300";
+    }
+  };
+
+  const getCheckColor = () => {
+    return colorClass === "indigo" ? "text-indigo-600" : "text-emerald-600";
+  };
+
+  return (
+    <div className="space-y-2 ml-1">
+      {displayedLanguages.map((lang) => {
+        const isSelected = selected.includes(lang);
+        return (
+          <div
+            key={lang}
+            onClick={() => onToggle(lang)}
+            className={`
+              flex items-center space-x-3 p-3 border rounded-lg cursor-pointer transition-all duration-200
+              ${getStyles(isSelected)}
+            `}
+          >
+            <div
+              className={`
+              flex-shrink-0 h-5 w-5 rounded border flex items-center justify-center transition-colors
+              ${
+                isSelected
+                  ? colorClass === "indigo"
+                    ? "border-indigo-500 bg-indigo-50 dark:border-indigo-400 dark:bg-indigo-900/50"
+                    : "border-emerald-500 bg-emerald-50 dark:border-emerald-400 dark:bg-emerald-900/50"
+                  : "border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700"
+              }
+            `}
+            >
+              {isSelected && (
+                <Check size={14} className={getCheckColor()} strokeWidth={3} />
+              )}
+            </div>
+            <span className={`text-sm font-medium ${getTextColor(isSelected)}`}>
+              {lang}
+            </span>
+          </div>
+        );
+      })}
+
+      {!showAll && hasHiddenLanguages && (
+        <button
+          type="button"
+          onClick={() => setShowAll(true)}
+          className="w-full flex items-center justify-center gap-2 p-2 mt-2 text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+        >
+          <ChevronDown size={16} />
+          もっと見る ({languages.length - displayedLanguages.length})
+        </button>
+      )}
+
+      {showAll && (
+        <button
+          type="button"
+          onClick={() => setShowAll(false)}
+          className="w-full flex items-center justify-center gap-2 p-2 mt-2 text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 transition-colors"
+        >
+          <ChevronUp size={16} />
+          閉じる
+        </button>
+      )}
+    </div>
+  );
+};
+import { LANGUAGE_OPTIONS } from "../onboarding.logic";
 
 interface Step4LanguagePCProps {
   data: any;
@@ -59,34 +183,12 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
               あなたの第一言語を選択してください。複数選択可能です。
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 ml-1">
-            {LANGUAGE_OPTIONS.map((lang) => (
-              <label
-                key={`native-${lang}`}
-                className={`
-                                flex items-center space-x-3 p-3 border rounded-lg cursor-pointer transition-all hover:shadow-md
-                                ${
-                                  (nativeLanguages || []).includes(lang)
-                                    ? "border-indigo-500 bg-white dark:bg-indigo-900/30 ring-2 ring-indigo-500 shadow-sm"
-                                    : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-indigo-300"
-                                }
-                            `}
-              >
-                <input
-                  type="checkbox"
-                  value={lang}
-                  checked={(nativeLanguages || []).includes(lang)}
-                  onChange={() => handleNativeToggle(lang)}
-                  className="h-5 w-5 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
-                />
-                <span
-                  className={`text-sm font-medium ${(nativeLanguages || []).includes(lang) ? "text-indigo-700 dark:text-indigo-300" : "text-slate-700 dark:text-slate-300"}`}
-                >
-                  {lang}
-                </span>
-              </label>
-            ))}
-          </div>
+          <LanguageList
+            languages={LANGUAGE_OPTIONS}
+            selected={nativeLanguages || []}
+            onToggle={handleNativeToggle}
+            colorClass="indigo"
+          />
         </div>
 
         {/* 2. Available Languages */}
@@ -103,34 +205,12 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
               コミュニケーション可能なその他の言語を選択してください。
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 ml-1">
-            {LANGUAGE_OPTIONS.map((lang) => (
-              <label
-                key={`avail-${lang}`}
-                className={`
-                            flex items-center space-x-3 p-3 border rounded-lg cursor-pointer transition-all hover:shadow-md
-                            ${
-                              (availableLanguages || []).includes(lang)
-                                ? "border-emerald-500 bg-white dark:bg-emerald-900/30 ring-2 ring-emerald-500 shadow-sm"
-                                : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-300"
-                            }
-                        `}
-              >
-                <input
-                  type="checkbox"
-                  value={lang}
-                  checked={(availableLanguages || []).includes(lang)}
-                  onChange={() => handleAvailableToggle(lang)}
-                  className="h-5 w-5 text-emerald-600 rounded border-gray-300 focus:ring-emerald-500"
-                />
-                <span
-                  className={`text-sm font-medium ${(availableLanguages || []).includes(lang) ? "text-emerald-700 dark:text-emerald-300" : "text-slate-700 dark:text-slate-300"}`}
-                >
-                  {lang}
-                </span>
-              </label>
-            ))}
-          </div>
+          <LanguageList
+            languages={LANGUAGE_OPTIONS}
+            selected={availableLanguages || []}
+            onToggle={handleAvailableToggle}
+            colorClass="emerald"
+          />
         </div>
 
         {/* 3. Language Ability Type */}

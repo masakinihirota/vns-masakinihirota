@@ -1,7 +1,5 @@
-import { RefreshCcw, Check } from "lucide-react";
-import React, { useState, useEffect } from "react";
-import { generateUniqueCandidates } from "@/lib/anonymous-name-generator";
-import { GENERATIONS } from "../../onboarding/onboarding.logic";
+import { AlertCircle } from "lucide-react";
+import { GENERATIONS } from "../onboarding.logic";
 
 interface Step3IdentityPCProps {
   data: any;
@@ -12,26 +10,7 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
   data,
   onUpdate,
 }) => {
-  const { display_id, zodiac_sign, display_name, birth_generation } = data;
-  const [candidates, setCandidates] = useState<string[]>([]);
-  const [excludedNames, setExcludedNames] = useState<string[]>([]);
-
-  // Reset candidates when Zodiac changes
-  useEffect(() => {
-    if (zodiac_sign) {
-      const newCandidates = generateUniqueCandidates(zodiac_sign, 3);
-      setCandidates(newCandidates);
-      setExcludedNames(newCandidates);
-      // If current display_name is not in new candidates (e.g. switched zodiac), clear it
-      // Or if it's the first time
-      if (!newCandidates.includes(display_name)) {
-        onUpdate({ display_name: "" });
-      }
-    } else {
-      setCandidates([]);
-      setExcludedNames([]);
-    }
-  }, [zodiac_sign]);
+  const { zodiac_sign, birth_generation, amazon_associate_tag } = data;
 
   const handleZodiacChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sign = e.target.value;
@@ -41,27 +20,12 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
     });
   };
 
-  const handleReloadNames = () => {
-    if (!zodiac_sign) return;
-    const newCandidates = generateUniqueCandidates(
-      zodiac_sign,
-      3,
-      excludedNames
-    );
-    setCandidates(newCandidates);
-    // Add new candidates to exclusion to prevent immediate repeat
-    // We can keep growing the list or just keep the last batch.
-    // User request: "直近で表示したものが被らないように" (Prevent overlap with recently displayed)
-    // So keeping the last displayed batch in exclusion is sufficient.
-    setExcludedNames(newCandidates);
-  };
-
-  const handleNameSelect = (name: string) => {
-    onUpdate({ display_name: name });
-  };
-
   const handleGenerationChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     onUpdate({ birth_generation: e.target.value });
+  };
+
+  const handleAmazonIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    onUpdate({ amazon_associate_tag: e.target.value });
   };
 
   return (
@@ -76,24 +40,8 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
       </div>
 
       <div className="bg-white dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
-        {/* 1. Display ID (Read-only) */}
-        <div>
-          <label className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300">
-            Display ID
-          </label>
-          <input
-            type="text"
-            value={display_id || ""}
-            readOnly
-            className="w-full p-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900/50 text-slate-500 dark:text-slate-400 font-mono text-sm"
-          />
-          <p className="text-xs text-slate-500 mt-1">
-            ※システムにより自動生成されるユニークIDです。
-          </p>
-        </div>
-
-        {/* 2. Zodiac Sign & Name Selection */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* 2. Zodiac Sign */}
+        <div className="space-y-6">
           <div>
             <label
               htmlFor="zodiac"
@@ -124,52 +72,8 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
             </select>
           </div>
 
-          {/* Anonymous Name Selection */}
-          <div className="space-y-3">
-            <div className="flex justify-between items-center">
-              <label className="block text-sm font-medium text-slate-700 dark:text-slate-300">
-                表示名 (匿名)
-              </label>
-              {candidates.length > 0 && (
-                <button
-                  type="button"
-                  onClick={handleReloadNames}
-                  className="text-xs flex items-center gap-1 text-indigo-600 dark:text-indigo-400 hover:underline"
-                >
-                  <RefreshCcw size={12} />
-                  候補を更新
-                </button>
-              )}
-            </div>
-
-            {!zodiac_sign ? (
-              <div className="p-4 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 text-slate-400 text-sm text-center">
-                星座を選択すると候補が表示されます
-              </div>
-            ) : (
-              <div className="space-y-2">
-                {candidates.map((name) => (
-                  <button
-                    key={name}
-                    type="button"
-                    onClick={() => handleNameSelect(name)}
-                    className={`w-full p-3 rounded-lg border text-left flex items-center justify-between transition-all ${
-                      display_name === name
-                        ? "border-indigo-500 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 ring-1 ring-indigo-500"
-                        : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300"
-                    }`}
-                  >
-                    <span className="font-medium">{name}</span>
-                    {display_name === name && (
-                      <Check
-                        size={16}
-                        className="text-indigo-600 dark:text-indigo-400"
-                      />
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
+          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg text-sm text-slate-500">
+            ルートアカウントに名前は不要です。星座のみ設定してください。
           </div>
         </div>
 
@@ -179,7 +83,10 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
             htmlFor="generation"
             className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
           >
-            生誕世代
+            生誕世代(生まれた年){" "}
+            <span className="text-xs text-slate-500 font-normal ml-2">
+              ※5年毎
+            </span>
           </label>
           <select
             id="generation"
@@ -195,6 +102,59 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
               </option>
             ))}
           </select>
+        </div>
+
+        {/* 5. Amazon Associate ID */}
+        <div className="pt-4 border-t border-slate-100 dark:border-slate-700">
+          <label
+            htmlFor="amazon-id"
+            className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
+          >
+            AmazonアソシエイトID (任意)
+          </label>
+          <input
+            type="text"
+            id="amazon-id"
+            placeholder="example-22"
+            className="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+            value={amazon_associate_tag || ""}
+            onChange={handleAmazonIdChange}
+          />
+          <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
+            あなたの活動を収益化するためのIDを入力します。
+            <br />
+            <span className="text-red-600 dark:text-red-400 font-bold">
+              後から変更は出来ません。
+            </span>
+            <br />
+            ※アフィリエイトURLの表示には、一定の信頼継続日数や活動度、サイトへの貢献度が必要です。また、ペナルティ期間中は使用されません。
+          </p>
+
+          <div className="mt-4 p-4 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
+            <div className="text-xs text-amber-800 dark:text-amber-200 space-y-2">
+              <p className="font-bold">
+                Amazonアソシエイト規約に関する重要事項
+              </p>
+              <p>
+                報酬を正しく受け取るために、必ずAmazonアソシエイト管理画面の「Webサイト情報の登録」に本サイトのURLを追加してください。
+              </p>
+              <p className="bg-white/50 dark:bg-black/20 p-2 rounded font-mono break-all select-all">
+                https://vns-masakinihirota.com
+              </p>
+              <p>
+                また、Amazonアソシエイト規約に基づき、アフィリエイトであることを明示する必要があります。本サイトのフッターには以下の声明を表示しています。
+                <br />
+                <span className="italic">
+                  「Amazon
+                  アソシエイトとして、対象となる購入から収入を得ています。」
+                </span>
+              </p>
+              <p className="opacity-80">
+                登録がない場合や明示がない場合、Amazonの規約によりアカウント停止等のペナルティ対象となる恐れがあります。
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

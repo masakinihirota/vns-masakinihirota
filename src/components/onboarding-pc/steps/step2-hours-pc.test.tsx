@@ -21,7 +21,7 @@ describe("Step2HoursPC", () => {
 
   it("renders core activity hours title and initial times", () => {
     render(<Step2HoursPC {...defaultProps} />);
-    expect(screen.getByText("コア活動時間")).toBeInTheDocument();
+    expect(screen.getByText("アクティブ時間（連絡OK）")).toBeInTheDocument();
     expect(screen.getByText("第一活動時間")).toBeInTheDocument();
     // Check for displayed time range
     expect(screen.getByText(/09:00 ～ 18:00/)).toBeInTheDocument();

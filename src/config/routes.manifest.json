@@ -14,60 +14,60 @@
     "visibleInMenu": true
   },
   {
+    "path": "/groups",
+    "label": "グループ",
+    "group": "main",
+    "order": 30,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/nations",
+    "label": "国",
+    "group": "main",
+    "order": 40,
+    "visibleInMenu": true
+  },
+  {
     "path": "/matching",
     "label": "マッチング",
     "group": "main",
-    "order": 30,
+    "order": 50,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/works",
+    "label": "作品",
+    "group": "main",
+    "order": 60,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/values",
+    "label": "価値観",
+    "group": "main",
+    "order": 70,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/skills",
+    "label": "スキル",
+    "group": "main",
+    "order": 80,
     "visibleInMenu": true
   },
   {
     "path": "/recommendations",
     "label": "おすすめ",
     "group": "main",
-    "order": 40,
-    "visibleInMenu": true
+    "order": 90,
+    "visibleInMenu": false
   },
   {
     "path": "/search",
     "label": "検索",
     "group": "group",
     "order": 10,
-    "visibleInMenu": true
-  },
-  {
-    "path": "/nations",
-    "label": "国",
-    "group": "group",
-    "order": 20,
-    "visibleInMenu": true
-  },
-  {
-    "path": "/groups",
-    "label": "グループ",
-    "group": "group",
-    "order": 30,
-    "visibleInMenu": true
-  },
-  {
-    "path": "/works",
-    "label": "作品",
-    "group": "registration",
-    "order": 10,
-    "visibleInMenu": true
-  },
-  {
-    "path": "/values",
-    "label": "価値観",
-    "group": "registration",
-    "order": 20,
-    "visibleInMenu": true
-  },
-  {
-    "path": "/skills",
-    "label": "スキル",
-    "group": "registration",
-    "order": 30,
-    "visibleInMenu": true
+    "visibleInMenu": false
   },
   {
     "path": "/lists",

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { Step1ResidencePC } from "./steps/step1-residence-pc";
@@ -31,6 +32,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
     uses_ai_translation: false,
     display_id: `user-${userId.substring(0, 8)}`, // Mock display ID
     nativeLanguages: [],
+    amazon_associate_tag: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -51,7 +53,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       alert("PCオンボーディング完了！ (デモ)");
-      router.push("/root-accounts");
+      router.push("/beginning-country");
     } catch (e) {
       console.error(e);
       alert("エラーが発生しました");
@@ -81,7 +83,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
       <div className="w-full md:w-64 flex-shrink-0">
         <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 shadow-lg h-full sticky top-4">
           <h1 className="text-xl font-bold mb-8 text-slate-900 dark:text-white">
-            Profile Setup
+            アカウント作成
           </h1>
 
           <div className="space-y-6 relative">
@@ -89,14 +91,18 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
             <div className="absolute left-4 top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-slate-800 -z-10" />
 
             {[1, 2, 3, 4].map((step) => (
-              <div key={step} className="flex items-center gap-4">
+              <button
+                key={step}
+                onClick={() => setCurrentStep(step)}
+                className="flex items-center gap-4 w-full text-left group"
+              >
                 <div
                   className={`
                                     w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-all
                                     ${
                                       currentStep >= step
                                         ? "bg-indigo-600 text-white shadow-md ring-4 ring-indigo-50 dark:ring-indigo-900/30"
-                                        : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                                        : "bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-slate-200 dark:group-hover:bg-slate-700"
                                     }
                                 `}
                 >
@@ -105,16 +111,67 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                 <span
                   className={`
                                     text-sm font-medium transition-colors
-                                    ${currentStep === step ? "text-indigo-600 dark:text-indigo-400" : "text-slate-500 dark:text-slate-500"}
+                                    ${currentStep === step ? "text-indigo-600 dark:text-indigo-400" : "text-slate-500 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300"}
                                 `}
                 >
-                  {step === 1 && "Residence & Culture"}
-                  {step === 2 && "Activity Hours"}
-                  {step === 3 && "Identity"}
-                  {step === 4 && "Language"}
+                  {step === 1 && "居住地・文化圏"}
+                  {step === 2 && "活動時間"}
+                  {step === 3 && "アイデンティティ"}
+                  {step === 4 && "言語設定"}
                 </span>
-              </div>
+              </button>
             ))}
+          </div>
+
+          {/* Guide Character */}
+          <div className="hidden md:block mt-8 border-t border-slate-100 dark:border-slate-800 pt-6 text-center">
+            <div className="relative w-28 h-28 mx-auto mb-3">
+              <Image
+                src="/images/characters/schrodinger-guide.png"
+                alt="シュレディンガーちゃん"
+                fill
+                className="object-contain drop-shadow-lg scale-110"
+              />
+            </div>
+            <div className="bg-indigo-50 dark:bg-slate-800 p-3 rounded-xl text-xs text-indigo-900 dark:text-indigo-200 relative border border-indigo-100 dark:border-slate-700">
+              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-indigo-50 dark:bg-slate-800 rotate-45 border-l border-t border-indigo-100 dark:border-slate-700" />
+              <p className="font-bold leading-relaxed">
+                {currentStep === 1 && (
+                  <>
+                    まずは住んでいる場所と
+                    <br />
+                    文化圏を教えてね。
+                    <br />
+                    すべてはここから始まるよ！
+                  </>
+                )}
+                {currentStep === 2 && (
+                  <>
+                    いつ活動しているの？
+                    <br />
+                    一緒に働いたり遊んだりする
+                    <br />
+                    時間を教えてね！
+                  </>
+                )}
+                {currentStep === 3 && (
+                  <>
+                    生まれた世代と
+                    <br />
+                    星座を教えてね！
+                  </>
+                )}
+                {currentStep === 4 && (
+                  <>
+                    何語で話すのが得意？
+                    <br />
+                    AI翻訳を使えば世界中の人と
+                    <br />
+                    お話しできるよ✨
+                  </>
+                )}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -128,9 +185,9 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
             {currentStep > 1 ? (
               <button
                 onClick={prevStep}
-                className="px-6 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="px-6 py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors bg-white dark:bg-transparent"
               >
-                Back
+                戻る
               </button>
             ) : (
               <div />
@@ -141,7 +198,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                 onClick={nextStep}
                 className="px-8 py-2.5 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 transition-all transform hover:-translate-y-0.5"
               >
-                Next
+                次へ
               </button>
             ) : (
               <button
@@ -149,7 +206,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                 disabled={isSubmitting}
                 className="px-8 py-2.5 rounded-lg bg-emerald-600 text-white font-medium hover:bg-emerald-700 shadow-lg shadow-emerald-200 dark:shadow-emerald-900/30 transition-all transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isSubmitting ? "Processing..." : "Complete Setup"}
+                {isSubmitting ? "処理中..." : "設定完了"}
               </button>
             )}
           </div>

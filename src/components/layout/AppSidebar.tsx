@@ -164,16 +164,6 @@ const mainMenuItems = manifestRoutes
     icon: iconFor(r.path),
   }));
 
-// 集団系メニュー（第2グループ）
-const groupMenuItems = manifestRoutes
-  .filter((r) => r.visibleInMenu && r.group === "group")
-  .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-  .map((r) => ({
-    title: r.label,
-    url: toSidebarUrl(r.path),
-    icon: iconFor(r.path),
-  }));
-
 // 登録系メニュー（第3グループ）
 const registrationMenuItems = manifestRoutes
   .filter((r) => r.visibleInMenu && r.group === "registration")
@@ -526,15 +516,6 @@ export function AppSidebar({
         {/* メインメニュー */}
         <NavGroup
           items={mainMenuItems}
-          currentPath={pathname}
-          userLevel={userLevel}
-          newlyUnlockedFeatures={newlyUnlockedFeatures}
-        />
-
-        {/* 集団系メニュー（第2グループ） */}
-        <NavGroup
-          label="集団"
-          items={groupMenuItems}
           currentPath={pathname}
           userLevel={userLevel}
           newlyUnlockedFeatures={newlyUnlockedFeatures}

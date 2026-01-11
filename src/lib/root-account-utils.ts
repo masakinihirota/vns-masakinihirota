@@ -3,7 +3,25 @@
  * 既存データの後方互換性を保つための処理を提供
  */
 
-import { RootAccount } from "@/components/root-accounts/root-account-dashboard/root-account-dashboard.types";
+import { RootAccount } from "../components/root-accounts/root-account-dashboard/root-account-dashboard.types";
+
+export const AREA_DEFINITIONS = {
+  1: {
+    name: "北米、南米 (アメリカ NY時間)",
+    timezone: "America/New_York",
+    defaultCoreHours: { start: "16:00", end: "24:00" },
+  },
+  2: {
+    name: "欧州、アフリカ (イギリス ロンドン時間)",
+    timezone: "Europe/London",
+    defaultCoreHours: { start: "08:00", end: "16:00" },
+  },
+  3: {
+    name: "アジア、オセアニア (日本 東京時間)",
+    timezone: "Asia/Tokyo",
+    defaultCoreHours: { start: "00:00", end: "08:00" },
+  },
+} as const;
 
 /**
  * 旧スキーマ（単一言語コード）から新スキーマ（配列）への変換

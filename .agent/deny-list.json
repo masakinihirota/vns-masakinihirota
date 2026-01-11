@@ -1,0 +1,17 @@
+{
+  "deny": [
+    "Bash(diskutil eraseDisk:*)",
+    "Bash(mkfs:*)",
+    "Bash(fdisk:*)",
+    "Bash(parted:*)",
+    "Bash(dd:*)",
+    "Bash(chmod -R /:*)",
+    "Bash(chown -R /:*)",
+    "Bash(git reset --hard:*)",
+    "Bash(git clean -fdx:*)",
+    "Bash(git push --force:*)",
+    "Bash(docker system prune:*)",
+    "Read(**/.env*)",
+    "Read(**/.ssh/**)"
+  ]
+}

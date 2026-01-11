@@ -1,11 +1,10 @@
 import React from "react";
 import {
   CULTURAL_SPHERES,
-  PREFECTURES,
   DETAILED_REGIONS,
   MOON_LOCATIONS,
   MARS_LOCATIONS,
-} from "../../onboarding/onboarding.logic";
+} from "../onboarding.logic";
 import { MarsMap } from "./mars-map";
 import { MoonMap } from "./moon-map";
 import { ResidenceMap } from "./residence-map";
@@ -54,7 +53,7 @@ export const Step1ResidencePC: React.FC<Step1ResidencePCProps> = ({
   };
 
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    onUpdate({ selectedCountry: e.target.value });
+    onUpdate({ selectedCountry: e.target.value, selectedRegion: "" });
   };
 
   const handleRegionChange = (
@@ -71,6 +70,11 @@ export const Step1ResidencePC: React.FC<Step1ResidencePCProps> = ({
   const currentDetail = activity_culture_code
     ? DETAILED_REGIONS[activity_culture_code]
     : null;
+
+  const currentCountryData = currentDetail?.countries.find(
+    (c) => c.name === selectedCountry
+  );
+  const currentRegions = currentCountryData?.regions;
 
   return (
     <div className="space-y-8">
@@ -114,8 +118,6 @@ export const Step1ResidencePC: React.FC<Step1ResidencePCProps> = ({
               onChange={(e) => handleMoonSelect(e.target.value)}
             >
               <option value="">未選択 (Select location)</option>
-              {/* Options populated from extensible list */}
-              {/* NOTE: Add new locations to MOON_LOCATIONS in onboarding.logic.ts */}
               {MOON_LOCATIONS.map((loc: string) => (
                 <option key={loc} value={loc}>
                   {loc}
@@ -142,8 +144,6 @@ export const Step1ResidencePC: React.FC<Step1ResidencePCProps> = ({
               onChange={(e) => handleMarsSelect(e.target.value)}
             >
               <option value="">未選択 (Select location)</option>
-              {/* Options populated from extensible list */}
-              {/* NOTE: Add new locations to MARS_LOCATIONS in onboarding.logic.ts */}
               {MARS_LOCATIONS.map((loc: string) => (
                 <option key={loc} value={loc}>
                   {loc}
@@ -214,22 +214,22 @@ export const Step1ResidencePC: React.FC<Step1ResidencePCProps> = ({
         {/* 4. Prefecture/State */}
         <div>
           <label
-            htmlFor={selectedCountry === "日本" ? "prefecture" : "region"}
+            htmlFor={currentRegions ? "region-select" : "region"}
             className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
           >
-            {selectedCountry === "日本" ? "都道府県" : "州/地域"}
+            {selectedCountry === "日本" ? "都道府県" : "州/地域 (Region/State)"}
           </label>
-          {selectedCountry === "日本" ? (
+          {currentRegions ? (
             <select
-              id="prefecture"
+              id="region-select"
               className="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
               value={selectedRegion || ""}
               onChange={handleRegionChange}
             >
               <option value="">選択してください</option>
-              {PREFECTURES.map((pref) => (
-                <option key={pref} value={pref}>
-                  {pref}
+              {currentRegions.map((reg) => (
+                <option key={reg} value={reg}>
+                  {reg}
                 </option>
               ))}
             </select>
