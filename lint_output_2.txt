@@ -1,6 +1,0 @@
-
-> vns-masakinihirota@0.8.0 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
-> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
-
-Found 0 warnings and 0 errors.
-Finished in 4.9s on 284 files using 12 threads.
