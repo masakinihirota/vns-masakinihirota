@@ -1,1 +1,2 @@
-export { WorkRegistrationFormContainer } from "./work-registration-form.container";
+export * from "./work-registration-form";
+export * from "./schema";

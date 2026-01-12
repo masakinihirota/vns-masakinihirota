@@ -1,0 +1,88 @@
+import { Work } from "./schema";
+
+export const MOCK_DB_WORKS: Work[] = [
+  {
+    id: "work-1",
+    title: "四月は君の嘘",
+    author: "新川直司",
+    publisher: "講談社",
+    summary:
+      "母の死をきっかけにピアノが弾けなくなった元神童・有馬公生が、ヴァイオリニスト・宮園かをりと出会い、再び音楽と向き合っていく青春ストーリー。",
+    coverImageUrl: "",
+    officialUrl: "https://kimiuso.jp",
+    category: "manga",
+    scale: "one_week",
+    isNew: false,
+    isAiGenerated: false,
+  },
+  {
+    id: "work-2",
+    title: "葬送のフリーレン",
+    author: "山田鐘人 / アベツカサ",
+    publisher: "小学館",
+    summary:
+      "魔王を倒した勇者一行の後日譚。エルフの魔法使いフリーレンが、人間を知るための旅に出る。",
+    coverImageUrl: "",
+    officialUrl: "https://frieren-anime.jp",
+    category: "manga",
+    scale: "one_month",
+    isNew: false,
+    isAiGenerated: false,
+  },
+  {
+    id: "work-3",
+    title: "ONE PIECE",
+    author: "尾田栄一郎",
+    publisher: "集英社",
+    summary:
+      "海賊王を夢見る少年モンキー・D・ルフィが、仲間と共に「ひとつなぎの大秘宝（ワンピース）」を探す冒険を描く。",
+    coverImageUrl: "",
+    officialUrl: "https://one-piece.com",
+    category: "manga",
+    scale: "long_term",
+    isNew: false,
+    isAiGenerated: false,
+  },
+  {
+    id: "work-4",
+    title: "鬼滅の刃",
+    author: "吾峠呼世晴",
+    publisher: "集英社",
+    summary:
+      "家族を鬼に殺された少年・竈門炭治郎が、鬼になった妹・禰豆子を人間に戻すために戦う物語。",
+    coverImageUrl: "",
+    officialUrl: "https://kimetsu.com",
+    category: "manga",
+    scale: "one_week",
+    isNew: false,
+    isAiGenerated: false,
+  },
+  {
+    id: "work-5",
+    title: "君の名は。",
+    author: "新海誠",
+    publisher: "コミックス・ウェーブ・フィルム",
+    summary:
+      "東京に住む少年・瀧と、飛騨の山奥に住む少女・三葉の身体が入れ替わる不思議な物語。",
+    coverImageUrl: "",
+    officialUrl: "http://www.kiminona.com/",
+    category: "anime",
+    scale: "one_day",
+    isNew: false,
+    isAiGenerated: false,
+  },
+  {
+    id: "work-6",
+    title: "千と千尋の神隠し",
+    author: "宮崎駿",
+    publisher: "スタジオジブリ",
+    summary:
+      "不思議な世界に迷い込んだ少女・千尋が、名前を奪われながらも成長していく物語。",
+    coverImageUrl: "",
+    officialUrl: "https://www.ghibli.jp/works/chihiro/",
+    category: "anime",
+    scale: "one_day",
+    isNew: false,
+    isAiGenerated: false,
+  },
+];
