@@ -1,0 +1,87 @@
+
+> vns-masakinihirota@0.9.0 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  ! eslint(no-unused-vars): Identifier 'UseFormReturn' is imported but never used.
+   ,-[src/components/work-registration-form/hooks/use-work-registration.ts:3:19]
+ 2 | import { useCallback, useEffect } from "react";
+ 3 | import { useForm, UseFormReturn } from "react-hook-form";
+   :                   ^^^^^^|^^^^^^
+   :                         `-- 'UseFormReturn' is imported here
+ 4 | import {
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Work' is imported but never used.
+   ,-[src/components/work-registration-form/hooks/use-work-registration.ts:7:3]
+ 6 |   RegistrationFormValues,
+ 7 |   Work,
+   :   ^^|^
+   :     `-- 'Work' is imported here
+ 8 | } from "../schema";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'data' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/work-registration-form/hooks/use-work-registration.ts:59:39]
+ 58 | 
+ 59 |   const onSubmit = useCallback(async (data: RegistrationFormValues) => {
+    :                                       ^^|^
+    :                                         `-- 'data' is declared here
+ 60 |     try {
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Catch parameter 'error' is caught but never used. Unused caught errors should start with a '_'.
+    ,-[src/components/work-registration-form/hooks/use-work-registration.ts:65:14]
+ 64 |       alert("菫晏ｭ倥＠縺ｾ縺励◆・・);
+ 65 |     } catch (error) {
+    :              ^^|^^
+    :                `-- 'error' is declared here
+ 66 |       // console.error("Save failed:", error);
+    `----
+  help: Consider handling this error.
+
+  ! eslint(no-unused-vars): Catch parameter 'error' is caught but never used. Unused caught errors should start with a '_'.
+    ,-[src/components/work-registration-form/hooks/use-work-search.ts:64:16]
+ 63 |         }
+ 64 |       } catch (error) {
+    :                ^^|^^
+    :                  `-- 'error' is declared here
+ 65 |         // console.error("Search failed:", error);
+    `----
+  help: Consider handling this error.
+
+  ! eslint(no-unused-vars): Identifier 'Slider' is imported but never used.
+    ,-[src/components/work-registration-form/features/entry-form.tsx:20:10]
+ 19 | } from "@/components/ui/select";
+ 20 | import { Slider } from "@/components/ui/slider";
+    :          ^^^|^^
+    :             `-- 'Slider' is imported here
+ 21 | import { Textarea } from "@/components/ui/textarea";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Work' is imported but never used.
+    ,-[src/components/work-registration-form/features/entry-form.tsx:24:3]
+ 23 | import {
+ 24 |   Work,
+    :   ^^|^
+    :     `-- 'Work' is imported here
+ 25 |   SCALES,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'handleSubmit' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/work-registration-form/features/entry-form.tsx:41:27]
+ 40 | }: EntryFormProps) {
+ 41 |   const { form, onSubmit: handleSubmit } = useWorkRegistration(initialValues);
+    :                           ^^^^^^|^^^^^
+    :                                 `-- 'handleSubmit' is declared here
+ 42 | 
+    `----
+  help: Consider removing this declaration.
+
+Found 8 warnings and 0 errors.
+Finished in 3.8s on 334 files using 12 threads.

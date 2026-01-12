@@ -1,0 +1,24 @@
+
+> vns-masakinihirota@0.9.0 build U:\2026src\vns-masakinihirota.worktrees\anti
+> next build
+
+   笆ｲ Next.js 16.0.10 (Turbopack)
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+ 笨・Compiled successfully in 16.4s
+   Running TypeScript ...
+Failed to compile.
+
+./src/components/mandala-chart/mandala-chart/mandala-chart.tsx:6:38
+Type error: Cannot find module 'prismjs' or its corresponding type declarations.
+
+  4 | import "prismjs/themes/prism.css"; // Basic theme, we can customize via CSS
+  5 | import { ZoomIn, Maximize2 } from "lucide-react";
+> 6 | import { highlight, languages } from "prismjs";
+    |                                      ^
+  7 | import { useState, useEffect, useRef } from "react";
+  8 | // Editor & Syntax Highlight
+  9 | import Editor from "react-simple-code-editor";
+Next.js build worker exited with code: 1 and signal: null
+窶右LIFECYCLE窶・Command failed with exit code 1.

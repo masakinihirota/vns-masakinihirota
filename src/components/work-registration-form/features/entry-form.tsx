@@ -17,15 +17,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 import { useWorkRegistration } from "../hooks/use-work-registration";
-import {
-  Work,
-  SCALES,
-  STATUS_OPTIONS,
-  RegistrationFormValues,
-} from "../schema";
+import { SCALES, STATUS_OPTIONS, RegistrationFormValues } from "../schema";
 
 interface EntryFormProps {
   initialValues?: Partial<RegistrationFormValues>;
@@ -38,7 +32,7 @@ export function EntryForm({
   onBack,
   onConfirm,
 }: EntryFormProps) {
-  const { form, onSubmit: handleSubmit } = useWorkRegistration(initialValues);
+  const { form } = useWorkRegistration(initialValues);
 
   const isNewWork = form.watch("work.isNew");
   const isAiGenerated = form.watch("work.isAiGenerated");

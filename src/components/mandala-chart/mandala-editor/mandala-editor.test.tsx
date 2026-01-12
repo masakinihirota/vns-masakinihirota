@@ -5,24 +5,6 @@ import * as axeMatchers from "vitest-axe/matchers";
 import { MandalaEditor } from "./mandala-editor";
 import { MandalaData } from "./mandala-editor.logic";
 
-// PrismJSの完全なモック化
-vi.mock("prismjs", () => ({
-  default: {
-    highlight: vi.fn((code) => code),
-    highlightAll: vi.fn(),
-    languages: { markdown: {} },
-  },
-}));
-vi.mock("prismjs/components/prism-markdown", () => ({}));
-vi.mock("prismjs/themes/prism-tomorrow.css", () => ({}));
-
-// グローバル Prism のモック（ReferenceError対策）
-(global as any).Prism = {
-  highlight: vi.fn((code) => code),
-  highlightAll: vi.fn(),
-  languages: { markdown: {} },
-};
-
 expect.extend(axeMatchers);
 
 describe("MandalaEditor", () => {
