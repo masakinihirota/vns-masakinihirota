@@ -24,6 +24,12 @@ export default function Home() {
       icon: <Zap className="text-indigo-500" size={24} />,
       routes: [
         {
+          title: "作品登録 / 一覧 (New UI)",
+          path: "/work-registration-form",
+          desc: "新しいUI/UXで作品を検索・登録・評価する。",
+          badge: "Active",
+        },
+        {
           title: "始まりの国",
           path: "/beginning-country",
           desc: "プロフィールの作成、または幽霊として観測を始める儀式ページ。",
@@ -35,22 +41,10 @@ export default function Home() {
           desc: "深層心理や思考を81マスのグリッドで整理（プロフェッショナル版）。",
           badge: "New",
         },
-        {
-          title: "新規プロフィールの作成",
-          path: "/user-profiles/new",
-          desc: "新しいプロフィール（仮面）を受肉するウィザード形式の作成フロー。",
-          badge: "New",
-        },
-        {
-          title: "体験モード選択",
-          path: "/onboarding/mode-selection",
-          desc: "ゲーミフィケーションかスタンダードか、体験の質を選択。",
-          badge: "Update",
-        },
       ],
     },
     {
-      title: "🏠 アカウントとプロフィール",
+      title: "🏠 ユーザーセンター",
       description: "自己の管理と拠点の構築",
       color: "from-blue-500/20 to-indigo-500/20",
       icon: <HomeIcon className="text-blue-500" size={24} />,
@@ -79,8 +73,8 @@ export default function Home() {
       ],
     },
     {
-      title: "🤝 縁結びの杜",
-      description: "マッチング・相性診断システム",
+      title: "🤝 縁結びと価値観",
+      description: "マッチングと価値観の定義",
       color: "from-emerald-500/20 to-teal-500/20",
       icon: <Handshake className="text-emerald-500" size={24} />,
       routes: [
@@ -91,14 +85,14 @@ export default function Home() {
           badge: "Core",
         },
         {
-          title: "自動マッチング",
-          path: "/matching/auto",
-          desc: "アルゴリズムに基づく最適な対象との自動照合。",
+          title: "価値観リスト",
+          path: "/values",
+          desc: "登録されている価値観の一覧と詳細。",
         },
         {
-          title: "手動マッチング",
-          path: "/matching/manual",
-          desc: "条件を指定して自ら縁を探す能動的な照合。",
+          title: "価値観の選定",
+          path: "/values-selection",
+          desc: "自分にとって重要な5つの価値観を定義する。",
         },
         {
           title: "投票マッチ (Vote Match)",
@@ -108,31 +102,26 @@ export default function Home() {
       ],
     },
     {
-      title: "🎨 創造と価値観",
-      description: "作品登録・思考の整理",
+      title: "🎨 コンテンツと探索",
+      description: "作品一覧・製品情報の閲覧",
       color: "from-amber-500/20 to-orange-500/20",
       icon: <PenTool className="text-amber-500" size={24} />,
       routes: [
         {
-          title: "価値観リスト",
-          path: "/values",
-          desc: "登録されている価値観の一覧と詳細。",
-          badge: "New",
-        },
-        {
-          title: "価値観の選定",
-          path: "/values-selection",
-          desc: "自分にとって重要な5つの価値観を定義する。",
-        },
-        {
-          title: "作品登録 / 一覧",
+          title: "作品一覧",
           path: "/works",
-          desc: "全ての作品データのディレクトリと新規登録フォーム。",
+          desc: "登録されている作品セットの確認・プレビュー。",
+          badge: "NEW",
+        },
+        {
+          title: "プロダクトリスト",
+          path: "/product-list",
+          desc: "Shop機能等のための製品表示デモ。",
         },
       ],
     },
     {
-      title: "📚 ヘルプとドキュメント",
+      title: "📚 ヘルプ・サポート",
       description: "VNSの哲学・用語集・サポート",
       color: "from-teal-500/20 to-emerald-500/20",
       icon: <Book className="text-teal-600" size={24} />,
@@ -162,9 +151,9 @@ export default function Home() {
       icon: <FlaskConical className="text-zinc-500" size={24} />,
       routes: [
         {
-          title: "プロダクトリスト",
-          path: "/product-list",
-          desc: "Shop機能等のための製品表示デモ。",
+          title: "体験モード選択",
+          path: "/onboarding/mode-selection",
+          desc: "ゲーミフィケーションかスタンダードか、体験の質を選択。",
         },
         {
           title: "旧 曼荼羅チャート",
@@ -180,6 +169,12 @@ export default function Home() {
           title: "レガシー・プロフィール",
           path: "/user-profiles/new-legacy",
           desc: "従来のプロフィール作成フォーム（参照用）。",
+        },
+        {
+          title: "新規プロフィールの作成 (Legacy)",
+          path: "/user-profiles/new",
+          desc: "新しいプロフィール（仮面）を受肉するウィザード形式の作成フロー。",
+          badge: "Legacy",
         },
       ],
     },
