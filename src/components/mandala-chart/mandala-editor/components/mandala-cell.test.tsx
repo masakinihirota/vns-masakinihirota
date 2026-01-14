@@ -48,7 +48,7 @@ describe("MandalaCell", () => {
     const { container } = render(
       <MandalaCell
         {...defaultProps}
-        text="これは非常に長い思考の断片であり、フォントサイズが縮小されるべきテキストです。"
+        text="これは非常に長い思考の断片であり、フォントサイズがさらに縮小されるべき、40文字以上の長いテキストです。"
       />
     );
     const span = container.querySelector("span");

@@ -37,7 +37,7 @@ describe("MandalaEditor", () => {
 
   it("タイトルが表示されること", () => {
     render(<MandalaEditor {...defaultProps} />);
-    expect(screen.getByText("Mandala Markdown Editor")).toBeInTheDocument();
+    expect(screen.getByText("Mandala Pro")).toBeInTheDocument();
   });
 
   it("Markdown入力エリアが存在すること", () => {

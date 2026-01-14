@@ -1,5 +1,5 @@
-"use client";
-
+import React, { useState, useCallback } from "react";
+import { CellEditDialog } from "./components/cell-edit-dialog";
 import { EditorFooter } from "./components/editor-footer";
 import { EditorHeader } from "./components/editor-header";
 import { MandalaBlock } from "./components/mandala-block";
@@ -44,6 +44,47 @@ export const MandalaEditor: React.FC<MandalaEditorProps> = ({
   fitMode,
   onFitModeChange,
 }) => {
+  // Dialog State
+  const [editingCell, setEditingCell] = useState<{
+    label: string;
+    cellIndex: number | "title";
+    value: string;
+  } | null>(null);
+
+  const handleCellClick = useCallback(
+    (label: string, cellIndex: number | "title") => {
+      // Find the current value
+      let currentValue = "";
+      if (label === "★") {
+        currentValue =
+          cellIndex === "title"
+            ? data.center.title
+            : data.center.items[cellIndex as number];
+      } else {
+        const block = data.blocks.find((b) => b.label === label);
+        if (block) {
+          currentValue =
+            cellIndex === "title"
+              ? block.title
+              : block.items[cellIndex as number];
+        }
+      }
+
+      setEditingCell({
+        label,
+        cellIndex,
+        value: currentValue,
+      });
+    },
+    [data]
+  );
+
+  const handleSaveCell = (newValue: string) => {
+    if (editingCell) {
+      onCellEdit(editingCell.label, editingCell.cellIndex, newValue);
+    }
+  };
+
   return (
     <div className="flex flex-col h-full bg-slate-100 dark:bg-zinc-950 text-slate-900 dark:text-zinc-100 font-sans overflow-hidden text-[13px]">
       <EditorHeader
@@ -93,19 +134,7 @@ export const MandalaEditor: React.FC<MandalaEditorProps> = ({
                     index={blockIdx}
                     isCenterBlock={isCenterBlock}
                     onClear={onClearBlock}
-                    onCellClick={(label, cellIdx) => {
-                      const currentText =
-                        cellIdx === "title"
-                          ? blockData.title
-                          : blockData.items[cellIdx as number];
-                      const newValue = window.prompt(
-                        `${label} の内容を編集:`,
-                        currentText
-                      );
-                      if (newValue !== null) {
-                        onCellEdit(label, cellIdx, newValue);
-                      }
-                    }}
+                    onCellClick={handleCellClick}
                   />
                 );
               })}
@@ -115,6 +144,15 @@ export const MandalaEditor: React.FC<MandalaEditorProps> = ({
       </main>
 
       <EditorFooter />
+
+      {/* Editing Dialog */}
+      <CellEditDialog
+        isOpen={editingCell !== null}
+        onClose={() => setEditingCell(null)}
+        onSave={handleSaveCell}
+        label={editingCell?.label || ""}
+        initialValue={editingCell?.value || ""}
+      />
     </div>
   );
 };
