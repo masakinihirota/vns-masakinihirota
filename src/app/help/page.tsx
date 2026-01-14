@@ -4,6 +4,7 @@ import {
   ArrowRight,
   MessageCircle,
   ShieldCheck,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";
@@ -27,9 +28,19 @@ export default function HelpPage() {
       color: "bg-teal-50 dark:bg-teal-900/20 text-teal-600 dark:text-teal-400",
     },
     {
-      title: "FAQ (反対意見と回答)",
+      title: "議論 (Core Discussion)",
+
       description:
-        "サービスへの疑問や反対意見に対する、VNSの思想的な回答をまとめています。",
+        "VNSへの批判的な意見に対する、思想的な回答と対論。より深い「なぜ」に応えます。",
+      icon: Zap,
+      href: "/help/discussion",
+      color:
+        "bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400",
+    },
+    {
+      title: "FAQ (よくある質問)",
+      description:
+        "機能の使い方、システムの仕組み、Amazonアソシエイト設定などの一般的な疑問にお答えします。",
       icon: HelpCircle,
       href: "/help/faq",
       color: "bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400",

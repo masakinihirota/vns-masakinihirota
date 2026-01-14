@@ -61,8 +61,8 @@ export function useWorkSearch() {
         } else {
           setAiResults([]);
         }
-      } catch (error) {
-        // console.error("Search failed:", error);
+      } catch (_error) {
+        // console.error("Search failed:", _error);
         // エラーハンドリング（通知など）
       } finally {
         setIsSearching(false);

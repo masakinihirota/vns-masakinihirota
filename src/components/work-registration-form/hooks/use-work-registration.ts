@@ -1,11 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback, useEffect } from "react";
-import { useForm, UseFormReturn } from "react-hook-form";
-import {
-  registrationFormSchema,
-  RegistrationFormValues,
-  Work,
-} from "../schema";
+import { useForm } from "react-hook-form";
+import { registrationFormSchema, RegistrationFormValues } from "../schema";
 
 export function useWorkRegistration(
   initialValues?: Partial<RegistrationFormValues>
@@ -56,14 +52,14 @@ export function useWorkRegistration(
     }
   }, [initialValues, form]);
 
-  const onSubmit = useCallback(async (data: RegistrationFormValues) => {
+  const onSubmit = useCallback(async (_data: RegistrationFormValues) => {
     try {
-      // console.log("Submitting:", data);
+      // console.log("Submitting:", _data);
       // API call to save data
       await new Promise((resolve) => setTimeout(resolve, 1000));
       alert("保存しました！");
-    } catch (error) {
-      // console.error("Save failed:", error);
+    } catch (_error) {
+      // console.error("Save failed:", _error);
       alert("保存に失敗しました");
     }
   }, []);

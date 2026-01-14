@@ -1,9 +1,6 @@
 "use client";
 
-import "prismjs/components/prism-markdown";
-import "prismjs/themes/prism.css"; // Basic theme, we can customize via CSS
 import { ZoomIn, Maximize2 } from "lucide-react";
-import { highlight, languages } from "prismjs";
 import { useState, useEffect, useRef } from "react";
 // Editor & Syntax Highlight
 import Editor from "react-simple-code-editor";
@@ -170,9 +167,7 @@ export function MandalaChart({
             <Editor
               value={markdownText}
               onValueChange={handleMarkdownChange}
-              highlight={(code) =>
-                highlight(code, languages.markdown, "markdown")
-              }
+              highlight={(code) => code}
               padding={24}
               className="font-mono text-sm leading-relaxed min-h-full"
               style={{
