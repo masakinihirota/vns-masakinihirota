@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useCallback } from "react";
 import { CellEditDialog } from "./components/cell-edit-dialog";
 import { EditorFooter } from "./components/editor-footer";
