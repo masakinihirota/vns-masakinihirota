@@ -65,6 +65,91 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
 
   const isCurrentAnswered = !!formData.basicValues[currentQ.id];
 
+  const renderOasisModeInfo = () => {
+    if (currentQ.id !== "oasis" || !isCurrentAnswered) return null;
+
+    const isOasis = formData.basicValues["oasis"] === "守る";
+    const isTrust =
+      isOasis && formData.basicValues["anonymous_prohibition"] === "true";
+
+    let modeTitle = "";
+    let modeDesc = "";
+    let modeClass = "";
+    let modeIcon = null;
+
+    if (!isOasis) {
+      modeTitle = "SNSモード (Sword)";
+      modeDesc =
+        "表現の自由が最優先される「自由競争型」の世界です。批判や攻撃的な表現も許容され、見たくないものは自分でブロックする「自己責任」の空間となります。";
+      modeClass = "bg-slate-100 border-slate-300 text-slate-700";
+      modeIcon = <Sparkles className="w-6 h-6" />;
+    } else if (isTrust) {
+      modeTitle = "Trustモード (Credibility)";
+      modeDesc =
+        "ブラジル・韓国型。オアシス宣言に加え、法的責任を伴う「実名準拠」の運用を行います。高度な信用が必要な組織や、法規制への対応が必要な場合に選択します。";
+      modeClass = "bg-blue-50 border-blue-200 text-blue-800";
+      modeIcon = <ShieldCheck className="w-6 h-6" />;
+    } else {
+      modeTitle = "Oasisモード (Shield)";
+      modeDesc =
+        "日本・欧州型。VNS標準の「調和・安心型」の世界です。個人の尊厳が守られ、ペルソナ（匿名）による本音の対話が可能です。";
+      modeClass = "bg-teal-50 border-teal-200 text-teal-800";
+      modeIcon = <Sparkles className="w-6 h-6" />;
+    }
+
+    return (
+      <div className="mb-8 animate-in fade-in slide-in-from-top-2">
+        <div className="space-y-6">
+          {/* モード表示カード */}
+          <div
+            className={`p-6 border-2 rounded-2xl flex items-start gap-4 ${modeClass}`}
+          >
+            <div className="p-2 bg-white/50 rounded-xl">{modeIcon}</div>
+            <div className="space-y-2">
+              <h4 className="text-lg font-black">{modeTitle}</h4>
+              <p className="text-sm font-medium leading-relaxed opacity-90">
+                {modeDesc}
+              </p>
+            </div>
+          </div>
+
+          {/* 匿名禁止オプション（オアシス宣言を守る場合のみ） */}
+          {isOasis && (
+            <div className="bg-white border-2 border-slate-100 rounded-2xl p-5 hover:border-slate-300 transition-colors">
+              <label className="flex items-start gap-4 cursor-pointer">
+                <div className="relative flex items-center">
+                  <input
+                    type="checkbox"
+                    className="peer sr-only"
+                    checked={
+                      formData.basicValues["anonymous_prohibition"] === "true"
+                    }
+                    onChange={(e) => {
+                      updateBasicValue(
+                        "anonymous_prohibition",
+                        e.target.checked ? "true" : "false"
+                      );
+                    }}
+                  />
+                  <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-teal-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-teal-600"></div>
+                </div>
+                <div className="space-y-1">
+                  <span className="font-bold text-slate-800 block">
+                    匿名禁止（責任ある対話）モードを有効にする
+                  </span>
+                  <span className="text-xs text-slate-500 block leading-relaxed">
+                    ※
+                    本音よりも「責任」を重視する場合に選択します。ペルソナを使用していても、システム内部では実名アカウントとの紐付けが厳格に行われます。
+                  </span>
+                </div>
+              </label>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 max-w-4xl mx-auto">
       {/* 導入メッセージ */}
@@ -200,38 +285,7 @@ export const Step4Values: React.FC<Step4ValuesProps> = ({
               </div>
             )}
 
-            {currentQ.id === "oasis" &&
-              isCurrentAnswered &&
-              formData.basicValues[currentQ.id] !== "守る" && (
-                <div className="mb-8 p-6 bg-red-50 border-2 border-red-200 rounded-[2rem] flex items-start gap-4 animate-in zoom-in duration-500 shadow-lg shadow-red-500/5">
-                  <div className="bg-red-100 p-3 rounded-2xl text-red-600">
-                    <AlertCircle className="w-8 h-8" />
-                  </div>
-                  <div className="space-y-3">
-                    <p className="text-lg font-black text-red-700 tracking-tight">
-                      【重要】一部の機能が永久に制限されます
-                    </p>
-                    <p className="text-sm text-red-600 leading-relaxed font-bold">
-                      オアシス宣言を遵守いただけない場合、あなたの活動はサイト内を
-                      <span className="underline decoration-2 underline-offset-4 decoration-red-400 mx-1">
-                        見て回る（観測・ウォッチ）のみ
-                      </span>
-                      に制限されます。
-                    </p>
-                    <p className="text-[11px] text-red-500 leading-relaxed bg-white/50 p-3 rounded-xl">
-                      ※
-                      コミュニティへの書き込み、マーケットへの出品、アライアンスの形成、メッセージ送信などの相互作用を伴う機能は一切利用できません。
-                    </p>
-                    <Link
-                      href="/help/oasis-declaration"
-                      className="inline-flex items-center gap-2 text-xs font-black text-red-700 hover:underline pt-2"
-                    >
-                      なぜ制限されるのかを詳しく知る
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
-              )}
+            {renderOasisModeInfo()}
 
             {/* ナビゲーション */}
             <div className="flex items-center justify-between pt-6 border-t border-slate-100">

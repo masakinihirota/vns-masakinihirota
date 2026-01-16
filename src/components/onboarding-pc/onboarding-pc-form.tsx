@@ -3,6 +3,9 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { StepBasicValuesPC } from "./steps/step-basic-values-pc";
+import { StepConfirmationPC } from "./steps/step-confirmation-pc";
+import { StepDeclarationsPC } from "./steps/step-declarations-pc";
 import { Step1ResidencePC } from "./steps/step1-residence-pc";
 import { Step2HoursPC } from "./steps/step2-hours-pc";
 import { Step3IdentityPC } from "./steps/step3-identity-pc";
@@ -33,6 +36,12 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
     display_id: `user-${userId.substring(0, 8)}`, // Mock display ID
     nativeLanguages: [],
     amazon_associate_tag: "",
+    is_minor: undefined, // Added minor check state
+    basic_values: {}, // Added basic values
+    // Declarations
+    agreed_oasis: false,
+    agreed_human: false,
+    agreed_honesty: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,7 +49,28 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
     setFormData((prev: any) => ({ ...prev, ...data }));
   };
 
-  const nextStep = () => setCurrentStep((prev) => Math.min(prev + 1, 4));
+  const nextStep = () => {
+    // Validation for Step 5 (Identity) - Block minors
+    if (currentStep === 5) {
+      if (formData.is_minor === true) {
+        alert("未成年の方はご利用いただけません。");
+        return;
+      }
+      if (formData.is_minor === undefined) {
+        // Optionally force selection, though UI might handle it or default is undefined
+        // For now, let's enforce selection if we want strictness, or just let them pass if we don't block.
+        // But the requirement implies we must ask.
+        // As per implementation plan, disable button or block here.
+        // Let's block if undefined for better UX, or just if check is true.
+        // Let's enforce selection:
+        if (formData.is_minor === undefined) {
+          alert("未成年かどうかの確認を選択してください。");
+          return;
+        }
+      }
+    }
+    setCurrentStep((prev) => Math.min(prev + 1, 7));
+  };
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
   const handleSubmit = async () => {
@@ -65,13 +95,26 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
   const renderStep = () => {
     switch (currentStep) {
       case 1:
-        return <Step1ResidencePC data={formData} onUpdate={handleUpdate} />;
+        return <StepDeclarationsPC data={formData} onUpdate={handleUpdate} />;
       case 2:
-        return <Step2HoursPC data={formData} onUpdate={handleUpdate} />;
+        return <StepBasicValuesPC data={formData} onUpdate={handleUpdate} />;
       case 3:
-        return <Step3IdentityPC data={formData} onUpdate={handleUpdate} />;
+        return <Step1ResidencePC data={formData} onUpdate={handleUpdate} />;
       case 4:
+        return <Step2HoursPC data={formData} onUpdate={handleUpdate} />;
+      case 5:
+        return <Step3IdentityPC data={formData} onUpdate={handleUpdate} />;
+      case 6:
         return <Step4LanguagePC data={formData} onUpdate={handleUpdate} />;
+      case 7:
+        return (
+          <StepConfirmationPC
+            data={formData}
+            onBack={prevStep}
+            onSubmit={handleSubmit}
+            isSubmitting={isSubmitting}
+          />
+        );
       default:
         return null;
     }
@@ -90,7 +133,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
             {/* Connection Line */}
             <div className="absolute left-4 top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-slate-800 -z-10" />
 
-            {[1, 2, 3, 4].map((step) => (
+            {[1, 2, 3, 4, 5, 6, 7].map((step) => (
               <button
                 key={step}
                 onClick={() => setCurrentStep(step)}
@@ -114,10 +157,13 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                                     ${currentStep === step ? "text-indigo-600 dark:text-indigo-400" : "text-slate-500 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-300"}
                                 `}
                 >
-                  {step === 1 && "居住地・文化圏"}
-                  {step === 2 && "活動時間"}
-                  {step === 3 && "アイデンティティ"}
-                  {step === 4 && "言語設定"}
+                  {step === 1 && "3つの誓い"}
+                  {step === 2 && "10の基本価値観"}
+                  {step === 3 && "居住地・文化圏"}
+                  {step === 4 && "活動時間"}
+                  {step === 5 && "アイデンティティ"}
+                  {step === 6 && "言語設定"}
+                  {step === 7 && "確認"}
                 </span>
               </button>
             ))}
@@ -138,6 +184,24 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
               <p className="font-bold leading-relaxed">
                 {currentStep === 1 && (
                   <>
+                    VNSへようこそ！
+                    <br />
+                    まずは私たちの
+                    <br />
+                    大切な約束を確認してね。
+                  </>
+                )}
+                {currentStep === 2 && (
+                  <>
+                    あなたの価値観を
+                    <br />
+                    教えてね。
+                    <br />
+                    正解はないから安心してね！
+                  </>
+                )}
+                {currentStep === 3 && (
+                  <>
                     まずは住んでいる場所と
                     <br />
                     文化圏を教えてね。
@@ -145,7 +209,7 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                     すべてはここから始まるよ！
                   </>
                 )}
-                {currentStep === 2 && (
+                {currentStep === 4 && (
                   <>
                     いつ活動しているの？
                     <br />
@@ -154,20 +218,29 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                     時間を教えてね！
                   </>
                 )}
-                {currentStep === 3 && (
+                {currentStep === 5 && (
                   <>
                     生まれた世代と
                     <br />
                     星座を教えてね！
                   </>
                 )}
-                {currentStep === 4 && (
+                {currentStep === 6 && (
                   <>
                     何語で話すのが得意？
                     <br />
                     AI翻訳を使えば世界中の人と
                     <br />
                     お話しできるよ✨
+                  </>
+                )}
+                {currentStep === 7 && (
+                  <>
+                    最後に設定内容を
+                    <br />
+                    確認してね。
+                    <br />
+                    準備はＯＫ？
                   </>
                 )}
               </p>
@@ -193,12 +266,26 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
               <div />
             )}
 
-            {currentStep < 4 ? (
+            {currentStep < 7 ? (
               <button
                 onClick={nextStep}
-                className="px-8 py-2.5 rounded-lg bg-indigo-600 text-white font-medium hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 transition-all transform hover:-translate-y-0.5"
+                disabled={
+                  currentStep === 5 &&
+                  (formData.is_minor === true ||
+                    formData.is_minor === undefined)
+                }
+                className={`
+                  px-8 py-2.5 rounded-lg font-medium transition-all transform
+                  ${
+                    currentStep === 5 &&
+                    (formData.is_minor === true ||
+                      formData.is_minor === undefined)
+                      ? "bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed shadow-none"
+                      : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 hover:-translate-y-0.5"
+                  }
+                `}
               >
-                次へ
+                {currentStep === 6 ? "確認画面へ" : "次へ"}
               </button>
             ) : (
               <button

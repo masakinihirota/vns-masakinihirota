@@ -27,4 +27,8 @@ export const footerNav = [
     label: "利用規約",
     href: "/terms",
   },
+  {
+    label: "世界の孤独対策",
+    href: "/global-loneliness-measures",
+  },
 ];

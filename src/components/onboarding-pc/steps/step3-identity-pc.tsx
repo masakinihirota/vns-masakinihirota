@@ -10,7 +10,8 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
   data,
   onUpdate,
 }) => {
-  const { zodiac_sign, birth_generation, amazon_associate_tag } = data;
+  const { zodiac_sign, birth_generation, amazon_associate_tag, is_minor } =
+    data;
 
   const handleZodiacChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sign = e.target.value;
@@ -28,6 +29,10 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
     onUpdate({ amazon_associate_tag: e.target.value });
   };
 
+  const handleMinorChange = (isMinor: boolean) => {
+    onUpdate({ is_minor: isMinor });
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div>
@@ -40,8 +45,82 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
       </div>
 
       <div className="bg-white dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+        {/* 1. Minor Check */}
+        <div>
+          <label className="block text-sm font-medium mb-3 text-slate-700 dark:text-slate-300">
+            あなたは未成年ですか？
+          </label>
+          <div className="flex gap-4">
+            <label
+              className={`
+                            flex-1 relative flex items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition-all
+                            ${
+                              is_minor === true
+                                ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20"
+                                : "border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-700"
+                            }
+                        `}
+            >
+              <input
+                type="radio"
+                name="is_minor"
+                className="sr-only"
+                checked={is_minor === true}
+                onChange={() => handleMinorChange(true)}
+              />
+              <span
+                className={`font-medium ${
+                  is_minor === true
+                    ? "text-indigo-700 dark:text-indigo-300"
+                    : "text-slate-600 dark:text-slate-400"
+                }`}
+              >
+                はい (未成年)
+              </span>
+            </label>
+
+            <label
+              className={`
+                            flex-1 relative flex items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition-all
+                            ${
+                              is_minor === false
+                                ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20"
+                                : "border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-700"
+                            }
+                        `}
+            >
+              <input
+                type="radio"
+                name="is_minor"
+                className="sr-only"
+                checked={is_minor === false}
+                onChange={() => handleMinorChange(false)}
+              />
+              <span
+                className={`font-medium ${
+                  is_minor === false
+                    ? "text-indigo-700 dark:text-indigo-300"
+                    : "text-slate-600 dark:text-slate-400"
+                }`}
+              >
+                いいえ (成人)
+              </span>
+            </label>
+          </div>
+          {is_minor === true && (
+            <div className="mt-3 flex items-start gap-2 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-3 rounded-lg text-sm">
+              <AlertCircle size={18} className="mt-0.5 flex-shrink-0" />
+              <p>
+                申し訳ありません。未成年の方は現在VNSをご利用いただけません。今後のアップデートをお待ちください。
+              </p>
+            </div>
+          )}
+        </div>
+
         {/* 2. Zodiac Sign */}
-        <div className="space-y-6">
+        <div
+          className={`space-y-6 ${is_minor === true ? "opacity-50 pointer-events-none grayscale" : ""}`}
+        >
           <div>
             <label
               htmlFor="zodiac"
@@ -55,6 +134,7 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
               className="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
               value={zodiac_sign || ""}
               onChange={handleZodiacChange}
+              disabled={is_minor === true}
             >
               <option value="">選択してください</option>
               <option value="aries">牡羊座 (3/21-4/19)</option>
@@ -78,7 +158,9 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
         </div>
 
         {/* 4. Generation */}
-        <div>
+        <div
+          className={`${is_minor === true ? "opacity-50 pointer-events-none grayscale" : ""}`}
+        >
           <label
             htmlFor="generation"
             className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
@@ -94,6 +176,7 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
             className="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
             value={birth_generation || ""}
             onChange={handleGenerationChange}
+            disabled={is_minor === true}
           >
             <option value="">選択してください</option>
             {GENERATIONS.map((gen) => (
@@ -105,7 +188,9 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
         </div>
 
         {/* 5. Amazon Associate ID */}
-        <div className="pt-4 border-t border-slate-100 dark:border-slate-700">
+        <div
+          className={`pt-4 border-t border-slate-100 dark:border-slate-700 ${is_minor === true ? "opacity-50 pointer-events-none grayscale" : ""}`}
+        >
           <label
             htmlFor="amazon-id"
             className="block text-sm font-medium mb-2 text-slate-700 dark:text-slate-300"
@@ -119,42 +204,8 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
             className="w-full p-3 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
             value={amazon_associate_tag || ""}
             onChange={handleAmazonIdChange}
+            disabled={is_minor === true}
           />
-          <p className="mt-2 text-xs text-slate-500 dark:text-slate-400">
-            あなたの活動を収益化するためのIDを入力します。
-            <br />
-            <span className="text-red-600 dark:text-red-400 font-bold">
-              後から変更は出来ません。
-            </span>
-            <br />
-            ※アフィリエイトURLの表示には、一定の信頼継続日数や活動度、サイトへの貢献度が必要です。また、ペナルティ期間中は使用されません。
-          </p>
-
-          <div className="mt-4 p-4 rounded-lg bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-900/50 flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
-            <div className="text-xs text-amber-800 dark:text-amber-200 space-y-2">
-              <p className="font-bold">
-                Amazonアソシエイト規約に関する重要事項
-              </p>
-              <p>
-                報酬を正しく受け取るために、必ずAmazonアソシエイト管理画面の「Webサイト情報の登録」に本サイトのURLを追加してください。
-              </p>
-              <p className="bg-white/50 dark:bg-black/20 p-2 rounded font-mono break-all select-all">
-                https://vns-masakinihirota.com
-              </p>
-              <p>
-                また、Amazonアソシエイト規約に基づき、アフィリエイトであることを明示する必要があります。本サイトのフッターには以下の声明を表示しています。
-                <br />
-                <span className="italic">
-                  「Amazon
-                  アソシエイトとして、対象となる購入から収入を得ています。」
-                </span>
-              </p>
-              <p className="opacity-80">
-                登録がない場合や明示がない場合、Amazonの規約によりアカウント停止等のペナルティ対象となる恐れがあります。
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
