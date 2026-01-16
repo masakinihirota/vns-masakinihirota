@@ -27,7 +27,7 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
 
       <div className="space-y-4">
         {/* Oasis Declaration */}
-        <label className="group flex items-start gap-4 p-5 bg-white dark:bg-slate-800 rounded-2xl border-2 border-slate-100 dark:border-slate-700 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-md">
+        <label className="group flex items-start gap-4 p-5 bg-white dark:bg-slate-800 rounded-2xl border-2 border-slate-100 dark:border-slate-700 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-md has-[:checked]:border-indigo-500 dark:has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 dark:has-[:checked]:bg-indigo-900/20">
           <div className="relative flex items-center mt-1">
             <input
               type="checkbox"
@@ -35,7 +35,7 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
               checked={data.agreed_oasis}
               onChange={(e) => onUpdate({ agreed_oasis: e.target.checked })}
             />
-            <div className="w-6 h-6 border-2 border-slate-300 dark:border-slate-500 rounded bg-white dark:bg-slate-700 peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-slate-400 dark:border-slate-400 rounded bg-white dark:bg-slate-700 peer-checked:bg-indigo-600 dark:peer-checked:bg-indigo-500 peer-checked:border-indigo-600 dark:peer-checked:border-indigo-500 transition-colors flex items-center justify-center">
               <svg
                 className="w-4 h-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity"
                 fill="none"
@@ -74,7 +74,7 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
         </label>
 
         {/* Human Declaration */}
-        <label className="group flex items-start gap-4 p-5 bg-white dark:bg-slate-800 rounded-2xl border-2 border-slate-100 dark:border-slate-700 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-md">
+        <label className="group flex items-start gap-4 p-5 bg-white dark:bg-slate-800 rounded-2xl border-2 border-slate-100 dark:border-slate-700 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-md has-[:checked]:border-indigo-500 dark:has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 dark:has-[:checked]:bg-indigo-900/20">
           <div className="relative flex items-center mt-1">
             <input
               type="checkbox"
@@ -82,7 +82,7 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
               checked={data.agreed_human}
               onChange={(e) => onUpdate({ agreed_human: e.target.checked })}
             />
-            <div className="w-6 h-6 border-2 border-slate-300 dark:border-slate-500 rounded bg-white dark:bg-slate-700 peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-slate-400 dark:border-slate-400 rounded bg-white dark:bg-slate-700 peer-checked:bg-indigo-600 dark:peer-checked:bg-indigo-500 peer-checked:border-indigo-600 dark:peer-checked:border-indigo-500 transition-colors flex items-center justify-center">
               <svg
                 className="w-4 h-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity"
                 fill="none"
@@ -122,7 +122,7 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
         </label>
 
         {/* Honesty Declaration */}
-        <label className="group flex items-start gap-4 p-5 bg-white dark:bg-slate-800 rounded-2xl border-2 border-slate-100 dark:border-slate-700 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-md">
+        <label className="group flex items-start gap-4 p-5 bg-white dark:bg-slate-800 rounded-2xl border-2 border-slate-100 dark:border-slate-700 cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-500 transition-all shadow-sm hover:shadow-md has-[:checked]:border-indigo-500 dark:has-[:checked]:border-indigo-500 has-[:checked]:bg-indigo-50 dark:has-[:checked]:bg-indigo-900/20">
           <div className="relative flex items-center mt-1">
             <input
               type="checkbox"
@@ -130,7 +130,7 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
               checked={data.agreed_honesty}
               onChange={(e) => onUpdate({ agreed_honesty: e.target.checked })}
             />
-            <div className="w-6 h-6 border-2 border-slate-300 dark:border-slate-500 rounded bg-white dark:bg-slate-700 peer-checked:bg-indigo-600 peer-checked:border-indigo-600 transition-colors flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-slate-400 dark:border-slate-400 rounded bg-white dark:bg-slate-700 peer-checked:bg-indigo-600 dark:peer-checked:bg-indigo-500 peer-checked:border-indigo-600 dark:peer-checked:border-indigo-500 transition-colors flex items-center justify-center">
               <svg
                 className="w-4 h-4 text-white opacity-0 peer-checked:opacity-100 transition-opacity"
                 fill="none"

@@ -13,12 +13,34 @@ interface StepBasicValuesPCProps {
 
 export function StepBasicValuesPC({ data, onUpdate }: StepBasicValuesPCProps) {
   const handleChange = (id: BasicValueQuestionId, value: string) => {
-    // データ構造: basic_values: { [questionId]: value }
+    // データ構造: basic_values: { [questionId]: value | string[] }
     const currentValues = data.basic_values || {};
+    const question = BASIC_VALUES_QUESTIONS.find((q) => q.id === id);
+
+    let newValue: string | string[];
+
+    if (question?.multiple) {
+      const currentArray: string[] = Array.isArray(currentValues[id])
+        ? currentValues[id]
+        : [];
+      if (currentArray.includes(value)) {
+        newValue = currentArray.filter((v) => v !== value);
+      } else {
+        newValue = [...currentArray, value];
+      }
+    } else {
+      // Allow toggle off for single selection
+      if (currentValues[id] === value) {
+        newValue = undefined as any; // or remove key, using undefined works with our validation filter
+      } else {
+        newValue = value;
+      }
+    }
+
     onUpdate({
       basic_values: {
         ...currentValues,
-        [id]: value,
+        [id]: newValue,
       },
     });
   };
@@ -51,6 +73,11 @@ export function StepBasicValuesPC({ data, onUpdate }: StepBasicValuesPCProps) {
                   {question.category}
                 </span>
                 {question.title}
+                {question.multiple && (
+                  <span className="text-xs text-teal-600 dark:text-teal-400 ml-auto border border-teal-200 dark:border-teal-800 px-2 py-0.5 rounded">
+                    複数選択可
+                  </span>
+                )}
               </h3>
 
               <div
@@ -59,8 +86,10 @@ export function StepBasicValuesPC({ data, onUpdate }: StepBasicValuesPCProps) {
                 }`}
               >
                 {question.options.map((option) => {
-                  const isSelected =
-                    selectedValues[question.id] === option.value;
+                  const val = selectedValues[question.id];
+                  const isSelected = question.multiple
+                    ? Array.isArray(val) && val.includes(option.value)
+                    : val === option.value;
                   return (
                     <button
                       key={option.value}

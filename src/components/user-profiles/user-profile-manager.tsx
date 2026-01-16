@@ -24,6 +24,7 @@ import {
   // RotateCcw,
   ArrowUp,
   ArrowDown,
+  Contact,
 } from "lucide-react";
 
 type SortKey = "displayName" | "role" | "purpose" | "type";
@@ -758,6 +759,21 @@ export default function UserProfileManager() {
                     >
                       {viewMode === "active" ? (
                         <>
+                          <Link
+                            href={`/user-profiles/${profile.id}/card`}
+                            onClick={(e) => e.stopPropagation()}
+                            passHref
+                          >
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-slate-500 hover:text-blue-600"
+                              data-testid="button-card"
+                              aria-label="Business Card"
+                            >
+                              <Contact className="h-4 w-4" />
+                            </Button>
+                          </Link>
                           <Link
                             href={`/user-profiles/${profile.id}/edit`}
                             onClick={(e) => e.stopPropagation()}
