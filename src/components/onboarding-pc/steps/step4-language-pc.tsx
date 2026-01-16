@@ -40,11 +40,11 @@ const LanguageList = ({
     if (colorClass === "indigo") {
       return isSelected
         ? "border-indigo-500 bg-white dark:bg-indigo-900/30 ring-2 ring-indigo-500 shadow-sm"
-        : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-indigo-300 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/20";
+        : "border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 hover:border-indigo-300 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/20";
     } else {
       return isSelected
         ? "border-emerald-500 bg-white dark:bg-emerald-900/30 ring-2 ring-emerald-500 shadow-sm"
-        : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-emerald-300 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20";
+        : "border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 hover:border-emerald-300 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/20";
     }
   };
 
@@ -85,7 +85,7 @@ const LanguageList = ({
                   ? colorClass === "indigo"
                     ? "border-indigo-500 bg-indigo-50 dark:border-indigo-400 dark:bg-indigo-900/50"
                     : "border-emerald-500 bg-emerald-50 dark:border-emerald-400 dark:bg-emerald-900/50"
-                  : "border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700"
+                  : "border-slate-400 dark:border-slate-400 bg-white dark:bg-slate-700"
               }
             `}
             >

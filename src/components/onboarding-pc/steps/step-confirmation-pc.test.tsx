@@ -9,16 +9,9 @@ describe("StepConfirmationPC", () => {
 
   const validData = {
     // Step 1
-    activity_area_id: 1,
-    activity_culture_code: "japanese",
-    selectedCountry: "日本",
-    selectedRegion: "Tokyo",
-    // Step 3
-    is_minor: false,
-    zodiac_sign: "aries",
-    birth_generation: "1990",
-    // Step 4
-    nativeLanguages: ["Japanese"],
+    agreed_oasis: true,
+    agreed_human: true,
+    agreed_honesty: true,
     // Step 2
     basic_values: {
       q1: "a",
@@ -32,9 +25,24 @@ describe("StepConfirmationPC", () => {
       q9: "a",
       q10: "a",
     },
+    // Step 3
+    activity_area_id: 1,
+    activity_culture_code: "japanese",
+    selectedCountry: "日本",
+    selectedRegion: "Tokyo",
+    // Step 4
+    core_activity_start: "09:00",
+    core_activity_end: "18:00",
+    // Step 5
+    is_minor: false,
+    zodiac_sign: "aries",
+    birth_generation: "1990",
+    // Step 6
+    nativeLanguages: ["Japanese"],
   };
 
   const invalidData = {
+    agreed_oasis: false,
     activity_area_id: null,
     moon_location: "",
     mars_location: "",
@@ -67,13 +75,11 @@ describe("StepConfirmationPC", () => {
       />
     );
 
-    expect(
-      screen.getByText("入力完了です！設定を保存できます")
-    ).toBeInTheDocument();
+    expect(screen.getByText("入力内容に問題はありません")).toBeInTheDocument();
 
-    // Check for "OK" badges (optional, but good to verify logic)
-    const okBadges = screen.getAllByText("OK");
-    expect(okBadges.length).toBeGreaterThanOrEqual(5);
+    // Check for specific confirmation texts
+    expect(screen.getAllByText("同意済み").length).toBeGreaterThanOrEqual(3);
+    expect(screen.getByText("成人 (確認済み)")).toBeInTheDocument();
   });
 
   it("renders error status when data is missing", () => {
@@ -87,7 +93,7 @@ describe("StepConfirmationPC", () => {
     );
 
     expect(
-      screen.getByText("全ての必須項目を入力してください")
+      screen.getByText("必須項目（*）に未入力の内容があります")
     ).toBeInTheDocument();
   });
 
@@ -101,9 +107,6 @@ describe("StepConfirmationPC", () => {
       />
     );
 
-    expect(screen.getByText("未成年の方は利用できません")).toBeInTheDocument();
-    expect(
-      screen.getByText("全ての必須項目を入力してください")
-    ).toBeInTheDocument();
+    expect(screen.getByText("未成年 (利用不可)")).toBeInTheDocument();
   });
 });

@@ -90,3 +90,23 @@ export async function createUserProfile(
 
   return profile as UserProfile;
 }
+
+export async function getUserProfileById(id: string) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("user_profiles")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    if (error.code === "PGRST116") {
+      return null;
+    }
+    console.error("Error fetching user profile:", error);
+    throw new Error("Failed to fetch profile");
+  }
+
+  return data as UserProfile;
+}

@@ -7,7 +7,6 @@ import {
   ChevronRight,
   CheckCircle2,
   ShieldCheck,
-  ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";

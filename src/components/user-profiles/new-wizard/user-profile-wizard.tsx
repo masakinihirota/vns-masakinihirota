@@ -178,14 +178,14 @@ export const UserProfileWizard: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-[50] flex h-screen bg-white font-sans text-slate-800 overflow-hidden">
+    <div className="flex flex-col h-full bg-white font-sans text-slate-800 overflow-hidden">
       <StepIndicator
         currentStep={currentStep}
         steps={STEPS}
         onStepClick={setCurrentStep}
       />
 
-      <main className="flex-1 ml-0 md:ml-64 flex flex-col h-full relative">
+      <main className="flex-1 flex flex-col h-full relative">
         <div className="flex-1 overflow-y-auto px-6 md:px-12 py-12 scroll-smooth">
           <div className="max-w-5xl mx-auto pb-24">
             {currentStep === 1 && (
