@@ -134,15 +134,15 @@ export function BeginningCountry({
   };
 
   return (
-    <div className="flex h-screen bg-[#020204] text-zinc-100 overflow-hidden font-sans">
+    <div className="flex h-screen bg-slate-50 dark:bg-[#020204] text-slate-900 dark:text-zinc-100 overflow-hidden font-sans">
       {/* サイドバー */}
-      <aside className="w-80 border-r border-zinc-900 bg-black/60 flex flex-col shrink-0">
+      <aside className="w-80 border-r border-slate-200 dark:border-zinc-900 bg-white/80 dark:bg-black/60 flex flex-col shrink-0">
         <div className="p-8">
           <div className="flex items-center space-x-4 mb-12">
             <div className="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-xl shadow-indigo-600/30">
               <User className="text-white" size={28} />
             </div>
-            <h1 className="font-black text-xl tracking-tighter uppercase italic text-indigo-100 italic">
+            <h1 className="font-black text-xl tracking-tighter uppercase italic text-slate-900 dark:text-indigo-100 italic">
               Masakinihirota
             </h1>
           </div>
@@ -157,7 +157,7 @@ export function BeginningCountry({
                 className={`w-full flex items-center space-x-5 p-6 rounded-2xl transition-all text-left group ${
                   Math.floor(currentStep) === s.id
                     ? "bg-indigo-600/10 border-l-4 border-indigo-500 shadow-lg"
-                    : "hover:bg-zinc-800 border-l-4 border-transparent"
+                    : "hover:bg-slate-100 dark:hover:bg-zinc-800 border-l-4 border-transparent"
                 }`}
               >
                 <div
@@ -166,7 +166,7 @@ export function BeginningCountry({
                       ? "bg-indigo-50 border-indigo-400 text-indigo-600 shadow-lg"
                       : currentStep > s.id && ![99, 88].includes(currentStep)
                         ? "bg-emerald-500 border-emerald-400 text-white"
-                        : "border-zinc-700 text-zinc-500 group-hover:border-zinc-500"
+                        : "border-slate-300 dark:border-zinc-700 text-slate-400 dark:text-zinc-500 group-hover:border-slate-400 dark:group-hover:border-zinc-500"
                   }`}
                 >
                   {currentStep > s.id && ![99, 88].includes(currentStep) ? (
@@ -178,8 +178,8 @@ export function BeginningCountry({
                 <p
                   className={`text-lg font-bold tracking-tight ${
                     Math.floor(currentStep) === s.id
-                      ? "text-zinc-100"
-                      : "text-zinc-500 group-hover:text-zinc-300"
+                      ? "text-slate-900 dark:text-zinc-100"
+                      : "text-slate-500 dark:text-zinc-500 group-hover:text-slate-700 dark:group-hover:text-zinc-300"
                   }`}
                 >
                   {s.title}
@@ -188,8 +188,8 @@ export function BeginningCountry({
             ))}
           </nav>
         </div>
-        <div className="mt-auto p-8 border-t border-zinc-900/50 bg-black/40 text-center">
-          <p className="text-lg text-zinc-500 font-bold italic leading-snug">
+        <div className="mt-auto p-8 border-t border-slate-200 dark:border-zinc-900/50 bg-slate-100/50 dark:bg-black/40 text-center">
+          <p className="text-lg text-slate-400 dark:text-zinc-500 font-bold italic leading-snug">
             "不確かな存在を、
             <br />
             愛おしく想います。"
@@ -198,25 +198,25 @@ export function BeginningCountry({
       </aside>
 
       {/* メインコンテンツ */}
-      <main className="flex-1 flex flex-col relative bg-[radial-gradient(circle_at_20%_10%,_rgba(67,56,202,0.1),_transparent)] overflow-hidden">
-        <header className="h-20 px-12 flex items-center justify-between border-b border-zinc-900/50 backdrop-blur-3xl sticky top-0 z-20">
-          <div className="flex items-center space-x-3 text-zinc-500 text-lg font-bold tracking-widest uppercase">
+      <main className="flex-1 flex flex-col relative bg-[radial-gradient(circle_at_20%_10%,_rgba(67,56,202,0.05),_transparent)] dark:bg-[radial-gradient(circle_at_20%_10%,_rgba(67,56,202,0.1),_transparent)] overflow-hidden">
+        <header className="h-20 px-12 flex items-center justify-between border-b border-slate-200 dark:border-zinc-900/50 backdrop-blur-3xl sticky top-0 z-20">
+          <div className="flex items-center space-x-3 text-slate-400 dark:text-zinc-500 text-lg font-bold tracking-widest uppercase">
             <span>Identity Flow</span>
             <ChevronRight size={16} />
-            <span className="text-zinc-100 uppercase tracking-widest">
+            <span className="text-slate-900 dark:text-zinc-100 uppercase tracking-widest">
               Step {currentStep === 99 ? "?" : currentStep}
             </span>
           </div>
-          <div className="flex items-center space-x-5 bg-zinc-900/80 px-6 py-2.5 rounded-full border border-zinc-800 shadow-xl">
+          <div className="flex items-center space-x-5 bg-white/80 dark:bg-zinc-900/80 px-6 py-2.5 rounded-full border border-slate-200 dark:border-zinc-800 shadow-xl">
             <Ghost
               size={24}
               className={
                 currentStep === 99
                   ? "text-indigo-400 animate-pulse"
-                  : "text-zinc-600"
+                  : "text-slate-500 dark:text-zinc-600"
               }
             />
-            <span className="text-lg font-black text-zinc-300 tracking-widest uppercase">
+            <span className="text-lg font-black text-slate-700 dark:text-zinc-300 tracking-widest uppercase">
               {currentStep === 99 ? "Observer" : "Ghost State"}
             </span>
           </div>
@@ -227,15 +227,18 @@ export function BeginningCountry({
             {/* --- ステップ 0: 女王の問いかけ --- */}
             {currentStep === 0 && (
               <div className="animate-in slide-in-from-bottom-8 fade-in duration-600 flex flex-col space-y-10 items-center text-center py-6">
-                <div className="w-24 h-24 bg-zinc-900 rounded-[2.5rem] border-2 border-zinc-800 flex items-center justify-center mb-2 shadow-2xl relative">
-                  <Crown size={54} className="text-indigo-400" />
+                <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-[2.5rem] border-2 border-slate-200 dark:border-zinc-800 flex items-center justify-center mb-2 shadow-2xl relative">
+                  <Crown
+                    size={54}
+                    className="text-indigo-500 dark:text-indigo-400"
+                  />
                 </div>
 
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-black text-indigo-100 tracking-tight italic">
+                  <h2 className="text-2xl font-black text-indigo-900 dark:text-indigo-100 tracking-tight italic">
                     「不確かな存在で名前がまだないシュレディンガー(あなた)さん。ようこそ、ここは始まりの国です。」
                   </h2>
-                  <p className="text-zinc-300 text-lg leading-relaxed max-w-4xl font-medium px-8">
+                  <p className="text-slate-600 dark:text-zinc-300 text-lg leading-relaxed max-w-4xl font-medium px-8">
                     そして、私はこの始まりの国を治める女王です。アカウントを作ったばかりのあなたは、まだ形を持たない「幽霊」の状態なのです。
                     <br />
                     現在、この世界を眺めること(ウォッチ)はできますが、誰かと繋がったり、活動に参加したりするには「仮面（プロフィール）」を作る必要があります。
@@ -271,16 +274,19 @@ export function BeginningCountry({
                   {/* 2. 幽霊のまま見て回る */}
                   <button
                     onClick={() => onStepChange(99)}
-                    className="p-10 rounded-[3rem] bg-zinc-900 border-2 border-zinc-800 hover:bg-zinc-800 hover:scale-[1.02] transition-all shadow-xl text-left flex items-center space-x-10 group shrink-0"
+                    className="p-10 rounded-[3rem] bg-slate-100 dark:bg-zinc-900 border-2 border-slate-200 dark:border-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-800 hover:scale-[1.02] transition-all shadow-xl text-left flex items-center space-x-10 group shrink-0"
                   >
-                    <div className="w-24 h-24 bg-zinc-800 rounded-[2rem] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                      <Eye className="text-zinc-400" size={48} />
+                    <div className="w-24 h-24 bg-white dark:bg-zinc-800 rounded-[2rem] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                      <Eye
+                        className="text-slate-400 dark:text-zinc-400"
+                        size={48}
+                      />
                     </div>
                     <div className="flex-1">
-                      <p className="text-xl font-black text-zinc-300 leading-none mb-3">
+                      <p className="text-xl font-black text-slate-700 dark:text-zinc-300 leading-none mb-3">
                         仮面（プロフィール）を作成せずに、幽霊状態のまま世界を見て回る
                       </p>
-                      <p className="text-zinc-500 text-lg leading-relaxed font-medium">
+                      <p className="text-slate-500 dark:text-zinc-500 text-lg leading-relaxed font-medium">
                         まずは観測者としてこの世界の様子を見に行きます。
                       </p>
                     </div>
@@ -290,16 +296,19 @@ export function BeginningCountry({
                   {/* 3. チュートリアル案内 */}
                   <button
                     onClick={() => onStepChange(88)}
-                    className="p-10 rounded-[3rem] bg-emerald-900/30 border-2 border-emerald-500/30 hover:bg-emerald-900/50 hover:scale-[1.02] transition-all shadow-xl text-left flex items-center space-x-10 group shrink-0"
+                    className="p-10 rounded-[3rem] bg-emerald-50 dark:bg-emerald-900/30 border-2 border-emerald-100 dark:border-emerald-500/30 hover:bg-emerald-100 dark:hover:bg-emerald-900/50 hover:scale-[1.02] transition-all shadow-xl text-left flex items-center space-x-10 group shrink-0"
                   >
-                    <div className="w-24 h-24 bg-emerald-500/10 rounded-[2rem] flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform">
-                      <BookOpen className="text-emerald-400" size={48} />
+                    <div className="w-24 h-24 bg-emerald-100 dark:bg-emerald-500/10 rounded-[2rem] flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform">
+                      <BookOpen
+                        className="text-emerald-500 dark:text-emerald-400"
+                        size={48}
+                      />
                     </div>
                     <div className="flex-1">
-                      <p className="text-xl font-black text-emerald-100 leading-none mb-3">
+                      <p className="text-xl font-black text-emerald-800 dark:text-emerald-100 leading-none mb-3">
                         導き手へ案内（チュートリアルの開始）
                       </p>
-                      <p className="text-emerald-400/60 text-lg leading-relaxed font-medium">
+                      <p className="text-emerald-600 dark:text-emerald-400/60 text-lg leading-relaxed font-medium">
                         私の用意した導き手と一緒に、丁寧にこの世界の歩き方を学べます。チュートリアルをしていくとLvが上がり、使える機能が解放されていきますよ。
                       </p>
                     </div>
@@ -309,29 +318,25 @@ export function BeginningCountry({
                   {/* 4. ゲーミフィケーション中止 */}
                   <button
                     onClick={() => onStepChange(77)}
-                    className="p-6 rounded-[2rem] bg-zinc-950/50 border-2 border-zinc-900 hover:bg-zinc-900 hover:border-zinc-700 hover:scale-[1.01] transition-all shadow-md text-left flex items-center space-x-8 group shrink-0 mt-4 mx-auto w-[90%]"
+                    className="p-6 rounded-[2rem] bg-slate-100 dark:bg-zinc-950/50 border-2 border-slate-200 dark:border-zinc-900 hover:bg-slate-200 dark:hover:bg-zinc-900 hover:border-slate-300 dark:hover:border-zinc-700 hover:scale-[1.01] transition-all shadow-md text-left flex items-center space-x-8 group shrink-0 mt-4 mx-auto w-[90%]"
                   >
-                    <div className="w-16 h-16 bg-zinc-900 rounded-[1.5rem] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <div className="w-16 h-16 bg-white dark:bg-zinc-900 rounded-[1.5rem] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                       <X
-                        className="text-zinc-500 group-hover:text-zinc-300"
+                        className="text-slate-400 dark:text-zinc-500 group-hover:text-slate-500 dark:group-hover:text-zinc-300"
                         size={32}
                       />
                     </div>
                     <div className="flex-1">
-                      <p className="text-lg font-black text-zinc-400 group-hover:text-zinc-200 leading-none mb-2">
-                        ゲーミフィケーションを中止して自分で行動を決める
+                      <p className="text-lg font-black text-slate-500 dark:text-zinc-400 group-hover:text-slate-700 dark:group-hover:text-zinc-200 leading-none mb-2">
+                        ゲーミフィケーションを中止します。
                       </p>
-                      <p className="text-zinc-600 text-base leading-relaxed font-medium">
-                        ※レベル制限をなくし自由に行動できますが、プロフィール作成（オアシス宣言への同意）がない限り、
-                        <span className="text-zinc-500 font-bold">
-                          「見て回るだけ」しかできない
-                        </span>
-                        のは変わりません。
+                      <p className="text-slate-500 dark:text-zinc-600 text-base leading-relaxed font-medium">
+                        ※中止後は、まずはプロフィールを作成してください、作成しないと行動は「見る」しかできません。
                       </p>
                     </div>
                     <ChevronRight
                       size={32}
-                      className="text-zinc-800 group-hover:text-zinc-600"
+                      className="text-slate-400 dark:text-zinc-800 group-hover:text-slate-500 dark:group-hover:text-zinc-600"
                     />
                   </button>
                 </div>
@@ -341,17 +346,17 @@ export function BeginningCountry({
             {/* --- ステップ 99: 幽霊モードの詳細案内 --- */}
             {currentStep === 99 && (
               <div className="animate-in fade-in zoom-in-95 duration-700 flex flex-col space-y-12 items-center py-6">
-                <div className="w-full max-w-5xl p-12 bg-zinc-900/50 border-2 border-indigo-500/20 rounded-[4rem] relative overflow-hidden shadow-2xl">
+                <div className="w-full max-w-5xl p-12 bg-white/80 dark:bg-zinc-900/50 border-2 border-indigo-500/20 rounded-[4rem] relative overflow-hidden shadow-2xl">
                   <div className="absolute -right-20 -top-20 opacity-5">
                     <Ghost size={500} className="text-indigo-400" />
                   </div>
 
                   <div className="relative z-10 space-y-12">
                     <div className="text-center">
-                      <h2 className="text-2xl font-black text-indigo-100 mb-8 tracking-tight italic underline decoration-indigo-500 underline-offset-8">
+                      <h2 className="text-2xl font-black text-indigo-900 dark:text-indigo-100 mb-8 tracking-tight italic underline decoration-indigo-500 underline-offset-8">
                         シュレディンガーちゃんの観測
                       </h2>
-                      <p className="text-zinc-300 text-lg leading-relaxed font-medium px-12">
+                      <p className="text-slate-600 dark:text-zinc-300 text-lg leading-relaxed font-medium px-12">
                         眺めること(ウォッチ)はできますが、まだあなたは「実体」がありません。
                         <br />
                         プロフィール（仮面）がなくても、すぐに以下のことを「見る（観測）」ことが可能です。
@@ -403,16 +408,16 @@ export function BeginningCountry({
                       ].map((item, i) => (
                         <div
                           key={i}
-                          className="flex items-center space-x-6 bg-zinc-950/80 p-8 rounded-[2rem] border border-zinc-800 hover:border-indigo-500/40 transition-all group shadow-xl"
+                          className="flex items-center space-x-6 bg-slate-50 dark:bg-zinc-950/80 p-8 rounded-[2rem] border border-slate-200 dark:border-zinc-800 hover:border-indigo-500/40 transition-all group shadow-xl"
                         >
-                          <div className="p-4 bg-zinc-900 rounded-2xl text-indigo-400 shadow-xl group-hover:scale-110 transition-transform">
+                          <div className="p-4 bg-white dark:bg-zinc-900 rounded-2xl text-indigo-500 dark:text-indigo-400 shadow-xl group-hover:scale-110 transition-transform">
                             {item.icon}
                           </div>
                           <div>
-                            <p className="text-lg font-bold text-zinc-100 mb-1 leading-none">
+                            <p className="text-lg font-bold text-slate-800 dark:text-zinc-100 mb-1 leading-none">
                               {item.title}
                             </p>
-                            <p className="text-lg text-zinc-600 leading-snug font-medium">
+                            <p className="text-lg text-slate-500 dark:text-zinc-600 leading-snug font-medium">
                               {item.desc}
                             </p>
                           </div>
@@ -420,21 +425,21 @@ export function BeginningCountry({
                       ))}
                     </div>
 
-                    <div className="p-10 bg-indigo-950/20 border-2 border-indigo-500/30 rounded-[3rem] space-y-6 text-center">
-                      <p className="text-lg text-zinc-400 leading-relaxed font-medium">
+                    <div className="p-10 bg-indigo-50/50 dark:bg-indigo-950/20 border-2 border-indigo-500/30 rounded-[3rem] space-y-6 text-center">
+                      <p className="text-lg text-slate-600 dark:text-zinc-400 leading-relaxed font-medium">
                         ※幽霊状態はあくまで
-                        <span className="text-indigo-300 font-bold">
+                        <span className="text-indigo-600 dark:text-indigo-300 font-bold">
                           「観測者」
                         </span>
                         としての滞在であり、
-                        <span className="text-red-400/80 font-bold">
+                        <span className="text-rose-500 dark:text-red-400/80 font-bold">
                           サイト内を見て回ることしかできません。
                         </span>
                         <br />
                         誰かを応援したり、マッチングで繋がったり、イベントや国の活動に直接参加するには、
                         <br />
                         <span
-                          className="text-white font-bold underline decoration-indigo-500 underline-offset-8 cursor-pointer hover:text-indigo-200 transition-colors"
+                          className="text-slate-800 dark:text-white font-bold underline decoration-indigo-500 underline-offset-8 cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-200 transition-colors"
                           onClick={() => onStepChange(1)}
                         >
                           ユーザープロフィール（仮面）
@@ -448,7 +453,7 @@ export function BeginningCountry({
                 <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 w-full max-w-4xl">
                   <button
                     onClick={() => onStepChange(0)}
-                    className="flex-1 w-full px-12 py-10 border-2 border-zinc-800 text-zinc-400 rounded-[2.5rem] font-bold text-lg hover:text-white hover:bg-zinc-800 transition-all flex items-center justify-center space-x-4 shadow-xl"
+                    className="flex-1 w-full px-12 py-10 border-2 border-slate-200 dark:border-zinc-800 text-slate-400 dark:text-zinc-400 rounded-[2.5rem] font-bold text-lg hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all flex items-center justify-center space-x-4 shadow-xl"
                   >
                     <ChevronLeft size={36} />
                     <span>女女王様の問いに戻る</span>
@@ -457,7 +462,7 @@ export function BeginningCountry({
                     onClick={() => {
                       /* Dashboard redirect handled in container */
                     }}
-                    className="flex-[2] w-full px-16 py-10 bg-white text-zinc-950 rounded-[2.5rem] font-black text-xl hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center space-x-6 shadow-2xl shadow-white/10"
+                    className="flex-[2] w-full px-16 py-10 bg-indigo-600 text-white dark:bg-white dark:text-zinc-950 rounded-[2.5rem] font-black text-xl hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center space-x-6 shadow-2xl shadow-indigo-500/30 dark:shadow-white/10"
                   >
                     <span>幽霊のまま観測に出る</span>
                     <ArrowRight size={40} />
@@ -469,18 +474,18 @@ export function BeginningCountry({
             {/* --- ステップ 88: チュートリアル案内 --- */}
             {currentStep === 88 && (
               <div className="animate-in fade-in zoom-in-95 duration-700 flex flex-col space-y-12 items-center py-6 text-center">
-                <div className="w-full max-w-4xl p-16 bg-emerald-950/20 border-2 border-emerald-500/30 rounded-[4rem] shadow-2xl relative overflow-hidden">
+                <div className="w-full max-w-4xl p-16 bg-emerald-50 dark:bg-emerald-950/20 border-2 border-emerald-500/30 rounded-[4rem] shadow-2xl relative overflow-hidden">
                   <div className="absolute -right-16 -top-16 opacity-[0.03]">
                     <BookOpen size={400} className="text-emerald-400" />
                   </div>
                   <BookOpen
                     size={80}
-                    className="text-emerald-400 mx-auto mb-10"
+                    className="text-emerald-500 dark:text-emerald-400 mx-auto mb-10"
                   />
-                  <h2 className="text-2xl font-black text-emerald-100 mb-8 tracking-tight">
+                  <h2 className="text-2xl font-black text-emerald-900 dark:text-emerald-100 mb-8 tracking-tight">
                     導き手に会いに行きますか？
                   </h2>
-                  <p className="text-zinc-300 text-lg leading-relaxed mb-12 font-medium px-10">
+                  <p className="text-slate-600 dark:text-zinc-300 text-lg leading-relaxed mb-12 font-medium px-10">
                     始まりの国の女女王様が用意した「導き手」は、新しく訪れたシュレディンガーちゃんを心待ちにしています。
                     <br />
                     この世界の歩き方や、仮面の作り方、価値観でつながる喜びを、対話を通じて一つずつ学んでいきましょう。
@@ -499,7 +504,7 @@ export function BeginningCountry({
 
                 <button
                   onClick={() => onStepChange(0)}
-                  className="flex items-center space-x-4 text-zinc-500 font-bold text-lg hover:text-white transition-all underline underline-offset-8 decoration-2"
+                  className="flex items-center space-x-4 text-slate-400 dark:text-zinc-500 font-bold text-lg hover:text-slate-900 dark:hover:text-white transition-all underline underline-offset-8 decoration-2"
                 >
                   <ChevronLeft size={28} />
                   <span>女女王様の問いへ戻る</span>
@@ -510,19 +515,22 @@ export function BeginningCountry({
             {/* --- ステップ 1: 仮面の作成（プロフィール） --- */}
             {currentStep === 1 && (
               <div className="animate-in slide-in-from-bottom-8 fade-in duration-600 flex flex-col space-y-12 pb-20">
-                <div className="bg-indigo-600/5 border-2 border-indigo-500/20 rounded-[3rem] p-12 relative overflow-hidden group shadow-2xl">
+                <div className="bg-white/80 dark:bg-indigo-600/5 border-2 border-indigo-500/20 rounded-[3rem] p-12 relative overflow-hidden group shadow-2xl">
                   <div className="absolute -right-10 -top-10 opacity-5 group-hover:opacity-10 transition-opacity">
                     <Sparkles size={260} className="text-indigo-400" />
                   </div>
                   <div className="relative z-10 flex items-start space-x-10">
                     <div className="p-8 bg-indigo-500/10 rounded-[1.5rem] border-2 border-indigo-500/30 shadow-inner">
-                      <Fingerprint className="text-indigo-400" size={54} />
+                      <Fingerprint
+                        className="text-indigo-500 dark:text-indigo-400"
+                        size={54}
+                      />
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-2xl font-black text-indigo-100 mb-5 tracking-tight leading-none italic uppercase">
+                      <h2 className="text-2xl font-black text-indigo-900 dark:text-indigo-100 mb-5 tracking-tight leading-none italic uppercase">
                         Generate Mask
                       </h2>
-                      <p className="text-zinc-300 text-lg leading-relaxed font-medium">
+                      <p className="text-slate-600 dark:text-zinc-300 text-lg leading-relaxed font-medium">
                         この世界での「名前」と「あり方」を定めたプロフィールという名の仮面を作り上げましょう。
                         <br />
                         完成して装着した時、あなたは初めて幽霊を卒業し、確かな実体として「受肉」できます。
@@ -535,25 +543,25 @@ export function BeginningCountry({
                   <section className="space-y-4">
                     <div className="flex items-center space-x-4">
                       <span className="w-2.5 h-6 bg-indigo-500 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.8)]" />
-                      <label className="text-lg font-black text-zinc-500 uppercase tracking-widest leading-none">
+                      <label className="text-lg font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest leading-none">
                         01. 魂の刻印（不変の星座）
                       </label>
                     </div>
-                    <div className="flex items-center justify-between p-10 bg-zinc-900/30 border-2 border-zinc-900 rounded-[3rem] relative shadow-inner">
+                    <div className="flex items-center justify-between p-10 bg-slate-100 dark:bg-zinc-900/30 border-2 border-slate-200 dark:border-zinc-900 rounded-[3rem] relative shadow-inner">
                       <div className="flex items-center space-x-12 relative z-10">
-                        <div className="w-32 h-32 bg-zinc-950 rounded-[2.5rem] flex items-center justify-center text-7xl shadow-2xl border border-zinc-800">
+                        <div className="w-32 h-32 bg-white dark:bg-zinc-950 rounded-[2.5rem] flex items-center justify-center text-7xl shadow-2xl border border-slate-200 dark:border-zinc-800">
                           {zodiac.emoji}
                         </div>
                         <div>
                           <p className="text-lg font-black text-indigo-500 uppercase tracking-[0.4em] leading-none mb-4 font-bold">
                             Metadata Locked
                           </p>
-                          <h3 className="text-3xl font-black tracking-tight text-white leading-none">
+                          <h3 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white leading-none">
                             {zodiac.name}
                           </h3>
                         </div>
                       </div>
-                      <div className="flex items-center space-x-5 text-zinc-600 bg-zinc-950/80 px-10 py-5 rounded-2xl border border-zinc-800">
+                      <div className="flex items-center space-x-5 text-slate-500 dark:text-zinc-600 bg-white dark:bg-zinc-950/80 px-10 py-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
                         <Lock size={28} />
                         <span className="text-lg font-black uppercase tracking-widest">
                           不変
@@ -576,8 +584,8 @@ export function BeginningCountry({
                           disabled={isRotating || !canRestore}
                           className={`group flex items-center space-x-3 px-8 py-5 rounded-full border-2 transition-all ${
                             isRotating || !canRestore
-                              ? "opacity-10 cursor-not-allowed border-zinc-800"
-                              : "bg-zinc-800 border-zinc-700 hover:text-white"
+                              ? "opacity-10 cursor-not-allowed border-slate-200 dark:border-zinc-800"
+                              : "bg-white dark:bg-zinc-800 border-slate-300 dark:border-zinc-700 hover:text-white hover:bg-zinc-800"
                           }`}
                         >
                           <Undo2 size={28} />
@@ -590,8 +598,8 @@ export function BeginningCountry({
                           disabled={isRotating}
                           className={`group flex items-center space-x-4 px-10 py-5 rounded-full border-2 transition-all ${
                             isRotating
-                              ? "bg-zinc-800 border-zinc-700 text-zinc-600"
-                              : "bg-indigo-600/10 border-indigo-500/50 text-indigo-300 hover:bg-indigo-600 hover:text-white shadow-xl"
+                              ? "bg-slate-100 dark:bg-zinc-800 border-slate-200 dark:border-zinc-700 text-slate-500 dark:text-zinc-600"
+                              : "bg-indigo-600/10 border-indigo-500/50 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-600 hover:text-white shadow-xl"
                           }`}
                         >
                           <RefreshCcw
@@ -611,15 +619,15 @@ export function BeginningCountry({
                           onClick={() => onUpdateForm({ displayName: name })}
                           className={`p-16 rounded-[3rem] border-2 flex flex-col items-center justify-center space-y-6 transition-all group ${
                             formData.displayName === name
-                              ? "bg-zinc-100 text-zinc-950 border-white shadow-2xl scale-[1.03]"
-                              : "bg-zinc-900/40 border-zinc-800 text-zinc-400 hover:border-zinc-700"
+                              ? "bg-white dark:bg-zinc-100 text-slate-900 dark:text-zinc-950 border-white shadow-2xl scale-[1.03]"
+                              : "bg-slate-50 dark:bg-zinc-900/40 border-slate-200 dark:border-zinc-800 text-slate-400 dark:text-zinc-400 hover:border-slate-300 dark:hover:border-zinc-700"
                           }`}
                         >
                           <div
                             className={`w-14 h-14 rounded-[1.5rem] flex items-center justify-center border-2 transition-all ${
                               formData.displayName === name
                                 ? "bg-indigo-600 border-indigo-400 text-white"
-                                : "bg-zinc-950/50 border-zinc-800"
+                                : "bg-slate-200 dark:bg-zinc-950/50 border-slate-300 dark:border-zinc-800"
                             }`}
                           >
                             <Check size={32} />
@@ -635,7 +643,7 @@ export function BeginningCountry({
                   <section className="space-y-4">
                     <div className="flex items-center space-x-4">
                       <span className="w-2.5 h-6 bg-indigo-500 rounded-full" />
-                      <label className="text-lg font-black text-zinc-500 uppercase tracking-widest leading-none">
+                      <label className="text-lg font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest leading-none">
                         03. 仮面の形式（情報の深度）
                       </label>
                     </div>
@@ -663,19 +671,19 @@ export function BeginningCountry({
                   </section>
 
                   {/* 04. Amazon Associate ID */}
-                  <section className="space-y-6 pt-12 border-t border-zinc-900">
+                  <section className="space-y-6 pt-12 border-t border-slate-200 dark:border-zinc-900">
                     <div className="flex items-center space-x-4">
                       <span className="w-2.5 h-6 bg-indigo-500 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.8)]" />
-                      <label className="text-lg font-black text-zinc-500 uppercase tracking-widest leading-none">
+                      <label className="text-lg font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest leading-none">
                         04. 収益化の設定（任意）
                       </label>
                     </div>
 
-                    <div className="bg-zinc-900/30 border-2 border-zinc-900 rounded-[3rem] p-10 space-y-8">
+                    <div className="bg-slate-100 dark:bg-zinc-900/30 border-2 border-slate-200 dark:border-zinc-900 rounded-[3rem] p-10 space-y-8">
                       <div className="space-y-4">
                         <label
                           htmlFor="amazon-id"
-                          className="block text-xl font-bold text-zinc-300"
+                          className="block text-xl font-bold text-slate-700 dark:text-zinc-300"
                         >
                           AmazonアソシエイトID
                         </label>
@@ -683,7 +691,7 @@ export function BeginningCountry({
                           type="text"
                           id="amazon-id"
                           placeholder="example-22"
-                          className="w-full p-8 rounded-[2rem] bg-zinc-950 border-2 border-zinc-800 text-2xl font-bold text-white focus:border-indigo-500 outline-none transition-all placeholder:text-zinc-700"
+                          className="w-full p-8 rounded-[2rem] bg-white dark:bg-zinc-950 border-2 border-slate-200 dark:border-zinc-800 text-2xl font-bold text-slate-900 dark:text-white focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-zinc-700"
                           value={formData.amazon_associate_tag || ""}
                           onChange={(e) =>
                             onUpdateForm({
@@ -733,10 +741,10 @@ export function BeginningCountry({
             {currentStep === 3 && (
               <div className="animate-in zoom-in-95 fade-in duration-300 flex flex-col space-y-12 items-center text-center">
                 <header className="max-w-3xl">
-                  <h2 className="text-2xl font-black text-white leading-none uppercase italic tracking-tighter">
+                  <h2 className="text-2xl font-black text-slate-900 dark:text-white leading-none uppercase italic tracking-tighter">
                     Incarnation Ritual
                   </h2>
-                  <p className="text-zinc-400 text-lg mt-8 font-medium leading-relaxed px-10">
+                  <p className="text-slate-500 dark:text-zinc-400 text-lg mt-8 font-medium leading-relaxed px-10">
                     作り上げた「仮面」は完成しました。シュレディンガーちゃん。
                     <br />
                     今、この仮面を被ることで幽霊状態を脱し、
@@ -745,23 +753,23 @@ export function BeginningCountry({
                   </p>
                 </header>
 
-                <div className="w-full max-w-4xl bg-zinc-900/30 border-2 border-zinc-800 rounded-[4rem] p-16 space-y-12 text-left relative overflow-hidden shadow-[0_0_60px_rgba(99,102,241,0.15)]">
+                <div className="w-full max-w-4xl bg-slate-100 dark:bg-zinc-900/30 border-2 border-slate-200 dark:border-zinc-800 rounded-[4rem] p-16 space-y-12 text-left relative overflow-hidden shadow-[0_0_60px_rgba(99,102,241,0.15)]">
                   <div className="absolute -right-20 -bottom-20 opacity-[0.05]">
                     <Fingerprint size={400} className="text-indigo-400" />
                   </div>
                   <div className="flex items-center space-x-12">
-                    <div className="w-56 h-56 bg-zinc-950 rounded-[4rem] flex items-center justify-center text-9xl border-2 border-zinc-800 shadow-inner">
+                    <div className="w-56 h-56 bg-white dark:bg-zinc-950 rounded-[4rem] flex items-center justify-center text-9xl border-2 border-slate-200 dark:border-zinc-800 shadow-inner">
                       {formData.avatar}
                     </div>
                     <div className="space-y-6">
-                      <h3 className="text-4xl font-black tracking-tight text-white leading-none">
+                      <h3 className="text-4xl font-black tracking-tight text-slate-900 dark:text-white leading-none">
                         {formData.displayName}
                       </h3>
                       <div className="flex gap-8">
-                        <span className="bg-indigo-600/20 text-indigo-400 text-xl px-8 py-3 rounded-full border-2 border-indigo-500/30 font-black uppercase tracking-widest">
+                        <span className="bg-indigo-600/20 text-indigo-600 dark:text-indigo-400 text-xl px-8 py-3 rounded-full border-2 border-indigo-500/30 font-black uppercase tracking-widest">
                           {formData.format}
                         </span>
-                        <span className="bg-zinc-800 text-zinc-400 text-xl px-8 py-3 rounded-full border-2 border-zinc-700 font-black uppercase tracking-widest">
+                        <span className="bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 text-xl px-8 py-3 rounded-full border-2 border-zinc-200 dark:border-zinc-700 font-black uppercase tracking-widest">
                           {formData.role}
                         </span>
                         {formData.amazon_associate_tag && (
@@ -773,8 +781,8 @@ export function BeginningCountry({
                       </div>
                     </div>
                   </div>
-                  <div className="space-y-8 border-t-2 border-zinc-800 pt-16">
-                    <p className="text-xl font-black text-zinc-500 uppercase tracking-[0.4em] leading-none">
+                  <div className="space-y-8 border-t-2 border-slate-300 dark:border-zinc-800 pt-16">
+                    <p className="text-xl font-black text-slate-500 dark:text-zinc-500 uppercase tracking-[0.4em] leading-none">
                       確定させる世界との接点
                     </p>
                     <div className="flex flex-wrap gap-6 mt-8">
@@ -788,7 +796,7 @@ export function BeginningCountry({
                         return (
                           <span
                             key={p}
-                            className="bg-white/5 text-zinc-300 text-2xl px-12 py-6 rounded-[2.5rem] border border-zinc-800 font-bold shadow-lg leading-none transition-all hover:bg-white/10"
+                            className="bg-white/80 dark:bg-white/5 text-slate-700 dark:text-zinc-300 text-2xl px-12 py-6 rounded-[2.5rem] border border-slate-300 dark:border-zinc-800 font-bold shadow-lg leading-none transition-all hover:bg-slate-100 dark:hover:bg-white/10"
                           >
                             {labels[p] || p}
                           </span>
@@ -810,7 +818,7 @@ export function BeginningCountry({
         </div>
 
         {/* フッターアクション */}
-        <footer className="h-32 px-12 border-t border-zinc-900 bg-black/80 backdrop-blur-3xl flex items-center justify-between z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.6)]">
+        <footer className="h-32 px-12 border-t border-slate-200 dark:border-zinc-900 bg-white/80 dark:bg-black/80 backdrop-blur-3xl flex items-center justify-between z-30 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] dark:shadow-[0_-10px_40px_rgba(0,0,0,0.6)]">
           <button
             onClick={() => {
               if (currentStep === 1) onStepChange(0);
@@ -825,7 +833,7 @@ export function BeginningCountry({
             className={`flex items-center space-x-6 px-16 py-8 rounded-[2.5rem] font-black text-xl tracking-[0.2em] transition-all ${
               currentStep === 0
                 ? "opacity-0 pointer-events-none"
-                : "text-zinc-500 hover:text-zinc-100 hover:bg-zinc-900/60 shadow-xl"
+                : "text-slate-400 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-zinc-100 hover:bg-slate-100 dark:hover:bg-zinc-900/60 shadow-xl"
             }`}
           >
             <ChevronLeft size={40} />
@@ -840,7 +848,7 @@ export function BeginningCountry({
                   /* Create profile handled in container */
                 }
               }}
-              className="flex items-center space-x-8 px-24 py-8 bg-white text-zinc-950 rounded-[2.5rem] font-black text-2xl hover:scale-[1.03] active:scale-95 transition-all shadow-[0_0_50px_rgba(255,255,255,0.2)]"
+              className="flex items-center space-x-8 px-24 py-8 bg-indigo-600 text-white dark:bg-white dark:text-zinc-950 rounded-[2.5rem] font-black text-2xl hover:scale-[1.03] active:scale-95 transition-all shadow-[0_0_50px_rgba(99,102,241,0.2)] dark:shadow-[0_0_50px_rgba(255,255,255,0.2)]"
             >
               <span>
                 {currentStep === 3 ? "仮面を被り、世界へ受肉する" : "次に進む"}

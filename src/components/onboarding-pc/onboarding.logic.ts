@@ -732,6 +732,144 @@ export const CORE_ACTIVITY_HOURS = Array.from(
   (_, i) => i.toString().padStart(2, "0") + ":00"
 );
 
+// 価値観データ型
+export type BasicValueQuestionId =
+  | "peace_preference"
+  | "hate_speech_aversion"
+  | "forgiving_mistakes"
+  | "apologizing"
+  | "forgiving_nature"
+  | "honesty_desire"
+  | "fact_checking"
+  | "creativity"
+  | "ai_usage"
+  | "opinion_diversity";
+
+export interface BasicValueOption {
+  value: string;
+  label: string;
+}
+
+export interface BasicValueQuestion {
+  id: BasicValueQuestionId;
+  title: string;
+  category: "Oasis" | "Human" | "Honesty" | "Creator" | "Other";
+  options: BasicValueOption[];
+}
+
+export const BASIC_VALUES_QUESTIONS: BasicValueQuestion[] = [
+  // オアシス宣言
+  {
+    id: "peace_preference",
+    title: "あなたは平和がよいですか？",
+    category: "Oasis",
+    options: [
+      { value: "yes", label: "はい" },
+      { value: "no", label: "いいえ" },
+    ],
+  },
+  {
+    id: "hate_speech_aversion",
+    title: "ヘイト発言などネガティブな言葉は嫌ですか？",
+    category: "Oasis",
+    options: [
+      { value: "yes", label: "はい" },
+      { value: "no", label: "いいえ" },
+    ],
+  },
+  // 人間宣言
+  {
+    id: "forgiving_mistakes",
+    title: "人間が間違えること",
+    category: "Human",
+    options: [
+      { value: "forgivable", label: "許せる" },
+      { value: "unforgivable", label: "許せない" },
+    ],
+  },
+  {
+    id: "apologizing",
+    title: "自分が間違った時は謝罪をしますか？",
+    category: "Human",
+    options: [
+      { value: "yes", label: "はい" },
+      { value: "no", label: "いいえ" },
+    ],
+  },
+  {
+    id: "forgiving_nature",
+    title: "なにか問題があった時に許す心",
+    category: "Human",
+    options: [
+      { value: "yes", label: "ある" },
+      { value: "no", label: "ない" },
+    ],
+  },
+  // 正直宣言
+  {
+    id: "honesty_desire",
+    title: "発言が正直であること",
+    category: "Honesty",
+    options: [
+      { value: "want_to_be", label: "そうありたい" },
+      { value: "difficult", label: "難しい" },
+    ],
+  },
+  {
+    id: "fact_checking",
+    title: "発言は自分の目で見て調べていますか？",
+    category: "Honesty",
+    options: [
+      { value: "yes", label: "はい" },
+      { value: "no", label: "いいえ" },
+    ],
+  },
+  // クリエイターファースト
+  {
+    id: "creativity",
+    title: "なにか作りたい気持ち（創造性）",
+    category: "Creator",
+    options: [
+      { value: "very_much", label: "すごくある" },
+      { value: "yes", label: "ある" },
+      { value: "little", label: "少しある" },
+      { value: "none", label: "ない" },
+    ],
+  },
+  // その他
+  {
+    id: "ai_usage",
+    title: "AIの活用",
+    category: "Other",
+    options: [
+      { value: "active_agree", label: "積極的賛成" },
+      { value: "passive_agree", label: "消極的賛成" },
+      { value: "passive_disagree", label: "消極的反対" },
+      { value: "active_disagree", label: "積極的反対" },
+    ],
+  },
+  {
+    id: "opinion_diversity",
+    title: "自分と違う意見についてどう思いますか？",
+    category: "Other",
+    options: [
+      { value: "new_perspective", label: "新しい視点や学びの機会だと感じる" },
+      { value: "many_opinions", label: "沢山の意見があっていいと思う" },
+      {
+        value: "listen_temporarily",
+        label: "一旦は話を聞いてみる（態度の保留）",
+      },
+      { value: "hard_to_understand", label: "理解に苦しむ・受け入れがたい" },
+      { value: "argue_to_correct", label: "議論をして間違いを正したい" },
+      {
+        value: "single_truth",
+        label: "この世は一つの正しい意見にまとまるべきだ",
+      },
+      { value: "my_opinion_only", label: "自分の意見こそがこの世で唯一正しい" },
+    ],
+  },
+];
+
 export const useOnboarding = () => {
   const [selectedArea, setSelectedArea] = useState<string | null>(null);
   const [culturalSphere, setCulturalSphere] = useState<string>("");

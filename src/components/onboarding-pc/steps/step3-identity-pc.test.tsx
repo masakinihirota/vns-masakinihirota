@@ -1,86 +1,71 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { GENERATIONS } from "../onboarding.logic";
+import { axe } from "vitest-axe";
 import { Step3IdentityPC } from "./step3-identity-pc";
 
-// Mock generateAnonymousName if it's imported globally, or we just test the callback
-// If the component imports specific logic, we might need to mock that module.
-vi.mock("@/lib/anonymous-name-generator", () => ({
-  generateAnonymousName: vi.fn(),
-  generateUniqueCandidates: vi.fn(() => [
-    "Candidate 1",
-    "Candidate 2",
-    "Candidate 3",
-  ]),
-}));
-
 describe("Step3IdentityPC", () => {
-  const mockUpdate = vi.fn();
-  const defaultProps = {
-    data: {
-      display_id: "user-123",
-      zodiac_sign: "",
-      display_name: "",
-    },
-    onUpdate: mockUpdate,
+  const mockOnUpdate = vi.fn();
+  const defaultData = {
+    zodiac_sign: "",
+    birth_generation: "",
+    amazon_associate_tag: "",
+    is_minor: undefined,
   };
 
-  it("renders identity fields", () => {
-    render(<Step3IdentityPC {...defaultProps} />);
+  it("should have no accessibility violations", async () => {
+    const { container } = render(
+      <Step3IdentityPC data={defaultData} onUpdate={mockOnUpdate} />
+    );
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
 
-    expect(screen.getByLabelText("星座")).toBeInTheDocument();
-    expect(screen.getByText("表示名 (匿名)")).toBeInTheDocument();
-    expect(screen.getByLabelText("生誕世代(生まれた年)")).toBeInTheDocument();
+  it("renders the age check question", () => {
+    render(<Step3IdentityPC data={defaultData} onUpdate={mockOnUpdate} />);
+    expect(screen.getByText("あなたは未成年ですか？")).toBeInTheDocument();
+  });
 
-    // Should show placeholder initially
+  it("calls onUpdate with is_minor: true when 'Yes' is clicked", () => {
+    render(<Step3IdentityPC data={defaultData} onUpdate={mockOnUpdate} />);
+    const yesRadio = screen.getByLabelText("はい (未成年)");
+    fireEvent.click(yesRadio);
+    expect(mockOnUpdate).toHaveBeenCalledWith({ is_minor: true });
+  });
+
+  it("calls onUpdate with is_minor: false when 'No' is clicked", () => {
+    render(<Step3IdentityPC data={defaultData} onUpdate={mockOnUpdate} />);
+    const noRadio = screen.getByLabelText("いいえ (成人)");
+    fireEvent.click(noRadio);
+    expect(mockOnUpdate).toHaveBeenCalledWith({ is_minor: false });
+  });
+
+  it("shows blocking message when is_minor is true", () => {
+    render(
+      <Step3IdentityPC
+        data={{ ...defaultData, is_minor: true }}
+        onUpdate={mockOnUpdate}
+      />
+    );
     expect(
-      screen.getByText("星座を選択すると候補が表示されます")
+      screen.getByText(
+        /申し訳ありません。未成年の方は現在VNSをご利用いただけません/
+      )
     ).toBeInTheDocument();
   });
 
-  it("displays candidates when zodiac is selected", () => {
-    // Since component is controlled, we render with the value already set to test the effect
+  it("disables other fields when is_minor is true", () => {
     render(
       <Step3IdentityPC
-        {...defaultProps}
-        data={{ ...defaultProps.data, zodiac_sign: "aries" }}
+        data={{ ...defaultData, is_minor: true }}
+        onUpdate={mockOnUpdate}
       />
     );
+    const zodiacSelect = screen.getByLabelText("星座");
+    const generationSelect = screen.getByLabelText("生誕世代");
+    const inputs = screen.getByLabelText("AmazonアソシエイトID (任意)");
 
-    // Should display candidates from mock
-    expect(screen.getByText("Candidate 1")).toBeInTheDocument();
-    expect(screen.getByText("Candidate 2")).toBeInTheDocument();
-    expect(screen.getByText("Candidate 3")).toBeInTheDocument();
-  });
-
-  it("updates display_name when a candidate is selected", () => {
-    render(
-      <Step3IdentityPC
-        {...defaultProps}
-        data={{ ...defaultProps.data, zodiac_sign: "aries" }}
-      />
-    ); // Pre-select zodiac to trigger useEffect
-
-    // Wait for effect? No, useEffect runs after render, but in tests `render` usually settles.
-    // However, initial render with zodiac set should trigger candidates.
-
-    const candidateBtn = screen.getByText("Candidate 1");
-    fireEvent.click(candidateBtn);
-
-    expect(mockUpdate).toHaveBeenCalledWith(
-      expect.objectContaining({ display_name: "Candidate 1" })
-    );
-  });
-
-  it("updates generation", () => {
-    render(<Step3IdentityPC {...defaultProps} />);
-
-    // Select a generation
-    fireEvent.change(screen.getByLabelText("生誕世代(生まれた年)"), {
-      target: { value: GENERATIONS[0] },
-    });
-    expect(mockUpdate).toHaveBeenCalledWith({
-      birth_generation: GENERATIONS[0],
-    });
+    expect(zodiacSelect).toBeDisabled();
+    expect(generationSelect).toBeDisabled();
+    expect(inputs).toBeDisabled();
   });
 });
