@@ -19,6 +19,10 @@ import {
   CreditCard,
   UserCircle,
   UserPlus,
+  Layout,
+  Eye,
+  Sparkles,
+  PenTool,
   type LucideIcon,
 } from "lucide-react";
 
@@ -28,6 +32,11 @@ export const ICON_MAP: Record<string, LucideIcon> = {
   "/matching": Heart,
   "/user-profiles": User,
   "/profiles": User,
+  "/user-profiles/new": UserPlus,
+  "/user-profiles/prototypes/simple": Layout,
+  "/user-profiles/prototypes/ui-view": Eye,
+  "/user-profiles/prototypes/complex": Sparkles,
+  "/user-profiles/prototypes/creation": PenTool,
 
   // community / org
   "/groups": Users,

@@ -1,4 +1,4 @@
-import { ProfileCreationStep1 } from "@/components/user-profiles/new";
+import { ProfileCreationStep1 } from "@/components/user-profiles/new-backup-20260117";
 import { getUserProfiles } from "@/lib/db/user-profiles";
 import { createClient } from "@/lib/supabase/server";
 

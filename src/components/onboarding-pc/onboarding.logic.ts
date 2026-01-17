@@ -29,6 +29,12 @@ export const useOnboarding = () => {
   // 活動設定用のState
   const [coreActivityStart, setCoreActivityStart] = useState<string>("09:00");
   const [coreActivityEnd, setCoreActivityEnd] = useState<string>("18:00");
+  const [holidayActivityStart, setHolidayActivityStart] =
+    useState<string>("09:00");
+  const [holidayActivityEnd, setHolidayActivityEnd] = useState<string>("18:00");
+  const [holidayActivity2Start, setHolidayActivity2Start] =
+    useState<string>("");
+  const [holidayActivity2End, setHolidayActivity2End] = useState<string>("");
   const [useAiTranslation, setUseAiTranslation] = useState<boolean>(true);
 
   // 同意事項用のState
@@ -96,6 +102,10 @@ export const useOnboarding = () => {
       availableLanguages,
       coreActivityStart,
       coreActivityEnd,
+      holidayActivityStart,
+      holidayActivityEnd,
+      holidayActivity2Start,
+      holidayActivity2End,
       useAiTranslation,
       isAdult,
       agreements,
@@ -111,6 +121,10 @@ export const useOnboarding = () => {
       setNativeLanguage,
       setCoreActivityStart,
       setCoreActivityEnd,
+      setHolidayActivityStart,
+      setHolidayActivityEnd,
+      setHolidayActivity2Start,
+      setHolidayActivity2End,
       setUseAiTranslation,
       setIsAdult,
       toggleAvailableLanguage,

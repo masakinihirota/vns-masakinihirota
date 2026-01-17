@@ -94,6 +94,7 @@ type RouteEntry = {
 const PATH_TO_FEATURE_MAP: Record<string, string> = {
   "/home": "home",
   "/user-profiles": "profiles",
+  "/user-profiles/new": "profiles",
   "/profiles": "profiles",
   "/matching": "matching",
   "/groups": "organizations",
@@ -489,7 +490,7 @@ export function AppSidebar({
   const pathname = usePathname();
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" className="z-50" {...props}>
       {/* ヘッダー: ブランド名 */}
       <SidebarHeader>
         <SidebarMenu>

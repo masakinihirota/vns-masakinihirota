@@ -32,6 +32,10 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
     core_activity_end: "18:00",
     core_activity_2_start: undefined,
     core_activity_2_end: undefined,
+    holidayActivityStart: "09:00",
+    holidayActivityEnd: "18:00",
+    holidayActivity2Start: undefined,
+    holidayActivity2End: undefined,
     uses_ai_translation: false,
     display_id: `user-${userId.substring(0, 8)}`, // Mock display ID
     nativeLanguages: [],
@@ -112,7 +116,6 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
             data={formData}
             onBack={prevStep}
             onSubmit={handleSubmit}
-            isSubmitting={isSubmitting}
           />
         );
       default:

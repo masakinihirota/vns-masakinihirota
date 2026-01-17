@@ -178,7 +178,7 @@ export const UserProfileWizard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-white font-sans text-slate-800 overflow-hidden">
+    <div className="flex flex-col h-full bg-background font-sans text-foreground overflow-hidden">
       <StepIndicator
         currentStep={currentStep}
         steps={STEPS}
@@ -219,12 +219,12 @@ export const UserProfileWizard: React.FC = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-slate-200 px-6 md:px-12 py-4 z-20">
+        <div className="absolute bottom-0 left-0 right-0 bg-background/90 backdrop-blur-md border-t border-border px-6 md:px-12 py-4 z-20">
           <div className="max-w-5xl mx-auto flex justify-between items-center">
             <button
               onClick={() => setCurrentStep((prev) => Math.max(1, prev - 1))}
               disabled={currentStep === 1}
-              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all ${currentStep === 1 ? "text-slate-300 cursor-not-allowed" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold transition-all ${currentStep === 1 ? "text-muted-foreground/50 cursor-not-allowed" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"}`}
             >
               <ArrowLeft className="w-5 h-5" />
               戻る
@@ -236,7 +236,7 @@ export const UserProfileWizard: React.FC = () => {
                   isStepComplete() &&
                   setCurrentStep((prev) => Math.min(5, prev + 1))
                 }
-                className={`flex items-center gap-2 px-8 py-3 rounded-lg font-bold transition-all hover:scale-105 active:scale-95 ${isStepComplete() ? "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200" : "bg-slate-200 text-slate-400 cursor-not-allowed"}`}
+                className={`flex items-center gap-2 px-8 py-3 rounded-lg font-bold transition-all hover:scale-105 active:scale-95 ${isStepComplete() ? "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200" : "bg-muted text-muted-foreground cursor-not-allowed"}`}
               >
                 次へ進む
                 <ArrowRight className="w-5 h-5" />
