@@ -1,18 +1,16 @@
-import { Check, AlertCircle, MapPin, Globe, User, Star } from "lucide-react";
+import { Check, AlertCircle, MapPin, Star } from "lucide-react";
 import { CULTURAL_SPHERES } from "../onboarding.logic";
 
 interface StepConfirmationPCProps {
   data: any;
   onBack: () => void;
   onSubmit: () => void;
-  isSubmitting: boolean;
 }
 
 export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
   data,
   onBack: _onBack,
   onSubmit: _onSubmit,
-  isSubmitting,
 }) => {
   const {
     // Step 1
@@ -33,6 +31,10 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
     core_activity_end,
     core_activity_2_start,
     core_activity_2_end,
+    holidayActivityStart,
+    holidayActivityEnd,
+    holidayActivity2Start,
+    holidayActivity2End,
     // Step 5
     is_minor,
     zodiac_sign,
@@ -238,7 +240,7 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
                   {selectedCountry && (
                     <span className="text-slate-500 dark:text-slate-400 ml-2 text-xs">
                       ({selectedCountry}
-                      {selectedRegion ? `, ${selectedRegion}` : ""})
+                      {selectedRegion ? `, ${selectedRegion} ` : ""})
                     </span>
                   )}
                 </div>
@@ -252,15 +254,29 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
         {/* Step 4: Hours */}
         <ConfirmationSection title="活動時間">
           <ConfirmationRow
-            label="第一活動時間"
+            label="第一活動時間 (仕事)"
             isRequired
-            value={`${core_activity_start || "09:00"} ～ ${core_activity_end || "18:00"}`}
+            value={`${core_activity_start || "09:00"} ～ ${core_activity_end || "18:00"} `}
           />
           <ConfirmationRow
-            label="第二活動時間"
+            label="第二活動時間 (仕事)"
             value={
               core_activity_2_start && core_activity_2_end ? (
-                `${core_activity_2_start} ～ ${core_activity_2_end}`
+                `${core_activity_2_start} ～ ${core_activity_2_end} `
+              ) : (
+                <span className="text-slate-400 text-xs">設定なし</span>
+              )
+            }
+          />
+          <ConfirmationRow
+            label="第一活動時間 (休日)"
+            value={`${holidayActivityStart || "09:00"} ～ ${holidayActivityEnd || "18:00"} `}
+          />
+          <ConfirmationRow
+            label="第二活動時間 (休日)"
+            value={
+              holidayActivity2Start && holidayActivity2End ? (
+                `${holidayActivity2Start} ～ ${holidayActivity2End} `
               ) : (
                 <span className="text-slate-400 text-xs">設定なし</span>
               )

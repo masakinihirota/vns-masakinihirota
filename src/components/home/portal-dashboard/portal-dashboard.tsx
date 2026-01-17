@@ -66,6 +66,12 @@ export function PortalDashboard() {
           desc: "作成済みのプロフィール（仮面）の一覧管理。",
         },
         {
+          title: "新規プロフィールの作成",
+          path: "/user-profiles/new",
+          desc: "新しいプロフィール（仮面）を受肉するウィザード形式の作成フロー。",
+          badge: "Start",
+        },
+        {
           title: "ルートアカウント",
           path: "/root-accounts",
           desc: "アカウント全体の属性管理・セキュリティ設定。",
@@ -175,12 +181,6 @@ export function PortalDashboard() {
           title: "レガシー・プロフィール",
           path: "/user-profiles/new-legacy",
           desc: "従来のプロフィール作成フォーム（参照用）。",
-        },
-        {
-          title: "新規プロフィールの作成 (Legacy)",
-          path: "/user-profiles/new",
-          desc: "新しいプロフィール（仮面）を受肉するウィザード形式の作成フロー。",
-          badge: "Legacy",
         },
       ],
     },

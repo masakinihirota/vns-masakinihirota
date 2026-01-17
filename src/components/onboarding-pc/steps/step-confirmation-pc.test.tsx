@@ -58,7 +58,6 @@ describe("StepConfirmationPC", () => {
         data={validData}
         onBack={mockOnBack}
         onSubmit={mockOnSubmit}
-        isSubmitting={false}
       />
     );
     const results = await axe(container);
@@ -71,7 +70,6 @@ describe("StepConfirmationPC", () => {
         data={validData}
         onBack={mockOnBack}
         onSubmit={mockOnSubmit}
-        isSubmitting={false}
       />
     );
 
@@ -88,7 +86,6 @@ describe("StepConfirmationPC", () => {
         data={invalidData}
         onBack={mockOnBack}
         onSubmit={mockOnSubmit}
-        isSubmitting={false}
       />
     );
 
@@ -103,7 +100,6 @@ describe("StepConfirmationPC", () => {
         data={{ ...validData, is_minor: true }}
         onBack={mockOnBack}
         onSubmit={mockOnSubmit}
-        isSubmitting={false}
       />
     );
 

@@ -1,4 +1,4 @@
-import { ProfileCreationStep2 } from "@/components/user-profiles/new";
+import { ProfileCreationStep2 } from "@/components/user-profiles/new-backup-20260117";
 
 export default function ProfileCreateDetailsPage({
   searchParams,
