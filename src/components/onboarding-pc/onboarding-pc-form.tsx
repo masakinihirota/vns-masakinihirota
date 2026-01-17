@@ -145,10 +145,11 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                 <div
                   className={`
                                     w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm transition-all
-                                    ${currentStep >= step
-                      ? "bg-indigo-600 text-white shadow-md ring-4 ring-indigo-50 dark:ring-indigo-900/30"
-                      : "bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-slate-200 dark:group-hover:bg-slate-700"
-                    }
+                                    ${
+                                      currentStep >= step
+                                        ? "bg-indigo-600 text-white shadow-md ring-4 ring-indigo-50 dark:ring-indigo-900/30"
+                                        : "bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-slate-200 dark:group-hover:bg-slate-700"
+                                    }
                                 `}
                 >
                   {step}
@@ -278,11 +279,12 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
                 }
                 className={`
                   px-8 py-2.5 rounded-lg font-medium transition-all transform
-                  ${currentStep === 5 &&
+                  ${
+                    currentStep === 5 &&
                     (formData.is_minor === true ||
                       formData.is_minor === undefined)
-                    ? "bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed shadow-none"
-                    : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 hover:-translate-y-0.5"
+                      ? "bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed shadow-none"
+                      : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 hover:-translate-y-0.5"
                   }
                 `}
               >
