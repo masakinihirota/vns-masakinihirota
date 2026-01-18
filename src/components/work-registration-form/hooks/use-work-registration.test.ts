@@ -1,5 +1,6 @@
 import { renderHook, act } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
+import { RegistrationFormValues } from "../schema";
 import { useWorkRegistration } from "./use-work-registration";
 
 describe("useWorkRegistration", () => {
@@ -10,19 +11,17 @@ describe("useWorkRegistration", () => {
   });
 
   it("props経由の初期値が反映されること", () => {
-    const initialValues = {
+    const initialValues: Partial<RegistrationFormValues> = {
       work: {
         title: "テスト作品",
         author: "作者A",
-        category: "manga" as const,
+        category: "manga",
         isNew: true,
         isAiGenerated: false,
       },
-      entry: { status: "reading", memo: "メモ" },
+      entry: { status: "reading", memo: "メモ", tier: undefined },
     };
-    const { result } = renderHook(() =>
-      useWorkRegistration(initialValues as any)
-    );
+    const { result } = renderHook(() => useWorkRegistration(initialValues));
 
     expect(result.current.form.getValues().work.title).toBe("テスト作品");
     expect(result.current.form.getValues().entry.status).toBe("reading");

@@ -4,7 +4,7 @@ import { ValuesList } from "./values-list";
 import { VALUES_QUESTIONS } from "./values-list.logic";
 
 // Mock Lucide icons
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 vi.mock("lucide-react", async (importOriginal) => {
   const actual = await importOriginal<typeof import("lucide-react")>();
   return {
