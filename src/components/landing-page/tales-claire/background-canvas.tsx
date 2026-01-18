@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 
-export const BackgroundCanvas = () => {
+export function BackgroundCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -15,13 +15,9 @@ export const BackgroundCanvas = () => {
     let animationFrameId: number;
     let width: number;
     let height: number;
-    let particles: Particle[] = [];
 
-    const resize = () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-
+    // Particle class definition within useEffect to close over width/height
+    // Checking if moving this logic helps, or better yet, make it a simple object factory
     class Particle {
       x: number;
       y: number;
@@ -56,6 +52,13 @@ export const BackgroundCanvas = () => {
         context.fill();
       }
     }
+
+    let particles: Particle[] = [];
+
+    const resize = () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    };
 
     const initParticles = () => {
       particles = [];
@@ -113,4 +116,4 @@ export const BackgroundCanvas = () => {
       className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
     />
   );
-};
+}
