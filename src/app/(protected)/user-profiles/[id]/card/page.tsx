@@ -61,14 +61,16 @@ export default async function BusinessCardPage(props: Props) {
   // Fetch Works
   const { data: worksData } = await supabase
     .from("user_profile_works")
-    .select(`
+    .select(
+      `
         tier,
         work:works (
             id,
             title,
             creator_name
         )
-    `)
+    `
+    )
     .eq("user_profile_id", profileId);
 
   const works: Work[] = (worksData || []).map((item: any) => ({

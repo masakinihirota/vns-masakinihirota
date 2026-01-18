@@ -452,6 +452,10 @@ export default function UserProfileCreator() {
   const [activePurposeFilter, setActivePurposeFilter] = useState("RECOMMENDED"); // Deprecated, but keeping line for replacement target match if needed? No, just replacing.
   const [isDetailOpen, setIsDetailOpen] = useState(false); // Accordion state for Step 5
 
+  // Step 5: Manual Add/Remove State
+  const [addedQuestionIds, setAddedQuestionIds] = useState<string[]>([]);
+  const [removedQuestionIds, setRemovedQuestionIds] = useState<string[]>([]);
+
   const [formData, setFormData] = useState({
     role: "Leader",
     type: "SELF",
@@ -1419,16 +1423,24 @@ export default function UserProfileCreator() {
   // STEP 5: Values (Standalone)
   const renderStep5 = () => {
     // List Logic: Separation of Concerns
-    // 1. Registered List (Left Column): All questions that have selections/tiers OR are related to selected purposes
+    // 1. Registered List (Left Column):
+    //    (Interacted OR Purpose-Related OR Manually Added) AND (NOT Manually Removed)
     const registeredValues = VALUE_QUESTIONS.filter((q) => {
-      // 1. Explicitly interacted with
+      // If manually removed, exclude (even if purpose-related or answered)
+      // Note: Data is kept in valueSelections, just hidden from "Registered List"
+      if (removedQuestionIds.includes(q.id)) return false;
+
+      // If manually added, include
+      if (addedQuestionIds.includes(q.id)) return true;
+
+      // 1. Explicitly interacted with (Answered or Tiered)
+      // We keep this enabling condition for now, unless "Remove" should hide even answered ones.
+      // Yes, "Remove" explicitly hides it.
       const hasInteraction =
         (valueSelections[q.id]?.length || 0) > 0 || (valueTiers[q.id] || 0) > 0;
       if (hasInteraction) return true;
 
       // 2. Related to selected Purpose (Auto-register)
-      // If the question is related to any of the currently selected purposes, show it in Profile.
-      // (User request: "Select from right and move to left based on purpose")
       if (
         q.relatedPurposes &&
         q.relatedPurposes.some((p) => formData.purposes.includes(p))
@@ -1439,17 +1451,11 @@ export default function UserProfileCreator() {
       return false;
     });
 
-    // 2. Candidate List (Right Column): All questions NOT in Registered List
-    // These are filtered by Purpose (unless Show All is ON)
-    const candidateQuestions = VALUE_QUESTIONS.filter((q) => {
-      // Exclude registered
-      if (registeredValues.find((r) => r.id === q.id)) return false;
-
-      // Filter by Purpose
-      if (showAllQuestions) return true;
-      if (!q.relatedPurposes || q.relatedPurposes.length === 0) return true;
-      return q.relatedPurposes.some((p) => formData.purposes.includes(p));
-    });
+    // 2. Candidate List (Right Column): All questions (Library Mode)
+    // Display ALL existing values EXCEPT those already registered (Left) to simulate "Moving".
+    const candidateQuestions = VALUE_QUESTIONS.filter(
+      (q) => !registeredValues.some((r) => r.id === q.id)
+    );
 
     // Pagination for Candidate List
     const ITEMS_PER_PAGE = 5;
@@ -1481,6 +1487,18 @@ export default function UserProfileCreator() {
       setCurrentPage(1);
     };
 
+    // Handlers for Add/Remove
+    const handleAddValue = (id: string) => {
+      setAddedQuestionIds((prev) => [...prev, id]);
+      setRemovedQuestionIds((prev) => prev.filter((rid) => rid !== id)); // Clear removal if re-added
+    };
+
+    const handleRemoveValue = (id: string) => {
+      setRemovedQuestionIds((prev) => [...prev, id]);
+      setAddedQuestionIds((prev) => prev.filter((aid) => aid !== id)); // Clear addition if removed
+      setOpenQuestionId(null); // Close if open
+    };
+
     // Helper: Render Question Card (Shared between Left/Right columns)
     const renderQuestionCard = (
       q: (typeof VALUE_QUESTIONS)[0],
@@ -1499,6 +1517,35 @@ export default function UserProfileCreator() {
         : "border-slate-200";
       const baseBgColor = isRegistered ? "bg-indigo-50/20" : "bg-white";
 
+      if (!isRegistered) {
+        // --- CANDIDATE (Right Column) ---
+        // Click to ADD
+        return (
+          <div
+            key={q.id}
+            onClick={() => handleAddValue(q.id)}
+            className="rounded-xl border border-dashed border-slate-300 bg-white p-4 cursor-pointer hover:border-indigo-400 hover:bg-indigo-50 transition-all group flex items-start gap-3"
+          >
+            <div className="mt-0.5 w-7 h-7 rounded-full flex items-center justify-center bg-slate-100 text-slate-400 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+              <Plus className="w-4 h-4" />
+            </div>
+            <div className="flex-1">
+              <span className="text-[10px] px-2 py-0.5 bg-slate-100 rounded text-slate-500 border border-slate-200 mb-1 inline-block">
+                {q.category}
+              </span>
+              <h3 className="font-bold text-sm text-slate-600 group-hover:text-indigo-700 transition-colors">
+                {q.title}
+              </h3>
+            </div>
+            <div className="text-indigo-600 opacity-0 group-hover:opacity-100 text-xs font-bold self-center transition-opacity">
+              追加
+            </div>
+          </div>
+        );
+      }
+
+      // --- REGISTERED (Left Column) ---
+      // Accordion + Delete
       return (
         <div
           key={q.id}
@@ -1510,7 +1557,10 @@ export default function UserProfileCreator() {
         >
           {/* Header */}
           <div
-            onClick={() => setOpenQuestionId(isOpen ? null : q.id)}
+            onClick={(e) => {
+              // Toggle Open
+              setOpenQuestionId(isOpen ? null : q.id);
+            }}
             className={`p-4 cursor-pointer flex items-start gap-3 transition-colors ${
               isOpen ? "bg-indigo-50/40" : "hover:bg-indigo-50/20"
             }`}
@@ -1549,13 +1599,26 @@ export default function UserProfileCreator() {
                 {q.title}
               </h3>
             </div>
-            <div className="text-slate-400 mt-1">
-              <div
-                className={`transform transition-transform duration-300 ${
-                  isOpen ? "rotate-180" : ""
-                }`}
+            <div className="flex flex-col items-center gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleRemoveValue(q.id);
+                }}
+                className="p-1.5 text-slate-300 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                title="リストから削除"
               >
-                ▼
+                <Trash2 className="w-4 h-4" />
+              </button>
+              {/* Accordion Indicator */}
+              <div className="text-slate-400 mt-1">
+                <div
+                  className={`transform transition-transform duration-300 ${
+                    isOpen ? "rotate-180" : ""
+                  }`}
+                >
+                  ▼
+                </div>
               </div>
             </div>
           </div>
@@ -1793,6 +1856,7 @@ export default function UserProfileCreator() {
             {/* Context / Filters */}
             {/* Context / Filters (Moved to Left, Keeping 'Show All' here? Or simplify?) */}
             {/* Just Show All Toggle and Count */}
+            {/* Library Header */}
             <div className="bg-slate-50 rounded-xl border border-dashed border-slate-200 p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="text-sm font-bold text-slate-500">
                 <span className="text-xs font-normal mr-2">
@@ -1800,33 +1864,6 @@ export default function UserProfileCreator() {
                 </span>
                 {candidateQuestions.length}
                 <span className="text-xs font-normal ml-1">件のお題</span>
-              </div>
-
-              <button
-                onClick={() => {
-                  setShowAllQuestions(!showAllQuestions);
-                  setCurrentPage(1);
-                }}
-                className={`px-4 py-2 text-xs rounded-full border transition-all flex items-center gap-2 cursor-pointer hover:scale-105 active:scale-95 ${
-                  showAllQuestions
-                    ? "bg-slate-800 text-white border-slate-800 font-bold shadow-md"
-                    : "bg-white text-slate-600 border-slate-300 hover:bg-slate-100"
-                }`}
-              >
-                {showAllQuestions ? (
-                  <CheckCircle2 className="w-3.5 h-3.5" />
-                ) : (
-                  <Plus className="w-3.5 h-3.5" />
-                )}
-                すべての価値観を表示
-              </button>
-            </div>
-
-            {/* List Controls (Simplified) */}
-            <div className="flex items-center justify-between px-2">
-              <div className="text-sm font-bold text-slate-500">
-                価値観を探す: {candidateQuestions.length}{" "}
-                <span className="text-xs font-normal">お題</span>
               </div>
             </div>
 

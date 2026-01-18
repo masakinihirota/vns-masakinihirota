@@ -998,7 +998,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         onValueChange={(values) => {
                           const newStartUtc = toUTC(values[0]);
                           const newEndLocal = values[1];
-                          let newEndUtc = toUTC(newEndLocal);
+                          const newEndUtc = toUTC(newEndLocal);
 
                           handleChange(
                             "core_hours_start",

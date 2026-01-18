@@ -164,7 +164,7 @@ const ComplexGUI = () => {
       ];
       const lastHistory: string[] =
         nameHistory.length > 0 ? nameHistory[nameHistory.length - 1] : [];
-      let newCandidates: string[] = [];
+      const newCandidates: string[] = [];
       while (newCandidates.length < 3) {
         const c = colors[Math.floor(Math.random() * colors.length)];
         const n = concepts[Math.floor(Math.random() * concepts.length)];
@@ -819,10 +819,26 @@ const ComplexGUI = () => {
       </main>
 
       <style jsx global>{`
-        .scrollbar-none::-webkit-scrollbar { display: none; }
-        .scrollbar-none { -ms-overflow-style: none; scrollbar-width: none; }
-        @keyframes fade-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-in { animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .scrollbar-none::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-none {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        @keyframes fade-in {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-in {
+          animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
       `}</style>
     </div>
   );
