@@ -24,8 +24,11 @@ import {
   Newspaper,
   ClipboardList,
   Crown,
+  AlertCircle,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
+import { GhostMap } from "./ghost-map/ghost-map";
 
 interface FormData {
   displayName: string;
@@ -111,6 +114,7 @@ const ListSelector = ({
 };
 
 const ComplexGUI = () => {
+  const router = useRouter();
   const fixedZodiac: { emoji: string; name: string } = {
     emoji: " Scorpio",
     name: "蠍座",
@@ -309,22 +313,29 @@ const ComplexGUI = () => {
 
                 <div className="grid grid-cols-1 gap-6 w-full max-w-4xl mt-6 px-4">
                   {/* 1. チュートリアル案内 */}
+                  {/* 1. チュートリアル案内 (Disabled) */}
                   <button
-                    onClick={() => setCurrentStep(88)}
-                    className="p-10 rounded-[3rem] bg-emerald-900/30 border-2 border-emerald-500/30 hover:bg-emerald-900/50 hover:scale-[1.02] transition-all shadow-xl text-left flex items-center space-x-10 group shrink-0"
+                    disabled
+                    className="p-10 rounded-[3rem] bg-zinc-900/10 border-2 border-zinc-800/50 opacity-60 cursor-not-allowed text-left flex items-center space-x-10 group shrink-0 relative overflow-hidden grayscale"
                   >
-                    <div className="w-24 h-24 bg-emerald-500/10 rounded-[2rem] flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform">
-                      <BookOpen className="text-emerald-400" size={48} />
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/40 z-10 backdrop-blur-[1px]">
+                      <span className="bg-zinc-900 text-zinc-400 px-6 py-2 rounded-full font-bold border border-zinc-700 flex items-center gap-2 transform -rotate-3 text-sm">
+                        <Lock size={16} />
+                        チュートリアル（MVP対象外・後回し）
+                      </span>
                     </div>
-                    <div className="flex-1">
-                      <p className="text-xl font-black text-emerald-100 leading-none mb-3">
+                    <div className="w-24 h-24 bg-emerald-900/10 rounded-[2rem] flex items-center justify-center shrink-0">
+                      <BookOpen className="text-emerald-800" size={48} />
+                    </div>
+                    <div className="flex-1 opacity-50">
+                      <p className="text-xl font-black text-emerald-900 leading-none mb-3">
                         導き手へ案内（チュートリアルの開始）
                       </p>
-                      <p className="text-emerald-400/60 text-lg leading-relaxed font-medium">
+                      <p className="text-emerald-900/60 text-lg leading-relaxed font-medium">
                         私の用意した導き手と一緒に、この世界の歩き方を丁寧に学べます。チュートリアルをしていくとLvがあがり使える機能が解放されていきますよ。
                       </p>
                     </div>
-                    <ChevronRight size={40} className="text-emerald-500/50" />
+                    <ChevronRight size={40} className="text-emerald-900/20" />
                   </button>
 
                   {/* 2. プロフィールを作る */}
@@ -398,125 +409,11 @@ const ComplexGUI = () => {
               </div>
             )}
 
-            {/* --- ステップ 99: 幽霊モードの詳細案内 --- */}
+            {/* --- ステップ 99: 幽霊モード (2D探索マップ) --- */}
             {currentStep === 99 && (
-              <div className="animate-in fade-in zoom-in-95 duration-700 flex flex-col space-y-12 items-center py-6">
-                <div className="w-full max-w-5xl p-12 bg-zinc-900/50 border-2 border-indigo-500/20 rounded-[4rem] relative overflow-hidden shadow-2xl">
-                  <div className="absolute -right-20 -top-20 opacity-5">
-                    <Ghost size={500} className="text-indigo-400" />
-                  </div>
-
-                  <div className="relative z-10 space-y-12">
-                    <div className="text-center">
-                      <h2 className="text-2xl font-black text-indigo-100 mb-8 tracking-tight italic underline decoration-indigo-500 underline-offset-8">
-                        シュレディンガー（あなた）の観測
-                      </h2>
-                      <p className="text-zinc-300 text-lg leading-relaxed font-medium px-12">
-                        眺めること(ウォッチ)はできますが、まだあなたは「実体」がありません。
-                        <br />
-                        プロフィール（仮面）がなくても、すぐに以下のことを「見る（観測）」ことが可能です。
-                      </p>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      {[
-                        {
-                          icon: <Activity />,
-                          title: "マッチングの観測",
-                          desc: "価値観を基にした相性を算出します",
-                        },
-                        {
-                          icon: <ShoppingBag />,
-                          title: "マーケットを覗く",
-                          desc: "流通する作品や依頼を閲覧します",
-                        },
-                        {
-                          icon: <Layers />,
-                          title: "登録作品を見る",
-                          desc: "人々が生み出した感動の記録です",
-                        },
-                        {
-                          icon: <ShieldCheck />,
-                          title: "価値観に答える",
-                          desc: "お題に答え、自分自身を確定していきます。",
-                        },
-                        {
-                          icon: <Plus />,
-                          title: "スキルを見る",
-                          desc: "他者が持つ多様な能力の目録です",
-                        },
-                        {
-                          icon: <Grid />,
-                          title: "マンダラチャート作成",
-                          desc: "自分自身の能力の目標を立て、その能力を視覚化していきます。",
-                        },
-                        {
-                          icon: <Newspaper />,
-                          title: "最新情報を見る",
-                          desc: "世界で今何が起きているかを知ります",
-                        },
-                        {
-                          icon: <ClipboardList />,
-                          title: "リストを見る",
-                          desc: "誰かの「まとめ」を観測します",
-                        },
-                      ].map((item, i) => (
-                        <div
-                          key={i}
-                          className="flex items-center space-x-6 bg-zinc-950/80 p-8 rounded-[2rem] border border-zinc-800 hover:border-indigo-500/40 transition-all group shadow-xl"
-                        >
-                          <div className="p-4 bg-zinc-900 rounded-2xl text-indigo-400 shadow-xl group-hover:scale-110 transition-transform">
-                            {item.icon}
-                          </div>
-                          <div>
-                            <p className="text-lg font-bold text-zinc-100 mb-1 leading-none">
-                              {item.title}
-                            </p>
-                            <p className="text-lg text-zinc-600 leading-snug font-medium">
-                              {item.desc}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="p-10 bg-indigo-950/20 border-2 border-indigo-500/30 rounded-[3rem] space-y-6 text-center">
-                      <p className="text-lg text-zinc-400 leading-relaxed font-medium">
-                        ※幽霊状態はあくまで
-                        <span className="text-indigo-300 font-bold">
-                          「観測者」
-                        </span>
-                        としての滞在です。
-                        <br />
-                        誰かを応援したり、マッチングで繋がったり、イベントや国の活動に直接参加するには、
-                        <br />
-                        <span
-                          className="text-white font-bold underline decoration-indigo-500 underline-offset-8 cursor-pointer hover:text-indigo-200 transition-colors"
-                          onClick={() => setCurrentStep(1)}
-                        >
-                          ユーザープロフィール（仮面）
-                        </span>
-                        を完成させて装着する必要があります。
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-8 w-full max-w-4xl">
-                  <button
-                    onClick={() => setCurrentStep(0)}
-                    className="flex-1 w-full px-12 py-10 border-2 border-zinc-800 text-zinc-400 rounded-[2.5rem] font-bold text-lg hover:text-white hover:bg-zinc-800 transition-all flex items-center justify-center space-x-4 shadow-xl"
-                  >
-                    <ChevronLeft size={36} />
-                    <span>女王様の問いに戻る</span>
-                  </button>
-                  <button
-                    onClick={() => alert("ダッシュボードへ旅立ちます。")}
-                    className="flex-[2] w-full px-16 py-10 bg-white text-zinc-950 rounded-[2.5rem] font-black text-xl hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center space-x-6 shadow-2xl shadow-white/10"
-                  >
-                    <span>幽霊のまま観測に出る</span>
-                    <ArrowRight size={40} />
-                  </button>
+              <div className="flex flex-col items-center justify-center p-8 animate-in fade-in duration-700">
+                <div className="w-full max-w-5xl">
+                  <GhostMap onBack={() => setCurrentStep(0)} />
                 </div>
               </div>
             )}
@@ -560,148 +457,64 @@ const ComplexGUI = () => {
               </div>
             )}
 
-            {/* --- ステップ 1: 仮面の作成（プロフィール） --- */}
+            {/* --- ステップ 1: プロフィール作成への誘導 (リダイレクト案内) --- */}
             {currentStep === 1 && (
-              <div className="animate-in slide-in-from-bottom-8 fade-in duration-600 flex flex-col space-y-12 pb-20">
-                <div className="bg-indigo-600/5 border-2 border-indigo-500/20 rounded-[3rem] p-12 relative overflow-hidden group shadow-2xl">
-                  <div className="absolute -right-10 -top-10 opacity-5 group-hover:opacity-10 transition-opacity">
-                    <Sparkles size={260} className="text-indigo-400" />
-                  </div>
-                  <div className="relative z-10 flex items-start space-x-10">
-                    <div className="p-8 bg-indigo-500/10 rounded-[1.5rem] border-2 border-indigo-500/30 shadow-inner">
-                      <Fingerprint className="text-indigo-400" size={54} />
-                    </div>
-                    <div className="flex-1">
-                      <h2 className="text-2xl font-black text-indigo-100 mb-5 tracking-tight leading-none italic uppercase">
-                        Generate Mask
-                      </h2>
-                      <p className="text-zinc-300 text-lg leading-relaxed font-medium">
-                        この世界での「名前」と「あり方」を定めたプロフィールという名の仮面を作り上げましょう。
-                        <br />
-                        完成して装着した時、あなたは初めて幽霊を卒業し、確かな実体として「受肉」できます。
-                      </p>
+              <div className="animate-in slide-in-from-bottom-8 fade-in duration-600 flex flex-col items-center justify-center py-10 max-w-4xl mx-auto text-center space-y-12">
+                <div className="w-32 h-32 bg-indigo-500/10 rounded-[3rem] flex items-center justify-center border-2 border-indigo-500/30 relative mb-8">
+                  <div className="absolute inset-0 bg-indigo-500/20 blur-2xl rounded-full" />
+                  <Fingerprint
+                    className="text-indigo-400 relative z-10"
+                    size={64}
+                  />
+                </div>
+
+                <div className="space-y-6">
+                  <h2 className="text-4xl font-black text-white tracking-tight leading-tight">
+                    仮面(プロフィール)の作成
+                  </h2>
+                  <p className="text-xl text-zinc-300 leading-relaxed font-medium max-w-2xl mx-auto">
+                    幽霊の状態では、あなたは「観測」しかできません。
+                    <br />
+                    誰かと話したり、作品を作ったり、市場に参加するには
+                    <br />
+                    <span className="text-indigo-400 font-bold">
+                      「確かな実体」
+                    </span>
+                    が必要です。
+                  </p>
+
+                  <div className="bg-zinc-900/50 border border-zinc-800 p-8 rounded-[2rem] max-w-2xl mx-auto text-left space-y-4">
+                    <div className="flex items-start gap-4">
+                      <AlertCircle className="text-indigo-400 shrink-0 mt-1" />
+                      <div>
+                        <h4 className="font-bold text-indigo-200 mb-1">
+                          プロフィール作成でできること
+                        </h4>
+                        <ul className="text-zinc-400 space-y-2 list-disc list-inside">
+                          <li>他ユーザーとの交流・マッチング</li>
+                          <li>自分の作品の登録・販売</li>
+                          <li>クエストやイベントへの参加</li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex flex-col space-y-12">
-                  <section className="space-y-4">
-                    <div className="flex items-center space-x-4">
-                      <span className="w-2.5 h-6 bg-indigo-500 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.8)]" />
-                      <label className="text-lg font-black text-zinc-500 uppercase tracking-widest leading-none">
-                        01. 魂の刻印（不変の星座）
-                      </label>
-                    </div>
-                    <div className="flex items-center justify-between p-10 bg-zinc-900/30 border-2 border-zinc-900 rounded-[3rem] relative shadow-inner">
-                      <div className="flex items-center space-x-12 relative z-10">
-                        <div className="w-32 h-32 bg-zinc-950 rounded-[2.5rem] flex items-center justify-center text-7xl shadow-2xl border border-zinc-800">
-                          {fixedZodiac.emoji}
-                        </div>
-                        <div>
-                          <p className="text-lg font-black text-indigo-500 uppercase tracking-[0.4em] leading-none mb-4 font-bold">
-                            Metadata Locked
-                          </p>
-                          <h3 className="text-3xl font-black tracking-tight text-white leading-none">
-                            {fixedZodiac.name}
-                          </h3>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-5 text-zinc-600 bg-zinc-950/80 px-10 py-5 rounded-2xl border border-zinc-800">
-                        <Lock size={28} />
-                        <span className="text-lg font-black uppercase tracking-widest">
-                          不変
-                        </span>
-                      </div>
-                    </div>
-                  </section>
+                <div className="flex flex-col gap-6 w-full max-w-md mx-auto">
+                  <button
+                    onClick={() => router.push("/user-profiles/new")}
+                    className="w-full py-6 px-8 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-bold text-xl transition-all shadow-xl shadow-indigo-900/20 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-4"
+                  >
+                    <span>プロフィール作成画面へ</span>
+                    <ArrowRight />
+                  </button>
 
-                  <section className="space-y-4">
-                    <div className="flex items-center justify-between px-2">
-                      <div className="flex items-center space-x-4">
-                        <span className="w-2.5 h-6 bg-indigo-500 rounded-full" />
-                        <label className="text-lg font-black text-zinc-500 uppercase tracking-widest leading-none">
-                          02. 言霊の選定（仮面の名）
-                        </label>
-                      </div>
-                      <div className="flex items-center space-x-5">
-                        <button
-                          onClick={restorePreviousNames}
-                          disabled={isRotating || nameHistory.length === 0}
-                          className={`group flex items-center space-x-3 px-8 py-5 rounded-full border-2 transition-all ${isRotating || nameHistory.length === 0 ? "opacity-10 cursor-not-allowed border-zinc-800" : "bg-zinc-800 border-zinc-700 hover:text-white"}`}
-                        >
-                          <Undo2 size={28} />
-                          <span className="text-lg font-black uppercase leading-none">
-                            戻す
-                          </span>
-                        </button>
-                        <button
-                          onClick={() => generateCandidates(true)}
-                          disabled={isRotating}
-                          className={`group flex items-center space-x-4 px-10 py-5 rounded-full border-2 transition-all ${isRotating ? "bg-zinc-800 border-zinc-700 text-zinc-600" : "bg-indigo-600/10 border-indigo-500/50 text-indigo-300 hover:bg-indigo-600 hover:text-white shadow-xl"}`}
-                        >
-                          <RefreshCcw
-                            size={28}
-                            className={isRotating ? "animate-spin" : ""}
-                          />
-                          <span className="text-lg font-black uppercase leading-none">
-                            {isRotating ? "生成中" : "再観測"}
-                          </span>
-                        </button>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                      {nameCandidates.map((name) => (
-                        <button
-                          key={name}
-                          onClick={() =>
-                            setFormData({ ...formData, displayName: name })
-                          }
-                          className={`p-16 rounded-[3rem] border-2 flex flex-col items-center justify-center space-y-6 transition-all group ${formData.displayName === name ? "bg-zinc-100 text-zinc-950 border-white shadow-2xl scale-[1.03]" : "bg-zinc-900/40 border-zinc-800 text-zinc-400 hover:border-zinc-700"}`}
-                        >
-                          <div
-                            className={`w-14 h-14 rounded-[1.5rem] flex items-center justify-center border-2 transition-all ${formData.displayName === name ? "bg-indigo-600 border-indigo-400 text-white" : "bg-zinc-950/50 border-zinc-800"}`}
-                          >
-                            <Check size={32} />
-                          </div>
-                          <span className="text-xl font-bold tracking-tight text-center leading-relaxed">
-                            {name}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  </section>
-
-                  <section className="space-y-4">
-                    <div className="flex items-center space-x-4">
-                      <span className="w-2.5 h-6 bg-indigo-500 rounded-full" />
-                      <label className="text-lg font-black text-zinc-500 uppercase tracking-widest leading-none">
-                        03. 仮面の形式（情報の深度）
-                      </label>
-                    </div>
-                    <ListSelector
-                      value={formData.format}
-                      onChange={(val) =>
-                        setFormData({ ...formData, format: val })
-                      }
-                      options={[
-                        {
-                          id: "card",
-                          label: "名刺",
-                          sub: "（必要最低限の情報のみ表示します）",
-                        },
-                        {
-                          id: "profile",
-                          label: "プロフィール",
-                          sub: "（ポートフォリオ、履歴書、経歴書など。仕事で使える形にします）",
-                        },
-                        {
-                          id: "full",
-                          label: "フル",
-                          sub: "（制限無しですべての情報を含む完全な記録です）",
-                        },
-                      ]}
-                    />
-                  </section>
+                  <button
+                    onClick={() => setCurrentStep(0)}
+                    className="text-zinc-500 hover:text-zinc-300 font-medium transition-colors"
+                  >
+                    戻る
+                  </button>
                 </div>
               </div>
             )}
