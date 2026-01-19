@@ -48,37 +48,10 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
         {/* 1. Minor Check */}
         <div>
           <label className="block text-sm font-medium mb-3 text-slate-700 dark:text-slate-300">
-            あなたは未成年ですか？
+            あなたは成年ですか？
           </label>
           <div className="flex gap-4">
-            <label
-              className={`
-                            flex-1 relative flex items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition-all
-                            ${
-                              is_minor === true
-                                ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20"
-                                : "border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-700"
-                            }
-                        `}
-            >
-              <input
-                type="radio"
-                name="is_minor"
-                className="sr-only"
-                checked={is_minor === true}
-                onChange={() => handleMinorChange(true)}
-              />
-              <span
-                className={`font-medium ${
-                  is_minor === true
-                    ? "text-indigo-700 dark:text-indigo-300"
-                    : "text-slate-600 dark:text-slate-400"
-                }`}
-              >
-                はい (未成年)
-              </span>
-            </label>
-
+            {/* Yes (Adult) -> is_minor: false */}
             <label
               className={`
                             flex-1 relative flex items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition-all
@@ -103,7 +76,36 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
                     : "text-slate-600 dark:text-slate-400"
                 }`}
               >
-                いいえ (成人)
+                はい (成人)
+              </span>
+            </label>
+
+            {/* No (Minor) -> is_minor: true */}
+            <label
+              className={`
+                            flex-1 relative flex items-center justify-center p-4 rounded-lg border-2 cursor-pointer transition-all
+                            ${
+                              is_minor === true
+                                ? "border-indigo-600 bg-indigo-50 dark:bg-indigo-900/20"
+                                : "border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-700"
+                            }
+                        `}
+            >
+              <input
+                type="radio"
+                name="is_minor"
+                className="sr-only"
+                checked={is_minor === true}
+                onChange={() => handleMinorChange(true)}
+              />
+              <span
+                className={`font-medium ${
+                  is_minor === true
+                    ? "text-indigo-700 dark:text-indigo-300"
+                    : "text-slate-600 dark:text-slate-400"
+                }`}
+              >
+                いいえ (未成年)
               </span>
             </label>
           </div>

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { ProfileWizard } from "@/components/user-profiles/create/profile-wizard";
+import { UserProfileCreationContainer } from "@/components/user-profiles/create";
 
 export const metadata: Metadata = {
   title: "名刺作成 | VNS",
@@ -10,7 +10,7 @@ export default function CreateProfilePage() {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 md:p-8 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
       <div className="w-full max-w-7xl mx-auto">
-        <ProfileWizard />
+        <UserProfileCreationContainer />
       </div>
     </div>
   );
