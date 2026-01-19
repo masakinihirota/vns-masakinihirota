@@ -456,7 +456,7 @@ export function BeginningCountry({
                     className="flex-1 w-full px-12 py-10 border-2 border-slate-200 dark:border-zinc-800 text-slate-400 dark:text-zinc-400 rounded-[2.5rem] font-bold text-lg hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 transition-all flex items-center justify-center space-x-4 shadow-xl"
                   >
                     <ChevronLeft size={36} />
-                    <span>女女王様の問いに戻る</span>
+                    <span>女王様の問いに戻る</span>
                   </button>
                   <button
                     onClick={() => {
@@ -486,7 +486,7 @@ export function BeginningCountry({
                     導き手に会いに行きますか？
                   </h2>
                   <p className="text-slate-600 dark:text-zinc-300 text-lg leading-relaxed mb-12 font-medium px-10">
-                    始まりの国の女女王様が用意した「導き手」は、新しく訪れたシュレディンガーちゃんを心待ちにしています。
+                    始まりの国の女王様が用意した「導き手」は、新しく訪れたシュレディンガーちゃんを心待ちにしています。
                     <br />
                     この世界の歩き方や、仮面の作り方、価値観でつながる喜びを、対話を通じて一つずつ学んでいきましょう。
                   </p>
@@ -507,7 +507,7 @@ export function BeginningCountry({
                   className="flex items-center space-x-4 text-slate-400 dark:text-zinc-500 font-bold text-lg hover:text-slate-900 dark:hover:text-white transition-all underline underline-offset-8 decoration-2"
                 >
                   <ChevronLeft size={28} />
-                  <span>女女王様の問いへ戻る</span>
+                  <span>女王様の問いへ戻る</span>
                 </button>
               </div>
             )}

@@ -308,7 +308,26 @@ const ComplexGUI = () => {
                 </div>
 
                 <div className="grid grid-cols-1 gap-6 w-full max-w-4xl mt-6 px-4">
-                  {/* 1. プロフィールを作る */}
+                  {/* 1. チュートリアル案内 */}
+                  <button
+                    onClick={() => setCurrentStep(88)}
+                    className="p-10 rounded-[3rem] bg-emerald-900/30 border-2 border-emerald-500/30 hover:bg-emerald-900/50 hover:scale-[1.02] transition-all shadow-xl text-left flex items-center space-x-10 group shrink-0"
+                  >
+                    <div className="w-24 h-24 bg-emerald-500/10 rounded-[2rem] flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform">
+                      <BookOpen className="text-emerald-400" size={48} />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xl font-black text-emerald-100 leading-none mb-3">
+                        導き手へ案内（チュートリアルの開始）
+                      </p>
+                      <p className="text-emerald-400/60 text-lg leading-relaxed font-medium">
+                        私の用意した導き手と一緒に、この世界の歩き方を丁寧に学べます。チュートリアルをしていくとLvがあがり使える機能が解放されていきますよ。
+                      </p>
+                    </div>
+                    <ChevronRight size={40} className="text-emerald-500/50" />
+                  </button>
+
+                  {/* 2. プロフィールを作る */}
                   <button
                     onClick={() => setCurrentStep(1)}
                     className="p-10 rounded-[3rem] bg-indigo-600 border-2 border-indigo-400 hover:scale-[1.02] transition-all shadow-2xl text-left flex items-center space-x-10 group"
@@ -327,7 +346,7 @@ const ComplexGUI = () => {
                     <ChevronRight size={40} className="text-white/50" />
                   </button>
 
-                  {/* 2. 幽霊のまま見て回る */}
+                  {/* 3. 幽霊のまま見て回る */}
                   <button
                     onClick={() => setCurrentStep(99)}
                     className="p-10 rounded-[3rem] bg-zinc-900 border-2 border-zinc-800 hover:bg-zinc-800 hover:scale-[1.02] transition-all shadow-xl text-left flex items-center space-x-10 group shrink-0"
@@ -344,25 +363,6 @@ const ComplexGUI = () => {
                       </p>
                     </div>
                     <ChevronRight size={40} className="text-zinc-700" />
-                  </button>
-
-                  {/* 3. チュートリアル案内 */}
-                  <button
-                    onClick={() => setCurrentStep(88)}
-                    className="p-10 rounded-[3rem] bg-emerald-900/30 border-2 border-emerald-500/30 hover:bg-emerald-900/50 hover:scale-[1.02] transition-all shadow-xl text-left flex items-center space-x-10 group shrink-0"
-                  >
-                    <div className="w-24 h-24 bg-emerald-500/10 rounded-[2rem] flex items-center justify-center shrink-0 group-hover:rotate-12 transition-transform">
-                      <BookOpen className="text-emerald-400" size={48} />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-xl font-black text-emerald-100 leading-none mb-3">
-                        導き手へ案内（チュートリアルの開始）
-                      </p>
-                      <p className="text-emerald-400/60 text-lg leading-relaxed font-medium">
-                        私の用意した導き手と一緒に、この世界の歩き方を丁寧に学べます。チュートリアルをしていくとLvがあがり使える機能が解放されていきますよ。
-                      </p>
-                    </div>
-                    <ChevronRight size={40} className="text-emerald-500/50" />
                   </button>
 
                   {/* 4. ゲーミフィケーション中止 */}
@@ -508,7 +508,7 @@ const ComplexGUI = () => {
                     className="flex-1 w-full px-12 py-10 border-2 border-zinc-800 text-zinc-400 rounded-[2.5rem] font-bold text-lg hover:text-white hover:bg-zinc-800 transition-all flex items-center justify-center space-x-4 shadow-xl"
                   >
                     <ChevronLeft size={36} />
-                    <span>女女王様の問いに戻る</span>
+                    <span>女王様の問いに戻る</span>
                   </button>
                   <button
                     onClick={() => alert("ダッシュボードへ旅立ちます。")}
@@ -536,7 +536,7 @@ const ComplexGUI = () => {
                     導き手に会いに行きますか？
                   </h2>
                   <p className="text-zinc-300 text-lg leading-relaxed mb-12 font-medium px-10">
-                    始まりの国の女女王様が用意した「導き手」は、新しく訪れたシュレディンガーちゃんを心待ちにしています。
+                    始まりの国の女王様が用意した「導き手」は、新しく訪れたシュレディンガーちゃんを心待ちにしています。
                     <br />
                     この世界の歩き方や、仮面の作り方、価値観でつながる喜びを、対話を通じて一つずつ学んでいきましょう。
                   </p>
@@ -555,7 +555,7 @@ const ComplexGUI = () => {
                   className="flex items-center space-x-4 text-zinc-500 font-bold text-lg hover:text-white transition-all underline underline-offset-8 decoration-2"
                 >
                   <ChevronLeft size={28} />
-                  <span>女女王様の問いへ戻る</span>
+                  <span>女王様の問いへ戻る</span>
                 </button>
               </div>
             )}

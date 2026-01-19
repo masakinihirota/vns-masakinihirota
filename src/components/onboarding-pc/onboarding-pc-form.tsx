@@ -20,9 +20,15 @@ import { Step4LanguagePC } from "./steps/step4-language-pc";
 
 interface OnboardingPCFormProps {
   userId: string;
+  initialData?: {
+    constellation?: string;
+  };
 }
 
-export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
+export function OnboardingPCForm({
+  userId,
+  initialData,
+}: OnboardingPCFormProps) {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<any>({
@@ -46,6 +52,8 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
     agreed_oasis: false,
     agreed_human: false,
     agreed_honesty: false,
+    // Pre-fill from initialData
+    zodiac_sign: initialData?.constellation,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -87,7 +95,10 @@ export function OnboardingPCForm({ userId }: OnboardingPCFormProps) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       alert("PCオンボーディング完了！ (デモ)");
-      router.push("/beginning-country");
+      alert("PCオンボーディング完了！ (デモ)");
+      alert("PCオンボーディング完了！ (デモ)");
+      // Redirect to Home, checks there will route to Mode Selection next
+      router.push("/home");
     } catch (e) {
       console.error(e);
       alert("エラーが発生しました");

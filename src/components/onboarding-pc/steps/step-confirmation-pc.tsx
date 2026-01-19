@@ -53,8 +53,9 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
   const isBasicValuesValid = basicValuesCount === 10;
 
   const isAgreedOasisValid = agreed_oasis === true;
-  const isAgreedHumanValid = agreed_human === true;
-  const isAgreedHonestyValid = agreed_honesty === true;
+  // Human and Honesty are optional now
+  // const isAgreedHumanValid = agreed_human === true;
+  // const isAgreedHonestyValid = agreed_honesty === true;
 
   const isResidenceValid = !!(
     activity_area_id ||
@@ -72,8 +73,8 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
   const allValid =
     isBasicValuesValid &&
     isAgreedOasisValid &&
-    isAgreedHumanValid &&
-    isAgreedHonestyValid &&
+    // Optional: isAgreedHumanValid &&
+    // Optional: isAgreedHonestyValid &&
     isResidenceValid &&
     isCultureValid &&
     isMinorValid &&
@@ -159,29 +160,31 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
           />
           <ConfirmationRow
             label="人間宣言"
-            isRequired
-            isValid={isAgreedHumanValid}
+            // Optional
+            // isRequired
+            // isValid={isAgreedHumanValid}
             value={
               agreed_human ? (
                 <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
                   <Check size={14} className="mr-1" /> 同意済み
                 </span>
               ) : (
-                <span className="text-slate-400">未同意</span>
+                <span className="text-slate-400">未同意 (任意)</span>
               )
             }
           />
           <ConfirmationRow
             label="正直宣言"
-            isRequired
-            isValid={isAgreedHonestyValid}
+            // Optional
+            // isRequired
+            // isValid={isAgreedHonestyValid}
             value={
               agreed_honesty ? (
                 <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
                   <Check size={14} className="mr-1" /> 同意済み
                 </span>
               ) : (
-                <span className="text-slate-400">未同意</span>
+                <span className="text-slate-400">未同意 (任意)</span>
               )
             }
           />
