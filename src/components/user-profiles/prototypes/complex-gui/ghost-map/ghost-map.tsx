@@ -14,6 +14,9 @@ import {
   DoorOpen,
   Info,
   Locate,
+  Sparkles,
+  Undo2,
+  Globe,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect, useRef, useMemo } from "react";
@@ -151,13 +154,34 @@ const DialogOverlay = ({
   );
 };
 
-export const GhostMap = ({ onBack }: { onBack: () => void }) => {
+// --- Props ---
+export interface GhostProfile {
+  id: string;
+  name: string;
+  type: "ghost" | "avatar";
+  avatarStr: string; // Emoji or specific string identifier
+  position: Position;
+  zoneId: string;
+  color: string;
+}
+
+interface GhostMapProps {
+  onBack: () => void;
+  activeProfile: GhostProfile;
+  onUpdateProfile: (updates: Partial<GhostProfile>) => void;
+}
+
+export const GhostMap = ({
+  onBack,
+  activeProfile,
+  onUpdateProfile,
+}: GhostMapProps) => {
   const router = useRouter();
-  const [playerPosition, setPlayerPosition] = useState<Position>({
-    x: 10,
-    y: 10,
-  });
-  const [playerZone, setPlayerZone] = useState<string>("world");
+
+  // Use props for player state
+  const playerPosition = activeProfile.position;
+  const playerZone = activeProfile.zoneId;
+
   const [speedMode, setSpeedMode] = useState<"walk" | "run" | "turbo">("walk");
   const [facing, setFacing] = useState<"left" | "right">("right");
   const [showLegend, setShowLegend] = useState(false);
@@ -271,7 +295,101 @@ export const GhostMap = ({ onBack }: { onBack: () => void }) => {
     targetY = Math.max(0, Math.min(targetY, maxScrollY));
 
     setCamera({ x: targetX, y: targetY });
-  }, [playerPosition, viewportRef.current]);
+  }, [playerPosition, viewportRef]);
+
+  // --- Interaction Logic (Simplified for brevity) ---
+  const checkInteraction = (pos: Position, zone: string = playerZone) => {
+    const entity = entities.find(
+      (e) =>
+        e.position.x === pos.x && e.position.y === pos.y && e.zoneId === zone
+    );
+    if (!entity) return;
+
+    if (entity.type === "king") {
+      setDialog({
+        show: true,
+        title: "始まりの国の女王",
+        message:
+          "おお、迷える幽霊よ。そなたはまだ「顔（プロフィール）」を持たぬようだな。\n受肉せねば、この世界で誰かと関わることはできぬぞ。",
+        action: {
+          label: "受肉する（プロフィール作成）",
+          onClick: () => router.push("/user-profiles/new"),
+        },
+      });
+    } else if (entity.type === "item" && !entity.interacted) {
+      setLog(
+        `「${entity.name}」を入手しました！\nコンパスナビゲーション機能が解放されました。`
+      );
+      setHasMap(true);
+      setEntities((prev) =>
+        prev.map((e) => (e.id === entity.id ? { ...e, interacted: true } : e))
+      );
+    } else if (entity.type === "tavern") {
+      setDialog({
+        show: true,
+        title: "酒場「ルイーダ」",
+        message: "中に入りますか？",
+        action: {
+          label: "入店する",
+          onClick: () => {
+            onUpdateProfile({
+              zoneId: "tavern",
+              position: { x: 5, y: 5 },
+            });
+            setDialog(null);
+          },
+        },
+        secondaryAction: { label: "やめる", onClick: () => setDialog(null) },
+      });
+    } else if (entity.type === "door") {
+      setDialog({
+        show: true,
+        title: "出口",
+        message: "外に出ますか？",
+        action: {
+          label: "出る",
+          onClick: () => {
+            onUpdateProfile({
+              zoneId: "world",
+              position: { x: 23, y: 15 },
+            });
+            setDialog(null);
+          },
+        },
+        secondaryAction: { label: "やめる", onClick: () => setDialog(null) },
+      });
+    } else if (entity.type === "market") {
+      setDialog({
+        show: true,
+        title: "マーケット (閲覧モード)",
+        message:
+          "色とりどりのアイテムが並んでいます。\nしかし、幽霊のあなたには見ることしか出来ません、触れることも買うことも不可能です。",
+        action: { label: "閉じる", onClick: () => setDialog(null) },
+      });
+    } else if (entity.type === "bbs") {
+      setDialog({
+        show: true,
+        title: "冒険者ギルドの掲示板",
+        message:
+          "『求む、ドラゴン討伐隊！』『迷子の猫を探しています』\n幽霊のあなたには見ることしか出来ません、書き込むこと不可能です。",
+        action: { label: "閉じる", onClick: () => setDialog(null) },
+      });
+    } else if (entity.id === "tavern_inner_master") {
+      setDialog({
+        show: true,
+        title: "バーテンダー",
+        message: "いらっしゃい。ゆっくりしていってくれ。",
+        action: { label: "閉じる", onClick: () => setDialog(null) },
+      });
+    } else if (entity.type === "npc") {
+      setDialog({
+        show: true,
+        title: entity.name,
+        message: "（楽しそうに話している...）",
+        action: { label: "閉じる", onClick: () => setDialog(null) },
+      });
+    }
+  };
 
   // --- Move Helper ---
   const move = (dx: number, dy: number) => {
@@ -279,7 +397,7 @@ export const GhostMap = ({ onBack }: { onBack: () => void }) => {
     const newY = playerPosition.y + dy;
 
     if (newX > 0 && newX < MAP_WIDTH - 1 && newY > 0 && newY < MAP_HEIGHT - 1) {
-      setPlayerPosition({ x: newX, y: newY });
+      onUpdateProfile({ position: { x: newX, y: newY } });
       if (dx !== 0) setFacing(dx > 0 ? "right" : "left"); // Update facing
       checkInteraction({ x: newX, y: newY });
     }
@@ -416,98 +534,6 @@ export const GhostMap = ({ onBack }: { onBack: () => void }) => {
     return () => clearInterval(interval);
   }, [visibleEntities]);
 
-  // --- Interaction Logic (Simplified for brevity) ---
-  const checkInteraction = (pos: Position) => {
-    const entity = entities.find(
-      (e) =>
-        e.position.x === pos.x &&
-        e.position.y === pos.y &&
-        e.zoneId === playerZone
-    );
-    if (!entity) return;
-
-    if (entity.type === "king") {
-      setDialog({
-        show: true,
-        title: "始まりの国の女王",
-        message:
-          "おお、迷える幽霊よ。そなたはまだ「顔（プロフィール）」を持たぬようだな。\n受肉せねば、この世界で誰かと関わることはできぬぞ。",
-        action: {
-          label: "受肉する（プロフィール作成）",
-          onClick: () => router.push("/user-profiles/new"),
-        },
-      });
-    } else if (entity.type === "item" && !entity.interacted) {
-      setLog(
-        `「${entity.name}」を入手しました！\nコンパスナビゲーション機能が解放されました。`
-      );
-      setHasMap(true);
-      setEntities((prev) =>
-        prev.map((e) => (e.id === entity.id ? { ...e, interacted: true } : e))
-      );
-    } else if (entity.type === "tavern") {
-      setDialog({
-        show: true,
-        title: "酒場「ルイーダ」",
-        message: "中に入りますか？",
-        action: {
-          label: "入店する",
-          onClick: () => {
-            setPlayerZone("tavern");
-            setPlayerPosition({ x: 5, y: 5 });
-            setDialog(null);
-          },
-        },
-        secondaryAction: { label: "やめる", onClick: () => setDialog(null) },
-      });
-    } else if (entity.type === "door") {
-      setDialog({
-        show: true,
-        title: "出口",
-        message: "外に出ますか？",
-        action: {
-          label: "出る",
-          onClick: () => {
-            setPlayerZone("world");
-            setPlayerPosition({ x: 23, y: 15 });
-            setDialog(null);
-          },
-        },
-        secondaryAction: { label: "やめる", onClick: () => setDialog(null) },
-      });
-    } else if (entity.type === "market") {
-      setDialog({
-        show: true,
-        title: "マーケット (閲覧モード)",
-        message:
-          "色とりどりのアイテムが並んでいます。\nしかし、幽霊のあなたには見ることしか出来ません、触れることも買うことも不可能です。",
-        action: { label: "閉じる", onClick: () => setDialog(null) },
-      });
-    } else if (entity.type === "bbs") {
-      setDialog({
-        show: true,
-        title: "冒険者ギルドの掲示板",
-        message:
-          "『求む、ドラゴン討伐隊！』『迷子の猫を探しています』\n幽霊のあなたには見ることしか出来ません、書き込むこと不可能です。",
-        action: { label: "閉じる", onClick: () => setDialog(null) },
-      });
-    } else if (entity.id === "tavern_inner_master") {
-      setDialog({
-        show: true,
-        title: "バーテンダー",
-        message: "いらっしゃい。ゆっくりしていってくれ。",
-        action: { label: "閉じる", onClick: () => setDialog(null) },
-      });
-    } else if (entity.type === "npc") {
-      setDialog({
-        show: true,
-        title: entity.name,
-        message: "（楽しそうに話している...）",
-        action: { label: "閉じる", onClick: () => setDialog(null) },
-      });
-    }
-  };
-
   // --- Jump Feature ---
   const handleJump = () => {
     const x = parseInt(jumpCoords.x);
@@ -520,11 +546,106 @@ export const GhostMap = ({ onBack }: { onBack: () => void }) => {
       y >= 0 &&
       y < MAP_HEIGHT
     ) {
-      setPlayerPosition({ x, y });
+      onUpdateProfile({ position: { x, y } });
       setLog(`ワープしました: (${x}, ${y})`);
       setShowJumpUI(false);
     }
   };
+
+  // --- Warp Feature State ---
+  const [jumpSource, setJumpSource] = useState<{
+    position: Position;
+    zoneId: string;
+  } | null>(null);
+
+  // --- Global Warp State ---
+  const [showGlobalWarp, setShowGlobalWarp] = useState(false);
+  const [globalWarpStep, setGlobalWarpStep] = useState<1 | 2 | 3>(1);
+  const [selectedGlobalZone, setSelectedGlobalZone] = useState<string | null>(
+    null
+  );
+  // Custom Warp State
+  const [customWarpInput, setCustomWarpInput] = useState<{
+    zoneId: string;
+    x: string;
+    y: string;
+  }>({ zoneId: "world", x: "10", y: "10" });
+
+  // Mock Home Data (In a real app, this would come from user profile)
+  const hasHome = true;
+  const homeLocation = {
+    id: "my_home",
+    name: "マイホーム",
+    zoneId: "world",
+    position: { x: 20, y: 20 },
+  };
+
+  // --- Warp Logic ---
+  const execWarp = (target: {
+    position: Position;
+    zoneId: string;
+    name: string;
+    id?: string;
+  }) => {
+    // Save current position for return
+    setJumpSource({
+      position: playerPosition,
+      zoneId: playerZone,
+    });
+
+    // Warp
+    // Warp
+    onUpdateProfile({
+      position: target.position,
+      zoneId: target.zoneId,
+    });
+    setLog(`「${target.name}」へ瞬時移動しました！`);
+
+    // Set as current target for compass only if it has an ID
+    if (target.id) {
+      setTargetEntityId(target.id);
+    } else {
+      setTargetEntityId(null);
+    }
+
+    // Force interaction check
+    checkInteraction(target.position, target.zoneId);
+
+    // Close UIs
+    setShowGlobalWarp(false);
+    setGlobalWarpStep(1);
+    setSelectedGlobalZone(null);
+  };
+
+  const handleWarpToTarget = () => {
+    if (!targetEntityId) return;
+    const target = entities.find((e) => e.id === targetEntityId);
+    if (!target) return;
+    execWarp(target);
+  };
+
+  const handleReturnJump = () => {
+    if (!jumpSource) return;
+
+    onUpdateProfile({
+      position: jumpSource.position,
+      zoneId: jumpSource.zoneId,
+    });
+    setLog("元の場所へ戻りました。");
+    setJumpSource(null);
+  };
+
+  // Zones for Global Warp
+  const availableZones = Array.from(new Set(entities.map((e) => e.zoneId))).map(
+    (id) => {
+      // Simple name mapping
+      const names: Record<string, string> = {
+        world: "始まりの国 (World)",
+        tavern: "酒場「ルイーダ」 (Indoor)",
+      };
+      return { id, name: names[id] || id };
+    }
+  );
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[600px] w-full bg-stone-50/95 dark:bg-black/90 rounded-[3rem] border border-stone-200 dark:border-zinc-800 relative overflow-hidden p-8 font-sans transition-colors duration-300">
@@ -540,6 +661,18 @@ export const GhostMap = ({ onBack }: { onBack: () => void }) => {
           <Ghost size={16} />
           <span className="font-bold">Ghost Mode</span>
         </div>
+        {/* Global Warp Toggle */}
+        <button
+          onClick={() => {
+            setShowGlobalWarp(true);
+            setGlobalWarpStep(1);
+          }}
+          className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 transition-transform active:scale-95"
+          title="Global Warp"
+        >
+          <Globe size={18} />
+          <span className="text-sm font-bold">WARP</span>
+        </button>
         {/* Legend Toggle */}
         <button
           onClick={() => setShowLegend(!showLegend)}
@@ -551,6 +684,243 @@ export const GhostMap = ({ onBack }: { onBack: () => void }) => {
           <Info size={20} />
         </button>
       </div>
+
+      {/* Global Warp Dialog */}
+      <AnimatePresence>
+        {showGlobalWarp && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-white dark:bg-zinc-900 rounded-3xl p-8 max-w-2xl w-full shadow-2xl border-2 border-indigo-100 dark:border-zinc-700 overflow-hidden flex flex-col max-h-[90%]"
+            >
+              <div className="flex justify-between items-center mb-6 shrink-0">
+                <h3 className="text-2xl font-black text-zinc-800 dark:text-white flex items-center gap-3">
+                  <Globe className="text-indigo-500" />
+                  <span>Global Warp System</span>
+                </h3>
+                <button
+                  onClick={() => setShowGlobalWarp(false)}
+                  className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-full transition-colors"
+                >
+                  <X size={24} className="text-zinc-400" />
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto min-h-0">
+                {globalWarpStep === 1 ? (
+                  /* Step 1: Select Map (Zone) */
+                  <div className="space-y-6">
+                    {/* Bookmarks Section */}
+                    {hasHome && (
+                      <div className="space-y-2">
+                        <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-2">
+                          <span className="w-full h-px bg-zinc-100 dark:bg-zinc-800" />
+                          BOOKMARKS
+                          <span className="w-full h-px bg-zinc-100 dark:bg-zinc-800" />
+                        </h4>
+                        <button
+                          onClick={() => execWarp(homeLocation)}
+                          className="w-full p-4 bg-orange-50 dark:bg-orange-900/20 hover:bg-orange-100 dark:hover:bg-orange-900/40 border-2 border-orange-200 dark:border-orange-800 hover:border-orange-400 rounded-2xl flex items-center gap-4 transition-all group"
+                        >
+                          <div className="w-12 h-12 bg-white dark:bg-zinc-900 rounded-full flex items-center justify-center border-2 border-orange-100 dark:border-orange-800 text-2xl shadow-sm">
+                            🏠
+                          </div>
+                          <div className="text-left">
+                            <div className="font-bold text-zinc-800 dark:text-orange-100 group-hover:text-orange-600 dark:group-hover:text-orange-300">
+                              {homeLocation.name}
+                            </div>
+                            <div className="text-xs text-zinc-500">
+                              Zone: {homeLocation.zoneId} (
+                              {homeLocation.position.x},{" "}
+                              {homeLocation.position.y})
+                            </div>
+                          </div>
+                        </button>
+                      </div>
+                    )}
+
+                    <div className="space-y-2">
+                      <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider flex items-center gap-2">
+                        <span className="w-full h-px bg-zinc-100 dark:bg-zinc-800" />
+                        SELECT AREA
+                        <span className="w-full h-px bg-zinc-100 dark:bg-zinc-800" />
+                      </h4>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        {availableZones.map((zone) => (
+                          <button
+                            key={zone.id}
+                            onClick={() => {
+                              setSelectedGlobalZone(zone.id);
+                              setGlobalWarpStep(2);
+                            }}
+                            className="p-6 bg-zinc-50 dark:bg-zinc-800 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 border-2 border-zinc-200 dark:border-zinc-700 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl text-left transition-all group"
+                          >
+                            <span className="text-xl font-bold text-zinc-700 dark:text-zinc-200 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
+                              {zone.name}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Custom Warp Button */}
+                    <div className="pt-2">
+                      <button
+                        onClick={() => setGlobalWarpStep(3)}
+                        className="w-full py-3 px-4 rounded-xl border-2 border-dashed border-zinc-200 dark:border-zinc-700 text-zinc-400 hover:text-indigo-500 hover:border-indigo-300 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/20 transition-all flex items-center justify-center gap-2 text-sm font-bold"
+                      >
+                        <Locate size={16} />
+                        指定座標へワープ (DEBUG/CUSTOM)
+                      </button>
+                    </div>
+                  </div>
+                ) : globalWarpStep === 2 ? (
+                  /* Step 2: Select Location */
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-4 mb-2">
+                      <button
+                        onClick={() => setGlobalWarpStep(1)}
+                        className="text-sm font-bold text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 flex items-center gap-1 transition-colors"
+                      >
+                        <Undo2 size={16} />
+                        BACK TO MAPS
+                      </button>
+                      <h4 className="text-lg font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                        Select Destination
+                      </h4>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {entities
+                        .filter((e) => e.zoneId === selectedGlobalZone)
+                        .map((entity) => (
+                          <button
+                            key={entity.id}
+                            onClick={() => execWarp(entity)}
+                            className="flex items-center gap-4 p-4 bg-zinc-50 dark:bg-zinc-800 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 border border-zinc-200 dark:border-zinc-700 hover:border-emerald-500 rounded-xl text-left transition-all group"
+                          >
+                            <div className="w-12 h-12 bg-white dark:bg-zinc-900 rounded-full flex items-center justify-center border border-zinc-200 dark:border-zinc-700 text-lg shadow-sm group-hover:scale-110 transition-transform">
+                              {/* Simple icon mapping based on type not ideal but using emoji/name for now */}
+                              {entity.type === "king" && "👑"}
+                              {entity.type === "tavern" && "🍺"}
+                              {entity.type === "door" && "🚪"}
+                              {entity.type === "item" && "💎"}
+                              {entity.type === "npc" && "👤"}
+                              {entity.type === "market" && "🏪"}
+                              {entity.type === "bbs" && "📋"}
+                            </div>
+                            <div>
+                              <div className="font-bold text-zinc-800 dark:text-zinc-100">
+                                {entity.name}
+                              </div>
+                              <div className="text-xs text-zinc-500">
+                                ({entity.position.x}, {entity.position.y})
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                    </div>
+                  </div>
+                ) : (
+                  /* Step 3: Custom Coordinates */
+                  <div className="space-y-6">
+                    <div className="flex items-center gap-4 mb-2">
+                      <button
+                        onClick={() => setGlobalWarpStep(1)}
+                        className="text-sm font-bold text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 flex items-center gap-1 transition-colors"
+                      >
+                        <Undo2 size={16} />
+                        BACK TO MENU
+                      </button>
+                      <h4 className="text-lg font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                        Custom Coordinates
+                      </h4>
+                    </div>
+
+                    <div className="bg-zinc-50 dark:bg-zinc-800/50 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-700 space-y-6">
+                      <div className="space-y-2">
+                        <label className="text-xs font-bold text-zinc-500 uppercase">
+                          Zone
+                        </label>
+                        <select
+                          value={customWarpInput.zoneId}
+                          onChange={(e) =>
+                            setCustomWarpInput({
+                              ...customWarpInput,
+                              zoneId: e.target.value,
+                            })
+                          }
+                          className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500"
+                        >
+                          {availableZones.map((z) => (
+                            <option key={z.id} value={z.id}>
+                              {z.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <label className="text-xs font-bold text-zinc-500 uppercase">
+                            X Coordinate
+                          </label>
+                          <input
+                            type="number"
+                            value={customWarpInput.x}
+                            onChange={(e) =>
+                              setCustomWarpInput({
+                                ...customWarpInput,
+                                x: e.target.value,
+                              })
+                            }
+                            className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-xs font-bold text-zinc-500 uppercase">
+                            Y Coordinate
+                          </label>
+                          <input
+                            type="number"
+                            value={customWarpInput.y}
+                            onChange={(e) =>
+                              setCustomWarpInput({
+                                ...customWarpInput,
+                                y: e.target.value,
+                              })
+                            }
+                            className="w-full p-3 rounded-xl border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 outline-none focus:ring-2 focus:ring-indigo-500 font-mono"
+                          />
+                        </div>
+                      </div>
+
+                      <button
+                        onClick={() =>
+                          execWarp({
+                            position: {
+                              x: parseInt(customWarpInput.x) || 0,
+                              y: parseInt(customWarpInput.y) || 0,
+                            },
+                            zoneId: customWarpInput.zoneId,
+                            name: `Custom Point (${customWarpInput.x}, ${customWarpInput.y})`,
+                          })
+                        }
+                        className="w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2"
+                      >
+                        <Sparkles size={20} />
+                        WARP NOW
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <div className="absolute top-6 right-8 z-10 flex flex-col items-end gap-4 pointer-events-none">
         <div className="pointer-events-auto bg-white/90 dark:bg-zinc-950/80 text-zinc-600 dark:text-zinc-300 px-6 py-3 rounded-xl border border-zinc-200 dark:border-zinc-800 text-sm font-mono shadow-lg whitespace-pre-wrap text-right backdrop-blur-md">
@@ -670,13 +1040,38 @@ export const GhostMap = ({ onBack }: { onBack: () => void }) => {
                 >
                   <option value="">目的地を選択...</option>
                   {entities
-                    .filter((e) => e.type !== "player")
+                    .filter(
+                      (e) => e.type !== "player" && e.zoneId === playerZone
+                    )
                     .map((entity) => (
                       <option key={entity.id} value={entity.id}>
                         {entity.name}
                       </option>
                     ))}
                 </select>
+
+                <div className="flex gap-2">
+                  {/* Warp Button */}
+                  {targetEntityId && (
+                    <button
+                      onClick={handleWarpToTarget}
+                      className="flex-1 bg-indigo-500 hover:bg-indigo-600 text-white text-[10px] font-bold py-1.5 rounded-lg shadow-md flex items-center justify-center gap-1 transition-transform active:scale-95"
+                    >
+                      <Sparkles size={12} />
+                      WARP
+                    </button>
+                  )}
+                  {/* Return Button */}
+                  {jumpSource && (
+                    <button
+                      onClick={handleReturnJump}
+                      className="flex-1 bg-zinc-600 hover:bg-zinc-700 text-white text-[10px] font-bold py-1.5 rounded-lg shadow-md flex items-center justify-center gap-1 transition-transform active:scale-95"
+                    >
+                      <Undo2 size={12} />
+                      RETURN
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -807,13 +1202,25 @@ export const GhostMap = ({ onBack }: { onBack: () => void }) => {
               <div
                 className={`absolute -top-12 px-3 py-1 bg-indigo-600/90 text-white text-[10px] font-bold rounded-full mb-1 border border-indigo-400 shadow-[0_0_15px_rgba(99,102,241,0.5)] whitespace-nowrap z-50 ${facing === "left" ? "-scale-x-100" : ""}`}
               >
-                YOU
+                {activeProfile.name}
               </div>
               <div className="absolute inset-0 bg-indigo-400/40 dark:bg-indigo-400/60 blur-[12px] rounded-full scale-150 animate-pulse" />
-              <Ghost
-                size={38}
-                className="text-white drop-shadow-[0_0_8px_rgba(0,0,0,0.5)] dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] relative z-10"
-              />
+
+              {activeProfile.type === "ghost" ? (
+                <Ghost
+                  size={38}
+                  className="text-white drop-shadow-[0_0_8px_rgba(0,0,0,0.5)] dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] relative z-10"
+                />
+              ) : (
+                <div
+                  className="text-4xl drop-shadow-lg relative z-10"
+                  style={{
+                    filter: `drop-shadow(0 0 10px ${activeProfile.color})`,
+                  }}
+                >
+                  {activeProfile.avatarStr}
+                </div>
+              )}
             </div>
           </motion.div>
         </motion.div>
