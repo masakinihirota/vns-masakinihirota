@@ -1,4 +1,5 @@
 "use strict";
+import Image from "next/image";
 import React from "react";
 import { cn } from "@/lib/utils";
 
@@ -23,10 +24,11 @@ export const MoonMap: React.FC<MoonMapProps> = ({
       <div className="relative w-full pb-[100%]">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/star/moon.svg"
             alt="Moon Map"
-            className="w-full h-full object-contain"
+            fill
+            className="object-contain"
           />
         </div>
       </div>

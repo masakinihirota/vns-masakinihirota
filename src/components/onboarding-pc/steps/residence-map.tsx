@@ -1,7 +1,7 @@
 "use strict";
+import Image from "next/image";
 import React from "react";
 import { cn } from "@/lib/utils";
-// import Image from "next/image"; // Note: Using img for simplicity with public assets in this setup
 
 interface ResidenceMapProps {
   selectedAreaId: number | null | undefined;
@@ -70,11 +70,12 @@ export const ResidenceMap: React.FC<ResidenceMapProps> = ({
             )}
 
             <div className="relative w-full aspect-[3/4]">
-              <img
+              <Image
                 src={area.src}
                 alt={area.label}
+                fill
                 className={cn(
-                  "w-full h-full object-cover transition-all duration-300",
+                  "object-cover transition-all duration-300",
                   isSelected
                     ? "brightness-110"
                     : "grayscale-[0.5] group-hover:grayscale-0"
