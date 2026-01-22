@@ -76,6 +76,12 @@ export function PortalDashboard() {
           path: "/root-accounts",
           desc: "アカウント全体の属性管理・セキュリティ設定。",
         },
+        {
+          title: "プロフィールテーマ",
+          path: "/profile-theme",
+          desc: "プロフィールのテーマ設定（実験的機能）。",
+          badge: "Lab",
+        },
       ],
     },
     {
@@ -89,6 +95,17 @@ export function PortalDashboard() {
           path: "/matching",
           desc: "マッチングシステムのメインエントランス。",
           badge: "Core",
+        },
+        {
+          title: "オートマッチング",
+          path: "/auto-matching",
+          desc: "条件に基づいた自動マッチング機能。",
+          badge: "Beta",
+        },
+        {
+          title: "マニュアルマッチング",
+          path: "/manual-matching",
+          desc: "手動で条件を指定してユーザーを検索。",
         },
         {
           title: "価値観リスト",
@@ -145,6 +162,11 @@ export function PortalDashboard() {
           badge: "Support",
         },
         {
+          title: "チュートリアル",
+          path: "/tutorial",
+          desc: "VNSの基本的な使い方を学ぶガイド。",
+        },
+        {
           title: "用語集 (Glossary)",
           path: "/help/glossary",
           desc: "オアシス宣言など根幹概念の解説。",
@@ -154,6 +176,21 @@ export function PortalDashboard() {
           path: "/help/faq",
           desc: "基本的な使い方や困った時の解決方法。",
         },
+        {
+          title: "オアシス宣言",
+          path: "/oasis",
+          desc: "VNSの核心となる理念（Oasis Declaration）。",
+        },
+        {
+          title: "人間宣言",
+          path: "/human",
+          desc: "人間としての尊厳と権利に関する宣言。",
+        },
+        {
+          title: "孤独感尺度",
+          path: "/global-loneliness-measures",
+          desc: "UCLA孤独感尺度を用いた自己診断ツール。",
+        },
       ],
     },
     {
@@ -162,6 +199,17 @@ export function PortalDashboard() {
       color: "from-zinc-500/20 to-slate-500/20",
       icon: <FlaskConical className="text-zinc-500" size={24} />,
       routes: [
+        {
+          title: "ツール一覧",
+          path: "/tools",
+          desc: "開発者向けのユーティリティツール集。",
+        },
+        {
+          title: "Onboarding PC",
+          path: "/onboarding-pc",
+          desc: "PC向けの没入型オンボーディング体験（Map UI）。",
+          badge: "Exp",
+        },
         {
           title: "体験モード選択",
           path: "/onboarding/mode-selection",
