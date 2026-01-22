@@ -15,11 +15,11 @@ export const AvatarImage: React.FC<
 > = ({ className, alt, ...props }) => (
   // eslint-disable-next-line @next/next/no-img-element
   <Image
-    className={cn("aspect-square h-full w-full", className)}
+    className={cn("aspect-square h-full w-full object-cover", className)}
     alt={alt || "Avatar"}
-    width={40}
-    height={40}
-    {...props}
+    fill
+    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    {...(props as any)}
     data-testid="avatar-image"
   />
 );

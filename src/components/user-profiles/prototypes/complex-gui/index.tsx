@@ -7,7 +7,6 @@ import {
   Check,
   ChevronRight,
   ChevronLeft,
-  RefreshCcw,
   Undo2,
   ArrowRight,
   ShieldCheck,
