@@ -1,4 +1,5 @@
 "use strict";
+import Image from "next/image";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { MARS_LOCATIONS } from "../onboarding.logic";
@@ -51,10 +52,11 @@ export const MarsMap: React.FC<MarsMapProps> = ({
     >
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img
+        <Image
           src="/star/mars.svg"
           alt="Mars Map"
-          className="w-full h-full object-contain"
+          fill
+          className="object-contain"
         />
       </div>
     </div>

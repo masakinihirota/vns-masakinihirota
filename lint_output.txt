@@ -1,87 +1,67 @@
 
-> vns-masakinihirota@0.9.0 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
-> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+> vns-masakinihirota@0.17.0 test U:\2026src\vns-masakinihirota.worktrees\anti
+> vitest --run "src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx"
 
 
-  ! eslint(no-unused-vars): Identifier 'UseFormReturn' is imported but never used.
-   ,-[src/components/work-registration-form/hooks/use-work-registration.ts:3:19]
- 2 | import { useCallback, useEffect } from "react";
- 3 | import { useForm, UseFormReturn } from "react-hook-form";
-   :                   ^^^^^^|^^^^^^
-   :                         `-- 'UseFormReturn' is imported here
- 4 | import {
-   `----
-  help: Consider removing this import.
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mU:/2026src/vns-masakinihirota.worktrees/anti[39m
 
-  ! eslint(no-unused-vars): Identifier 'Work' is imported but never used.
-   ,-[src/components/work-registration-form/hooks/use-work-registration.ts:7:3]
- 6 |   RegistrationFormValues,
- 7 |   Work,
-   :   ^^|^
-   :     `-- 'Work' is imported here
- 8 | } from "../schema";
-   `----
-  help: Consider removing this import.
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+stderr | src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx > WorkContinuousRating UI > should render category selection when category is null
+An update to ForwardRef(LinkComponent) inside a test was not wrapped in act(...).
 
-  ! eslint(no-unused-vars): Parameter 'data' is declared but never used. Unused parameters should start with a '_'.
-    ,-[src/components/work-registration-form/hooks/use-work-registration.ts:59:39]
- 58 | 
- 59 |   const onSubmit = useCallback(async (data: RegistrationFormValues) => {
-    :                                       ^^|^
-    :                                         `-- 'data' is declared here
- 60 |     try {
-    `----
-  help: Consider removing this parameter.
+When testing, code that causes React state updates should be wrapped into act(...):
 
-  ! eslint(no-unused-vars): Catch parameter 'error' is caught but never used. Unused caught errors should start with a '_'.
-    ,-[src/components/work-registration-form/hooks/use-work-registration.ts:65:14]
- 64 |       alert("菫晏ｭ倥＠縺ｾ縺励◆・・);
- 65 |     } catch (error) {
-    :              ^^|^^
-    :                `-- 'error' is declared here
- 66 |       // console.error("Save failed:", error);
-    `----
-  help: Consider handling this error.
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
 
-  ! eslint(no-unused-vars): Catch parameter 'error' is caught but never used. Unused caught errors should start with a '_'.
-    ,-[src/components/work-registration-form/hooks/use-work-search.ts:64:16]
- 63 |         }
- 64 |       } catch (error) {
-    :                ^^|^^
-    :                  `-- 'error' is declared here
- 65 |         // console.error("Search failed:", error);
-    `----
-  help: Consider handling this error.
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
 
-  ! eslint(no-unused-vars): Identifier 'Slider' is imported but never used.
-    ,-[src/components/work-registration-form/features/entry-form.tsx:20:10]
- 19 | } from "@/components/ui/select";
- 20 | import { Slider } from "@/components/ui/slider";
-    :          ^^^|^^
-    :             `-- 'Slider' is imported here
- 21 | import { Textarea } from "@/components/ui/textarea";
-    `----
-  help: Consider removing this import.
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+ [31m笶ｯ[39m src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 955[2mms[22m[39m
+     [33m[2m笨・[22m[39m should render category selection when category is null [33m 390[2mms[22m[39m
+     [32m笨・[39m should call onCategorySelect when category button is clicked[32m 13[2mms[22m[39m
+     [32m笨・[39m should render session size selection when sessionSize is null[32m 117[2mms[22m[39m
+[31m     [31mﾃ・[31m should render rating screen when session is active[39m[33m 322[2mms[22m[39m
+     [32m笨・[39m should render completion screen when isComplete is true[32m 110[2mms[22m[39m
 
-  ! eslint(no-unused-vars): Identifier 'Work' is imported but never used.
-    ,-[src/components/work-registration-form/features/entry-form.tsx:24:3]
- 23 | import {
- 24 |   Work,
-    :   ^^|^
-    :     `-- 'Work' is imported here
- 25 |   SCALES,
-    `----
-  help: Consider removing this import.
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Tests 1 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
 
-  ! eslint(no-unused-vars): Variable 'handleSubmit' is declared but never used. Unused variables should start with a '_'.
-    ,-[src/components/work-registration-form/features/entry-form.tsx:41:27]
- 40 | }: EntryFormProps) {
- 41 |   const { form, onSubmit: handleSubmit } = useWorkRegistration(initialValues);
-    :                           ^^^^^^|^^^^^
-    :                                 `-- 'handleSubmit' is declared here
- 42 | 
-    `----
-  help: Consider removing this declaration.
+ FAIL  src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx > WorkContinuousRating UI > should render rating screen when session is active
+Error: expect(received).toHaveNoViolations(expected)
 
-Found 8 warnings and 0 errors.
-Finished in 3.8s on 334 files using 12 threads.
+Expected the HTML found at $('div[role="progressbar"]') to have no violations:
+
+<div class="mb-8" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+
+Received:
+
+"ARIA progressbar nodes must have an accessible name (aria-progressbar-name)"
+
+Fix any of the following:
+  aria-label attribute does not exist or is empty
+  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty
+  Element has no title attribute
+
+You can find more information on this issue here: 
+https://dequeuniversity.com/rules/axe/4.11/aria-progressbar-name?application=axeAPI
+ 笶ｯ src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx:71:25
+     69| 
+     70|         const results = await axe(container);
+     71|         expect(results).toHaveNoViolations();
+       |                         ^
+     72|     });
+     73| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/1]竡ｯ
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 11:53:30
+[2m   Duration [22m 4.46s[2m (transform 118ms, setup 289ms, import 1.20s, tests 955ms, environment 1.61s)[22m
+
+窶右LIFECYCLE窶・Test failed. See above for more details.

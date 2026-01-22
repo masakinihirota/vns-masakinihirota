@@ -124,6 +124,12 @@ export function PortalDashboard() {
           path: "/product-list",
           desc: "Shop機能等のための製品表示デモ。",
         },
+        {
+          title: "作品連続評価",
+          path: "/works/continuous-rating",
+          desc: "アニメ・漫画を連続で高速に評価する専用ページ。",
+          badge: "Feature",
+        },
       ],
     },
     {
