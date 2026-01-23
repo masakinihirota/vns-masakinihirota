@@ -11,7 +11,6 @@ JSONレスポンス {"success": true, ...} が表示されるまでお待ちく�
 型安全性: 新しい型とスキーマがTypeScriptによって検証されました。
 手動チェック: http://localhost:3000/works でUIを確認してください。
 
-
 # remotion skills
 
 ```
