@@ -4,19 +4,11 @@ import {
   Search,
   Filter,
   User,
-  CheckCircle2,
-  XCircle,
-  ArrowRightLeft,
-  MoreHorizontal,
-  Calendar,
-  MapPin,
-  Briefcase,
   Heart,
-  AlertCircle,
+  CheckCircle2,
   Moon,
   Sun,
   Loader2,
-  Check,
   BookOpen,
   Tv,
   Music,
@@ -51,14 +43,6 @@ type UserProfile = {
   // New fields for deep comparison
   favoriteWorks: Work[];
   values: string[]; // e.g., "連絡はマメに", "一人の時間も大切"
-};
-
-type MatchRecord = {
-  id: string;
-  subjectId: string;
-  targetId: string;
-  status: "draft" | "approved" | "rejected";
-  createdAt: string;
 };
 
 // --- Mock Data (Updated with Works and Values) ---
@@ -207,7 +191,7 @@ const MOCK_CANDIDATES: UserProfile[] = [
 const supabase = {
   from: (table: string) => {
     return {
-      select: async (query: string = "*") => {
+      select: async (_query: string = "*") => {
         await new Promise((resolve) => setTimeout(resolve, 400));
 
         if (table === "match_candidates_view") {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo } from "react";
-import { UserProfile, MatchRecord } from "../common/types";
+import { UserProfile } from "../common/types";
 import { ManualMatchingConsole } from "./manual-matching-console";
 import {
   fetchSubjects,

@@ -58,7 +58,7 @@ export const fetchUserAnswers = async (): Promise<UserValueAnswer[]> => {
 };
 
 export const saveUserAnswer = async (
-  answer: UserValueAnswer
+  _answer: UserValueAnswer
 ): Promise<boolean> => {
   return new Promise((resolve) => setTimeout(() => resolve(true), 500));
 };

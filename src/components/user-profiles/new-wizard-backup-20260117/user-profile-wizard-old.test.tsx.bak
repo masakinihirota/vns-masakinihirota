@@ -1,0 +1,23 @@
+import { render, screen } from '@testing-library/react';
+import { axe } from 'vitest-axe';
+import { UserProfileWizard } from './user-profile-wizard';
+import { describe, it, expect, vi } from 'vitest';
+
+// Mock scrollIntoView since it's not available in jsdom
+window.HTMLElement.prototype.scrollIntoView = vi.fn();
+
+describe('UserProfileWizard Accessibility', () => {
+    it('should have no accessibility violations on Step 1', async () => {
+        // Arrange
+        const { container } = render(<UserProfileWizard />);
+
+        // Assert (Step 1 is default)
+        expect(screen.getByText('1. 役割 (Role)')).toBeInTheDocument();
+
+        // Act
+        const results = await axe(container);
+
+        // Assert
+        expect(results).toHaveNoViolations();
+    });
+});

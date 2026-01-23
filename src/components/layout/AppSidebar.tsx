@@ -4,7 +4,6 @@ import {
   ChevronRight,
   MoreHorizontal,
   LogOut,
-  UserPlus,
   ChevronsUpDown,
   type LucideIcon,
 } from "lucide-react";
@@ -95,6 +94,7 @@ type RouteEntry = {
 const PATH_TO_FEATURE_MAP: Record<string, string> = {
   "/home": "home",
   "/user-profiles": "profiles",
+  "/user-profiles/new": "profiles",
   "/profiles": "profiles",
   "/matching": "matching",
   "/groups": "organizations",
@@ -158,16 +158,6 @@ const manifestRoutes: RouteEntry[] = routesManifest as RouteEntry[];
 
 const mainMenuItems = manifestRoutes
   .filter((r) => r.visibleInMenu && r.group === "main")
-  .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-  .map((r) => ({
-    title: r.label,
-    url: toSidebarUrl(r.path),
-    icon: iconFor(r.path),
-  }));
-
-// 集団系メニュー（第2グループ）
-const groupMenuItems = manifestRoutes
-  .filter((r) => r.visibleInMenu && r.group === "group")
   .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
   .map((r) => ({
     title: r.label,
@@ -461,15 +451,6 @@ function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem asChild>
-                <Link href="/home/root-accounts">
-                  <UserPlus className="mr-2 h-4 w-4" />
-                  既存のアカウントを追加
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
               {footerMenuItems.map((item) => (
                 <DropdownMenuItem key={item.url} asChild>
                   <Link href={item.url}>
@@ -509,7 +490,7 @@ export function AppSidebar({
   const pathname = usePathname();
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" className="z-50" {...props}>
       {/* ヘッダー: ブランド名 */}
       <SidebarHeader>
         <SidebarMenu>
@@ -536,15 +517,6 @@ export function AppSidebar({
         {/* メインメニュー */}
         <NavGroup
           items={mainMenuItems}
-          currentPath={pathname}
-          userLevel={userLevel}
-          newlyUnlockedFeatures={newlyUnlockedFeatures}
-        />
-
-        {/* 集団系メニュー（第2グループ） */}
-        <NavGroup
-          label="集団"
-          items={groupMenuItems}
           currentPath={pathname}
           userLevel={userLevel}
           newlyUnlockedFeatures={newlyUnlockedFeatures}

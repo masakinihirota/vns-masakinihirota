@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { calculateMatches, SearchCriteria } from "./auto-matching.logic";
 
 describe("calculateMatches", () => {
@@ -40,7 +40,7 @@ describe("calculateMatches", () => {
       remote: false,
     };
 
-    const results = await calculateMatches(criteria);
+    await calculateMatches(criteria);
     // c1 (max 800) は条件厳しい
 
     // とりあえず結果が空でないか、あるいはスコアが計算されているか
