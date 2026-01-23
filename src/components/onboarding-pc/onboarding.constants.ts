@@ -709,6 +709,7 @@ export const LANGUAGE_OPTIONS = [
   "ロシア語 (Russian)",
   "イタリア語 (Italian)",
   "ドイツ語 (German)",
+  "その他 (Other)",
 ] as const;
 
 export interface Agreements {

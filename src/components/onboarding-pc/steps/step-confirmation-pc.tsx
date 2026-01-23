@@ -169,7 +169,7 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
                   <Check size={14} className="mr-1" /> 同意済み
                 </span>
               ) : (
-                <span className="text-slate-400">未同意 (任意)</span>
+                <span className="text-slate-400">未同意</span>
               )
             }
           />
@@ -184,7 +184,7 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
                   <Check size={14} className="mr-1" /> 同意済み
                 </span>
               ) : (
-                <span className="text-slate-400">未同意 (任意)</span>
+                <span className="text-slate-400">未同意</span>
               )
             }
           />
@@ -339,7 +339,7 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
         </ConfirmationSection>
 
         {/* Step 6: Language */}
-        <ConfirmationSection title="言語設定">
+        <ConfirmationSection title="言語">
           <ConfirmationRow
             label="母語"
             isRequired

@@ -55,6 +55,9 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
             <div className="flex items-center gap-2 mb-1">
               <div className="font-bold text-lg text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                 オアシス宣言を守る
+                <span className="ml-2 text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                  必須
+                </span>
               </div>
               <Link
                 href="/help/oasis-declaration"
@@ -103,9 +106,8 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
               <div className="font-bold text-lg text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                 人間宣言を守る
               </div>
-              {/* Human Declaration Link - Placeholder or specific if known */}
               <Link
-                href="/help/human-declaration" // Assuming this might exist or will exist
+                href="/help/glossary"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-400 hover:text-indigo-500 transition-colors"
@@ -151,8 +153,16 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
               <div className="font-bold text-lg text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                 正直宣言を守る
               </div>
-              {/* Honesty Declaration Link - Placeholder */}
-              {/* Not linking Honesty declaration for now as no obvious path, or maybe same help? */}
+              <Link
+                href="/help/glossary"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-slate-400 hover:text-indigo-500 transition-colors"
+                title="正直宣言を詳しく読む"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <ExternalLink className="w-4 h-4" />
+              </Link>
             </div>
             <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
               自分自身を偽らず、誠実な対話を心がけます。

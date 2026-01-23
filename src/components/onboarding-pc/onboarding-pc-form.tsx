@@ -165,16 +165,18 @@ export function OnboardingPCForm({
               <button
                 onClick={nextStep}
                 disabled={
-                  currentStep === 5 &&
-                  (formData.is_minor === true ||
-                    formData.is_minor === undefined)
+                  (currentStep === 1 && !formData.agreed_oasis) ||
+                  (currentStep === 5 &&
+                    (formData.is_minor === true ||
+                      formData.is_minor === undefined))
                 }
                 className={`
                   px-8 py-2.5 rounded-lg font-medium transition-all transform
                   ${
-                    currentStep === 5 &&
-                    (formData.is_minor === true ||
-                      formData.is_minor === undefined)
+                    (currentStep === 1 && !formData.agreed_oasis) ||
+                    (currentStep === 5 &&
+                      (formData.is_minor === true ||
+                        formData.is_minor === undefined))
                       ? "bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed shadow-none"
                       : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 hover:-translate-y-0.5"
                   }

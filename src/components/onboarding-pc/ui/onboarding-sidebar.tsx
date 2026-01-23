@@ -51,7 +51,7 @@ export const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
               {step === 3 && "居住地・文化圏"}
               {step === 4 && "活動時間"}
               {step === 5 && "アイデンティティ"}
-              {step === 6 && "言語設定"}
+              {step === 6 && "言語"}
               {step === 7 && "確認"}
             </span>
           </button>
@@ -60,13 +60,16 @@ export const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
 
       {/* Guide Character */}
       <div className="hidden md:block mt-8 border-t border-slate-100 dark:border-slate-800 pt-6 text-center">
-        <div className="relative w-28 h-28 mx-auto mb-3">
+        <div className="relative w-28 h-28 mx-auto mb-4">
           <Image
             src="/images/characters/schrodinger-guide.png"
             alt="シュレディンガーちゃん"
             fill
             className="object-contain drop-shadow-lg scale-110"
           />
+        </div>
+        <div className="text-center text-xs font-bold text-slate-600 dark:text-slate-300 mb-3">
+          シュレディンガーちゃん
         </div>
         <div className="bg-indigo-50 dark:bg-slate-800 p-3 rounded-xl text-xs text-indigo-900 dark:text-indigo-200 relative border border-indigo-100 dark:border-slate-700">
           <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-indigo-50 dark:bg-slate-800 rotate-45 border-l border-t border-indigo-100 dark:border-slate-700" />

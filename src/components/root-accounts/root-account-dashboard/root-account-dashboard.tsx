@@ -225,7 +225,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
     }
   };
 
-  // 言語設定の保存
+  // 言語の保存
   const handleSaveLanguages = async () => {
     setIsLoading(true);
     try {
@@ -233,7 +233,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
       setOriginalData(formData);
       setIsEditingLanguages(false);
-      alert("言語設定を保存しました");
+      alert("言語を保存しました");
     } catch (error) {
       console.error("保存エラー:", error);
       alert("保存に失敗しました");
@@ -1560,7 +1560,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-lg leading-6 font-medium text-slate-900 dark:text-slate-50 flex items-center gap-2">
                     <Globe size={20} className="text-slate-400" />
-                    言語設定
+                    言語
                   </h3>
                   <button
                     onClick={() => {
@@ -1583,7 +1583,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 </div>
                 {isEditingLanguages && (
                   <div className="mb-4 text-xs text-slate-600 dark:text-slate-300 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 rounded-md px-3 py-2">
-                    言語設定を編集モードに切り替えました。母語や使用言語の追加・削除、AI翻訳の切替を行えます（実装予定）。
+                    言語を編集モードに切り替えました。母語や使用言語の追加・削除、AI翻訳の切替を行えます（実装予定）。
                   </div>
                 )}
                 <div className="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">

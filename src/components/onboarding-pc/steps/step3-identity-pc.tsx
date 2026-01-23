@@ -153,10 +153,6 @@ export const Step3IdentityPC: React.FC<Step3IdentityPCProps> = ({
               <option value="pisces">魚座 (2/19-3/20)</option>
             </select>
           </div>
-
-          <div className="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-lg text-sm text-slate-500">
-            ルートアカウントに名前は不要です。星座のみ設定してください。
-          </div>
         </div>
 
         {/* 4. Generation */}
