@@ -51,7 +51,14 @@ export const workSchema = z.object({
     .or(z.literal("")),
   category: z.enum(["manga", "anime"]),
   scale: z
-    .enum(["half_day", "one_day", "one_week", "one_month", "one_cour", "long_term"])
+    .enum([
+      "half_day",
+      "one_day",
+      "one_week",
+      "one_month",
+      "one_cour",
+      "long_term",
+    ])
     .optional(),
   isNew: z.boolean().default(false),
   isAiGenerated: z.boolean().default(false),
