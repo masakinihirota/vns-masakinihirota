@@ -44,6 +44,11 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
     nativeLanguages,
     availableLanguages,
     uses_ai_translation,
+    // Step 7
+    agreed_system_open_data,
+    agreed_system_mediator,
+    agreed_system_ad,
+    agreed_system_creator,
   } = data;
 
   // Validations
@@ -391,6 +396,62 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
                 <span className="flex items-center gap-1">
                   <span className="text-emerald-500">👤</span> 自分の力
                 </span>
+              )
+            }
+          />
+        </ConfirmationSection>
+
+        {/* Step 7: System Request */}
+        <ConfirmationSection title="システム項目">
+          <ConfirmationRow
+            label="オープンデータ制度"
+            isValid={agreed_system_open_data}
+            value={
+              agreed_system_open_data ? (
+                <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
+                  <Check size={14} className="mr-1" /> 同意済み
+                </span>
+              ) : (
+                <span className="text-slate-400">未同意</span>
+              )
+            }
+          />
+          <ConfirmationRow
+            label="メディエーター制度"
+            isValid={agreed_system_mediator}
+            value={
+              agreed_system_mediator ? (
+                <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
+                  <Check size={14} className="mr-1" /> 同意済み
+                </span>
+              ) : (
+                <span className="text-slate-400">未同意</span>
+              )
+            }
+          />
+          <ConfirmationRow
+            label="広告表示選択制度"
+            isValid={agreed_system_ad}
+            value={
+              agreed_system_ad ? (
+                <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
+                  <Check size={14} className="mr-1" /> 同意済み
+                </span>
+              ) : (
+                <span className="text-slate-400">未同意</span>
+              )
+            }
+          />
+          <ConfirmationRow
+            label="クリエーターファースト制度"
+            isValid={agreed_system_creator}
+            value={
+              agreed_system_creator ? (
+                <span className="text-emerald-600 dark:text-emerald-400 flex items-center">
+                  <Check size={14} className="mr-1" /> 同意済み
+                </span>
+              ) : (
+                <span className="text-slate-400">未同意</span>
               )
             }
           />

@@ -22,7 +22,7 @@ export const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
         {/* Connection Line */}
         <div className="absolute left-4 top-4 bottom-4 w-0.5 bg-slate-200 dark:bg-slate-800 -z-10" />
 
-        {[1, 2, 3, 4, 5, 6, 7].map((step) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((step) => (
           <button
             key={step}
             onClick={() => onStepClick(step)}
@@ -52,7 +52,8 @@ export const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
               {step === 4 && "活動時間"}
               {step === 5 && "アイデンティティ"}
               {step === 6 && "言語"}
-              {step === 7 && "確認"}
+              {step === 7 && "システム"}
+              {step === 8 && "確認"}
             </span>
           </button>
         ))}
@@ -127,6 +128,15 @@ export const OnboardingSidebar: React.FC<OnboardingSidebarProps> = ({
               </>
             )}
             {currentStep === 7 && (
+              <>
+                VNSのシステムについて
+                <br />
+                確認してね！
+                <br />
+                大切なことだよ🤖
+              </>
+            )}
+            {currentStep === 8 && (
               <>
                 最後に設定内容を
                 <br />
