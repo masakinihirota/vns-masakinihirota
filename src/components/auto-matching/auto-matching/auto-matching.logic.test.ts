@@ -1,49 +1,122 @@
 import { describe, it, expect } from "vitest";
-import { calculateMatches, SearchCriteria } from "./auto-matching.logic";
+import {
+  calculateUserScore,
+  filterCandidates,
+  UserProfile,
+} from "./auto-matching.logic";
 
-describe("calculateMatches", () => {
-  it("条件に合致する候補者をフィルタリングしてスコア順に返すこと", async () => {
-    const criteria: SearchCriteria = {
-      role: "Frontend Engineer",
-      skills: [],
-      location: "東京",
-      min_salary: 600,
-      remote: false,
-    };
+// Mock Data
+const mockTargetProfile: UserProfile = {
+  id: "target",
+  name: "Target",
+  values: ["A", "B"],
+  createdWorks: ["Work1"],
+  favoriteWorks: ["Fav1"],
+  skills: ["Skill1"],
+};
 
-    const results = await calculateMatches(criteria);
+const mockCandidate: UserProfile = {
+  id: "c1",
+  name: "Candidate1",
+  values: ["A", "C"], // 1 match
+  createdWorks: ["Work1"], // 1 match
+  favoriteWorks: [], // 0 match
+  skills: ["Skill1", "Skill2"], // 1 match
+};
 
-    // 期待される結果:
-    // c1 (Frontend, 東京, 600万) -> ハイマッチ
-    // c2 (Fullstack, 大阪) -> ローマッチ (場所不一致)
-    // c3 (Backend) -> ローマッチ (職種不一致)
-    // c4 (Designer, リモート) -> ローマッチ
-    // c5 (Frontend, 福岡) -> ミドルマッチ (職種一致)
+describe("AutoMatching Logic", () => {
+  describe("calculateUserScore", () => {
+    it("should calculate score correctly based on selected categories", () => {
+      // Match in values (1), createdWorks (1), skills (1) -> Total 3 matches * 2 points = 6
+      const categories = ["values", "createdWorks", "skills"];
+      const result = calculateUserScore(
+        mockCandidate,
+        mockTargetProfile,
+        categories
+      );
+      expect(result.matchScore).toBe(6);
+    });
 
-    expect(results.length).toBeGreaterThan(0);
+    it("should return 0 score if no matches", () => {
+      const result = calculateUserScore(
+        { ...mockCandidate, values: ["Z"], createdWorks: ["Z"], skills: ["Z"] },
+        mockTargetProfile,
+        ["values", "createdWorks", "skills"]
+      );
+      expect(result.matchScore).toBe(0);
+    });
 
-    // スコア順であることを確認
-    for (let i = 0; i < results.length - 1; i++) {
-      expect(results[i].score).toBeGreaterThanOrEqual(results[i + 1].score);
-    }
-
-    // トップはc1であるべき (単純なロジックの場合)
-    // アルゴリズムの詳細は実装次第だが、少なくともデータが返ってくることを確認
+    it("should ignore categories not selected", () => {
+      // Match only in values (1) -> 2 points. createdWorks and skills are ignored.
+      const categories = ["values"];
+      const result = calculateUserScore(
+        mockCandidate,
+        mockTargetProfile,
+        categories
+      );
+      expect(result.matchScore).toBe(2);
+    });
   });
 
-  it("最低年収が条件を満たさない候補者はスコアが低くなるか除外されること", async () => {
-    const criteria: SearchCriteria = {
-      role: "Frontend Engineer",
-      skills: [],
-      location: "東京",
-      min_salary: 1000, // 高い給与要求
-      remote: false,
-    };
+  describe("filterCandidates", () => {
+    const pool: UserProfile[] = [
+      {
+        id: "c1",
+        name: "C1",
+        values: ["A"],
+        createdWorks: [],
+        favoriteWorks: [],
+        skills: [],
+      }, // Match A (2pts)
+      {
+        id: "c2",
+        name: "C2",
+        values: ["A", "B"],
+        createdWorks: [],
+        favoriteWorks: [],
+        skills: [],
+      }, // Match A, B (4pts)
+      {
+        id: "c3",
+        name: "C3",
+        values: [],
+        createdWorks: [],
+        favoriteWorks: [],
+        skills: [],
+      }, // 0pts
+    ];
 
-    await calculateMatches(criteria);
-    // c1 (max 800) は条件厳しい
+    it("should correctily expand candidates based on count", () => {
+      const result = filterCandidates(
+        pool,
+        [],
+        mockTargetProfile,
+        ["values"],
+        "expand",
+        "count",
+        2,
+        0
+      ) as { addedUsers: UserProfile[] };
 
-    // とりあえず結果が空でないか、あるいはスコアが計算されているか
-    // 実装詳細によるが、ここではモックロジックの挙動をテスト
+      expect(result.addedUsers).toHaveLength(2);
+      expect(result.addedUsers[0].id).toBe("c2"); // Highest score first
+      expect(result.addedUsers[1].id).toBe("c1");
+    });
+
+    it("should correctily expand candidates based on score threshold", () => {
+      const result = filterCandidates(
+        pool,
+        [],
+        mockTargetProfile,
+        ["values"],
+        "expand",
+        "score",
+        0,
+        4 // Only C2 has 4 points
+      ) as { addedUsers: UserProfile[] };
+
+      expect(result.addedUsers).toHaveLength(1);
+      expect(result.addedUsers[0].id).toBe("c2");
+    });
   });
 });

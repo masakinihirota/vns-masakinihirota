@@ -1,131 +1,210 @@
-export interface MatchingProfile {
+import { Heart, Briefcase, Tag, Zap } from "lucide-react";
+
+// --- Types ---
+export interface Category {
+  id: "values" | "createdWorks" | "favoriteWorks" | "skills";
+  label: string;
+  icon: React.ElementType;
+}
+
+export interface UserStats {
+  follows: number;
+  watches: number;
+  partners: number;
+}
+
+export interface UserProfile {
   id: string;
   name: string;
-  role: string;
+  icon?: string;
+  color?: string;
+  purposes?: string[];
+  values: string[];
+  createdWorks: string[];
+  favoriteWorks: string[];
   skills: string[];
-  location: string;
-  min_salary: number;
-  max_salary: number;
-  experience_years: number;
-  avatar_url?: string;
+  stats?: UserStats;
+  matchScore?: number;
+  // Index allow for category access
+  [key: string]: any;
 }
 
-export interface MatchingScore {
-  session_id: string;
-  candidate_id: string;
-  score: number; // 0.000 to 1.000
-  rank: number;
-  explanation: {
-    skill_match: number;
-    salary_match: number;
-    location_match: number;
-    tags: string[];
-  };
-  candidate: MatchingProfile; // Join result
-  created_at: string;
+export interface MatchStats {
+  added: number;
+  removed: number;
 }
 
-export interface SearchCriteria {
-  role: string;
-  skills: string[];
-  location: string;
-  min_salary: number;
-  remote: boolean;
-}
+// --- Constants ---
+export const CATEGORIES: Category[] = [
+  { id: "values", label: "価値観", icon: Heart },
+  { id: "createdWorks", label: "作った作品", icon: Briefcase },
+  { id: "favoriteWorks", label: "好きな作品", icon: Tag },
+  { id: "skills", label: "スキル", icon: Zap },
+];
 
-export const DUMMY_CANDIDATES: MatchingProfile[] = [
+// --- Mock Data ---
+export const MY_PROFILES: UserProfile[] = [
   {
-    id: "c1",
-    name: "田中 健太",
-    role: "Frontend Engineer",
-    skills: ["React", "Next.js", "TypeScript", "Tailwind"],
-    location: "東京",
-    min_salary: 600,
-    max_salary: 800,
-    experience_years: 5,
+    id: "p1",
+    name: "プロフェッショナル",
+    icon: "💼",
+    purposes: ["創る・働く"],
+    values: ["効率", "論理", "成長"],
+    createdWorks: ["システムA"],
+    favoriteWorks: ["技術書X"],
+    skills: ["React", "Go"],
+    stats: { follows: 12, watches: 45, partners: 3 },
   },
   {
-    id: "c2",
-    name: "佐藤 優子",
-    role: "Fullstack Engineer",
-    skills: ["Node.js", "React", "PostgreSQL", "AWS"],
-    location: "大阪",
-    min_salary: 700,
-    max_salary: 900,
-    experience_years: 7,
-  },
-  {
-    id: "c3",
-    name: "鈴木 一郎",
-    role: "Backend Engineer",
-    skills: ["Go", "Docker", "Kubernetes", "gRPC"],
-    location: "東京",
-    min_salary: 800,
-    max_salary: 1000,
-    experience_years: 6,
-  },
-  {
-    id: "c4",
-    name: "高橋 美咲",
-    role: "UI/UX Designer",
-    skills: ["Figma", "Adobe XD", "HTML/CSS"],
-    location: "リモート",
-    min_salary: 500,
-    max_salary: 700,
-    experience_years: 3,
-  },
-  {
-    id: "c5",
-    name: "伊藤 翔",
-    role: "Frontend Engineer",
-    skills: ["Vue.js", "Nuxt", "JavaScript"],
-    location: "福岡",
-    min_salary: 550,
-    max_salary: 750,
-    experience_years: 4,
+    id: "p2",
+    name: "自由人",
+    icon: "🎮",
+    purposes: ["遊ぶ"],
+    values: ["没入感", "物語"],
+    createdWorks: ["Modツール"],
+    favoriteWorks: ["RPG Z"],
+    skills: ["エイム"],
+    stats: { follows: 5, watches: 128, partners: 1 },
   },
 ];
 
-export const calculateMatches = async (
-  criteria: SearchCriteria
-): Promise<MatchingScore[]> => {
-  // Simulating API latency
-  await new Promise((resolve) => setTimeout(resolve, 800));
+export const CANDIDATE_POOL: UserProfile[] = [
+  {
+    id: "u1",
+    name: "アリス",
+    color: "bg-blue-500",
+    values: ["効率", "美"],
+    createdWorks: ["デザイン"],
+    favoriteWorks: ["技術書X"],
+    skills: ["React"],
+  },
+  {
+    id: "u2",
+    name: "ボブ",
+    color: "bg-green-500",
+    values: ["没入感", "共闘"],
+    createdWorks: ["ゲーム"],
+    favoriteWorks: ["RPG Z"],
+    skills: ["チームビルド"],
+  },
+  {
+    id: "u3",
+    name: "キャロル",
+    color: "bg-purple-500",
+    values: ["物語", "繊細"],
+    createdWorks: ["小説"],
+    favoriteWorks: ["アニメM"],
+    skills: ["執筆"],
+  },
+  {
+    id: "u4",
+    name: "デイビッド",
+    color: "bg-orange-500",
+    values: ["論理", "成長"],
+    createdWorks: ["アプリ"],
+    favoriteWorks: ["ビジネス書"],
+    skills: ["Go"],
+  },
+  {
+    id: "u5",
+    name: "エレン",
+    color: "bg-pink-500",
+    values: ["独創性", "感情"],
+    createdWorks: ["写真"],
+    favoriteWorks: ["映画P"],
+    skills: ["撮影"],
+  },
+  {
+    id: "u6",
+    name: "サトシ",
+    color: "bg-indigo-500",
+    values: ["論理", "美"],
+    createdWorks: ["Webサイト"],
+    favoriteWorks: ["技術書X"],
+    skills: ["React"],
+  },
+  {
+    id: "u7",
+    name: "ミカ",
+    color: "bg-teal-500",
+    values: ["効率", "成長"],
+    createdWorks: ["ツール"],
+    favoriteWorks: ["ビジネス書"],
+    skills: ["Go"],
+  },
+];
 
-  const scoredResults = DUMMY_CANDIDATES.map((candidate) => {
-    // Simple mock scoring logic
-    let score = 0.5;
-    if (candidate.role === criteria.role) score += 0.3;
-    if (candidate.location.includes(criteria.location)) score += 0.1;
-    if (candidate.min_salary <= criteria.min_salary) score += 0.1;
+// --- Logic Functions ---
 
-    // Normalize score 0-1 (mock)
-    score = Math.min(Math.max(score + (Math.random() * 0.1 - 0.05), 0), 1);
+export const calculateUserScore = (
+  user: UserProfile,
+  targetProfile: UserProfile,
+  selectedCategories: string[]
+): UserProfile => {
+  let score = 0;
+  selectedCategories.forEach((cat) => {
+    const userItems = user[cat] as string[] | undefined;
+    const targetItems = targetProfile[cat] as string[] | undefined;
 
-    return {
-      session_id: "sess_" + Math.random().toString(36).substr(2, 9),
-      candidate_id: candidate.id,
-      score: parseFloat(score.toFixed(3)),
-      rank: 0, // calculated after sort
-      explanation: {
-        skill_match: Math.floor(score * 100),
-        salary_match: 90,
-        location_match: 80,
-        tags: candidate.role === criteria.role ? ["職種一致"] : [],
-      },
-      candidate: candidate,
-      created_at: new Date().toISOString(),
-    } as MatchingScore;
+    if (userItems && targetItems) {
+      const matches = userItems.filter((item) => targetItems.includes(item));
+      score += matches.length * 2;
+    }
   });
+  return { ...user, matchScore: score };
+};
 
-  // Sort by score descending
-  scoredResults.sort((a, b) => b.score - a.score);
+export const filterCandidates = (
+  candidates: UserProfile[],
+  watchList: UserProfile[],
+  targetProfile: UserProfile,
+  selectedCategories: string[],
+  matchMode: "expand" | "refine",
+  matchCriterion: "count" | "score",
+  processLimit: number,
+  scoreThreshold: number
+) => {
+  let addedUsers: UserProfile[] = [];
+  let removedUsers: UserProfile[] = [];
 
-  // Assign ranks
-  const rankedResults = scoredResults.map((item, index) => ({
-    ...item,
-    rank: index + 1,
-  }));
+  // Calculate score helper
+  const calculateScore = (user: UserProfile) =>
+    calculateUserScore(user, targetProfile, selectedCategories);
 
-  return rankedResults;
+  if (matchMode === "expand") {
+    const scoredCandidates = candidates
+      .filter((p) => !watchList.find((w) => w.id === p.id))
+      .map(calculateScore);
+
+    if (matchCriterion === "count") {
+      addedUsers = scoredCandidates
+        .sort((a, b) => (b.matchScore || 0) - (a.matchScore || 0))
+        .slice(0, processLimit);
+    } else {
+      addedUsers = scoredCandidates.filter(
+        (u) => (u.matchScore || 0) >= scoreThreshold
+      );
+    }
+
+    return { addedUsers, removedUsers };
+  } else {
+    const scoredWatchList = watchList.map(calculateScore);
+
+    if (matchCriterion === "count") {
+      const sorted = scoredWatchList.sort(
+        (a, b) => (a.matchScore || 0) - (b.matchScore || 0)
+      );
+      removedUsers = sorted.slice(0, processLimit);
+      const kept = sorted.slice(processLimit);
+      return { addedUsers, removedUsers, kept };
+    } else {
+      removedUsers = scoredWatchList.filter(
+        (u) => (u.matchScore || 0) < scoreThreshold
+      );
+      const kept = scoredWatchList.filter(
+        (u) => (u.matchScore || 0) >= scoreThreshold
+      );
+      return { addedUsers, removedUsers, kept };
+    }
+  }
 };

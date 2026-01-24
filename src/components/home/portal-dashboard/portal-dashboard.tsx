@@ -226,6 +226,12 @@ export function PortalDashboard() {
           path: "/user-profiles/new-legacy",
           desc: "従来のプロフィール作成フォーム（参照用）。",
         },
+        {
+          title: "手動マッチング (Gemini UI)",
+          path: "/sample/manual-matching-gemini",
+          desc: "手動マッチングのUIプロトタイプ (Gemini版)。",
+          badge: "Sample",
+        },
       ],
     },
   ];
