@@ -6,6 +6,7 @@ export const SCALES = [
   { value: "one_day", label: "1日 (1〜数冊)" },
   { value: "one_week", label: "一週間 (数冊〜十数冊)" },
   { value: "one_month", label: "一ヶ月以内 (十数冊〜)" },
+  { value: "one_cour", label: "1クール (3ヶ月)" },
   { value: "long_term", label: "一ヶ月以上 (十数冊〜百冊以上)" },
 ] as const;
 
@@ -50,7 +51,14 @@ export const workSchema = z.object({
     .or(z.literal("")),
   category: z.enum(["manga", "anime"]),
   scale: z
-    .enum(["half_day", "one_day", "one_week", "one_month", "long_term"])
+    .enum([
+      "half_day",
+      "one_day",
+      "one_week",
+      "one_month",
+      "one_cour",
+      "long_term",
+    ])
     .optional(),
   isNew: z.boolean().default(false),
   isAiGenerated: z.boolean().default(false),

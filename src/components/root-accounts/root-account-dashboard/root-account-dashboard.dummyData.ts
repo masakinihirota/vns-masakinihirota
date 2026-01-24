@@ -87,7 +87,7 @@ export const dummyRootAccountData: RootAccount = {
     {
       id: "aw3",
       title: "Language Master",
-      description: "3ヶ国語以上の言語設定を完了",
+      description: "3ヶ国語以上の言語を完了",
       awarded_at: "2024-04-15T14:30:00Z",
       icon_type: "crown",
     },

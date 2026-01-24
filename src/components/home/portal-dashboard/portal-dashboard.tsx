@@ -108,19 +108,9 @@ export function PortalDashboard() {
           desc: "手動で条件を指定してユーザーを検索。",
         },
         {
-          title: "価値観リスト",
-          path: "/values",
-          desc: "登録されている価値観の一覧と詳細。",
-        },
-        {
           title: "価値観の選定",
           path: "/values-selection",
           desc: "自分にとって重要な5つの価値観を定義する。",
-        },
-        {
-          title: "投票マッチ (Vote Match)",
-          path: "/vote-match",
-          desc: "社会・政治的価値観に基づく相性算出。",
         },
       ],
     },

@@ -142,6 +142,50 @@ describe("Step4LanguagePC", () => {
     );
   });
 
+  it("excludes 'Other' option from available languages but keeps it in native languages", () => {
+    render(<Step4LanguagePC {...defaultProps} />);
+
+    // 1. Check Native Languages (should have Other)
+    const nativeSection = screen.getByText("母語 (複数選択可)").closest(".p-4");
+    expect(nativeSection).toBeInTheDocument();
+
+    // Expand list
+    const showMoreNative = within(nativeSection as HTMLElement).getByRole(
+      "button",
+      {
+        name: /もっと見る|すべて表示/,
+      }
+    );
+    fireEvent.click(showMoreNative);
+
+    expect(
+      within(nativeSection as HTMLElement).getByText("その他 (Other)")
+    ).toBeInTheDocument();
+
+    // 2. Check Available Languages (should NOT have Other)
+    const availableSection = screen.getByText("使用可能言語").closest(".p-4");
+    expect(availableSection).toBeInTheDocument();
+
+    // Expand list (if button exists - it might not if Other was the only one hidden, but there are others)
+    // Actually, "Other" is the last item. There are 12 items. Major is 5. So 7 hidden.
+    // If we remove "Other", there are 11 items. Major 5. 6 hidden.
+    // So "Show More" should still exist.
+    const showMoreAvailable = within(
+      availableSection as HTMLElement
+    ).queryByRole("button", {
+      name: /もっと見る|すべて表示/,
+    });
+
+    // If show more exists, click it to reveal everything
+    if (showMoreAvailable) {
+      fireEvent.click(showMoreAvailable);
+    }
+
+    expect(
+      within(availableSection as HTMLElement).queryByText("その他 (Other)")
+    ).not.toBeInTheDocument();
+  });
+
   it("should have no accessibility violations", async () => {
     const { container } = render(<Step4LanguagePC {...defaultProps} />);
     const results = await axe(container);

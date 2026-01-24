@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { axe } from "vitest-axe";
 import { OnboardingPCForm } from "./onboarding-pc-form";
@@ -36,5 +36,22 @@ describe("OnboardingPCForm", () => {
     const { container } = render(<OnboardingPCForm userId="test-user-id" />);
     const results = await axe(container);
     expect(results).toHaveNoViolations();
+  });
+  it("disables Next button on Step 1 if Oasis declaration is not agreed", () => {
+    render(<OnboardingPCForm userId="test-user-id" />);
+    const nextButton = screen.getByText("次へ");
+    expect(nextButton).toBeDisabled();
+  });
+
+  it("enables Next button on Step 1 when Oasis declaration is agreed", () => {
+    render(<OnboardingPCForm userId="test-user-id" />);
+    // Find checkbox for Oasis declaration (first checkbox)
+    const checkboxes = screen.getAllByRole("checkbox");
+    const oasisCheckbox = checkboxes[0];
+
+    fireEvent.click(oasisCheckbox);
+
+    const nextButton = screen.getByText("次へ");
+    expect(nextButton).toBeEnabled();
   });
 });

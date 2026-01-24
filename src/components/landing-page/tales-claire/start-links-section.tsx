@@ -41,7 +41,8 @@ export const StartLinksSection = () => {
               <p className="text-indigo-200 text-sm mb-4">
                 あなたは「幽霊」としてこの世界に降り立ちます。
                 <br />
-                王様との対話や探索を通じて、少しずつVNSの仕組みを学びながら受肉します。
+                女王様との対話や探索を通じて、少しずつVNS
+                masakinihirotaの仕組みを学んでいきます。
               </p>
             </div>
             <div className="flex items-center text-indigo-300 font-bold group-hover:translate-x-2 transition-transform">
@@ -66,7 +67,7 @@ export const StartLinksSection = () => {
                 ノーマルスタート
               </h4>
               <p className="text-zinc-400 text-sm mb-4">
-                すぐにプロフィール作成画面へ移動します。
+                すぐに活動を始められます。
                 <br />
                 既に目的が決まっている方や、システムに慣れている方向けの最短ルートです。
               </p>

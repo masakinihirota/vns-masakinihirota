@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { StepBasicValuesPC } from "./steps/step-basic-values-pc";
 import { StepConfirmationPC } from "./steps/step-confirmation-pc";
 import { StepDeclarationsPC } from "./steps/step-declarations-pc";
+import { StepSystemRequestPC } from "./steps/step-system-request-pc";
 import { Step1ResidencePC } from "./steps/step1-residence-pc";
 import { Step2HoursPC } from "./steps/step2-hours-pc";
 import { Step3IdentityPC } from "./steps/step3-identity-pc";
@@ -52,6 +53,11 @@ export function OnboardingPCForm({
     agreed_oasis: false,
     agreed_human: false,
     agreed_honesty: false,
+    // System Request
+    agreed_system_open_data: false,
+    agreed_system_mediator: false,
+    agreed_system_ad: false,
+    agreed_system_creator: false,
     // Pre-fill from initialData
     zodiac_sign: initialData?.constellation,
   });
@@ -81,7 +87,7 @@ export function OnboardingPCForm({
         }
       }
     }
-    setCurrentStep((prev) => Math.min(prev + 1, 7));
+    setCurrentStep((prev) => Math.min(prev + 1, 8));
   };
   const prevStep = () => setCurrentStep((prev) => Math.max(prev - 1, 1));
 
@@ -122,6 +128,8 @@ export function OnboardingPCForm({
       case 6:
         return <Step4LanguagePC data={formData} onUpdate={handleUpdate} />;
       case 7:
+        return <StepSystemRequestPC data={formData} onUpdate={handleUpdate} />;
+      case 8:
         return (
           <StepConfirmationPC
             data={formData}
@@ -161,26 +169,28 @@ export function OnboardingPCForm({
               <div />
             )}
 
-            {currentStep < 7 ? (
+            {currentStep < 8 ? (
               <button
                 onClick={nextStep}
                 disabled={
-                  currentStep === 5 &&
-                  (formData.is_minor === true ||
-                    formData.is_minor === undefined)
+                  (currentStep === 1 && !formData.agreed_oasis) ||
+                  (currentStep === 5 &&
+                    (formData.is_minor === true ||
+                      formData.is_minor === undefined))
                 }
                 className={`
                   px-8 py-2.5 rounded-lg font-medium transition-all transform
                   ${
-                    currentStep === 5 &&
-                    (formData.is_minor === true ||
-                      formData.is_minor === undefined)
+                    (currentStep === 1 && !formData.agreed_oasis) ||
+                    (currentStep === 5 &&
+                      (formData.is_minor === true ||
+                        formData.is_minor === undefined))
                       ? "bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed shadow-none"
                       : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 hover:-translate-y-0.5"
                   }
                 `}
               >
-                {currentStep === 6 ? "確認画面へ" : "次へ"}
+                {currentStep === 7 ? "確認画面へ" : "次へ"}
               </button>
             ) : (
               <button

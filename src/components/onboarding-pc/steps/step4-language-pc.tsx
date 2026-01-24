@@ -161,7 +161,7 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
     <div className="space-y-8 animate-in fade-in duration-500">
       <div>
         <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
-          言語設定
+          言語
         </h2>
         <p className="text-slate-600 dark:text-slate-400">
           使用する言語と翻訳設定を行います。
@@ -206,7 +206,9 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
             </p>
           </div>
           <LanguageList
-            languages={LANGUAGE_OPTIONS}
+            languages={LANGUAGE_OPTIONS.filter(
+              (lang) => lang !== "その他 (Other)"
+            )}
             selected={availableLanguages || []}
             onToggle={handleAvailableToggle}
             colorClass="emerald"

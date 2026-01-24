@@ -7,6 +7,7 @@ import { DeclarationsSection } from "./declarations-section";
 import { Footer } from "./footer";
 import { HeroSection } from "./hero-section";
 import { InspirationSection } from "./inspiration-section";
+import { PurposeSection } from "./purpose-section";
 import { StartLinksSection } from "./start-links-section";
 
 export const TalesClaireLP = () => {
@@ -28,6 +29,9 @@ export const TalesClaireLP = () => {
 
         {/* 3. Start Links */}
         <StartLinksSection />
+
+        {/* 4. Purpose Section */}
+        <PurposeSection />
 
         {/* 4. Reference Video & Explanation */}
         <InspirationSection />

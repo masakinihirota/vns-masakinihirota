@@ -76,7 +76,7 @@ const handleCancel = () => {
 
 以下のセクションに保存処理を実装しました：
 
-#### 言語設定
+#### 言語
 
 ```typescript
 const handleSaveLanguages = async () => {
