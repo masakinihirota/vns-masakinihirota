@@ -99,7 +99,7 @@ export const StepSystemRequestPC: React.FC<StepSystemRequestPCProps> = ({
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
               <div className="font-bold text-lg text-slate-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                メディエーター制度
+                メディエーター(Mediator:中立な立場の仲裁者)制度
               </div>
             </div>
             <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
@@ -141,6 +141,8 @@ export const StepSystemRequestPC: React.FC<StepSystemRequestPCProps> = ({
             </div>
             <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
               広告表示の仕方をユーザー自身が決めることができます。
+              <br />
+              ※これは自分自身の広告は対象外です
             </p>
           </div>
         </label>
