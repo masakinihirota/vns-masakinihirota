@@ -8,6 +8,7 @@ import {
   Sparkles,
   Monitor,
   Star,
+  Landmark,
 } from "lucide-react";
 import React from "react";
 import {
@@ -58,6 +59,15 @@ export const USER_TYPES: UserType[] = [
       "デザインの確認や動作テストのために、AIが架空のプロフィール（名前、画像、設定）を自動生成してプロフィール項目を埋めます。",
     icon: React.createElement(Monitor, { className: "w-6 h-6" }),
   },
+  {
+    id: "POLITICIAN",
+    title: "議員 (候補含む) / POLITICIAN",
+    subtitle: "選挙で候補者、もしくは議員の価値観を視覚化します。",
+    description:
+      "公約や政策、政治的信念をプロフィール化し、有権者との価値観マッチングを促進します。特別枠として扱われます。",
+    icon: React.createElement(Landmark, { className: "w-6 h-6" }),
+    isSpecial: true,
+  },
 ];
 
 export const PURPOSES: Purpose[] = [
@@ -80,6 +90,11 @@ export const PURPOSES: Purpose[] = [
     id: "consult",
     label: "相談",
     icon: React.createElement(MessageCircle, { className: "w-4 h-4" }),
+  },
+  {
+    id: "politics",
+    label: "政治",
+    icon: React.createElement(Landmark, { className: "w-4 h-4" }),
   },
   {
     id: "other",

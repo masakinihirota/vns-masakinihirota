@@ -1,1 +1,1 @@
-export { ManualMatchingContainer } from "./manual-matching/manual-matching.container";
+export { ManualMatching } from "./manual-matching";

@@ -144,7 +144,7 @@ const CATEGORIES = [
   { id: "skills", label: "スキル", icon: <Zap size={14} /> },
 ];
 
-export const ManualMatchingGemini = () => {
+export const ManualMatching = () => {
   // 状態管理
   const [selectedProfileId, setSelectedProfileId] = useState(MY_PROFILES[0].id);
   const [selectedMatchedUserId, setSelectedMatchedUserId] = useState<
@@ -799,78 +799,35 @@ export const ManualMatchingGemini = () => {
                 setSelectedMatchedUserId(user.id);
                 if (view !== "compare") setView("compare");
               }}
-              className={`w-full text-left p-2.5 rounded-xl transition-all border flex items-center gap-3 ${
+              className={`w-full text-left p-2.5 rounded-xl transition-all border flex items-start gap-3 ${
                 selectedMatchedUserId === user.id
-                  ? "bg-indigo-50 border-indigo-200 ring-2 ring-indigo-50"
+                  ? "bg-indigo-50 border-indigo-200 text-indigo-900 shadow-sm"
                   : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
               } ${isRightSidebarCollapsed ? "justify-center" : ""}`}
             >
               <div
-                className={`w-9 h-9 ${user.color} rounded-lg flex items-center justify-center text-white font-black shrink-0 text-sm shadow-sm`}
+                className={`w-8 h-8 ${user.color} rounded-lg flex items-center justify-center text-white text-sm shrink-0 shadow-sm`}
               >
-                {user.name[0]}
+                👤
               </div>
               {!isRightSidebarCollapsed && (
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-bold text-slate-800 truncate leading-tight">
-                    {user.name}
-                  </div>
-                  <div className="text-[10px] text-slate-400 font-bold uppercase tracking-tighter italic">
-                    Matching result
+                  <div className="text-sm font-bold truncate">{user.name}</div>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {user.values.slice(0, 2).map((tag: string) => (
+                      <span
+                        key={tag}
+                        className="text-[9px] bg-slate-100 text-slate-400 px-1 py-0.5 rounded font-medium"
+                      >
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
               )}
-              {selectedMatchedUserId === user.id &&
-                !isRightSidebarCollapsed && (
-                  <ChevronRight size={16} className="text-indigo-500" />
-                )}
             </button>
           ))}
-
-          {currentCandidates.length === 0 && (
-            <div className="text-center py-16 text-slate-300 px-6 animate-in fade-in duration-500">
-              <Search className="mx-auto mb-2 opacity-10" size={32} />
-              {!isRightSidebarCollapsed && (
-                <>
-                  <p className="text-[10px] font-bold uppercase tracking-widest">
-                    No Candidates
-                  </p>
-                  <p className="text-[9px] mt-1 text-slate-400 italic">
-                    候補がいません
-                  </p>
-                  <button
-                    onClick={() => setView("setup")}
-                    className="mt-4 text-[10px] font-black text-indigo-500 hover:underline flex items-center justify-center gap-1 mx-auto"
-                  >
-                    <Play size={10} fill="currentColor" /> 探索開始
-                  </button>
-                </>
-              )}
-            </div>
-          )}
         </div>
-
-        {currentCandidates.length > 0 && !isRightSidebarCollapsed && (
-          <div className="p-4 border-t border-slate-100 bg-slate-50/50 flex flex-col gap-2 text-base">
-            <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest text-center mb-1">
-              一括処理
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                onClick={() => handleAllAction("watch")}
-                className="py-2 text-[10px] font-black bg-indigo-50 text-indigo-700 rounded-lg border border-indigo-100 hover:bg-indigo-100 transition-colors"
-              >
-                全員ウォッチ
-              </button>
-              <button
-                onClick={() => handleAllAction("follow")}
-                className="py-2 text-[10px] font-black bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
-              >
-                全員フォロー
-              </button>
-            </div>
-          </div>
-        )}
       </aside>
     </div>
   );

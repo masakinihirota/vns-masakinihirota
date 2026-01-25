@@ -99,23 +99,53 @@ export const MandalaEditor: React.FC<MandalaEditorProps> = ({
         onFitModeChange={onFitModeChange}
       />
 
-      <main className="flex flex-1 overflow-hidden">
+      <main
+        className={`flex flex-1 overflow-hidden ${
+          displayMode === "split"
+            ? "flex-col xl:flex-row overflow-y-auto xl:overflow-y-hidden"
+            : ""
+        }`}
+      >
         {/* Left Pane: Markdown Editor */}
         <div
-          className={`${displayMode === "grid" ? "hidden" : "flex"} ${displayMode === "split" ? "w-1/2" : "w-full"} h-full border-r border-slate-200 dark:border-zinc-800 transition-all duration-300`}
+          className={`${displayMode === "grid" ? "hidden" : "flex"} ${
+            displayMode === "split"
+              ? "w-full min-h-[500px] xl:w-1/2 xl:h-full xl:min-h-0 border-b xl:border-b-0 xl:border-r shrink-0"
+              : "w-full h-full"
+          } border-slate-200 dark:border-zinc-800 transition-all duration-300`}
         >
           <MarkdownPanel markdown={markdown} setMarkdown={setMarkdown} />
         </div>
 
         {/* Right Pane: Graphical View */}
         <div
-          className={`${displayMode === "markdown" ? "hidden" : "flex flex-col items-stretch"} ${displayMode === "split" ? "w-1/2" : "w-full"} bg-slate-200/30 dark:bg-zinc-900/40 ${fitMode === "height" ? "overflow-hidden items-center justify-center p-4 md:p-6 lg:p-8" : "overflow-auto"} transition-all duration-300`}
+          className={`${
+            displayMode === "markdown"
+              ? "hidden"
+              : "flex flex-col items-stretch"
+          } ${
+            displayMode === "split"
+              ? "w-full xl:w-1/2 xl:h-full shrink-0"
+              : "w-full"
+          } bg-slate-200/30 dark:bg-zinc-900/40 ${
+            fitMode === "height"
+              ? "overflow-hidden items-center justify-center p-4 md:p-6 lg:p-8"
+              : "overflow-auto"
+          } transition-all duration-300`}
         >
           <div
-            className={`${fitMode === "height" ? "w-full h-full max-w-screen-2xl flex items-center justify-center mx-auto" : "w-full min-w-full h-auto"}`}
+            className={`${
+              fitMode === "height"
+                ? "w-full h-full max-w-screen-2xl flex items-center justify-center mx-auto"
+                : "w-full min-w-full h-auto"
+            }`}
           >
             <div
-              className={`grid grid-cols-3 grid-rows-3 gap-1.5 md:gap-3 lg:gap-4 ${fitMode === "height" ? "h-full aspect-square max-h-full max-w-full" : "w-full min-w-full h-auto aspect-square"}`}
+              className={`grid grid-cols-3 grid-rows-3 gap-1.5 md:gap-3 lg:gap-4 ${
+                fitMode === "height"
+                  ? "xl:h-full xl:aspect-square xl:max-h-full xl:max-w-full w-full h-auto aspect-square py-8 xl:py-0"
+                  : "w-full min-w-full h-auto aspect-square"
+              }`}
             >
               {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((blockIdx) => {
                 const isCenterBlock = blockIdx === CENTER_BLOCK_INDEX;
