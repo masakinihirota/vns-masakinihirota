@@ -1,67 +1,509 @@
 
-> vns-masakinihirota@0.17.0 test U:\2026src\vns-masakinihirota.worktrees\anti
-> vitest --run "src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx"
+> vns-masakinihirota@0.20.0 lint:fast U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
 
 
-[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mU:/2026src/vns-masakinihirota.worktrees/anti[39m
+  ! eslint(no-unused-vars): Parameter 'e' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/user-profiles/create/steps/step-5-values.tsx:169:21]
+ 168 |         <div
+ 169 |           onClick={(e) => {
+     :                     |
+     :                     `-- 'e' is declared here
+ 170 |             // Toggle Open
+     `----
+  help: Consider removing this parameter.
 
-Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
-stderr | src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx > WorkContinuousRating UI > should render category selection when category is null
-An update to ForwardRef(LinkComponent) inside a test was not wrapped in act(...).
+  ! eslint(no-unused-vars): Identifier 'Undo2' is imported but never used.
+    ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:10:3]
+  9 |   ChevronLeft,
+ 10 |   Undo2,
+    :   ^^|^^
+    :     `-- 'Undo2' is imported here
+ 11 |   ArrowRight,
+    `----
+  help: Consider removing this import.
 
-When testing, code that causes React state updates should be wrapped into act(...):
+  ! eslint(no-unused-vars): Identifier 'Sparkles' is imported but never used.
+    ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:15:3]
+ 14 |   Ghost,
+ 15 |   Sparkles,
+    :   ^^^^|^^^
+    :       `-- 'Sparkles' is imported here
+ 16 |   Fingerprint,
+    `----
+  help: Consider removing this import.
 
-act(() => {
-  /* fire events that update state */
-});
-/* assert on the output */
+  ! eslint(no-unused-vars): Identifier 'ShoppingBag' is imported but never used.
+    ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:18:3]
+ 17 |   Eye,
+ 18 |   ShoppingBag,
+    :   ^^^^^|^^^^^
+    :        `-- 'ShoppingBag' is imported here
+ 19 |   BookOpen,
+    `----
+  help: Consider removing this import.
 
-This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+  ! eslint(no-unused-vars): Identifier 'Layers' is imported but never used.
+    ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:20:3]
+ 19 |   BookOpen,
+ 20 |   Layers,
+    :   ^^^|^^
+    :      `-- 'Layers' is imported here
+ 21 |   Activity,
+    `----
+  help: Consider removing this import.
 
-Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
-Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
-Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
- [31m笶ｯ[39m src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 955[2mms[22m[39m
-     [33m[2m笨・[22m[39m should render category selection when category is null [33m 390[2mms[22m[39m
-     [32m笨・[39m should call onCategorySelect when category button is clicked[32m 13[2mms[22m[39m
-     [32m笨・[39m should render session size selection when sessionSize is null[32m 117[2mms[22m[39m
-[31m     [31mﾃ・[31m should render rating screen when session is active[39m[33m 322[2mms[22m[39m
-     [32m笨・[39m should render completion screen when isComplete is true[32m 110[2mms[22m[39m
+  ! eslint(no-unused-vars): Identifier 'Activity' is imported but never used.
+    ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:21:3]
+ 20 |   Layers,
+ 21 |   Activity,
+    :   ^^^^|^^^
+    :       `-- 'Activity' is imported here
+ 22 |   Grid,
+    `----
+  help: Consider removing this import.
 
-竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Tests 1 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+  ! eslint(no-unused-vars): Identifier 'Grid' is imported but never used.
+    ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:22:3]
+ 21 |   Activity,
+ 22 |   Grid,
+    :   ^^|^
+    :     `-- 'Grid' is imported here
+ 23 |   Newspaper,
+    `----
+  help: Consider removing this import.
 
- FAIL  src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx > WorkContinuousRating UI > should render rating screen when session is active
-Error: expect(received).toHaveNoViolations(expected)
+  ! eslint(no-unused-vars): Identifier 'Newspaper' is imported but never used.
+    ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:23:3]
+ 22 |   Grid,
+ 23 |   Newspaper,
+    :   ^^^^|^^^^
+    :       `-- 'Newspaper' is imported here
+ 24 |   ClipboardList,
+    `----
+  help: Consider removing this import.
 
-Expected the HTML found at $('div[role="progressbar"]') to have no violations:
+  ! eslint(no-unused-vars): Identifier 'ClipboardList' is imported but never used.
+    ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:24:3]
+ 23 |   Newspaper,
+ 24 |   ClipboardList,
+    :   ^^^^^^|^^^^^^
+    :         `-- 'ClipboardList' is imported here
+ 25 |   Crown,
+    `----
+  help: Consider removing this import.
 
-<div class="mb-8" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">
+  ! eslint(no-unused-vars): Variable 'ListSelector' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:57:7]
+ 56 | 
+ 57 | const ListSelector = ({
+    :       ^^^^^^|^^^^^
+    :             `-- 'ListSelector' is declared here
+ 58 |   options,
+    `----
+  help: Consider removing this declaration.
 
-Received:
+  ! eslint(no-unused-vars): Variable 'isRotating' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:168:10]
+ 167 |   const [nameHistory, setNameHistory] = useState<string[][]>([]);
+ 168 |   const [isRotating, setIsRotating] = useState<boolean>(false);
+     :          ^^^^^|^^^^
+     :               `-- 'isRotating' is declared here
+ 169 | 
+     `----
+  help: Consider removing this declaration.
 
-"ARIA progressbar nodes must have an accessible name (aria-progressbar-name)"
+  ! eslint(no-unused-vars): Variable 'restorePreviousNames' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/user-profiles/prototypes/complex-gui/index.tsx:221:9]
+ 220 | 
+ 221 |   const restorePreviousNames = () => {
+     :         ^^^^^^^^^^|^^^^^^^^^
+     :                   `-- 'restorePreviousNames' is declared here
+ 222 |     if (nameHistory.length === 0) return;
+     `----
+  help: Consider removing this declaration.
 
-Fix any of the following:
-  aria-label attribute does not exist or is empty
-  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty
-  Element has no title attribute
+  ! eslint(no-unused-vars): Parameter 'userId' is declared but never used. Unused parameters should start with a '_'.
+   ,-[src/lib/auth/root-account-guard.ts:1:38]
+ 1 | export async function hasRootAccount(userId: string): Promise<boolean> {
+   :                                      ^^^|^^
+   :                                         `-- 'userId' is declared here
+ 2 |   // Mock: Return false for "dev-mock-user-id" to force onboarding testing
+   `----
+  help: Consider removing this parameter.
 
-You can find more information on this issue here: 
-https://dequeuniversity.com/rules/axe/4.11/aria-progressbar-name?application=axeAPI
- 笶ｯ src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx:71:25
-     69| 
-     70|         const results = await axe(container);
-     71|         expect(results).toHaveNoViolations();
-       |                         ^
-     72|     });
-     73| 
+  ! eslint(no-unused-vars): Parameter 'userId' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/lib/auth/root-account-guard.ts:17:39]
+ 16 | 
+ 17 | export async function hasSelectedMode(userId: string): Promise<boolean> {
+    :                                       ^^^|^^
+    :                                          `-- 'userId' is declared here
+ 18 |   // Mock
+    `----
+  help: Consider removing this parameter.
 
-竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/1]竡ｯ
+  ! eslint(no-unused-vars): Identifier 'path' is imported but never used.
+   ,-[src/lib/works/seed-utils.ts:2:8]
+ 1 | import fs from "fs";
+ 2 | import path from "path";
+   :        ^^|^
+   :          `-- 'path' is imported here
+ 3 | 
+   `----
+  help: Consider removing this import.
 
+  ! eslint(no-unused-vars): Identifier 'MatchStats' is imported but never used.
+   ,-[src/components/auto-matching/auto-matching/auto-matching.test.tsx:4:23]
+ 3 | import { AutoMatching } from "./auto-matching";
+ 4 | import { UserProfile, MatchStats } from "./auto-matching.logic";
+   :                       ^^^^^|^^^^
+   :                            `-- 'MatchStats' is imported here
+ 5 | 
+   `----
+  help: Consider removing this import.
 
-[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
-[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (5)[39m
-[2m   Start at [22m 11:53:30
-[2m   Duration [22m 4.46s[2m (transform 118ms, setup 289ms, import 1.20s, tests 955ms, environment 1.61s)[22m
+  ! eslint(no-unused-vars): Identifier 'ExternalLink' is imported but never used.
+   ,-[src/components/onboarding-pc/steps/step-system-request-pc.tsx:1:10]
+ 1 | import { ExternalLink } from "lucide-react";
+   :          ^^^^^^|^^^^^
+   :                `-- 'ExternalLink' is imported here
+ 2 | import Link from "next/link";
+   `----
+  help: Consider removing this import.
 
-窶右LIFECYCLE窶・Test failed. See above for more details.
+  ! eslint(no-unused-vars): Identifier 'Link' is imported but never used.
+   ,-[src/components/onboarding-pc/steps/step-system-request-pc.tsx:2:8]
+ 1 | import { ExternalLink } from "lucide-react";
+ 2 | import Link from "next/link";
+   :        ^^|^
+   :          `-- 'Link' is imported here
+ 3 | import React from "react";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ChevronRight' is imported but never used.
+   ,-[src/components/user-profiles/create/user-profile-creation.tsx:5:3]
+ 4 |   CheckCircle2,
+ 5 |   ChevronRight,
+   :   ^^^^^^|^^^^^
+   :         `-- 'ChevronRight' is imported here
+ 6 |   User,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'User' is imported but never used.
+   ,-[src/components/user-profiles/create/user-profile-creation.tsx:6:3]
+ 5 |   ChevronRight,
+ 6 |   User,
+   :   ^^|^
+   :     `-- 'User' is imported here
+ 7 |   AlertCircle,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useUserProfileCreation' is imported but never used.
+   ,-[src/components/user-profiles/create/user-profile-creation.test.tsx:5:10]
+ 4 | import { UserProfileCreation } from "./user-profile-creation";
+ 5 | import { useUserProfileCreation } from "./user-profile-creation.logic";
+   :          ^^^^^^^^^^^|^^^^^^^^^^
+   :                     `-- 'useUserProfileCreation' is imported here
+ 6 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'isMatching' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/auto-matching/auto-matching/auto-matching.container.tsx:27:10]
+ 26 | 
+ 27 |   const [isMatching, setIsMatching] = useState(false);
+    :          ^^^^^|^^^^
+    :               `-- 'isMatching' is declared here
+ 28 |   const [watchedUsersPerProfile, setWatchedUsersPerProfile] = useState<
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'FormLabel' is imported but never used.
+   ,-[src/components/works/work-registration/parts/category-selector.tsx:8:3]
+ 7 |   FormItem,
+ 8 |   FormLabel,
+   :   ^^^^|^^^^
+   :       `-- 'FormLabel' is imported here
+ 9 | } from "@/components/ui/form";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'RatingValue' is imported but never used.
+   ,-[src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx:5:18]
+ 4 | import { WorkContinuousRating } from "./work-continuous-rating";
+ 5 | import { Rating, RatingValue } from "./work-continuous-rating.logic";
+   :                  ^^^^^|^^^^^
+   :                       `-- 'RatingValue' is imported here
+ 6 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'patternId' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.logic.ts:97:3]
+ 96 |   ratings: Record<string, Rating>,
+ 97 |   patternId: string = "default"
+    :   ^^^^^^^^^^^^^^|^^^^^^^^^^^^^^
+    :                 `-- 'patternId' is declared here
+ 98 | ) => {
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Parameter 'req' is declared but never used. Unused parameters should start with a '_'.
+   ,-[src/app/api/admin/seed-works/route.ts:6:28]
+ 5 | 
+ 6 | export async function POST(req: NextRequest) {
+   :                            ^|^
+   :                             `-- 'req' is declared here
+ 7 |   const supabase = await createClient();
+   `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'afterEach' is imported but never used.
+   ,-[src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.logic.test.ts:1:48]
+ 1 | import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+   :                                                ^^^^|^^^^
+   :                                                    `-- 'afterEach' is imported here
+ 2 | import {
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'fullList' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.container.tsx:23:10]
+ 22 |   // Session State
+ 23 |   const [fullList, setFullList] = useState<string[]>([]);
+    :          ^^^^|^^^
+    :              `-- 'fullList' is declared here
+ 24 |   const [sessionList, setSessionList] = useState<string[]>([]);
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'CHAT_RADIUS' is imported but never used.
+    ,-[src/components/user-profiles/prototypes/complex-gui/ghost-map/ghost-map.tsx:30:3]
+ 29 |   MAX_VISIBLE_ENTITIES,
+ 30 |   CHAT_RADIUS,
+    :   ^^^^^|^^^^^
+    :        `-- 'CHAT_RADIUS' is imported here
+ 31 |   INITIAL_MAP_LAYOUT,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'e' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/user-profiles/prototypes/complex-gui/ghost-map/ghost-map.tsx:411:28]
+ 410 | 
+ 411 |   const handleTouchMove = (e: React.TouchEvent) => {
+     :                            |
+     :                            `-- 'e' is declared here
+ 412 |     if (!touchStart.current) return;
+     `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Variable 'user' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/lib/supabase/middleware.ts:37:13]
+ 36 |   const {
+ 37 |     data: { user },
+    :             ^^|^
+    :               `-- 'user' is declared here
+ 38 |   } = await supabase.auth.getUser();
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'waitFor' is imported but never used.
+   ,-[src/components/work-registration-form/hooks/use-work-search.test.ts:1:27]
+ 1 | import { renderHook, act, waitFor } from "@testing-library/react";
+   :                           ^^^|^^^
+   :                              `-- 'waitFor' is imported here
+ 2 | import { describe, it, expect } from "vitest";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'vi' is imported but never used.
+   ,-[src/components/work-registration-form/hooks/use-work-registration.test.ts:2:32]
+ 1 | import { renderHook, act } from "@testing-library/react";
+ 2 | import { describe, it, expect, vi } from "vitest";
+   :                                ^|
+   :                                 `-- 'vi' is imported here
+ 3 | import { RegistrationFormValues } from "../schema";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Badge' is imported but never used.
+   ,-[src/app/(protected)/tools/page.tsx:5:10]
+ 4 | import Link from "next/link";
+ 5 | import { Badge } from "@/components/ui/badge";
+   :          ^^|^^
+   :            `-- 'Badge' is imported here
+ 6 | import { Button } from "@/components/ui/button";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'redirect' is imported but never used.
+   ,-[src/app/(protected)/works/actions.ts:4:10]
+ 3 | import { revalidatePath } from "next/cache";
+ 4 | import { redirect } from "next/navigation";
+   :          ^^^^|^^^
+   :              `-- 'redirect' is imported here
+ 5 | import { z } from "zod";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'description' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/app/(protected)/works/actions.ts:53:36]
+ 52 | 
+ 53 |   const { title, author, category, description } = validatedFields.data;
+    :                                    ^^^^^|^^^^^
+    :                                         `-- 'description' is declared here
+ 54 | 
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Parameter 'e' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/user-profiles/prototypes/simple-gui/steps/step-5-values.tsx:169:21]
+ 168 |         <div
+ 169 |           onClick={(e) => {
+     :                     |
+     :                     `-- 'e' is declared here
+ 170 |             // Toggle Open
+     `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'User' is imported but never used.
+   ,-[src/components/manual-matching/manual-matching.tsx:4:3]
+ 3 | import {
+ 4 |   User,
+   :   ^^|^
+   :     `-- 'User' is imported here
+ 5 |   Users,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Users' is imported but never used.
+   ,-[src/components/manual-matching/manual-matching.tsx:5:3]
+ 4 |   User,
+ 5 |   Users,
+   :   ^^|^^
+   :     `-- 'Users' is imported here
+ 6 |   Play,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'UserMinus' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:9:3]
+  8 |   UserPlus,
+  9 |   UserMinus,
+    :   ^^^^|^^^^
+    :       `-- 'UserMinus' is imported here
+ 10 |   ArrowRightLeft,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Info' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:11:3]
+ 10 |   ArrowRightLeft,
+ 11 |   Info,
+    :   ^^|^
+    :     `-- 'Info' is imported here
+ 12 |   Layers,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Square' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:25:3]
+ 24 |   CheckSquare,
+ 25 |   Square,
+    :   ^^^|^^
+    :      `-- 'Square' is imported here
+ 26 |   ToggleLeft,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ToggleLeft' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:26:3]
+ 25 |   Square,
+ 26 |   ToggleLeft,
+    :   ^^^^^|^^^^
+    :        `-- 'ToggleLeft' is imported here
+ 27 |   ToggleRight,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ToggleRight' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:27:3]
+ 26 |   ToggleLeft,
+ 27 |   ToggleRight,
+    :   ^^^^^|^^^^^
+    :        `-- 'ToggleRight' is imported here
+ 28 |   ArrowLeft,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ArrowLeft' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:28:3]
+ 27 |   ToggleRight,
+ 28 |   ArrowLeft,
+    :   ^^^^|^^^^
+    :       `-- 'ArrowLeft' is imported here
+ 29 |   CheckCircle,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'PURPOSE_OPTIONS' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/manual-matching/manual-matching.tsx:39:7]
+ 38 | // --- 螳壽焚 ---
+ 39 | const PURPOSE_OPTIONS = [
+    :       ^^^^^^^|^^^^^^^
+    :              `-- 'PURPOSE_OPTIONS' is declared here
+ 40 |   "蜑ｵ繧九・蜒阪￥",
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'isMatching' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/manual-matching/manual-matching.tsx:157:10]
+ 156 |   );
+ 157 |   const [isMatching, setIsMatching] = useState(false);
+     :          ^^^^^|^^^^
+     :               `-- 'isMatching' is declared here
+ 158 | 
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'watchedPerProfile' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/manual-matching/manual-matching.tsx:163:10]
+ 162 |   >({});
+ 163 |   const [watchedPerProfile, setWatchedPerProfile] = useState<
+     :          ^^^^^^^^|^^^^^^^^
+     :                  `-- 'watchedPerProfile' is declared here
+ 164 |     Record<string, any[]>
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'followedPerProfile' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/manual-matching/manual-matching.tsx:166:10]
+ 165 |   >({});
+ 166 |   const [followedPerProfile, setFollowedPerProfile] = useState<
+     :          ^^^^^^^^^|^^^^^^^^
+     :                   `-- 'followedPerProfile' is declared here
+ 167 |     Record<string, any[]>
+     `----
+  help: Consider removing this declaration.
+
+  x typescript(TS2739): Type '{ id: string; name: string; role: string; tags: string[]; icon: string; color: string; matchScore: number; }' is missing the following properties from type 'UserProfile': values, createdWorks, favoriteWorks, skills
+    ,-[src/components/auto-matching/auto-matching/auto-matching.test.tsx:15:9]
+ 14 | 
+ 15 |   const mockProfile: UserProfile = {
+    :         ^^^^^^^^^^^
+ 16 |     id: "1",
+    `----
+
+  x typescript(TS2305): Module '"@/components/manual-matching"' has no exported member 'ManualMatchingContainer'.
+   ,-[src/app/(protected)/matching/manual/page.tsx:1:10]
+ 1 | import { ManualMatchingContainer } from "@/components/manual-matching";
+   :          ^^^^^^^^^^^^^^^^^^^^^^^
+ 2 | 
+   `----
+
+Found 49 warnings and 2 errors.
+Finished in 3.4s on 423 files using 12 threads.
+窶右LIFECYCLE窶・Command failed with exit code 1.

@@ -1,10 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeAll } from "vitest";
 import { AutoMatching } from "./auto-matching";
-import { SearchCriteria, MatchingScore } from "./auto-matching.logic";
+import { UserProfile, MatchStats } from "./auto-matching.logic";
 
 describe("AutoMatching UI", () => {
-  // Mock ResizeObserver for Radix UI
   beforeAll(() => {
     global.ResizeObserver = class ResizeObserver {
       observe() {}
@@ -13,68 +12,71 @@ describe("AutoMatching UI", () => {
     };
   });
 
-  const defaultCriteria: SearchCriteria = {
-    role: "Frontend Engineer",
+  const mockProfile: UserProfile = {
+    id: "1",
+    name: "User 1",
+    role: "Dev",
+    tags: ["React"],
+    icon: "👤",
+    color: "bg-blue-500",
+    matchScore: 0,
+    values: [],
+    createdWorks: [],
+    favoriteWorks: [],
     skills: [],
-    location: "東京",
-    min_salary: 600,
-    remote: false,
   };
 
-  const mockProps = {
-    criteria: defaultCriteria,
-    results: [],
-    loading: false,
-    darkMode: false,
-    onCriteriaChange: vi.fn(),
-    onSearch: vi.fn(),
-    onToggleDarkMode: vi.fn(),
+  const defaultProps = {
+    selectedProfileId: "1",
+    selectedCategories: [],
+    matchCriterion: "count" as const,
+    processLimit: 5,
+    scoreThreshold: 80,
+    view: "setup" as const,
+    matchMode: "expand" as const,
+    lastMatchStats: { added: 0, removed: 0 },
+    viewingUser: null,
+    isSidebarCollapsed: false,
+    isRightSidebarCollapsed: false,
+    rightSidebarTab: "watch" as const,
+    myProfiles: [mockProfile],
+    selectedProfile: mockProfile,
+    currentWatchList: [],
+    currentDriftList: [],
+    onProfileSwitch: vi.fn(),
+    onToggleCategory: vi.fn(),
+    onSetSelectedCategories: vi.fn(),
+    onSetMatchCriterion: vi.fn(),
+    onSetProcessLimit: vi.fn(),
+    onSetScoreThreshold: vi.fn(),
+    onSetMatchMode: vi.fn(),
+    onRunMatching: vi.fn(),
+    onSetView: vi.fn(),
+    onViewUser: vi.fn(),
+    onCloseUserDetail: vi.fn(),
+    onRestoreUser: vi.fn(),
+    onRemoveUser: vi.fn(),
+    onToggleSidebar: vi.fn(),
+    onToggleRightSidebar: vi.fn(),
+    onSetRightSidebarTab: vi.fn(),
   };
 
-  it("検索条件フォームが表示されること", () => {
-    render(<AutoMatching {...mockProps} />);
-    expect(screen.getByText(/マッチング条件/)).toBeInTheDocument();
-    expect(screen.getByText(/希望職種/)).toBeInTheDocument();
-    expect(screen.getByText(/勤務地/)).toBeInTheDocument();
+  it("設定画面が正しくレンダリングされること", () => {
+    render(<AutoMatching {...defaultProps} />);
+    expect(screen.getByText("自動マッチング設定")).toBeInTheDocument();
+    expect(screen.getByText("Matching Management")).toBeInTheDocument();
   });
 
-  it("検索ボタンをクリックするとonSearchが呼ばれること", () => {
-    render(<AutoMatching {...mockProps} />);
-    const button = screen.getByRole("button", { name: /再検索/i });
-    fireEvent.click(button);
-    expect(mockProps.onSearch).toHaveBeenCalled();
+  it("マッチングモードの切り替えボタンが表示されること", () => {
+    render(<AutoMatching {...defaultProps} />);
+    expect(screen.getByText("新規プロフィールの追加")).toBeInTheDocument();
+    expect(screen.getByText("既存リストの整理")).toBeInTheDocument();
   });
 
-  it("結果がある場合、リストが表示されること", () => {
-    const results: MatchingScore[] = [
-      {
-        session_id: "1",
-        candidate_id: "c1",
-        score: 0.9,
-        rank: 1,
-        explanation: {
-          skill_match: 90,
-          salary_match: 100,
-          location_match: 100,
-          tags: [],
-        },
-        candidate: {
-          id: "c1",
-          name: "Test Candidate",
-          role: "Frontend",
-          skills: [],
-          location: "Tokyo",
-          min_salary: 500,
-          max_salary: 800,
-          experience_years: 5,
-          avatar_url: "",
-        },
-        created_at: new Date().toISOString(),
-      },
-    ];
-    render(<AutoMatching {...mockProps} results={results} />);
-
-    expect(screen.getByText(/Match/)).toBeInTheDocument();
-    expect(screen.getByText(/Test Candidate/)).toBeInTheDocument();
+  it("サイドバーのプロファイル切り替え", () => {
+    render(<AutoMatching {...defaultProps} />);
+    const profileButton = screen.getByText("User 1");
+    fireEvent.click(profileButton);
+    expect(defaultProps.onProfileSwitch).toHaveBeenCalledWith("1");
   });
 });
