@@ -234,10 +234,7 @@ export const UserProfileCreation = (
 
         {/* Modals */}
         {showRatingHelp && (
-          <RatingHelpModal
-            onClose={() => setShowRatingHelp(false)}
-            context={currentStep === 5 ? "VALUES" : "WORKS"}
-          />
+          <RatingHelpModal onClose={() => setShowRatingHelp(false)} />
         )}
       </div>
     </div>

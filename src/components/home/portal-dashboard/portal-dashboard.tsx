@@ -41,12 +41,6 @@ export function PortalDashboard() {
           desc: "深層心理や思考を81マスのグリッドで整理（プロフェッショナル版）。",
           badge: "New",
         },
-        {
-          title: "曼荼羅チャート (New Input)",
-          path: "/sample/mandala-chart-2",
-          desc: "テキストエディタと同期する新しい曼荼羅チャート入力V2。",
-          badge: "Dev",
-        },
       ],
     },
     {
@@ -231,6 +225,12 @@ export function PortalDashboard() {
           title: "レガシー・プロフィール",
           path: "/user-profiles/new-legacy",
           desc: "従来のプロフィール作成フォーム（参照用）。",
+        },
+        {
+          title: "手動マッチング (Gemini UI)",
+          path: "/sample/manual-matching-gemini",
+          desc: "手動マッチングのUIプロトタイプ (Gemini版)。",
+          badge: "Sample",
         },
       ],
     },
