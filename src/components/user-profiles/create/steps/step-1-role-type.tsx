@@ -69,7 +69,7 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {USER_TYPES.map((t) => (
+          {USER_TYPES.filter((t) => !t.isSpecial).map((t) => (
             <div
               key={t.id}
               onClick={() => updateForm("type", t.id)}
@@ -108,6 +108,61 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
             </div>
           ))}
         </div>
+
+        {/* Special Types Section */}
+        {USER_TYPES.some((t) => t.isSpecial) && (
+          <div className="mt-8">
+            <h3 className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+              <span className="w-8 h-[1px] bg-slate-200 dark:bg-slate-700"></span>
+              Special Profiles
+              <span className="flex-1 h-[1px] bg-slate-200 dark:bg-slate-700"></span>
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {USER_TYPES.filter((t) => t.isSpecial).map((t) => (
+                <div
+                  key={t.id}
+                  onClick={() => updateForm("type", t.id)}
+                  className={`
+                    cursor-pointer p-5 rounded-xl border-2 transition-all duration-200 hover:shadow-xl relative overflow-hidden group
+                    ${
+                      formData.type === t.id
+                        ? "border-amber-500 bg-amber-50 dark:bg-amber-900/20 ring-2 ring-amber-200 dark:ring-amber-800 ring-offset-1 dark:ring-offset-slate-900"
+                        : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-amber-300 dark:hover:border-amber-700"
+                    }
+                  `}
+                >
+                  {/* Decorative background for special types */}
+                  <div className="absolute top-0 right-0 p-16 bg-gradient-to-bl from-amber-100/50 to-transparent dark:from-amber-900/20 rounded-bl-full pointer-events-none transition-opacity opacity-50 group-hover:opacity-100" />
+
+                  <div className="flex items-start justify-between mb-2 relative z-10">
+                    <div
+                      className={`p-2 rounded-lg ${
+                        formData.type === t.id
+                          ? "bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-100"
+                          : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400"
+                      }`}
+                    >
+                      {t.icon}
+                    </div>
+                    {formData.type === t.id && (
+                      <CheckCircle2 className="w-6 h-6 text-amber-500" />
+                    )}
+                  </div>
+                  <h3 className="font-bold text-slate-800 dark:text-slate-100 mb-1 relative z-10">
+                    {t.title}
+                  </h3>
+                  <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-2 relative z-10">
+                    {t.subtitle}
+                  </p>
+                  <p className="text-xs text-slate-500 dark:text-slate-500 leading-normal relative z-10">
+                    {t.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
