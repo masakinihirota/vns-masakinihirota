@@ -9,6 +9,7 @@ import {
   ChevronRight,
   ArrowRight,
   Book,
+  Brain,
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -35,17 +36,35 @@ export function PortalDashboard() {
           desc: "プロフィールの作成、または幽霊として観測を始める儀式ページ。",
           badge: "PickUp",
         },
+      ],
+    },
+    {
+      title: "🧠 思考と拡張",
+      description: "自己理解とアイデアの拡張ツール",
+      color: "from-pink-500/20 to-rose-500/20",
+      icon: <Brain className="text-pink-500" size={24} />,
+      routes: [
+        {
+          title: "曼荼羅チャート (AI)",
+          path: "/sample/mandala-chart-ai",
+          desc: "AIが思考をマッピング・拡張する新しい曼荼羅チャート。",
+          badge: "New",
+        },
         {
           title: "曼荼羅チャート",
           path: "/mandala-chart",
           desc: "深層心理や思考を81マスのグリッドで整理（プロフェッショナル版）。",
-          badge: "New",
         },
         {
           title: "曼荼羅チャート (New Input)",
           path: "/sample/mandala-chart-2",
           desc: "テキストエディタと同期する新しい曼荼羅チャート入力V2。",
           badge: "Dev",
+        },
+        {
+          title: "旧 曼荼羅チャート",
+          path: "/tools/mandala-chart",
+          desc: "旧形式の曼荼羅チャート（互換用）。",
         },
       ],
     },
@@ -210,11 +229,6 @@ export function PortalDashboard() {
           title: "体験モード選択",
           path: "/onboarding/mode-selection",
           desc: "ゲーミフィケーションかスタンダードか、体験の質を選択。",
-        },
-        {
-          title: "旧 曼荼羅チャート",
-          path: "/tools/mandala-chart",
-          desc: "旧形式の曼荼羅チャート（互換用）。",
         },
         {
           title: "ランディングページ",
