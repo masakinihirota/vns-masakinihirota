@@ -14,7 +14,7 @@ import { SearchingEffect } from "./searching-effect";
 
 type MatchingState = "idle" | "searching" | "results";
 
-export function MatchingView() {
+export function MatchingView({ hasProfile = true }: { hasProfile?: boolean }) {
   const [state, setState] = useState<MatchingState>("idle");
   const [profiles, setProfiles] = useState<UserProfile[]>([]);
 
@@ -23,7 +23,7 @@ export function MatchingView() {
     setProfiles([]); // Clear previous results
 
     // 1. Simulate finding matches
-    const foundProfiles = await findMatches();
+    const foundProfiles = await findMatches(hasProfile);
 
     // 2. Simulate auto-watchlist logic
     const watchlistedProfiles = await activeWatchlist(foundProfiles);

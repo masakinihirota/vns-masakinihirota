@@ -236,12 +236,6 @@ export function PortalDashboard() {
           desc: "VNSプロジェクト全体のトップビューページ。",
         },
         {
-          title: "LP (テイルズ クレア編)",
-          path: "/landing-page/tales-claire",
-          desc: "「テイルズ オブ」シリーズをオマージュしたランディングページ案。",
-          badge: "BETA",
-        },
-        {
           title: "レガシー・プロフィール",
           path: "/user-profiles/new-legacy",
           desc: "従来のプロフィール作成フォーム（参照用）。",
