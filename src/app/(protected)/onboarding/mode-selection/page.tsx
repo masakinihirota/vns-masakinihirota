@@ -84,10 +84,10 @@ export default function ModeSelectionPage() {
               />
               <Label
                 htmlFor="normal"
-                className="flex flex-col items-center justify-between rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600 peer-data-[state=checked]:border-emerald-600 [&:has([data-state=checked])]:border-emerald-600 peer-data-[state=checked]:text-emerald-600 cursor-pointer h-full transition-all"
+                className="flex flex-col items-center justify-between rounded-xl border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-indigo-600 peer-data-[state=checked]:border-indigo-600 [&:has([data-state=checked])]:border-indigo-600 peer-data-[state=checked]:text-indigo-600 cursor-pointer h-full transition-all"
               >
-                <div className="mb-4 p-4 bg-emerald-100 dark:bg-emerald-900/30 rounded-full">
-                  <User className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+                <div className="mb-4 p-4 bg-indigo-100 dark:bg-indigo-900/30 rounded-full">
+                  <User className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
                 </div>
                 <div className="text-center">
                   <span className="block font-bold text-lg mb-1">
@@ -107,7 +107,7 @@ export default function ModeSelectionPage() {
             <Button
               size="lg"
               onClick={handleNext}
-              className="px-10 py-6 text-lg rounded-full"
+              className="px-10 py-6 text-lg rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/20 transition-all font-bold"
             >
               選択して始める
             </Button>

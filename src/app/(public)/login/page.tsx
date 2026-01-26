@@ -4,41 +4,52 @@ import { GitHubLoginForm } from "@/components/auth/github-login-form";
 import { GoogleLoginForm } from "@/components/auth/google-login-form";
 import { Button as DadsButton } from "@/components/dads";
 
-export default function Page() {
+export default async function Page(props: {
+  searchParams?: Promise<{
+    type?: string;
+    error?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const isTrialMode =
+    searchParams?.type === "trial" ||
+    searchParams?.error === "anonymous_sign_in_failed";
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-black text-white px-4 py-8">
       {/* 開発者情報ヘッダー */}
       <div className="text-center mb-8">
-        <h2 className="text-lg font-bold">開発中 masakinihirota</h2>
-        <p className="text-sm text-gray-400">現在の環境: development</p>
+        <h2 className="text-lg font-bold">
+          {isTrialMode ? "ゲスト・お試しログイン" : "開発中 masakinihirota"}
+        </h2>
+        <p className="text-sm text-gray-400">
+          {isTrialMode
+            ? "お名前やパスワードを登録せずに、今すぐサービスを体験できます。"
+            : `現在の環境: ${process.env.NODE_ENV}`}
+        </p>
         <p className="text-sm text-gray-400 mt-2">
           昨日僕が感動したことを、今日の君はまだ知らない。
         </p>
-        <p className="text-sm text-gray-400">ログインしていません</p>
-        <div className="mt-4 p-4 border border-gray-700 rounded bg-gray-900 inline-block">
-          <p className="text-xs text-gray-400 mb-2">
-            DADS Component Verification
-          </p>
-          <div className="flex gap-2 justify-center">
-            <DadsButton variant="solid-fill" size="sm">
-              Solid Fill
-            </DadsButton>
-            <DadsButton variant="outline" size="sm">
-              Outline
-            </DadsButton>
-          </div>
-        </div>
       </div>
 
       <h1 className="text-2xl font-bold mb-8">
-        ユーザーの認証方法を選択してください
+        {isTrialMode
+          ? "匿名ログインで体験を開始する"
+          : "ユーザーの認証方法を選択してください"}
       </h1>
 
       {/* ログインフォーム */}
       <div className="flex flex-col md:flex-row gap-6 w-full max-w-5xl justify-center">
-        <AnonymousLoginForm className="flex-1 min-w-0" />
-        <GoogleLoginForm className="flex-1 min-w-0" />
-        <GitHubLoginForm className="flex-1 min-w-0" />
+        <AnonymousLoginForm
+          className={isTrialMode ? "max-w-md mx-auto" : "flex-1 min-w-0"}
+        />
+
+        {!isTrialMode && (
+          <>
+            <GoogleLoginForm className="flex-1 min-w-0" />
+            <GitHubLoginForm className="flex-1 min-w-0" />
+          </>
+        )}
       </div>
 
       <Link
