@@ -209,13 +209,7 @@ export const UserProfileCreation = (
                   href="/"
                   className="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"
                 >
-                  Topへ
-                </Link>
-                <Link
-                  href="/works/popular"
-                  className="group flex items-center gap-2 px-6 py-3 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold shadow-sm hover:bg-slate-200 dark:hover:bg-slate-700 transition-all active:scale-95"
-                >
-                  今はスキップして人気作品を見る
+                  はじまりの国へ戻る
                 </Link>
               </div>
             )}

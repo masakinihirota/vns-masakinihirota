@@ -42,17 +42,7 @@ export function ProfileCard({ profile }: ProfileCardProps) {
           <Badge variant="secondary" className="font-mono text-xs">
             {profile.compatibility}% MATCH
           </Badge>
-          {profile.isPriority && (
-            <Badge className="bg-rose-500 hover:bg-rose-600 text-white border-none text-[10px] uppercase font-bold animate-pulse">
-              Matching Requested
-            </Badge>
-          )}
-          {new Date(profile.createdAt).getTime() >
-            Date.now() - 1000 * 60 * 60 * 24 * 7 && (
-            <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white border-none text-[10px] uppercase font-bold">
-              New Arrival
-            </Badge>
-          )}
+          {/* Priority Badges removed for unified experience */}
         </div>
       </CardHeader>
 
