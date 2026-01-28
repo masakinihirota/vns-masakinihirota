@@ -54,7 +54,7 @@ export function BeginningCountry(_props?: any) {
 
           {/* 2. 幽霊のまま見て回る */}
           <button
-            onClick={() => handleChoice("/user-profiles/prototypes/complex")}
+            onClick={() => handleChoice("/home")}
             className="group p-10 rounded-[2.5rem] bg-white dark:bg-zinc-900 border-2 border-slate-200 dark:border-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-800 hover:scale-[1.02] transition-all shadow-xl text-left flex items-center space-x-10"
           >
             <div className="w-20 h-20 bg-slate-100 dark:bg-zinc-800 rounded-3xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">

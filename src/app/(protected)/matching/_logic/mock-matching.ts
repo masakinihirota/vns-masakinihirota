@@ -101,6 +101,8 @@ export const findMatches = async (
     setTimeout(() => {
       const allProfiles = generateMockProfiles(50);
 
+      // プロフィールがない（または空の）場合は、全データからランダムまたは相性順に表示する
+      // 特別な「ゲスト用優先順位」は廃止し、本格ログインと同じ挙動に倒す
       if (hasProfile) {
         // 通常のマッチング：相性順
         resolve(
@@ -109,31 +111,12 @@ export const findMatches = async (
             .slice(0, 10)
         );
       } else {
-        // 未登録者向け：優先選出ロジック
-        // 優先順位: 強く希望している人 > 人気な人 > 新しい人 > マッチングが少ない人
-        const guestMatches = allProfiles.sort((a, b) => {
-          // 1. 強く希望している人を最優先
-          if (a.isPriority !== b.isPriority) {
-            return a.isPriority ? -1 : 1;
-          }
-          // 2. 次に人気な人
-          if (Math.abs(b.popularity - a.popularity) > 20) {
-            return b.popularity - a.popularity;
-          }
-          // 3. 次に新しい人
-          const dateA = new Date(a.createdAt).getTime();
-          const dateB = new Date(b.createdAt).getTime();
-          if (Math.abs(dateB - dateA) > 1000 * 60 * 60 * 24 * 30) {
-            return dateB - dateA;
-          }
-          // 4. マッチングが少ない人
-          return a.matchCount - b.matchCount;
-        });
-
-        // ゲスト向けは相性を一律「誰でもマッチング」として85%前後に固定
-        const results = guestMatches.slice(0, 10).map((p) => ({
+        // 匿名・空プロフィールの場合は、全体の中から高めの相性でランダムに表示
+        // (マッチング条件がないため、誰とでも繋がれる体験を提供)
+        const results = allProfiles.slice(0, 10).map((p) => ({
           ...p,
-          compatibility: Math.floor(Math.random() * 5) + 85,
+          compatibility: Math.floor(Math.random() * 10) + 80,
+          isPriority: false, // ゲスト向け優先バッジは表示しない
         }));
 
         resolve(results);

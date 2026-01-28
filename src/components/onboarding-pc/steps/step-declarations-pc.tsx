@@ -60,7 +60,7 @@ export const StepDeclarationsPC: React.FC<StepDeclarationsPCProps> = ({
                 </span>
               </div>
               <Link
-                href="/help/oasis-declaration"
+                href="/oasis"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-slate-400 hover:text-indigo-500 transition-colors"

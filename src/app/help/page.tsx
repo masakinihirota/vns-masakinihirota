@@ -16,7 +16,7 @@ export default function HelpPage() {
       description:
         "VNSの根幹となる最も重要な指針です。この場所が「安らぎの地」であることを守るための誓いです。",
       icon: ShieldCheck,
-      href: "/help/oasis-declaration",
+      href: "/oasis",
       color: "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400",
     },
     {

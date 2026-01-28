@@ -15,7 +15,7 @@ export const Footer = () => {
     {
       title: "Philosophy",
       links: [
-        { label: "オアシス宣言", href: "/help/oasis-declaration" },
+        { label: "オアシス宣言", href: "/oasis" },
         { label: "人間宣言", href: "/human" },
         { label: "孤独感尺度", href: "/global-loneliness-measures" },
       ],

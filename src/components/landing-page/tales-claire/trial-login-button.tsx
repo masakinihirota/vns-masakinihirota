@@ -21,8 +21,8 @@ export const TrialLoginButton = () => {
         return;
       }
 
-      // 成功時はプロフィール作成（受肉）ページへ
-      router.push("/user-profiles/new");
+      // 成功時はオンボーディングの起点（はじまりの国）へ
+      router.push("/beginning-country");
       router.refresh();
     });
   };

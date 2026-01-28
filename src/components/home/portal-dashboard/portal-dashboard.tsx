@@ -63,7 +63,7 @@ export function PortalDashboard() {
         },
         {
           title: "旧 曼荼羅チャート",
-          path: "/tools/mandala-chart",
+          path: "/mandala-chart-legacy",
           desc: "旧形式の曼荼羅チャート（互換用）。",
         },
       ],
@@ -215,11 +215,6 @@ export function PortalDashboard() {
       icon: <FlaskConical className="text-zinc-500" size={24} />,
       routes: [
         {
-          title: "ツール一覧",
-          path: "/tools",
-          desc: "開発者向けのユーティリティツール集。",
-        },
-        {
           title: "Onboarding PC",
           path: "/onboarding-pc",
           desc: "PC向けの没入型オンボーディング体験（Map UI）。",
@@ -235,10 +230,37 @@ export function PortalDashboard() {
           path: "/landing-page",
           desc: "VNSプロジェクト全体のトップビューページ。",
         },
+      ],
+    },
+    {
+      title: "🧪 重複・サンプルページ確認",
+      description: "整理対象（重複・バックアップ・未使用）の確認用リンク",
+      color: "from-red-500/20 to-orange-500/20",
+      icon: <FlaskConical className="text-red-500" size={24} />,
+      routes: [
         {
-          title: "レガシー・プロフィール",
-          path: "/user-profiles/new-legacy",
-          desc: "従来のプロフィール作成フォーム（参照用）。",
+          title: "マニュアルマッチング (1)",
+          path: "/manual-matching",
+          desc: "構成: src/app/(protected)/manual-matching",
+          badge: "重複A",
+        },
+        {
+          title: "マニュアルマッチング (2)",
+          path: "/matching/manual",
+          desc: "構成: src/app/(protected)/matching/manual",
+          badge: "重複B",
+        },
+        {
+          title: "マニュアルマッチング (3)",
+          path: "/matching-manual",
+          desc: "構成: src/app/(protected)/matching-manual",
+          badge: "重複C",
+        },
+        {
+          title: "オアシス宣言 (Final)",
+          path: "/oasis",
+          desc: "構成: src/app/(public)/oasis",
+          badge: "Unified",
         },
       ],
     },

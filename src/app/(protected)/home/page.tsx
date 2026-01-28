@@ -45,30 +45,15 @@ export default async function DashboardPage() {
     <div className="flex flex-col gap-12">
       <div className="space-y-2">
         <h1 className="text-3xl font-black tracking-tighter uppercase italic">
-          Dashboard{" "}
-          <span className="text-indigo-500">
-            {hasProfile ? "Portal" : "Guest"}
-          </span>
+          Dashboard <span className="text-indigo-500">Portal</span>
         </h1>
         <p className="text-muted-foreground font-medium">
-          {hasProfile
-            ? "VNSプラットフォームへようこそ。利用したい機能を選択してください。"
-            : "現在はプロフィール未登録のゲスト状態です。サイト全体のトレンドを見て回ることができます。"}
+          VNSプラットフォームへようこそ。利用したい機能を選択してください。
         </p>
       </div>
 
-      {!hasProfile && (
-        <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000">
-          <PopularWorksView />
-        </div>
-      )}
-
-      {hasProfile && (
-        <>
-          <HomeGuide />
-          <HomeMenuGrid />
-        </>
-      )}
+      <HomeGuide />
+      <HomeMenuGrid />
     </div>
   );
 }

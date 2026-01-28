@@ -25,7 +25,7 @@ export default function ModeSelectionPage() {
       `${mode === "gamification" ? "ゲーミフィケーション" : "通常"}モードを選択しました`
     );
     if (mode === "gamification") {
-      router.push("/user-profiles/prototypes/complex");
+      router.push("/home");
     } else {
       router.push("/home");
     }
