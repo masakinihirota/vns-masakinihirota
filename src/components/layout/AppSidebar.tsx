@@ -64,6 +64,7 @@ import {
  * - 作品 (第3メニュー - 登録系)
  * - 価値観
  * - スキル
+ * - チュートリアル
  * - もっと見る (折りたたみ)
  *   - リスト
  *   - チェーン
@@ -71,7 +72,6 @@ import {
  *   - 実績
  *   - アチーブメント
  *   - 成果
- *   - チュートリアル
  *
  * 下側 (フッター):
  * - 設定
@@ -104,6 +104,7 @@ const PATH_TO_FEATURE_MAP: Record<string, string> = {
   "/skills": "skills",
   "/chains": "chains",
   "/mandala": "mandala",
+  "/tutorial": "tutorial",
 };
 
 /**

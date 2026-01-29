@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { RegistrationFormValues } from "../schema";
 import { useWorkRegistration } from "./use-work-registration";
 

@@ -1,4 +1,5 @@
 import { Check, AlertCircle, MapPin, Star } from "lucide-react";
+import { WeekScheduler } from "../../ui/week-scheduler";
 import { CULTURAL_SPHERES } from "../onboarding.logic";
 
 interface StepConfirmationPCProps {
@@ -35,6 +36,7 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
     holidayActivityEnd,
     holidayActivity2Start,
     holidayActivity2End,
+    week_schedule,
     // Step 5
     is_minor,
     zodiac_sign,
@@ -290,6 +292,20 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
               )
             }
           />
+          {week_schedule && (
+            <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-700/50">
+              <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mb-2">
+                週間スケジュール
+              </p>
+              <div className="transform scale-90 origin-top-left sm:scale-100 sm:origin-top">
+                <WeekScheduler
+                  value={week_schedule}
+                  onChange={() => {}}
+                  readOnly
+                />
+              </div>
+            </div>
+          )}
         </ConfirmationSection>
 
         {/* Step 5: Identity */}

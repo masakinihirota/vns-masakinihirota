@@ -1,0 +1,628 @@
+
+  ! eslint(no-unused-vars): Identifier 'MatchStats' is imported but never used.
+   ,-[src/components/auto-matching/auto-matching/auto-matching.test.tsx:4:23]
+ 3 | import { AutoMatching } from "./auto-matching";
+ 4 | import { UserProfile, MatchStats } from "./auto-matching.logic";
+   :                       ^^^^^|^^^^
+   :                            `-- 'MatchStats' is imported here
+ 5 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'req' is declared but never used. Unused parameters should start with a '_'.
+   ,-[src/app/api/admin/seed-works/route.ts:6:28]
+ 5 | 
+ 6 | export async function POST(req: NextRequest) {
+   :                            ^|^
+   :                             `-- 'req' is declared here
+ 7 |   const supabase = await createClient();
+   `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'FormLabel' is imported but never used.
+   ,-[src/components/works/work-registration/parts/category-selector.tsx:8:3]
+ 7 |   FormItem,
+ 8 |   FormLabel,
+   :   ^^^^|^^^^
+   :       `-- 'FormLabel' is imported here
+ 9 | } from "@/components/ui/form";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'isMatching' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/auto-matching/auto-matching/auto-matching.container.tsx:27:10]
+ 26 | 
+ 27 |   const [isMatching, setIsMatching] = useState(false);
+    :          ^^^^^|^^^^
+    :               `-- 'isMatching' is declared here
+ 28 |   const [watchedUsersPerProfile, setWatchedUsersPerProfile] = useState<
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'CardContent' is imported but never used.
+   ,-[src/components/works/popular-works-view.tsx:8:16]
+ 7 | import { Button } from "@/components/ui/button";
+ 8 | import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+   :                ^^^^^|^^^^^
+   :                     `-- 'CardContent' is imported here
+ 9 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'RatingValue' is imported but never used.
+   ,-[src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.test.tsx:5:18]
+ 4 | import { WorkContinuousRating } from "./work-continuous-rating";
+ 5 | import { Rating, RatingValue } from "./work-continuous-rating.logic";
+   :                  ^^^^^|^^^^^
+   :                       `-- 'RatingValue' is imported here
+ 6 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'PopularWorksView' is imported but never used.
+   ,-[src/app/(protected)/home/page.tsx:4:10]
+ 3 | import { HomeMenuGrid } from "@/components/home/home-menu-grid";
+ 4 | import { PopularWorksView } from "@/components/works/popular-works-view";
+   :          ^^^^^^^^|^^^^^^^
+   :                  `-- 'PopularWorksView' is imported here
+ 5 | import {
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'hasProfile' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/app/(protected)/home/page.tsx:42:9]
+ 41 |   const profiles = rootAccountId ? await getUserProfiles(rootAccountId) : [];
+ 42 |   const hasProfile = profiles.length > 0;
+    :         ^^^^^|^^^^
+    :              `-- 'hasProfile' is declared here
+ 43 | 
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'Layout' is imported but never used.
+    ,-[src/config/menu-icons.ts:22:3]
+ 21 |   UserPlus,
+ 22 |   Layout,
+    :   ^^^|^^
+    :      `-- 'Layout' is imported here
+ 23 |   Eye,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Eye' is imported but never used.
+    ,-[src/config/menu-icons.ts:23:3]
+ 22 |   Layout,
+ 23 |   Eye,
+    :   ^|^
+    :    `-- 'Eye' is imported here
+ 24 |   Sparkles,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Sparkles' is imported but never used.
+    ,-[src/config/menu-icons.ts:24:3]
+ 23 |   Eye,
+ 24 |   Sparkles,
+    :   ^^^^|^^^
+    :       `-- 'Sparkles' is imported here
+ 25 |   PenTool,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'PenTool' is imported but never used.
+    ,-[src/config/menu-icons.ts:25:3]
+ 24 |   Sparkles,
+ 25 |   PenTool,
+    :   ^^^|^^^
+    :      `-- 'PenTool' is imported here
+ 26 |   type LucideIcon,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'fullList' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.container.tsx:23:10]
+ 22 |   // Session State
+ 23 |   const [fullList, setFullList] = useState<string[]>([]);
+    :          ^^^^|^^^
+    :              `-- 'fullList' is declared here
+ 24 |   const [sessionList, setSessionList] = useState<string[]>([]);
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'redirect' is imported but never used.
+   ,-[src/app/(protected)/works/actions.ts:4:10]
+ 3 | import { revalidatePath } from "next/cache";
+ 4 | import { redirect } from "next/navigation";
+   :          ^^^^|^^^
+   :              `-- 'redirect' is imported here
+ 5 | import { z } from "zod";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'description' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/app/(protected)/works/actions.ts:53:36]
+ 52 | 
+ 53 |   const { title, author, category, description } = validatedFields.data;
+    :                                    ^^^^^|^^^^^
+    :                                         `-- 'description' is declared here
+ 54 | 
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'afterEach' is imported but never used.
+   ,-[src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.logic.test.ts:1:48]
+ 1 | import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+   :                                                ^^^^|^^^^
+   :                                                    `-- 'afterEach' is imported here
+ 2 | import {
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'user' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/lib/supabase/middleware.ts:37:13]
+ 36 |   const {
+ 37 |     data: { user },
+    :             ^^|^
+    :               `-- 'user' is declared here
+ 38 |   } = await supabase.auth.getUser();
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Parameter 'patternId' is declared but never used. Unused parameters should start with a '_'.
+    ,-[src/components/work-continuous-rating/work-continuous-rating/work-continuous-rating.logic.ts:97:3]
+ 96 |   ratings: Record<string, Rating>,
+ 97 |   patternId: string = "default"
+    :   ^^^^^^^^^^^^^^|^^^^^^^^^^^^^^
+    :                 `-- 'patternId' is declared here
+ 98 | ) => {
+    `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'waitFor' is imported but never used.
+   ,-[src/components/work-registration-form/hooks/use-work-search.test.ts:1:27]
+ 1 | import { renderHook, act, waitFor } from "@testing-library/react";
+   :                           ^^^|^^^
+   :                              `-- 'waitFor' is imported here
+ 2 | import { describe, it, expect } from "vitest";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'PenTool' is imported but never used.
+   ,-[src/components/home/portal-dashboard/portal-dashboard.tsx:7:3]
+ 6 |   Handshake,
+ 7 |   PenTool,
+   :   ^^^|^^^
+   :      `-- 'PenTool' is imported here
+ 8 |   FlaskConical,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Book' is imported but never used.
+    ,-[src/components/home/portal-dashboard/portal-dashboard.tsx:11:3]
+ 10 |   ArrowRight,
+ 11 |   Book,
+    :   ^^|^
+    :     `-- 'Book' is imported here
+ 12 |   Brain,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Brain' is imported but never used.
+    ,-[src/components/home/portal-dashboard/portal-dashboard.tsx:12:3]
+ 11 |   Book,
+ 12 |   Brain,
+    :   ^^|^^
+    :     `-- 'Brain' is imported here
+ 13 | } from "lucide-react";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'vi' is imported but never used.
+   ,-[src/components/work-registration-form/hooks/use-work-registration.test.ts:2:32]
+ 1 | import { renderHook, act } from "@testing-library/react";
+ 2 | import { describe, it, expect, vi } from "vitest";
+   :                                ^|
+   :                                 `-- 'vi' is imported here
+ 3 | import { RegistrationFormValues } from "../schema";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ChevronRight' is imported but never used.
+   ,-[src/components/user-profiles/create/user-profile-creation.tsx:5:3]
+ 4 |   CheckCircle2,
+ 5 |   ChevronRight,
+   :   ^^^^^^|^^^^^
+   :         `-- 'ChevronRight' is imported here
+ 6 |   User,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'User' is imported but never used.
+   ,-[src/components/user-profiles/create/user-profile-creation.tsx:6:3]
+ 5 |   ChevronRight,
+ 6 |   User,
+   :   ^^|^
+   :     `-- 'User' is imported here
+ 7 |   AlertCircle,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useUserProfileCreation' is imported but never used.
+   ,-[src/components/user-profiles/create/user-profile-creation.test.tsx:5:10]
+ 4 | import { UserProfileCreation } from "./user-profile-creation";
+ 5 | import { useUserProfileCreation } from "./user-profile-creation.logic";
+   :          ^^^^^^^^^^^|^^^^^^^^^^
+   :                     `-- 'useUserProfileCreation' is imported here
+ 6 | 
+   `----
+  help: Consider removing this import.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[src/components/ghost/scenes/MainScene.ts:102:11]
+ 101 |         if (status === "SUBSCRIBED") {
+ 102 |           console.log("Connected to Supabase Realtime");
+     :           ^^^^^^^^^^^
+ 103 |         }
+     `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Identifier 'GlobalHeader' is imported but never used.
+   ,-[src/components/landing-page/tales-claire/tales-claire-lp.tsx:6:3]
+ 5 | import {
+ 6 |   GlobalHeader,
+   :   ^^^^^^|^^^^^
+   :         `-- 'GlobalHeader' is imported here
+ 7 |   AdToggle,
+   `----
+  help: Consider removing this import.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/scripts/verify-supabase.ts:29:1]
+ 28 | 
+ 29 | console.log(`Using Supabase URL: ${supabaseUrl}`);
+    : ^^^^^^^^^^^
+ 30 | const supabase = createClient(supabaseUrl, serviceRoleKey);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/scripts/verify-supabase.ts:33:3]
+ 32 | async function main() {
+ 33 |   console.log("--- Starting Supabase Data Verification ---");
+    :   ^^^^^^^^^^^
+ 34 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/scripts/verify-supabase.ts:38:3]
+ 37 | 
+ 38 |   console.log(`1. Creating test user: ${testEmail}`);
+    :   ^^^^^^^^^^^
+ 39 |   const { data: userData, error: userError } =
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/scripts/verify-supabase.ts:52:3]
+ 51 |   const userId = userData.user.id;
+ 52 |   console.log(`   User created with ID: ${userId}`);
+    :   ^^^^^^^^^^^
+ 53 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/scripts/verify-supabase.ts:57:3]
+ 56 | 
+ 57 |   console.log("2. Verifying root_accounts trigger...");
+    :   ^^^^^^^^^^^
+ 58 |   const { data: rootAccount, error: rootError } = await supabase
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/scripts/verify-supabase.ts:73:3]
+ 72 |   }
+ 73 |   console.log(`   Root account found: ${rootAccount.id}`);
+    :   ^^^^^^^^^^^
+ 74 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/scripts/verify-supabase.ts:75:3]
+ 74 | 
+ 75 |   console.log("3. Inserting user_profiles record...");
+    :   ^^^^^^^^^^^
+ 76 |   const { data: profile, error: profileError } = await supabase
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/scripts/verify-supabase.ts:91:3]
+ 90 |   }
+ 91 |   console.log(`   Profile inserted: ${profile.id} (${profile.display_name})`);
+    :   ^^^^^^^^^^^
+ 92 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/scripts/verify-supabase.ts:93:3]
+ 92 | 
+ 93 |   console.log("4. Verifying data persistence (Select)...");
+    :   ^^^^^^^^^^^
+ 94 |   const { data: fetchedProfile, error: fetchError } = await supabase
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[src/scripts/verify-supabase.ts:109:3]
+ 108 |   }
+ 109 |   console.log("   Data verification successful!");
+     :   ^^^^^^^^^^^
+ 110 | 
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[src/scripts/verify-supabase.ts:111:3]
+ 110 | 
+ 111 |   console.log("5. Cleanup (Deleting user)...");
+     :   ^^^^^^^^^^^
+ 112 |   const { error: deleteError } = await supabase.auth.admin.deleteUser(userId);
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[src/scripts/verify-supabase.ts:116:5]
+ 115 |   } else {
+ 116 |     console.log("   User deleted successfully.");
+     :     ^^^^^^^^^^^
+ 117 |   }
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[src/scripts/verify-supabase.ts:119:3]
+ 118 | 
+ 119 |   console.log("--- Verification Complete: SUCCESS ---");
+     :   ^^^^^^^^^^^
+ 120 | }
+     `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Parameter 'e' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/user-profiles/create/steps/step-5-values.tsx:169:21]
+ 168 |         <div
+ 169 |           onClick={(e) => {
+     :                     |
+     :                     `-- 'e' is declared here
+ 170 |             // Toggle Open
+     `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Identifier 'User' is imported but never used.
+   ,-[src/components/manual-matching/manual-matching.tsx:4:3]
+ 3 | import {
+ 4 |   User,
+   :   ^^|^
+   :     `-- 'User' is imported here
+ 5 |   Users,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Users' is imported but never used.
+   ,-[src/components/manual-matching/manual-matching.tsx:5:3]
+ 4 |   User,
+ 5 |   Users,
+   :   ^^|^^
+   :     `-- 'Users' is imported here
+ 6 |   Play,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'UserMinus' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:9:3]
+  8 |   UserPlus,
+  9 |   UserMinus,
+    :   ^^^^|^^^^
+    :       `-- 'UserMinus' is imported here
+ 10 |   ArrowRightLeft,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Info' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:11:3]
+ 10 |   ArrowRightLeft,
+ 11 |   Info,
+    :   ^^|^
+    :     `-- 'Info' is imported here
+ 12 |   Layers,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Square' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:25:3]
+ 24 |   CheckSquare,
+ 25 |   Square,
+    :   ^^^|^^
+    :      `-- 'Square' is imported here
+ 26 |   ToggleLeft,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ToggleLeft' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:26:3]
+ 25 |   Square,
+ 26 |   ToggleLeft,
+    :   ^^^^^|^^^^
+    :        `-- 'ToggleLeft' is imported here
+ 27 |   ToggleRight,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ToggleRight' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:27:3]
+ 26 |   ToggleLeft,
+ 27 |   ToggleRight,
+    :   ^^^^^|^^^^^
+    :        `-- 'ToggleRight' is imported here
+ 28 |   ArrowLeft,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ArrowLeft' is imported but never used.
+    ,-[src/components/manual-matching/manual-matching.tsx:28:3]
+ 27 |   ToggleRight,
+ 28 |   ArrowLeft,
+    :   ^^^^|^^^^
+    :       `-- 'ArrowLeft' is imported here
+ 29 |   CheckCircle,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'PURPOSE_OPTIONS' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/manual-matching/manual-matching.tsx:39:7]
+ 38 | // --- 定数 ---
+ 39 | const PURPOSE_OPTIONS = [
+    :       ^^^^^^^|^^^^^^^
+    :              `-- 'PURPOSE_OPTIONS' is declared here
+ 40 |   "創る・働く",
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'isMatching' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/manual-matching/manual-matching.tsx:157:10]
+ 156 |   );
+ 157 |   const [isMatching, setIsMatching] = useState(false);
+     :          ^^^^^|^^^^
+     :               `-- 'isMatching' is declared here
+ 158 | 
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'watchedPerProfile' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/manual-matching/manual-matching.tsx:163:10]
+ 162 |   >({});
+ 163 |   const [watchedPerProfile, setWatchedPerProfile] = useState<
+     :          ^^^^^^^^|^^^^^^^^
+     :                  `-- 'watchedPerProfile' is declared here
+ 164 |     Record<string, any[]>
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'followedPerProfile' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/manual-matching/manual-matching.tsx:166:10]
+ 165 |   >({});
+ 166 |   const [followedPerProfile, setFollowedPerProfile] = useState<
+     :          ^^^^^^^^^|^^^^^^^^
+     :                   `-- 'followedPerProfile' is declared here
+ 167 |     Record<string, any[]>
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'path' is imported but never used.
+   ,-[src/lib/works/seed-utils.ts:2:8]
+ 1 | import fs from "fs";
+ 2 | import path from "path";
+   :        ^^|^
+   :          `-- 'path' is imported here
+ 3 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'LogIn' is imported but never used.
+   ,-[src/components/landing-page/trial-entry/trial-entry-section.tsx:8:3]
+ 7 |   ArrowRight,
+ 8 |   LogIn,
+   :   ^^|^^
+   :     `-- 'LogIn' is imported here
+ 9 | } from "lucide-react";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'LogIn' is imported but never used.
+    ,-[src/components/layout/GlobalHeader.tsx:13:3]
+ 12 |   HelpCircle,
+ 13 |   LogIn,
+    :   ^^|^^
+    :     `-- 'LogIn' is imported here
+ 14 |   MonitorSmartphone,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'ExternalLink' is imported but never used.
+   ,-[src/components/onboarding-pc/steps/step-system-request-pc.tsx:1:10]
+ 1 | import { ExternalLink } from "lucide-react";
+   :          ^^^^^^|^^^^^
+   :                `-- 'ExternalLink' is imported here
+ 2 | import Link from "next/link";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'Link' is imported but never used.
+   ,-[src/components/onboarding-pc/steps/step-system-request-pc.tsx:2:8]
+ 1 | import { ExternalLink } from "lucide-react";
+ 2 | import Link from "next/link";
+   :        ^^|^
+   :          `-- 'Link' is imported here
+ 3 | import React from "react";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'DadsButton' is imported but never used.
+   ,-[src/app/(public)/login/page.tsx:5:20]
+ 4 | import { GoogleLoginForm } from "@/components/auth/google-login-form";
+ 5 | import { Button as DadsButton } from "@/components/dads";
+   :                    ^^^^^|^^^^
+   :                         `-- 'DadsButton' is imported here
+ 6 | 
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-empty-pattern): Empty object binding pattern
+    ,-[src/components/onboarding-trial/onboarding-trial-form.tsx:18:37]
+ 17 | 
+ 18 | export function OnboardingTrialForm({}: OnboardingTrialFormProps) {
+    :                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 19 |   const router = useRouter();
+    `----
+  help: Passing `null` or `undefined` will result in runtime error because `null` and `undefined` cannot be destructured.
+
+  ! eslint(no-unused-vars): Identifier 'ArrowRight' is imported but never used.
+   ,-[src/components/onboarding-trial/onboarding-trial-form.tsx:3:10]
+ 2 | 
+ 3 | import { ArrowRight } from "lucide-react";
+   :          ^^^^^|^^^^
+   :               `-- 'ArrowRight' is imported here
+ 4 | import { useRouter } from "next/navigation";
+   `----
+  help: Consider removing this import.
+
+  x typescript-eslint(no-floating-promises): Promises must be awaited.
+     ,-[src/components/layout/GlobalHeader.tsx:413:5]
+ 412 |         const supabase = createClient();
+ 413 | ,->     supabase.auth.getSession().then(({ data: { session } }) => {
+ 414 | |         setUser(session?.user ?? null);
+ 415 | |         setLoading(false);
+ 416 | `->     });
+ 417 |     
+     `----
+  help: The promise must end with a call to .catch, or end with a call to .then with a rejection handler, or be explicitly marked as ignored with the `void` operator.
+
+  x typescript-eslint(no-floating-promises): Promises must be awaited.
+     ,-[src/components/ghost/scenes/MainScene.ts:123:5]
+ 122 |     
+ 123 | ,->     this.channel.send({
+ 124 | |         type: "broadcast",
+ 125 | |         event: "player-move",
+ 126 | |         payload: { userId: this.myId, x, y },
+ 127 | `->     });
+ 128 |     
+     `----
+  help: The promise must end with a call to .catch, or end with a call to .then with a rejection handler, or be explicitly marked as ignored with the `void` operator.
+
+Found 48 warnings and 16 errors.
+Finished in 3.4s on 432 files using 12 threads.

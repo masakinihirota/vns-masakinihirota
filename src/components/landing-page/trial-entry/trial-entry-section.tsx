@@ -5,7 +5,6 @@ import {
   UserCircle2,
   Sparkles,
   ArrowRight,
-  LogIn,
 } from "lucide-react";
 import Link from "next/link";
 import React from "react";

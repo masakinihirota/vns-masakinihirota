@@ -1,14 +1,14 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeAll } from "vitest";
 import { AutoMatching } from "./auto-matching";
-import { UserProfile, MatchStats } from "./auto-matching.logic";
+import { UserProfile } from "./auto-matching.logic";
 
 describe("AutoMatching UI", () => {
   beforeAll(() => {
     global.ResizeObserver = class ResizeObserver {
-      observe() {}
-      unobserve() {}
-      disconnect() {}
+      observe() { }
+      unobserve() { }
+      disconnect() { }
     };
   });
 

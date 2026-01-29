@@ -1,0 +1,28 @@
+
+> vns-masakinihirota@0.25.0 build U:\2026src\vns-masakinihirota.worktrees\anti
+> next build
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+   笆ｲ Next.js 16.0.10 (Turbopack)
+   - Environments: .env.local, .env
+
+   Creating an optimized production build ...
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+ 笨・Compiled successfully in 20.7s
+   Running TypeScript ...
+Failed to compile.
+
+./tailwind.config.ts:3:29
+Type error: Cannot find module 'tailwindcss' or its corresponding type declarations.
+  There are types at 'U:/2026src/vns-masakinihirota.worktrees/anti/node_modules/tailwindcss/dist/lib.d.mts', but this result could not be resolved under your current 'moduleResolution' setting. Consider updating to 'node16', 'nodenext', or 'bundler'.
+
+  1 |
+  2 | import tailwindThemePlugin from "@digital-go-jp/tailwind-theme-plugin";
+> 3 | import type { Config } from "tailwindcss";
+    |                             ^
+  4 |
+  5 | const config: Config = {
+  6 |   darkMode: "class",
+Next.js build worker exited with code: 1 and signal: null
+窶右LIFECYCLE窶・Command failed with exit code 1.

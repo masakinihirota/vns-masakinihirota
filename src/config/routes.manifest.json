@@ -121,8 +121,8 @@
   {
     "path": "/tutorial",
     "label": "チュートリアル",
-    "group": "more",
-    "order": 70,
+    "group": "main",
+    "order": 100,
     "visibleInMenu": true
   },
   {

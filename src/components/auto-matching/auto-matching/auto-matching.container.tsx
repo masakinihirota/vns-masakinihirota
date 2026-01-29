@@ -24,7 +24,7 @@ export const AutoMatchingContainer = () => {
   const [processLimit, setProcessLimit] = useState(3); // 人数指定用
   const [scoreThreshold, setScoreThreshold] = useState(2); // スコア指定用
 
-  const [isMatching, setIsMatching] = useState(false);
+
   const [watchedUsersPerProfile, setWatchedUsersPerProfile] = useState<
     Record<string, UserProfile[]>
   >({});
@@ -104,7 +104,7 @@ export const AutoMatchingContainer = () => {
 
   const runMatching = () => {
     if (!selectedProfile) return;
-    setIsMatching(true);
+    // setIsMatching(true);
     setView("matching");
 
     setTimeout(() => {
@@ -153,7 +153,7 @@ export const AutoMatchingContainer = () => {
         setLastMatchStats({ added: 0, removed: removedUsers.length });
       }
 
-      setIsMatching(false);
+      // setIsMatching(false);
       setView("result");
     }, 1500);
   };

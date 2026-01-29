@@ -2,8 +2,6 @@ import {
   ArrowLeft,
   ArrowRight,
   CheckCircle2,
-  ChevronRight,
-  User,
   AlertCircle,
 } from "lucide-react";
 import Link from "next/link";

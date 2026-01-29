@@ -19,10 +19,6 @@ import {
   CreditCard,
   UserCircle,
   UserPlus,
-  Layout,
-  Eye,
-  Sparkles,
-  PenTool,
   type LucideIcon,
 } from "lucide-react";
 

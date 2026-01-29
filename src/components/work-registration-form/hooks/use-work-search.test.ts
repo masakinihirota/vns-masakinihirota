@@ -1,4 +1,4 @@
-import { renderHook, act, waitFor } from "@testing-library/react";
+import { renderHook, act } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { MOCK_DB_WORKS } from "../mock-data";
 import { useWorkSearch } from "./use-work-search";
