@@ -1,5 +1,6 @@
 "use client";
 
+import { type User } from "@supabase/supabase-js";
 import {
   Search,
   Bell,
@@ -9,6 +10,9 @@ import {
   Megaphone,
   Coins,
   HelpCircle,
+  LogIn,
+  MonitorSmartphone,
+  ArrowRight,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -32,6 +36,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { createClient } from "@/lib/supabase/client";
 
 /**
  * ヘッダーメニュー要件定義書に基づく機能:
@@ -169,7 +174,7 @@ function HeaderSearch() {
 }
 
 // 広告切替ボタン
-function AdToggle() {
+export function AdToggle() {
   const [adsEnabled, setAdsEnabled] = React.useState(true);
 
   return (
@@ -195,7 +200,7 @@ function AdToggle() {
 }
 
 // 言語切替
-function LanguageToggle() {
+export function LanguageToggle() {
   const [lang, setLang] = React.useState<"ja" | "en">("ja");
 
   return (
@@ -226,7 +231,7 @@ function LanguageToggle() {
 }
 
 // ダークモード切替
-function ThemeToggle() {
+export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   return (
@@ -330,7 +335,7 @@ function NotificationBell() {
 }
 
 // ヘルプボタン
-function HelpButton() {
+export function HelpButton() {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -348,30 +353,119 @@ function HelpButton() {
   );
 }
 
+// お試し利用ボタン
+// お試し利用ボタン
+export function TrialButton() {
+  const [isPending, startTransition] = React.useTransition();
+  const router = useRouter();
+
+  const handleLocalModeStart = () => {
+    startTransition(() => {
+      // ローカルモード用クッキーを設定 (有効期限: 1年)
+      document.cookie =
+        "local_mode=true; path=/; max-age=31536000; SameSite=Lax";
+      // オンボーディングの起点へ遷移
+      router.push("/beginning-country");
+      router.refresh();
+    });
+  };
+
+  return (
+    <Button
+      className="group h-10 px-5 text-lg bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-full transition-all shadow-md hover:shadow-emerald-500/30 hover:scale-105 flex items-center gap-2 hidden sm:flex"
+      onClick={handleLocalModeStart}
+      disabled={isPending}
+    >
+      <span className="leading-none pt-0.5">
+        {isPending ? "準備中..." : "ゲートを開く"}
+      </span>
+      <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+    </Button>
+  );
+}
+
+// 登録/ログインボタン
+export function LoginButton() {
+  return (
+    <Button
+      className="group h-10 px-5 text-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-full transition-all shadow-md shadow-indigo-500/20 hover:scale-105 flex items-center gap-2"
+      asChild
+    >
+      <Link href="/login">
+        <span className="leading-none pt-0.5">メンバー登録 / ログイン</span>
+        <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+      </Link>
+    </Button>
+  );
+}
+
 // メインヘッダーコンポーネント
-export function GlobalHeader() {
+export function GlobalHeader({
+  showSidebarTrigger = true,
+}: {
+  showSidebarTrigger?: boolean;
+}) {
+  const [user, setUser] = React.useState<User | null>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const supabase = createClient();
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      setLoading(false);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <TooltipProvider>
-      <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-2 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 px-4">
-        {/* 左側: サイドバートリガー */}
+      <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between gap-2 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 px-4">
+        {/* 左側: サイドバートリガー & ロゴエリア */}
         <div className="flex items-center gap-2">
-          <SidebarTrigger className="-ml-1" />
+          {showSidebarTrigger && <SidebarTrigger className="-ml-1" />}
         </div>
 
-        {/* 中央: 検索バー */}
+        {/* 中央: 検索バー (ログイン時のみ) */}
         <div className="flex-1 flex justify-center px-4">
-          <HeaderSearch />
+          {!loading && user && <HeaderSearch />}
         </div>
 
         {/* 右側: ユーティリティ群 */}
-        <div className="flex items-center gap-1">
-          <AdToggle />
-          <LanguageToggle />
-          <ThemeToggle />
-          <HelpButton />
-          <Separator orientation="vertical" className="mx-2 h-4" />
-          <PointsDisplay />
-          <NotificationBell />
+        <div className="flex items-center gap-2">
+          {!loading && (
+            <>
+              {/* 共通ボタン */}
+              <AdToggle />
+              <LanguageToggle />
+              <ThemeToggle />
+              <HelpButton />
+
+              <Separator
+                orientation="vertical"
+                className="mx-2 h-4 hidden sm:block"
+              />
+
+              {/* ユーザー状態による分岐 */}
+              {user ? (
+                <>
+                  <PointsDisplay />
+                  <NotificationBell />
+                </>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <TrialButton />
+                  <LoginButton />
+                </div>
+              )}
+            </>
+          )}
         </div>
       </header>
     </TooltipProvider>

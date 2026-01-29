@@ -1,9 +1,11 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import React, { useEffect, useRef } from "react";
 
 export function BackgroundCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -16,8 +18,19 @@ export function BackgroundCanvas() {
     let width: number;
     let height: number;
 
-    // Particle class definition within useEffect to close over width/height
-    // Checking if moving this logic helps, or better yet, make it a simple object factory
+    const isSystemDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const isDark = theme === "dark" || (theme === "system" && isSystemDark);
+
+    // Colors based on theme
+    const particleColor = isDark ? "255, 255, 255" : "20, 20, 20";
+    const nebulaStart = isDark
+      ? "rgba(20, 30, 60, 0.4)"
+      : "rgba(200, 210, 255, 0.4)";
+    const nebulaEnd = isDark ? "rgba(0, 0, 0, 0)" : "rgba(255, 255, 255, 0)";
+
+    // Particle class definition
     class Particle {
       x: number;
       y: number;
@@ -48,7 +61,7 @@ export function BackgroundCanvas() {
       draw(context: CanvasRenderingContext2D) {
         context.beginPath();
         context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        context.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        context.fillStyle = `rgba(${particleColor}, ${this.opacity})`;
         context.fill();
       }
     }
@@ -56,6 +69,7 @@ export function BackgroundCanvas() {
     let particles: Particle[] = [];
 
     const resize = () => {
+      // 親要素が fixed w-full h-full なので window サイズでOK
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
     };
@@ -80,8 +94,8 @@ export function BackgroundCanvas() {
         height / 2,
         width
       );
-      gradient.addColorStop(0, "rgba(20, 30, 60, 0.4)");
-      gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+      gradient.addColorStop(0, nebulaStart);
+      gradient.addColorStop(1, nebulaEnd);
       ctx.fillStyle = gradient;
       ctx.fillRect(0, 0, width, height);
 
@@ -108,12 +122,12 @@ export function BackgroundCanvas() {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [theme]); // Re-run effect when theme changes
 
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"
+      className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none transition-opacity duration-500"
     />
   );
 }

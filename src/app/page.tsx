@@ -1,16 +1,5 @@
-import { PortalDashboard } from "@/components/home/portal-dashboard";
-import { UnauthenticatedHome } from "@/components/home/unauthenticated-home";
-import { createClient } from "@/lib/supabase/server";
+import { TalesClaireLP } from "@/components/landing-page/tales-claire/tales-claire-lp";
 
-export default async function Home() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user && process.env.NODE_ENV !== "development") {
-    return <UnauthenticatedHome />;
-  }
-
-  return <PortalDashboard />;
+export default function Home() {
+  return <TalesClaireLP />;
 }

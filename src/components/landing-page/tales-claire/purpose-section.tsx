@@ -35,7 +35,7 @@ export const PurposeSection = () => {
   return (
     <section className="space-y-12 animate-fade-in-up delay-400">
       <div className="text-center space-y-4">
-        <h2 className="text-2xl md:text-3xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-200 to-blue-200">
+        <h2 className="text-2xl md:text-3xl font-serif font-bold text-slate-800 dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-teal-200 dark:to-blue-200">
           masakinihirotaの主な機能
         </h2>
       </div>
@@ -44,13 +44,15 @@ export const PurposeSection = () => {
         {purposes.map((item, index) => (
           <div
             key={index}
-            className="group relative p-6 rounded-2xl border border-white/5 bg-white/5 hover:bg-white/10 transition-colors duration-300"
+            className="group relative p-6 rounded-2xl border border-white/50 dark:border-white/5 bg-white/60 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 transition-colors duration-300 shadow-sm dark:shadow-none"
           >
-            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/10 to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
-            <h3 className="text-lg font-bold text-blue-100 mb-2 group-hover:text-white transition-colors">
+            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
+            <h3 className="text-xl font-bold text-slate-800 dark:text-blue-100 mb-2 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
               {item.title}
             </h3>
-            <p className="text-indigo-200/80 text-sm">{item.description}</p>
+            <p className="text-slate-600 dark:text-indigo-200/80 text-lg">
+              {item.description}
+            </p>
           </div>
         ))}
       </div>
