@@ -1,74 +1,99 @@
 "use client";
 
-import React from "react";
+import {
+  GlobalHeader,
+  AdToggle,
+  LanguageToggle,
+  ThemeToggle,
+  HelpButton,
+  TrialButton,
+  LoginButton,
+} from "@/components/layout/GlobalHeader";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { TrialEntrySection } from "../trial-entry";
 import { BackgroundCanvas } from "./background-canvas";
 import { ConceptSection } from "./concept-section";
 import { DeclarationsSection } from "./declarations-section";
 import { Footer } from "./footer";
 import { HeroSection } from "./hero-section";
 import { InspirationSection } from "./inspiration-section";
-import { Navbar } from "./navbar";
 import { PurposeSection } from "./purpose-section";
-import { StartLinksSection } from "./start-links-section";
 
 export const TalesClaireLP = () => {
   return (
-    <div className="antialiased selection:bg-blue-500 selection:text-white min-h-screen relative text-neutral-200 font-sans bg-[#0a0a0a]">
-      {/* Navigation */}
-      <Navbar />
+    <SidebarProvider>
+      <div className="antialiased selection:bg-blue-500 selection:text-white min-h-screen relative text-foreground font-sans bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:bg-[#0a0a0a] dark:bg-none w-full transition-colors duration-500">
+        {/* Header (No Sidebar Trigger) - User requested removal */}
+        {/* <GlobalHeader showSidebarTrigger={false} /> */}
 
-      {/* Background Animation */}
-      <BackgroundCanvas />
+        {/* Top Right Utility Buttons and Actions */}
+        <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
+          <div className="flex items-center gap-2 mr-4">
+            <TrialButton />
+            <LoginButton />
+          </div>
+          <TooltipProvider>
+            <AdToggle />
+            <LanguageToggle />
+            <ThemeToggle />
+            <HelpButton />
+          </TooltipProvider>
+        </div>
 
-      {/* Main Container */}
-      <main className="relative z-10 w-full max-w-5xl mx-auto px-6 py-20 flex flex-col gap-24">
-        {/* 1. Name & Catchphrase */}
-        <HeroSection />
+        {/* Background Animation */}
+        <BackgroundCanvas />
 
-        {/* 2. Description (Declarations & Concept) */}
-        <section id="about" className="space-y-16">
-          <DeclarationsSection />
-          <ConceptSection />
-        </section>
+        {/* Main Container */}
+        <main className="relative z-10 w-full max-w-5xl mx-auto px-6 pt-32 pb-20 flex flex-col gap-24">
+          {/* 1. Name & Catchphrase */}
+          <HeroSection />
 
-        {/* 3. Start Links */}
-        <StartLinksSection />
+          {/* 2. Description (Declarations & Concept) */}
+          <section id="about" className="space-y-16">
+            <DeclarationsSection />
+            <ConceptSection />
+          </section>
 
-        {/* 4. Purpose Section */}
-        <PurposeSection />
+          {/* 3. Start Links (Trial Entry) */}
+          <TrialEntrySection />
 
-        {/* 4. Reference Video & Explanation */}
-        <InspirationSection />
+          {/* 4. Purpose Section */}
+          <PurposeSection />
 
-        {/* Footer */}
-        <Footer />
-      </main>
+          {/* 4. Reference Video & Explanation */}
+          <InspirationSection />
 
-      <style jsx global>{`
-        @keyframes fadeInUp {
-          from {
+          {/* Footer */}
+          <Footer />
+        </main>
+
+        <style jsx global>{`
+          @keyframes fadeInUp {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
             opacity: 0;
-            transform: translateY(20px);
           }
-          to {
-            opacity: 1;
-            transform: translateY(0);
+          .delay-200 {
+            animation-delay: 0.2s;
           }
-        }
-        .animate-fade-in-up {
-          animation: fadeInUp 0.8s ease-out forwards;
-          opacity: 0;
-        }
-        .delay-200 {
-          animation-delay: 0.2s;
-        }
-        .delay-400 {
-          animation-delay: 0.4s;
-        }
-        .delay-600 {
-          animation-delay: 0.6s;
-        }
-      `}</style>
-    </div>
+          .delay-400 {
+            animation-delay: 0.4s;
+          }
+          .delay-600 {
+            animation-delay: 0.6s;
+          }
+        `}</style>
+      </div>
+    </SidebarProvider>
   );
 };
