@@ -709,6 +709,7 @@ export const LANGUAGE_OPTIONS = [
   "ロシア語 (Russian)",
   "イタリア語 (Italian)",
   "ドイツ語 (German)",
+  "その他 (Other)",
 ] as const;
 
 export interface Agreements {
@@ -808,7 +809,7 @@ export const BASIC_VALUES_QUESTIONS: BasicValueQuestion[] = [
   },
   {
     id: "fact_checking",
-    title: "発言は自分の目で見て調べていますか？",
+    title: "相手の発言は自分の目で見て調べていますか？",
     category: "Honesty",
     options: [
       { value: "yes", label: "はい" },
@@ -818,7 +819,7 @@ export const BASIC_VALUES_QUESTIONS: BasicValueQuestion[] = [
   // クリエイターファースト
   {
     id: "creativity",
-    title: "なにか作りたい気持ち（創造性）",
+    title: "なにかを作りたい気持ち（創造性）",
     category: "Creator",
     options: [
       { value: "very_much", label: "すごくある" },
@@ -857,7 +858,10 @@ export const BASIC_VALUES_QUESTIONS: BasicValueQuestion[] = [
         value: "single_truth",
         label: "この世は一つの正しい意見にまとまるべきだ",
       },
-      { value: "my_opinion_only", label: "自分の意見こそがこの世で唯一正しい" },
+      {
+        value: "my_opinion_only",
+        label: "自分の意見こそがこの世で唯一正しいはずだ",
+      },
     ],
   },
 ];

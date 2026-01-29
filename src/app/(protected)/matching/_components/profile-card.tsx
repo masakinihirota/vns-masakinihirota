@@ -38,10 +38,11 @@ export function ProfileCard({ profile }: ProfileCardProps) {
   return (
     <Card className="relative overflow-hidden group h-full flex flex-col hover:shadow-lg transition-shadow duration-300 border-primary/20">
       <CardHeader className="relative p-0 h-32 bg-gradient-to-br from-primary/10 to-secondary/10">
-        <div className="absolute top-4 right-4 z-10">
+        <div className="absolute top-4 right-4 z-10 flex flex-col items-end gap-2">
           <Badge variant="secondary" className="font-mono text-xs">
             {profile.compatibility}% MATCH
           </Badge>
+          {/* Priority Badges removed for unified experience */}
         </div>
       </CardHeader>
 

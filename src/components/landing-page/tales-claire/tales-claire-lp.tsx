@@ -7,11 +7,16 @@ import { DeclarationsSection } from "./declarations-section";
 import { Footer } from "./footer";
 import { HeroSection } from "./hero-section";
 import { InspirationSection } from "./inspiration-section";
+import { Navbar } from "./navbar";
+import { PurposeSection } from "./purpose-section";
 import { StartLinksSection } from "./start-links-section";
 
 export const TalesClaireLP = () => {
   return (
     <div className="antialiased selection:bg-blue-500 selection:text-white min-h-screen relative text-neutral-200 font-sans bg-[#0a0a0a]">
+      {/* Navigation */}
+      <Navbar />
+
       {/* Background Animation */}
       <BackgroundCanvas />
 
@@ -28,6 +33,9 @@ export const TalesClaireLP = () => {
 
         {/* 3. Start Links */}
         <StartLinksSection />
+
+        {/* 4. Purpose Section */}
+        <PurposeSection />
 
         {/* 4. Reference Video & Explanation */}
         <InspirationSection />

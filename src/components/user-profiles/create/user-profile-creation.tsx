@@ -204,12 +204,14 @@ export const UserProfileCreation = (
                 戻る
               </button>
             ) : (
-              <Link
-                href="/"
-                className="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"
-              >
-                Topへ
-              </Link>
+              <div className="flex gap-4">
+                <Link
+                  href="/"
+                  className="group flex items-center gap-2 px-6 py-3 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 font-bold hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"
+                >
+                  はじまりの国へ戻る
+                </Link>
+              </div>
             )}
 
             {currentStep < STEPS.length ? (
@@ -222,7 +224,11 @@ export const UserProfileCreation = (
               </button>
             ) : (
               <button
-                onClick={() => alert("プロフィールを作成しました！（デモ）")}
+                onClick={() => {
+                  alert("プロフィールを作成しました！（デモ）");
+                  // Redirect to home which handles mode selection check
+                  window.location.href = "/home";
+                }}
                 className="group flex items-center gap-2 px-10 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-lg shadow-purple-200 dark:shadow-purple-900/30 hover:shadow-xl hover:-translate-y-0.5 hover:brightness-110 transition-all active:scale-95"
               >
                 <CheckCircle2 className="w-5 h-5" />
@@ -234,7 +240,10 @@ export const UserProfileCreation = (
 
         {/* Modals */}
         {showRatingHelp && (
-          <RatingHelpModal onClose={() => setShowRatingHelp(false)} />
+          <RatingHelpModal
+            onClose={() => setShowRatingHelp(false)}
+            context={currentStep === 5 ? "VALUES" : "WORKS"}
+          />
         )}
       </div>
     </div>

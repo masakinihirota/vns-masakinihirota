@@ -29,6 +29,7 @@ export interface UserType {
   subtitle: string;
   description: string;
   icon: ReactNode;
+  isSpecial?: boolean;
 }
 
 export interface Purpose {

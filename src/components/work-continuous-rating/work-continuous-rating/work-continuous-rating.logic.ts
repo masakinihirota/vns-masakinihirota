@@ -103,7 +103,18 @@ export const exportRatings = (
   });
 
   // フォーマット: [評価][タイトル]
-  const output = rated.map((i) => `[${i.rating}][${i.title}]`).join("\n");
+  const output = rated
+    .map((i) => {
+      // 事前にフィルタリングしているが型定義上nullが含まれるためチェック
+      if (!i.rating) return "";
+      const ratingStr =
+        typeof i.rating === "object"
+          ? `${i.rating.status}:${i.rating.value}`
+          : i.rating;
+      return `[${ratingStr}][${i.title}]`;
+    })
+    .filter((s) => s !== "")
+    .join("\n");
   const blob = new Blob([output], { type: "text/plain;charset=utf-8" });
   const url = URL.createObjectURL(blob);
 

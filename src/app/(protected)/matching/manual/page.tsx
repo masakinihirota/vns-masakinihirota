@@ -1,4 +1,4 @@
-import { ManualMatchingContainer } from "@/components/manual-matching";
+import { ManualMatching as ManualMatchingContainer } from "@/components/manual-matching";
 
 export const metadata = {
   title: "Manual Matching | VNS masakinihirota",

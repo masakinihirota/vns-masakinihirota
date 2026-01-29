@@ -9,6 +9,7 @@ import {
   ChevronRight,
   ArrowRight,
   Book,
+  Brain,
 } from "lucide-react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -35,11 +36,35 @@ export function PortalDashboard() {
           desc: "プロフィールの作成、または幽霊として観測を始める儀式ページ。",
           badge: "PickUp",
         },
+      ],
+    },
+    {
+      title: "🧠 思考と拡張",
+      description: "自己理解とアイデアの拡張ツール",
+      color: "from-pink-500/20 to-rose-500/20",
+      icon: <Brain className="text-pink-500" size={24} />,
+      routes: [
+        {
+          title: "曼荼羅チャート (AI)",
+          path: "/sample/mandala-chart-ai",
+          desc: "AIが思考をマッピング・拡張する新しい曼荼羅チャート。",
+          badge: "New",
+        },
         {
           title: "曼荼羅チャート",
           path: "/mandala-chart",
           desc: "深層心理や思考を81マスのグリッドで整理（プロフェッショナル版）。",
-          badge: "New",
+        },
+        {
+          title: "曼荼羅チャート (New Input)",
+          path: "/sample/mandala-chart-2",
+          desc: "テキストエディタと同期する新しい曼荼羅チャート入力V2。",
+          badge: "Dev",
+        },
+        {
+          title: "旧 曼荼羅チャート",
+          path: "/mandala-chart-legacy",
+          desc: "旧形式の曼荼羅チャート（互換用）。",
         },
       ],
     },
@@ -108,19 +133,9 @@ export function PortalDashboard() {
           desc: "手動で条件を指定してユーザーを検索。",
         },
         {
-          title: "価値観リスト",
-          path: "/values",
-          desc: "登録されている価値観の一覧と詳細。",
-        },
-        {
           title: "価値観の選定",
           path: "/values-selection",
           desc: "自分にとって重要な5つの価値観を定義する。",
-        },
-        {
-          title: "投票マッチ (Vote Match)",
-          path: "/vote-match",
-          desc: "社会・政治的価値観に基づく相性算出。",
         },
       ],
     },
@@ -200,11 +215,6 @@ export function PortalDashboard() {
       icon: <FlaskConical className="text-zinc-500" size={24} />,
       routes: [
         {
-          title: "ツール一覧",
-          path: "/tools",
-          desc: "開発者向けのユーティリティツール集。",
-        },
-        {
           title: "Onboarding PC",
           path: "/onboarding-pc",
           desc: "PC向けの没入型オンボーディング体験（Map UI）。",
@@ -216,25 +226,41 @@ export function PortalDashboard() {
           desc: "ゲーミフィケーションかスタンダードか、体験の質を選択。",
         },
         {
-          title: "旧 曼荼羅チャート",
-          path: "/tools/mandala-chart",
-          desc: "旧形式の曼荼羅チャート（互換用）。",
-        },
-        {
           title: "ランディングページ",
           path: "/landing-page",
           desc: "VNSプロジェクト全体のトップビューページ。",
         },
+      ],
+    },
+    {
+      title: "🧪 重複・サンプルページ確認",
+      description: "整理対象（重複・バックアップ・未使用）の確認用リンク",
+      color: "from-red-500/20 to-orange-500/20",
+      icon: <FlaskConical className="text-red-500" size={24} />,
+      routes: [
         {
-          title: "LP (テイルズ クレア編)",
-          path: "/landing-page/tales-claire",
-          desc: "「テイルズ オブ」シリーズをオマージュしたランディングページ案。",
-          badge: "BETA",
+          title: "マニュアルマッチング (1)",
+          path: "/manual-matching",
+          desc: "構成: src/app/(protected)/manual-matching",
+          badge: "重複A",
         },
         {
-          title: "レガシー・プロフィール",
-          path: "/user-profiles/new-legacy",
-          desc: "従来のプロフィール作成フォーム（参照用）。",
+          title: "マニュアルマッチング (2)",
+          path: "/matching/manual",
+          desc: "構成: src/app/(protected)/matching/manual",
+          badge: "重複B",
+        },
+        {
+          title: "マニュアルマッチング (3)",
+          path: "/matching-manual",
+          desc: "構成: src/app/(protected)/matching-manual",
+          badge: "重複C",
+        },
+        {
+          title: "オアシス宣言 (Final)",
+          path: "/oasis",
+          desc: "構成: src/app/(public)/oasis",
+          badge: "Unified",
         },
       ],
     },

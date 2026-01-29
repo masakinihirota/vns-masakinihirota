@@ -1,4 +1,5 @@
 import { Search, Loader2 } from "lucide-react";
+import { useRef, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -20,22 +21,30 @@ export function SearchScreen({ onSelect, onManualCreate }: SearchScreenProps) {
     setCategory,
     isSearching,
     dbResults,
+    displayedResults,
+    hasMore,
+    loadMore,
     aiResults,
     handleSearch,
   } = useWorkSearch();
 
-  // Filter DB results based on query (client-side filtering for better UX if needed, or rely on hook)
-  // Assuming dbResults from hook might already be filtered if the hook handles it efficiently for "registered works".
-  // If the hook only returns DB matches for the query, we might need to fetch ALL for the "default right column" view if query is empty.
-  // However, typically `dbResults` in search hooks returns matches.
-  // Requirement says: "When query is empty: Show all registered works on Right."
-  // If the current hook only searches when query exists, we might need to adjust or assume the hook returns 'initial' list.
-  // Let's assume for this specific UI requirement, we show what we have.
-  // If query is empty, displaying "All" might require a separate fetch or hook adjustment if not already provided.
-  // For now, we'll try to use existing props. If dbResults is empty when no query, we might need a "Recent" or "All" list.
-  // Given the constraints and typical "search" behavior, let's focus on the layout structure first.
-  // IMPORTANT: The requirements imply we need a list of registered works *always* visible or filtered.
-  // We'll place `dbResults` in the right column.
+  // Simple infinite scroll trigger using callback ref
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastElementRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isSearching) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          loadMore();
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isSearching, hasMore, loadMore]
+  );
 
   return (
     <div className="animate-in fade-in duration-500 h-full">
@@ -147,7 +156,7 @@ export function SearchScreen({ onSelect, onManualCreate }: SearchScreenProps) {
                 <Skeleton className="h-32 w-full rounded-xl" />
                 <Skeleton className="h-32 w-full rounded-xl" />
               </div>
-            ) : dbResults.length > 0 ? (
+            ) : query && dbResults.length > 0 ? (
               <div className="space-y-4">
                 <h3 className="text-sm font-bold text-green-600 uppercase tracking-wider flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-green-500" />
@@ -217,16 +226,34 @@ export function SearchScreen({ onSelect, onManualCreate }: SearchScreenProps) {
             {/* If query exists, we might want to show filtered list.
                              Based on current mock/hook implementation, dbResults likely contains matches.
                              We simply display what we have. */}
-            {dbResults.length > 0 ? (
-              <div className="grid gap-4">
-                {dbResults.map((work) => (
-                  <WorkCard
-                    key={work.id}
-                    work={work}
-                    onClick={() => onSelect(work)}
-                    source="db"
-                  />
-                ))}
+            {displayedResults.length > 0 ? (
+              <div className="grid gap-4 pb-4">
+                {displayedResults.map((work, index) => {
+                  if (index === displayedResults.length - 1) {
+                    return (
+                      <div key={work.id} ref={lastElementRef}>
+                        <WorkCard
+                          work={work}
+                          onClick={() => onSelect(work)}
+                          source="db"
+                        />
+                      </div>
+                    );
+                  }
+                  return (
+                    <WorkCard
+                      key={work.id}
+                      work={work}
+                      onClick={() => onSelect(work)}
+                      source="db"
+                    />
+                  );
+                })}
+                {hasMore && (
+                  <div className="flex justify-center py-4 text-slate-400">
+                    <Loader2 className="animate-spin w-5 h-5" />
+                  </div>
+                )}
               </div>
             ) : (
               <div className="text-center py-10 text-slate-500">

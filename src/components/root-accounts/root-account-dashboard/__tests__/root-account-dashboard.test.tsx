@@ -103,12 +103,12 @@ describe("RootAccountDashboard", () => {
   });
 
   describe("セクション別編集機能", () => {
-    it("言語設定の編集ボタンが機能する", () => {
+    it("言語の編集ボタンが機能する", () => {
       render(<RootAccountDashboard data={dummyRootAccountData} />);
 
       const editButtons = screen.getAllByRole("button", { name: /編集/i });
       const languageEditButton = editButtons.find((btn) =>
-        btn.closest("div")?.textContent?.includes("言語設定")
+        btn.closest("div")?.textContent?.includes("言語")
       );
 
       expect(languageEditButton).toBeDefined();

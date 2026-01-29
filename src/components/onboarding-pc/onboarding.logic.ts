@@ -22,7 +22,7 @@ export const useOnboarding = () => {
   const [selectedCountry, setSelectedCountry] = useState<string>("");
   const [selectedRegion, setSelectedRegion] = useState<string>("");
 
-  // 言語設定用のState
+  // 言語用のState
   const [nativeLanguage, setNativeLanguage] = useState<string>("");
   const [availableLanguages, setAvailableLanguages] = useState<string[]>([]);
 

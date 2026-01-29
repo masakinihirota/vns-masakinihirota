@@ -159,33 +159,5 @@
     "group": "footer",
     "order": 50,
     "visibleInMenu": false
-  },
-  {
-    "path": "/user-profiles/prototypes/simple",
-    "label": "Proto 1: Simple",
-    "group": "more",
-    "order": 100,
-    "visibleInMenu": true
-  },
-  {
-    "path": "/user-profiles/prototypes/ui-view",
-    "label": "Proto 2: UI View",
-    "group": "more",
-    "order": 101,
-    "visibleInMenu": true
-  },
-  {
-    "path": "/user-profiles/prototypes/complex",
-    "label": "Proto 3: Complex",
-    "group": "more",
-    "order": 102,
-    "visibleInMenu": true
-  },
-  {
-    "path": "/user-profiles/prototypes/creation",
-    "label": "Proto 4: Creation",
-    "group": "more",
-    "order": 103,
-    "visibleInMenu": true
   }
 ]

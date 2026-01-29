@@ -28,8 +28,16 @@ HTMLCanvasElement.prototype.getContext = vi.fn(() => ({
 describe("TalesClaireLP", () => {
   it("should render successfully", () => {
     render(<TalesClaireLP />);
-    expect(screen.getByText("VNS masakinihirota")).toBeInTheDocument();
+    const heading = screen.getByRole("heading", { level: 1 });
+    expect(heading).toHaveTextContent("VNS");
+    expect(heading).toHaveTextContent("masakinihirota");
     expect(screen.getByText(/昨日僕が感動した作品を/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/まっさきにひろった の名前の由来/i)
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/インターネットという情報の洪水の中から/i)
+    ).toBeInTheDocument();
   });
 
   it("should have no accessibility violations", async () => {

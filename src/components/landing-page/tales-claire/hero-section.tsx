@@ -10,7 +10,9 @@ export const HeroSection = () => {
           Value Network Service
         </p>
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white font-serif">
-          VNS masakinihirota
+          VNS
+          <br className="block" />
+          masakinihirota
         </h1>
       </div>
 
@@ -21,6 +23,15 @@ export const HeroSection = () => {
         <br className="md:hidden" />
         今日の君はまだ知らない。」
       </h2>
+
+      <div className="space-y-4 font-serif">
+        <p className="text-sm md:text-base text-gray-400">
+          まっさきにひろった の名前の由来
+        </p>
+        <p className="text-xs md:text-sm text-gray-400 max-w-2xl">
+          インターネットという情報の洪水の中から真っ先に価値のあるものを拾い上げる
+        </p>
+      </div>
 
       <style jsx>{`
         .font-serif {

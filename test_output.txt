@@ -1,0 +1,97 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.15 [39m[90mU:/2026src/vns-masakinihirota.worktrees/anti[39m
+
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+Not implemented: HTMLCanvasElement's getContext() method: without installing the canvas npm package
+ [31m笶ｯ[39m src/components/tmp_AutoMatching2.test.tsx [2m([22m[2m3 tests[22m[2m | [22m[31m3 failed[39m[2m)[22m[33m 2106[2mms[22m[39m
+[31m     [31mﾃ・[31m should have no accessibility violations on initial render[39m[33m 948[2mms[22m[39m
+[31m     [31mﾃ・[31m should have no violations when sidebar is collapsed[39m[33m 591[2mms[22m[39m
+[31m     [31mﾃ・[31m should have no violations in dark mode[39m[33m 564[2mms[22m[39m
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Tests 3 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+
+ FAIL  src/components/tmp_AutoMatching2.test.tsx > AutoMatching2 Accessibility > should have no accessibility violations on initial render
+Error: expect(received).toHaveNoViolations(expected)
+
+Expected the HTML found at $('.w-72') to have no violations:
+
+<aside class="w-72 bg-white/95 backdrop-blur-xl border-r border-slate-200 dark:bg-[#0B0F1A]/95 dark:border-white/5 flex flex-col shrink-0 transition-all duration-300 relative z-20">
+
+Received:
+
+"Landmarks should have a unique role or role/label/title (i.e. accessible name) combination (landmark-unique)"
+
+Fix any of the following:
+  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable
+
+You can find more information on this issue here: 
+https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=axeAPI
+ 笶ｯ src/components/tmp_AutoMatching2.test.tsx:17:25
+
+     15|         const { container } = render(<AutoMatching2 />);
+     16|         const results = await axe(container);
+     17|         expect(results).toHaveNoViolations();
+       |                         ^
+     18|     });
+     19| 
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m3 failed[39m[22m[90m (3)[39m
+[2m   Start at [22m 01:09:00
+[2m   Duration [22m 4.88s[2m (transform 174ms, setup 250ms, import 1.04s, tests 2.11s, environment 1.19s)[22m
+
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/3]竡ｯ
+
+ FAIL  src/components/tmp_AutoMatching2.test.tsx > AutoMatching2 Accessibility > should have no violations when sidebar is collapsed
+Error: expect(received).toHaveNoViolations(expected)
+
+Expected the HTML found at $('.w-20') to have no violations:
+
+<aside class="w-20 bg-white/95 backdrop-blur-xl border-r border-slate-200 dark:bg-[#0B0F1A]/95 dark:border-white/5 flex flex-col shrink-0 transition-all duration-300 relative z-20">
+
+Received:
+
+"Landmarks should have a unique role or role/label/title (i.e. accessible name) combination (landmark-unique)"
+
+Fix any of the following:
+  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable
+
+You can find more information on this issue here: 
+https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=axeAPI
+ 笶ｯ src/components/tmp_AutoMatching2.test.tsx:29:25
+     27| 
+     28|         const results = await axe(container);
+     29|         expect(results).toHaveNoViolations();
+       |                         ^
+     30|     });
+     31| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[2/3]竡ｯ
+
+ FAIL  src/components/tmp_AutoMatching2.test.tsx > AutoMatching2 Accessibility > should have no violations in dark mode
+Error: expect(received).toHaveNoViolations(expected)
+
+Expected the HTML found at $('.w-72') to have no violations:
+
+<aside class="w-72 bg-white/95 backdrop-blur-xl border-r border-slate-200 dark:bg-[#0B0F1A]/95 dark:border-white/5 flex flex-col shrink-0 transition-all duration-300 relative z-20">
+
+Received:
+
+"Landmarks should have a unique role or role/label/title (i.e. accessible name) combination (landmark-unique)"
+
+Fix any of the following:
+  The landmark must have a unique aria-label, aria-labelledby, or title to make landmarks distinguishable
+
+You can find more information on this issue here: 
+https://dequeuniversity.com/rules/axe/4.11/landmark-unique?application=axeAPI
+ 笶ｯ src/components/tmp_AutoMatching2.test.tsx:38:25
+     36| 
+     37|         const results = await axe(container);
+     38|         expect(results).toHaveNoViolations();
+       |                         ^
+     39|     });
+     40| });
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[3/3]竡ｯ
+
