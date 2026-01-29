@@ -1,25 +1,88 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import { GhostOverlay } from "./ghost-overlay";
+
+interface DialogState {
+  show: boolean;
+  title: string;
+  message: string;
+}
+
+interface GameState {
+  x: number;
+  y: number;
+  hasMap?: boolean;
+  dialog?: DialogState;
+}
 
 export const GameCanvas = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const gameRef = useRef<any>(null);
+  const initializingRef = useRef(false);
+
+  const [playerPosition, setPlayerPosition] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
+  const [hasMap, setHasMap] = useState(false);
+  const [dialog, setDialog] = useState<DialogState | null>(null);
+
+  const dialogShownRef = useRef<string | null>(null);
+
+  const handleCloseDialog = useCallback(() => {
+    setDialog(null);
+    dialogShownRef.current = null;
+  }, []);
+
+  // キーボードイベント（Enter/Spaceでダイアログを閉じる）
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (dialog?.show) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleCloseDialog();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [dialog, handleCloseDialog]);
 
   useEffect(() => {
     const initGame = async () => {
-      if (typeof window !== "undefined" && !gameRef.current) {
+      // 初期化中または初期化済みの場合はスキップ
+      if (initializingRef.current || gameRef.current) {
+        return;
+      }
+
+      if (typeof window === "undefined" || !containerRef.current) {
+        return;
+      }
+
+      initializingRef.current = true;
+
+      try {
         const Phaser = (await import("phaser")).default;
         const { createMainSceneClass } = await import("./scenes/MainScene");
         const MainScene = await createMainSceneClass();
-        const config: any = {
+
+        // 再度チェック（非同期処理中に状態が変わった場合）
+        if (gameRef.current) {
+          initializingRef.current = false;
+          return;
+        }
+
+        const config: Phaser.Types.Core.GameConfig = {
           type: Phaser.AUTO,
-          parent: "phaser-game",
+          parent: containerRef.current,
           width: 800,
-          height: 600,
+          height: 576,
           physics: {
             default: "arcade",
             arcade: {
-              gravity: { y: 0, x: 0 }, // No gravity for top-down
+              gravity: { y: 0, x: 0 },
               debug: false,
             },
           },
@@ -27,7 +90,33 @@ export const GameCanvas = () => {
           backgroundColor: "#1a1a1a",
         };
 
-        gameRef.current = new Phaser.Game(config);
+        const game = new Phaser.Game(config);
+        gameRef.current = game;
+
+        game.events.once("ready", () => {
+          const scene = game.scene.getScene("MainScene") as any;
+          if (scene && scene.setUpdateCallback) {
+            scene.setUpdateCallback((state: GameState) => {
+              setPlayerPosition({ x: state.x, y: state.y });
+
+              if (state.hasMap) {
+                setHasMap(true);
+              }
+
+              if (state.dialog?.show) {
+                const dialogKey = state.dialog.title + state.dialog.message;
+                if (dialogShownRef.current !== dialogKey) {
+                  dialogShownRef.current = dialogKey;
+                  setDialog(state.dialog);
+                }
+              }
+            });
+          }
+        });
+      } catch (error) {
+        console.error("Failed to initialize Phaser game:", error);
+      } finally {
+        initializingRef.current = false;
       }
     };
 
@@ -38,13 +127,19 @@ export const GameCanvas = () => {
         gameRef.current.destroy(true);
         gameRef.current = null;
       }
+      initializingRef.current = false;
     };
   }, []);
 
   return (
-    <div
-      id="phaser-game"
-      className="rounded-lg overflow-hidden shadow-2xl border border-white/10"
-    />
+    <div className="relative rounded-lg overflow-hidden shadow-2xl border border-white/10 group">
+      <div ref={containerRef} style={{ width: 800, height: 576 }} />
+      <GhostOverlay
+        playerPosition={playerPosition}
+        hasMap={hasMap}
+        dialog={dialog}
+        onCloseDialog={handleCloseDialog}
+      />
+    </div>
   );
 };
