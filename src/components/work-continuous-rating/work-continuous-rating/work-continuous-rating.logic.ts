@@ -93,8 +93,7 @@ export const saveRatingsToStorage = (
  */
 export const exportRatings = (
   category: "anime" | "manga",
-  ratings: Record<string, Rating>,
-
+  ratings: Record<string, Rating>
 ) => {
   const rated: ItemRating[] = [];
   Object.keys(ratings).forEach((title) => {

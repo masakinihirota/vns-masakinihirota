@@ -1,6 +1,5 @@
 import fs from "fs";
 
-
 export interface WorkSeedData {
   title: string;
   author?: string;

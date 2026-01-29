@@ -138,12 +138,10 @@ export const ManualMatching = () => {
     CATEGORIES.map((c) => c.id)
   );
 
-
   // プロフィールごとの状態管理 { [profileId]: User[] }
   const [candidatesPerProfile, setCandidatesPerProfile] = useState<
     Record<string, any[]>
   >({});
-
 
   const [view, setView] = useState("setup");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -303,10 +301,11 @@ export const ManualMatching = () => {
             <button
               key={profile.id}
               onClick={() => handleProfileSwitch(profile.id)}
-              className={`w-full text-left p-2.5 rounded-xl transition-all border flex items-start gap-3 ${selectedProfileId === profile.id
-                ? "bg-indigo-600 border-indigo-600 text-white shadow-md"
-                : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
-                } ${isSidebarCollapsed ? "justify-center items-center" : ""}`}
+              className={`w-full text-left p-2.5 rounded-xl transition-all border flex items-start gap-3 ${
+                selectedProfileId === profile.id
+                  ? "bg-indigo-600 border-indigo-600 text-white shadow-md"
+                  : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
+              } ${isSidebarCollapsed ? "justify-center items-center" : ""}`}
             >
               <span className="text-2xl shrink-0 mt-1">{profile.icon}</span>
               {!isSidebarCollapsed && (
@@ -458,10 +457,11 @@ export const ManualMatching = () => {
             <button
               onClick={startMatching}
               disabled={selectedCategories.length === 0}
-              className={`w-full py-4 rounded-xl font-black text-lg shadow-lg transition-all flex items-center justify-center gap-3 transform hover:-translate-y-0.5 active:scale-95 ${selectedCategories.length > 0
-                ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200"
-                : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
-                }`}
+              className={`w-full py-4 rounded-xl font-black text-lg shadow-lg transition-all flex items-center justify-center gap-3 transform hover:-translate-y-0.5 active:scale-95 ${
+                selectedCategories.length > 0
+                  ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200"
+                  : "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none"
+              }`}
             >
               <Play fill="currentColor" size={20} /> マッチングを開始
             </button>
@@ -582,10 +582,11 @@ export const ManualMatching = () => {
                   <button
                     key={c.id}
                     onClick={() => toggleCategory(c.id)}
-                    className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm ${selectedCategories.includes(c.id)
-                      ? "bg-indigo-600 text-white border-indigo-700 ring-2 ring-indigo-100"
-                      : "bg-slate-100 text-slate-400 border-transparent hover:bg-slate-200 hover:text-slate-600"
-                      }`}
+                    className={`flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs font-bold transition-all shadow-sm ${
+                      selectedCategories.includes(c.id)
+                        ? "bg-indigo-600 text-white border-indigo-700 ring-2 ring-indigo-100"
+                        : "bg-slate-100 text-slate-400 border-transparent hover:bg-slate-200 hover:text-slate-600"
+                    }`}
                   >
                     {/* アイコンを表示して識別しやすく */}
                     {React.cloneElement(c.icon, { size: 14 })}
@@ -780,10 +781,11 @@ export const ManualMatching = () => {
                 setSelectedMatchedUserId(user.id);
                 if (view !== "compare") setView("compare");
               }}
-              className={`w-full text-left p-2.5 rounded-xl transition-all border flex items-start gap-3 ${selectedMatchedUserId === user.id
-                ? "bg-indigo-50 border-indigo-200 text-indigo-900 shadow-sm"
-                : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
-                } ${isRightSidebarCollapsed ? "justify-center" : ""}`}
+              className={`w-full text-left p-2.5 rounded-xl transition-all border flex items-start gap-3 ${
+                selectedMatchedUserId === user.id
+                  ? "bg-indigo-50 border-indigo-200 text-indigo-900 shadow-sm"
+                  : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
+              } ${isRightSidebarCollapsed ? "justify-center" : ""}`}
             >
               <div
                 className={`w-8 h-8 ${user.color} rounded-lg flex items-center justify-center text-white text-sm shrink-0 shadow-sm`}

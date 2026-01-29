@@ -24,7 +24,6 @@ export const AutoMatchingContainer = () => {
   const [processLimit, setProcessLimit] = useState(3); // 人数指定用
   const [scoreThreshold, setScoreThreshold] = useState(2); // スコア指定用
 
-
   const [watchedUsersPerProfile, setWatchedUsersPerProfile] = useState<
     Record<string, UserProfile[]>
   >({});
