@@ -2,7 +2,6 @@ import { render } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { UserProfileCreation } from "./user-profile-creation";
-import { useUserProfileCreation } from "./user-profile-creation.logic";
 
 // Mock the hook to provide controlled state
 vi.mock("./user-profile-creation.logic");

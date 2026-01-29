@@ -1,6 +1,5 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 // Reuse existing components where possible
@@ -35,6 +34,15 @@ export function OnboardingTrialForm({}: OnboardingTrialFormProps) {
     birth_generation: "",
     // Trial specific
     is_trial: true,
+    week_schedule: {
+      mon: "BUSY",
+      tue: "BUSY",
+      wed: "BUSY",
+      thu: "BUSY",
+      fri: "BUSY",
+      sat: "MATCH",
+      sun: "MATCH",
+    },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 

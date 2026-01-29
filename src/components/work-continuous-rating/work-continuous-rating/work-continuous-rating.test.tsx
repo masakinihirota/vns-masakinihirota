@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { axe } from "vitest-axe";
 import { WorkContinuousRating } from "./work-continuous-rating";
-import { Rating, RatingValue } from "./work-continuous-rating.logic";
+import { Rating } from "./work-continuous-rating.logic";
 
 describe("WorkContinuousRating UI", () => {
   const defaultProps = {

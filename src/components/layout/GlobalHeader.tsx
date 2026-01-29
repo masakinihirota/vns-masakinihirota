@@ -10,7 +10,6 @@ import {
   Megaphone,
   Coins,
   HelpCircle,
-  LogIn,
   MonitorSmartphone,
   ArrowRight,
 } from "lucide-react";
@@ -410,11 +409,13 @@ export function GlobalHeader({
 
   React.useEffect(() => {
     const supabase = createClient();
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    // Check initial session
+    void supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
       setLoading(false);
     });
 
+    // Listen for auth changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -430,6 +431,26 @@ export function GlobalHeader({
         {/* 左側: サイドバートリガー & ロゴエリア */}
         <div className="flex items-center gap-2">
           {showSidebarTrigger && <SidebarTrigger className="-ml-1" />}
+          {process.env.NODE_ENV === "development" && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  asChild
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <Link href="/dev-dashboard">
+                    <MonitorSmartphone className="h-4 w-4" />
+                    <span className="sr-only">Dev Dashboard</span>
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Dev Dashboard (Development Only)</p>
+              </TooltipContent>
+            </Tooltip>
+          )}
         </div>
 
         {/* 中央: 検索バー (ログイン時のみ) */}

@@ -1,4 +1,5 @@
 import { execSync } from "child_process";
+/* eslint-disable no-console */
 import { createClient } from "@supabase/supabase-js";
 
 function getSupabaseConfig() {

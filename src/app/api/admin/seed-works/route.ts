@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { parseAnimeData, parseMangaData } from "@/lib/works/seed-utils";
 
-export async function POST(req: NextRequest) {
+export async function POST(_req: NextRequest) {
   const supabase = await createClient();
 
   // Ideally verify admin here, but for now we trust the caller (dev only)

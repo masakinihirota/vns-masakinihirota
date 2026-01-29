@@ -29,8 +29,8 @@
     "**/*.tsx",
     "**/*.mts",
     ".next/types/**/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    "node_modules/phaser/types"
   ],
-  "exclude": ["node_modules", ".next", "_trash"],
-  "types": ["vitest/globals", "node"]
+  "exclude": ["node_modules", ".next", "_trash"]
 }

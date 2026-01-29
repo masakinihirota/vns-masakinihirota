@@ -1,14 +1,10 @@
 "use client";
 
 import {
-  User,
-  Users,
   Play,
   Eye,
   UserPlus,
-  UserMinus,
   ArrowRightLeft,
-  Info,
   Layers,
   Search,
   Check,
@@ -22,27 +18,14 @@ import {
   Tag,
   Circle,
   CheckSquare,
-  Square,
-  ToggleLeft,
-  ToggleRight,
-  ArrowLeft,
-  CheckCircle,
   UserCheck,
   Settings2,
   Globe,
   LayoutDashboard,
   ClipboardList,
+  CheckCircle,
 } from "lucide-react";
 import React, { useState, useMemo } from "react";
-
-// --- 定数 ---
-const PURPOSE_OPTIONS = [
-  "創る・働く",
-  "遊ぶ",
-  "パートナー探し",
-  "相談",
-  "その他",
-];
 
 // --- モックデータ ---
 const MY_PROFILES = [
@@ -154,16 +137,9 @@ export const ManualMatching = () => {
   const [selectedCategories, setSelectedCategories] = useState(
     CATEGORIES.map((c) => c.id)
   );
-  const [isMatching, setIsMatching] = useState(false);
 
   // プロフィールごとの状態管理 { [profileId]: User[] }
   const [candidatesPerProfile, setCandidatesPerProfile] = useState<
-    Record<string, any[]>
-  >({});
-  const [watchedPerProfile, setWatchedPerProfile] = useState<
-    Record<string, any[]>
-  >({});
-  const [followedPerProfile, setFollowedPerProfile] = useState<
     Record<string, any[]>
   >({});
 
@@ -189,7 +165,7 @@ export const ManualMatching = () => {
 
   // ハンドラー
   const startMatching = () => {
-    setIsMatching(true);
+    // setIsMatching(true);
     setView("matching");
 
     setTimeout(() => {
@@ -201,7 +177,7 @@ export const ManualMatching = () => {
         [selectedProfileId]: picked,
       }));
 
-      setIsMatching(false);
+      // setIsMatching(false);
       setView("prompt");
     }, 1500);
   };
@@ -245,6 +221,8 @@ export const ManualMatching = () => {
       ),
     }));
 
+    /*
+    // Unused state logic removed
     if (type === "watch") {
       setWatchedPerProfile((prev) => ({
         ...prev,
@@ -256,11 +234,14 @@ export const ManualMatching = () => {
         [selectedProfileId]: [...(prev[selectedProfileId] || []), userToMove],
       }));
     }
+    */
 
     if (selectedMatchedUserId === userId) setSelectedMatchedUserId(null);
   };
 
   const handleAllAction = (type: "watch" | "follow") => {
+    /*
+    // Unused state logic removed
     if (type === "watch") {
       setWatchedPerProfile((prev) => ({
         ...prev,
@@ -278,6 +259,7 @@ export const ManualMatching = () => {
         ],
       }));
     }
+    */
     setCandidatesPerProfile((prev) => ({ ...prev, [selectedProfileId]: [] }));
     setView("setup");
   };

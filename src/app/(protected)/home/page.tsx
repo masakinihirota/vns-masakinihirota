@@ -38,8 +38,7 @@ export default async function DashboardPage() {
   }
 
   // プロフィール存在チェック
-  const profiles = rootAccountId ? await getUserProfiles(rootAccountId) : [];
-  const hasProfile = profiles.length > 0;
+  // const profiles = rootAccountId ? await getUserProfiles(rootAccountId) : [];
 
   return (
     <div className="flex flex-col gap-12">

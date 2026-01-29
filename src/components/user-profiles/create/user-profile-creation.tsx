@@ -1,11 +1,4 @@
-import {
-  ArrowLeft,
-  ArrowRight,
-  CheckCircle2,
-  ChevronRight,
-  User,
-  AlertCircle,
-} from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { Step1RoleType } from "./steps/step-1-role-type";

@@ -1,5 +1,6 @@
 import { AlertCircle } from "lucide-react";
 import React from "react";
+import { WeekScheduler } from "@/components/ui/week-scheduler";
 import { timeToHours } from "@/lib/root-account-utils";
 import { DailyScheduleEditor } from "./daily-schedule-editor";
 
@@ -56,6 +57,25 @@ export const Step2HoursPC: React.FC<Step2HoursPCProps> = ({
           主に活動する時間帯を設定してください。マッチング等の参考にされます。
         </p>
       </div>
+
+      {/* Week Schedule */}
+      {data.week_schedule && (
+        <div className="mb-8 p-6 bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700">
+          <div className="mb-6">
+            <h3 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span className="w-1 h-6 bg-indigo-500 rounded-full"></span>
+              週間リズム (Weekly Rhythm)
+            </h3>
+            <p className="text-sm text-slate-500 mt-1 ml-3">
+              曜日ごとの基本的な活動ステータスを設定します。
+            </p>
+          </div>
+          <WeekScheduler
+            value={data.week_schedule}
+            onChange={(val) => onUpdate({ week_schedule: val })}
+          />
+        </div>
+      )}
 
       {/* Work Schedule */}
       <div className="space-y-4">

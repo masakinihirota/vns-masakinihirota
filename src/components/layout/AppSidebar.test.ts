@@ -1,5 +1,6 @@
 import { Home } from "lucide-react";
 import { describe, it, expect } from "vitest";
+import { vi } from "vitest";
 import { ICON_MAP, iconFor } from "@/config/menu-icons";
 import manifest from "@/config/routes.manifest.json";
 import {
@@ -7,6 +8,21 @@ import {
   mapPathToFeature,
   getMenuItemsWithState,
 } from "./AppSidebar";
+
+// Mock Lv制状態ロジック (テスト用)
+vi.mock("@/lib/tutorial/tutorial", () => ({
+  getMenuItemState: (feature: string, level: number) => {
+    if (feature === "matching") return level >= 3 ? "unlocked" : "grayed";
+    if (feature === "skills") {
+      if (level < 10) return "hidden";
+      if (level < 12) return "grayed";
+      return "unlocked";
+    }
+    if (feature === "nations") return level >= 5 ? "unlocked" : "grayed";
+    return "unlocked";
+  },
+  getMenuUnlockTip: () => "",
+}));
 
 describe("AppSidebar manifest integration", () => {
   it("should have icon mapping for each visible menu route in manifest", () => {

@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 
@@ -50,7 +49,7 @@ export async function registerWork(
     };
   }
 
-  const { title, author, category, description } = validatedFields.data;
+  const { title, author, category } = validatedFields.data;
 
   const { error } = await supabase.from("works").insert({
     title,

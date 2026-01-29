@@ -61,6 +61,15 @@ export function OnboardingPCForm({
     agreed_system_creator: false,
     // Pre-fill from initialData
     zodiac_sign: initialData?.constellation,
+    week_schedule: {
+      mon: "BUSY",
+      tue: "BUSY",
+      wed: "BUSY",
+      thu: "BUSY",
+      fri: "BUSY",
+      sat: "MATCH",
+      sun: "MATCH",
+    },
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 

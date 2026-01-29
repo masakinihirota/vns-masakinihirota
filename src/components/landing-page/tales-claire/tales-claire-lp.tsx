@@ -1,7 +1,8 @@
 "use client";
 
+import { MonitorSmartphone } from "lucide-react";
+import Link from "next/link";
 import {
-  GlobalHeader,
   AdToggle,
   LanguageToggle,
   ThemeToggle,
@@ -9,8 +10,14 @@ import {
   TrialButton,
   LoginButton,
 } from "@/components/layout/GlobalHeader";
+import { Button } from "@/components/ui/button";
 import { SidebarProvider } from "@/components/ui/sidebar";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { TrialEntrySection } from "../trial-entry";
 import { BackgroundCanvas } from "./background-canvas";
 import { ConceptSection } from "./concept-section";
@@ -26,6 +33,32 @@ export const TalesClaireLP = () => {
       <div className="antialiased selection:bg-blue-500 selection:text-white min-h-screen relative text-foreground font-sans bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:bg-[#0a0a0a] dark:bg-none w-full transition-colors duration-500">
         {/* Header (No Sidebar Trigger) - User requested removal */}
         {/* <GlobalHeader showSidebarTrigger={false} /> */}
+
+        {/* Top Left Dev Link (Development Only) */}
+        {process.env.NODE_ENV === "development" && (
+          <div className="absolute top-4 left-4 z-50">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    asChild
+                    className="text-muted-foreground hover:text-foreground"
+                  >
+                    <Link href="/dev-dashboard">
+                      <MonitorSmartphone className="h-6 w-6" />
+                      <span className="sr-only">Dev Dashboard</span>
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Dev Dashboard (Development Only)</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
 
         {/* Top Right Utility Buttons and Actions */}
         <div className="absolute top-4 right-4 z-50 flex items-center gap-2">

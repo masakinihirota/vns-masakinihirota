@@ -20,7 +20,7 @@ export const WorkContinuousRatingContainer: React.FC = () => {
   const [ratings, setRatings] = useState<Record<string, Rating>>({});
 
   // Session State
-  const [fullList, setFullList] = useState<string[]>([]);
+
   const [sessionList, setSessionList] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [sessionSize, setSessionSize] = useState<number | "all" | null>(null);
@@ -47,7 +47,7 @@ export const WorkContinuousRatingContainer: React.FC = () => {
       try {
         const data =
           category === "anime" ? await loadAnimeData() : await loadMangaData();
-        setFullList(data);
+        // setFullList(data); // Removed unused state setter
 
         const saved = getRatingsFromStorage(category, patternId);
         setRatings(saved);
@@ -87,7 +87,7 @@ export const WorkContinuousRatingContainer: React.FC = () => {
       // ただし value が '後で見る' の場合は Status=Future に強制するなど整合性を取る
 
       let statusToSave = currentStatus;
-      let valueToSave = value;
+      const valueToSave = value;
 
       if (value === "後で見る") {
         statusToSave = "Future";
@@ -164,7 +164,7 @@ export const WorkContinuousRatingContainer: React.FC = () => {
   // エクスポート
   const handleExport = useCallback(() => {
     if (!category) return;
-    exportRatings(category, ratings, patternId);
+    exportRatings(category, ratings);
     setAnnouncement("評価データをエクスポートしました");
   }, [category, ratings]);
 

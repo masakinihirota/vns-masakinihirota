@@ -166,7 +166,7 @@ export const Step5Values = ({
       >
         {/* Header */}
         <div
-          onClick={(e) => {
+          onClick={() => {
             // Toggle Open
             setOpenQuestionId(isOpen ? null : q.id);
           }}

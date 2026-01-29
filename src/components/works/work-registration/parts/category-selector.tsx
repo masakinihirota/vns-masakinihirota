@@ -1,12 +1,7 @@
 import { Folder } from "lucide-react";
 import React from "react";
 import { Control, ControllerRenderProps } from "react-hook-form";
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { WorkFormValues, CATEGORIES } from "../work-registration.logic";
