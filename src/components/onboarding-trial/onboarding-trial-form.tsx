@@ -7,17 +7,20 @@ import { Step1ResidencePC } from "@/components/onboarding-pc/steps/step1-residen
 import { Step2HoursPC } from "@/components/onboarding-pc/steps/step2-hours-pc";
 import { Step4LanguagePC } from "@/components/onboarding-pc/steps/step4-language-pc";
 import { OnboardingSidebarTrial } from "@/components/onboarding-trial/ui/onboarding-sidebar-trial";
+import { TrialStorage, type TrialRootAccount } from "@/lib/trial-storage";
 import { StepConfirmationTrial } from "./steps/step-confirmation-trial";
 // New components for trial
 import { StepDeclarationsTrial } from "./steps/step-declarations-trial";
 import { Step3IdentityTrial } from "./steps/step3-identity-trial";
 
-interface OnboardingTrialFormProps {}
+type TrialFormData = Omit<TrialRootAccount, "display_name" | "created_at"> & {
+  is_trial: boolean;
+};
 
-export function OnboardingTrialForm({}: OnboardingTrialFormProps) {
+export function OnboardingTrialForm() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
-  const [formData, setFormData] = useState<any>({
+  const [formData, setFormData] = useState<TrialFormData>({
     // Initial state
     activity_area_id: null,
     core_activity_start: "09:00",
@@ -46,8 +49,8 @@ export function OnboardingTrialForm({}: OnboardingTrialFormProps) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleUpdate = (data: any) => {
-    setFormData((prev: any) => ({ ...prev, ...data }));
+  const handleUpdate = (data: Partial<TrialFormData>) => {
+    setFormData((prev) => ({ ...prev, ...data }));
   };
 
   const nextStep = () => {
@@ -61,22 +64,32 @@ export function OnboardingTrialForm({}: OnboardingTrialFormProps) {
       // Simulate API call delay
       await new Promise((resolve) => setTimeout(resolve, 800));
 
-      // Generate Constellation Name (simple random logic for now)
       const constellationName = `${formData.zodiac_sign || "Star"}-${Math.floor(Math.random() * 1000)}`;
 
-      const trialProfile = {
-        ...formData,
+      const trialRootAccount: TrialRootAccount = {
+        display_id: formData.display_id,
         display_name: constellationName,
+        activity_area_id: formData.activity_area_id,
+        core_activity_start: formData.core_activity_start,
+        core_activity_end: formData.core_activity_end,
+        holidayActivityStart: formData.holidayActivityStart,
+        holidayActivityEnd: formData.holidayActivityEnd,
+        uses_ai_translation: formData.uses_ai_translation,
+        nativeLanguages: formData.nativeLanguages,
+        agreed_oasis: formData.agreed_oasis,
+        zodiac_sign: formData.zodiac_sign,
+        birth_generation: formData.birth_generation,
+        week_schedule: formData.week_schedule,
         created_at: new Date().toISOString(),
       };
 
-      // Save to localStorage
-      localStorage.setItem("vns_trial_profile", JSON.stringify(trialProfile));
+      // Save to localStorage using utility
+      TrialStorage.setRootAccount(trialRootAccount);
 
       alert(`体験版登録完了！\nあなたの星座名: ${constellationName}`);
 
       // Redirect to Beginning Country
-      router.push("/beginning-country");
+      router.push("/onboarding-trial/choice");
     } catch (e) {
       console.error(e);
       alert("エラーが発生しました");

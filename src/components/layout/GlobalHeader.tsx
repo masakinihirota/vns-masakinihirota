@@ -36,6 +36,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { createClient } from "@/lib/supabase/client";
+import { TrialStorage } from "@/lib/trial-storage";
+import { TrialStatusBadge } from "./trial-status-badge";
 
 /**
  * ヘッダーメニュー要件定義書に基づく機能:
@@ -376,7 +378,7 @@ export function TrialButton() {
       disabled={isPending}
     >
       <span className="leading-none pt-0.5">
-        {isPending ? "準備中..." : "ゲートを開く"}
+        {isPending ? "準備中..." : "お試し体験"}
       </span>
       <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
     </Button>
@@ -425,12 +427,23 @@ export function GlobalHeader({
     return () => subscription.unsubscribe();
   }, []);
 
+  const [isTrial, setIsTrial] = React.useState(false);
+
+  React.useEffect(() => {
+    // Check trial mode on mount
+    const trialData = TrialStorage.load();
+    if (trialData?.rootAccount) {
+      setIsTrial(true);
+    }
+  }, []);
+
   return (
     <TooltipProvider>
       <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center justify-between gap-2 border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60 px-4">
         {/* 左側: サイドバートリガー & ロゴエリア */}
         <div className="flex items-center gap-2">
           {showSidebarTrigger && <SidebarTrigger className="-ml-1" />}
+          {isTrial && <TrialStatusBadge />}
           {process.env.NODE_ENV === "development" && (
             <Tooltip>
               <TooltipTrigger asChild>
