@@ -18,12 +18,10 @@ export const TrialEntrySection = () => {
       <div className="max-w-4xl mx-auto w-full px-4">
         {/* Title for Context */}
         <div className="text-center mb-12 space-y-4">
-          <h2 className="text-3xl font-bold dark:text-white">
-            さあ、あなたの「感動」を登録しましょう
-          </h2>
-          <p className="text-slate-500 dark:text-slate-400">
-            スタイルに合わせた2つの入り口を用意しています。
-          </p>
+          <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-indigo-600 dark:from-emerald-400 dark:to-indigo-400">
+            VNS <br />
+            masakinihirotaの世界に入る
+          </h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -44,7 +42,7 @@ export const TrialEntrySection = () => {
                   </span>
                 </h4>
                 <p className="text-slate-500 dark:text-slate-400 leading-relaxed mb-8">
-                  ユーザー登録不要。ブラウザ（Cookie）にのみデータを保存し、VNSの基本機能をすぐに体験できます。
+                  ユーザー登録不要。あなたのブラウザ内（Cookie等）にデータを保存します。masakinihirotaを体験します。
                 </p>
               </div>
 
@@ -53,7 +51,7 @@ export const TrialEntrySection = () => {
                 disabled={isPending}
                 className="relative z-10 w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl transition-all flex items-center justify-center gap-2 group/btn shadow-lg hover:shadow-emerald-500/30"
               >
-                {isPending ? "準備中..." : "ゲートを開く"}
+                {isPending ? "準備中..." : "体験を始める"}
                 <ArrowRight
                   size={18}
                   className="group-hover/btn:translate-x-1 transition-transform"
@@ -73,7 +71,7 @@ export const TrialEntrySection = () => {
                   <UserCircle2 size={28} />
                 </div>
                 <h4 className="text-2xl font-bold mb-4 text-slate-900 dark:text-white flex items-center gap-2">
-                  正式メンバー
+                  ユーザー登録
                   <Sparkles size={16} className="text-indigo-400" />
                 </h4>
                 <p className="text-slate-500 dark:text-slate-400 leading-relaxed mb-8">
@@ -94,11 +92,6 @@ export const TrialEntrySection = () => {
             </div>
           </div>
         </div>
-
-        {/* Footer info text */}
-        <p className="text-center mt-12 text-sm text-slate-400 font-serif italic">
-          「あなたの感動を、一生ものにするために。」
-        </p>
       </div>
     </section>
   );
