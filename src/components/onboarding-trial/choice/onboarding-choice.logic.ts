@@ -30,6 +30,9 @@ export const useOnboardingChoice = () => {
           // TODO: プロフィール作成へのパスを確認して修正
           router.push("/profile/create");
           break;
+        case "home":
+          router.push("/");
+          break;
       }
     } catch (error) {
       console.error("Navigation error:", error);

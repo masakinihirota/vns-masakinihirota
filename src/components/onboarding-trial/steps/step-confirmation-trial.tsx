@@ -187,7 +187,7 @@ export const StepConfirmationTrial: React.FC<StepConfirmationTrialProps> = ({
             value={`${core_activity_start || "09:00"} ～ ${core_activity_end || "18:00"} `}
           />
           <ConfirmationRow
-            label="第一活動時間 (休日)"
+            label="自由行動時間"
             value={`${holidayActivityStart || "09:00"} ～ ${holidayActivityEnd || "18:00"} `}
           />
           {week_schedule && (
@@ -200,6 +200,8 @@ export const StepConfirmationTrial: React.FC<StepConfirmationTrialProps> = ({
                   value={week_schedule}
                   onChange={() => {}}
                   readOnly
+                  labels={{ MATCH: "自由行動時間" }}
+                  labelClassName="text-[18px]"
                 />
               </div>
             </div>

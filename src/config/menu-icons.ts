@@ -40,6 +40,7 @@ export const ICON_MAP: Record<string, LucideIcon> = {
   "/home/search": Search,
   "/recommendations": Star,
   "/works": Briefcase,
+  "/works/continuous-rating": Star,
 
   // features
   "/values": Lightbulb,

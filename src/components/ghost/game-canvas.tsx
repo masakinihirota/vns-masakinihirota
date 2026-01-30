@@ -77,8 +77,11 @@ export const GameCanvas = () => {
         const config: Phaser.Types.Core.GameConfig = {
           type: Phaser.AUTO,
           parent: containerRef.current,
-          width: 800,
-          height: 576,
+          scale: {
+            mode: Phaser.Scale.RESIZE,
+            width: "100%",
+            height: "100%",
+          },
           physics: {
             default: "arcade",
             arcade: {
@@ -124,6 +127,23 @@ export const GameCanvas = () => {
 
     return () => {
       if (gameRef.current) {
+        // Save Position on Unmount
+        const scene = gameRef.current.scene.getScene("MainScene") as any;
+        if (scene && scene.myPlayer) {
+          try {
+            localStorage.setItem(
+              "ghost_map_position",
+              JSON.stringify({
+                x: scene.myPlayer.x,
+                y: scene.myPlayer.y,
+                hasMap: scene.hasMap,
+              })
+            );
+          } catch (e) {
+            console.error("Failed to save position", e);
+          }
+        }
+
         gameRef.current.destroy(true);
         gameRef.current = null;
       }
@@ -131,14 +151,25 @@ export const GameCanvas = () => {
     };
   }, []);
 
+  // Warp Handler
+  const handleWarp = useCallback((x: number, y: number) => {
+    if (gameRef.current) {
+      const scene = gameRef.current.scene.getScene("MainScene") as any;
+      if (scene && scene.teleport) {
+        scene.teleport(x, y);
+      }
+    }
+  }, []);
+
   return (
-    <div className="relative rounded-lg overflow-hidden shadow-2xl border border-white/10 group">
-      <div ref={containerRef} style={{ width: 800, height: 576 }} />
+    <div className="relative rounded-lg overflow-hidden shadow-2xl border border-white/10 group w-full h-[calc(100vh-64px)]">
+      <div ref={containerRef} className="h-full w-full" />
       <GhostOverlay
         playerPosition={playerPosition}
         hasMap={hasMap}
         dialog={dialog}
         onCloseDialog={handleCloseDialog}
+        onWarp={handleWarp}
       />
     </div>
   );

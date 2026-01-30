@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { Footer } from "@/components/layout/footer";
 import { GlobalHeader } from "@/components/layout/GlobalHeader";
+import { MainContent } from "@/components/layout/MainContent";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { createClient } from "@/lib/supabase/server";
 
@@ -42,7 +43,7 @@ export default async function AuthLayout({
         <GlobalHeader />
 
         {/* メインコンテンツ */}
-        <main className="flex-1 p-6">{children}</main>
+        <MainContent>{children}</MainContent>
 
         {/* フッターメニュー */}
         <Footer />

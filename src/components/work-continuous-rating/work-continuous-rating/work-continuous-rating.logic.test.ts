@@ -91,8 +91,18 @@ Manga 2
 
     it("should save and retrieve ratings (object format)", () => {
       const ratings: Record<string, Rating> = {
-        "Title 1": { status: "Now", value: "Tier1" },
-        "Title 2": { status: "Future", value: "Tier3" },
+        "Title 1": {
+          status: "Now",
+          isLiked: true,
+          tier: "Tier1",
+          otherValue: null,
+        },
+        "Title 2": {
+          status: "Future",
+          isLiked: true,
+          tier: "Tier3",
+          otherValue: null,
+        },
       };
       saveRatingsToStorage("anime", ratings, "test-obj");
 

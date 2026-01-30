@@ -11,6 +11,7 @@ import {
   getRatingsFromStorage,
   saveRatingsToStorage,
   exportRatings,
+  normalizeRating,
 } from "./work-continuous-rating.logic";
 
 export const WorkContinuousRatingContainer: React.FC = () => {
@@ -80,23 +81,34 @@ export const WorkContinuousRatingContainer: React.FC = () => {
       if (sessionList.length === 0) return;
 
       const currentTitle = sessionList[currentIndex];
+      const prevRating = normalizeRating(ratings[currentTitle]); // Get current state for memory
 
       // 評価オブジェクトを作成
-      // 後で見るは Legacy support としてもあるが、新規は Future ステータスを使うべき
-      // 今回はシンプルに currentStatus + value で保存
-      // ただし value が '後で見る' の場合は Status=Future に強制するなど整合性を取る
-
       let statusToSave = currentStatus;
-      const valueToSave = value;
 
       if (value === "後で見る") {
         statusToSave = "Future";
       }
 
-      const newRating: Rating = {
-        status: statusToSave,
-        value: valueToSave,
-      };
+      let newRating: Rating;
+
+      // Tier Selection Logic
+      if (["Tier1", "Tier2", "Tier3"].includes(value)) {
+        newRating = {
+          status: statusToSave,
+          isLiked: true,
+          tier: value as "Tier1" | "Tier2" | "Tier3",
+          otherValue: null,
+        };
+      } else {
+        // Other Selection Logic (Unlikes, but keeps Tier memory from prevRating)
+        newRating = {
+          status: statusToSave,
+          isLiked: false,
+          tier: prevRating.tier, // Keep memory
+          otherValue: value,
+        };
+      }
 
       const newRatings = { ...ratings, [currentTitle]: newRating };
       setRatings(newRatings);
@@ -104,13 +116,13 @@ export const WorkContinuousRatingContainer: React.FC = () => {
         saveRatingsToStorage(category, newRatings, patternId);
       }
       setAnnouncement(
-        `${currentTitle}を${statusToSave} - ${valueToSave}と評価しました`
+        `${currentTitle}を${statusToSave} - ${value}と評価しました`
       );
 
       // 次へ進む（最後でなければ）
       if (currentIndex < sessionList.length - 1) {
         setCurrentIndex((prev) => prev + 1);
-        // ステータスは維持する (以前は 'Now' にリセットしていた)
+        // ステータスは維持する
       } else {
         // 完了扱いにするためにインデックスを進める
         setCurrentIndex((prev) => prev + 1);
@@ -119,6 +131,28 @@ export const WorkContinuousRatingContainer: React.FC = () => {
     },
     [category, currentIndex, ratings, sessionList, currentStatus]
   );
+
+  // LIKE Toggle Action
+  const handleToggleLike = useCallback(() => {
+    if (sessionList.length === 0) return;
+
+    const currentTitle = sessionList[currentIndex];
+    const currentRating = normalizeRating(ratings[currentTitle]);
+    const newIsLiked = !currentRating.isLiked;
+
+    const newRating: Rating = {
+      status: currentRating.status,
+      isLiked: newIsLiked,
+      tier: currentRating.tier, // Keep/Restore Tier memory
+      otherValue: newIsLiked ? null : currentRating.otherValue, // Clear otherValue if Liked
+    };
+
+    const newRatings = { ...ratings, [currentTitle]: newRating };
+    setRatings(newRatings);
+    if (category) {
+      saveRatingsToStorage(category, newRatings, patternId);
+    }
+  }, [category, currentIndex, ratings, sessionList]);
 
   // ナビゲーション
   const handlePrevious = useCallback(() => {
@@ -129,10 +163,10 @@ export const WorkContinuousRatingContainer: React.FC = () => {
       // 戻った時のステータス復元
       const prevTitle = sessionList[currentIndex - 1];
       const prevRating = ratings[prevTitle];
-      if (prevRating && typeof prevRating !== "string") {
-        setCurrentStatus(prevRating.status);
+      if (prevRating) {
+        const norm = normalizeRating(prevRating);
+        setCurrentStatus(norm.status);
       }
-      // 以前の評価がない場合は、現在のステータスを維持する
     }
   }, [currentIndex, sessionList, ratings]);
 
@@ -142,11 +176,11 @@ export const WorkContinuousRatingContainer: React.FC = () => {
       setAnnouncement(`次の作品: ${sessionList[currentIndex + 1]}`);
 
       // 次の作品が既に評価済みならそのステータスを復元
-      // 未評価なら現在のステータスを維持
       const nextTitle = sessionList[currentIndex + 1];
       const nextRating = ratings[nextTitle];
-      if (nextRating && typeof nextRating !== "string") {
-        setCurrentStatus(nextRating.status);
+      if (nextRating) {
+        const norm = normalizeRating(nextRating);
+        setCurrentStatus(norm.status);
       }
     }
   }, [currentIndex, sessionList, ratings]);
@@ -204,6 +238,10 @@ export const WorkContinuousRatingContainer: React.FC = () => {
         case "6":
           handleRate("Tier3");
           break;
+        case "l":
+        case "L":
+          handleToggleLike();
+          break;
         case "7":
         case "q":
         case "Q":
@@ -214,9 +252,9 @@ export const WorkContinuousRatingContainer: React.FC = () => {
         case "W":
           handleRate("興味無し");
           break;
-
-        // Legacy / Extras
-        // case 'e': case 'E': handleRate('後で見る'); break; // 2 (Future) should be used instead
+        case "9": // Added shortcut for 後で見る
+          handleRate("後で見る");
+          break;
 
         // Navigation
         case "ArrowLeft":
@@ -236,6 +274,7 @@ export const WorkContinuousRatingContainer: React.FC = () => {
     sessionList,
     currentIndex,
     handleRate,
+    handleToggleLike,
     handlePrevious,
     handleNext,
   ]);
@@ -260,6 +299,7 @@ export const WorkContinuousRatingContainer: React.FC = () => {
       onCategorySelect={setCategory}
       onSessionStart={handleSessionStart}
       onRate={handleRate}
+      onToggleLike={handleToggleLike}
       onStatusChange={setCurrentStatus}
       onPrevious={handlePrevious}
       onNext={handleNext}

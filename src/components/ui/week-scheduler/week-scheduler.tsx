@@ -1,11 +1,14 @@
 import { Briefcase, Users, HelpCircle, Info } from "lucide-react";
 import React from "react";
+import { cn } from "@/lib/utils";
 import { WeekSchedule, WeekStatus, DAYS, DayKey } from "./types";
 
-interface WeekSchedulerProps {
+export interface WeekSchedulerProps {
   value: WeekSchedule;
   onChange?: (value: WeekSchedule) => void;
   readOnly?: boolean;
+  labels?: Partial<Record<WeekStatus, string>>;
+  labelClassName?: string;
 }
 
 const STATUS_CONFIG = {
@@ -33,6 +36,8 @@ export const WeekScheduler: React.FC<WeekSchedulerProps> = ({
   value,
   onChange,
   readOnly = false,
+  labels = {},
+  labelClassName,
 }) => {
   const toggleStatus = (dayKey: DayKey) => {
     if (readOnly || !onChange) return;
@@ -84,8 +89,13 @@ export const WeekScheduler: React.FC<WeekSchedulerProps> = ({
                 >
                   <Icon size={20} className="sm:w-7 sm:h-7" />
                 </button>
-                <span className="mt-2 text-[10px] sm:text-sm font-bold text-slate-700 text-center leading-tight">
-                  {config.label}
+                <span
+                  className={cn(
+                    "mt-2 text-[10px] sm:text-sm font-bold text-slate-700 text-center leading-tight",
+                    labelClassName
+                  )}
+                >
+                  {labels[status] || config.label}
                 </span>
               </div>
             );
@@ -116,7 +126,7 @@ export const WeekScheduler: React.FC<WeekSchedulerProps> = ({
                   </div>
                   <div>
                     <p className="text-sm font-bold text-slate-800">
-                      {info.label}
+                      {labels[key as WeekStatus] || info.label}
                     </p>
                     <p className="text-xs text-slate-500 mt-0.5">{info.desc}</p>
                   </div>
