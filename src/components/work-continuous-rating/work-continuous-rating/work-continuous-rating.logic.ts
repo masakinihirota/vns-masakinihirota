@@ -14,10 +14,69 @@ export type RatingValue =
 
 // Combined Rating Type
 export type Rating =
-  | { status: RatingStatus; value: RatingValue }
+  | {
+      status: RatingStatus;
+      isLiked: boolean;
+      tier: "Tier1" | "Tier2" | "Tier3";
+      otherValue: RatingValue | null; // For "普通" etc.
+    }
   // Legacy string support for backward compatibility during migration
   | RatingValue
   | null;
+
+export const normalizeRating = (
+  rating: Rating
+): {
+  status: RatingStatus;
+  isLiked: boolean;
+  tier: "Tier1" | "Tier2" | "Tier3";
+  otherValue: RatingValue | null;
+} => {
+  if (!rating) {
+    return { status: "Now", isLiked: false, tier: "Tier1", otherValue: null };
+  }
+
+  // Legacy string handling
+  if (typeof rating === "string") {
+    if (["Tier1", "Tier2", "Tier3"].includes(rating)) {
+      return {
+        status: "Now",
+        isLiked: true,
+        tier: rating as "Tier1" | "Tier2" | "Tier3",
+        otherValue: null,
+      };
+    }
+    return {
+      status: "Now",
+      isLiked: false,
+      tier: "Tier1", // Default preference
+      otherValue: rating,
+    };
+  }
+
+  // Object handling (Already migrated or new)
+  // Ensure all fields exist even if partial (though Type says full)
+  if ("isLiked" in rating) {
+    return rating;
+  }
+
+  // Fallback for old object style { status: "Now", value: "Tier1" }
+  const oldObj = rating as { status: RatingStatus; value: RatingValue };
+  if (["Tier1", "Tier2", "Tier3"].includes(oldObj.value)) {
+    return {
+      status: oldObj.status,
+      isLiked: true,
+      tier: oldObj.value as any,
+      otherValue: null,
+    };
+  }
+  return {
+    status: oldObj.status,
+    isLiked: false,
+    tier: "Tier1",
+    otherValue: oldObj.value,
+  };
+};
 
 /**
  * 作品と評価のペア
@@ -106,10 +165,10 @@ export const exportRatings = (
     .map((i) => {
       // 事前にフィルタリングしているが型定義上nullが含まれるためチェック
       if (!i.rating) return "";
-      const ratingStr =
-        typeof i.rating === "object"
-          ? `${i.rating.status}:${i.rating.value}`
-          : i.rating;
+      const r = normalizeRating(i.rating);
+      const ratingStr = r.isLiked
+        ? `${r.status}:${r.tier}`
+        : `${r.status}:${r.otherValue || "未評価"}`;
       return `[${ratingStr}][${i.title}]`;
     })
     .filter((s) => s !== "")

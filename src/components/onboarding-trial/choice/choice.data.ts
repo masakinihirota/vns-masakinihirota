@@ -1,7 +1,7 @@
-import { BookOpen, Ghost, UserPlus } from "lucide-react";
+import { BookOpen, Ghost, UserPlus, Home } from "lucide-react";
 import React from "react";
 
-export type ChoiceId = "tutorial" | "ghost" | "profile";
+export type ChoiceId = "tutorial" | "ghost" | "profile" | "home";
 
 export interface ChoicePath {
   id: ChoiceId;
@@ -11,7 +11,7 @@ export interface ChoicePath {
   description: string;
   benefits: string[];
   recommends: string;
-  color: "emerald" | "purple" | "amber";
+  color: "emerald" | "purple" | "amber" | "slate";
 }
 
 export const CHOICE_PATHS: ChoicePath[] = [
@@ -47,5 +47,16 @@ export const CHOICE_PATHS: ChoicePath[] = [
     benefits: ["機能の早期解放", "マッチング利用", "自己表現"],
     recommends: "目的が決まっている方・すぐに交流したい方",
     color: "amber",
+  },
+  {
+    id: "home",
+    title: "何もしない",
+    subtitle: "スキップ",
+    icon: Home,
+    description:
+      "何も選択せず、そのままトップページ（ホーム）へ移動します。いつでも後から選択可能です。",
+    benefits: ["すぐにホームへ", "選択を保留", "自由行動"],
+    recommends: "今は選びたくない方",
+    color: "slate" as any, // Temporary fix for type strictness if needed, or update ChoicePath color type
   },
 ] as const;

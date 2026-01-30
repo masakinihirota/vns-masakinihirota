@@ -1,13 +1,10 @@
 import { redirect } from "next/navigation";
 import { HomeGuide } from "@/components/home/home-guide";
 import { HomeMenuGrid } from "@/components/home/home-menu-grid";
-import { PopularWorksView } from "@/components/works/popular-works-view";
 import {
   hasRootAccount,
-  hasSelectedMode,
   getRootAccountId,
 } from "@/lib/auth/root-account-guard";
-import { getUserProfiles } from "@/lib/db/user-profiles";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function DashboardPage() {
@@ -21,18 +18,17 @@ export default async function DashboardPage() {
     user?.id ||
     (process.env.NODE_ENV === "development" ? "dev-mock-user-id" : null);
 
-  let rootAccountId: string | null = null;
   if (userId) {
     const hasRoot = await hasRootAccount(userId);
     if (!hasRoot) {
       redirect("/onboarding-pc");
     }
-    rootAccountId = await getRootAccountId(userId);
+    await getRootAccountId(userId);
 
-    const hasMode = await hasSelectedMode(userId);
-    if (!hasMode) {
-      redirect("/onboarding/mode-selection");
-    }
+    // const hasMode = await hasSelectedMode(userId);
+    // if (!hasMode) {
+    //   redirect("/onboarding/mode-selection");
+    // }
   } else if (!user && process.env.NODE_ENV !== "development") {
     redirect("/auth/login");
   }

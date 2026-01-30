@@ -1,9 +1,11 @@
 import Link from "next/link";
 import React from "react";
+// Helper to format rating for display
 import {
   Rating,
   RatingStatus,
   RatingValue,
+  normalizeRating,
 } from "./work-continuous-rating.logic";
 
 interface WorkContinuousRatingProps {
@@ -23,6 +25,7 @@ interface WorkContinuousRatingProps {
   onCategorySelect: (cat: "anime" | "manga") => void;
   onSessionStart: (size: number | "all") => void;
   onRate: (value: RatingValue) => void;
+  onToggleLike: () => void;
   onStatusChange: (status: RatingStatus) => void;
   onPrevious: () => void;
   onNext: () => void;
@@ -34,15 +37,16 @@ interface WorkContinuousRatingProps {
 // Helper to format rating for display
 const formatRating = (rating: Rating): string => {
   if (!rating) return "";
-  if (typeof rating === "string") return rating;
-  return `${rating.status} - ${rating.value}`;
+  const r = normalizeRating(rating);
+  if (r.isLiked) {
+    return `${r.status} - ${r.tier} (Like)`;
+  }
+  return r.otherValue || "";
 };
 
 // Helper to get value for comparison
-const getRatingValue = (rating: Rating): RatingValue | null => {
-  if (!rating) return null;
-  if (typeof rating === "string") return rating;
-  return rating.value;
+const getRatingState = (rating: Rating) => {
+  return normalizeRating(rating);
 };
 
 export const WorkContinuousRating: React.FC<WorkContinuousRatingProps> = ({
@@ -60,6 +64,7 @@ export const WorkContinuousRating: React.FC<WorkContinuousRatingProps> = ({
   onCategorySelect,
   onSessionStart,
   onRate,
+  onToggleLike,
   onStatusChange,
   onPrevious,
   onNext,
@@ -69,6 +74,8 @@ export const WorkContinuousRating: React.FC<WorkContinuousRatingProps> = ({
 }) => {
   const progress =
     sessionTotal > 0 ? ((currentIndex + 1) / sessionTotal) * 100 : 0;
+
+  const currentRating = getRatingState(ratings[currentTitle]);
 
   // -------------------------------------------------------------------------
   // 共通スタイル定義 (Light/Dark対応)
@@ -403,6 +410,21 @@ export const WorkContinuousRating: React.FC<WorkContinuousRatingProps> = ({
           </button>
         </div>
 
+        {/* LIKE & TIME AXIS Controls */}
+        <div className="mb-4">
+          <button
+            onClick={onToggleLike}
+            className={`w-full py-4 rounded-xl font-bold text-xl transition-all shadow-md hover:shadow-xl border border-white/30 backdrop-blur-md
+               ${
+                 currentRating.isLiked
+                   ? "bg-pink-500 text-white ring-4 ring-pink-200"
+                   : "bg-white/50 text-gray-400 dark:bg-white/5"
+               }`}
+          >
+            {currentRating.isLiked ? "❤️ LIKE" : "🤍 Like"}
+          </button>
+        </div>
+
         {/* 評価ボタン群 */}
         <div className="space-y-4">
           {/* 上段：評価系 (Tier1, Tier2, Tier3, 普通) */}
@@ -411,21 +433,27 @@ export const WorkContinuousRating: React.FC<WorkContinuousRatingProps> = ({
               label="Tier1"
               subLabel="⭐ Tier1"
               colorClass="bg-yellow-200/60 hover:bg-yellow-300/70 dark:bg-yellow-900/40 dark:hover:bg-yellow-900/60 dark:text-yellow-100 dark:border-yellow-500/30"
-              isSelected={getRatingValue(ratings[currentTitle]) === "Tier1"}
+              isSelected={
+                currentRating.isLiked && currentRating.tier === "Tier1"
+              }
               onClick={() => onRate("Tier1")}
             />
             <RatingButton
               label="Tier2"
               subLabel="🌟 Tier2"
               colorClass="bg-orange-200/60 hover:bg-orange-300/70 dark:bg-orange-900/40 dark:hover:bg-orange-900/60 dark:text-orange-100 dark:border-orange-500/30"
-              isSelected={getRatingValue(ratings[currentTitle]) === "Tier2"}
+              isSelected={
+                currentRating.isLiked && currentRating.tier === "Tier2"
+              }
               onClick={() => onRate("Tier2")}
             />
             <RatingButton
               label="Tier3"
               subLabel="💙 Tier3"
               colorClass="bg-blue-200/60 hover:bg-blue-300/70 dark:bg-blue-900/40 dark:hover:bg-blue-900/60 dark:text-blue-100 dark:border-blue-500/30"
-              isSelected={getRatingValue(ratings[currentTitle]) === "Tier3"}
+              isSelected={
+                currentRating.isLiked && currentRating.tier === "Tier3"
+              }
               onClick={() => onRate("Tier3")}
             />
             <RatingButton
@@ -439,8 +467,8 @@ export const WorkContinuousRating: React.FC<WorkContinuousRatingProps> = ({
               }
               colorClass="bg-gray-200/60 hover:bg-gray-300/70 dark:bg-gray-800/60 dark:hover:bg-gray-700/60 dark:text-gray-200 dark:border-gray-500/30"
               isSelected={
-                getRatingValue(ratings[currentTitle]) ===
-                "普通 or 自分に合わない"
+                !currentRating.isLiked &&
+                currentRating.otherValue === "普通 or 自分に合わない"
               }
               onClick={() => onRate("普通 or 自分に合わない")}
             />
@@ -452,14 +480,20 @@ export const WorkContinuousRating: React.FC<WorkContinuousRatingProps> = ({
               label="興味無し"
               subLabel="💀 興味無し"
               colorClass="bg-purple-200/60 hover:bg-purple-300/70 dark:bg-purple-900/40 dark:hover:bg-purple-900/60 dark:text-purple-100 dark:border-purple-500/30"
-              isSelected={getRatingValue(ratings[currentTitle]) === "興味無し"}
+              isSelected={
+                !currentRating.isLiked &&
+                currentRating.otherValue === "興味無し"
+              }
               onClick={() => onRate("興味無し")}
             />
             <RatingButton
               label="後で見る"
               subLabel="⏳ 後で見る"
               colorClass="bg-emerald-200/60 hover:bg-emerald-300/70 dark:bg-emerald-900/40 dark:hover:bg-emerald-900/60 dark:text-emerald-100 dark:border-emerald-500/30"
-              isSelected={getRatingValue(ratings[currentTitle]) === "後で見る"}
+              isSelected={
+                !currentRating.isLiked &&
+                currentRating.otherValue === "後で見る"
+              }
               onClick={() => onRate("後で見る")}
             />
           </div>
@@ -476,6 +510,9 @@ export const WorkContinuousRating: React.FC<WorkContinuousRatingProps> = ({
             </div>
             <div>
               <Kbd>4-6</Kbd> = Tier 1-3
+            </div>
+            <div>
+              <Kbd>L</Kbd> = Toggle Like (NEW)
             </div>
             <div>
               <Kbd>7</Kbd> = 普通/合わない

@@ -2,6 +2,8 @@
 import { createClient } from "@/lib/supabase/client";
 
 interface PlayerPosition {
+  userId: string;
+  x: number;
   y: number;
 }
 
@@ -41,6 +43,11 @@ export const createMainSceneClass = async () => {
     > = new Map();
     contactedEntities: Set<string> = new Set(); // 接触済みエンティティ（離れるまで再トリガーしない）
 
+    // Movement & State
+    targetPosition: { x: number; y: number } | null = null;
+    isGhostMode: boolean = false;
+    ghostModeKey!: Phaser.Input.Keyboard.Key;
+
     constructor() {
       super({ key: "MainScene" });
       this.myId = Math.random().toString(36).substring(7);
@@ -69,15 +76,52 @@ export const createMainSceneClass = async () => {
       this.createEntitySprites();
 
       // 3. Create My Player (Ghost representation)
-      this.myPlayer = this.createGhostAvatar(
-        SPAWN_POINT.x,
-        SPAWN_POINT.y,
-        0xffffff
+      // Reset position every time (Disable saved position loading)
+      let startX = SPAWN_POINT.x;
+      let startY = SPAWN_POINT.y;
+
+      /*
+      try {
+        const savedPos = localStorage.getItem("ghost_map_position");
+        if (savedPos) {
+          const parsed = JSON.parse(savedPos);
+          // Simple validation
+          if (typeof parsed.x === 'number' && typeof parsed.y === 'number') {
+             startX = parsed.x;
+             startY = parsed.y;
+          }
+          if (parsed.hasMap) {
+            this.hasMap = true;
+          }
+        }
+      } catch (e) {
+        console.error("Failed to load position", e);
+      }
+      */
+
+      this.myPlayer = this.createGhostAvatar(startX, startY, 0xffffff);
+
+      // 4. Camera Control
+      // Smooth follow
+      this.cameras.main.startFollow(this.myPlayer, true, 0.09, 0.09);
+      this.cameras.main.setZoom(1);
+
+      // Zoom with mouse wheel
+      this.input.on(
+        "wheel",
+        (
+          pointer: any,
+          gameObjects: any,
+          deltaX: number,
+          deltaY: number,
+          _deltaZ: number
+        ) => {
+          const zoom = this.cameras.main.zoom;
+          const newZoom = PhaserLib.Math.Clamp(zoom - deltaY * 0.001, 0.5, 2.0);
+          this.cameras.main.setZoom(newZoom);
+        }
       );
 
-      // 4. Fixed Camera (No follow)
-      this.cameras.main.setZoom(1);
-      // No startFollow - camera is fixed
       this.physics.world.setBounds(
         0,
         0,
@@ -88,20 +132,29 @@ export const createMainSceneClass = async () => {
       // 5. Setup Controls
       if (this.input.keyboard) {
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.ghostModeKey = this.input.keyboard.addKey(
+          PhaserLib.Input.Keyboard.KeyCodes.G
+        );
+
         this.input.keyboard.addCapture([
           PhaserLib.Input.Keyboard.KeyCodes.UP,
           PhaserLib.Input.Keyboard.KeyCodes.DOWN,
           PhaserLib.Input.Keyboard.KeyCodes.LEFT,
           PhaserLib.Input.Keyboard.KeyCodes.RIGHT,
+          PhaserLib.Input.Keyboard.KeyCodes.SPACE,
         ]);
         this.input.keyboard.enabled = true;
       }
 
-      // Focus on canvas when clicked
-      this.input.on("pointerdown", () => {
+      // Click to move & Focus
+      this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
         if (this.input.keyboard) {
           this.input.keyboard.enabled = true;
         }
+
+        // Set target position for movement (World coordinates)
+        // Only if not clicking on UI (game canvas handles this mainly)
+        this.targetPosition = { x: pointer.worldX, y: pointer.worldY };
       });
 
       // 6. Setup Supabase Realtime
@@ -109,18 +162,26 @@ export const createMainSceneClass = async () => {
 
       // 7. UI Text
       this.add
-        .text(16, 16, "Arrow keys to move\nHold SHIFT to Run", {
-          fontSize: "14px",
-          color: "#ffffff",
-          backgroundColor: "#00000088",
-          padding: { x: 4, y: 4 },
-        })
+        .text(
+          16,
+          16,
+          "Arrow keys / Click to move\nShift: Dash | G: Toggle Ghost Mode\nWheel: Zoom",
+          {
+            fontSize: "14px",
+            color: "#ffffff",
+            backgroundColor: "#00000088",
+            padding: { x: 4, y: 4 },
+          }
+        )
         .setScrollFactor(0)
         .setDepth(100);
     }
 
     createEntitySprites() {
       MAP_ENTITIES.forEach((entity) => {
+        // Skip map item if already have map
+        if (entity.id === "map_item" && this.hasMap) return;
+
         const x = entity.position.x * TILE_SIZE;
         const y = entity.position.y * TILE_SIZE;
 
@@ -188,71 +249,125 @@ export const createMainSceneClass = async () => {
       }
     }
 
+    pendingDialog: { title: string; message: string } | null = null;
+
     handleEntityContact(entity: (typeof MAP_ENTITIES)[0]) {
-      if (entity.type === "item" && entity.id === "map_item" && !this.hasMap) {
-        // Pickup map item
-        this.hasMap = true;
-        const sprite = this.entitySprites.get(entity.id);
-        if (sprite) sprite.destroy();
-        this.entitySprites.delete(entity.id);
-
-        // Notify React
-        if (this.onUpdateState) {
-          this.onUpdateState({
-            x: this.myPlayer.x,
-            y: this.myPlayer.y,
-            hasMap: true,
-            dialog: {
-              show: true,
-              title: "アイテム取得",
-              message:
-                "「古びた地図」を手に入れた！\nコンパス機能が使えるようになりました。",
-            },
-          });
-        }
-      } else {
-        // Trigger dialog for other entities
-        if (this.onUpdateState) {
-          const dialogMessages: Record<
-            string,
-            { title: string; message: string }
-          > = {
-            king: {
-              title: "女王",
-              message: "おお、迷える幽霊よ。そなたはまだ顔を持たぬようだな。",
-            },
-            market: {
-              title: "商人",
-              message:
-                "いらっしゃい！何をお探しかな？（幽霊には売れないが...）",
-            },
-            tavern: {
-              title: "酒場のマスター",
-              message: "やあ、ゆっくりしていきな。",
-            },
-            bbs: {
-              title: "掲示板",
-              message: "『冒険者求む！』『迷子の猫探してます』",
-            },
-            npc: { title: entity.name, message: "（話しかけてきた...）" },
-            door: { title: entity.name, message: "ここから中に入れそうだ。" },
-          };
-
-          const dialog = dialogMessages[entity.type] || {
-            title: entity.name,
-            message: "...",
-          };
-          this.onUpdateState({
-            x: this.myPlayer.x,
-            y: this.myPlayer.y,
-            dialog: { show: true, ...dialog },
-          });
-        }
+      // Stop auto-movement and physics velocity
+      this.targetPosition = null;
+      if (this.myPlayer?.body) {
+        (this.myPlayer.body as Phaser.Physics.Arcade.Body).setVelocity(0);
       }
+      if (entity.type === "item" && entity.id === "map_item") {
+        if (!this.hasMap) {
+          // Pickup map item
+          this.hasMap = true;
+          const sprite = this.entitySprites.get(entity.id);
+          if (sprite) sprite.destroy();
+          this.entitySprites.delete(entity.id);
+
+          const dialog = {
+            title: "アイテム取得",
+            message:
+              "「古びた地図」を手に入れた！\nコンパス機能が使えるようになりました。",
+          };
+
+          // Notify React
+          if (this.onUpdateState) {
+            this.onUpdateState({
+              x: this.myPlayer.x,
+              y: this.myPlayer.y,
+              hasMap: true,
+              dialog: {
+                show: true,
+                ...dialog,
+              },
+            });
+          } else {
+            this.pendingDialog = dialog;
+          }
+        }
+        return;
+      }
+
+      // Trigger dialog for other entities
+      const dialogMessages: Record<string, { title: string; message: string }> =
+        {
+          king: {
+            title: "女王",
+            message: "おお、迷える幽霊よ。そなたはまだ顔を持たぬようだな。",
+          },
+          market: {
+            title: "商人",
+            message: "いらっしゃい！何をお探しかな？（幽霊には売れないが...）",
+          },
+          tavern: {
+            title: "酒場のマスター",
+            message: "やあ、ゆっくりしていきな。",
+          },
+          bbs: {
+            title: "掲示板",
+            message: "『冒険者求む！』『迷子の猫探してます』",
+          },
+          npc: { title: entity.name, message: "（話しかけてきた...）" },
+          door: { title: entity.name, message: "ここから中に入れそうだ。" },
+        };
+
+      const dialog = dialogMessages[entity.type] || {
+        title: entity.name,
+        message: "...",
+      };
+
+      if (this.onUpdateState) {
+        this.onUpdateState({
+          x: this.myPlayer.x,
+          y: this.myPlayer.y,
+          dialog: { show: true, ...dialog },
+        });
+      } else {
+        this.pendingDialog = dialog;
+      }
+    }
+
+    teleport(tileX: number, tileY: number) {
+      if (!this.myPlayer) return;
+
+      const x = tileX * TILE_SIZE + TILE_SIZE / 2;
+      const y = tileY * TILE_SIZE + TILE_SIZE / 2;
+
+      // Reset movement state
+      this.targetPosition = null;
+      (this.myPlayer.body as Phaser.Physics.Arcade.Body).setVelocity(0);
+
+      // Move player
+      this.myPlayer.setPosition(x, y);
+
+      // Force broadcast
+      this.broadcastPosition();
+    }
+
+    toggleGhostMode() {
+      this.isGhostMode = !this.isGhostMode;
+      const body = this.myPlayer.body as Phaser.Physics.Arcade.Body;
+
+      if (this.isGhostMode) {
+        this.myPlayer.setAlpha(0.5); // Visual indication
+        body.checkCollision.none = true; // Disable world bounds/collision
+      } else {
+        this.myPlayer.setAlpha(1);
+        body.checkCollision.none = false;
+      }
+
+      // Notify (optional toast)
+      // console.log(`Ghost Mode: ${this.isGhostMode ? "ON" : "OFF"}`);
     }
 
     update() {
       if (!this.cursors || !this.myPlayer) return;
+
+      // Toggle Ghost Mode
+      if (PhaserLib.Input.Keyboard.JustDown(this.ghostModeKey)) {
+        this.toggleGhostMode();
+      }
 
       const baseSpeed = 200;
       const runSpeed = 400;
@@ -261,20 +376,49 @@ export const createMainSceneClass = async () => {
 
       const body = this.myPlayer.body as Phaser.Physics.Arcade.Body;
 
-      // Reset velocity
       if (body) {
         body.setVelocity(0);
+        let movedByKey = false;
 
+        // Keyboard Movement
         if (this.cursors.left.isDown) {
           body.setVelocityX(-speed);
+          movedByKey = true;
         } else if (this.cursors.right.isDown) {
           body.setVelocityX(speed);
+          movedByKey = true;
         }
 
         if (this.cursors.up.isDown) {
           body.setVelocityY(-speed);
+          movedByKey = true;
         } else if (this.cursors.down.isDown) {
           body.setVelocityY(speed);
+          movedByKey = true;
+        }
+
+        // If keys are pressed, cancel click movement
+        if (movedByKey) {
+          this.targetPosition = null;
+        }
+        // Click Movement
+        else if (this.targetPosition) {
+          const dx = this.targetPosition.x - this.myPlayer.x;
+          const dy = this.targetPosition.y - this.myPlayer.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          const arrivalThreshold = 5;
+
+          if (distance > arrivalThreshold) {
+            this.physics.moveToObject(
+              this.myPlayer,
+              this.targetPosition,
+              speed
+            );
+          } else {
+            // Arrived
+            body.setVelocity(0);
+            this.targetPosition = null;
+          }
         }
 
         // Send updates if moved significantly
@@ -284,7 +428,18 @@ export const createMainSceneClass = async () => {
 
         // Sync to React
         if (this.onUpdateState) {
-          this.onUpdateState({ x: this.myPlayer.x, y: this.myPlayer.y });
+          const updatePayload: any = {
+            x: this.myPlayer.x,
+            y: this.myPlayer.y,
+            hasMap: this.hasMap,
+          };
+
+          if (this.pendingDialog) {
+            updatePayload.dialog = { show: true, ...this.pendingDialog };
+            this.pendingDialog = null;
+          }
+
+          this.onUpdateState(updatePayload);
         }
 
         // Check for entity contact

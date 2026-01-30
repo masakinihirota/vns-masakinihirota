@@ -49,6 +49,13 @@
     "visibleInMenu": true
   },
   {
+    "path": "/works/continuous-rating",
+    "label": "作品連続評価",
+    "group": "main",
+    "order": 65,
+    "visibleInMenu": true
+  },
+  {
     "path": "/values",
     "label": "価値観",
     "group": "main",

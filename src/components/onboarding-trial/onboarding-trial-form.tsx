@@ -107,7 +107,17 @@ export function OnboardingTrialForm() {
       case 2:
         return <Step1ResidencePC data={formData} onUpdate={handleUpdate} />;
       case 3:
-        return <Step2HoursPC data={formData} onUpdate={handleUpdate} />;
+        return (
+          <Step2HoursPC
+            data={formData}
+            onUpdate={handleUpdate}
+            weekSchedulerProps={{
+              labels: { MATCH: "自由行動時間" },
+              labelClassName: "text-[18px]",
+            }}
+            holidayLabel="自由行動時間"
+          />
+        );
       case 4:
         return <Step3IdentityTrial data={formData} onUpdate={handleUpdate} />;
       case 5:

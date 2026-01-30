@@ -212,8 +212,8 @@ export const ManualMatching = () => {
     return { common, onlyMe, onlyPartner };
   };
 
-  const handleConfirmAction = (userId: string, type: "watch" | "follow") => {
-    const userToMove = currentCandidates.find((u: any) => u.id === userId);
+  const handleConfirmAction = (userId: string, _type: "watch" | "follow") => {
+    // const userToMove = currentCandidates.find((u: any) => u.id === userId);
     setCandidatesPerProfile((prev) => ({
       ...prev,
       [selectedProfileId]: prev[selectedProfileId].filter(
@@ -239,7 +239,7 @@ export const ManualMatching = () => {
     if (selectedMatchedUserId === userId) setSelectedMatchedUserId(null);
   };
 
-  const handleAllAction = (type: "watch" | "follow") => {
+  const handleAllAction = (_type: "watch" | "follow") => {
     /*
     // Unused state logic removed
     if (type === "watch") {

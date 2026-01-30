@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Map as MapIcon, Compass, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { MAP_ENTITIES, TILE_SIZE } from "./constants";
+import { GhostChat } from "./ghost-chat";
 
 interface DialogState {
   show: boolean;
@@ -16,6 +17,7 @@ interface GhostOverlayProps {
   hasMap: boolean;
   dialog: DialogState | null;
   onCloseDialog: () => void;
+  onWarp?: (x: number, y: number) => void;
 }
 
 export const GhostOverlay: React.FC<GhostOverlayProps> = ({
@@ -23,8 +25,17 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
   hasMap,
   dialog,
   onCloseDialog,
+  onWarp,
 }) => {
   const [targetEntityId, setTargetEntityId] = useState<string | null>(null);
+
+  // Warp State
+  const [warpX, setWarpX] = useState<string>("");
+  const [warpY, setWarpY] = useState<string>("");
+  const [countries, setCountries] = useState<string[]>(["始まりの国"]);
+  const [selectedCountry, setSelectedCountry] = useState<string>("始まりの国");
+  const [newCountryName, setNewCountryName] = useState("");
+  const [showWarpMenu, setShowWarpMenu] = useState(false);
 
   // ターゲット可能なエンティティのフィルタリング（地図取得済みなら全て、未取得なら非表示）
   const targetableEntities = hasMap
@@ -55,6 +66,38 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
     const dx = target.position.x - playerTileX;
     const dy = target.position.y - playerTileY;
     return Math.sqrt(dx * dx + dy * dy).toFixed(1);
+  };
+
+  const handleWarpToTarget = () => {
+    if (!onWarp || !targetEntityId) return;
+    const target = MAP_ENTITIES.find((e) => e.id === targetEntityId);
+    if (target) {
+      onWarp(target.position.x, target.position.y);
+    }
+  };
+
+  const handleCoordinateWarp = () => {
+    if (!onWarp) return;
+    const x = parseInt(warpX);
+    const y = parseInt(warpY);
+    if (!isNaN(x) && !isNaN(y)) {
+      onWarp(x, y);
+    }
+  };
+
+  const handleAddCountry = () => {
+    if (newCountryName && !countries.includes(newCountryName)) {
+      setCountries([...countries, newCountryName]);
+      setNewCountryName("");
+    }
+  };
+
+  const handleDeleteCountry = (country: string) => {
+    if (country === "始まりの国") return; // Initial country cannot be deleted
+    setCountries(countries.filter((c) => c !== country));
+    if (selectedCountry === country) {
+      setSelectedCountry(countries[0]);
+    }
   };
 
   if (!playerPosition) return null;
@@ -112,19 +155,20 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
 
       {/* Bottom Right: Compass (Only if hasMap) */}
       {hasMap && (
-        <div className="pointer-events-auto bg-black/70 backdrop-blur-md rounded-xl p-3 border border-white/10 shadow-lg w-64 self-end">
-          <div className="flex items-center justify-between mb-2">
+        <div className="pointer-events-auto bg-black/70 backdrop-blur-md rounded-xl p-3 border border-white/10 shadow-lg w-72 self-end flex flex-col gap-3">
+          {/* Header */}
+          <div className="flex items-center justify-between">
             <span className="text-[10px] text-neutral-400 font-bold uppercase tracking-wider flex items-center gap-1">
               <MapIcon size={12} /> Compass
             </span>
-            {targetEntityId && (
-              <button
-                onClick={() => setTargetEntityId(null)}
-                className="text-[9px] text-red-400 hover:text-red-300"
-              >
-                Clear
-              </button>
-            )}
+
+            {/* Toggle Warp Menu */}
+            <button
+              onClick={() => setShowWarpMenu(!showWarpMenu)}
+              className="text-[10px] px-2 py-0.5 bg-neutral-800 hover:bg-neutral-700 text-indigo-400 rounded border border-neutral-700 transition-colors"
+            >
+              {showWarpMenu ? "Hide Warp" : "Warp Menu"}
+            </button>
           </div>
 
           <div className="flex gap-3 items-center">
@@ -149,7 +193,7 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
             </div>
 
             {/* Target Select */}
-            <div className="flex-1">
+            <div className="flex-1 flex flex-col gap-2">
               <select
                 className="w-full bg-neutral-800 text-neutral-200 text-[11px] rounded-lg px-2 py-1.5 border border-neutral-700 outline-none focus:border-indigo-500"
                 value={targetEntityId || ""}
@@ -162,15 +206,106 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
                   </option>
                 ))}
               </select>
+
+              {/* Warp to Target Button */}
               {targetEntityId && (
-                <div className="text-[10px] text-neutral-400 mt-1">
-                  距離: {getDistanceToTarget()} tiles
-                </div>
+                <button
+                  onClick={handleWarpToTarget}
+                  className="w-full py-1 text-[10px] bg-indigo-900/50 hover:bg-indigo-900 text-indigo-200 border border-indigo-500/30 rounded transition-colors"
+                >
+                  Warp to Target ({getDistanceToTarget()})
+                </button>
               )}
             </div>
           </div>
+
+          {/* Warp Menu Section */}
+          {showWarpMenu && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              className="pt-2 border-t border-white/10 flex flex-col gap-2 overflow-hidden"
+            >
+              <div className="text-[10px] text-neutral-400 font-bold">
+                Coordinate Warp
+              </div>
+
+              {/* Country Select */}
+              <div className="flex gap-1">
+                <select
+                  className="flex-1 bg-neutral-800 text-[10px] text-neutral-300 rounded px-2 py-1 border border-neutral-700 outline-none"
+                  value={selectedCountry}
+                  onChange={(e) => setSelectedCountry(e.target.value)}
+                >
+                  {countries.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+                {selectedCountry !== "始まりの国" && (
+                  <button
+                    onClick={() => handleDeleteCountry(selectedCountry)}
+                    className="px-2 bg-red-900/30 text-red-400 hover:bg-red-900/50 rounded border border-red-900/50 text-[10px]"
+                  >
+                    Del
+                  </button>
+                )}
+              </div>
+
+              {/* Add Country (Mock) */}
+              <div className="flex gap-1">
+                <input
+                  type="text"
+                  placeholder="New Country Name"
+                  className="flex-1 bg-neutral-800 text-[10px] text-neutral-300 rounded px-2 py-1 border border-neutral-700 outline-none"
+                  value={newCountryName}
+                  onChange={(e) => setNewCountryName(e.target.value)}
+                />
+                <button
+                  onClick={handleAddCountry}
+                  className="px-2 bg-neutral-700 hover:bg-neutral-600 text-neutral-300 rounded text-[10px]"
+                >
+                  Add
+                </button>
+              </div>
+
+              {/* Coordinates Input */}
+              <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-1 flex-1">
+                  <span className="text-[10px] text-neutral-500">X</span>
+                  <input
+                    type="number"
+                    className="w-full bg-neutral-800 text-[10px] text-neutral-300 rounded px-2 py-1 border border-neutral-700 outline-none"
+                    placeholder="0"
+                    value={warpX}
+                    onChange={(e) => setWarpX(e.target.value)}
+                  />
+                </div>
+                <div className="flex items-center gap-1 flex-1">
+                  <span className="text-[10px] text-neutral-500">Y</span>
+                  <input
+                    type="number"
+                    className="w-full bg-neutral-800 text-[10px] text-neutral-300 rounded px-2 py-1 border border-neutral-700 outline-none"
+                    placeholder="0"
+                    value={warpY}
+                    onChange={(e) => setWarpY(e.target.value)}
+                  />
+                </div>
+                <button
+                  onClick={handleCoordinateWarp}
+                  className="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white rounded text-[10px] font-bold shadow-lg shadow-indigo-500/20"
+                >
+                  GO
+                </button>
+              </div>
+            </motion.div>
+          )}
         </div>
       )}
+
+      {/* Chat Overlay */}
+      <GhostChat />
     </div>
   );
 };

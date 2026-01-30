@@ -26,6 +26,7 @@ describe("WorkContinuousRating UI", () => {
     onReset: vi.fn(),
     onExport: vi.fn(),
     onToggleRatedItems: vi.fn(),
+    onToggleLike: vi.fn(),
   };
 
   it("should render category selection when category is null", async () => {
@@ -114,7 +115,14 @@ describe("WorkContinuousRating UI", () => {
       sessionSize: 10,
       sessionTotal: 10,
       currentTitle: "Test Anime",
-      ratings: { "Test Anime": { status: "Now", value: "Tier1" } as Rating },
+      ratings: {
+        "Test Anime": {
+          status: "Now",
+          isLiked: true,
+          tier: "Tier1",
+          otherValue: null,
+        } as Rating,
+      },
     };
     const { unmount } = render(<WorkContinuousRating {...props} />);
 
@@ -137,7 +145,12 @@ describe("WorkContinuousRating UI", () => {
       sessionTotal: 10,
       currentTitle: "Test Anime 2",
       ratings: {
-        "Test Anime 2": { status: "Future", value: "後で見る" } as Rating,
+        "Test Anime 2": {
+          status: "Future",
+          isLiked: false,
+          tier: "Tier1",
+          otherValue: "後で見る",
+        } as Rating,
       },
     };
     render(<WorkContinuousRating {...props} />);

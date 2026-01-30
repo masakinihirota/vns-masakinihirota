@@ -33,6 +33,11 @@ export const ChoiceCard = ({
       bgRef: "bg-amber-500/50",
       textUpper: "text-amber-400/80",
     },
+    slate: {
+      textRef: "text-slate-400",
+      bgRef: "bg-slate-500/50",
+      textUpper: "text-slate-400/80",
+    },
   };
 
   const { textRef, bgRef, textUpper } =

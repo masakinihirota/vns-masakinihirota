@@ -111,7 +111,7 @@ export function OnboardingChoice() {
         <div className="text-center space-y-4 animate-in fade-in slide-in-from-top-8 duration-700">
           <div className="inline-flex items-center space-x-2 bg-white/80 dark:bg-slate-900/80 border border-neutral-200 dark:border-slate-800 rounded-full px-4 py-1.5 mb-4 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            <span className="text-xs text-neutral-500 dark:text-slate-400 font-medium tracking-wide">
+            <span className="text-lg text-neutral-500 dark:text-slate-400 font-medium tracking-wide">
               ROOT ACCOUNT CREATED
             </span>
           </div>
@@ -132,7 +132,7 @@ export function OnboardingChoice() {
               key={path.id}
               selected={selectedPath === path.id}
               onClick={() => handleSelect(path.id)}
-              className="group flex flex-col h-full p-6 md:p-8 hover:bg-white dark:hover:bg-slate-900 transition-all"
+              className="group flex flex-col h-full p-6 md:p-8 hover:bg-white dark:hover:bg-slate-900 dark:hover:border-slate-400 transition-all"
             >
               {/* Card Header */}
               <div className="flex items-start justify-between mb-6">
@@ -152,7 +152,7 @@ export function OnboardingChoice() {
               <div className="flex-1 space-y-4">
                 <div>
                   <p
-                    className={`text-xs font-bold uppercase tracking-wider mb-1 text-${path.color}-600/80 dark:text-${path.color}-400/80`}
+                    className={`text-lg font-bold uppercase tracking-wider mb-1 text-${path.color}-600/80 dark:text-${path.color}-400/80 dark:group-hover:text-${path.color}-300 transition-colors`}
                   >
                     {path.subtitle}
                   </p>
@@ -161,7 +161,7 @@ export function OnboardingChoice() {
                   </h3>
                 </div>
 
-                <p className="text-sm text-neutral-600 dark:text-slate-400 leading-relaxed min-h-[4.5em]">
+                <p className="text-lg text-neutral-600 dark:text-slate-400 dark:group-hover:text-slate-200 transition-colors leading-relaxed min-h-[4.5em]">
                   {path.description}
                 </p>
 
@@ -171,7 +171,7 @@ export function OnboardingChoice() {
                     {path.benefits.map((benefit, idx) => (
                       <li
                         key={idx}
-                        className="flex items-center text-xs text-neutral-500 dark:text-slate-500 group-hover:text-neutral-700 dark:group-hover:text-slate-400 transition-colors"
+                        className="flex items-center text-lg text-neutral-500 dark:text-slate-500 group-hover:text-neutral-700 dark:group-hover:text-slate-300 transition-colors"
                       >
                         <span
                           className={`w-1 h-1 rounded-full mr-2 bg-${path.color}-500/50`}
@@ -185,7 +185,7 @@ export function OnboardingChoice() {
 
               {/* Recommendation Tag */}
               <div className="mt-6 pt-4">
-                <div className="flex items-center gap-2 text-[10px] text-neutral-500 dark:text-slate-500 font-medium bg-neutral-100 dark:bg-slate-950/50 px-3 py-2 rounded-lg border border-neutral-200 dark:border-slate-800/50">
+                <div className="flex items-center gap-2 text-lg text-neutral-500 dark:text-slate-500 font-medium bg-neutral-100 dark:bg-slate-950/50 px-3 py-2 rounded-lg border border-neutral-200 dark:border-slate-800/50">
                   <Info className="w-3 h-3" />
                   {path.recommends}
                 </div>
@@ -217,7 +217,7 @@ export function OnboardingChoice() {
               </span>
             )}
           </ActionButton>
-          <p className="text-xs text-neutral-500 dark:text-slate-500">
+          <p className="text-lg text-neutral-500 dark:text-slate-500">
             ※ 選択した内容は後から変更・追加可能です。
           </p>
         </div>

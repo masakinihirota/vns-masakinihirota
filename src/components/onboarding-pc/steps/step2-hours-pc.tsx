@@ -1,17 +1,24 @@
 import { AlertCircle } from "lucide-react";
 import React from "react";
-import { WeekScheduler } from "@/components/ui/week-scheduler";
+import {
+  WeekScheduler,
+  WeekSchedulerProps,
+} from "@/components/ui/week-scheduler/week-scheduler";
 import { timeToHours } from "@/lib/root-account-utils";
 import { DailyScheduleEditor } from "./daily-schedule-editor";
 
 interface Step2HoursPCProps {
   data: any;
   onUpdate: (data: any) => void;
+  weekSchedulerProps?: Partial<WeekSchedulerProps>;
+  holidayLabel?: string;
 }
 
 export const Step2HoursPC: React.FC<Step2HoursPCProps> = ({
   data,
   onUpdate,
+  weekSchedulerProps,
+  holidayLabel = "休日用 (Holiday)",
 }) => {
   // Total hours calculation helper
   const calculateTotal = (
@@ -73,6 +80,7 @@ export const Step2HoursPC: React.FC<Step2HoursPCProps> = ({
           <WeekScheduler
             value={data.week_schedule}
             onChange={(val) => onUpdate({ week_schedule: val })}
+            {...weekSchedulerProps}
           />
         </div>
       )}
@@ -120,7 +128,7 @@ export const Step2HoursPC: React.FC<Step2HoursPCProps> = ({
       {/* Holiday Schedule */}
       <div className="space-y-4">
         <DailyScheduleEditor
-          label="休日用 (Holiday)"
+          label={holidayLabel}
           startKey="holidayActivityStart"
           endKey="holidayActivityEnd"
           subStartKey="holidayActivity2Start"
@@ -153,7 +161,8 @@ export const Step2HoursPC: React.FC<Step2HoursPCProps> = ({
                   : "text-green-900 dark:text-green-100"
               }`}
             >
-              休日用 合計活動時間: {holidayTotalHours.toFixed(1)}時間
+              {holidayLabel.split(" ")[0]} 合計活動時間:{" "}
+              {holidayTotalHours.toFixed(1)}時間
             </p>
           </div>
         </div>
