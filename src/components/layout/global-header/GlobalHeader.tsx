@@ -37,6 +37,7 @@ import {
 } from "@/components/ui/tooltip";
 import { createClient } from "@/lib/supabase/client";
 import { TrialStorage } from "@/lib/trial-storage";
+import { TrialOnboardingBackButton } from "../trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TrialStatusBadge } from "../trial-status-badge/TrialStatusBadge";
 
 /**
@@ -354,7 +355,125 @@ export function HelpButton() {
   );
 }
 
-// お試し利用ボタン
+// VNS Button Components Showcase
+// * コンセプト:
+// 1. Oasis (Cyan/Blue) - 癒やしと潤い
+// 2. Shield (Rounded/Glass) - 保護と安心
+// 3. Drift (Animation) - ゆるやかな遷移
+
+interface VNSButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?:
+    | "primary"
+    | "secondary"
+    | "ghost"
+    | "persona"
+    | "warm"
+    | "emerald"
+    | "indigo";
+  size?: "sm" | "md" | "lg" | "icon";
+  icon?: React.ElementType;
+  loading?: boolean;
+  href?: string;
+}
+
+const VNSButton = React.forwardRef<HTMLButtonElement, VNSButtonProps>(
+  (
+    {
+      children,
+      variant = "primary",
+      size = "md",
+      icon: Icon,
+      className = "",
+      loading = false,
+      href,
+      ...props
+    },
+    ref
+  ) => {
+    const baseStyles =
+      "relative inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 active:scale-95 disabled:opacity-50 disabled:pointer-events-none overflow-hidden group";
+
+    const sizes = {
+      sm: "px-4 py-1.5 text-sm rounded-xl gap-2",
+      md: "px-6 py-2.5 text-base rounded-2xl gap-2",
+      lg: "px-8 py-4 text-lg rounded-[2rem] gap-3",
+      icon: "p-2.5 rounded-2xl",
+    };
+
+    const variants = {
+      // 1. Oasis Primary: シアンの発光と深いグラデーション
+      primary:
+        "bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25 hover:shadow-cyan-400/40 hover:-translate-y-0.5",
+
+      // Customized for Trial (Emerald)
+      emerald:
+        "bg-gradient-to-br from-emerald-400 to-green-600 text-white shadow-lg shadow-emerald-500/25 hover:shadow-emerald-400/40 hover:-translate-y-0.5",
+
+      // Customized for Login (Indigo)
+      indigo:
+        "bg-gradient-to-br from-indigo-500 to-purple-600 text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-400/40 hover:-translate-y-0.5",
+
+      // 2. Shield Secondary: ガラスの質感と境界線
+      secondary:
+        "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 hover:border-white/40",
+
+      // 3. Drift Ghost: 背景なし、ホバーで光が走る
+      ghost:
+        "bg-transparent text-cyan-400 hover:text-cyan-300 hover:bg-cyan-500/10",
+
+      // 4. Persona (Thousand Masks): 奥行きのある多層レイヤー風
+      persona:
+        "bg-zinc-900 border border-zinc-700 text-zinc-300 hover:border-cyan-500/50 hover:text-cyan-400 shadow-[4px_4px_0px_0px_rgba(39,39,42,1)] hover:shadow-[2px_2px_0px_0px_rgba(6,182,212,0.5)] active:shadow-none translate-x-[-2px] translate-y-[-2px] active:translate-x-0 active:translate-y-0",
+
+      // 5. Danger/Alert: オアシスの赤（警告ではなく「熱量」）
+      warm: "bg-rose-500/10 border border-rose-500/30 text-rose-400 hover:bg-rose-500/20 hover:text-rose-300",
+    };
+
+    const content = (
+      <>
+        {/* ホバー時の光の反射エフェクト */}
+        <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
+
+        {Icon && (
+          <Icon
+            size={size === "sm" ? 16 : size === "lg" ? 24 : 20}
+            className="relative z-10"
+          />
+        )}
+        <span className="relative z-10">{children}</span>
+
+        {loading && (
+          <div className="absolute inset-0 bg-inherit flex items-center justify-center z-20">
+            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+          </div>
+        )}
+      </>
+    );
+
+    if (href) {
+      return (
+        <Link
+          href={href}
+          className={`${baseStyles} ${sizes[size]} ${variants[variant]} ${className}`}
+        >
+          {content}
+        </Link>
+      );
+    }
+
+    return (
+      <button
+        ref={ref}
+        className={`${baseStyles} ${sizes[size]} ${variants[variant]} ${className}`}
+        {...props}
+      >
+        {content}
+      </button>
+    );
+  }
+);
+VNSButton.displayName = "VNSButton";
+
 // お試し利用ボタン
 export function TrialButton() {
   const [isPending, startTransition] = React.useTransition();
@@ -366,37 +485,31 @@ export function TrialButton() {
       document.cookie =
         "local_mode=true; path=/; max-age=31536000; SameSite=Lax";
       // オンボーディングの起点へ遷移
-      router.push("/beginning-country");
+      router.push("/onboarding-trial/choice");
       router.refresh();
     });
   };
 
   return (
-    <Button
-      className="group h-10 px-5 text-lg bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-full transition-all shadow-md hover:shadow-emerald-500/30 hover:scale-105 flex items-center gap-2 hidden sm:flex"
+    <VNSButton
+      variant="emerald"
       onClick={handleLocalModeStart}
       disabled={isPending}
+      loading={isPending}
+      icon={ArrowRight}
+      className="hidden sm:inline-flex"
     >
-      <span className="leading-none pt-0.5">
-        {isPending ? "準備中..." : "お試し体験"}
-      </span>
-      <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-    </Button>
+      {isPending ? "準備中..." : "お試し体験"}
+    </VNSButton>
   );
 }
 
 // 登録/ログインボタン
 export function LoginButton() {
   return (
-    <Button
-      className="group h-10 px-5 text-lg bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-full transition-all shadow-md shadow-indigo-500/20 hover:scale-105 flex items-center gap-2"
-      asChild
-    >
-      <Link href="/login">
-        <span className="leading-none pt-0.5">メンバー登録 / ログイン</span>
-        <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-      </Link>
-    </Button>
+    <VNSButton variant="indigo" icon={ArrowRight} href="/login">
+      メンバー登録 / ログイン
+    </VNSButton>
   );
 }
 
@@ -444,6 +557,7 @@ export function GlobalHeader({
         <div className="flex items-center gap-2">
           {showSidebarTrigger && <SidebarTrigger className="-ml-1" />}
           {isTrial && <TrialStatusBadge />}
+          <TrialOnboardingBackButton />
           {process.env.NODE_ENV === "development" && (
             <Tooltip>
               <TooltipTrigger asChild>

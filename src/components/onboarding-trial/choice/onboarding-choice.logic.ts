@@ -27,11 +27,10 @@ export const useOnboardingChoice = () => {
           router.push("/ghost");
           break;
         case "profile":
-          // TODO: プロフィール作成へのパスを確認して修正
-          router.push("/profile/create");
+          router.push("/user-profiles/new");
           break;
         case "home":
-          router.push("/");
+          router.push("/home");
           break;
       }
     } catch (error) {

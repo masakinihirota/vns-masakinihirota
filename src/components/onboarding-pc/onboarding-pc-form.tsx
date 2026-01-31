@@ -2,7 +2,7 @@
 
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { StepBasicValuesPC } from "./steps/step-basic-values-pc";
 import { StepConfirmationPC } from "./steps/step-confirmation-pc";
 import { StepDeclarationsPC } from "./steps/step-declarations-pc";
@@ -113,8 +113,8 @@ export function OnboardingPCForm({
       alert("PCオンボーディング完了！ (デモ)");
       alert("PCオンボーディング完了！ (デモ)");
       alert("PCオンボーディング完了！ (デモ)");
-      // Redirect to Beginning Country, where they choose their first action
-      router.push("/beginning-country");
+      // Redirect to onboarding choice screen, where they choose their first action
+      router.push("/onboarding-trial/choice");
     } catch (e) {
       console.error(e);
       alert("エラーが発生しました");

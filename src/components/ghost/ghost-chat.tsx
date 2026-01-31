@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Maximize2, Minimize2, Send, MessageSquare } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { ChevronsDown, ChevronsUp, MessageSquare, Send } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 interface Message {
@@ -81,13 +81,7 @@ export const GhostChat = () => {
           <MessageSquare size={16} className="text-indigo-400" />
           <span>Chat</span>
         </div>
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="p-1 hover:bg-white/10 rounded-lg text-neutral-400 hover:text-white transition-colors"
-          title={isExpanded ? "縮小" : "拡大"}
-        >
-          {isExpanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
-        </button>
+        {/* Toggle button removed from here */}
       </div>
 
       {/* Messages Area */}
@@ -130,6 +124,25 @@ export const GhostChat = () => {
           <Send size={16} />
         </button>
       </form>
+
+      {/* Footer Toggle */}
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full h-6 flex items-center justify-center bg-white/5 hover:bg-white/10 border-t border-white/10 transition-colors group"
+        title={isExpanded ? "縮小" : "拡大"}
+      >
+        {isExpanded ? (
+          <div className="flex items-center gap-1 text-[10px] text-neutral-400 group-hover:text-white">
+            <ChevronsDown size={14} />
+            <span>Close</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-1 text-[10px] text-neutral-400 group-hover:text-white">
+            <ChevronsUp size={14} />
+            <span>Expand</span>
+          </div>
+        )}
+      </button>
     </motion.div>
   );
 };
