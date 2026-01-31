@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { vi, describe, it, expect } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import { OnboardingChoice } from "./onboarding-choice";
+import { OnboardingChoice } from "./OnboardingChoice";
 
 // モック: useRouter
 const pushMock = vi.fn();

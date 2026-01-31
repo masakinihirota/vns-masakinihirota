@@ -2,16 +2,16 @@
 
 import { type User } from "@supabase/supabase-js";
 import {
-  Search,
-  Bell,
-  Sun,
-  Moon,
-  Globe,
-  Megaphone,
-  Coins,
-  HelpCircle,
-  MonitorSmartphone,
   ArrowRight,
+  Bell,
+  Coins,
+  Globe,
+  HelpCircle,
+  Megaphone,
+  MonitorSmartphone,
+  Moon,
+  Search,
+  Sun,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -37,7 +37,7 @@ import {
 } from "@/components/ui/tooltip";
 import { createClient } from "@/lib/supabase/client";
 import { TrialStorage } from "@/lib/trial-storage";
-import { TrialStatusBadge } from "./trial-status-badge";
+import { TrialStatusBadge } from "../trial-status-badge/TrialStatusBadge";
 
 /**
  * ヘッダーメニュー要件定義書に基づく機能:

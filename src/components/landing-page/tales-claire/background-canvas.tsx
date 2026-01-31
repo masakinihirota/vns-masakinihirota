@@ -30,42 +30,6 @@ export function BackgroundCanvas() {
       : "rgba(200, 210, 255, 0.4)";
     const nebulaEnd = isDark ? "rgba(0, 0, 0, 0)" : "rgba(255, 255, 255, 0)";
 
-    // Particle class definition
-    class Particle {
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      opacity: number;
-
-      constructor() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.2;
-        this.vy = (Math.random() - 0.5) * 0.2;
-        this.size = Math.random() * 2;
-        this.opacity = Math.random() * 0.5 + 0.1;
-      }
-
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0) this.x = width;
-        if (this.x > width) this.x = 0;
-        if (this.y < 0) this.y = height;
-        if (this.y > height) this.y = 0;
-      }
-
-      draw(context: CanvasRenderingContext2D) {
-        context.beginPath();
-        context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        context.fillStyle = `rgba(${particleColor}, ${this.opacity})`;
-        context.fill();
-      }
-    }
-
     let particles: Particle[] = [];
 
     const resize = () => {
@@ -78,7 +42,7 @@ export function BackgroundCanvas() {
       particles = [];
       const particleCount = Math.floor((width * height) / 15000);
       for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
+        particles.push(new Particle(width, height));
       }
     };
 
@@ -100,8 +64,8 @@ export function BackgroundCanvas() {
       ctx.fillRect(0, 0, width, height);
 
       particles.forEach((p) => {
-        p.update();
-        p.draw(ctx);
+        p.update(width, height);
+        p.draw(ctx, particleColor);
       });
 
       animationFrameId = requestAnimationFrame(animate);
@@ -130,4 +94,39 @@ export function BackgroundCanvas() {
       className="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none transition-opacity duration-500"
     />
   );
+}
+
+class Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  size: number;
+  opacity: number;
+
+  constructor(w: number, h: number) {
+    this.x = Math.random() * w;
+    this.y = Math.random() * h;
+    this.vx = (Math.random() - 0.5) * 0.2;
+    this.vy = (Math.random() - 0.5) * 0.2;
+    this.size = Math.random() * 2;
+    this.opacity = Math.random() * 0.5 + 0.1;
+  }
+
+  update(w: number, h: number) {
+    this.x += this.vx;
+    this.y += this.vy;
+
+    if (this.x < 0) this.x = w;
+    if (this.x > w) this.x = 0;
+    if (this.y < 0) this.y = h;
+    if (this.y > h) this.y = 0;
+  }
+
+  draw(context: CanvasRenderingContext2D, color: string) {
+    context.beginPath();
+    context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    context.fillStyle = `rgba(${color}, ${this.opacity})`;
+    context.fill();
+  }
 }

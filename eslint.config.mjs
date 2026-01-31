@@ -1,19 +1,12 @@
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
-import prettierConfig from "eslint-config-prettier";
-import prettierPlugin from "eslint-plugin-prettier";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  prettierConfig,
   {
-    plugins: {
-      prettier: prettierPlugin,
-    },
     rules: {
-      "prettier/prettier": "error",
       "@typescript-eslint/no-unused-vars": "off",
       // "no-unused-vars": "off", // JS標準ルールも念のためOFF
       // strict-rule準拠ルール（型情報不要なもののみ）

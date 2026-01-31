@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createClient } from "@/lib/supabase/client";
 
 interface PlayerPosition {
@@ -17,6 +16,20 @@ import {
   TILE_SIZE,
 } from "../constants";
 
+export interface GhostMainScene extends Phaser.Scene {
+  myPlayer: Phaser.GameObjects.Container;
+  hasMap: boolean;
+  teleport: (x: number, y: number) => void;
+  setUpdateCallback: (
+    fn: (state: {
+      x: number;
+      y: number;
+      hasMap?: boolean;
+      dialog?: { show: boolean; title: string; message: string };
+    }) => void
+  ) => void;
+}
+
 export const createMainSceneClass = async () => {
   const PhaserLib = (await import("phaser")).default;
 
@@ -33,13 +46,15 @@ export const createMainSceneClass = async () => {
           x: number;
           y: number;
           hasMap?: boolean;
-          dialog?: any;
+          dialog?: { show: boolean; title: string; message: string };
         }) => void)
       | null = null;
     hasMap: boolean = false;
     entitySprites: Map<
       string,
-      Phaser.GameObjects.Sprite | Phaser.GameObjects.Container
+      | Phaser.GameObjects.Sprite
+      | Phaser.GameObjects.Container
+      | Phaser.GameObjects.Text
     > = new Map();
     contactedEntities: Set<string> = new Set(); // 接触済みエンティティ（離れるまで再トリガーしない）
 
@@ -58,7 +73,7 @@ export const createMainSceneClass = async () => {
         x: number;
         y: number;
         hasMap?: boolean;
-        dialog?: any;
+        dialog?: { show: boolean; title: string; message: string };
       }) => void
     ) {
       this.onUpdateState = fn;
@@ -77,8 +92,8 @@ export const createMainSceneClass = async () => {
 
       // 3. Create My Player (Ghost representation)
       // Reset position every time (Disable saved position loading)
-      let startX = SPAWN_POINT.x;
-      let startY = SPAWN_POINT.y;
+      const startX = SPAWN_POINT.x;
+      const startY = SPAWN_POINT.y;
 
       /*
       try {
@@ -110,9 +125,9 @@ export const createMainSceneClass = async () => {
       this.input.on(
         "wheel",
         (
-          pointer: any,
-          gameObjects: any,
-          deltaX: number,
+          _pointer: unknown,
+          _gameObjects: unknown,
+          _deltaX: number,
           deltaY: number,
           _deltaZ: number
         ) => {
@@ -185,8 +200,6 @@ export const createMainSceneClass = async () => {
         const x = entity.position.x * TILE_SIZE;
         const y = entity.position.y * TILE_SIZE;
 
-        let sprite: Phaser.GameObjects.Text;
-
         // Use emoji/text for entities
         const emojiMap: Record<string, string> = {
           king: "👑",
@@ -199,7 +212,7 @@ export const createMainSceneClass = async () => {
         };
 
         const emoji = emojiMap[entity.type] || "❓";
-        sprite = this.add
+        const sprite = this.add
           .text(x, y, emoji, {
             fontSize: "24px",
           })
@@ -426,9 +439,13 @@ export const createMainSceneClass = async () => {
           this.broadcastPosition();
         }
 
-        // Sync to React
         if (this.onUpdateState) {
-          const updatePayload: any = {
+          const updatePayload: {
+            x: number;
+            y: number;
+            hasMap?: boolean;
+            dialog?: { show: boolean; title: string; message: string };
+          } = {
             x: this.myPlayer.x,
             y: this.myPlayer.y,
             hasMap: this.hasMap,

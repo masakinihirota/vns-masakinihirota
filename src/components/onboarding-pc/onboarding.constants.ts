@@ -507,6 +507,13 @@ export type CulturalSphereId =
   | "italian"
   | "portuguese"
   | "russian"
+  | "vietnamese"
+  | "filipino"
+  | "nepali"
+  | "indonesian"
+  | "burmese"
+  | "sinhalese_tamil"
+  | "thai"
   | "other";
 
 export interface CulturalSphere {
@@ -535,6 +542,13 @@ export const CULTURAL_SPHERES: CulturalSphere[] = [
   { id: "italian", label: "イタリア語文化圏", en: "Italian" },
   { id: "portuguese", label: "ポルトガル語文化圏", en: "Portuguese" },
   { id: "russian", label: "ロシア語文化圏", en: "Russian" },
+  { id: "vietnamese", label: "ベトナム語文化圏", en: "Vietnamese" },
+  { id: "filipino", label: "フィリピン語文化圏", en: "Filipino (Tagalog)" },
+  { id: "nepali", label: "ネパール語文化圏", en: "Nepali" },
+  { id: "indonesian", label: "インドネシア語文化圏", en: "Indonesian" },
+  { id: "burmese", label: "ビルマ語文化圏", en: "Burmese" },
+  { id: "sinhalese_tamil", label: "スリランカ文化圏", en: "Sinhalese/Tamil" },
+  { id: "thai", label: "タイ語文化圏", en: "Thai" },
   { id: "other", label: "その他の文化圏", en: "Others" },
 ];
 
@@ -643,6 +657,27 @@ export const DETAILED_REGIONS: Record<
       { name: "その他 (Others)" },
     ],
   },
+  vietnamese: {
+    countries: [{ name: "ベトナム" }, { name: "その他 (Others)" }],
+  },
+  filipino: {
+    countries: [{ name: "フィリピン" }, { name: "その他 (Others)" }],
+  },
+  nepali: {
+    countries: [{ name: "ネパール" }, { name: "その他 (Others)" }],
+  },
+  indonesian: {
+    countries: [{ name: "インドネシア" }, { name: "その他 (Others)" }],
+  },
+  burmese: {
+    countries: [{ name: "ミャンマー" }, { name: "その他 (Others)" }],
+  },
+  sinhalese_tamil: {
+    countries: [{ name: "スリランカ" }, { name: "その他 (Others)" }],
+  },
+  thai: {
+    countries: [{ name: "タイ" }, { name: "その他 (Others)" }],
+  },
   other: {
     countries: [{ name: "その他 (Others)" }],
   },
@@ -697,7 +732,40 @@ export const MARS_LOCATIONS = [
   "シドニア地域 (Cydonia)",
 ] as const;
 
-export const LANGUAGE_OPTIONS = [
+export const JAPANESE_LEVELS = [
+  {
+    value: "native",
+    label: "ネイティブ",
+    description: "日本人(にほんじん)と同じ(おなじ)",
+  },
+  {
+    value: "n1",
+    label: "N1：ビジネスレベルの日本語 / Business Level",
+    description: "ニュースがわかり、仕事で自由に話せる。",
+  },
+  {
+    value: "n2",
+    label: "N2：日常(にちじょう)の日本語(にほんご) / Daily Japanese",
+    description: "複雑な会話もだいたい理解できる。",
+  },
+  {
+    value: "n3",
+    label: "N3：基本(きほん)の日本語(にほんご) / Basic Japanese",
+    description: "買い物や生活の会話がスムーズにできる。",
+  },
+  {
+    value: "n4",
+    label: "N4：やさしい日本語(にほんご) / Easy Japanese",
+    description: "ゆっくり話せばわかる。",
+  },
+  {
+    value: "n5",
+    label: "N5：はじめての日本語(にほんご) / Beginner",
+    description: "挨拶や短い文が少しわかる。",
+  },
+] as const;
+
+export const NATIVE_LANGUAGE_OPTIONS = [
   "日本語 (Japanese)",
   "英語 (English)",
   "フランス語 (French)",
@@ -709,7 +777,40 @@ export const LANGUAGE_OPTIONS = [
   "ロシア語 (Russian)",
   "イタリア語 (Italian)",
   "ドイツ語 (German)",
+  "ベトナム語 (Vietnamese)",
+  "タガログ語 (Tagalog)",
+  "ネパール語 (Nepali)",
+  "インドネシア語 (Indonesian)",
+  "ビルマ語 (Burmese)",
+  "シンハラ語 (Sinhalese)",
+  "タミル語 (Tamil)",
+  "タイ語 (Thai)",
   "その他 (Other)",
+] as const;
+
+export const AVAILABLE_LANGUAGE_OPTIONS = [
+  "日本語 (Japanese)",
+  "英語 (English)",
+  "フランス語 (French)",
+  "中国語 (繁体字) (Chinese Traditional)",
+  "中国語 (簡体字) (Chinese Simplified)",
+  "スペイン語 (Spanish)",
+  "ポルトガル語 (Portuguese)",
+  "韓国語 (Korean)",
+  "ロシア語 (Russian)",
+  "イタリア語 (Italian)",
+  "ドイツ語 (German)",
+  ...JAPANESE_LEVELS.filter((level) => level.value !== "native").map(
+    (level) => level.label
+  ),
+  "ベトナム語 (Vietnamese)",
+  "タガログ語 (Tagalog)",
+  "ネパール語 (Nepali)",
+  "インドネシア語 (Indonesian)",
+  "ビルマ語 (Burmese)",
+  "シンハラ語 (Sinhalese)",
+  "タミル語 (Tamil)",
+  "タイ語 (Thai)",
 ] as const;
 
 export interface Agreements {

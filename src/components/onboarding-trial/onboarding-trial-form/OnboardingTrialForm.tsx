@@ -1,17 +1,17 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 // Reuse existing components where possible
 import { Step1ResidencePC } from "@/components/onboarding-pc/steps/step1-residence-pc";
 import { Step2HoursPC } from "@/components/onboarding-pc/steps/step2-hours-pc";
 import { Step4LanguagePC } from "@/components/onboarding-pc/steps/step4-language-pc";
 import { OnboardingSidebarTrial } from "@/components/onboarding-trial/ui/onboarding-sidebar-trial";
 import { TrialStorage, type TrialRootAccount } from "@/lib/trial-storage";
-import { StepConfirmationTrial } from "./steps/step-confirmation-trial";
+import { StepConfirmationTrial } from "../steps/step-confirmation-trial";
 // New components for trial
-import { StepDeclarationsTrial } from "./steps/step-declarations-trial";
-import { Step3IdentityTrial } from "./steps/step3-identity-trial";
+import { StepDeclarationsTrial } from "../steps/step-declarations-trial";
+import { Step3IdentityTrial } from "../steps/step3-identity-trial";
 
 type TrialFormData = Omit<TrialRootAccount, "display_name" | "created_at"> & {
   is_trial: boolean;

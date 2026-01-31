@@ -13,7 +13,7 @@ export const OnboardingChoice = () => {
     useOnboardingChoice();
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-blue-500/30 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="relative overflow-hidden py-12">
       {/* Background Ambient Effects */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[100px]" />

@@ -1,5 +1,10 @@
-import { Globe, Bot, User, Check, ChevronDown, ChevronUp } from "lucide-react";
+import { Bot, Check, ChevronDown, ChevronUp, Globe, User } from "lucide-react";
 import React, { useState } from "react";
+import {
+  AVAILABLE_LANGUAGE_OPTIONS,
+  JAPANESE_LEVELS,
+  NATIVE_LANGUAGE_OPTIONS,
+} from "../onboarding.logic";
 
 const LanguageList = ({
   languages,
@@ -64,22 +69,26 @@ const LanguageList = ({
     return colorClass === "indigo" ? "text-indigo-600" : "text-emerald-600";
   };
 
+  const japaneseLevelLabels = JAPANESE_LEVELS.map((level) => level.label);
+
   return (
     <div className="space-y-2 ml-1">
       {displayedLanguages.map((lang) => {
         const isSelected = selected.includes(lang);
+        const jpLevel = JAPANESE_LEVELS.find((l) => l.label === lang);
+
         return (
           <div
             key={lang}
             onClick={() => onToggle(lang)}
             className={`
-              flex items-center space-x-3 p-3 border rounded-lg cursor-pointer transition-all duration-200
+              flex items-start space-x-3 p-3 border rounded-lg cursor-pointer transition-all duration-200
               ${getStyles(isSelected)}
             `}
           >
             <div
               className={`
-              flex-shrink-0 h-5 w-5 rounded border flex items-center justify-center transition-colors
+              flex-shrink-0 h-5 w-5 mt-0.5 rounded border flex items-center justify-center transition-colors
               ${
                 isSelected
                   ? colorClass === "indigo"
@@ -93,9 +102,16 @@ const LanguageList = ({
                 <Check size={14} className={getCheckColor()} strokeWidth={3} />
               )}
             </div>
-            <span className={`text-sm font-medium ${getTextColor(isSelected)}`}>
-              {lang}
-            </span>
+            <div className="flex flex-col">
+              <span className={`text-sm font-bold ${getTextColor(isSelected)}`}>
+                {lang}
+              </span>
+              {jpLevel && jpLevel.value !== "native" && (
+                <span className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
+                  {jpLevel.description}
+                </span>
+              )}
+            </div>
           </div>
         );
       })}
@@ -124,7 +140,6 @@ const LanguageList = ({
     </div>
   );
 };
-import { LANGUAGE_OPTIONS } from "../onboarding.logic";
 
 interface Step4LanguagePCProps {
   data: any;
@@ -170,7 +185,10 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
 
       <div className="bg-white dark:bg-slate-800/50 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-8">
         {/* 1. Native Language */}
-        <div className="p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-900/30">
+        <div
+          data-testid="native-languages-section"
+          className="p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-900/10 border border-indigo-100 dark:border-indigo-900/30"
+        >
           <div className="mb-4">
             <h3 className="text-lg font-bold flex items-center gap-2 text-indigo-700 dark:text-indigo-300">
               <User
@@ -180,11 +198,11 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
               母語 (複数選択可)
             </h3>
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 ml-7">
-              あなたの第一言語を選択してください。複数選択可能です。
+              あなたの母語を選択してください。複数選択可能です。
             </p>
           </div>
           <LanguageList
-            languages={LANGUAGE_OPTIONS}
+            languages={NATIVE_LANGUAGE_OPTIONS}
             selected={nativeLanguages || []}
             onToggle={handleNativeToggle}
             colorClass="indigo"
@@ -192,7 +210,10 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
         </div>
 
         {/* 2. Available Languages */}
-        <div className="p-4 rounded-xl bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/30">
+        <div
+          data-testid="available-languages-section"
+          className="p-4 rounded-xl bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/30"
+        >
           <div className="mb-4">
             <h3 className="text-lg font-bold flex items-center gap-2 text-emerald-700 dark:text-emerald-300">
               <Globe
@@ -206,9 +227,7 @@ export const Step4LanguagePC: React.FC<Step4LanguagePCProps> = ({
             </p>
           </div>
           <LanguageList
-            languages={LANGUAGE_OPTIONS.filter(
-              (lang) => lang !== "その他 (Other)"
-            )}
+            languages={AVAILABLE_LANGUAGE_OPTIONS}
             selected={availableLanguages || []}
             onToggle={handleAvailableToggle}
             colorClass="emerald"

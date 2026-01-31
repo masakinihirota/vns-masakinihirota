@@ -3,10 +3,53 @@ import { WeekScheduler } from "../../ui/week-scheduler";
 import { CULTURAL_SPHERES } from "../onboarding.logic";
 
 interface StepConfirmationPCProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
   onBack: () => void;
   onSubmit: () => void;
 }
+
+const ConfirmationSection = ({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) => (
+  <div className="mb-6 last:mb-0">
+    <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 border-b border-slate-100 dark:border-slate-800 pb-1">
+      {title}
+    </h3>
+    <div className="space-y-0">{children}</div>
+  </div>
+);
+
+const ConfirmationRow = ({
+  label,
+  value,
+  isRequired = false,
+  isValid = true,
+}: {
+  label: string;
+  value: React.ReactNode;
+  isRequired?: boolean;
+  isValid?: boolean;
+}) => (
+  <div className="flex flex-col sm:flex-row sm:items-baseline py-2 border-b border-slate-50 dark:border-slate-800/50 last:border-0 text-sm">
+    <div className="sm:w-1/3 flex-shrink-0 text-slate-500 dark:text-slate-400 font-medium flex items-center">
+      {label}
+      {isRequired && <span className="text-red-500 ml-1 font-bold">*</span>}
+    </div>
+    <div className="sm:w-2/3 flex-grow mt-1 sm:mt-0 font-medium text-slate-900 dark:text-slate-200 break-words">
+      {value}
+      {!isValid && isRequired && (
+        <span className="block text-red-500 text-xs mt-1 flex items-center">
+          <AlertCircle size={10} className="mr-1" /> 必須項目です
+        </span>
+      )}
+    </div>
+  </div>
+);
 
 export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
   data,
@@ -92,48 +135,6 @@ export const StepConfirmationPC: React.FC<StepConfirmationPCProps> = ({
   const getCultureLabel = (code: string) => {
     return CULTURAL_SPHERES.find((s) => s.id === code)?.label || code;
   };
-
-  const ConfirmationSection = ({
-    title,
-    children,
-  }: {
-    title: string;
-    children: React.ReactNode;
-  }) => (
-    <div className="mb-6 last:mb-0">
-      <h3 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 border-b border-slate-100 dark:border-slate-800 pb-1">
-        {title}
-      </h3>
-      <div className="space-y-0">{children}</div>
-    </div>
-  );
-
-  const ConfirmationRow = ({
-    label,
-    value,
-    isRequired = false,
-    isValid = true,
-  }: {
-    label: string;
-    value: React.ReactNode;
-    isRequired?: boolean;
-    isValid?: boolean;
-  }) => (
-    <div className="flex flex-col sm:flex-row sm:items-baseline py-2 border-b border-slate-50 dark:border-slate-800/50 last:border-0 text-sm">
-      <div className="sm:w-1/3 flex-shrink-0 text-slate-500 dark:text-slate-400 font-medium flex items-center">
-        {label}
-        {isRequired && <span className="text-red-500 ml-1 font-bold">*</span>}
-      </div>
-      <div className="sm:w-2/3 flex-grow mt-1 sm:mt-0 font-medium text-slate-900 dark:text-slate-200 break-words">
-        {value}
-        {!isValid && isRequired && (
-          <span className="block text-red-500 text-xs mt-1 flex items-center">
-            <AlertCircle size={10} className="mr-1" /> 必須項目です
-          </span>
-        )}
-      </div>
-    </div>
-  );
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-10">

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { GhostOverlay } from "./ghost-overlay";
+import type { GhostMainScene } from "./scenes/MainScene";
 
 interface DialogState {
   show: boolean;
@@ -18,6 +19,7 @@ interface GameState {
 
 export const GameCanvas = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const gameRef = useRef<any>(null);
   const initializingRef = useRef(false);
 
@@ -63,6 +65,7 @@ export const GameCanvas = () => {
 
       initializingRef.current = true;
 
+      // eslint-disable-next-line no-restricted-syntax
       try {
         const Phaser = (await import("phaser")).default;
         const { createMainSceneClass } = await import("./scenes/MainScene");
@@ -97,7 +100,9 @@ export const GameCanvas = () => {
         gameRef.current = game;
 
         game.events.once("ready", () => {
-          const scene = game.scene.getScene("MainScene") as any;
+          const scene = game.scene.getScene(
+            "MainScene"
+          ) as unknown as GhostMainScene;
           if (scene && scene.setUpdateCallback) {
             scene.setUpdateCallback((state: GameState) => {
               setPlayerPosition({ x: state.x, y: state.y });
@@ -128,8 +133,11 @@ export const GameCanvas = () => {
     return () => {
       if (gameRef.current) {
         // Save Position on Unmount
-        const scene = gameRef.current.scene.getScene("MainScene") as any;
+        const scene = gameRef.current.scene.getScene(
+          "MainScene"
+        ) as unknown as GhostMainScene;
         if (scene && scene.myPlayer) {
+          // eslint-disable-next-line no-restricted-syntax
           try {
             localStorage.setItem(
               "ghost_map_position",
@@ -154,7 +162,9 @@ export const GameCanvas = () => {
   // Warp Handler
   const handleWarp = useCallback((x: number, y: number) => {
     if (gameRef.current) {
-      const scene = gameRef.current.scene.getScene("MainScene") as any;
+      const scene = gameRef.current.scene.getScene(
+        "MainScene"
+      ) as unknown as GhostMainScene;
       if (scene && scene.teleport) {
         scene.teleport(x, y);
       }

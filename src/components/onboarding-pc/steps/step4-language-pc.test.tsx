@@ -1,6 +1,6 @@
-import { render, screen, fireEvent, within } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { useState } from "react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import * as matchers from "vitest-axe/matchers";
 import { Step4LanguagePC } from "./step4-language-pc";
@@ -35,86 +35,76 @@ describe("Step4LanguagePC", () => {
   it("renders major languages initially", () => {
     render(<Step4LanguagePC {...defaultProps} />);
 
-    // Top 5 languages should be visible
-    // 1. Japanese
+    // 「日本語 (Japanese)」は両方のセクションの主要言語（AVAILABLE_LANGUAGE_OPTIONS の先頭に移動したため）
     expect(screen.getAllByText("日本語 (Japanese)")).toHaveLength(2);
-    // 4. Chinese Traditional (Now major)
-    expect(
-      screen.getAllByText("中国語 (繁体字) (Chinese Traditional)")
-    ).toHaveLength(2);
 
-    // 11. German (Now hidden major -> other)
-    const hiddenLang = screen.queryByText("ドイツ語 (German)");
+    // 「英語 (English)」も両方のセクションの主要言語
+    expect(screen.getAllByText("英語 (English)")).toHaveLength(2);
+
+    // 母語セクションの主要5件に入っていない言語（例：韓国語）が非表示であることを確認
+    // インデックスによっては表示される可能性があるので、確実なものを選択
+    const hiddenLang = screen.queryByText("ロシア語 (Russian)");
     expect(hiddenLang).not.toBeInTheDocument();
   });
 
   it("shows hidden languages when 'show more' is clicked", () => {
     render(<Step4LanguagePC {...defaultProps} />);
 
-    const nativeSection = screen.getByText("母語 (複数選択可)").closest(".p-4");
+    const nativeSection = screen.getByTestId("native-languages-section");
     expect(nativeSection).toBeInTheDocument();
-    if (!nativeSection) return;
 
-    const showMoreBtn = within(nativeSection as HTMLElement).getByRole(
-      "button",
-      { name: /もっと見る|すべて表示/ }
-    );
+    const showMoreBtn = within(nativeSection).getByRole("button", {
+      name: /もっと見る|すべて表示/,
+    });
     fireEvent.click(showMoreBtn);
 
-    // German is 11th, so it should be visible now
+    // ドイツ語などは展開後に表示されるはず
     expect(
-      within(nativeSection as HTMLElement).getByText("ドイツ語 (German)")
+      within(nativeSection).getByText("ドイツ語 (German)")
     ).toBeInTheDocument();
   });
 
   it("keeps selected hidden language visible after collapsing", () => {
     render(<TestWrapper />);
 
-    const nativeSection = screen.getByText("母語 (複数選択可)").closest(".p-4");
+    const nativeSection = screen.getByTestId("native-languages-section");
     expect(nativeSection).toBeInTheDocument();
-    if (!nativeSection) return;
 
     // 1. Expand
-    const showMoreBtn = within(nativeSection as HTMLElement).getByRole(
-      "button",
-      { name: /もっと見る/ }
-    );
+    const showMoreBtn = within(nativeSection).getByRole("button", {
+      name: /もっと見る/,
+    });
     fireEvent.click(showMoreBtn);
 
     // 2. Select German (which is normally hidden)
-    const germanItem = within(nativeSection as HTMLElement).getByText(
-      "ドイツ語 (German)"
-    );
+    const germanItem = within(nativeSection).getByText("ドイツ語 (German)");
     fireEvent.click(germanItem);
 
     // 3. Collapse
-    const closeBtn = within(nativeSection as HTMLElement).getByRole("button", {
+    const closeBtn = within(nativeSection).getByRole("button", {
       name: /閉じる/,
     });
     fireEvent.click(closeBtn);
 
     // 4. Verify German is STILL visible because it's selected
     expect(
-      within(nativeSection as HTMLElement).getByText("ドイツ語 (German)")
+      within(nativeSection).getByText("ドイツ語 (German)")
     ).toBeInTheDocument();
 
     // 5. Verify unselected hidden language (e.g. Russian) is NOT visible
     expect(
-      within(nativeSection as HTMLElement).queryByText("ロシア語 (Russian)")
+      within(nativeSection).queryByText("ロシア語 (Russian)")
     ).not.toBeInTheDocument();
   });
 
   it("updates native languages (toggle item)", () => {
     render(<Step4LanguagePC {...defaultProps} />);
 
-    const nativeSection = screen.getByText("母語 (複数選択可)").closest(".p-4");
+    const nativeSection = screen.getByTestId("native-languages-section");
     expect(nativeSection).toBeInTheDocument();
-    if (!nativeSection) return;
 
-    const japaneseItem = within(nativeSection as HTMLElement).getByText(
-      "日本語 (Japanese)"
-    );
-    fireEvent.click(japaneseItem);
+    const nativeItem = within(nativeSection).getByText("日本語 (Japanese)");
+    fireEvent.click(nativeItem);
 
     expect(mockUpdate).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -126,13 +116,17 @@ describe("Step4LanguagePC", () => {
   it("updates available languages (toggle item)", () => {
     render(<Step4LanguagePC {...defaultProps} />);
 
-    const availableSection = screen.getByText("使用可能言語").closest(".p-4");
-    expect(availableSection).toBeInTheDocument();
-    if (!availableSection) return;
+    const section = screen.getByTestId("available-languages-section");
+    expect(section).toBeInTheDocument();
 
-    const englishItem = within(availableSection as HTMLElement).getByText(
-      "英語 (English)"
-    );
+    // 日本語 (Japanese) が初期表示（主要リストの上位5件）にあるはず
+    expect(within(section).getByText("日本語 (Japanese)")).toBeInTheDocument();
+
+    // N1 などは初期表示にはないはず
+    expect(within(section).queryByText(/N1：/)).not.toBeInTheDocument();
+
+    // 「英語 (English)」を選択テスト
+    const englishItem = within(section).getByText("英語 (English)");
     fireEvent.click(englishItem);
 
     expect(mockUpdate).toHaveBeenCalledWith(
@@ -140,39 +134,40 @@ describe("Step4LanguagePC", () => {
         availableLanguages: ["英語 (English)"],
       })
     );
+
+    // 「もっと見る」をクリックして展開
+    const showMoreBtn = within(section).getByRole("button", {
+      name: /もっと見る/,
+    });
+    fireEvent.click(showMoreBtn);
+
+    // 展開後に N1 が表示されることを確認
+    expect(within(section).getByText(/N1：/)).toBeInTheDocument();
   });
 
   it("excludes 'Other' option from available languages but keeps it in native languages", () => {
     render(<Step4LanguagePC {...defaultProps} />);
 
     // 1. Check Native Languages (should have Other)
-    const nativeSection = screen.getByText("母語 (複数選択可)").closest(".p-4");
+    const nativeSection = screen.getByTestId("native-languages-section");
     expect(nativeSection).toBeInTheDocument();
 
     // Expand list
-    const showMoreNative = within(nativeSection as HTMLElement).getByRole(
-      "button",
-      {
-        name: /もっと見る|すべて表示/,
-      }
-    );
+    const showMoreNative = within(nativeSection).getByRole("button", {
+      name: /もっと見る|すべて表示/,
+    });
     fireEvent.click(showMoreNative);
 
     expect(
-      within(nativeSection as HTMLElement).getByText("その他 (Other)")
+      within(nativeSection).getByText("その他 (Other)")
     ).toBeInTheDocument();
 
     // 2. Check Available Languages (should NOT have Other)
-    const availableSection = screen.getByText("使用可能言語").closest(".p-4");
+    const availableSection = screen.getByTestId("available-languages-section");
     expect(availableSection).toBeInTheDocument();
 
-    // Expand list (if button exists - it might not if Other was the only one hidden, but there are others)
-    // Actually, "Other" is the last item. There are 12 items. Major is 5. So 7 hidden.
-    // If we remove "Other", there are 11 items. Major 5. 6 hidden.
-    // So "Show More" should still exist.
-    const showMoreAvailable = within(
-      availableSection as HTMLElement
-    ).queryByRole("button", {
+    // Expand list
+    const showMoreAvailable = within(availableSection).queryByRole("button", {
       name: /もっと見る|すべて表示/,
     });
 
@@ -182,7 +177,7 @@ describe("Step4LanguagePC", () => {
     }
 
     expect(
-      within(availableSection as HTMLElement).queryByText("その他 (Other)")
+      within(availableSection).queryByText("その他 (Other)")
     ).not.toBeInTheDocument();
   });
 
