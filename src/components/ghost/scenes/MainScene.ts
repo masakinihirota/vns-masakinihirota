@@ -279,9 +279,9 @@ export const createMainSceneClass = async () => {
           this.entitySprites.delete(entity.id);
 
           const dialog = {
-            title: "アイテム取得",
+            title: "🧭 コンパス機能が解放されました！",
             message:
-              "「古びた地図」を手に入れた！\nコンパス機能が使えるようになりました。",
+              "「古びた地図」から魔力を感じます...\n\n画面右下に【コンパスUI】が出現しました。\n行き先を選択すると、針がその方向を指し示します。\n\n広大なゴーストタウンの探索に役立てましょう！",
           };
 
           // Notify React

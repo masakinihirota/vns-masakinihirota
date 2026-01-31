@@ -20,6 +20,10 @@ export const footerNav = [
     href: "/contact",
   },
   {
+    label: "伝説のスピーチ",
+    href: "/legendary-speech",
+  },
+  {
     label: "プライバシーポリシー",
     href: "/privacy",
   },

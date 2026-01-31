@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { GhostOverlay } from "./ghost-overlay";
 import type { GhostMainScene } from "./scenes/MainScene";
 
@@ -37,14 +37,21 @@ export const GameCanvas = () => {
     dialogShownRef.current = null;
   }, []);
 
-  // キーボードイベント（Enter/Spaceでダイアログを閉じる）
+  // キーボードイベント（Enter/Spaceでダイアログを閉じる、矢印キーのスクロール防止）
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // ダイアログ表示中のEnter/Space
       if (dialog?.show) {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           handleCloseDialog();
+          return;
         }
+      }
+
+      // 矢印キーでのデフォルトスクロール防止
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].includes(e.key)) {
+        e.preventDefault();
       }
     };
 
@@ -104,11 +111,28 @@ export const GameCanvas = () => {
             "MainScene"
           ) as unknown as GhostMainScene;
           if (scene && scene.setUpdateCallback) {
+            // スロットリング用の変数
+            let lastUpdateTime = 0;
+            let lastX = -999;
+            let lastY = -999;
+
             scene.setUpdateCallback((state: GameState) => {
-              setPlayerPosition({ x: state.x, y: state.y });
+              const now = Date.now();
+              // 50ms未満の更新はスキップ (最大20fps)、ただし距離が大きく動いた場合は即反映しても良いが、これでも十分
+              // 座標の変化が小さい場合もスキップ (0.1未満)
+              if (
+                now - lastUpdateTime > 50 &&
+                (Math.abs(state.x - lastX) > 0.1 ||
+                  Math.abs(state.y - lastY) > 0.1)
+              ) {
+                setPlayerPosition({ x: state.x, y: state.y });
+                lastUpdateTime = now;
+                lastX = state.x;
+                lastY = state.y;
+              }
 
               if (state.hasMap) {
-                setHasMap(true);
+                setHasMap((prev) => (prev ? prev : true));
               }
 
               if (state.dialog?.show) {
@@ -172,7 +196,7 @@ export const GameCanvas = () => {
   }, []);
 
   return (
-    <div className="relative rounded-lg overflow-hidden shadow-2xl border border-white/10 group w-full h-[calc(100vh-64px)]">
+    <div className="relative rounded-lg overflow-hidden shadow-2xl border border-white/10 group w-full h-full">
       <div ref={containerRef} className="h-full w-full" />
       <GhostOverlay
         playerPosition={playerPosition}
