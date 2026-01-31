@@ -23,19 +23,19 @@ export const GhostChat = () => {
       id: "1",
       user: "System",
       text: "ようこそ、Ghost Townへ。",
-      timestamp: Date.now(),
+      timestamp: 0,
     },
     {
       id: "2",
       user: "Guide",
       text: "ここは亡霊たちの集う場所です。",
-      timestamp: Date.now(),
+      timestamp: 0,
     },
     {
       id: "3",
       user: "Guide",
       text: "地図を見つけて、世界を探索しましょう。",
-      timestamp: Date.now(),
+      timestamp: 0,
     },
   ]);
 

@@ -1,2 +1,1 @@
-pnpm run format:fast
-pnpm run lint:fast
+pnpm run check

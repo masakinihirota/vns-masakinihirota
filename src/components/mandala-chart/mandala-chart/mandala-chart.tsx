@@ -23,6 +23,70 @@ const createEmptyBlocks = () =>
     .fill(null)
     .map(() => Array(9).fill(""));
 
+const getCellStyles = (bIdx: number, cIdx: number) => {
+  const isMainCenter = bIdx === 4 && cIdx === 4;
+  const isSubCenter = (bIdx === 4 && cIdx !== 4) || (bIdx !== 4 && cIdx === 4);
+  if (isMainCenter) return "bg-indigo-600 text-white font-bold";
+  if (isSubCenter)
+    return "bg-indigo-50 text-indigo-700 font-semibold border-indigo-100";
+  return "bg-white text-slate-600 dark:bg-zinc-900 dark:text-zinc-400";
+};
+
+interface BlockProps {
+  blockIdx: number;
+  isFocused: boolean;
+  blocks: string[][];
+  readOnly: boolean;
+  setFocusedBlock: (blockIdx: number) => void;
+  handleCellChange: (blockIdx: number, cellIdx: number, val: string) => void;
+}
+
+const Block = ({
+  blockIdx,
+  isFocused,
+  blocks,
+  readOnly,
+  setFocusedBlock,
+  handleCellChange,
+}: BlockProps) => (
+  <div
+    className={`
+      grid grid-cols-3 gap-[1px] bg-slate-200 dark:bg-zinc-700 p-[1px]
+      ${isFocused ? "rounded-xl overflow-hidden max-w-2xl mx-auto shadow-xl" : "h-full"}
+    `}
+  >
+    {blocks[blockIdx].map((content, cellIdx) => (
+      <div
+        key={cellIdx}
+        className={`
+            relative aspect-square flex items-center justify-center p-0 text-center transition-colors
+            ${getCellStyles(blockIdx, cellIdx)}
+          `}
+      >
+        {isFocused ? (
+          <input
+            className="w-full h-full bg-transparent text-center outline-none px-1 text-sm md:text-base cursor-text"
+            value={content}
+            onChange={(e) =>
+              handleCellChange(blockIdx, cellIdx, e.target.value)
+            }
+            readOnly={readOnly}
+          />
+        ) : (
+          <button
+            className="w-full h-full flex items-center justify-center p-0.5"
+            onClick={() => setFocusedBlock(blockIdx)}
+          >
+            <span className="line-clamp-3 text-[8px] sm:text-[10px] md:text-[11px] leading-tight break-all">
+              {content || (blockIdx === 4 && cellIdx === 4 ? "テーマ" : "")}
+            </span>
+          </button>
+        )}
+      </div>
+    ))}
+  </div>
+);
+
 export function MandalaChart({
   initialData,
   onChange,
@@ -41,6 +105,7 @@ export function MandalaChart({
   useEffect(() => {
     if (initialData) {
       sourceRef.current = "external";
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setBlocks(initialData);
     }
   }, [initialData]);
@@ -52,6 +117,7 @@ export function MandalaChart({
       return;
     }
     const newMarkdown = generateMarkdownFromMandala(blocks);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMarkdownText(newMarkdown);
   }, [blocks]);
 
@@ -89,61 +155,6 @@ export function MandalaChart({
     setBlocks(newBlocks);
     onChange?.(newBlocks);
   };
-
-  const getCellStyles = (bIdx: number, cIdx: number) => {
-    const isMainCenter = bIdx === 4 && cIdx === 4;
-    const isSubCenter =
-      (bIdx === 4 && cIdx !== 4) || (bIdx !== 4 && cIdx === 4);
-    if (isMainCenter) return "bg-indigo-600 text-white font-bold";
-    if (isSubCenter)
-      return "bg-indigo-50 text-indigo-700 font-semibold border-indigo-100";
-    return "bg-white text-slate-600 dark:bg-zinc-900 dark:text-zinc-400";
-  };
-
-  const Block = ({
-    blockIdx,
-    isFocused,
-  }: {
-    blockIdx: number;
-    isFocused: boolean;
-  }) => (
-    <div
-      className={`
-      grid grid-cols-3 gap-[1px] bg-slate-200 dark:bg-zinc-700 p-[1px]
-      ${isFocused ? "rounded-xl overflow-hidden max-w-2xl mx-auto shadow-xl" : "h-full"}
-    `}
-    >
-      {blocks[blockIdx].map((content, cellIdx) => (
-        <div
-          key={cellIdx}
-          className={`
-            relative aspect-square flex items-center justify-center p-0 text-center transition-colors
-            ${getCellStyles(blockIdx, cellIdx)}
-          `}
-        >
-          {isFocused ? (
-            <input
-              className="w-full h-full bg-transparent text-center outline-none px-1 text-sm md:text-base cursor-text"
-              value={content}
-              onChange={(e) =>
-                handleCellChange(blockIdx, cellIdx, e.target.value)
-              }
-              readOnly={readOnly}
-            />
-          ) : (
-            <button
-              className="w-full h-full flex items-center justify-center p-0.5"
-              onClick={() => setFocusedBlock(blockIdx)}
-            >
-              <span className="line-clamp-3 text-[8px] sm:text-[10px] md:text-[11px] leading-tight break-all">
-                {content || (blockIdx === 4 && cellIdx === 4 ? "テーマ" : "")}
-              </span>
-            </button>
-          )}
-        </div>
-      ))}
-    </div>
-  );
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[calc(100vh-12rem)] min-h-[600px]">
@@ -205,7 +216,14 @@ export function MandalaChart({
                           ? "★"
                           : idx}
                   </div>
-                  <Block blockIdx={idx} isFocused={false} />
+                  <Block
+                    blockIdx={idx}
+                    isFocused={false}
+                    blocks={blocks}
+                    readOnly={readOnly}
+                    setFocusedBlock={setFocusedBlock}
+                    handleCellChange={handleCellChange}
+                  />
                   {idx !== 4 && (
                     <button
                       onClick={() => setFocusedBlock(idx)}
@@ -229,7 +247,14 @@ export function MandalaChart({
                 </h2>
               </div>
               <div className="w-full max-w-[500px] aspect-square">
-                <Block blockIdx={focusedBlock} isFocused={true} />
+                <Block
+                  blockIdx={focusedBlock}
+                  isFocused={true}
+                  blocks={blocks}
+                  readOnly={readOnly}
+                  setFocusedBlock={setFocusedBlock}
+                  handleCellChange={handleCellChange}
+                />
               </div>
             </div>
           )}

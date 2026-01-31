@@ -1,4 +1,3 @@
-/* eslint-disable */
 export type Json =
   | string
   | number

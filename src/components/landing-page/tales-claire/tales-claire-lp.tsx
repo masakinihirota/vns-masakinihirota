@@ -4,12 +4,12 @@ import { MonitorSmartphone } from "lucide-react";
 import Link from "next/link";
 import {
   AdToggle,
-  LanguageToggle,
-  ThemeToggle,
   HelpButton,
-  TrialButton,
+  LanguageToggle,
   LoginButton,
-} from "@/components/layout/GlobalHeader";
+  ThemeToggle,
+  TrialButton,
+} from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import {

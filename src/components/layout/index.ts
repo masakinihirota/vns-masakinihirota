@@ -4,7 +4,16 @@
  */
 
 // フォルダ化されたコンポーネント
-// シンプルなコンポーネント（今後フォルダ化推奨）
-export { Footer } from "./footer";
-export { GlobalHeader } from "./GlobalHeader";
-export { AppSidebar } from "./AppSidebar";
+export { AppSidebar } from "./app-sidebar/AppSidebar";
+export { Footer } from "./footer/Footer";
+export {
+  AdToggle,
+  GlobalHeader,
+  HelpButton,
+  LanguageToggle,
+  LoginButton,
+  ThemeToggle,
+  TrialButton,
+} from "./global-header/GlobalHeader";
+export { MainContent } from "./main-content/MainContent";
+export { TrialStatusBadge } from "./trial-status-badge/TrialStatusBadge";

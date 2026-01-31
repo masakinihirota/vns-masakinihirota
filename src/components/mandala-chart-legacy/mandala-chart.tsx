@@ -37,6 +37,77 @@ const MODELS = {
   },
 } as const;
 
+const getCellStyles = (bIdx: number, cIdx: number) => {
+  const isMainCenter = bIdx === 4 && cIdx === 4;
+  const isSubCenter = (bIdx === 4 && cIdx !== 4) || (bIdx !== 4 && cIdx === 4);
+  if (isMainCenter) return "bg-indigo-600 text-white font-bold z-10";
+  if (isSubCenter)
+    return "bg-indigo-50 text-indigo-700 font-semibold border-indigo-100";
+  return "bg-white text-slate-600 hover:bg-slate-50 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800";
+};
+
+interface BlockProps {
+  blockIdx: number;
+  isFocused: boolean;
+  blocks: string[][];
+  focusedBlock: number | null;
+  activeCell: { blockIdx: number; cellIdx: number } | null;
+  setFocusedBlock: (idx: number | null) => void;
+  setActiveCell: (cell: { blockIdx: number; cellIdx: number } | null) => void;
+  updateCell: (blockIdx: number, cellIdx: number, value: string) => void;
+  activeModel: keyof typeof MODELS;
+}
+
+const Block = ({
+  blockIdx,
+  isFocused,
+  blocks,
+  focusedBlock,
+  activeCell,
+  setFocusedBlock,
+  setActiveCell,
+  updateCell,
+}: BlockProps) => (
+  <div
+    className={`
+      grid grid-cols-3 gap-[1px] bg-slate-300 dark:bg-zinc-700 p-[1px] transition-all duration-300
+      ${isFocused ? "rounded-xl overflow-hidden max-w-2xl mx-auto shadow-2xl" : "h-full"}
+    `}
+  >
+    {blocks[blockIdx].map((content, cellIdx) => (
+      <div
+        key={cellIdx}
+        onClick={() => {
+          if (focusedBlock === null && blockIdx !== 4)
+            setFocusedBlock(blockIdx);
+          setActiveCell({ blockIdx, cellIdx });
+        }}
+        className={`
+          relative aspect-square flex items-center justify-center p-1 text-[9px] sm:text-[11px] md:text-xs text-center cursor-pointer transition-colors
+          ${getCellStyles(blockIdx, cellIdx)}
+          ${activeCell?.blockIdx === blockIdx && activeCell?.cellIdx === cellIdx ? "ring-2 ring-inset ring-indigo-400 z-20" : ""}
+        `}
+      >
+        {activeCell?.blockIdx === blockIdx &&
+        activeCell?.cellIdx === cellIdx ? (
+          <textarea
+            autoFocus
+            className="absolute inset-0 w-full h-full p-1 bg-white dark:bg-zinc-800 text-slate-800 dark:text-zinc-200 focus:outline-none resize-none z-30 text-center flex items-center justify-center font-medium"
+            value={content}
+            onChange={(e) => updateCell(blockIdx, cellIdx, e.target.value)}
+            onBlur={() => setActiveCell(null)}
+            placeholder={blockIdx === 4 && cellIdx === 4 ? "メイン目標" : ""}
+          />
+        ) : (
+          <span className="line-clamp-3 px-0.5 leading-tight">
+            {content || (blockIdx === 4 && cellIdx === 4 ? "テーマ" : "")}
+          </span>
+        )}
+      </div>
+    ))}
+  </div>
+);
+
 export const MandalaChart: React.FC = () => {
   const [blocks, setBlocks] = useState(
     Array(9)
@@ -71,62 +142,15 @@ export const MandalaChart: React.FC = () => {
     setBlocks(newBlocks);
   };
 
-  const getCellStyles = (bIdx: number, cIdx: number) => {
-    const isMainCenter = bIdx === 4 && cIdx === 4;
-    const isSubCenter =
-      (bIdx === 4 && cIdx !== 4) || (bIdx !== 4 && cIdx === 4);
-    if (isMainCenter) return "bg-indigo-600 text-white font-bold z-10";
-    if (isSubCenter)
-      return "bg-indigo-50 text-indigo-700 font-semibold border-indigo-100";
-    return "bg-white text-slate-600 hover:bg-slate-50 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800";
+  const blockProps = {
+    blocks,
+    focusedBlock,
+    activeCell,
+    setFocusedBlock,
+    setActiveCell,
+    updateCell,
+    activeModel,
   };
-
-  const Block = ({
-    blockIdx,
-    isFocused,
-  }: {
-    blockIdx: number;
-    isFocused: boolean;
-  }) => (
-    <div
-      className={`
-      grid grid-cols-3 gap-[1px] bg-slate-300 dark:bg-zinc-700 p-[1px] transition-all duration-300
-      ${isFocused ? "rounded-xl overflow-hidden max-w-2xl mx-auto shadow-2xl" : "h-full"}
-    `}
-    >
-      {blocks[blockIdx].map((content, cellIdx) => (
-        <div
-          key={cellIdx}
-          onClick={() => {
-            if (focusedBlock === null && blockIdx !== 4)
-              setFocusedBlock(blockIdx);
-            setActiveCell({ blockIdx, cellIdx });
-          }}
-          className={`
-            relative aspect-square flex items-center justify-center p-1 text-[9px] sm:text-[11px] md:text-xs text-center cursor-pointer transition-colors
-            ${getCellStyles(blockIdx, cellIdx)}
-            ${activeCell?.blockIdx === blockIdx && activeCell?.cellIdx === cellIdx ? "ring-2 ring-inset ring-indigo-400 z-20" : ""}
-          `}
-        >
-          {activeCell?.blockIdx === blockIdx &&
-          activeCell?.cellIdx === cellIdx ? (
-            <textarea
-              autoFocus
-              className="absolute inset-0 w-full h-full p-1 bg-white dark:bg-zinc-800 text-slate-800 dark:text-zinc-200 focus:outline-none resize-none z-30 text-center flex items-center justify-center font-medium"
-              value={content}
-              onChange={(e) => updateCell(blockIdx, cellIdx, e.target.value)}
-              onBlur={() => setActiveCell(null)}
-              placeholder={blockIdx === 4 && cellIdx === 4 ? "メイン目標" : ""}
-            />
-          ) : (
-            <span className="line-clamp-3 px-0.5 leading-tight">
-              {content || (blockIdx === 4 && cellIdx === 4 ? "テーマ" : "")}
-            </span>
-          )}
-        </div>
-      ))}
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-zinc-950 text-slate-900 dark:text-zinc-100 p-2 md:p-6 font-sans transition-colors duration-500">
@@ -207,7 +231,7 @@ export const MandalaChart: React.FC = () => {
                   {MODELS[activeModel].order[idx]}
                 </div>
 
-                <Block blockIdx={idx} isFocused={false} />
+                <Block blockIdx={idx} isFocused={false} {...blockProps} />
 
                 {idx !== 4 && (
                   <button
@@ -263,7 +287,7 @@ export const MandalaChart: React.FC = () => {
                   </h2>
                 </div>
               </div>
-              <Block blockIdx={focusedBlock} isFocused={true} />
+              <Block blockIdx={focusedBlock} isFocused={true} {...blockProps} />
             </div>
           </div>
         )}

@@ -1,2 +1,2 @@
-export * from "./onboarding-trial-form";
-export * from "./choice/onboarding-choice";
+export { OnboardingChoice } from "./choice/OnboardingChoice";
+export { OnboardingTrialForm } from "./onboarding-trial-form/OnboardingTrialForm";
