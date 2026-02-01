@@ -2,7 +2,11 @@
  * チュートリアルイベントシステムの型定義
  */
 
-export type EventTriggerType = "proximity" | "click" | "tile-enter" | "automatic";
+export type EventTriggerType =
+  | "proximity"
+  | "click"
+  | "tile-enter"
+  | "automatic";
 export type ActionType =
   | "give-item"
   | "show-dialogue"
@@ -15,6 +19,7 @@ export interface GameContext {
   playerPosition: { x: number; y: number };
   hasMap: boolean;
   currentPhase: string;
+  lineIndex: number;
   discoveredEntities: Set<string>;
 }
 
@@ -48,6 +53,7 @@ export interface TutorialEvent {
 export interface EventResult {
   eventId: string;
   executed: boolean;
+  reason?: string;
   error?: Error;
   results?: any[];
 }

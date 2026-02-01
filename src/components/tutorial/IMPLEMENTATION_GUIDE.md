@@ -36,6 +36,7 @@ npm run dev
 ### A. 状態管理 (`GameStateManager`)
 
 #### 単一の状態変更
+
 ```typescript
 import { getGameStateManager } from "@/components/tutorial/state";
 
@@ -55,6 +56,7 @@ manager.unlockKeyword("compass");
 ```
 
 #### 状態変更をリッスン
+
 ```typescript
 import { useTutorialState } from "@/components/tutorial/state";
 
@@ -67,6 +69,7 @@ export function MyComponent() {
 ```
 
 #### 状態の特定部分のみをリッスン（最適化）
+
 ```typescript
 import {
   useTutorialPhase,
@@ -286,11 +289,13 @@ const savedState = await hybrid.load(userId, async (uid) => {
 ### 1. 常に GameStateManager を通して状態を更新
 
 ❌ **悪い例**:
+
 ```typescript
 localStorage.setItem("phase", "map_found");
 ```
 
 ✅ **良い例**:
+
 ```typescript
 const manager = getGameStateManager();
 manager.goToPhase("map_found", 0);
@@ -299,6 +304,7 @@ manager.goToPhase("map_found", 0);
 ### 2. イベントは LEVEL01_EVENTS オブジェクトで定義
 
 ❌ **悪い例**:
+
 ```typescript
 if (isNear(player, npc)) {
   showDialogue("Hello");
@@ -307,6 +313,7 @@ if (isNear(player, npc)) {
 ```
 
 ✅ **良い例**:
+
 ```typescript
 export const LEVEL01_EVENTS = {
   map_item: {
@@ -322,6 +329,7 @@ export const LEVEL01_EVENTS = {
 ### 3. React Hooks で状態をリッスン
 
 ❌ **悪い例**:
+
 ```typescript
 const manager = getGameStateManager();
 const state = manager.getState(); // 1 回の取得
@@ -329,6 +337,7 @@ console.log(state.phase);
 ```
 
 ✅ **良い例**:
+
 ```typescript
 export function Component() {
   const { phase } = useTutorialPhase(); // リッスン開始
@@ -339,6 +348,7 @@ export function Component() {
 ### 4. 複雑なエラー処理は Manager のエラーハンドラーを使用
 
 ❌ **悪い例**:
+
 ```typescript
 try {
   await eventSystem.execute(event, context);
@@ -348,6 +358,7 @@ try {
 ```
 
 ✅ **良い例**:
+
 ```typescript
 const manager = getGameStateManager();
 
@@ -369,6 +380,7 @@ manager.logError("event-failed", "イベント実行失敗", {
 ### 新しいレベルを追加
 
 1. **イベント定義を作成**:
+
    ```typescript
    // src/components/tutorial/events/level03-events.ts
    export const LEVEL03_EVENTS: Record<string, TutorialEvent> = {
@@ -377,6 +389,7 @@ manager.logError("event-failed", "イベント実行失敗", {
    ```
 
 2. **マップコンフィグを作成**:
+
    ```typescript
    // src/components/tutorial/map/map-config.ts
    export const LEVEL03_MAP_CONFIG: MapConfig = {
@@ -385,6 +398,7 @@ manager.logError("event-failed", "イベント実行失敗", {
    ```
 
 3. **シナリオを作成**:
+
    ```typescript
    // src/components/tutorial/scenarios/level03/scenes.ts
    export const SCENE_1_LINES = [
@@ -455,12 +469,15 @@ eventSystem.registerHandler("my-custom-action", async (context) => {
 ### Q: イベントが発火しない
 
 **確認項目**:
+
 1. トリガー距離が正しいか？
+
    ```typescript
    triggerDistance: 1.0, // プレイヤーが 1.0 タイル内にいる必要がある
    ```
 
 2. `canExecute()` が true か？
+
    ```typescript
    if (!eventSystem.canExecute(event, context)) {
      console.log("実行不可:", event.id);
@@ -476,6 +493,7 @@ eventSystem.registerHandler("my-custom-action", async (context) => {
 ### Q: 状態が同期されない
 
 **確認項目**:
+
 1. `GameStateManager` を通して更新しているか？
 2. React Hooks で正しくリッスンしているか？
 3. アンサブスクライブしていないか？
@@ -493,6 +511,7 @@ const unsubscribe = manager.subscribe(() => {
 ### Q: Phaser が初期化失敗する
 
 **確認項目**:
+
 1. コンテナ要素が存在するか？
 2. ブラウザが WebGL をサポートしているか？
 3. エラーバウンダリがキャッチしているか？
@@ -538,12 +557,14 @@ npm run test -- --coverage
 ## パフォーマンスのヒント
 
 1. **位置更新のスロットリング**:
+
    ```typescript
    // GameStateManager が自動的にスロットリング (0.1px 閾値)
    manager.updatePlayerPosition(x, y);
    ```
 
 2. **特定の状態のみをリッスン**:
+
    ```typescript
    // ❌ すべての状態をリッスン
    const state = useTutorialState();

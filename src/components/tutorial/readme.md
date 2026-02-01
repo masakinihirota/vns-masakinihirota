@@ -26,6 +26,7 @@
 このチュートリアルシステムは、**Phaser 3 ゲームエンジン** と **React** を統合したストーリー駆動型チュートリアルを提供します。
 
 ### 主要機能
+
 - ✅ フェーズベースのストーリー進行（10フェーズ）
 - ✅ イベント駆動型アーキテクチャ
 - ✅ 状態管理の一元化（React + Phaser）
@@ -35,6 +36,7 @@
 - ✅ エラーハンドリング
 
 ### 技術スタック
+
 - **React 18+**: UI コンポーネント
 - **Phaser 3**: ゲームエンジン
 - **TypeScript**: 型安全性
@@ -68,6 +70,7 @@
 ```
 
 ### レイヤー分離の原則
+
 1. **UI Layer**: React コンポーネント（表示のみ）
 2. **State Layer**: 状態管理（GameStateManager）
 3. **Event Layer**: イベント駆動ロジック（EventSystem）
@@ -131,31 +134,43 @@ tutorial/
 ### 各ディレクトリの役割
 
 #### `state/` - 状態管理
+
 **責務**: チュートリアル全体の状態を一元管理
+
 - `GameStateManager`: シングルトンクラス、全状態を保持
 - `use-tutorial-state.ts`: React フック提供
 
 #### `events/` - イベントシステム
+
 **責務**: 条件ベースのイベント実行
+
 - `EventSystem`: イベント実行エンジン
 - `level01-events.ts`: イベント定義（位置トリガー、アイテム取得など）
 
 #### `scenarios/` - シナリオ定義
+
 **責務**: ストーリー台詞の管理
+
 - `scenes.ts`: フェーズごとの台詞データ
 - `types.ts`: シナリオ型定義（Speaker, DialogueLine など）
 
 #### `map/` - マップレンダリング
+
 **責務**: Phaser タイルマップの描画
+
 - `map-renderer.ts`: タイルマップ描画
 - `entity-renderer.ts`: アイテム・NPCの描画
 
 #### `keywords/` - キーワードシステム
+
 **責務**: キーワードのアンロック・学習管理
+
 - `keyword-system.ts`: キーワードロジック
 
 #### `persistence/` - 永続化
+
 **責務**: LocalStorage への保存・読込
+
 - `tutorial-persistence.ts`: 保存/復元API
 - `local-storage-cache.ts`: キャッシュ層
 
@@ -468,6 +483,7 @@ UI が更新される
 ### 新しいストーリーを追加する
 
 #### ステップ1: フェーズを定義
+
 **ファイル**: `state/game-state-manager.ts`
 
 ```typescript
@@ -478,6 +494,7 @@ type TutorialPhase =
 ```
 
 #### ステップ2: シナリオを追加
+
 **ファイル**: `scenarios/level01/scenes.ts`
 
 ```typescript
@@ -495,6 +512,7 @@ scenes: {
 ```
 
 #### ステップ3: イベントを追加
+
 **ファイル**: `events/level01-events.ts`
 
 ```typescript
@@ -549,6 +567,7 @@ export const TUTORIAL_KEYWORDS = [
 ### コンパスが表示されない
 
 **原因チェックリスト**:
+
 1. ✅ `hasMap` が `true` になっているか？
    - `GameStateManager.getState().hasMap` を確認
 2. ✅ `map_item` 接触イベントが発火しているか？
@@ -559,6 +578,7 @@ export const TUTORIAL_KEYWORDS = [
    - `useTutorialState()` で `hasMap` の値を確認
 
 **デバッグ方法**:
+
 ```typescript
 // GameStateManager の状態を確認
 const manager = getGameStateManager();
@@ -571,6 +591,7 @@ console.log("Executed Events:", eventSystem.getExecutedEvents());
 ### ダイアログが表示されない
 
 **チェック項目**:
+
 1. `dialog` 状態が `null` でないか？
 2. `queen-dialogue.tsx` が正しくレンダリングされているか？
 3. `z-index` が他の要素に隠れていないか？
@@ -578,6 +599,7 @@ console.log("Executed Events:", eventSystem.getExecutedEvents());
 ### フェーズが進まない
 
 **チェック項目**:
+
 1. イベントの `trigger` 条件が満たされているか？
 2. イベントが `enabled: true` になっているか？
 3. `oneTime: true` イベントが既に実行済みでないか？
@@ -585,6 +607,7 @@ console.log("Executed Events:", eventSystem.getExecutedEvents());
 ### プレイヤーが動かない
 
 **チェック項目**:
+
 1. Phaser シーンが正しく初期化されているか？
 2. `isPaused` が `true` になっていないか？
 3. キーボード入力が有効か？
@@ -609,11 +632,13 @@ npm run test -- tutorial-system.test.ts
 ### テストファイル
 
 #### `tutorial-system.test.ts`
+
 - GameStateManager のテスト
 - EventSystem のテスト
 - キーワードシステムのテスト
 
 #### `tutorial-integration.test.ts`
+
 - エンドツーエンドのテスト
 - フェーズ遷移のテスト
 - イベント連携のテスト

@@ -1,0 +1,261 @@
+
+> vns-masakinihirota@0.30.1 lint U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  ! eslint(no-unused-vars): Variable 'japaneseLevelLabels' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/onboarding-pc/steps/step4-language-pc.tsx:72:9]
+ 71 | 
+ 72 |   const japaneseLevelLabels = JAPANESE_LEVELS.map((level) => level.label);
+    :         ^^^^^^^^^|^^^^^^^^^
+    :                  `-- 'japaneseLevelLabels' is declared here
+ 73 | 
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'i' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/tutorial/queen-dialogue.tsx:49:9]
+ 48 |     const delay = speed === "fast" ? 10 : 30;
+ 49 |     let i = 0;
+    :         |
+    :         `-- 'i' is declared here
+ 50 |     const interval = setInterval(() => {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'BookOpen' is imported but never used.
+   ,-[src/components/tutorial/tutorial-story.tsx:3:10]
+ 2 | 
+ 3 | import { BookOpen, FastForward, Pause, Play, Timer, Zap } from "lucide-react";
+   :          ^^^^|^^^
+   :              `-- 'BookOpen' is imported here
+ 4 | import dynamic from "next/dynamic";
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'TutorialErrorBoundary' is imported but never used.
+    ,-[src/components/tutorial/tutorial-story.tsx:14:10]
+ 13 | import { TrialBackButtonContent } from "../layout/trial-onboarding-back-button/TrialOnboardingBackButton";
+ 14 | import { TutorialErrorBoundary } from "./error-boundary";
+    :          ^^^^^^^^^^|^^^^^^^^^^
+    :                    `-- 'TutorialErrorBoundary' is imported here
+ 15 | import { EventSystem } from "./events/event-system";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'EventSystem' is imported but never used.
+    ,-[src/components/tutorial/tutorial-story.tsx:15:10]
+ 14 | import { TutorialErrorBoundary } from "./error-boundary";
+ 15 | import { EventSystem } from "./events/event-system";
+    :          ^^^^^|^^^^^
+    :               `-- 'EventSystem' is imported here
+ 16 | import { LEVEL01_EVENTS } from "./events/level01-events";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'LEVEL01_EVENTS' is imported but never used.
+    ,-[src/components/tutorial/tutorial-story.tsx:16:10]
+ 15 | import { EventSystem } from "./events/event-system";
+ 16 | import { LEVEL01_EVENTS } from "./events/level01-events";
+    :          ^^^^^^^|^^^^^^
+    :                 `-- 'LEVEL01_EVENTS' is imported here
+ 17 | import { KeywordModal } from "./keyword-modal";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'KeywordSystem' is imported but never used.
+    ,-[src/components/tutorial/tutorial-story.tsx:18:10]
+ 17 | import { KeywordModal } from "./keyword-modal";
+ 18 | import { KeywordSystem } from "./keywords/keyword-system";
+    :          ^^^^^^|^^^^^^
+    :                `-- 'KeywordSystem' is imported here
+ 19 | import { QueenDialogue } from "./queen-dialogue";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useTutorialState' is imported but never used.
+    ,-[src/components/tutorial/tutorial-story.tsx:22:3]
+ 21 |   getGameStateManager,
+ 22 |   useTutorialState,
+    :   ^^^^^^^^|^^^^^^^
+    :           `-- 'useTutorialState' is imported here
+ 23 |   useTutorialPhase,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useTutorialPhase' is imported but never used.
+    ,-[src/components/tutorial/tutorial-story.tsx:23:3]
+ 22 |   useTutorialState,
+ 23 |   useTutorialPhase,
+    :   ^^^^^^^^|^^^^^^^
+    :           `-- 'useTutorialPhase' is imported here
+ 24 |   useGameControl,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useGameControl' is imported but never used.
+    ,-[src/components/tutorial/tutorial-story.tsx:24:3]
+ 23 |   useTutorialPhase,
+ 24 |   useGameControl,
+    :   ^^^^^^^|^^^^^^
+    :          `-- 'useGameControl' is imported here
+ 25 |   useDialogControl,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useDialogControl' is imported but never used.
+    ,-[src/components/tutorial/tutorial-story.tsx:25:3]
+ 24 |   useGameControl,
+ 25 |   useDialogControl,
+    :   ^^^^^^^^|^^^^^^^
+    :           `-- 'useDialogControl' is imported here
+ 26 |   useKeywordManagement,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'useKeywordManagement' is imported but never used.
+    ,-[src/components/tutorial/tutorial-story.tsx:26:3]
+ 25 |   useDialogControl,
+ 26 |   useKeywordManagement,
+    :   ^^^^^^^^^^|^^^^^^^^^
+    :             `-- 'useKeywordManagement' is imported here
+ 27 | } from "./state";
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Parameter 'i' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/tutorial/tutorial-story.tsx:223:53]
+ 222 |     ) => {
+ 223 |       lines.slice(0, untilIndex + 1).forEach((text, i) => {
+     :                                                     |
+     :                                                     `-- 'i' is declared here
+ 224 |         history.push({
+     `----
+  help: Consider removing this parameter.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/components/tutorial/tutorial-story-v2.tsx:98:9]
+ 97 |       eventSystemRef.current.onAction("give-item", (action) => {
+ 98 |         console.log("Item given:", action.itemId);
+    :         ^^^^^^^^^^^
+ 99 |       });
+    `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-empty-pattern): Empty object binding pattern
+    ,-[src/components/tutorial/tutorial-story-v2.tsx:73:9]
+ 72 |   } = usePhaseTransition();
+ 73 |   const { } = useGameControl(); // 蠢・ｦ√〒縺ゅｌ縺ｰ谿九☆
+    :         ^^^
+ 74 |   const { showDialog, closeDialog } = useDialogControl();
+    `----
+  help: Passing `null` or `undefined` will result in runtime error because `null` and `undefined` cannot be destructured.
+
+  ! eslint(no-unused-vars): Variable 'gameState' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/tutorial/tutorial-story-v2.tsx:66:9]
+ 65 |   // 譁ｰ縺励＞繧ｷ繧ｹ繝・Β縺九ｉ迥ｶ諷九ｒ蜿門ｾ・ 66 |   const gameState = useTutorialState();
+    :         ^^^^|^^^^
+    :             `-- 'gameState' is declared here
+ 67 |   const { phase, lineIndex } = useTutorialPhase();
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'regressLine' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/tutorial/tutorial-story-v2.tsx:71:5]
+ 70 |     advanceLine: stateAdvanceLine,
+ 71 |     regressLine,
+    :     ^^^^^|^^^^^
+    :          `-- 'regressLine' is declared here
+ 72 |   } = usePhaseTransition();
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'showDialog' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/tutorial/tutorial-story-v2.tsx:74:11]
+ 73 |   const { } = useGameControl(); // 蠢・ｦ√〒縺ゅｌ縺ｰ谿九☆
+ 74 |   const { showDialog, closeDialog } = useDialogControl();
+    :           ^^^^^|^^^^
+    :                `-- 'showDialog' is declared here
+ 75 |   const {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'closeDialog' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/tutorial/tutorial-story-v2.tsx:74:23]
+ 73 |   const { } = useGameControl(); // 蠢・ｦ√〒縺ゅｌ縺ｰ谿九☆
+ 74 |   const { showDialog, closeDialog } = useDialogControl();
+    :                       ^^^^^|^^^^^
+    :                            `-- 'closeDialog' is declared here
+ 75 |   const {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Parameter 'i' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/tutorial/tutorial-story-v2.tsx:160:53]
+ 159 |     ) => {
+ 160 |       lines.slice(0, untilIndex + 1).forEach((text, i) => {
+     :                                                     |
+     :                                                     `-- 'i' is declared here
+ 161 |         history.push({
+     `----
+  help: Consider removing this parameter.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/components/tutorial/persistence/tutorial-persistence.ts:71:9]
+ 70 |         // 繝・・繧ｿ縺悟ｭ伜惠縺励↑縺・ｴ蜷医・豁｣蟶ｸ
+ 71 |         console.debug("No tutorial progress found for user:", userId);
+    :         ^^^^^^^^^^^^^
+ 72 |         return null;
+    `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Variable 'eventSystem' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/tutorial/__tests__/tutorial-system.test.ts:220:13]
+ 219 |       const stateManager = new GameStateManager();
+ 220 |       const eventSystem = new EventSystem();
+     :             ^^^^^|^^^^^
+     :                  `-- 'eventSystem' is declared here
+ 221 |       const keywordSystem = new KeywordSystem();
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Parameter 'event' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/tutorial/map/entity-renderer.ts:194:5]
+ 193 |     y: number,
+ 194 |     event: TutorialEvent
+     :     ^^|^^
+     :       `-- 'event' is declared here
+ 195 |   ): EntityVisuals {
+     `----
+  help: Consider removing this parameter.
+
+  ! eslint(no-unused-vars): Parameter 'state' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/components/tutorial/__tests__/tutorial-integration.test.ts:131:31]
+ 130 |     it("should integrate with state manager on event completion", async () => {
+ 131 |       stateManager.subscribe((state) => {
+     :                               ^^|^^
+     :                                 `-- 'state' is declared here
+ 132 |         // state.hasMap check (unused variable removed)
+     `----
+  help: Consider removing this parameter.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[src/components/layout/global-header/GlobalHeader.tsx:398:9]
+ 397 |         // 繝√Η繝ｼ繝医Μ繧｢繝ｫ繝｢繧ｸ繝･繝ｼ繝ｫ縺悟茜逕ｨ縺ｧ縺阪↑縺・ｴ蜷医・繧ｹ繧ｭ繝・・
+ 398 |         console.debug("Tutorial state not available", error);
+     :         ^^^^^^^^^^^^^
+ 399 |       }
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x typescript(TS2741): Property 'lineIndex' is missing in type '{ playerPosition: { x: number; y: number; }; hasMap: false; currentPhase: string; discoveredEntities: Set<string>; }' but required in type 'GameContext'.
+    ,-[src/components/tutorial/__tests__/tutorial-system.test.ts:18:7]
+ 17 |       eventSystem = new EventSystem();
+ 18 |       gameContext = {
+    :       ^^^^^^^^^^^
+ 19 |         playerPosition: { x: 5, y: 5 },
+    `----
+
+Found 22 warnings and 4 errors.
+Finished in 5.0s on 478 files using 12 threads.
+窶右LIFECYCLE窶・Command failed with exit code 1.

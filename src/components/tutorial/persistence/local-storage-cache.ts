@@ -108,10 +108,7 @@ export class HybridPersistence {
     });
 
     // 定期的にサーバーに同期
-    if (
-      remote &&
-      Date.now() - this.lastSyncTime > this.syncInterval
-    ) {
+    if (remote && Date.now() - this.lastSyncTime > this.syncInterval) {
       try {
         await remote(userId, state);
         this.lastSyncTime = Date.now();
@@ -149,9 +146,7 @@ export class HybridPersistence {
     if (localData) {
       return {
         ...localData,
-        discoveredEntities: new Set(
-          localData.discoveredEntities || []
-        ),
+        discoveredEntities: new Set(localData.discoveredEntities || []),
       };
     }
 

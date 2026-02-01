@@ -1,6 +1,5 @@
 "use client";
 
-
 export const HeroSection = () => {
   return (
     <header className="flex flex-col items-center text-center space-y-8 min-h-[60vh] justify-center animate-fade-in-up">

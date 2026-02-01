@@ -101,7 +101,11 @@ export class MapRenderer {
   /**
    * マップサイズを取得
    */
-  getSize(): { width: number; height: number; pixels: { w: number; h: number } } {
+  getSize(): {
+    width: number;
+    height: number;
+    pixels: { w: number; h: number };
+  } {
     return {
       width: this.config.width,
       height: this.config.height,
@@ -125,7 +129,12 @@ export class MapRenderer {
   /**
    * 強調表示
    */
-  highlightTile(x: number, y: number, color: number, duration: number = 500): void {
+  highlightTile(
+    x: number,
+    y: number,
+    color: number,
+    duration: number = 500
+  ): void {
     const tile = this.getTile(x, y);
     if (tile) {
       const originalFill = tile.fillColor;

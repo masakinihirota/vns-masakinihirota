@@ -1,23 +1,5 @@
 "use client";
 
-import { type User } from "@supabase/supabase-js";
-import {
-  ArrowRight,
-  Bell,
-  BookOpen,
-  Coins,
-  Globe,
-  HelpCircle,
-  Megaphone,
-  MonitorSmartphone,
-  Moon,
-  Search,
-  Sun,
-} from "lucide-react";
-import { useTheme } from "next-themes";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import * as React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,6 +20,24 @@ import {
 } from "@/components/ui/tooltip";
 import { createClient } from "@/lib/supabase/client";
 import { TrialStorage } from "@/lib/trial-storage";
+import { type User } from "@supabase/supabase-js";
+import {
+  ArrowRight,
+  Bell,
+  BookOpen,
+  Coins,
+  Globe,
+  HelpCircle,
+  Megaphone,
+  MonitorSmartphone,
+  Moon,
+  Search,
+  Sun,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import * as React from "react";
 import { TrialOnboardingBackButton } from "../trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TrialStatusBadge } from "../trial-status-badge/TrialStatusBadge";
 
@@ -313,9 +313,8 @@ function NotificationBell() {
         {mockNotifications.map((notification) => (
           <DropdownMenuItem
             key={notification.id}
-            className={`flex flex-col items-start gap-1 ${
-              !notification.read ? "bg-accent/50" : ""
-            }`}
+            className={`flex flex-col items-start gap-1 ${!notification.read ? "bg-accent/50" : ""
+              }`}
           >
             <span className="text-sm">{notification.title}</span>
             <span className="text-xs text-muted-foreground">
@@ -370,12 +369,11 @@ export function TutorialKeywordButton() {
     // dynamic importでチュートリアル状態を取得
     const updateUnreadCount = async () => {
       try {
-        const { getGameStateManager } = await import(
-          "@/components/tutorial/state"
-        );
+        const { getGameStateManager } =
+          await import("@/components/tutorial/state");
         const gameManager = getGameStateManager();
         setManager(gameManager);
-        
+
         const state = gameManager.getState();
         setUnlockedIds(state.unlockedKeywordIds);
         setLearnedIds(state.learnedKeywordIds);
@@ -396,6 +394,7 @@ export function TutorialKeywordButton() {
         return unsubscribe;
       } catch (error) {
         // チュートリアルモジュールが利用できない場合はスキップ
+        // eslint-disable-next-line no-console
         console.debug("Tutorial state not available", error);
       }
     };
@@ -431,7 +430,9 @@ export function TutorialKeywordButton() {
                 </Badge>
               )}
             </div>
-            <span className="text-sm font-medium hidden sm:inline">重要キーワード</span>
+            <span className="text-sm font-medium hidden sm:inline">
+              重要キーワード
+            </span>
           </button>
         </TooltipTrigger>
         <TooltipContent>
@@ -469,13 +470,13 @@ export function TutorialKeywordButton() {
 
 interface VNSButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
-    | "primary"
-    | "secondary"
-    | "ghost"
-    | "persona"
-    | "warm"
-    | "emerald"
-    | "indigo";
+  | "primary"
+  | "secondary"
+  | "ghost"
+  | "persona"
+  | "warm"
+  | "emerald"
+  | "indigo";
   size?: "sm" | "md" | "lg" | "icon";
   icon?: React.ElementType;
   loading?: boolean;
@@ -697,7 +698,7 @@ export function GlobalHeader({
             <>
               {/* 解説ボタン（左側に少し離して配置） */}
               <TutorialKeywordButton />
-              
+
               <Separator
                 orientation="vertical"
                 className="mx-2 h-4 hidden sm:block"

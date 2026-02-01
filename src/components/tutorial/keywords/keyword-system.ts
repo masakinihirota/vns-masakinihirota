@@ -30,7 +30,8 @@ export const TUTORIAL_KEYWORDS_EXTENDED: Record<string, Keyword> = {
   ghost: {
     id: "ghost",
     label: "ゴースト（幽霊状態）",
-    description: "実体を持たない幽霊の姿で、誰の目にも映らず傷つけられない状態。",
+    description:
+      "実体を持たない幽霊の姿で、誰の目にも映らず傷つけられない状態。",
     relatedPhase: "scene1",
     trigger: {
       type: "auto-unlock",
@@ -48,7 +49,8 @@ export const TUTORIAL_KEYWORDS_EXTENDED: Record<string, Keyword> = {
   incarnation: {
     id: "incarnation",
     label: "受肉（じゅにく）",
-    description: "ゴースト状態から実体を得た状態。他者と相互作用できるようになる。",
+    description:
+      "ゴースト状態から実体を得た状態。他者と相互作用できるようになる。",
     relatedPhase: "mask_intro",
     trigger: {
       type: "auto-unlock",
@@ -114,7 +116,8 @@ export const TUTORIAL_KEYWORDS_EXTENDED: Record<string, Keyword> = {
   drift: {
     id: "drift",
     label: "ドリフト（離脱）",
-    description: "合わない人間関係から静かに身を引く行為。争わずに生きるための知恵。",
+    description:
+      "合わない人間関係から静かに身を引く行為。争わずに生きるための知恵。",
     relatedPhase: "scene2",
     trigger: {
       type: "auto-unlock",
@@ -141,18 +144,14 @@ export const TUTORIAL_KEYWORDS_EXTENDED: Record<string, Keyword> = {
       lineIndex: 0,
     },
     category: "system-concept",
-    examples: [
-      "異なる価値観を尊重する世界",
-      "争わずに共存する知恵",
-    ],
+    examples: ["異なる価値観を尊重する世界", "争わずに共存する知恵"],
     relatedKeywords: ["watch", "drift", "profile"],
   },
 
   mask: {
     id: "mask",
     label: "仮面（プロフィール）",
-    description:
-      "この世界での自分の顔。プロフィール情報で他者にあなたを示す。",
+    description: "この世界での自分の顔。プロフィール情報で他者にあなたを示す。",
     relatedPhase: "mask_intro",
     trigger: {
       type: "auto-unlock",
@@ -189,7 +188,8 @@ export const TUTORIAL_KEYWORDS_EXTENDED: Record<string, Keyword> = {
   profile: {
     id: "profile",
     label: "プロフィール",
-    description: "あなたの価値観やスキルを表現した情報。複数作成して使い分けられる。",
+    description:
+      "あなたの価値観やスキルを表現した情報。複数作成して使い分けられる。",
     relatedPhase: "guide_intro",
     trigger: {
       type: "auto-unlock",
@@ -207,7 +207,8 @@ export const TUTORIAL_KEYWORDS_EXTENDED: Record<string, Keyword> = {
   observation: {
     id: "observation",
     label: "観察行動",
-    description: "他者を観察し学ぶ VNS の基本活動。マッチング機能で実現される。",
+    description:
+      "他者を観察し学ぶ VNS の基本活動。マッチング機能で実現される。",
     relatedPhase: "explore",
     trigger: {
       type: "manual-unlock",
@@ -237,7 +238,8 @@ export const TUTORIAL_KEYWORDS_EXTENDED: Record<string, Keyword> = {
   quest: {
     id: "quest",
     label: "クエスト",
-    description: "チュートリアルの目標となるミッション。完了することでストーリーが進む。",
+    description:
+      "チュートリアルの目標となるミッション。完了することでストーリーが進む。",
     relatedPhase: "quest",
     trigger: {
       type: "auto-unlock",
@@ -295,10 +297,7 @@ export class KeywordSystem {
   /**
    * フェーズに応じてキーワードをチェック
    */
-  checkAndUnlock(
-    phase: TutorialPhase,
-    lineIndex: number
-  ): string[] {
+  checkAndUnlock(phase: TutorialPhase, lineIndex: number): string[] {
     const newUnlocks: string[] = [];
 
     Object.values(TUTORIAL_KEYWORDS_EXTENDED).forEach((keyword) => {

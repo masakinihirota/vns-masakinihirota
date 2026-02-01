@@ -49,7 +49,8 @@ export interface TutorialError {
 export class GameStateManager {
   private state: TutorialGameState;
   private listeners: Set<StateListener> = new Set();
-  private errorHandlers: Map<string, (error: TutorialError) => void> = new Map();
+  private errorHandlers: Map<string, (error: TutorialError) => void> =
+    new Map();
 
   constructor(initialState?: Partial<TutorialGameState>) {
     this.state = {

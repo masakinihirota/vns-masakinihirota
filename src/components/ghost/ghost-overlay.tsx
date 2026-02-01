@@ -333,10 +333,11 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
             {/* Target Select */}
             <div className="flex-1 flex flex-col gap-3">
               <select
-                className={`w-full bg-neutral-800 text-neutral-200 text-lg rounded-xl px-3 py-2 border outline-none transition-colors ${isCompassHighlighted
-                  ? "border-indigo-500 animate-pulse ring-2 ring-indigo-500/20"
-                  : "border-neutral-700 focus:border-indigo-500"
-                  }`}
+                className={`w-full bg-neutral-800 text-neutral-200 text-lg rounded-xl px-3 py-2 border outline-none transition-colors ${
+                  isCompassHighlighted
+                    ? "border-indigo-500 animate-pulse ring-2 ring-indigo-500/20"
+                    : "border-neutral-700 focus:border-indigo-500"
+                }`}
                 value={targetEntityId || ""}
                 onChange={(e) => {
                   setTargetEntityId(e.target.value || null);

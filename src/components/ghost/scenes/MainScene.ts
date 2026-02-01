@@ -49,11 +49,11 @@ export const createMainSceneClass = async () => {
     lastSentPosition: { x: number; y: number } | null = null;
     onUpdateState:
       | ((state: {
-        x: number;
-        y: number;
-        hasMap?: boolean;
-        dialog?: { show: boolean; title: string; message: string };
-      }) => void)
+          x: number;
+          y: number;
+          hasMap?: boolean;
+          dialog?: { show: boolean; title: string; message: string };
+        }) => void)
       | null = null;
     hasMap: boolean = false;
     entitySprites: Map<
@@ -192,7 +192,7 @@ export const createMainSceneClass = async () => {
         if (event && event.target instanceof HTMLElement) {
           const tagName = event.target.tagName.toLowerCase();
           // canvas以外の要素がクリックされた場合は移動しない
-          if (tagName !== 'canvas') {
+          if (tagName !== "canvas") {
             return;
           }
         }
@@ -337,26 +337,26 @@ export const createMainSceneClass = async () => {
 
       // Trigger dialog for other entities
       const dialogMessages: Record<string, { title: string; message: string }> =
-      {
-        king: {
-          title: "女王",
-          message: "おお、迷える幽霊よ。そなたはまだ顔を持たぬようだな。",
-        },
-        market: {
-          title: "商人",
-          message: "いらっしゃい！何をお探しかな？（幽霊には売れないが...）",
-        },
-        tavern: {
-          title: "酒場のマスター",
-          message: "やあ、ゆっくりしていきな。",
-        },
-        bbs: {
-          title: "掲示板",
-          message: "『冒険者求む！』『迷子の猫探してます』",
-        },
-        npc: { title: entity.name, message: "（話しかけてきた...）" },
-        door: { title: entity.name, message: "ここから中に入れそうだ。" },
-      };
+        {
+          king: {
+            title: "女王",
+            message: "おお、迷える幽霊よ。そなたはまだ顔を持たぬようだな。",
+          },
+          market: {
+            title: "商人",
+            message: "いらっしゃい！何をお探しかな？（幽霊には売れないが...）",
+          },
+          tavern: {
+            title: "酒場のマスター",
+            message: "やあ、ゆっくりしていきな。",
+          },
+          bbs: {
+            title: "掲示板",
+            message: "『冒険者求む！』『迷子の猫探してます』",
+          },
+          npc: { title: entity.name, message: "（話しかけてきた...）" },
+          door: { title: entity.name, message: "ここから中に入れそうだ。" },
+        };
 
       const dialog = dialogMessages[entity.type] || {
         title: entity.name,

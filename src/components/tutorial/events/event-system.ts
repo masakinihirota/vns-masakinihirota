@@ -82,8 +82,7 @@ export class EventSystem {
           y: Math.floor(context.playerPosition.y),
         };
         return (
-          playerTile.x === event.position.x &&
-          playerTile.y === event.position.y
+          playerTile.x === event.position.x && playerTile.y === event.position.y
         );
       }
 
@@ -116,8 +115,21 @@ export class EventSystem {
     };
 
     try {
+      // ワンタイムイベントの場合、既に実行済みはスキップ
+      if (event.oneTime && this.executedEvents.has(event.id)) {
+        result.reason = "already_executed";
+        return result;
+      }
+
+      // 無効化されている場合
+      if (event.enabled === false) {
+        result.reason = "disabled";
+        return result;
+      }
+
       // トリガー条件をチェック
       if (!this.checkTrigger(event, context)) {
+        result.reason = "trigger_failed";
         return result;
       }
 

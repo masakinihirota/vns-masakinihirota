@@ -1,20 +1,22 @@
 "use client";
 
+import { BookOpen, FastForward, Pause, Play, Timer, Zap } from "lucide-react";
+import dynamic from "next/dynamic";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GhostChat, Message } from "@/components/ghost/ghost-chat";
 import {
   GhostOverlay,
   GhostOverlayProps,
 } from "@/components/ghost/ghost-overlay";
 import { TrialStorage } from "@/lib/trial-storage";
-import { BookOpen, FastForward, Pause, Play, Timer, Zap } from "lucide-react";
-import dynamic from "next/dynamic";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
 import { TrialBackButtonContent } from "../layout/trial-onboarding-back-button/TrialOnboardingBackButton";
-import { KeywordModal } from "./keyword-modal";
-import { QueenDialogue } from "./queen-dialogue";
-import { TUTORIAL_KEYWORDS } from "./tutorial-keywords.data";
 import { TutorialErrorBoundary } from "./error-boundary";
+import { EventSystem } from "./events/event-system";
+import { LEVEL01_EVENTS } from "./events/level01-events";
+import { KeywordModal } from "./keyword-modal";
+import { KeywordSystem } from "./keywords/keyword-system";
+import { QueenDialogue } from "./queen-dialogue";
 import {
   getGameStateManager,
   useTutorialState,
@@ -23,9 +25,7 @@ import {
   useDialogControl,
   useKeywordManagement,
 } from "./state";
-import { EventSystem } from "./events/event-system";
-import { LEVEL01_EVENTS } from "./events/level01-events";
-import { KeywordSystem } from "./keywords/keyword-system";
+import { TUTORIAL_KEYWORDS } from "./tutorial-keywords.data";
 
 const GameCanvas = dynamic(
   () => import("@/components/ghost/game-canvas").then((mod) => mod.GameCanvas),
@@ -215,7 +215,11 @@ export const TutorialStory = () => {
     const history: Message[] = [];
     let idCounter = 1;
 
-    const addLines = (lines: readonly string[], untilIndex: number, speaker: string = "Queen") => {
+    const addLines = (
+      lines: readonly string[],
+      untilIndex: number,
+      speaker: string = "Queen"
+    ) => {
       lines.slice(0, untilIndex + 1).forEach((text, i) => {
         history.push({
           id: `story-${idCounter++}`,
@@ -249,7 +253,11 @@ export const TutorialStory = () => {
         text: "クエスト完了: 地図を獲得しました",
         timestamp: idCounter++,
       });
-      addLines(SCENE_MAP_FOUND_LINES, SCENE_MAP_FOUND_LINES.length - 1, "Queen");
+      addLines(
+        SCENE_MAP_FOUND_LINES,
+        SCENE_MAP_FOUND_LINES.length - 1,
+        "Queen"
+      );
       history.push({
         id: `explore-start`,
         user: "System",
@@ -274,23 +282,41 @@ export const TutorialStory = () => {
       });
 
       // Map Found (Queen)
-      const mapFoundIndex = phase === "map_found" ? lineIndex : SCENE_MAP_FOUND_LINES.length - 1;
+      const mapFoundIndex =
+        phase === "map_found" ? lineIndex : SCENE_MAP_FOUND_LINES.length - 1;
       addLines(SCENE_MAP_FOUND_LINES, mapFoundIndex, "Queen");
 
       // Return to Queen (after explore)
-      if (phase === "return_to_queen" || phase === "guide_intro" || phase === "account_creation" || phase === "mask_intro" || phase === "end") {
+      if (
+        phase === "return_to_queen" ||
+        phase === "guide_intro" ||
+        phase === "account_creation" ||
+        phase === "mask_intro" ||
+        phase === "end"
+      ) {
         history.push({
           id: `explore-complete`,
           user: "System",
           text: "探索完了: 女王に報告",
           timestamp: idCounter++,
         });
-        const returnToQueenIndex = phase === "return_to_queen" ? lineIndex : SCENE_RETURN_TO_QUEEN_LINES.length - 1;
+        const returnToQueenIndex =
+          phase === "return_to_queen"
+            ? lineIndex
+            : SCENE_RETURN_TO_QUEEN_LINES.length - 1;
         addLines(SCENE_RETURN_TO_QUEEN_LINES, returnToQueenIndex, "Queen");
       }
 
-      if (phase === "guide_intro" || phase === "account_creation" || phase === "mask_intro" || phase === "end") {
-        const guideIntroIndex = phase === "guide_intro" ? lineIndex : SCENE_GUIDE_INTRO_LINES.length - 1;
+      if (
+        phase === "guide_intro" ||
+        phase === "account_creation" ||
+        phase === "mask_intro" ||
+        phase === "end"
+      ) {
+        const guideIntroIndex =
+          phase === "guide_intro"
+            ? lineIndex
+            : SCENE_GUIDE_INTRO_LINES.length - 1;
         addLines(SCENE_GUIDE_INTRO_LINES, guideIntroIndex, "Guide");
       }
 
@@ -302,7 +328,10 @@ export const TutorialStory = () => {
           text: "ルートアカウント作成完了",
           timestamp: idCounter++,
         });
-        const maskIntroIndex = phase === "mask_intro" ? lineIndex : SCENE_MASK_INTRO_LINES.length - 1;
+        const maskIntroIndex =
+          phase === "mask_intro"
+            ? lineIndex
+            : SCENE_MASK_INTRO_LINES.length - 1;
         addLines(SCENE_MASK_INTRO_LINES, maskIntroIndex, "Guide");
       }
     }
@@ -357,7 +386,7 @@ export const TutorialStory = () => {
     // 女王の位置 { x: 7, y: 3.5 } (Tiles)
     // タイルサイズ = 32px
     if (phase === "explore" && props.playerPosition) {
-      const QUEEN_X = 7 * 32;  // 224
+      const QUEEN_X = 7 * 32; // 224
       const QUEEN_Y = 3.5 * 32; // 112
       const TRIGGER_DISTANCE = 64; // 2タイル分の距離
       const dx = props.playerPosition.x - QUEEN_X;
@@ -374,8 +403,13 @@ export const TutorialStory = () => {
 
     // map_found 以降のフェーズではコンパスUIを確実に表示するため hasMap=true を強制
     // quest フェーズでは props.hasMap をそのまま使用（変化検知でモーダル表示を確保）
-    const isMapAcquiredPhase = phase === "map_found" || phase === "explore" ||
-      phase === "return_to_queen" || phase === "guide_intro" || phase === "mask_intro" || phase === "end";
+    const isMapAcquiredPhase =
+      phase === "map_found" ||
+      phase === "explore" ||
+      phase === "return_to_queen" ||
+      phase === "guide_intro" ||
+      phase === "mask_intro" ||
+      phase === "end";
 
     const effectiveProps: GhostOverlayProps = {
       ...props,
@@ -402,26 +436,34 @@ export const TutorialStory = () => {
       choices?: { label: string; onClick: () => void }[];
     } | null = null;
 
-    if (phase === "scene1" || phase === "scene2" || phase === "map_found" || phase === "return_to_queen") {
+    if (
+      phase === "scene1" ||
+      phase === "scene2" ||
+      phase === "map_found" ||
+      phase === "return_to_queen"
+    ) {
       dialogueProps = {
         speaker: "The Queen" as const,
         text: currentLines[lineIndex] || "",
       };
     } else if (phase === "guide_intro" || phase === "mask_intro") {
-      const isGuideIntroEnd = phase === "guide_intro" && lineIndex === currentLines.length - 1;
+      const isGuideIntroEnd =
+        phase === "guide_intro" && lineIndex === currentLines.length - 1;
 
       dialogueProps = {
         speaker: "Guide" as const,
         text: currentLines[lineIndex] || "",
-        choices: isGuideIntroEnd ? [
-          {
-            label: "はい",
-            onClick: () => {
-              setPhase("account_creation");
-              router.push("/onboarding-trial");
-            }
-          }
-        ] : undefined
+        choices: isGuideIntroEnd
+          ? [
+              {
+                label: "はい",
+                onClick: () => {
+                  setPhase("account_creation");
+                  router.push("/onboarding-trial");
+                },
+              },
+            ]
+          : undefined,
       };
     }
 
@@ -440,9 +482,9 @@ export const TutorialStory = () => {
               emotion: "neutral",
             }}
             choices={dialogueProps.choices}
-            highlightKeywords={TUTORIAL_KEYWORDS.map(k => ({
+            highlightKeywords={TUTORIAL_KEYWORDS.map((k) => ({
               label: k.label,
-              color: "text-indigo-400"
+              color: "text-indigo-400",
             }))}
           />
           <GhostChat
@@ -498,10 +540,11 @@ export const TutorialStory = () => {
                         flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95
                         min-w-[180px] justify-center
                         font-bold text-sm
-                        ${isPaused
-              ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
-              : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
-            }
+                        ${
+                          isPaused
+                            ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
+                            : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
+                        }
                     `}
           title="いつでも左サイドメニューから再開できます"
         >
@@ -545,8 +588,6 @@ export const TutorialStory = () => {
                 : "普通"}
           </span>
         </button>
-
-
 
         {/* Return Button (Trial Only) */}
         {isTrial && <TrialBackButtonContent />}

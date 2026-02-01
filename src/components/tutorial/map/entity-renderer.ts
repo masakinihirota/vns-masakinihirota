@@ -3,8 +3,8 @@
  * MainScene から分離
  */
 
-import type { TutorialEvent } from "../events";
 import { TILE_SIZE } from "@/components/ghost/constants";
+import type { TutorialEvent } from "../events";
 
 export interface EntityVisuals {
   position: { x: number; y: number };

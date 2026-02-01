@@ -1,12 +1,14 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { GameStateManager, getGameStateManager, resetGameStateManager } from "../state/game-state-manager";
+import { beforeEach, describe, expect, it } from "vitest";
 import { EventSystem } from "../events/event-system";
 import { LEVEL01_EVENTS } from "../events/level01-events";
+import type { GameContext, TutorialEvent } from "../events/types";
 import { KeywordSystem } from "../keywords/keyword-system";
-import { MapRenderer } from "../map/map-renderer";
-import { EntityRenderer } from "../map/entity-renderer";
 import { LEVEL01_MAP_CONFIG } from "../map/map-config";
-import type { TutorialEvent, GameContext } from "../events/types";
+import {
+  GameStateManager,
+  getGameStateManager,
+  resetGameStateManager,
+} from "../state/game-state-manager";
 
 describe("Tutorial Integration Tests", () => {
   let stateManager: GameStateManager;
@@ -72,6 +74,7 @@ describe("Tutorial Integration Tests", () => {
         hasMap: false,
         currentPhase: "quest",
         lineIndex: 0,
+        discoveredEntities: new Set(),
       };
 
       const canTrigger = eventSystem.checkTrigger(mapItemEvent, context);
@@ -85,6 +88,7 @@ describe("Tutorial Integration Tests", () => {
         hasMap: false,
         currentPhase: "quest",
         lineIndex: 0,
+        discoveredEntities: new Set(),
       };
 
       // 初回実行
@@ -114,6 +118,7 @@ describe("Tutorial Integration Tests", () => {
         hasMap: false,
         currentPhase: "quest",
         lineIndex: 0,
+        discoveredEntities: new Set(),
       };
 
       await eventSystem.execute(mapItemEvent, context);
@@ -123,11 +128,8 @@ describe("Tutorial Integration Tests", () => {
     });
 
     it("should integrate with state manager on event completion", async () => {
-      let mapUnlocked = false;
       stateManager.subscribe((state) => {
-        if (state.hasMap) {
-          mapUnlocked = true;
-        }
+        // state.hasMap check (unused variable removed)
       });
 
       const mapItemEvent = LEVEL01_EVENTS.map_item;
@@ -136,6 +138,7 @@ describe("Tutorial Integration Tests", () => {
         hasMap: false,
         currentPhase: "quest",
         lineIndex: 0,
+        discoveredEntities: new Set(),
       };
 
       eventSystem.onAction("trigger-phase", (action) => {
@@ -176,7 +179,7 @@ describe("Tutorial Integration Tests", () => {
       const ghostKeyword = keywordSystem.getKeyword("ghost");
       if (ghostKeyword) {
         keywordSystem.learn("ghost");
-        const learned = keywordSystem.serialize().learnedIds;
+        const learned = keywordSystem.serialize().learnedKeywords;
         isLearned = learned.includes("ghost");
       }
 
@@ -268,6 +271,7 @@ describe("Tutorial Integration Tests", () => {
         hasMap: false,
         currentPhase: "quest",
         lineIndex: 0,
+        discoveredEntities: new Set(),
       };
 
       const result = await eventSystem.execute(invalidEvent, context);
@@ -311,7 +315,7 @@ describe("Tutorial Integration Tests", () => {
       });
 
       eventSystem.onAction("give-item", (action) => {
-        itemsGiven.push(action.itemId);
+        if (action.itemId) itemsGiven.push(action.itemId);
       });
 
       stateManager.subscribe((state) => {
@@ -334,6 +338,7 @@ describe("Tutorial Integration Tests", () => {
         hasMap: false,
         currentPhase: "quest",
         lineIndex: 0,
+        discoveredEntities: new Set(),
       };
 
       await eventSystem.execute(mapItemEvent, questContext);

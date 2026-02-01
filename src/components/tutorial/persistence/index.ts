@@ -8,7 +8,4 @@ export {
   type TutorialProgressData,
 } from "./tutorial-persistence";
 
-export {
-  HybridPersistence,
-  LocalStorageCache,
-} from "./local-storage-cache";
+export { HybridPersistence, LocalStorageCache } from "./local-storage-cache";

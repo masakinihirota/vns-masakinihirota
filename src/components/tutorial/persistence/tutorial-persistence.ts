@@ -68,6 +68,7 @@ export class TutorialPersistence {
 
       if (error || !data) {
         // データが存在しない場合は正常
+        // eslint-disable-next-line no-console
         console.debug("No tutorial progress found for user:", userId);
         return null;
       }
@@ -92,15 +93,16 @@ export class TutorialPersistence {
   /**
    * イベント完了状態を記録
    */
-  async recordEventCompletion(userId: string, eventId: string): Promise<boolean> {
+  async recordEventCompletion(
+    userId: string,
+    eventId: string
+  ): Promise<boolean> {
     try {
-      const { error } = await this.supabase
-        .from("tutorial_event_log")
-        .insert({
-          user_id: userId,
-          event_id: eventId,
-          completed_at: new Date().toISOString(),
-        });
+      const { error } = await this.supabase.from("tutorial_event_log").insert({
+        user_id: userId,
+        event_id: eventId,
+        completed_at: new Date().toISOString(),
+      });
 
       if (error) {
         console.error("Failed to record event completion:", error);

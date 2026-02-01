@@ -2,15 +2,11 @@
  * チュートリアルシステムのテストスイート
  */
 
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { EventSystem } from "../events/event-system";
-import type {
-  EventAction,
-  GameContext,
-  TutorialEvent,
-} from "../events/types";
-import { GameStateManager } from "../state/game-state-manager";
+import type { EventAction, GameContext, TutorialEvent } from "../events/types";
 import { KeywordSystem } from "../keywords/keyword-system";
+import { GameStateManager } from "../state/game-state-manager";
 
 describe("Tutorial System", () => {
   describe("EventSystem", () => {
@@ -24,6 +20,7 @@ describe("Tutorial System", () => {
         hasMap: false,
         currentPhase: "scene1",
         discoveredEntities: new Set(),
+        lineIndex: 0,
       };
     });
 

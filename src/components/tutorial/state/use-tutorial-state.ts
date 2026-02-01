@@ -3,7 +3,11 @@
  */
 
 import { useEffect, useState } from "react";
-import type { DialogState, TutorialGameState, TutorialPhase } from "./game-state-manager";
+import type {
+  DialogState,
+  TutorialGameState,
+  TutorialPhase,
+} from "./game-state-manager";
 import { getGameStateManager } from "./game-state-manager";
 
 /**
@@ -11,8 +15,8 @@ import { getGameStateManager } from "./game-state-manager";
  */
 export function useTutorialState() {
   const manager = getGameStateManager();
-  const [state, setState] = useState<TutorialGameState>(() =>
-    manager.getState() as TutorialGameState
+  const [state, setState] = useState<TutorialGameState>(
+    () => manager.getState() as TutorialGameState
   );
 
   useEffect(() => {
@@ -91,8 +95,7 @@ export function useGameControl() {
 
   return {
     setPaused: (isPaused: boolean) => manager.setPaused(isPaused),
-    setSpeed: (speed: "instant" | "fast" | "normal") =>
-      manager.setSpeed(speed),
+    setSpeed: (speed: "instant" | "fast" | "normal") => manager.setSpeed(speed),
     setHasMap: (hasMap: boolean) => manager.setHasMap(hasMap),
     updatePlayerPosition: (x: number, y: number) =>
       manager.updatePlayerPosition(x, y),
@@ -112,8 +115,7 @@ export function useKeywordManagement() {
   return {
     unlockedKeywordIds: state.unlockedKeywordIds,
     learnedKeywordIds: state.learnedKeywordIds,
-    unlockKeyword: (keywordId: string) =>
-      manager.unlockKeyword(keywordId),
+    unlockKeyword: (keywordId: string) => manager.unlockKeyword(keywordId),
     learnKeyword: (keywordId: string) => manager.learnKeyword(keywordId),
   };
 }
