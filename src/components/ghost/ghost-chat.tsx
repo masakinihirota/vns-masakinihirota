@@ -5,20 +5,30 @@ import { ChevronsDown, ChevronsUp, MessageSquare, Send } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-interface Message {
+export interface Message {
   id: string;
   user: string;
   text: string;
   timestamp: number;
 }
 
-export const GhostChat = () => {
+interface GhostChatProps {
+  externalMessages?: Message[];
+  className?: string;
+  initialMessages?: Message[];
+}
+
+export const GhostChat = ({
+  externalMessages = [],
+  className,
+  initialMessages,
+}: GhostChatProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [message, setMessage] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Mock messages
-  const [messages, setMessages] = useState<Message[]>([
+  // Mock messages (only if no initial messages provided)
+  const defaultMessages: Message[] = [
     {
       id: "1",
       user: "System",
@@ -37,7 +47,28 @@ export const GhostChat = () => {
       text: "地図を見つけて、世界を探索しましょう。",
       timestamp: 0,
     },
-  ]);
+  ];
+
+  const [localMessages, setLocalMessages] = useState<Message[]>(
+    initialMessages !== undefined ? initialMessages : defaultMessages
+  );
+
+  // Combine local and external messages, sorted by timestamp or preserved order
+  // For simplicity, we just display external then local, or we really want a single merged list.
+  // Actually, for tutorial sync, we want the external messages to control the history mostly,
+  // or we append local user chats to it.
+  // Let's merge them:
+  const allMessages = [...(externalMessages || []), ...localMessages].sort(
+    (a, b) => {
+      // If timestamps are 0 (tutorial defaults), preserve index order?
+      // Realistically usually timestamp based.
+      if (a.timestamp === 0 && b.timestamp === 0) return 0; // Keep stable
+      return a.timestamp - b.timestamp;
+    }
+  );
+  // Note: Simple merge might duplicate if IDs conflict. Ensure IDs are unique.
+  // Actually, usually we'd either control it fully or not.
+  // For this tasks's specific requirement (sync queen dialogue), let's just render combined.
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -45,7 +76,7 @@ export const GhostChat = () => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isExpanded]);
+  }, [allMessages.length, isExpanded]);
 
   const handleSend = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -58,7 +89,7 @@ export const GhostChat = () => {
       timestamp: Date.now(),
     };
 
-    setMessages((prev) => [...prev, newMessage]);
+    setLocalMessages((prev) => [...prev, newMessage]);
     setMessage("");
   };
 
@@ -72,7 +103,8 @@ export const GhostChat = () => {
       className={cn(
         "absolute left-3 w-80 flex flex-col pointer-events-auto",
         "bg-black/70 backdrop-blur-md border border-white/10 rounded-xl shadow-xl overflow-hidden",
-        isExpanded ? "bottom-3" : "bottom-3"
+        isExpanded ? "bottom-3" : "bottom-3",
+        className
       )}
     >
       {/* Header */}
@@ -86,7 +118,7 @@ export const GhostChat = () => {
 
       {/* Messages Area */}
       <div className="flex-1 overflow-y-auto p-3 space-y-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
-        {messages.map((msg) => (
+        {allMessages.map((msg) => (
           <div key={msg.id} className="flex flex-col gap-1">
             <span
               className={cn(

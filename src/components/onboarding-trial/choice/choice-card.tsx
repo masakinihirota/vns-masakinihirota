@@ -19,24 +19,24 @@ export const ChoiceCard = ({
 
   const colorMap = {
     emerald: {
-      textRef: "text-emerald-400",
+      textRef: "text-emerald-600 dark:text-emerald-400",
       bgRef: "bg-emerald-500/50",
-      textUpper: "text-emerald-400/80",
+      textUpper: "text-emerald-600/80 dark:text-emerald-400/80",
     },
     purple: {
-      textRef: "text-purple-400",
+      textRef: "text-purple-600 dark:text-purple-400",
       bgRef: "bg-purple-500/50",
-      textUpper: "text-purple-400/80",
+      textUpper: "text-purple-600/80 dark:text-purple-400/80",
     },
     amber: {
-      textRef: "text-amber-400",
+      textRef: "text-amber-600 dark:text-amber-400",
       bgRef: "bg-amber-500/50",
-      textUpper: "text-amber-400/80",
+      textUpper: "text-amber-600/80 dark:text-amber-400/80",
     },
     slate: {
-      textRef: "text-slate-400",
+      textRef: "text-slate-600 dark:text-slate-400",
       bgRef: "bg-slate-500/50",
-      textUpper: "text-slate-400/80",
+      textUpper: "text-slate-600/80 dark:text-slate-400/80",
     },
   };
 
@@ -50,8 +50,8 @@ export const ChoiceCard = ({
       className={cn(
         "group relative flex flex-col h-full p-6 md:p-8 rounded-xl border transition-all duration-300 cursor-pointer overflow-hidden text-left w-full",
         isSelected
-          ? "border-blue-500 bg-blue-500/10 shadow-[0_0_30px_rgba(59,130,246,0.3)] scale-[1.02]"
-          : "border-slate-800 bg-slate-900/60 hover:border-slate-600 hover:bg-slate-800/80 hover:shadow-lg hover:-translate-y-1",
+          ? "border-blue-500 bg-blue-50/50 dark:bg-blue-500/10 shadow-[0_0_30px_rgba(59,130,246,0.3)] scale-[1.02]"
+          : "border-neutral-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 hover:border-neutral-300 dark:hover:border-slate-600 hover:bg-white/80 dark:hover:bg-slate-800/80 hover:shadow-lg hover:-translate-y-1",
         className
       )}
     >
@@ -59,7 +59,7 @@ export const ChoiceCard = ({
       <div className="flex items-start justify-between mb-6 w-full">
         <div
           className={cn(
-            "p-3 rounded-2xl bg-slate-950 border border-slate-800 shadow-inner group-hover:scale-110 transition-transform duration-300 shrink-0",
+            "p-3 rounded-2xl bg-neutral-100 dark:bg-slate-950 border border-neutral-200 dark:border-slate-800 shadow-inner group-hover:scale-110 transition-transform duration-300 shrink-0",
             textRef
           )}
         >
@@ -83,22 +83,22 @@ export const ChoiceCard = ({
           >
             {path.subtitle}
           </p>
-          <h2 className="text-xl font-bold text-slate-100 group-hover:text-blue-200 transition-colors">
+          <h2 className="text-xl font-bold text-neutral-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-200 transition-colors">
             {path.title}
           </h2>
         </div>
 
-        <p className="text-sm text-slate-400 leading-relaxed min-h-[4.5em]">
+        <p className="text-sm text-neutral-600 dark:text-slate-400 leading-relaxed min-h-[4.5em]">
           {path.description}
         </p>
 
         {/* Benefits List */}
-        <div className="pt-4 border-t border-slate-800/50 w-full">
+        <div className="pt-4 border-t border-neutral-200 dark:border-slate-800/50 w-full">
           <ul className="space-y-2">
             {path.benefits.map((benefit, idx) => (
               <li
                 key={idx}
-                className="flex items-center text-xs text-slate-500 group-hover:text-slate-400 transition-colors"
+                className="flex items-center text-xs text-neutral-500 dark:text-slate-500 group-hover:text-neutral-700 dark:group-hover:text-slate-400 transition-colors"
               >
                 <span
                   className={cn("w-1 h-1 rounded-full mr-2 shrink-0", bgRef)}
@@ -112,7 +112,7 @@ export const ChoiceCard = ({
 
       {/* Recommendation Tag */}
       <div className="mt-6 pt-4 w-full">
-        <div className="inline-flex items-center gap-2 text-[10px] text-slate-500 font-medium bg-slate-950/50 px-3 py-2 rounded-lg border border-slate-800/50">
+        <div className="inline-flex items-center gap-2 text-[10px] text-neutral-500 dark:text-slate-500 font-medium bg-neutral-100 dark:bg-slate-950/50 px-3 py-2 rounded-lg border border-neutral-200 dark:border-slate-800/50">
           <Info className="w-3 h-3 shrink-0" />
           {path.recommends}
         </div>

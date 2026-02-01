@@ -20,8 +20,7 @@ export const useOnboardingChoice = () => {
       // 実際の遷移処理
       switch (selectedPath) {
         case "tutorial":
-          // TODO: チュートリアルページへのパスを確認して修正
-          router.push("/tutorial");
+          router.push("/tutorial/story");
           break;
         case "ghost":
           router.push("/ghost");

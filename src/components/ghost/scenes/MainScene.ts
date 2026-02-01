@@ -20,6 +20,7 @@ export interface GhostMainScene extends Phaser.Scene {
   myPlayer: Phaser.GameObjects.Container;
   hasMap: boolean;
   teleport: (x: number, y: number) => void;
+  setInputEnabled: (enabled: boolean) => void;
   setUpdateCallback: (
     fn: (state: {
       x: number;
@@ -61,6 +62,7 @@ export const createMainSceneClass = async () => {
     // Movement & State
     targetPosition: { x: number; y: number } | null = null;
     isGhostMode: boolean = false;
+    isInputEnabled: boolean = true;
     ghostModeKey!: Phaser.Input.Keyboard.Key;
 
     constructor() {
@@ -77,6 +79,17 @@ export const createMainSceneClass = async () => {
       }) => void
     ) {
       this.onUpdateState = fn;
+    }
+
+    setInputEnabled(enabled: boolean) {
+      this.isInputEnabled = enabled;
+      // Also stop movement if disabled
+      if (!enabled) {
+        this.targetPosition = null;
+        if (this.myPlayer?.body) {
+          (this.myPlayer.body as Phaser.Physics.Arcade.Body).setVelocity(0);
+        }
+      }
     }
 
     preload() {
@@ -376,6 +389,11 @@ export const createMainSceneClass = async () => {
 
     update() {
       if (!this.cursors || !this.myPlayer) return;
+
+      // Input Lock Check
+      if (!this.isInputEnabled) {
+        return;
+      }
 
       // Toggle Ghost Mode
       if (PhaserLib.Input.Keyboard.JustDown(this.ghostModeKey)) {

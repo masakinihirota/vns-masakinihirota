@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowRight } from "lucide-react";
-import React from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ChoiceCard } from "./choice-card";
@@ -13,7 +12,7 @@ export const OnboardingChoice = () => {
     useOnboardingChoice();
 
   return (
-    <div className="relative overflow-hidden py-12">
+    <div className="relative w-full flex flex-col items-center justify-center min-h-[80vh] overflow-hidden py-12 transition-colors duration-500 bg-neutral-50 dark:bg-slate-950 text-neutral-900 dark:text-slate-100">
       {/* Background Ambient Effects */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-[-10%] left-[20%] w-[500px] h-[500px] bg-blue-900/20 rounded-full blur-[100px]" />
@@ -23,13 +22,7 @@ export const OnboardingChoice = () => {
       <div className="z-10 max-w-5xl w-full flex flex-col items-center space-y-12">
         {/* Header Section */}
         <div className="text-center space-y-4 animate-in fade-in slide-in-from-top-8 duration-700">
-          <div className="inline-flex items-center space-x-2 bg-slate-900/80 border border-slate-800 rounded-full px-4 py-1.5 mb-4">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            <span className="text-xs text-slate-400 font-medium tracking-wide">
-              ROOT ACCOUNT CREATED
-            </span>
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-neutral-800 via-neutral-600 to-neutral-800 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
             あなたの旅を選択してください
           </h1>
           <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
