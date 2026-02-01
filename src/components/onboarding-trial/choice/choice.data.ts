@@ -1,4 +1,4 @@
-import { BookOpen, Ghost, UserPlus, Home } from "lucide-react";
+import { BookOpen, Ghost, Home, UserPlus } from "lucide-react";
 import React from "react";
 
 export type ChoiceId = "tutorial" | "ghost" | "profile" | "home";
@@ -50,7 +50,7 @@ export const CHOICE_PATHS: ChoicePath[] = [
   },
   {
     id: "home",
-    title: "何もしない",
+    title: "自分で体験して覚える",
     subtitle: "スキップ",
     icon: Home,
     description:

@@ -1,6 +1,5 @@
-import { Github, ExternalLink } from "lucide-react";
+import { ExternalLink, Github } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 
 export const Footer = () => {
   const footerSections = [
@@ -40,7 +39,7 @@ export const Footer = () => {
           >
             VNS
           </Link>
-          <p className="text-sm text-slate-600 dark:text-muted-foreground leading-relaxed max-w-xs">
+          <p className="text-lg text-slate-600 dark:text-muted-foreground leading-relaxed max-w-xs">
             価値観でつながるネットワークサービス。
             「昨日僕が感動した作品を、今日の君はまだ知らない。」
           </p>
@@ -59,7 +58,7 @@ export const Footer = () => {
 
         {footerSections.map((section) => (
           <div key={section.title} className="space-y-6">
-            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 dark:text-muted-foreground">
+            <h4 className="text-lg font-black uppercase tracking-[0.2em] text-slate-500 dark:text-muted-foreground">
               {section.title}
             </h4>
             <ul className="space-y-4">
@@ -67,7 +66,7 @@ export const Footer = () => {
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-600 dark:text-muted-foreground hover:text-blue-600 dark:hover:text-blue-500 transition-colors flex items-center gap-1 group"
+                    className="text-lg text-slate-600 dark:text-muted-foreground hover:text-blue-600 dark:hover:text-blue-500 transition-colors flex items-center gap-1 group"
                   >
                     {link.label}
                     {link.href.startsWith("http") && (

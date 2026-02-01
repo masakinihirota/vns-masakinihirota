@@ -6,6 +6,7 @@
 // フォルダ化されたコンポーネント
 export { AppSidebar } from "./app-sidebar/AppSidebar";
 export { Footer } from "./footer/Footer";
+export { ConditionalFooter } from "./footer/ConditionalFooter";
 export {
   AdToggle,
   GlobalHeader,

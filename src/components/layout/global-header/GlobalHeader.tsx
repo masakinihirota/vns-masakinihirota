@@ -4,6 +4,7 @@ import { type User } from "@supabase/supabase-js";
 import {
   ArrowRight,
   Bell,
+  BookOpen,
   Coins,
   Globe,
   HelpCircle,
@@ -355,6 +356,111 @@ export function HelpButton() {
   );
 }
 
+// 解説ボタン（チュートリアルキーワード）
+export function TutorialKeywordButton() {
+  "use client";
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [unreadCount, setUnreadCount] = React.useState(0);
+  const [unlockedIds, setUnlockedIds] = React.useState<string[]>([]);
+  const [learnedIds, setLearnedIds] = React.useState<string[]>([]);
+  const [manager, setManager] = React.useState<any>(null);
+
+  // キーワード状態を監視して未読数を計算
+  React.useEffect(() => {
+    // dynamic importでチュートリアル状態を取得
+    const updateUnreadCount = async () => {
+      try {
+        const { getGameStateManager } = await import(
+          "@/components/tutorial/state"
+        );
+        const gameManager = getGameStateManager();
+        setManager(gameManager);
+        
+        const state = gameManager.getState();
+        setUnlockedIds(state.unlockedKeywordIds);
+        setLearnedIds(state.learnedKeywordIds);
+        const unread =
+          state.unlockedKeywordIds.length - state.learnedKeywordIds.length;
+        setUnreadCount(Math.max(0, unread));
+
+        // 状態変更を監視
+        const unsubscribe = gameManager.subscribe((newState: any) => {
+          setUnlockedIds(newState.unlockedKeywordIds);
+          setLearnedIds(newState.learnedKeywordIds);
+          const newUnread =
+            newState.unlockedKeywordIds.length -
+            newState.learnedKeywordIds.length;
+          setUnreadCount(Math.max(0, newUnread));
+        });
+
+        return unsubscribe;
+      } catch (error) {
+        // チュートリアルモジュールが利用できない場合はスキップ
+        console.debug("Tutorial state not available", error);
+      }
+    };
+
+    const cleanup = updateUnreadCount();
+    return () => {
+      void cleanup.then((fn) => fn?.());
+    };
+  }, []);
+
+  const handleLearn = (keywordId: string) => {
+    if (manager) {
+      manager.learnKeyword(keywordId);
+    }
+  };
+
+  return (
+    <>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <button
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-accent transition-colors relative"
+            onClick={() => setIsOpen(true)}
+          >
+            <div className="relative">
+              <BookOpen className="h-4 w-4" />
+              {unreadCount > 0 && (
+                <Badge
+                  variant="destructive"
+                  className="absolute -top-2 -right-2 h-4 w-4 flex items-center justify-center p-0 text-[10px] font-bold"
+                >
+                  {unreadCount}
+                </Badge>
+              )}
+            </div>
+            <span className="text-sm font-medium hidden sm:inline">重要キーワード</span>
+          </button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>
+            重要キーワードの解説
+            {unreadCount > 0 && ` (${unreadCount}件未読)`}
+          </p>
+        </TooltipContent>
+      </Tooltip>
+
+      {/* Dynamic import to avoid SSR issues */}
+      {isOpen && (
+        <React.Suspense fallback={null}>
+          {React.createElement(
+            require("@/components/tutorial/keyword-modal").KeywordModal,
+            {
+              isOpen,
+              onClose: () => setIsOpen(false),
+              unlockedIds,
+              learnedIds,
+              onLearn: handleLearn,
+            }
+          )}
+        </React.Suspense>
+      )}
+    </>
+  );
+}
+
 // VNS Button Components Showcase
 // * コンセプト:
 // 1. Oasis (Cyan/Blue) - 癒やしと潤い
@@ -589,6 +695,14 @@ export function GlobalHeader({
         <div className="flex items-center gap-2">
           {!loading && (
             <>
+              {/* 解説ボタン（左側に少し離して配置） */}
+              <TutorialKeywordButton />
+              
+              <Separator
+                orientation="vertical"
+                className="mx-2 h-4 hidden sm:block"
+              />
+
               {/* 共通ボタン */}
               <AdToggle />
               <LanguageToggle />

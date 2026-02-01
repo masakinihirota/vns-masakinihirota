@@ -1,12 +1,11 @@
 "use client";
 
-import React from "react";
 
 export const HeroSection = () => {
   return (
     <header className="flex flex-col items-center text-center space-y-8 min-h-[60vh] justify-center animate-fade-in-up">
       <div className="space-y-2">
-        <p className="text-blue-500 dark:text-blue-400 tracking-[0.2em] text-sm font-medium uppercase">
+        <p className="text-blue-500 dark:text-blue-400 tracking-[0.2em] text-lg font-medium uppercase">
           Value Network Service
         </p>
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground font-serif">

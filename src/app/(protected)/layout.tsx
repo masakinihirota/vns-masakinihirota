@@ -1,6 +1,6 @@
 import {
   AppSidebar,
-  Footer,
+  ConditionalFooter,
   GlobalHeader,
   MainContent,
 } from "@/components/layout";
@@ -46,7 +46,7 @@ export default async function AuthLayout({
         <MainContent>{children}</MainContent>
 
         {/* フッターメニュー */}
-        <Footer />
+        <ConditionalFooter />
       </SidebarInset>
     </SidebarProvider>
   );

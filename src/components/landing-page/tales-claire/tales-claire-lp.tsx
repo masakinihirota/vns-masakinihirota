@@ -1,7 +1,5 @@
 "use client";
 
-import { MonitorSmartphone } from "lucide-react";
-import Link from "next/link";
 import {
   AdToggle,
   HelpButton,
@@ -18,10 +16,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { MonitorSmartphone } from "lucide-react";
+import Link from "next/link";
 import { TrialEntrySection } from "../trial-entry";
 import { BackgroundCanvas } from "./background-canvas";
 import { ConceptSection } from "./concept-section";
 import { DeclarationsSection } from "./declarations-section";
+import { FinalGoalSection } from "./final-goal-section";
 import { Footer } from "./footer";
 import { HeroSection } from "./hero-section";
 import { InspirationSection } from "./inspiration-section";
@@ -30,7 +31,7 @@ import { PurposeSection } from "./purpose-section";
 export const TalesClaireLP = () => {
   return (
     <SidebarProvider>
-      <div className="antialiased selection:bg-blue-500 selection:text-white min-h-screen relative text-foreground font-sans bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:bg-[#0a0a0a] dark:bg-none w-full transition-colors duration-500">
+      <div className="antialiased selection:bg-blue-500 selection:text-white min-h-screen relative text-foreground font-sans bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:bg-[#0a0a0a] dark:bg-none w-full transition-colors duration-500 text-lg">
         {/* Header (No Sidebar Trigger) - User requested removal */}
         {/* <GlobalHeader showSidebarTrigger={false} /> */}
 
@@ -96,6 +97,9 @@ export const TalesClaireLP = () => {
 
           {/* 4. Reference Video & Explanation */}
           <InspirationSection />
+
+          {/* 5. Final Goal Section */}
+          <FinalGoalSection />
 
           {/* Footer */}
           <Footer />

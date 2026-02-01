@@ -38,6 +38,13 @@ export const GameCanvas = ({
   const [hasMap, setHasMap] = useState(false);
   const [dialog, setDialog] = useState<DialogState | null>(null);
 
+  // Ref to track latest input state for async init
+  const isInputEnabledRef = useRef(isInputEnabled);
+  useEffect(() => {
+    isInputEnabledRef.current = isInputEnabled;
+    // Also update immediately if game is ready (handled by separate effect below, but keeping sync)
+  }, [isInputEnabled]);
+
   const dialogShownRef = useRef<string | null>(null);
 
   const handleCloseDialog = useCallback(() => {
@@ -118,6 +125,12 @@ export const GameCanvas = ({
           const scene = game.scene.getScene(
             "MainScene"
           ) as unknown as GhostMainScene;
+
+          // Initialize Input State immediately
+          if (scene && scene.setInputEnabled) {
+            scene.setInputEnabled(isInputEnabledRef.current);
+          }
+
           if (scene && scene.setUpdateCallback) {
             // スロットリング用の変数
             let lastUpdateTime = 0;
@@ -203,14 +216,22 @@ export const GameCanvas = ({
     }
   }, [isInputEnabled]);
 
-  // Warp Handler
-  const handleWarp = useCallback((x: number, y: number) => {
+  // Warp Handler - ピクセル座標を受け取る
+  const handleWarp = useCallback((pixelX: number, pixelY: number) => {
     if (gameRef.current) {
       const scene = gameRef.current.scene.getScene(
         "MainScene"
       ) as unknown as GhostMainScene;
-      if (scene && scene.teleport) {
-        scene.teleport(x, y);
+      if (scene && scene.teleportToPixel) {
+        // 入力を無効化してからテレポート（移動コマンドのキューイングを防ぐ）
+        if (scene.setInputEnabled) {
+          scene.setInputEnabled(false);
+        }
+        scene.teleportToPixel(pixelX, pixelY);
+        // テレポート後に入力状態を復元（React側のisInputEnabledに従う）
+        if (scene.setInputEnabled) {
+          scene.setInputEnabled(isInputEnabledRef.current);
+        }
       }
     }
   }, []);
