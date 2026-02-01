@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, Compass, Map as MapIcon, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { MAP_ENTITIES, TILE_SIZE } from "./constants";
-import { GhostChat } from "./ghost-chat";
 
 interface DialogState {
   show: boolean;
@@ -66,10 +65,11 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
     }
   }, [hasMap]);
 
-  // ターゲット可能なエンティティのフィルタリング（地図取得済みなら全て、未取得なら非表示）
-  const targetableEntities = MAP_ENTITIES.filter(
-    (e) => e.type !== "item" || e.id !== "map_item"
-  );
+  // ターゲット可能なエンティティのフィルタリング
+  // 地図未取得時はターゲットなし（ワープ不可）
+  const targetableEntities = hasMap
+    ? MAP_ENTITIES.filter((e) => e.type !== "item" || e.id !== "map_item")
+    : [];
 
   // Calculate Angle
   const getAngleToTarget = () => {
@@ -333,11 +333,10 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
             {/* Target Select */}
             <div className="flex-1 flex flex-col gap-3">
               <select
-                className={`w-full bg-neutral-800 text-neutral-200 text-lg rounded-xl px-3 py-2 border outline-none transition-colors ${
-                  isCompassHighlighted
-                    ? "border-indigo-500 animate-pulse ring-2 ring-indigo-500/20"
-                    : "border-neutral-700 focus:border-indigo-500"
-                }`}
+                className={`w-full bg-neutral-800 text-neutral-200 text-lg rounded-xl px-3 py-2 border outline-none transition-colors ${isCompassHighlighted
+                  ? "border-indigo-500 animate-pulse ring-2 ring-indigo-500/20"
+                  : "border-neutral-700 focus:border-indigo-500"
+                  }`}
                 value={targetEntityId || ""}
                 onChange={(e) => {
                   setTargetEntityId(e.target.value || null);
@@ -473,8 +472,6 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
         </motion.div>
       </div>
 
-      {/* Chat Overlay */}
-      <GhostChat />
     </div>
   );
 };

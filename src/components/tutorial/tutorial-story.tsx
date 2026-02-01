@@ -1,29 +1,20 @@
 "use client";
 
-import { BookOpen, FastForward, Pause, Play, Timer, Zap } from "lucide-react";
+import { FastForward, Pause, Play, Timer, Zap } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { GhostChat, Message } from "@/components/ghost/ghost-chat";
+
 import {
   GhostOverlay,
   GhostOverlayProps,
 } from "@/components/ghost/ghost-overlay";
 import { TrialStorage } from "@/lib/trial-storage";
 import { TrialBackButtonContent } from "../layout/trial-onboarding-back-button/TrialOnboardingBackButton";
-import { TutorialErrorBoundary } from "./error-boundary";
-import { EventSystem } from "./events/event-system";
-import { LEVEL01_EVENTS } from "./events/level01-events";
 import { KeywordModal } from "./keyword-modal";
-import { KeywordSystem } from "./keywords/keyword-system";
 import { QueenDialogue } from "./queen-dialogue";
 import {
-  getGameStateManager,
-  useTutorialState,
-  useTutorialPhase,
-  useGameControl,
-  useDialogControl,
-  useKeywordManagement,
+  getGameStateManager
 } from "./state";
 import { TUTORIAL_KEYWORDS } from "./tutorial-keywords.data";
 
@@ -210,134 +201,7 @@ export const TutorialStory = () => {
     }
   };
 
-  // Calculate Chat History
-  const chatHistory = useMemo(() => {
-    const history: Message[] = [];
-    let idCounter = 1;
 
-    const addLines = (
-      lines: readonly string[],
-      untilIndex: number,
-      speaker: string = "Queen"
-    ) => {
-      lines.slice(0, untilIndex + 1).forEach((text, i) => {
-        history.push({
-          id: `story-${idCounter++}`,
-          user: speaker,
-          text: text,
-          timestamp: idCounter, // consistent ordering
-        });
-      });
-    };
-
-    if (phase === "scene1") {
-      addLines(SCENE_1_LINES, lineIndex);
-    } else if (phase === "scene2") {
-      addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
-      addLines(SCENE_2_LINES, lineIndex);
-    } else if (phase === "quest") {
-      addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
-      addLines(SCENE_2_LINES, SCENE_2_LINES.length - 1);
-      history.push({
-        id: `quest-start`,
-        user: "System",
-        text: "クエスト開始: 地図を探してください",
-        timestamp: idCounter++,
-      });
-    } else if (phase === "explore") {
-      addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
-      addLines(SCENE_2_LINES, SCENE_2_LINES.length - 1);
-      history.push({
-        id: `quest-complete`,
-        user: "System",
-        text: "クエスト完了: 地図を獲得しました",
-        timestamp: idCounter++,
-      });
-      addLines(
-        SCENE_MAP_FOUND_LINES,
-        SCENE_MAP_FOUND_LINES.length - 1,
-        "Queen"
-      );
-      history.push({
-        id: `explore-start`,
-        user: "System",
-        text: "自由探索: 世界を見て回り、女王に報告しよう",
-        timestamp: idCounter++,
-      });
-    } else if (
-      phase === "map_found" ||
-      phase === "return_to_queen" ||
-      phase === "guide_intro" ||
-      phase === "account_creation" ||
-      phase === "mask_intro" ||
-      phase === "end"
-    ) {
-      addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
-      addLines(SCENE_2_LINES, SCENE_2_LINES.length - 1);
-      history.push({
-        id: `quest-complete`,
-        user: "System",
-        text: "クエスト完了: 地図を獲得しました",
-        timestamp: idCounter++,
-      });
-
-      // Map Found (Queen)
-      const mapFoundIndex =
-        phase === "map_found" ? lineIndex : SCENE_MAP_FOUND_LINES.length - 1;
-      addLines(SCENE_MAP_FOUND_LINES, mapFoundIndex, "Queen");
-
-      // Return to Queen (after explore)
-      if (
-        phase === "return_to_queen" ||
-        phase === "guide_intro" ||
-        phase === "account_creation" ||
-        phase === "mask_intro" ||
-        phase === "end"
-      ) {
-        history.push({
-          id: `explore-complete`,
-          user: "System",
-          text: "探索完了: 女王に報告",
-          timestamp: idCounter++,
-        });
-        const returnToQueenIndex =
-          phase === "return_to_queen"
-            ? lineIndex
-            : SCENE_RETURN_TO_QUEEN_LINES.length - 1;
-        addLines(SCENE_RETURN_TO_QUEEN_LINES, returnToQueenIndex, "Queen");
-      }
-
-      if (
-        phase === "guide_intro" ||
-        phase === "account_creation" ||
-        phase === "mask_intro" ||
-        phase === "end"
-      ) {
-        const guideIntroIndex =
-          phase === "guide_intro"
-            ? lineIndex
-            : SCENE_GUIDE_INTRO_LINES.length - 1;
-        addLines(SCENE_GUIDE_INTRO_LINES, guideIntroIndex, "Guide");
-      }
-
-      if (phase === "mask_intro" || phase === "end") {
-        // System message for account creation done?
-        history.push({
-          id: `account-created`,
-          user: "System",
-          text: "ルートアカウント作成完了",
-          timestamp: idCounter++,
-        });
-        const maskIntroIndex =
-          phase === "mask_intro"
-            ? lineIndex
-            : SCENE_MASK_INTRO_LINES.length - 1;
-        addLines(SCENE_MASK_INTRO_LINES, maskIntroIndex, "Guide");
-      }
-    }
-
-    return history;
-  }, [phase, lineIndex]);
 
   // Input Locking: Only enabled if NOT paused AND in QUEST/EXPLORE phase
   // "Talking phases" = scene1, scene2, map_found, return_to_queen, guide_intro, mask_intro
@@ -455,14 +319,14 @@ export const TutorialStory = () => {
         text: currentLines[lineIndex] || "",
         choices: isGuideIntroEnd
           ? [
-              {
-                label: "はい",
-                onClick: () => {
-                  setPhase("account_creation");
-                  router.push("/onboarding-trial");
-                },
+            {
+              label: "はい",
+              onClick: () => {
+                setPhase("account_creation");
+                router.push("/onboarding-trial");
               },
-            ]
+            },
+          ]
           : undefined,
       };
     }
@@ -487,11 +351,7 @@ export const TutorialStory = () => {
               color: "text-indigo-400",
             }))}
           />
-          <GhostChat
-            externalMessages={chatHistory}
-            initialMessages={[]}
-            className="z-50"
-          />
+
         </>
       );
     }
@@ -500,9 +360,7 @@ export const TutorialStory = () => {
     return (
       <>
         <GhostOverlay {...effectiveProps} />
-        {/* Chat visible during quest too? Yes user asked for it */}
-        {/* Pass initialMessages={[]} to suppress default system messages */}
-        <GhostChat externalMessages={chatHistory} initialMessages={[]} />
+
 
         {/* Quest Indicator */}
         {phase === "quest" && (
@@ -540,11 +398,10 @@ export const TutorialStory = () => {
                         flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95
                         min-w-[180px] justify-center
                         font-bold text-sm
-                        ${
-                          isPaused
-                            ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
-                            : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
-                        }
+                        ${isPaused
+              ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
+              : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
+            }
                     `}
           title="いつでも左サイドメニューから再開できます"
         >
