@@ -1,7 +1,5 @@
 "use client";
 
-import { MonitorSmartphone } from "lucide-react";
-import Link from "next/link";
 import {
   AdToggle,
   HelpButton,
@@ -18,6 +16,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { MonitorSmartphone } from "lucide-react";
+import Link from "next/link";
 import { TrialEntrySection } from "../trial-entry";
 import { BackgroundCanvas } from "./background-canvas";
 import { ConceptSection } from "./concept-section";
@@ -105,31 +105,7 @@ export const TalesClaireLP = () => {
           <Footer />
         </main>
 
-        <style jsx global>{`
-          @keyframes fadeInUp {
-            from {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          .animate-fade-in-up {
-            animation: fadeInUp 0.8s ease-out forwards;
-            opacity: 0;
-          }
-          .delay-200 {
-            animation-delay: 0.2s;
-          }
-          .delay-400 {
-            animation-delay: 0.4s;
-          }
-          .delay-600 {
-            animation-delay: 0.6s;
-          }
-        `}</style>
+
       </div>
     </SidebarProvider>
   );
