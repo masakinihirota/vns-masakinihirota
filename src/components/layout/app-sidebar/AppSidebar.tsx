@@ -2,13 +2,15 @@
 
 import {
   ChevronRight,
-  MoreHorizontal,
-  LogOut,
   ChevronsUpDown,
+  LogOut,
+  MoreHorizontal,
+  Pause,
+  Play,
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -280,22 +282,57 @@ function NavGroup({
         {itemsWithState.map((item) => {
           const feature = mapPathToFeature(item.url);
           const isNew = newlyUnlockedFeatures.includes(feature);
+
+          // Special Tutorial Controls
+          const isTutorialStory = currentPath === "/tutorial/story";
+          const isTutorialItem = feature === "tutorial";
+
           return (
-            <NavItem
-              key={item.url}
-              item={item}
-              isActive={
-                currentPath === item.url ||
-                currentPath.startsWith(item.url + "/")
-              }
-              state={item.state}
-              tip={item.tip}
-              isNew={isNew}
-            />
+            <React.Fragment key={item.url}>
+              <NavItem
+                item={item}
+                isActive={
+                  currentPath === item.url ||
+                  currentPath.startsWith(item.url + "/")
+                }
+                state={item.state}
+                tip={item.tip}
+                isNew={isNew}
+              />
+              {isTutorialItem && isTutorialStory && <TutorialControlItem />}
+            </React.Fragment>
           );
         })}
       </SidebarMenu>
     </SidebarGroup>
+  );
+}
+
+// Helper for Tutorial Control
+function TutorialControlItem() {
+  const searchParams = useSearchParams();
+  const isPaused = searchParams.get("paused") === "true";
+
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton
+        asChild
+        className="text-yellow-500 hover:text-yellow-600 bg-yellow-500/10 hover:bg-yellow-500/20"
+      >
+        <Link
+          href={isPaused ? "/tutorial/story" : "/tutorial/story?paused=true"}
+        >
+          {isPaused ? (
+            <Play className="size-4" />
+          ) : (
+            <Pause className="size-4" />
+          )}
+          <span>
+            {isPaused ? "チュートリアルを再開" : "チュートリアルを一時停止"}
+          </span>
+        </Link>
+      </SidebarMenuButton>
+    </SidebarMenuItem>
   );
 }
 

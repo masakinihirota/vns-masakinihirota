@@ -23,6 +23,42 @@ export default function TutorialPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* ストーリーチュートリアル */}
+        <Card className="flex flex-col bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-950/20 dark:to-purple-950/20 border-indigo-200 dark:border-indigo-800 transition-shadow hover:shadow-lg relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-2">
+            <span className="bg-indigo-600 text-white text-xs px-2 py-1 rounded-full animate-pulse">
+              推奨
+            </span>
+          </div>
+          <CardHeader>
+            <div className="flex items-center gap-4 mb-2">
+              <div className="p-3 rounded-full bg-indigo-600 text-white shadow-sm">
+                <BookOpen className="h-6 w-6" />
+              </div>
+              <CardTitle className="text-xl">物語を体験する</CardTitle>
+            </div>
+            <CardDescription>
+              女王との対話を通じて、この世界の思想と操作方法を物語形式で学びます。
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="mt-auto pt-4">
+            <p className="text-sm mb-6 text-muted-foreground line-clamp-3">
+              ゴーストとして目覚め、地図を探し、仮面（プロフィール）を手に入れるまでの旅路です。途中から再開可能です。
+            </p>
+            <Button
+              asChild
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-md hover:shadow-lg transition-all"
+            >
+              <Link
+                href="/tutorial/story"
+                className="flex items-center justify-center gap-2"
+              >
+                物語を始める / 再開 <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+
         {/* 基本ガイド */}
         <Card className="flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-blue-200 dark:border-blue-800 transition-shadow hover:shadow-lg">
           <CardHeader>

@@ -12,7 +12,7 @@ interface DialogState {
   message: string;
 }
 
-interface GhostOverlayProps {
+export interface GhostOverlayProps {
   playerPosition: { x: number; y: number } | null;
   hasMap: boolean;
   dialog: DialogState | null;

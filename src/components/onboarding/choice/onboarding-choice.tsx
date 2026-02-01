@@ -1,16 +1,16 @@
 "use client";
 
 import {
-  BookOpen,
-  Ghost,
-  UserPlus,
   ArrowRight,
-  Info,
+  BookOpen,
   CheckCircle2,
+  Ghost,
   Home,
+  Info,
+  UserPlus,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { ActionButton } from "./ui/action-button";
 import { SelectionCard } from "./ui/selection-card";
 
@@ -81,7 +81,7 @@ export function OnboardingChoice() {
     setTimeout(() => {
       switch (selectedPath) {
         case "tutorial":
-          router.push("/tutorial");
+          router.push("/tutorial/story");
           break;
         case "ghost":
           router.push("/ghost");
@@ -109,12 +109,6 @@ export function OnboardingChoice() {
       <div className="z-10 max-w-7xl w-full flex flex-col items-center space-y-12">
         {/* Header Section */}
         <div className="text-center space-y-4 animate-in fade-in slide-in-from-top-8 duration-700">
-          <div className="inline-flex items-center space-x-2 bg-white/80 dark:bg-slate-900/80 border border-neutral-200 dark:border-slate-800 rounded-full px-4 py-1.5 mb-4 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            <span className="text-lg text-neutral-500 dark:text-slate-400 font-medium tracking-wide">
-              ROOT ACCOUNT CREATED
-            </span>
-          </div>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-neutral-800 via-neutral-600 to-neutral-800 dark:from-white dark:via-slate-200 dark:to-slate-400">
             あなたの旅を選択してください
           </h1>

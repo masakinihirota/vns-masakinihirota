@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { GhostOverlay } from "./ghost-overlay";
+import { GhostOverlay, type GhostOverlayProps } from "./ghost-overlay";
 import type { GhostMainScene } from "./scenes/MainScene";
 
 interface DialogState {
@@ -17,7 +17,15 @@ interface GameState {
   dialog?: DialogState;
 }
 
-export const GameCanvas = () => {
+interface GameCanvasProps {
+  renderOverlay?: (props: GhostOverlayProps) => React.ReactNode;
+  isInputEnabled?: boolean;
+}
+
+export const GameCanvas = ({
+  renderOverlay,
+  isInputEnabled = true,
+}: GameCanvasProps = {}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const gameRef = useRef<any>(null);
@@ -183,6 +191,18 @@ export const GameCanvas = () => {
     };
   }, []);
 
+  // Update input enabled state
+  useEffect(() => {
+    if (gameRef.current) {
+      const scene = gameRef.current.scene.getScene(
+        "MainScene"
+      ) as unknown as GhostMainScene;
+      if (scene && scene.setInputEnabled) {
+        scene.setInputEnabled(isInputEnabled);
+      }
+    }
+  }, [isInputEnabled]);
+
   // Warp Handler
   const handleWarp = useCallback((x: number, y: number) => {
     if (gameRef.current) {
@@ -198,13 +218,23 @@ export const GameCanvas = () => {
   return (
     <div className="relative rounded-lg overflow-hidden shadow-2xl border border-white/10 group w-full h-full">
       <div ref={containerRef} className="h-full w-full" />
-      <GhostOverlay
-        playerPosition={playerPosition}
-        hasMap={hasMap}
-        dialog={dialog}
-        onCloseDialog={handleCloseDialog}
-        onWarp={handleWarp}
-      />
+      {renderOverlay ? (
+        renderOverlay({
+          playerPosition,
+          hasMap,
+          dialog,
+          onCloseDialog: handleCloseDialog,
+          onWarp: handleWarp,
+        })
+      ) : (
+        <GhostOverlay
+          playerPosition={playerPosition}
+          hasMap={hasMap}
+          dialog={dialog}
+          onCloseDialog={handleCloseDialog}
+          onWarp={handleWarp}
+        />
+      )}
     </div>
   );
 };
