@@ -1,14 +1,15 @@
 "use client";
 
+import { FastForward, Pause, Play, Timer, Zap } from "lucide-react";
+import dynamic from "next/dynamic";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { GhostChat, Message } from "@/components/ghost/ghost-chat";
 import {
   GhostOverlay,
   GhostOverlayProps,
 } from "@/components/ghost/ghost-overlay";
 import { TrialStorage } from "@/lib/trial-storage";
-import { FastForward, Pause, Play, Timer, Zap } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
 import { TrialBackButtonContent } from "../layout/trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TutorialErrorBoundary } from "./error-boundary";
 import { EventSystem } from "./events/event-system";
@@ -20,11 +21,9 @@ import {
   useKeywordManagement,
   usePhaseTransition,
   useTutorialPhase,
-  useTutorialState
+  useTutorialState,
 } from "./state";
 import { TUTORIAL_KEYWORDS } from "./tutorial-keywords.data";
-
-import dynamic from "next/dynamic";
 
 const GameCanvas = dynamic(
   () => import("@/components/ghost/game-canvas").then((mod) => mod.GameCanvas),
@@ -386,14 +385,14 @@ const TutorialStoryInner = () => {
         text: phaseLines[lineIndex] || "",
         choices: isGuideIntroEnd
           ? [
-            {
-              label: "はい",
-              onClick: () => {
-                stateGoToPhase("account_creation", 0);
-                router.push("/onboarding-trial");
+              {
+                label: "はい",
+                onClick: () => {
+                  stateGoToPhase("account_creation", 0);
+                  router.push("/onboarding-trial");
+                },
               },
-            },
-          ]
+            ]
           : undefined,
       };
     }
@@ -466,9 +465,10 @@ const TutorialStoryInner = () => {
             flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95
             min-w-[180px] justify-center
             font-bold text-sm
-            ${isPaused
-              ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
-              : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
+            ${
+              isPaused
+                ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
+                : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
             }
           `}
           title="いつでも左サイドメニューから再開できます"

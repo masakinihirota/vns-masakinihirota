@@ -1,5 +1,23 @@
 "use client";
 
+import { type User } from "@supabase/supabase-js";
+import {
+  ArrowRight,
+  Bell,
+  BookOpen,
+  Coins,
+  Globe,
+  HelpCircle,
+  Megaphone,
+  MonitorSmartphone,
+  Moon,
+  Search,
+  Sun,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import * as React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,24 +38,6 @@ import {
 } from "@/components/ui/tooltip";
 import { createClient } from "@/lib/supabase/client";
 import { TrialStorage } from "@/lib/trial-storage";
-import { type User } from "@supabase/supabase-js";
-import {
-  ArrowRight,
-  Bell,
-  BookOpen,
-  Coins,
-  Globe,
-  HelpCircle,
-  Megaphone,
-  MonitorSmartphone,
-  Moon,
-  Search,
-  Sun,
-} from "lucide-react";
-import { useTheme } from "next-themes";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import * as React from "react";
 import { TrialOnboardingBackButton } from "../trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TrialStatusBadge } from "../trial-status-badge/TrialStatusBadge";
 
@@ -313,8 +313,9 @@ function NotificationBell() {
         {mockNotifications.map((notification) => (
           <DropdownMenuItem
             key={notification.id}
-            className={`flex flex-col items-start gap-1 ${!notification.read ? "bg-accent/50" : ""
-              }`}
+            className={`flex flex-col items-start gap-1 ${
+              !notification.read ? "bg-accent/50" : ""
+            }`}
           >
             <span className="text-sm">{notification.title}</span>
             <span className="text-xs text-muted-foreground">
@@ -470,13 +471,13 @@ export function TutorialKeywordButton() {
 
 interface VNSButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
-  | "primary"
-  | "secondary"
-  | "ghost"
-  | "persona"
-  | "warm"
-  | "emerald"
-  | "indigo";
+    | "primary"
+    | "secondary"
+    | "ghost"
+    | "persona"
+    | "warm"
+    | "emerald"
+    | "indigo";
   size?: "sm" | "md" | "lg" | "icon";
   icon?: React.ElementType;
   loading?: boolean;
