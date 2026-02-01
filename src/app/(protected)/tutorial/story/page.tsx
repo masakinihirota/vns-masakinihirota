@@ -1,5 +1,7 @@
-import { Suspense } from "react";
 import { TutorialStory } from "@/components/tutorial/tutorial-story";
+import { Suspense } from "react";
+
+export const dynamic = "force-dynamic";
 
 export default function TutorialStoryPage() {
   return (

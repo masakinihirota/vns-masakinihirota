@@ -1,17 +1,22 @@
 "use client";
 
-import { FastForward, Pause, Play, Timer, Zap } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react"; // Added useMemo, useRef
-import { GameCanvas } from "@/components/ghost/game-canvas";
 import { GhostChat, Message } from "@/components/ghost/ghost-chat"; // Import GhostChat and Message type
 import {
   GhostOverlay,
   GhostOverlayProps,
 } from "@/components/ghost/ghost-overlay";
 import { TrialStorage } from "@/lib/trial-storage";
+import { FastForward, Pause, Play, Timer, Zap } from "lucide-react";
+import dynamic from "next/dynamic";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react"; // Added useMemo, useRef
 import { TrialBackButtonContent } from "../layout/trial-onboarding-back-button/TrialOnboardingBackButton";
 import { QueenDialogue } from "./queen-dialogue";
+
+const GameCanvas = dynamic(
+  () => import("@/components/ghost/game-canvas").then((mod) => mod.GameCanvas),
+  { ssr: false }
+);
 
 const SCENE_1_LINES = [
   "……お目覚めですか、名もなき魂よ。",
@@ -289,11 +294,10 @@ export const TutorialStory = () => {
                         flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95
                         min-w-[180px] justify-center
                         font-bold text-sm
-                        ${
-                          isPaused
-                            ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
-                            : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
-                        }
+                        ${isPaused
+              ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
+              : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
+            }
                     `}
           title="いつでも左サイドメニューから再開できます"
         >
