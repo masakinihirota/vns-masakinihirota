@@ -97,38 +97,38 @@ export const GhostChat = ({
     <motion.div
       initial={false}
       animate={{
-        height: isExpanded ? "calc(100% - 24px)" : "400px", // 20 lines approx with header/input
+        height: isExpanded ? "calc(100% - 24px)" : "500px", // Increased default height
         top: isExpanded ? 12 : "auto",
       }}
       className={cn(
-        "absolute left-3 w-80 flex flex-col pointer-events-auto",
-        "bg-black/70 backdrop-blur-md border border-white/10 rounded-xl shadow-xl overflow-hidden",
+        "absolute left-3 w-[28rem] flex flex-col pointer-events-auto", // w-80 (20rem) -> w-[28rem] (112px wider)
+        "bg-black/70 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl overflow-hidden",
         isExpanded ? "bottom-3" : "bottom-3",
         className
       )}
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-3 border-b border-white/10 bg-white/5 shrink-0">
-        <div className="flex items-center gap-2 text-white font-medium text-sm">
-          <MessageSquare size={16} className="text-indigo-400" />
+      <div className="flex items-center justify-between p-4 border-b border-white/10 bg-white/5 shrink-0">
+        <div className="flex items-center gap-3 text-white font-medium text-lg">
+          <MessageSquare size={20} className="text-indigo-400" />
           <span>Chat</span>
         </div>
         {/* Toggle button removed from here */}
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-3 space-y-3 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent">
         {allMessages.map((msg) => (
           <div key={msg.id} className="flex flex-col gap-1">
             <span
               className={cn(
-                "text-[10px] font-bold",
+                "text-lg font-bold", // text-[10px] -> text-lg
                 msg.user === "You" ? "text-indigo-400" : "text-amber-400"
               )}
             >
               {msg.user}
             </span>
-            <span className="text-sm text-neutral-200 break-words leading-relaxed bg-black/30 p-2 rounded-lg">
+            <span className="text-lg text-neutral-200 break-words leading-relaxed bg-black/30 p-3 rounded-xl">
               {msg.text}
             </span>
           </div>
@@ -139,38 +139,38 @@ export const GhostChat = ({
       {/* Input Area */}
       <form
         onSubmit={handleSend}
-        className="p-3 border-t border-white/10 bg-white/5 shrink-0 gap-2 flex"
+        className="p-4 border-t border-white/10 bg-white/5 shrink-0 gap-3 flex"
       >
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="メッセージを入力..."
-          className="flex-1 bg-black/50 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-indigo-500 transition-colors"
+          className="flex-1 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-lg text-white focus:outline-none focus:border-indigo-500 transition-colors"
         />
         <button
           type="submit"
-          className="p-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={!message.trim()}
         >
-          <Send size={16} />
+          <Send size={20} />
         </button>
       </form>
 
       {/* Footer Toggle */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full h-6 flex items-center justify-center bg-white/5 hover:bg-white/10 border-t border-white/10 transition-colors group"
+        className="w-full h-10 flex items-center justify-center bg-white/5 hover:bg-white/10 border-t border-white/10 transition-colors group"
         title={isExpanded ? "縮小" : "拡大"}
       >
         {isExpanded ? (
-          <div className="flex items-center gap-1 text-[10px] text-neutral-400 group-hover:text-white">
-            <ChevronsDown size={14} />
+          <div className="flex items-center gap-2 text-lg text-neutral-400 group-hover:text-white">
+            <ChevronsDown size={20} />
             <span>Close</span>
           </div>
         ) : (
-          <div className="flex items-center gap-1 text-[10px] text-neutral-400 group-hover:text-white">
-            <ChevronsUp size={14} />
+          <div className="flex items-center gap-2 text-lg text-neutral-400 group-hover:text-white">
+            <ChevronsUp size={20} />
             <span>Expand</span>
           </div>
         )}

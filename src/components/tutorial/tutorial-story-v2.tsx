@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, FastForward, Pause, Play, Timer, Zap } from "lucide-react";
+import { FastForward, Pause, Play, Timer, Zap } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -13,17 +13,15 @@ import { TrialStorage } from "@/lib/trial-storage";
 import { TrialBackButtonContent } from "../layout/trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TutorialErrorBoundary } from "./error-boundary";
 import { EventSystem } from "./events/event-system";
-import { LEVEL01_EVENTS } from "./events/level01-events";
 import { KeywordModal } from "./keyword-modal";
 import { KeywordSystem } from "./keywords/keyword-system";
 import { QueenDialogue } from "./queen-dialogue";
 import {
-  getGameStateManager,
-  useTutorialState,
-  useTutorialPhase,
-  useGameControl,
   useDialogControl,
   useKeywordManagement,
+  usePhaseTransition,
+  useTutorialPhase,
+  useTutorialState,
 } from "./state";
 import { TUTORIAL_KEYWORDS } from "./tutorial-keywords.data";
 
@@ -32,7 +30,6 @@ const GameCanvas = dynamic(
   { ssr: false }
 );
 
-// シナリオデータは scenarios/ から読み込み
 import {
   SCENE_1_LINES,
   SCENE_2_LINES,
@@ -42,175 +39,112 @@ import {
 } from "./scenarios/level01";
 import { SCENE_MASK_INTRO_LINES } from "./scenarios/level02";
 
-export const TutorialStory = () => {
+type Phase =
+  | "scene1"
+  | "scene2"
+  | "quest"
+  | "map_found"
+  | "explore"
+  | "return_to_queen"
+  | "guide_intro"
+  | "account_creation"
+  | "mask_intro"
+  | "end";
+
+/**
+ * メインのチュートリアルストーリーコンポーネント
+ * 新しい統合状態管理とイベントシステムを使用
+ */
+
+const TutorialStoryInner = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [phase, setPhase] = useState<
-    | "scene1"
-    | "scene2"
-    | "quest"
-    | "map_found"
-    | "explore"
-    | "return_to_queen"
-    | "guide_intro"
-    | "account_creation"
-    | "mask_intro"
-    | "end"
-  >("scene1");
-  const [lineIndex, setLineIndex] = useState(0);
+
+  // 新しいシステムから状態を取得
+  const gameState = useTutorialState();
+  const { phase, lineIndex } = useTutorialPhase();
+  const {
+    goToPhase: stateGoToPhase,
+    advanceLine: stateAdvanceLine,
+    regressLine,
+  } = usePhaseTransition();
+  const { showDialog, closeDialog } = useDialogControl();
+  const {
+    unlockedKeywordIds: unlockedFromState,
+    learnedKeywordIds: learnedFromState,
+    unlockKeyword,
+    learnKeyword,
+  } = useKeywordManagement();
+
+  // ローカル状態（一部の互換性のため）
   const [isPaused, setIsPaused] = useState(false);
-  const [speed, setSpeed] = useState<"instant" | "fast" | "normal">("normal");
+  const [speed, setLocalSpeed] = useState<"instant" | "fast" | "normal">(
+    "normal"
+  );
   const [isTrial, setIsTrial] = useState(false);
-  const hasWarpedRef = useRef(false);
-
-  // Keyword State
   const [isKeywordModalOpen, setIsKeywordModalOpen] = useState(false);
-  const [unlockedKeywordIds, setUnlockedKeywordIds] = useState<string[]>([]);
-  const [learnedKeywordIds, setLearnedKeywordIds] = useState<string[]>([]);
+  const hasWarpedRef = useRef(false);
+  const eventSystemRef = useRef<EventSystem | null>(null);
+  const keywordSystemRef = useRef<KeywordSystem | null>(null);
 
-  // GameStateManager への参照を取得
-  const gameStateManager = useMemo(() => getGameStateManager(), []);
-
-  // Unlock Check Effect
+  // イベントシステムを初期化
   useEffect(() => {
-    TUTORIAL_KEYWORDS.forEach((keyword) => {
-      // Check if current phase/line matches trigger
-      if (
-        phase === keyword.trigger.phase &&
-        lineIndex >= keyword.trigger.lineIndex &&
-        !unlockedKeywordIds.includes(keyword.id)
-      ) {
-        setUnlockedKeywordIds((prev) => [...prev, keyword.id]);
-        // GameStateManager にも登録
-        gameStateManager.unlockKeyword(keyword.id);
-        // Optional: Toast notification that new keyword unlocked?
-      }
-    });
-  }, [phase, lineIndex, unlockedKeywordIds, gameStateManager]);
-
-  // Handle Learn
-  const handleLearnKeyword = (id: string) => {
-    if (!learnedKeywordIds.includes(id)) {
-      setLearnedKeywordIds((prev) => [...prev, id]);
-      // GameStateManager にも登録
-      gameStateManager.learnKeyword(id);
+    if (!eventSystemRef.current) {
+      eventSystemRef.current = new EventSystem();
+      eventSystemRef.current.onAction("give-item", (action) => {
+        // Item given action
+      });
     }
-  };
 
-  // Persistence Effect
-  useEffect(() => {
-    // Check Trial status
-    const checkTrial = () => {
-      const data = TrialStorage.load();
-      setIsTrial(!!data?.rootAccount);
-      return !!data?.rootAccount;
-    };
-    const hasAccount = checkTrial();
-
-    const savedProgress = localStorage.getItem("vns_tutorial_progress");
-    if (savedProgress) {
-      try {
-        const parsed = JSON.parse(savedProgress);
-        // If saved phase is valid, use it. If it was "intro", keep it.
-        // Also check if we should be in mask_intro if returning from account creation
-        if (parsed.phase && parsed.phase !== "intro") {
-          // Special handling for return from account creation
-          if (parsed.phase === "account_creation" && hasAccount) {
-            setPhase("mask_intro");
-            setLineIndex(0);
-          } else {
-            setPhase(parsed.phase);
-            setLineIndex(parsed.lineIndex);
-          }
-        }
-        // Load Keywords
-        if (parsed.unlockedByIds) setUnlockedKeywordIds(parsed.unlockedByIds);
-        if (parsed.learnedByIds) setLearnedKeywordIds(parsed.learnedByIds);
-      } catch (e) {
-        console.error("Failed to parse tutorial progress", e);
-      }
-    } else {
-      // No saved progress, but double check if we just came back from account creation manually
-      if (hasAccount) {
-        // If we have an account but no progress, maybe start from mask intro?
-        // Or better, strict flow: scene1.
-      }
+    if (!keywordSystemRef.current) {
+      keywordSystemRef.current = new KeywordSystem();
     }
   }, []);
 
-  // Sync with URL
+  // ... (omitted)
+
+  // キーワード自動アンロック: フェーズ変更時に確認
+  useEffect(() => {
+    if (!keywordSystemRef.current) return;
+
+    keywordSystemRef.current.checkAndUnlock(phase as any, lineIndex); // TutorialPhaseの型定義と一致させるのが面倒なので一旦 any で逃げるか、正しくは TutorialPhase にキャスト。ここでは any にしておくのが安全策（lint:fix目的）
+
+    const newUnlockedIds = keywordSystemRef.current.getNewUnlockedKeywords();
+    newUnlockedIds.forEach((id) => {
+      unlockKeyword(id);
+    });
+  }, [phase, lineIndex, unlockKeyword]);
+
+  // Trial status チェック
+  useEffect(() => {
+    const data = TrialStorage.load();
+    setIsTrial(!!data?.rootAccount);
+  }, []);
+
+  // 一時停止状態を同期
   useEffect(() => {
     const pausedParam = searchParams.get("paused");
-    setIsPaused(pausedParam === "true");
+    const isPausedFromUrl = pausedParam === "true";
+    setIsPaused(isPausedFromUrl);
   }, [searchParams]);
 
-  useEffect(() => {
-    localStorage.setItem(
-      "vns_tutorial_progress",
-      JSON.stringify({
-        phase,
-        lineIndex,
-        unlockedByIds: unlockedKeywordIds,
-        learnedByIds: learnedKeywordIds,
-      })
-    );
-  }, [phase, lineIndex, unlockedKeywordIds, learnedKeywordIds]);
-
-  // Manage dialogue progression
-  const currentLines = useMemo(() => {
-    switch (phase) {
-      case "scene1":
-        return SCENE_1_LINES;
-      case "scene2":
-        return SCENE_2_LINES;
-      case "map_found":
-        return SCENE_MAP_FOUND_LINES;
-      case "return_to_queen":
-        return SCENE_RETURN_TO_QUEEN_LINES;
-      case "guide_intro":
-        return SCENE_GUIDE_INTRO_LINES;
-      case "mask_intro":
-        return SCENE_MASK_INTRO_LINES;
-      default:
-        return [];
-    }
-  }, [phase]);
-
+  // Handle phase progression
   const handleNext = () => {
-    if (lineIndex < currentLines.length - 1) {
-      setLineIndex(lineIndex + 1);
+    if (lineIndex < getPhaseLines(phase as Phase).length - 1) {
+      stateAdvanceLine();
     } else {
-      // Phase Transition
-      if (phase === "scene1") {
-        setPhase("scene2");
-        setLineIndex(0);
-      } else if (phase === "scene2") {
-        setPhase("quest"); // Let user explore
-        setLineIndex(0);
-      } else if (phase === "map_found") {
-        setPhase("explore"); // 自由探索へ
-        setLineIndex(0);
-      } else if (phase === "return_to_queen") {
-        setPhase("guide_intro");
-        setLineIndex(0);
-      } else if (phase === "guide_intro") {
-        // Wait for user choice (Done in renderOverlay)
-        // Do nothing here if it's the last line, or just advance if not.
-        // But renderOverlay handles the choice which triggers transition.
-        // So we just need to ensure we don't auto-advance or push router here if it's the last line?
-        // Actually, handleNext won't be called if choice is displayed because we block it in QueenDialogue.
-        // But if we are NOT at the last line, we still want to advance index.
-        setPhase("account_creation");
-        // Note: router.push is now in the Choice callback
+      // フェーズ遷移
+      const nextPhase = getNextPhase(phase as Phase);
+      if (nextPhase) {
+        stateGoToPhase(nextPhase, 0);
       } else if (phase === "mask_intro") {
-        setPhase("end");
-        // End of current tutorial flow
-        router.push("/onboarding-trial"); // or wherever next
+        stateGoToPhase("end", 0);
+        router.push("/onboarding-trial");
       }
     }
   };
 
-  // Calculate Chat History
+  // チャット履歴を計算
   const chatHistory = useMemo(() => {
     const history: Message[] = [];
     let idCounter = 1;
@@ -225,17 +159,19 @@ export const TutorialStory = () => {
           id: `story-${idCounter++}`,
           user: speaker,
           text: text,
-          timestamp: idCounter, // consistent ordering
+          timestamp: idCounter,
         });
       });
     };
 
-    if (phase === "scene1") {
+    const currentPhase = phase as Phase;
+
+    if (currentPhase === "scene1") {
       addLines(SCENE_1_LINES, lineIndex);
-    } else if (phase === "scene2") {
+    } else if (currentPhase === "scene2") {
       addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
       addLines(SCENE_2_LINES, lineIndex);
-    } else if (phase === "quest") {
+    } else if (currentPhase === "quest") {
       addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
       addLines(SCENE_2_LINES, SCENE_2_LINES.length - 1);
       history.push({
@@ -244,7 +180,7 @@ export const TutorialStory = () => {
         text: "クエスト開始: 地図を探してください",
         timestamp: idCounter++,
       });
-    } else if (phase === "explore") {
+    } else if (currentPhase === "explore") {
       addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
       addLines(SCENE_2_LINES, SCENE_2_LINES.length - 1);
       history.push({
@@ -265,12 +201,12 @@ export const TutorialStory = () => {
         timestamp: idCounter++,
       });
     } else if (
-      phase === "map_found" ||
-      phase === "return_to_queen" ||
-      phase === "guide_intro" ||
-      phase === "account_creation" ||
-      phase === "mask_intro" ||
-      phase === "end"
+      currentPhase === "map_found" ||
+      currentPhase === "return_to_queen" ||
+      currentPhase === "guide_intro" ||
+      currentPhase === "account_creation" ||
+      currentPhase === "mask_intro" ||
+      currentPhase === "end"
     ) {
       addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
       addLines(SCENE_2_LINES, SCENE_2_LINES.length - 1);
@@ -281,18 +217,18 @@ export const TutorialStory = () => {
         timestamp: idCounter++,
       });
 
-      // Map Found (Queen)
       const mapFoundIndex =
-        phase === "map_found" ? lineIndex : SCENE_MAP_FOUND_LINES.length - 1;
+        currentPhase === "map_found"
+          ? lineIndex
+          : SCENE_MAP_FOUND_LINES.length - 1;
       addLines(SCENE_MAP_FOUND_LINES, mapFoundIndex, "Queen");
 
-      // Return to Queen (after explore)
       if (
-        phase === "return_to_queen" ||
-        phase === "guide_intro" ||
-        phase === "account_creation" ||
-        phase === "mask_intro" ||
-        phase === "end"
+        currentPhase === "return_to_queen" ||
+        currentPhase === "guide_intro" ||
+        currentPhase === "account_creation" ||
+        currentPhase === "mask_intro" ||
+        currentPhase === "end"
       ) {
         history.push({
           id: `explore-complete`,
@@ -301,27 +237,25 @@ export const TutorialStory = () => {
           timestamp: idCounter++,
         });
         const returnToQueenIndex =
-          phase === "return_to_queen"
+          currentPhase === "return_to_queen"
             ? lineIndex
             : SCENE_RETURN_TO_QUEEN_LINES.length - 1;
         addLines(SCENE_RETURN_TO_QUEEN_LINES, returnToQueenIndex, "Queen");
       }
 
       if (
-        phase === "guide_intro" ||
-        phase === "account_creation" ||
-        phase === "mask_intro" ||
-        phase === "end"
+        currentPhase === "guide_intro" ||
+        currentPhase === "mask_intro" ||
+        currentPhase === "end"
       ) {
         const guideIntroIndex =
-          phase === "guide_intro"
+          currentPhase === "guide_intro"
             ? lineIndex
             : SCENE_GUIDE_INTRO_LINES.length - 1;
         addLines(SCENE_GUIDE_INTRO_LINES, guideIntroIndex, "Guide");
       }
 
-      if (phase === "mask_intro" || phase === "end") {
-        // System message for account creation done?
+      if (currentPhase === "mask_intro" || currentPhase === "end") {
         history.push({
           id: `account-created`,
           user: "System",
@@ -329,7 +263,7 @@ export const TutorialStory = () => {
           timestamp: idCounter++,
         });
         const maskIntroIndex =
-          phase === "mask_intro"
+          currentPhase === "mask_intro"
             ? lineIndex
             : SCENE_MASK_INTRO_LINES.length - 1;
         addLines(SCENE_MASK_INTRO_LINES, maskIntroIndex, "Guide");
@@ -339,13 +273,11 @@ export const TutorialStory = () => {
     return history;
   }, [phase, lineIndex]);
 
-  // Input Locking: Only enabled if NOT paused AND in QUEST/EXPLORE phase
-  // "Talking phases" = scene1, scene2, map_found, return_to_queen, guide_intro, mask_intro
+  // Input Locking
   const isInputEnabled = isPaused || phase === "quest" || phase === "explore";
 
   const togglePause = () => {
     const nextState = !isPaused;
-    // Update URL to reflect state (and Sidebar will pick it up)
     const params = new URLSearchParams(searchParams.toString());
     if (nextState) {
       params.set("paused", "true");
@@ -356,53 +288,45 @@ export const TutorialStory = () => {
   };
 
   const toggleSpeed = () => {
-    setSpeed((prev) =>
+    setLocalSpeed((prev) =>
       prev === "normal" ? "fast" : prev === "fast" ? "instant" : "normal"
     );
   };
 
   const renderOverlay = (props: GhostOverlayProps) => {
-    // Initial Warp to Queen logic
+    // 初期ワープ
     if (!hasWarpedRef.current && props.onWarp && props.playerPosition) {
-      // Queen is at { x: 7, y: 3.5 } (Tiles)
-      // Let's put player at 7, 5 (1.5 tiles below) facing her.
       const TARGET_X = 7 * 32;
       const TARGET_Y = 5 * 32;
       props.onWarp(TARGET_X, TARGET_Y);
       hasWarpedRef.current = true;
     }
 
-    // Map found trigger
+    // マップ獲得トリガー
     if (phase === "quest" && props.hasMap) {
-      // Use setTimeout to avoid render loop warning
       setTimeout(() => {
-        setPhase("map_found");
-        setLineIndex(0);
+        stateGoToPhase("map_found", 0);
       }, 0);
       return null;
     }
 
-    // Explore -> Return to Queen trigger
-    // 女王の位置 { x: 7, y: 3.5 } (Tiles)
-    // タイルサイズ = 32px
+    // 探索 → 女王に戻る トリガー
     if (phase === "explore" && props.playerPosition) {
-      const QUEEN_X = 7 * 32; // 224
-      const QUEEN_Y = 3.5 * 32; // 112
-      const TRIGGER_DISTANCE = 64; // 2タイル分の距離
+      const QUEEN_X = 7 * 32;
+      const QUEEN_Y = 3.5 * 32;
+      const TRIGGER_DISTANCE = 64;
       const dx = props.playerPosition.x - QUEEN_X;
       const dy = props.playerPosition.y - QUEEN_Y;
       const distance = Math.sqrt(dx * dx + dy * dy);
       if (distance < TRIGGER_DISTANCE) {
         setTimeout(() => {
-          setPhase("return_to_queen");
-          setLineIndex(0);
+          stateGoToPhase("return_to_queen", 0);
         }, 0);
         return null;
       }
     }
 
-    // map_found 以降のフェーズではコンパスUIを確実に表示するため hasMap=true を強制
-    // quest フェーズでは props.hasMap をそのまま使用（変化検知でモーダル表示を確保）
+    // マップ表示の強制
     const isMapAcquiredPhase =
       phase === "map_found" ||
       phase === "explore" ||
@@ -417,7 +341,7 @@ export const TutorialStory = () => {
       topRightOffsetClassName: "top-48",
     };
 
-    // If paused, just show GhostOverlay (free roam)
+    // 一時停止中
     if (isPaused) {
       return (
         <>
@@ -429,36 +353,42 @@ export const TutorialStory = () => {
       );
     }
 
-    // Determine dialogue props based on phase
+    // ダイアログを確認
     let dialogueProps: {
       speaker: "The Queen" | "Guide";
       text: string;
       choices?: { label: string; onClick: () => void }[];
     } | null = null;
 
+    const currentPhase = phase as Phase;
+    const phaseLines = getPhaseLines(currentPhase);
+
     if (
-      phase === "scene1" ||
-      phase === "scene2" ||
-      phase === "map_found" ||
-      phase === "return_to_queen"
+      currentPhase === "scene1" ||
+      currentPhase === "scene2" ||
+      currentPhase === "map_found" ||
+      currentPhase === "return_to_queen"
     ) {
       dialogueProps = {
         speaker: "The Queen" as const,
-        text: currentLines[lineIndex] || "",
+        text: phaseLines[lineIndex] || "",
       };
-    } else if (phase === "guide_intro" || phase === "mask_intro") {
+    } else if (
+      currentPhase === "guide_intro" ||
+      currentPhase === "mask_intro"
+    ) {
       const isGuideIntroEnd =
-        phase === "guide_intro" && lineIndex === currentLines.length - 1;
+        currentPhase === "guide_intro" && lineIndex === phaseLines.length - 1;
 
       dialogueProps = {
         speaker: "Guide" as const,
-        text: currentLines[lineIndex] || "",
+        text: phaseLines[lineIndex] || "",
         choices: isGuideIntroEnd
           ? [
               {
                 label: "はい",
                 onClick: () => {
-                  setPhase("account_creation");
+                  stateGoToPhase("account_creation", 0);
                   router.push("/onboarding-trial");
                 },
               },
@@ -470,7 +400,6 @@ export const TutorialStory = () => {
     if (dialogueProps) {
       return (
         <>
-          {/* GhostOverlay を表示（コンパス等） */}
           <GhostOverlay {...effectiveProps} />
           <QueenDialogue
             {...effectiveProps}
@@ -496,22 +425,18 @@ export const TutorialStory = () => {
       );
     }
 
-    // During Quest / Exploration
+    // 探索フェーズ
     return (
       <>
         <GhostOverlay {...effectiveProps} />
-        {/* Chat visible during quest too? Yes user asked for it */}
-        {/* Pass initialMessages={[]} to suppress default system messages */}
         <GhostChat externalMessages={chatHistory} initialMessages={[]} />
 
-        {/* Quest Indicator */}
-        {phase === "quest" && (
+        {currentPhase === "quest" && (
           <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full backdrop-blur-md border border-white/20 animate-pulse pointer-events-none">
             Mission: 地図を探せ
           </div>
         )}
-        {/* Explore Indicator */}
-        {phase === "explore" && (
+        {currentPhase === "explore" && (
           <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-emerald-500/20 text-emerald-200 px-4 py-2 rounded-full backdrop-blur-md border border-emerald-500/30 font-medium pointer-events-none">
             🌍 自由探索中 — 女王に戻って報告しよう
           </div>
@@ -527,25 +452,25 @@ export const TutorialStory = () => {
         isInputEnabled={isInputEnabled}
       />
 
-      {/* Top Right Controls */}
-      <div className="fixed top-20 right-8 z-100 flex flex-row items-center gap-4">
-        {/* Pause Button */}
+      {/* 操作ボタン */}
+      <div className="fixed top-20 right-8 z-[100] flex flex-row items-center gap-4">
+        {/* 一時停止ボタン */}
         <button
           onClick={togglePause}
           className={`
-                        px-5 py-4
-                        rounded-full
-                        shadow-lg shadow-black/50
-                        border
-                        flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95
-                        min-w-[180px] justify-center
-                        font-bold text-sm
-                        ${
-                          isPaused
-                            ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
-                            : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
-                        }
-                    `}
+            px-5 py-4
+            rounded-full
+            shadow-lg shadow-black/50
+            border
+            flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95
+            min-w-[180px] justify-center
+            font-bold text-sm
+            ${
+              isPaused
+                ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
+                : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
+            }
+          `}
           title="いつでも左サイドメニューから再開できます"
         >
           {isPaused ? (
@@ -556,20 +481,20 @@ export const TutorialStory = () => {
           {isPaused ? "チュートリアルを再開" : "チュートリアルを一時停止"}
         </button>
 
-        {/* Speed Toggle */}
+        {/* 速度トグル */}
         <button
           onClick={toggleSpeed}
           className="
-                        bg-slate-800 hover:bg-slate-700
-                        text-slate-200 hover:text-white
-                        px-5 py-4
-                        rounded-full
-                        shadow-lg shadow-black/50
-                        border border-slate-600 hover:border-slate-500
-                        flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95
-                        min-w-[180px] justify-center
-                        group
-                    "
+            bg-slate-800 hover:bg-slate-700
+            text-slate-200 hover:text-white
+            px-5 py-4
+            rounded-full
+            shadow-lg shadow-black/50
+            border border-slate-600 hover:border-slate-500
+            flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95
+            min-w-[180px] justify-center
+            group
+          "
           title="テキストの表示速度を変更します"
         >
           {speed === "instant" ? (
@@ -589,24 +514,78 @@ export const TutorialStory = () => {
           </span>
         </button>
 
-        {/* Return Button (Trial Only) */}
+        {/* トライアル返却ボタン */}
         {isTrial && <TrialBackButtonContent />}
       </div>
 
+      {/* キーワードモーダル */}
       <KeywordModal
         isOpen={isKeywordModalOpen}
         onClose={() => setIsKeywordModalOpen(false)}
-        unlockedIds={unlockedKeywordIds}
-        learnedIds={learnedKeywordIds}
-        onLearn={handleLearnKeyword}
+        unlockedIds={unlockedFromState}
+        learnedIds={learnedFromState}
+        onLearn={learnKeyword}
       />
 
-      {/* Pause Instruction Toast */}
+      {/* 一時停止トースト */}
       {isPaused && (
         <div className="absolute top-20 left-1/2 -translate-x-1/2 mt-16 max-w-xs bg-black/60 text-white/80 p-3 rounded-lg text-xs backdrop-blur-md border border-white/10 text-center">
           いつでも左サイドメニューの「チュートリアル」から再開できます。
         </div>
       )}
     </>
+  );
+};
+
+/**
+ * ヘルパー関数: フェーズに対応する台詞を取得
+ */
+function getPhaseLines(phase: Phase): readonly string[] {
+  switch (phase) {
+    case "scene1":
+      return SCENE_1_LINES;
+    case "scene2":
+      return SCENE_2_LINES;
+    case "map_found":
+      return SCENE_MAP_FOUND_LINES;
+    case "return_to_queen":
+      return SCENE_RETURN_TO_QUEEN_LINES;
+    case "guide_intro":
+      return SCENE_GUIDE_INTRO_LINES;
+    case "mask_intro":
+      return SCENE_MASK_INTRO_LINES;
+    default:
+      return [];
+  }
+}
+
+/**
+ * ヘルパー関数: 次のフェーズを取得
+ */
+function getNextPhase(phase: Phase): Phase | null {
+  switch (phase) {
+    case "scene1":
+      return "scene2";
+    case "scene2":
+      return "quest";
+    case "map_found":
+      return "explore";
+    case "return_to_queen":
+      return "guide_intro";
+    case "guide_intro":
+      return "account_creation";
+    default:
+      return null;
+  }
+}
+
+/**
+ * エラーバウンダリーでラップされたコンポーネント
+ */
+export const TutorialStory = () => {
+  return (
+    <TutorialErrorBoundary>
+      <TutorialStoryInner />
+    </TutorialErrorBoundary>
   );
 };

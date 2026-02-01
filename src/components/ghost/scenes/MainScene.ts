@@ -19,7 +19,12 @@ import {
 export interface GhostMainScene extends Phaser.Scene {
   myPlayer: Phaser.GameObjects.Container;
   hasMap: boolean;
-  teleport: (x: number, y: number) => void;
+  /**
+   * プレイヤーを指定したピクセル座標にテレポートさせる
+   * @param pixelX - ピクセル座標X
+   * @param pixelY - ピクセル座標Y
+   */
+  teleportToPixel: (pixelX: number, pixelY: number) => void;
   setInputEnabled: (enabled: boolean) => void;
   setUpdateCallback: (
     fn: (state: {
@@ -83,11 +88,11 @@ export const createMainSceneClass = async () => {
 
     setInputEnabled(enabled: boolean) {
       this.isInputEnabled = enabled;
-      // Also stop movement if disabled
+      // 無効化された場合、全ての移動状態をクリア
       if (!enabled) {
         this.targetPosition = null;
         if (this.myPlayer?.body) {
-          (this.myPlayer.body as Phaser.Physics.Arcade.Body).setVelocity(0);
+          (this.myPlayer.body as Phaser.Physics.Arcade.Body).setVelocity(0, 0);
         }
       }
     }
@@ -176,12 +181,27 @@ export const createMainSceneClass = async () => {
 
       // Click to move & Focus
       this.input.on("pointerdown", (pointer: Phaser.Input.Pointer) => {
+        // 入力が無効な場合は完全に無視
+        if (!this.isInputEnabled) {
+          return;
+        }
+
+        // DOM要素のクリックを検出（React UIなど）
+        // pointer.event が存在し、target が canvas でない場合は無視
+        const event = pointer.event;
+        if (event && event.target instanceof HTMLElement) {
+          const tagName = event.target.tagName.toLowerCase();
+          // canvas以外の要素がクリックされた場合は移動しない
+          if (tagName !== "canvas") {
+            return;
+          }
+        }
+
         if (this.input.keyboard) {
           this.input.keyboard.enabled = true;
         }
 
-        // Set target position for movement (World coordinates)
-        // Only if not clicking on UI (game canvas handles this mainly)
+        // ワールド座標を移動先として設定
         this.targetPosition = { x: pointer.worldX, y: pointer.worldY };
       });
 
@@ -294,7 +314,7 @@ export const createMainSceneClass = async () => {
           const dialog = {
             title: "🧭 コンパス機能が解放されました！",
             message:
-              "「古びた地図」から魔力を感じます...\n\n画面右下に【コンパスUI】が出現しました。\n行き先を選択すると、針がその方向を指し示します。\n\n広大なゴーストタウンの探索に役立てましょう！",
+              "「古びた地図」から魔力を感じます...\n\n画面右上に【コンパスUI】が出現しました。\n行き先を選択すると、針がその方向を指し示します。\n\n広大なゴーストタウンの探索に役立てましょう！",
           };
 
           // Notify React
@@ -354,20 +374,26 @@ export const createMainSceneClass = async () => {
       }
     }
 
-    teleport(tileX: number, tileY: number) {
+    /**
+     * プレイヤーを指定したピクセル座標にテレポートさせる
+     * @param pixelX - ピクセル座標X
+     * @param pixelY - ピクセル座標Y
+     */
+    teleportToPixel(pixelX: number, pixelY: number) {
       if (!this.myPlayer) return;
 
-      const x = tileX * TILE_SIZE + TILE_SIZE / 2;
-      const y = tileY * TILE_SIZE + TILE_SIZE / 2;
-
-      // Reset movement state
+      // 移動状態を完全にリセット
       this.targetPosition = null;
-      (this.myPlayer.body as Phaser.Physics.Arcade.Body).setVelocity(0);
+      const body = this.myPlayer.body as Phaser.Physics.Arcade.Body;
+      if (body) {
+        body.setVelocity(0, 0);
+        body.stop();
+      }
 
-      // Move player
-      this.myPlayer.setPosition(x, y);
+      // プレイヤーを移動
+      this.myPlayer.setPosition(pixelX, pixelY);
 
-      // Force broadcast
+      // 位置を即座にブロードキャスト
       this.broadcastPosition();
     }
 
@@ -390,24 +416,20 @@ export const createMainSceneClass = async () => {
     update() {
       if (!this.cursors || !this.myPlayer) return;
 
-      // Input Lock Check
-      if (!this.isInputEnabled) {
-        return;
-      }
-
-      // Toggle Ghost Mode
-      if (PhaserLib.Input.Keyboard.JustDown(this.ghostModeKey)) {
-        this.toggleGhostMode();
-      }
-
-      const baseSpeed = 200;
-      const runSpeed = 400;
-      const isRunning = this.cursors.shift?.isDown;
-      const speed = isRunning ? runSpeed : baseSpeed;
-
       const body = this.myPlayer.body as Phaser.Physics.Arcade.Body;
 
-      if (body) {
+      // Input Lock Check - 移動処理のみをスキップ
+      if (this.isInputEnabled && body) {
+        // Toggle Ghost Mode
+        if (PhaserLib.Input.Keyboard.JustDown(this.ghostModeKey)) {
+          this.toggleGhostMode();
+        }
+
+        const baseSpeed = 200;
+        const runSpeed = 400;
+        const isRunning = this.cursors.shift?.isDown;
+        const speed = isRunning ? runSpeed : baseSpeed;
+
         body.setVelocity(0);
         let movedByKey = false;
 
@@ -456,30 +478,31 @@ export const createMainSceneClass = async () => {
         if (body.velocity.x !== 0 || body.velocity.y !== 0) {
           this.broadcastPosition();
         }
+      }
 
-        if (this.onUpdateState) {
-          const updatePayload: {
-            x: number;
-            y: number;
-            hasMap?: boolean;
-            dialog?: { show: boolean; title: string; message: string };
-          } = {
-            x: this.myPlayer.x,
-            y: this.myPlayer.y,
-            hasMap: this.hasMap,
-          };
+      // 入力ロックに関係なく、状態更新と接触判定は常に行う
+      if (this.onUpdateState) {
+        const updatePayload: {
+          x: number;
+          y: number;
+          hasMap?: boolean;
+          dialog?: { show: boolean; title: string; message: string };
+        } = {
+          x: this.myPlayer.x,
+          y: this.myPlayer.y,
+          hasMap: this.hasMap,
+        };
 
-          if (this.pendingDialog) {
-            updatePayload.dialog = { show: true, ...this.pendingDialog };
-            this.pendingDialog = null;
-          }
-
-          this.onUpdateState(updatePayload);
+        if (this.pendingDialog) {
+          updatePayload.dialog = { show: true, ...this.pendingDialog };
+          this.pendingDialog = null;
         }
 
-        // Check for entity contact
-        this.checkEntityContact();
+        this.onUpdateState(updatePayload);
       }
+
+      // Check for entity contact - 常に実行
+      this.checkEntityContact();
     }
 
     setupRealtime() {
