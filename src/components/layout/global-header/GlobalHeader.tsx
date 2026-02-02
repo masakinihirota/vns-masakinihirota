@@ -313,9 +313,8 @@ function NotificationBell() {
         {mockNotifications.map((notification) => (
           <DropdownMenuItem
             key={notification.id}
-            className={`flex flex-col items-start gap-1 ${
-              !notification.read ? "bg-accent/50" : ""
-            }`}
+            className={`flex flex-col items-start gap-1 ${!notification.read ? "bg-accent/50" : ""
+              }`}
           >
             <span className="text-sm">{notification.title}</span>
             <span className="text-xs text-muted-foreground">
@@ -370,8 +369,9 @@ export function TutorialKeywordButton() {
     // dynamic importでチュートリアル状態を取得
     const updateUnreadCount = async () => {
       try {
-        const { getGameStateManager } =
-          await import("@/components/tutorial/state");
+        const { getGameStateManager } = await import(
+          "@/components/tutorial/state"
+        );
         const gameManager = getGameStateManager();
         setManager(gameManager);
 
@@ -395,7 +395,6 @@ export function TutorialKeywordButton() {
         return unsubscribe;
       } catch (error) {
         // チュートリアルモジュールが利用できない場合はスキップ
-        // eslint-disable-next-line no-console
         console.debug("Tutorial state not available", error);
       }
     };
@@ -431,9 +430,7 @@ export function TutorialKeywordButton() {
                 </Badge>
               )}
             </div>
-            <span className="text-sm font-medium hidden sm:inline">
-              重要キーワード
-            </span>
+            <span className="text-sm font-medium hidden sm:inline">重要キーワード</span>
           </button>
         </TooltipTrigger>
         <TooltipContent>
@@ -471,13 +468,13 @@ export function TutorialKeywordButton() {
 
 interface VNSButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
-    | "primary"
-    | "secondary"
-    | "ghost"
-    | "persona"
-    | "warm"
-    | "emerald"
-    | "indigo";
+  | "primary"
+  | "secondary"
+  | "ghost"
+  | "persona"
+  | "warm"
+  | "emerald"
+  | "indigo";
   size?: "sm" | "md" | "lg" | "icon";
   icon?: React.ElementType;
   loading?: boolean;

@@ -1,6 +1,6 @@
 "use client";
 
-
+// GhostChat removed
 import {
   GhostOverlay,
   GhostOverlayProps,
@@ -15,6 +15,7 @@ import { TutorialErrorBoundary } from "./error-boundary";
 import { EventSystem } from "./events/event-system";
 import { KeywordModal } from "./keyword-modal";
 import { KeywordSystem } from "./keywords/keyword-system";
+import { MapChatContainer } from "./map-chat/map-chat.container";
 import { QueenDialogue } from "./queen-dialogue";
 import {
   useDialogControl,
@@ -55,12 +56,6 @@ type Phase =
  * メインのチュートリアルストーリーコンポーネント
  * 新しい統合状態管理とイベントシステムを使用
  */
-
-
-// ... existing imports
-
-
-
 const TutorialStoryInner = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -97,7 +92,7 @@ const TutorialStoryInner = () => {
     if (!eventSystemRef.current) {
       eventSystemRef.current = new EventSystem();
       eventSystemRef.current.onAction("give-item", (action) => {
-        // Item given action
+        console.log("Item given:", action.itemId);
       });
     }
 
@@ -106,15 +101,17 @@ const TutorialStoryInner = () => {
     }
   }, []);
 
-  // ... (omitted)
-
   // キーワード自動アンロック: フェーズ変更時に確認
   useEffect(() => {
     if (!keywordSystemRef.current) return;
 
-    keywordSystemRef.current.checkAndUnlock(phase as any, lineIndex); // TutorialPhaseの型定義と一致させるのが面倒なので一旦 any で逃げるか、正しくは TutorialPhase にキャスト。ここでは any にしておくのが安全策（lint:fix目的）
+    keywordSystemRef.current.checkAndUnlock(
+      phase,
+      lineIndex
+    );
 
-    const newUnlockedIds = keywordSystemRef.current.getNewUnlockedKeywords();
+    const newUnlockedIds =
+      keywordSystemRef.current.getNewUnlockedKeywords();
     newUnlockedIds.forEach((id) => {
       unlockKeyword(id);
     });
@@ -148,8 +145,6 @@ const TutorialStoryInner = () => {
       }
     }
   };
-
-
 
   // Input Locking
   const isInputEnabled = isPaused || phase === "quest" || phase === "explore";
@@ -215,8 +210,8 @@ const TutorialStoryInner = () => {
 
     const effectiveProps: GhostOverlayProps = {
       ...props,
-      hasMap: isMapAcquiredPhase ? true : (props.hasMap ?? false),
-      topRightOffsetClassName: "top-20",
+      hasMap: isMapAcquiredPhase ? true : props.hasMap ?? false,
+      topRightOffsetClassName: "top-48",
     };
 
     // 一時停止中
@@ -251,10 +246,7 @@ const TutorialStoryInner = () => {
         speaker: "The Queen" as const,
         text: phaseLines[lineIndex] || "",
       };
-    } else if (
-      currentPhase === "guide_intro" ||
-      currentPhase === "mask_intro"
-    ) {
+    } else if (currentPhase === "guide_intro" || currentPhase === "mask_intro") {
       const isGuideIntroEnd =
         currentPhase === "guide_intro" && lineIndex === phaseLines.length - 1;
 
@@ -294,7 +286,7 @@ const TutorialStoryInner = () => {
               color: "text-indigo-400",
             }))}
           />
-
+          <MapChatContainer />
         </>
       );
     }
@@ -303,6 +295,7 @@ const TutorialStoryInner = () => {
     return (
       <>
         <GhostOverlay {...effectiveProps} />
+        <MapChatContainer />
 
         {currentPhase === "quest" && (
           <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full backdrop-blur-md border border-white/20 animate-pulse pointer-events-none">

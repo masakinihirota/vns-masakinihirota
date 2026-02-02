@@ -1,7 +1,6 @@
 "use client";
 
-import { ChevronRight, HelpCircle } from "lucide-react";
-import Link from "next/link";
+import { TutorialHeader } from "@/components/tutorial";
 import {
   Accordion,
   AccordionContent,
@@ -15,17 +14,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { HelpCircle } from "lucide-react";
 
 export default function HelpPage() {
   return (
     <div className="container mx-auto py-8 max-w-3xl">
-      <div className="mb-6 flex items-center text-sm text-muted-foreground">
-        <Link href="/tutorial" className="hover:text-primary transition-colors">
-          チュートリアル
-        </Link>
-        <ChevronRight className="h-4 w-4 mx-2" />
-        <span className="font-semibold text-foreground">ヘルプ・FAQ</span>
-      </div>
+      <TutorialHeader title="ヘルプ・FAQ" />
 
       <div className="mb-8 text-center">
         <h1 className="text-3xl font-bold mb-2">ヘルプセンター</h1>

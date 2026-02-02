@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * チュートリアル状態管理用 React Hooks
  */

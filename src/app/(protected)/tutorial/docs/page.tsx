@@ -1,13 +1,14 @@
 "use client";
 
-import { ArrowUpRight, ChevronRight, FileText } from "lucide-react";
-import Link from "next/link";
+import { TutorialHeader } from "@/components/tutorial";
 import {
   Card,
   CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { ArrowUpRight, FileText } from "lucide-react";
+import Link from "next/link";
 
 const DOC_ITEMS = [
   {
@@ -35,13 +36,7 @@ const DOC_ITEMS = [
 export default function DocsPage() {
   return (
     <div className="container mx-auto py-8 max-w-4xl">
-      <div className="mb-6 flex items-center text-sm text-muted-foreground">
-        <Link href="/tutorial" className="hover:text-primary transition-colors">
-          チュートリアル
-        </Link>
-        <ChevronRight className="h-4 w-4 mx-2" />
-        <span className="font-semibold text-foreground">ドキュメント</span>
-      </div>
+      <TutorialHeader title="ドキュメント" />
 
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">ドキュメント</h1>
