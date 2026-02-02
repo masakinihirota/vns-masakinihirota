@@ -33,7 +33,7 @@ export function LatestInfoView() {
           おかえりなさい
         </h2>
         <p className="text-slate-600 dark:text-neutral-400 mt-2 leading-relaxed">
-          組織や国にいる仲間からの最新情報を表示しています。
+          グループや国にいる仲間からの最新情報を表示しています。
           <br />
           インターネットで拾った最新の感動との出会いを楽しみましょう。
         </p>

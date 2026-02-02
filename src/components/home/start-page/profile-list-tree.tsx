@@ -2,43 +2,18 @@
 
 /**
  * プロフィール構造のリスト形式ツリーコンポーネント
- * ルートアカウントと目的別プロフィールの階層構造を視覚化
+ * アカウントと目的別プロフィールの階層構造を視覚化
  */
 
-import { Briefcase, Gamepad2, Heart, Plus, ShieldCheck } from "lucide-react";
+import { Briefcase, Gamepad2, Heart, Plus } from "lucide-react";
+import { AccountCard } from "./root-account-card";
 
 export function ProfileListTree() {
   return (
     <div className="mt-8 p-6 md:p-10 bg-slate-50 dark:bg-neutral-900/50 rounded-3xl border border-slate-100 dark:border-neutral-800 backdrop-blur-sm">
       <div className="flex flex-col gap-0">
-        {/* ルートアカウントエリア */}
-        <div className="border-2 border-slate-300 dark:border-neutral-700 rounded-2xl bg-white dark:bg-neutral-900 overflow-hidden shadow-sm">
-          {/* ルートヘッダー */}
-          <div className="bg-slate-800 dark:bg-neutral-800 p-4 flex items-center gap-4 text-white">
-            <div className="w-10 h-10 rounded-lg bg-slate-700 dark:bg-neutral-700 flex items-center justify-center">
-              <ShieldCheck size={28} />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-[20px] font-black">ルートアカウント</span>
-            </div>
-          </div>
-
-          {/* ルートアイテム */}
-          <div className="p-6 space-y-4 text-[18px]">
-            <div className="text-slate-700 dark:text-neutral-300 font-bold">
-              ・プロフィールの管理（千の仮面）
-            </div>
-            <div className="text-slate-700 dark:text-neutral-300 font-bold">
-              ・現実の情報（母語・居住エリア）
-            </div>
-            <div className="text-slate-700 dark:text-neutral-300 font-bold">
-              ・ポイント・経済管理
-            </div>
-            <div className="text-slate-700 dark:text-neutral-300 font-bold">
-              ・その他、非常時にする重要情報
-            </div>
-          </div>
-        </div>
+        {/* アカウントエリア */}
+        <AccountCard isSimple={true} />
 
         {/* 縦セパレーター */}
         <div className="ml-10 h-10 border-l-4 border-slate-300 dark:border-neutral-700" />
@@ -106,7 +81,7 @@ export function ProfileListTree() {
       </div>
 
       <p className="mt-10 text-slate-600 dark:text-neutral-400 leading-relaxed bg-white/60 dark:bg-neutral-900/60 p-6 rounded-2xl border border-slate-200 dark:border-neutral-800 font-medium backdrop-blur-sm">
-        ルートアカウントは司令塔として、あなたの「現実」「資産」「非常時の情報」そして最大1000個の「仮面（プロフィール）」を一括で管理します。
+        アカウントは司令塔として、あなたの「現実」「資産」「非常時の情報」そして最大1000個の「仮面（プロフィール）」を一括で管理します。
         基盤を一つにまとめつつ、活動は目的ごとに完全に分離することが可能です。
       </p>
     </div>

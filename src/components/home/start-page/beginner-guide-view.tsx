@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ProfileListTree } from "./profile-list-tree";
+import { AccountCard } from "./root-account-card";
 import { BEGINNER_STEPS } from "./start-page.logic";
 
 /**
@@ -63,9 +64,9 @@ export function BeginnerGuideView() {
 
       {/* ステップリスト */}
       <div className="space-y-20">
-        {BEGINNER_STEPS.map((step, index) => (
+        {BEGINNER_STEPS.map((step) => (
           <div
-            key={index}
+            key={step.title}
             className="flex flex-col md:flex-row gap-8 items-start"
           >
             {/* アイコン */}
@@ -83,6 +84,13 @@ export function BeginnerGuideView() {
               <p className="text-slate-600 dark:text-neutral-400 leading-relaxed font-bold">
                 {step.desc}
               </p>
+
+              {/* アカウントカード（step 1等用） */}
+              {"hasRootAccountCard" in step && step.hasRootAccountCard && (
+                <div className="mt-8">
+                  <AccountCard />
+                </div>
+              )}
 
               {/* プロフィールツリー（step 2のみ） */}
               {step.hasProfileTree && (
