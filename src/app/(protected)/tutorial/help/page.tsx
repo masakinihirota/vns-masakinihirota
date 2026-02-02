@@ -1,7 +1,7 @@
 "use client";
 
 import { HelpCircle } from "lucide-react";
-import { TutorialHeader } from "@/components/tutorial";
+import { TutorialHeader } from "@/components/layout/tutorial-header";
 import {
   Accordion,
   AccordionContent,
