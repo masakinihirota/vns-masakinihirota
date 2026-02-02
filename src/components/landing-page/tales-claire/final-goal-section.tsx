@@ -8,6 +8,11 @@ export const FinalGoalSection = () => {
 
         <div className="space-y-6 text-lg font-medium">
           <div>
+            <span className="font-bold mr-2">テーマ</span>
+            <span>「生きる！」</span>
+          </div>
+
+          <div>
             <span className="font-bold mr-2">組織</span>
             <span>パートナー(ライフパートナー)を見つける</span>
           </div>

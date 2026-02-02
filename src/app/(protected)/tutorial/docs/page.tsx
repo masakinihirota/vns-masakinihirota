@@ -2,7 +2,7 @@
 
 import { ArrowUpRight, FileText } from "lucide-react";
 import Link from "next/link";
-import { TutorialHeader } from "@/components/tutorial";
+import { TutorialHeader } from "@/components/layout/tutorial-header";
 import {
   Card,
   CardDescription,
