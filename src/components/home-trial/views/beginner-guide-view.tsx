@@ -6,6 +6,7 @@
  * 体験版ではルートアカウント関連の手順に取り消し線を適用
  */
 
+import { cn } from "@/lib/utils";
 import {
   ArrowRightLeft,
   Globe,
@@ -17,21 +18,20 @@ import {
   User,
   Users,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { ProfileListTree } from "./profile-list-tree";
 
 export function BeginnerGuideView() {
   const steps = [
     {
-      title: "1. ルートアカウントの役割",
-      desc: "ルートアカウントはあなたの本拠地です。プロフィールの全体管理、現実の情報（母語・居住地）、ポイント、そして非常時に必要な重要情報を司ります。",
+      title: "1. アカウントの作成",
+      desc: "アカウントは複数のプロフィールを管理します。",
       icon: <ShieldCheck size={28} />,
       color: "text-slate-800 dark:text-slate-200",
       isRoot: true,
     },
     {
-      title: "2. プロフィールの作成（千の仮面）",
-      desc: "プロフィールはあなたの価値観です。サイト内での目的（仕事、遊び、パートナー探しなど）毎に最大1000個まで作成でき、目的毎にマッチングが可能です。",
+      title: "2. プロフィールの作成",
+      desc: "プロフィールはあなたの価値観を入力して作成します。このサイト内での目的（仕事、遊び、パートナー探しなど）毎に最大1000個まで作成でき、目的毎にマッチングが可能です。",
       icon: <User size={28} />,
       color: "text-blue-500",
       hasProfileTree: true,
