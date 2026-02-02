@@ -191,7 +191,7 @@ export class EntityRenderer {
   private createDefaultVisual(
     x: number,
     y: number,
-    event: TutorialEvent
+    _event: TutorialEvent
   ): EntityVisuals {
     const shape = this.scene.add.rectangle(x, y, 20, 20, 0xcccccc);
     shape.setStrokeStyle(1, 0x999999);

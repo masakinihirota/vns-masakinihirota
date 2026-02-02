@@ -69,8 +69,6 @@ const LanguageList = ({
     return colorClass === "indigo" ? "text-indigo-600" : "text-emerald-600";
   };
 
-  const japaneseLevelLabels = JAPANESE_LEVELS.map((level) => level.label);
-
   return (
     <div className="space-y-2 ml-1">
       {displayedLanguages.map((lang) => {

@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowUpRight, FileText } from "lucide-react";
+import Link from "next/link";
 import { TutorialHeader } from "@/components/tutorial";
 import {
   Card,
@@ -7,8 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowUpRight, FileText } from "lucide-react";
-import Link from "next/link";
 
 const DOC_ITEMS = [
   {

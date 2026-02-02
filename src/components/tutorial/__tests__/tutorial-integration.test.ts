@@ -128,7 +128,7 @@ describe("Tutorial Integration Tests", () => {
     });
 
     it("should integrate with state manager on event completion", async () => {
-      stateManager.subscribe((state) => {
+      stateManager.subscribe((_state) => {
         // state.hasMap check (unused variable removed)
       });
 

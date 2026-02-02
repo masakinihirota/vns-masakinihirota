@@ -1,8 +1,8 @@
 "use client";
 
-import { GhostOverlayProps } from "@/components/ghost/ghost-overlay";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
+import { GhostOverlayProps } from "@/components/ghost/ghost-overlay";
 
 // キーワードハイライト用の型
 export interface HighlightKeyword {
@@ -46,7 +46,6 @@ export const QueenDialogue = ({
     }
 
     const delay = speed === "fast" ? 10 : 30;
-    let i = 0;
     const interval = setInterval(() => {
       // Simple typewriter
       setDisplayedText((prev) => {
@@ -202,17 +201,19 @@ export const QueenDialogue = ({
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className={`pointer-events-auto backdrop-blur-xl border w-full max-w-4xl mx-auto rounded-xl p-6 md:p-8 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative cursor-pointer transition-colors z-10
-          ${isQueen
-            ? "bg-[#050814]/90 border-indigo-500/30" // Removed hover effect
-            : "bg-neutral-900/90 border-amber-500/30"
+          ${
+            isQueen
+              ? "bg-[#050814]/90 border-indigo-500/30" // Removed hover effect
+              : "bg-neutral-900/90 border-amber-500/30"
           }
         `}
         onClick={handleClick}
       >
         <div className="flex items-center gap-3 mb-3 border-b border-white/10 pb-2">
           <span
-            className={`font-bold tracking-widest text-sm uppercase ${isQueen ? "text-indigo-400" : "text-amber-400"
-              }`}
+            className={`font-bold tracking-widest text-sm uppercase ${
+              isQueen ? "text-indigo-400" : "text-amber-400"
+            }`}
           >
             {speaker === "The Queen" ? "The Queen" : "The Guide"}
           </span>
@@ -225,8 +226,9 @@ export const QueenDialogue = ({
           {renderHighlightedText}
           {isTyping && (
             <span
-              className={`inline-block w-2 h-5 ml-1 animate-pulse align-middle ${isQueen ? "bg-indigo-500" : "bg-amber-500"
-                }`}
+              className={`inline-block w-2 h-5 ml-1 animate-pulse align-middle ${
+                isQueen ? "bg-indigo-500" : "bg-amber-500"
+              }`}
             ></span>
           )}
         </p>
@@ -243,9 +245,10 @@ export const QueenDialogue = ({
                 }}
                 className={`
                   px-6 py-2 rounded-full font-bold transition-all transform hover:scale-105 active:scale-95
-                  ${i === 0
-                    ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20"
-                    : "bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border border-neutral-600"
+                  ${
+                    i === 0
+                      ? "bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20"
+                      : "bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border border-neutral-600"
                   }
                 `}
               >

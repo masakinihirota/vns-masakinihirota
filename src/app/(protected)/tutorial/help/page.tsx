@@ -1,5 +1,6 @@
 "use client";
 
+import { HelpCircle } from "lucide-react";
 import { TutorialHeader } from "@/components/tutorial";
 import {
   Accordion,
@@ -14,7 +15,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { HelpCircle } from "lucide-react";
 
 export default function HelpPage() {
   return (

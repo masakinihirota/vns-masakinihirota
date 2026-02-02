@@ -20,9 +20,13 @@ export const KeywordModal = ({
   learnedIds,
   onLearn,
 }: KeywordModalProps) => {
-  const [selectedKeywordId, setSelectedKeywordId] = useState<string | null>(null);
+  const [selectedKeywordId, setSelectedKeywordId] = useState<string | null>(
+    null
+  );
 
-  const selectedKeyword = TUTORIAL_KEYWORDS.find((k) => k.id === selectedKeywordId);
+  const selectedKeyword = TUTORIAL_KEYWORDS.find(
+    (k) => k.id === selectedKeywordId
+  );
 
   const handleSelect = (keyword: TutorialKeyword) => {
     if (!unlockedIds.includes(keyword.id)) return;
@@ -50,7 +54,7 @@ export const KeywordModal = ({
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
             className="relative w-full max-w-4xl h-auto my-auto bg-slate-900/90 border border-indigo-500/30 rounded-2xl shadow-2xl flex overflow-hidden backdrop-blur-xl"
-            style={{ maxHeight: 'calc(100vh - 8rem)' }}
+            style={{ maxHeight: "calc(100vh - 8rem)" }}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Left Sidebar: Keyword List */}
@@ -75,20 +79,27 @@ export const KeywordModal = ({
                       disabled={!isUnlocked}
                       className={`
                         w-full text-left p-3 rounded-lg flex items-center justify-between transition-all
-                        ${isSelected
-                          ? "bg-indigo-600/30 border border-indigo-500/50 text-white"
-                          : isUnlocked
-                            ? "bg-white/5 hover:bg-white/10 text-slate-200 border border-transparent"
-                            : "bg-black/20 text-slate-600 cursor-not-allowed border border-transparent"
+                        ${
+                          isSelected
+                            ? "bg-indigo-600/30 border border-indigo-500/50 text-white"
+                            : isUnlocked
+                              ? "bg-white/5 hover:bg-white/10 text-slate-200 border border-transparent"
+                              : "bg-black/20 text-slate-600 cursor-not-allowed border border-transparent"
                         }
                       `}
                     >
                       <div className="flex items-center gap-3">
-                        <div className={`
+                        <div
+                          className={`
                           p-2 rounded-full
                           ${isUnlocked ? "bg-indigo-900/50 text-indigo-300" : "bg-slate-800/50 text-slate-600"}
-                        `}>
-                          {isUnlocked ? <keyword.icon size={16} /> : <Lock size={16} />}
+                        `}
+                        >
+                          {isUnlocked ? (
+                            <keyword.icon size={16} />
+                          ) : (
+                            <Lock size={16} />
+                          )}
                         </div>
                         <span className="font-medium text-sm truncate">
                           {isUnlocked ? keyword.label : "？？？"}
@@ -96,7 +107,10 @@ export const KeywordModal = ({
                       </div>
 
                       {isLearned && (
-                        <Check size={16} className="text-emerald-400 shrink-0" />
+                        <Check
+                          size={16}
+                          className="text-emerald-400 shrink-0"
+                        />
                       )}
                     </button>
                   );
@@ -116,7 +130,10 @@ export const KeywordModal = ({
               {selectedKeyword ? (
                 <div className="flex-1 p-8 flex flex-col items-center justify-center text-center animate-in fade-in duration-300">
                   <div className="w-24 h-24 bg-indigo-500/20 rounded-3xl flex items-center justify-center mb-6 border border-indigo-500/30 shadow-[0_0_30px_rgba(99,102,241,0.2)]">
-                    <selectedKeyword.icon size={48} className="text-indigo-400" />
+                    <selectedKeyword.icon
+                      size={48}
+                      className="text-indigo-400"
+                    />
                   </div>
 
                   <h3 className="text-3xl font-bold text-white mb-6 tracking-tight">
@@ -134,7 +151,9 @@ export const KeywordModal = ({
               ) : (
                 <div className="flex-1 flex flex-col items-center justify-center text-slate-500 p-8">
                   <HelpCircle size={64} className="mb-4 opacity-20" />
-                  <p className="text-lg">左のリストからキーワードを選択してください</p>
+                  <p className="text-lg">
+                    左のリストからキーワードを選択してください
+                  </p>
                   <p className="text-sm mt-2 opacity-60">
                     物語が進むと、新しいキーワードが解放されます
                   </p>

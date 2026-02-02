@@ -1,15 +1,15 @@
 "use client";
 
+import { FastForward, Pause, Play, Timer, Zap } from "lucide-react";
+import dynamic from "next/dynamic";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
 // GhostChat removed
 import {
   GhostOverlay,
   GhostOverlayProps,
 } from "@/components/ghost/ghost-overlay";
 import { TrialStorage } from "@/lib/trial-storage";
-import { FastForward, Pause, Play, Timer, Zap } from "lucide-react";
-import dynamic from "next/dynamic";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
 import { TrialBackButtonContent } from "../layout/trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TutorialErrorBoundary } from "./error-boundary";
 import { EventSystem } from "./events/event-system";
@@ -61,14 +61,15 @@ const TutorialStoryInner = () => {
   const searchParams = useSearchParams();
 
   // 新しいシステムから状態を取得
-  const gameState = useTutorialState();
+  const _gameState = useTutorialState();
   const { phase, lineIndex } = useTutorialPhase();
   const {
     goToPhase: stateGoToPhase,
     advanceLine: stateAdvanceLine,
-    regressLine,
+    regressLine: _regressLine,
   } = usePhaseTransition();
-  const { showDialog, closeDialog } = useDialogControl();
+  const { showDialog: _showDialog, closeDialog: _closeDialog } =
+    useDialogControl();
   const {
     unlockedKeywordIds: unlockedFromState,
     learnedKeywordIds: learnedFromState,
@@ -91,8 +92,8 @@ const TutorialStoryInner = () => {
   useEffect(() => {
     if (!eventSystemRef.current) {
       eventSystemRef.current = new EventSystem();
-      eventSystemRef.current.onAction("give-item", (action) => {
-        console.log("Item given:", action.itemId);
+      eventSystemRef.current.onAction("give-item", (_action) => {
+        // アイテム取得処理（現在は未使用）
       });
     }
 
@@ -105,13 +106,9 @@ const TutorialStoryInner = () => {
   useEffect(() => {
     if (!keywordSystemRef.current) return;
 
-    keywordSystemRef.current.checkAndUnlock(
-      phase,
-      lineIndex
-    );
+    keywordSystemRef.current.checkAndUnlock(phase, lineIndex);
 
-    const newUnlockedIds =
-      keywordSystemRef.current.getNewUnlockedKeywords();
+    const newUnlockedIds = keywordSystemRef.current.getNewUnlockedKeywords();
     newUnlockedIds.forEach((id) => {
       unlockKeyword(id);
     });
@@ -210,7 +207,7 @@ const TutorialStoryInner = () => {
 
     const effectiveProps: GhostOverlayProps = {
       ...props,
-      hasMap: isMapAcquiredPhase ? true : props.hasMap ?? false,
+      hasMap: isMapAcquiredPhase ? true : (props.hasMap ?? false),
       topRightOffsetClassName: "top-48",
     };
 
@@ -246,7 +243,10 @@ const TutorialStoryInner = () => {
         speaker: "The Queen" as const,
         text: phaseLines[lineIndex] || "",
       };
-    } else if (currentPhase === "guide_intro" || currentPhase === "mask_intro") {
+    } else if (
+      currentPhase === "guide_intro" ||
+      currentPhase === "mask_intro"
+    ) {
       const isGuideIntroEnd =
         currentPhase === "guide_intro" && lineIndex === phaseLines.length - 1;
 
@@ -255,14 +255,14 @@ const TutorialStoryInner = () => {
         text: phaseLines[lineIndex] || "",
         choices: isGuideIntroEnd
           ? [
-            {
-              label: "はい",
-              onClick: () => {
-                stateGoToPhase("account_creation", 0);
-                router.push("/onboarding-trial");
+              {
+                label: "はい",
+                onClick: () => {
+                  stateGoToPhase("account_creation", 0);
+                  router.push("/onboarding-trial");
+                },
               },
-            },
-          ]
+            ]
           : undefined,
       };
     }
@@ -331,9 +331,10 @@ const TutorialStoryInner = () => {
             flex items-center gap-3 transition-all transform hover:scale-105 active:scale-95
             min-w-[180px] justify-center
             font-bold text-sm
-            ${isPaused
-              ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
-              : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
+            ${
+              isPaused
+                ? "bg-yellow-900/90 hover:bg-yellow-800 text-yellow-100 border-yellow-600/50"
+                : "bg-indigo-900/90 hover:bg-indigo-800 text-indigo-100 border-indigo-500/50"
             }
           `}
           title="いつでも左サイドメニューから再開できます"
