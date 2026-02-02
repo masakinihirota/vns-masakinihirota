@@ -19,7 +19,7 @@ export const FinalGoalSection = () => {
 
           <div>
             <span className="font-bold mr-2">国</span>
-            <span>ノーベル平和賞を獲得する</span>
+            <span>ノーベル平和賞を貰えるような国を目指す</span>
           </div>
         </div>
       </div>

@@ -7,9 +7,11 @@
 
 import {
   ArrowRightLeft,
+  Globe,
   Layers,
   ShieldCheck,
   Sparkles,
+  Store,
   Target,
   User,
   Users,
@@ -35,6 +37,10 @@ function getIcon(iconType: string) {
       return <Layers size={28} />;
     case "users":
       return <Users size={28} />;
+    case "globe":
+      return <Globe size={28} />;
+    case "store":
+      return <Store size={28} />;
     default:
       return <ShieldCheck size={28} />;
   }

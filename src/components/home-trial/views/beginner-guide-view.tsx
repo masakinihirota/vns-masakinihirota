@@ -6,30 +6,32 @@
  * 体験版ではルートアカウント関連の手順に取り消し線を適用
  */
 
+import { cn } from "@/lib/utils";
 import {
   ArrowRightLeft,
+  Globe,
   Layers,
   ShieldCheck,
   Sparkles,
+  Store,
   Target,
   User,
   Users,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { ProfileListTree } from "./profile-list-tree";
 
 export function BeginnerGuideView() {
   const steps = [
     {
-      title: "1. ルートアカウントの役割",
-      desc: "ルートアカウントはあなたの本拠地です。プロフィールの全体管理、現実の情報（母語・居住地）、ポイント、そして非常時に必要な重要情報を司ります。",
+      title: "1. アカウントの作成",
+      desc: "アカウントは複数のプロフィールを管理します。",
       icon: <ShieldCheck size={28} />,
       color: "text-slate-800 dark:text-slate-200",
       isRoot: true,
     },
     {
-      title: "2. プロフィールの作成（千の仮面）",
-      desc: "プロフィールはあなたの価値観です。サイト内での目的（仕事、遊び、パートナー探しなど）毎に最大1000個まで作成でき、目的毎にマッチングが可能です。",
+      title: "2. プロフィールの作成",
+      desc: "プロフィールはあなたの価値観を入力して作成します。このサイト内での目的（仕事、遊び、パートナー探しなど）毎に最大1000個まで作成でき、目的毎にマッチングが可能です。",
       icon: <User size={28} />,
       color: "text-blue-500",
       hasProfileTree: true,
@@ -42,7 +44,7 @@ export function BeginnerGuideView() {
     },
     {
       title: "4. 目的別マッチング",
-      desc: "作成したプロフィールの情報を基に、目的ごとに似た価値観を持つ人を探します。複数の目的を1つのプロフィールで利用するとも可能です。例えば、「仕事」と「パートナー探し」の両方の目的を1つのプロフィールからマッチングすることも可能です。",
+      desc: "作成したプロフィールの情報を基に、目的ごとに似た価値観を持つ人を探します。複数の目的を1つのプロフィールで利用することも可能です。例えば、「仕事」と「パートナー探し」の両方の目的を1つのプロフィールからマッチングすることも可能です。",
       icon: <Target size={28} />,
       color: "text-red-500",
     },
@@ -61,8 +63,14 @@ export function BeginnerGuideView() {
     {
       title: "7. 国を興す",
       desc: "国とはトップダウン型の人の集まりです。国は組織とは違い、プロフィールのマッチングでメンバーを集めません。国は少数の条件を掲げ同じ目的を持った人達を集めます。そうやって国に人を集めていきます。国を興すと、国独自のルールを策定したりできます。",
-      icon: <Users size={28} />,
-      color: "text-indigo-500",
+      icon: <Globe size={28} />,
+      color: "text-emerald-500",
+    },
+    {
+      title: "8. マーケット＆イベント",
+      desc: "国でものをつくる人や、イベントを開催します。人と一緒に何かをします。",
+      icon: <Store size={28} />,
+      color: "text-rose-500",
     },
   ];
 
