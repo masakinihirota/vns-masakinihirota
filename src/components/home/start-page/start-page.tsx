@@ -43,7 +43,7 @@ export function StartPage({
       {/* 最終目標セクション */}
       <section className="max-w-4xl mx-auto px-6 py-12 w-full text-center border-t border-slate-50 dark:border-neutral-800 mt-10">
         <p className="text-slate-400 dark:text-neutral-500 font-normal">
-          最終目標：組織では生涯のパートナーを探し、そして国ではノーベル平和賞を目指します。
+          最終目標：グループでは生涯のパートナーを探し、そして国ではノーベル平和賞を目指します。
         </p>
       </section>
 
