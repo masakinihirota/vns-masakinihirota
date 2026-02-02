@@ -218,7 +218,7 @@ describe("Tutorial System", () => {
   describe("Tutorial Flow", () => {
     it("should complete basic tutorial flow", async () => {
       const stateManager = new GameStateManager();
-      const eventSystem = new EventSystem();
+      const _eventSystem = new EventSystem();
       const keywordSystem = new KeywordSystem();
 
       // Start: scene1

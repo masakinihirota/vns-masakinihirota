@@ -1,8 +1,9 @@
 /**
  * チュートリアルエラーバウンダリ
  */
+"use client";
 
-import { AlertCircle, RefreshCw, Home } from "lucide-react";
+import { AlertCircle, Home, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 

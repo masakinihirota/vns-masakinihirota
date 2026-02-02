@@ -128,7 +128,7 @@ describe("Tutorial Integration Tests", () => {
     });
 
     it("should integrate with state manager on event completion", async () => {
-      stateManager.subscribe((state) => {
+      stateManager.subscribe((_state) => {
         // state.hasMap check (unused variable removed)
       });
 
@@ -162,11 +162,8 @@ describe("Tutorial Integration Tests", () => {
     });
 
     it("should not repeat keyword unlocks", () => {
-      keywordSystem.checkAndUnlock("scene1", 3);
-      const newUnlockedFirst = keywordSystem.getNewUnlockedKeywords();
-
-      keywordSystem.checkAndUnlock("scene1", 3);
-      const newUnlockedSecond = keywordSystem.getNewUnlockedKeywords();
+      const newUnlockedFirst = keywordSystem.checkAndUnlock("scene1", 3);
+      const newUnlockedSecond = keywordSystem.checkAndUnlock("scene1", 3);
 
       expect(newUnlockedFirst.length).toBeGreaterThan(0);
       expect(newUnlockedSecond.length).toBe(0);

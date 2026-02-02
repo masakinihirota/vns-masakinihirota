@@ -1,7 +1,6 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
-import Link from "next/link";
+import { TutorialHeader } from "@/components/tutorial";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,13 +14,7 @@ import {
 export default function BasicTutorialPage() {
   return (
     <div className="container mx-auto py-8 max-w-4xl">
-      <div className="mb-6 flex items-center text-sm text-muted-foreground">
-        <Link href="/tutorial" className="hover:text-primary transition-colors">
-          チュートリアル
-        </Link>
-        <ChevronRight className="h-4 w-4 mx-2" />
-        <span className="font-semibold text-foreground">基本ガイド</span>
-      </div>
+      <TutorialHeader title="基本操作ガイド" />
 
       <div className="space-y-6">
         <div className="text-center mb-8">

@@ -5,13 +5,14 @@ import {
   VenetianMask as Mask,
   Shield,
   Wind,
+  type LucideIcon,
 } from "lucide-react";
 
 export interface TutorialKeyword {
   id: string;
   label: string;
   description: string;
-  icon: any;
+  icon: LucideIcon;
   trigger: {
     phase: "scene1" | "scene2" | "quest" | "scene3" | "end";
     lineIndex: number;

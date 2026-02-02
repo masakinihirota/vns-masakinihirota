@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, Compass, Map as MapIcon, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { MAP_ENTITIES, TILE_SIZE } from "./constants";
-import { GhostChat } from "./ghost-chat";
 
 interface DialogState {
   show: boolean;
@@ -66,10 +65,11 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
     }
   }, [hasMap]);
 
-  // ターゲット可能なエンティティのフィルタリング（地図取得済みなら全て、未取得なら非表示）
-  const targetableEntities = MAP_ENTITIES.filter(
-    (e) => e.type !== "item" || e.id !== "map_item"
-  );
+  // ターゲット可能なエンティティのフィルタリング
+  // 地図未取得時はターゲットなし（ワープ不可）
+  const targetableEntities = hasMap
+    ? MAP_ENTITIES.filter((e) => e.type !== "item" || e.id !== "map_item")
+    : [];
 
   // Calculate Angle
   const getAngleToTarget = () => {
@@ -472,9 +472,6 @@ export const GhostOverlay: React.FC<GhostOverlayProps> = ({
           )}
         </motion.div>
       </div>
-
-      {/* Chat Overlay */}
-      <GhostChat />
     </div>
   );
 };

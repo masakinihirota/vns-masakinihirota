@@ -3,8 +3,8 @@
 import { FastForward, Pause, Play, Timer, Zap } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { GhostChat, Message } from "@/components/ghost/ghost-chat";
+import { useEffect, useRef, useState } from "react";
+// GhostChat removed
 import {
   GhostOverlay,
   GhostOverlayProps,
@@ -15,6 +15,7 @@ import { TutorialErrorBoundary } from "./error-boundary";
 import { EventSystem } from "./events/event-system";
 import { KeywordModal } from "./keyword-modal";
 import { KeywordSystem } from "./keywords/keyword-system";
+import { MapChatContainer } from "./map-chat/map-chat.container";
 import { QueenDialogue } from "./queen-dialogue";
 import {
   useDialogControl,
@@ -55,20 +56,20 @@ type Phase =
  * メインのチュートリアルストーリーコンポーネント
  * 新しい統合状態管理とイベントシステムを使用
  */
-
 const TutorialStoryInner = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   // 新しいシステムから状態を取得
-  const gameState = useTutorialState();
+  const _gameState = useTutorialState();
   const { phase, lineIndex } = useTutorialPhase();
   const {
     goToPhase: stateGoToPhase,
     advanceLine: stateAdvanceLine,
-    regressLine,
+    regressLine: _regressLine,
   } = usePhaseTransition();
-  const { showDialog, closeDialog } = useDialogControl();
+  const { showDialog: _showDialog, closeDialog: _closeDialog } =
+    useDialogControl();
   const {
     unlockedKeywordIds: unlockedFromState,
     learnedKeywordIds: learnedFromState,
@@ -91,8 +92,8 @@ const TutorialStoryInner = () => {
   useEffect(() => {
     if (!eventSystemRef.current) {
       eventSystemRef.current = new EventSystem();
-      eventSystemRef.current.onAction("give-item", (action) => {
-        // Item given action
+      eventSystemRef.current.onAction("give-item", (_action) => {
+        // アイテム取得処理（現在は未使用）
       });
     }
 
@@ -101,13 +102,11 @@ const TutorialStoryInner = () => {
     }
   }, []);
 
-  // ... (omitted)
-
   // キーワード自動アンロック: フェーズ変更時に確認
   useEffect(() => {
     if (!keywordSystemRef.current) return;
 
-    keywordSystemRef.current.checkAndUnlock(phase as any, lineIndex); // TutorialPhaseの型定義と一致させるのが面倒なので一旦 any で逃げるか、正しくは TutorialPhase にキャスト。ここでは any にしておくのが安全策（lint:fix目的）
+    keywordSystemRef.current.checkAndUnlock(phase, lineIndex);
 
     const newUnlockedIds = keywordSystemRef.current.getNewUnlockedKeywords();
     newUnlockedIds.forEach((id) => {
@@ -143,135 +142,6 @@ const TutorialStoryInner = () => {
       }
     }
   };
-
-  // チャット履歴を計算
-  const chatHistory = useMemo(() => {
-    const history: Message[] = [];
-    let idCounter = 1;
-
-    const addLines = (
-      lines: readonly string[],
-      untilIndex: number,
-      speaker: string = "Queen"
-    ) => {
-      lines.slice(0, untilIndex + 1).forEach((text, i) => {
-        history.push({
-          id: `story-${idCounter++}`,
-          user: speaker,
-          text: text,
-          timestamp: idCounter,
-        });
-      });
-    };
-
-    const currentPhase = phase as Phase;
-
-    if (currentPhase === "scene1") {
-      addLines(SCENE_1_LINES, lineIndex);
-    } else if (currentPhase === "scene2") {
-      addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
-      addLines(SCENE_2_LINES, lineIndex);
-    } else if (currentPhase === "quest") {
-      addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
-      addLines(SCENE_2_LINES, SCENE_2_LINES.length - 1);
-      history.push({
-        id: `quest-start`,
-        user: "System",
-        text: "クエスト開始: 地図を探してください",
-        timestamp: idCounter++,
-      });
-    } else if (currentPhase === "explore") {
-      addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
-      addLines(SCENE_2_LINES, SCENE_2_LINES.length - 1);
-      history.push({
-        id: `quest-complete`,
-        user: "System",
-        text: "クエスト完了: 地図を獲得しました",
-        timestamp: idCounter++,
-      });
-      addLines(
-        SCENE_MAP_FOUND_LINES,
-        SCENE_MAP_FOUND_LINES.length - 1,
-        "Queen"
-      );
-      history.push({
-        id: `explore-start`,
-        user: "System",
-        text: "自由探索: 世界を見て回り、女王に報告しよう",
-        timestamp: idCounter++,
-      });
-    } else if (
-      currentPhase === "map_found" ||
-      currentPhase === "return_to_queen" ||
-      currentPhase === "guide_intro" ||
-      currentPhase === "account_creation" ||
-      currentPhase === "mask_intro" ||
-      currentPhase === "end"
-    ) {
-      addLines(SCENE_1_LINES, SCENE_1_LINES.length - 1);
-      addLines(SCENE_2_LINES, SCENE_2_LINES.length - 1);
-      history.push({
-        id: `quest-complete`,
-        user: "System",
-        text: "クエスト完了: 地図を獲得しました",
-        timestamp: idCounter++,
-      });
-
-      const mapFoundIndex =
-        currentPhase === "map_found"
-          ? lineIndex
-          : SCENE_MAP_FOUND_LINES.length - 1;
-      addLines(SCENE_MAP_FOUND_LINES, mapFoundIndex, "Queen");
-
-      if (
-        currentPhase === "return_to_queen" ||
-        currentPhase === "guide_intro" ||
-        currentPhase === "account_creation" ||
-        currentPhase === "mask_intro" ||
-        currentPhase === "end"
-      ) {
-        history.push({
-          id: `explore-complete`,
-          user: "System",
-          text: "探索完了: 女王に報告",
-          timestamp: idCounter++,
-        });
-        const returnToQueenIndex =
-          currentPhase === "return_to_queen"
-            ? lineIndex
-            : SCENE_RETURN_TO_QUEEN_LINES.length - 1;
-        addLines(SCENE_RETURN_TO_QUEEN_LINES, returnToQueenIndex, "Queen");
-      }
-
-      if (
-        currentPhase === "guide_intro" ||
-        currentPhase === "mask_intro" ||
-        currentPhase === "end"
-      ) {
-        const guideIntroIndex =
-          currentPhase === "guide_intro"
-            ? lineIndex
-            : SCENE_GUIDE_INTRO_LINES.length - 1;
-        addLines(SCENE_GUIDE_INTRO_LINES, guideIntroIndex, "Guide");
-      }
-
-      if (currentPhase === "mask_intro" || currentPhase === "end") {
-        history.push({
-          id: `account-created`,
-          user: "System",
-          text: "ルートアカウント作成完了",
-          timestamp: idCounter++,
-        });
-        const maskIntroIndex =
-          currentPhase === "mask_intro"
-            ? lineIndex
-            : SCENE_MASK_INTRO_LINES.length - 1;
-        addLines(SCENE_MASK_INTRO_LINES, maskIntroIndex, "Guide");
-      }
-    }
-
-    return history;
-  }, [phase, lineIndex]);
 
   // Input Locking
   const isInputEnabled = isPaused || phase === "quest" || phase === "explore";
@@ -416,11 +286,7 @@ const TutorialStoryInner = () => {
               color: "text-indigo-400",
             }))}
           />
-          <GhostChat
-            externalMessages={chatHistory}
-            initialMessages={[]}
-            className="z-50"
-          />
+          <MapChatContainer />
         </>
       );
     }
@@ -429,7 +295,7 @@ const TutorialStoryInner = () => {
     return (
       <>
         <GhostOverlay {...effectiveProps} />
-        <GhostChat externalMessages={chatHistory} initialMessages={[]} />
+        <MapChatContainer />
 
         {currentPhase === "quest" && (
           <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-black/50 text-white px-4 py-2 rounded-full backdrop-blur-md border border-white/20 animate-pulse pointer-events-none">

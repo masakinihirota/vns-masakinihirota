@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { TutorialStory } from "@/components/tutorial/tutorial-story";
+import { TutorialStory } from "@/components/tutorial";
 
 export const dynamic = "force-dynamic";
 

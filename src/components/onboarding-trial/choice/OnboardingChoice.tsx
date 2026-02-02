@@ -21,7 +21,7 @@ export const OnboardingChoice = () => {
 
       <div className="z-10 max-w-5xl w-full flex flex-col items-center space-y-12">
         {/* Header Section */}
-        <div className="text-center space-y-4 animate-in fade-in slide-in-from-top-8 duration-700">
+        <div className="text-center space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight bg-gradient-to-r from-neutral-800 via-neutral-600 to-neutral-800 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
             あなたの旅を選択してください
           </h1>
@@ -33,7 +33,7 @@ export const OnboardingChoice = () => {
         </div>
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 w-full animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 w-full">
           {CHOICE_PATHS.map((path) => (
             <ChoiceCard
               key={path.id}

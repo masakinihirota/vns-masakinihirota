@@ -393,10 +393,8 @@ export function TutorialKeywordButton() {
         });
 
         return unsubscribe;
-      } catch (error) {
+      } catch {
         // チュートリアルモジュールが利用できない場合はスキップ
-        // eslint-disable-next-line no-console
-        console.debug("Tutorial state not available", error);
       }
     };
 

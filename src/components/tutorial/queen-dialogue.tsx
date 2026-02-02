@@ -46,7 +46,6 @@ export const QueenDialogue = ({
     }
 
     const delay = speed === "fast" ? 10 : 30;
-    let i = 0;
     const interval = setInterval(() => {
       // Simple typewriter
       setDisplayedText((prev) => {
@@ -149,7 +148,7 @@ export const QueenDialogue = ({
   }, [displayedText, highlightKeywords]);
 
   return (
-    <div className="absolute inset-0 pointer-events-none flex flex-col justify-end pb-32 px-4 z-50">
+    <div className="absolute inset-0 pointer-events-none flex flex-col justify-end pb-32 px-4 lg:pl-[30rem] z-50">
       {/* Avatar Display - Only for Queen for now */}
       <AnimatePresence>
         {isQueen && (
