@@ -1,13 +1,14 @@
 import {
+  ArrowRight,
   Book,
   HelpCircle,
-  ArrowRight,
   MessageCircle,
   ShieldCheck,
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+
+export const dynamic = "force-static";
 
 export default function HelpPage() {
   const categories = [
@@ -49,7 +50,7 @@ export default function HelpPage() {
       title: "お問い合わせ",
       description: "解決しない場合は、運営チームまで直接お声がけください。",
       icon: MessageCircle,
-      href: "#",
+      href: "/contact",
       color: "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-400",
     },
   ];
@@ -82,7 +83,7 @@ export default function HelpPage() {
                     {cat.title}
                     <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
                   </h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                  <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed">
                     {cat.description}
                   </p>
                 </div>
@@ -92,7 +93,7 @@ export default function HelpPage() {
         </div>
 
         <div className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm rounded-3xl p-8 border border-slate-200 dark:border-slate-800 text-center">
-          <p className="text-sm text-slate-400 dark:text-slate-500 italic">
+          <p className="text-lg text-slate-400 dark:text-slate-500 italic">
             "インターネットの情報を真っ先に拾い、価値あるものへと変える場所。"
           </p>
         </div>

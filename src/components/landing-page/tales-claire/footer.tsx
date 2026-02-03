@@ -24,7 +24,7 @@ export const Footer = () => {
       links: [
         { label: "利用規約", href: "/terms-service" },
         { label: "プライバシーポリシー", href: "/terms-service" }, // 仮設
-        { label: "お問い合わせ", href: "/help" }, // 暫定
+        { label: "お問い合わせ", href: "/contact" },
       ],
     },
   ];

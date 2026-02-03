@@ -372,9 +372,9 @@ function NavMore({
         >
           <SidebarMenuItem>
             <CollapsibleTrigger asChild>
-              <SidebarMenuButton tooltip="もっと見る">
+              <SidebarMenuButton tooltip="便利ツール">
                 <MoreHorizontal />
-                <span>もっと見る</span>
+                <span>便利ツール</span>
                 <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
               </SidebarMenuButton>
             </CollapsibleTrigger>

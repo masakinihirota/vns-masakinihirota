@@ -54,18 +54,6 @@ function getIcon(iconType: string) {
 export function LatestInfoView() {
   return (
     <div className="space-y-10 animate-in fade-in duration-500">
-      {/* ウェルカムバナー */}
-      <div className="border-l-8 border-blue-600 dark:border-blue-400 pl-8 py-4 bg-slate-50 dark:bg-neutral-900/50 rounded-r-2xl">
-        <h2 className="text-[28px] font-extrabold text-slate-800 dark:text-neutral-100">
-          おかえりなさい
-        </h2>
-        <p className="text-slate-600 dark:text-neutral-400 mt-2 leading-relaxed">
-          グループや国にいる仲間からの最新情報を表示しています。
-          <br />
-          インターネットで拾った最新の感動との出会いを楽しみましょう。
-        </p>
-      </div>
-
       {/* タイムライン */}
       <div className="space-y-6">
         <h3 className="font-bold text-slate-400 dark:text-neutral-500 flex items-center gap-3 uppercase tracking-widest text-[16px]">

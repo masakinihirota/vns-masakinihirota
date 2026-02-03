@@ -104,6 +104,13 @@ export function PortalDashboard() {
           isRetired: false,
         },
         {
+          title: "PCオンボーディング",
+          path: "/onboarding-pc",
+          desc: "PC版オンボーディング（ゲーミフィケーション）。",
+          badge: "New",
+          isRetired: false,
+        },
+        {
           title: "ログイン",
           path: "/login",
           desc: "システムの認証入り口。",
@@ -255,20 +262,6 @@ export function PortalDashboard() {
       color: "from-zinc-500/20 to-slate-500/20",
       icon: <Settings className="text-zinc-500" size={24} />,
       routes: [
-        {
-          title: "UIコンポーネント",
-          path: "/sample",
-          desc: "各種UI部品の動作確認用カタログページ。",
-          badge: undefined,
-          isRetired: false,
-        },
-        {
-          title: "AIチャットサンプル",
-          path: "/sample/mandala-chart-ai",
-          desc: "AI統合インターフェースの動作テスト。",
-          badge: undefined,
-          isRetired: false,
-        },
         {
           title: "ヘルプセンター",
           path: "/help",
