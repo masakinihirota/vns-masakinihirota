@@ -1,5 +1,8 @@
+"use client";
+
 // アイコンとしてlucide-reactのBookOpenを使用
 import { BookOpen, ChevronRight, Home, Lock } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 export const dynamic = "force-static";
@@ -153,11 +156,11 @@ const Footer = () => (
 
 // --- 利用規約ページコンポーネント ---
 const TermsOfServicePage = () => {
+  const router = useRouter();
+
   // 登録画面への遷移をシミュレートする関数
   const handleRegister = () => {
-    // Next.jsでは useRouter().push('/register') を使用しますが、ここでは window.location を使用します。
-    // NOTE: 実際のアプリケーションではrouterを使用してください
-    window.location.href = "/register";
+    router.push("/register");
   };
 
   return (
