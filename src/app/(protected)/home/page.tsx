@@ -1,9 +1,6 @@
 import { redirect } from "next/navigation";
 import * as Home from "@/components/home";
-import {
-  getRootAccountId,
-  hasRootAccount,
-} from "@/lib/auth/root-account-guard";
+import { hasRootAccount } from "@/lib/auth/root-account-guard";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -26,7 +23,6 @@ export default async function HomePage() {
     if (!hasRoot) {
       redirect("/onboarding-pc");
     }
-    await getRootAccountId(userId);
   } else if (!user && process.env.NODE_ENV !== "development") {
     redirect("/auth/login");
   }

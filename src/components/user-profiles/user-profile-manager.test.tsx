@@ -1,9 +1,16 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
-// import { axe, toHaveNoViolations } from "vitest-axe";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
+import { axe } from "vitest-axe";
+import * as axeMatchers from "vitest-axe/matchers";
 import UserProfileManager from "./user-profile-manager";
 
-// expect.extend(toHaveNoViolations);
+expect.extend(axeMatchers);
 
 // Mock Supabase client
 const mockSelect = vi.fn();
@@ -40,6 +47,7 @@ vi.mock("lucide-react", () => ({
   RotateCcw: () => <div data-testid="icon-restore" />,
   ArrowUp: () => <div data-testid="icon-arrow-up" />,
   ArrowDown: () => <div data-testid="icon-arrow-down" />,
+  Contact: () => <div data-testid="icon-contact" />,
 }));
 
 describe("UserProfileManager", () => {
@@ -77,7 +85,10 @@ describe("UserProfileManager", () => {
     // Assert
     const ghostCard = screen.getByTestId("ghost-card");
     expect(ghostCard).toHaveAttribute("aria-pressed", "false");
-    expect(profileCards[0]).toHaveAttribute("aria-pressed", "true");
+    expect(within(profileCards[0]).getByRole("checkbox")).toHaveAttribute(
+      "aria-checked",
+      "true"
+    );
   });
 
   it("複数のプロフィールを同時にアクティブにできること", async () => {
@@ -93,8 +104,14 @@ describe("UserProfileManager", () => {
     fireEvent.click(profileCards[1]); // 2つ目を選択
 
     // Assert
-    expect(profileCards[0]).toHaveAttribute("aria-pressed", "true");
-    expect(profileCards[1]).toHaveAttribute("aria-pressed", "true");
+    expect(within(profileCards[0]).getByRole("checkbox")).toHaveAttribute(
+      "aria-checked",
+      "true"
+    );
+    expect(within(profileCards[1]).getByRole("checkbox")).toHaveAttribute(
+      "aria-checked",
+      "true"
+    );
   });
 
   it("全てのプロフィールを非アクティブにすると、自動的にゴーストに戻ること", async () => {
@@ -107,13 +124,19 @@ describe("UserProfileManager", () => {
 
     // Act
     fireEvent.click(profileCards[0]); // ON
-    expect(profileCards[0]).toHaveAttribute("aria-pressed", "true");
+    expect(within(profileCards[0]).getByRole("checkbox")).toHaveAttribute(
+      "aria-checked",
+      "true"
+    );
     fireEvent.click(profileCards[0]); // OFF
 
     // Assert
     const ghostCard = screen.getByTestId("ghost-card");
     expect(ghostCard).toHaveAttribute("aria-pressed", "true");
-    expect(profileCards[0]).toHaveAttribute("aria-pressed", "false");
+    expect(within(profileCards[0]).getByRole("checkbox")).toHaveAttribute(
+      "aria-checked",
+      "false"
+    );
   });
 
   it("ゴーストカードをクリックすると、全ての選択が解除されること", async () => {
@@ -129,31 +152,42 @@ describe("UserProfileManager", () => {
     fireEvent.click(profileCards[0]);
     fireEvent.click(profileCards[1]);
     // この時点で2つ選択されているはず
-    expect(profileCards[0]).toHaveAttribute("aria-pressed", "true");
-    expect(profileCards[1]).toHaveAttribute("aria-pressed", "true");
+    expect(within(profileCards[0]).getByRole("checkbox")).toHaveAttribute(
+      "aria-checked",
+      "true"
+    );
+    expect(within(profileCards[1]).getByRole("checkbox")).toHaveAttribute(
+      "aria-checked",
+      "true"
+    );
 
     fireEvent.click(ghostCard); // ゴーストをクリック
 
     // Assert
     expect(ghostCard).toHaveAttribute("aria-pressed", "true");
-    expect(profileCards[0]).toHaveAttribute("aria-pressed", "false");
-    expect(profileCards[1]).toHaveAttribute("aria-pressed", "false");
+    expect(within(profileCards[0]).getByRole("checkbox")).toHaveAttribute(
+      "aria-checked",
+      "false"
+    );
+    expect(within(profileCards[1]).getByRole("checkbox")).toHaveAttribute(
+      "aria-checked",
+      "false"
+    );
   });
 
-  /*
-        it("should have no accessibility violations", async () => {
-            // Arrange
-            render(<UserProfileManager />);
-            await waitFor(() => expect(screen.queryByTestId("icon-loader")).not.toBeInTheDocument());
+  it("should have no accessibility violations", async () => {
+    // Arrange
+    const { container } = render(<UserProfileManager />);
+    await waitFor(() =>
+      expect(screen.queryByTestId("icon-loader")).not.toBeInTheDocument()
+    );
 
-            // Act
-            const results = await axe(container);
+    // Act
+    const results = await axe(container);
 
-            // Assert
-            expect(results).toHaveNoViolations();
-        });
-    });
-    */
+    // Assert
+    expect(results).toHaveNoViolations();
+  });
 
   describe("ゴミ箱機能（論理削除）", () => {
     it("削除ボタンを押すと、アイテムがリストから消える（ゴミ箱に移動）", async () => {

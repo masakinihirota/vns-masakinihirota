@@ -14,13 +14,6 @@
     "visibleInMenu": true
   },
   {
-    "path": "/user-profiles/new",
-    "label": "名刺作成",
-    "group": "registration",
-    "order": 10,
-    "visibleInMenu": true
-  },
-  {
     "path": "/groups",
     "label": "グループ",
     "group": "main",
@@ -51,7 +44,7 @@
   {
     "path": "/works/continuous-rating",
     "label": "作品連続評価",
-    "group": "main",
+    "group": "more",
     "order": 65,
     "visibleInMenu": true
   },

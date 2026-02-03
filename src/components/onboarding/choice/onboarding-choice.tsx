@@ -87,10 +87,10 @@ export function OnboardingChoice() {
           router.push("/ghost");
           break;
         case "profile":
-          router.push("/profile/create"); // Assuming standard create path, verify if needed
+          router.push("/user-profiles/new");
           break;
         case "home":
-          router.push("/"); // Or /home based on requirement. User said "Top page"
+          router.push("/");
           break;
         default:
           router.push("/dev-dashboard");

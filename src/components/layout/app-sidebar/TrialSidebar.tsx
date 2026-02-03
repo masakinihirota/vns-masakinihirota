@@ -48,7 +48,18 @@ import routesManifest from "@/config/routes.manifest.json";
 /**
  * 体験版でアクセス可能なパス
  */
-const ALLOWED_TRIAL_PATHS = ["/home-trial", "/tutorial", "/onboarding-trial"];
+const ALLOWED_TRIAL_PATHS = [
+  "/home-trial",
+  "/tutorial",
+  "/onboarding-trial",
+  "/user-profiles",
+  "/groups",
+  "/nations",
+  "/matching",
+  "/works",
+  "/values",
+  "/skills",
+];
 
 type RouteEntry = {
   path: string;
@@ -74,7 +85,6 @@ const filterAndSort = (group: string) =>
 const mainMenuItems = filterAndSort("main");
 const registrationMenuItems = filterAndSort("registration");
 const moreMenuItems = filterAndSort("more");
-const footerMenuItems = filterAndSort("footer");
 
 const mockUser = {
   name: "Guest User",
@@ -164,9 +174,9 @@ function TrialNavMore({
         >
           <SidebarMenuItem>
             <CollapsibleTrigger asChild>
-              <SidebarMenuButton tooltip="もっと見る">
+              <SidebarMenuButton tooltip="便利ツール">
                 <MoreHorizontal />
-                <span>もっと見る</span>
+                <span>便利ツール</span>
                 <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
               </SidebarMenuButton>
             </CollapsibleTrigger>

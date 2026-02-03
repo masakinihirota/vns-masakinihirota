@@ -1,17 +1,19 @@
 "use client";
 
 import {
+  AlertTriangle,
   ArrowLeft,
+  ChevronRight,
+  MessageSquare,
   ShieldAlert,
   ShieldCheck,
-  MessageSquare,
-  AlertTriangle,
   Zap,
-  ChevronRight,
 } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { DISCUSSION_ITEMS, DiscussionItem } from "./discussion-data";
+
+export const dynamic = "force-static";
 
 const DiscussionCard = ({ item }: { item: DiscussionItem }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -36,7 +38,7 @@ const DiscussionCard = ({ item }: { item: DiscussionItem }) => {
             <h3 className="text-xl font-black text-slate-900 dark:text-white leading-tight mb-1 group-hover:text-teal-600 transition-colors">
               {item.title}
             </h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">
+            <p className="text-lg text-slate-500 dark:text-slate-400 line-clamp-1">
               批判者からの懸念：{item.critique}
             </p>
           </div>
@@ -56,14 +58,14 @@ const DiscussionCard = ({ item }: { item: DiscussionItem }) => {
         <div className="px-6 pb-8 md:px-8 md:pb-10 space-y-8">
           {/* Critique Section */}
           <div className="relative p-6 bg-rose-50/50 dark:bg-rose-950/20 rounded-2xl border border-rose-100 dark:border-rose-900/50">
-            <div className="absolute -top-3 left-6 px-3 py-1 bg-rose-500 text-white text-[10px] font-black tracking-widest uppercase rounded-full">
+            <div className="absolute -top-3 left-6 px-3 py-1 bg-rose-500 text-white text-base font-black tracking-widest uppercase rounded-full">
               Critique
             </div>
             <div className="flex gap-4">
               <span className="text-rose-500 font-black text-2xl mt-1 select-none">
                 “
               </span>
-              <p className="text-base text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+              <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
                 {item.critique}
               </p>
             </div>
@@ -75,14 +77,14 @@ const DiscussionCard = ({ item }: { item: DiscussionItem }) => {
 
           {/* Rebuttal Section */}
           <div className="relative p-6 bg-teal-50/50 dark:bg-teal-950/20 rounded-2xl border border-teal-100 dark:border-teal-900/50 shadow-inner">
-            <div className="absolute -top-3 left-6 px-3 py-1 bg-teal-600 text-white text-[10px] font-black tracking-widest uppercase rounded-full">
+            <div className="absolute -top-3 left-6 px-3 py-1 bg-teal-600 text-white text-base font-black tracking-widest uppercase rounded-full">
               Rebuttal / VNS Philosophy
             </div>
             <div className="flex gap-4">
               <div className="w-10 h-10 rounded-full bg-teal-600 flex items-center justify-center flex-shrink-0 mt-1 shadow-lg shadow-teal-600/20">
                 <ShieldCheck className="w-5 h-5 text-white" />
               </div>
-              <p className="text-base text-slate-800 dark:text-slate-200 leading-relaxed font-semibold">
+              <p className="text-lg text-slate-800 dark:text-slate-200 leading-relaxed font-semibold">
                 {item.rebuttal}
               </p>
             </div>
@@ -104,14 +106,14 @@ export default function DiscussionPage() {
         <div className="relative max-w-5xl mx-auto px-6">
           <Link
             href="/help"
-            className="group inline-flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-teal-600 transition-colors mb-12"
+            className="group inline-flex items-center gap-2 text-lg font-bold text-slate-500 hover:text-teal-600 transition-colors mb-12"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             ヘルプセンターに戻る
           </Link>
 
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-[10px] font-black tracking-widest uppercase text-slate-500 dark:text-slate-400 mb-6 border border-slate-200 dark:border-slate-700">
+            <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-100 dark:bg-slate-800 rounded-full text-base font-black tracking-widest uppercase text-slate-500 dark:text-slate-400 mb-6 border border-slate-200 dark:border-slate-700">
               <Zap className="w-3 h-3 text-teal-500" />
               Core Discussion
             </div>

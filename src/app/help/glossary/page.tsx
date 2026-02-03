@@ -3,16 +3,18 @@
 import {
   ArrowLeft,
   BookOpen,
-  Quote,
-  Sparkles,
-  ShieldCheck,
-  Users,
-  Search,
-  Zap,
   Briefcase,
+  Quote,
+  Search,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
+
+export const dynamic = "force-static";
 
 const CATEGORIES = [
   { id: "all", label: "すべて", icon: BookOpen },
@@ -452,7 +454,7 @@ export default function GlossaryPage() {
         {/* Navigation */}
         <Link
           href="/help"
-          className="inline-flex items-center gap-2 text-sm font-bold text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors group"
+          className="inline-flex items-center gap-2 text-lg font-bold text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors group"
         >
           <div className="p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl group-hover:border-teal-200 dark:group-hover:border-teal-800 shadow-sm transition-all">
             <ArrowLeft className="w-4 h-4" />
@@ -488,7 +490,7 @@ export default function GlossaryPage() {
                 placeholder="用語を検索..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-sm focus:ring-2 focus:ring-teal-500 dark:text-white transition-all"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-lg focus:ring-2 focus:ring-teal-500 dark:text-white transition-all"
               />
             </div>
             <div className="flex flex-wrap gap-2 w-full">
@@ -498,7 +500,7 @@ export default function GlossaryPage() {
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-lg font-bold transition-all ${
                       selectedCategory === cat.id
                         ? "bg-teal-600 text-white shadow-lg shadow-teal-600/20"
                         : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
@@ -529,11 +531,11 @@ export default function GlossaryPage() {
                   <div className="flex items-start justify-between flex-wrap gap-4">
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="text-[10px] font-black px-2 py-0.5 rounded-md bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 uppercase tracking-widest border border-teal-100 dark:border-teal-800">
+                        <span className="text-base font-black px-2 py-0.5 rounded-md bg-teal-50 dark:bg-teal-900/30 text-teal-600 dark:text-teal-400 uppercase tracking-widest border border-teal-100 dark:border-teal-800">
                           {item.categoryLabel}
                         </span>
                         {item.motto && (
-                          <span className="flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 uppercase tracking-widest border border-amber-100 dark:border-amber-800">
+                          <span className="flex items-center gap-1 text-base font-bold px-2 py-0.5 rounded-md bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 uppercase tracking-widest border border-amber-100 dark:border-amber-800">
                             <Sparkles className="w-3 h-3" />
                             Policy
                           </span>
@@ -565,7 +567,7 @@ export default function GlossaryPage() {
                       {item.details.map((detail, i) => (
                         <div
                           key={i}
-                          className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 text-sm text-slate-600 dark:text-slate-400 leading-relaxed group/item transition-colors hover:bg-white dark:hover:bg-slate-800"
+                          className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 text-lg text-slate-600 dark:text-slate-400 leading-relaxed group/item transition-colors hover:bg-white dark:hover:bg-slate-800"
                         >
                           <div className="w-2 h-2 rounded-full bg-teal-400 dark:bg-teal-500 mt-1.5 flex-shrink-0 group-hover/item:scale-125 transition-transform" />
                           {detail}
@@ -602,7 +604,7 @@ export default function GlossaryPage() {
           <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
             <Link
               href="/help/faq"
-              className="px-8 py-4 bg-teal-500 hover:bg-teal-400 text-white rounded-2xl font-black transition-all shadow-lg shadow-teal-500/25 active:scale-95"
+              className="px-8 py-4 bg-teal-500 hover:bg-teal-400 text-white rounded-2xl font-black text-lg transition-all shadow-lg shadow-teal-500/25 active:scale-95"
             >
               FAQを見る
             </Link>

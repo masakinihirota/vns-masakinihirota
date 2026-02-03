@@ -1,12 +1,13 @@
 import { MoveRight } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 
 export const metadata = {
   title: "世界の孤独対策 | VNS",
   description:
     "高齢男性における社会的孤立と孤独のグローバル・ランドスケープ：構造的病理と介入戦略に関する包括的比較研究",
 };
+
+export const dynamic = "force-static";
 
 export default function GlobalLonelinessMeasuresPage() {
   return (

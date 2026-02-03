@@ -1,18 +1,20 @@
 "use client";
 
 import {
-  ArrowLeft,
-  Search,
-  ChevronDown,
-  MessageCircle,
-  Zap,
-  Info,
   AlertCircle,
+  ArrowLeft,
+  ChevronDown,
   HelpCircle,
+  Info,
+  MessageCircle,
+  Search,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { CATEGORIES, FAQ_ITEMS } from "./faq-data";
+
+export const dynamic = "force-static";
 
 const StructuralAnswer = ({
   title,
@@ -26,7 +28,7 @@ const StructuralAnswer = ({
       <Zap className="w-4 h-4" />
       {title}
     </h4>
-    <div className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+    <div className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
       {children}
     </div>
   </div>
@@ -69,7 +71,7 @@ export default function FAQPage() {
         <div className="max-w-4xl mx-auto px-6">
           <Link
             href="/help"
-            className="inline-flex items-center gap-2 text-sm text-slate-500 hover:text-teal-600 transition-colors mb-8"
+            className="inline-flex items-center gap-2 text-lg text-slate-500 hover:text-teal-600 transition-colors mb-8"
           >
             <ArrowLeft className="w-4 h-4" />
             ヘルプセンターに戻る
@@ -105,7 +107,7 @@ export default function FAQPage() {
                 placeholder="質問内容を検索..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-sm focus:ring-2 focus:ring-teal-500 dark:text-white transition-all shadow-inner"
+                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-none rounded-xl text-lg focus:ring-2 focus:ring-teal-500 dark:text-white transition-all shadow-inner"
               />
             </div>
             <div className="flex flex-wrap gap-2 w-full">
@@ -115,7 +117,7 @@ export default function FAQPage() {
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.id)}
-                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                    className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-lg font-bold transition-all ${
                       selectedCategory === cat.id
                         ? "bg-teal-600 text-white shadow-lg shadow-teal-600/20"
                         : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
@@ -146,7 +148,7 @@ export default function FAQPage() {
                     <span className="text-teal-600 dark:text-teal-400 font-black text-xl leading-none pt-1">
                       Q.
                     </span>
-                    <h3 className="text-base font-bold text-slate-900 dark:text-white leading-snug group-hover:text-teal-600 transition-colors">
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-snug group-hover:text-teal-600 transition-colors">
                       {item.question}
                     </h3>
                   </div>
@@ -167,7 +169,7 @@ export default function FAQPage() {
                     <span className="text-rose-500 dark:text-rose-400 font-black text-xl leading-none pt-4">
                       A.
                     </span>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 whitespace-pre-wrap leading-relaxed py-4">
+                    <p className="text-lg text-slate-600 dark:text-slate-400 whitespace-pre-wrap leading-relaxed py-4">
                       {item.answer}
                     </p>
                   </div>
@@ -218,7 +220,7 @@ export default function FAQPage() {
               <MessageCircle className="w-5 h-5" />
               結論
             </h3>
-            <p className="text-sm text-slate-700 dark:text-slate-400 leading-relaxed font-medium">
+            <p className="text-lg text-slate-700 dark:text-slate-400 leading-relaxed font-medium">
               VNS
               masakinihirotaは「完璧な正義」ではなく、「人間関係の不完全さ」を前提とした動的なエコシステムです。
               嫌なら逃げる（Drift）、合わないものは観測しない（シュレディンガーの猫主義）。生物的なアプローチによって全体の調和を保ちます。
@@ -234,7 +236,7 @@ export default function FAQPage() {
           <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
             それでも解決しない場合は
           </h3>
-          <p className="text-slate-500 dark:text-slate-400 text-sm mb-6">
+          <p className="text-slate-500 dark:text-slate-400 text-lg mb-6">
             運営チーム、またはお近くの「メディエーター」までご相談ください。
           </p>
         </div>

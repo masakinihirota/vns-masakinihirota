@@ -1,18 +1,20 @@
-import { Droplets, Heart, Globe, ShieldCheck, Users } from "lucide-react";
+import { Droplets, Globe, Heart, ShieldCheck, Users } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
 
 export const metadata = {
   title: "Oasis Declaration | VNS masakinihirota",
   description: "Our motto and promise defining our digital oasis.",
 };
+
+export const dynamic = "force-static";
 
 export default function OasisPage() {
   return (
@@ -29,7 +31,7 @@ export default function OasisPage() {
           <p className="text-xl text-muted-foreground font-serif italic">
             &quot;褒めるときは大きな声でみんなの前で、叱るときは二人きりで小さな声で。&quot;
           </p>
-          <p className="text-sm text-muted-foreground/80">
+          <p className="text-lg text-muted-foreground/80">
             Motto: When giving praise, do it loudly in front of everyone. When
             scolding, do it quietly with just the two of you.
           </p>
@@ -50,7 +52,7 @@ export default function OasisPage() {
             <CardContent className="space-y-8">
               <ul className="grid gap-6">
                 <li className="flex gap-4 items-start">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-muted text-sm font-bold">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-muted text-lg font-bold">
                     1
                   </span>
                   <div className="space-y-1">
@@ -60,7 +62,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       インターネット上で翼を休める場所、砂漠の中で命の水を授かる場所を作ります。
                       <br />
-                      <span className="text-xs opacity-70">
+                      <span className="text-base opacity-70">
                         Create a place where you can rest your wings on the
                         Internet, and a place where you can receive water of
                         life in the desert.
@@ -80,7 +82,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       広告はユーザー側に主導権があります。
                       <br />
-                      <span className="text-xs opacity-70">
+                      <span className="text-base opacity-70">
                         Advertising is led by the user.
                       </span>
                     </p>
@@ -98,7 +100,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       共通の価値観を持った人々のオアシスという場所を作ります。
                       <br />
-                      <span className="text-xs opacity-70">
+                      <span className="text-base opacity-70">
                         Create an oasis of people with common values.
                       </span>
                     </p>
@@ -116,7 +118,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       お互いの価値観を認めるのならば、誰もが参加できます。
                       <br />
-                      <span className="text-xs opacity-70">
+                      <span className="text-base opacity-70">
                         Everyone can participate if they recognize each
                         other&apos;s values.
                       </span>
@@ -135,7 +137,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       きれいな世界、優しい世界を守り、広めます。
                       <br />
-                      <span className="text-xs opacity-70">
+                      <span className="text-base opacity-70">
                         Protect and promote a beautiful world, a kind world.
                       </span>
                     </p>
@@ -158,13 +160,24 @@ export default function OasisPage() {
             <br />
             誰もが笑顔になれる場所です。
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-lg text-muted-foreground">
             We aim to be a place where everyone can rest without conflict. It is
             a place where everyone can smile.
           </p>
         </div>
 
-        <div className="flex justify-center pt-8">
+        <div className="flex flex-col items-center gap-4 py-8">
+          <Button asChild variant="outline" className="gap-2">
+            <Link
+              href="https://github.com/masakinihirota/masakinihirota/blob/main/README.md"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Globe className="size-4" />
+              オリジナルページを見る (GitHub)
+            </Link>
+          </Button>
+
           <Button asChild variant="ghost">
             <Link href="/">Back to Entrance</Link>
           </Button>

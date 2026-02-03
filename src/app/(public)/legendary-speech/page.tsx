@@ -5,6 +5,8 @@ export const metadata = {
   description: "VNSの思想の根幹にあるメッセージを表示します。",
 };
 
+export const dynamic = "force-static";
+
 export default function LegendarySpeechPage() {
   return <LegendarySpeech.LegendarySpeech />;
 }

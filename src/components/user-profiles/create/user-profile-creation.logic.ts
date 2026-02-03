@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { generateUniqueCandidates } from "@/lib/anonymous-name-generator";
 import { generateDummyWorks } from "./user-profile-creation.constants";
-import { MasterWork, Period, FavWork } from "./user-profile-creation.types";
+import { FavWork, MasterWork, Period } from "./user-profile-creation.types";
 
 export const useUserProfileCreation = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -78,7 +78,10 @@ export const useUserProfileCreation = () => {
     });
   };
 
-  const updateForm = (key: string, value: any) => {
+  const updateForm = <K extends keyof typeof formData>(
+    key: K,
+    value: (typeof formData)[K]
+  ) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
   };
 

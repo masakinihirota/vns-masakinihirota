@@ -7,9 +7,11 @@ description: チェック、ビルド、コミット、プッシュ、マージ�
 ### 1. 静的チェックと自動修正
 
 // turbo
-pnpm run lint:fast:fix
+pnpm run lint:fix
 // turbo
-pnpm run format:fast
+pnpm run format:fix
+// turbo
+pnpm audit --audit-level=moderate
 
 エラーが残っている場合は、エージェントが手動で修正を試みます。
 再度チェックを実行し、合格するまで繰り返します。

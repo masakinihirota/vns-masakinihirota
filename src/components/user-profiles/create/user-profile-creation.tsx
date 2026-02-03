@@ -1,6 +1,5 @@
-import { ArrowLeft, ArrowRight, CheckCircle2, AlertCircle } from "lucide-react";
+import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import { Step1RoleType } from "./steps/step-1-role-type";
 import { Step2PurposeIdentity } from "./steps/step-2-purpose-identity";
 import { Step3OwnWorks } from "./steps/step-3-own-works";
@@ -47,7 +46,7 @@ export const UserProfileCreation = (
         return (
           <Step1RoleType
             formData={props.formData}
-            updateForm={props.updateForm}
+            updateForm={props.updateForm as (key: string, value: any) => void}
           />
         );
       case 2:
@@ -55,7 +54,7 @@ export const UserProfileCreation = (
           <Step2PurposeIdentity
             formData={props.formData}
             togglePurpose={props.togglePurpose}
-            updateForm={props.updateForm}
+            updateForm={props.updateForm as (key: string, value: any) => void}
             handleUndoCandidates={props.handleUndoCandidates}
             historyIndex={props.historyIndex}
             handleGenerateCandidates={props.handleGenerateCandidates}
@@ -210,7 +209,8 @@ export const UserProfileCreation = (
             {currentStep < STEPS.length ? (
               <button
                 onClick={handleNext}
-                className="group flex items-center gap-2 px-8 py-3 rounded-full bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 hover:bg-indigo-700 hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95"
+                disabled={props.isSubmitting}
+                className="group flex items-center gap-2 px-8 py-3 rounded-full bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 hover:bg-indigo-700 hover:shadow-xl hover:-translate-y-0.5 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 次へ進む
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -218,14 +218,28 @@ export const UserProfileCreation = (
             ) : (
               <button
                 onClick={() => {
-                  alert("プロフィールを作成しました！（デモ）");
-                  // Redirect to home which handles mode selection check
-                  window.location.href = "/home";
+                  if (props.onComplete) {
+                    props.onComplete(props.formData);
+                  } else {
+                    // Fallback for demo/dev
+                    alert("プロフィールを作成しました！（デモ）");
+                    window.location.href = "/home";
+                  }
                 }}
-                className="group flex items-center gap-2 px-10 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-lg shadow-purple-200 dark:shadow-purple-900/30 hover:shadow-xl hover:-translate-y-0.5 hover:brightness-110 transition-all active:scale-95"
+                disabled={props.isSubmitting}
+                className="group flex items-center gap-2 px-10 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold shadow-lg shadow-purple-200 dark:shadow-purple-900/30 hover:shadow-xl hover:-translate-y-0.5 hover:brightness-110 transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <CheckCircle2 className="w-5 h-5" />
-                プロフィールを作成
+                {props.isSubmitting ? (
+                  <>
+                    <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
+                    保存中...
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle2 className="w-5 h-5" />
+                    プロフィール作成を完了
+                  </>
+                )}
               </button>
             )}
           </div>
