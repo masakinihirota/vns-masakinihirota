@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 import {
   ArrowDown,
   ArrowUp,
@@ -112,7 +112,7 @@ export default function UserProfileManager() {
 
   return (
     <div
-      className={`min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors duration-200 p-8`}
+      className={`min-h-screen bg-background text-foreground transition-colors duration-200 p-8`}
     >
       {/* Header Area */}
       <div className="max-w-7xl mx-auto space-y-8">

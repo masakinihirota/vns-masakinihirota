@@ -28,10 +28,10 @@ export default function OasisPage() {
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-600">
             オアシス宣言
           </h1>
-          <p className="text-xl text-muted-foreground font-serif italic">
+          <p className="text-xl text-foreground font-serif italic">
             &quot;褒めるときは大きな声でみんなの前で、叱るときは二人きりで小さな声で。&quot;
           </p>
-          <p className="text-lg text-muted-foreground/80">
+          <p className="text-lg text-muted-foreground">
             Motto: When giving praise, do it loudly in front of everyone. When
             scolding, do it quietly with just the two of you.
           </p>
@@ -62,7 +62,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       インターネット上で翼を休める場所、砂漠の中で命の水を授かる場所を作ります。
                       <br />
-                      <span className="text-base opacity-70">
+                      <span className="text-base text-muted-foreground">
                         Create a place where you can rest your wings on the
                         Internet, and a place where you can receive water of
                         life in the desert.
@@ -82,7 +82,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       広告はユーザー側に主導権があります。
                       <br />
-                      <span className="text-base opacity-70">
+                      <span className="text-base text-muted-foreground">
                         Advertising is led by the user.
                       </span>
                     </p>
@@ -100,7 +100,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       共通の価値観を持った人々のオアシスという場所を作ります。
                       <br />
-                      <span className="text-base opacity-70">
+                      <span className="text-base text-muted-foreground">
                         Create an oasis of people with common values.
                       </span>
                     </p>
@@ -118,7 +118,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       お互いの価値観を認めるのならば、誰もが参加できます。
                       <br />
-                      <span className="text-base opacity-70">
+                      <span className="text-base text-muted-foreground">
                         Everyone can participate if they recognize each
                         other&apos;s values.
                       </span>
@@ -137,7 +137,7 @@ export default function OasisPage() {
                     <p className="text-muted-foreground">
                       きれいな世界、優しい世界を守り、広めます。
                       <br />
-                      <span className="text-base opacity-70">
+                      <span className="text-base text-muted-foreground">
                         Protect and promote a beautiful world, a kind world.
                       </span>
                     </p>
@@ -176,10 +176,6 @@ export default function OasisPage() {
               <Globe className="size-4" />
               オリジナルページを見る (GitHub)
             </Link>
-          </Button>
-
-          <Button asChild variant="ghost">
-            <Link href="/">Back to Entrance</Link>
           </Button>
         </div>
       </main>

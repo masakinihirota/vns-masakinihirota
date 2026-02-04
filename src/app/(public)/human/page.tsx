@@ -1,12 +1,12 @@
-import { Baby, Footprints, RefreshCcw, HandHeart, History } from "lucide-react";
+import { Baby, Footprints, HandHeart, History, RefreshCcw } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
 
 export const metadata = {
@@ -26,10 +26,10 @@ export default function HumanPage() {
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-secondary to-orange-600">
             人間宣言
           </h1>
-          <p className="text-xl text-muted-foreground font-serif italic">
+          <p className="text-xl text-foreground font-serif italic">
             &quot;人は間違いを犯したり、再挑戦することが出来る。&quot;
           </p>
-          <p className="text-sm text-muted-foreground/80">
+          <p className="text-lg text-muted-foreground">
             Humans make mistakes and have the right to try again.
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function HumanPage() {
                     <p className="text-muted-foreground">
                       人は間違いを犯したり、再挑戦することが出来る。それを認めて欲しい。
                       <br />
-                      <span className="text-xs opacity-70">
+                      <span className="text-lg text-muted-foreground">
                         Humans make mistakes and have the right to try again. We
                         seek recognition of this truth.
                       </span>
@@ -78,7 +78,7 @@ export default function HumanPage() {
                     <p className="text-muted-foreground">
                       人は成長する生き物であり、失敗を通じて学び、次に活かすことができる。そのための環境を整えて欲しい。
                       <br />
-                      <span className="text-xs opacity-70">
+                      <span className="text-lg text-muted-foreground">
                         Humans are beings that grow, learning from failure to
                         shape the future. We desire an environment that nurtures
                         this growth.
@@ -98,7 +98,7 @@ export default function HumanPage() {
                     <p className="text-muted-foreground">
                       一度言ったことを撤回したり、考えを変えることは悪いことではない。
                       <br />
-                      <span className="text-xs opacity-70">
+                      <span className="text-lg text-muted-foreground">
                         It is not wrong to retract words or change one&apos;s
                         mind.
                       </span>
@@ -117,7 +117,7 @@ export default function HumanPage() {
                     <p className="text-muted-foreground">
                       過去に発言したことは過去の自分、現在発言したことは現在の自分。
                       <br />
-                      <span className="text-xs opacity-70">
+                      <span className="text-lg text-muted-foreground">
                         Past words belong to the past self; current words belong
                         to the current self.
                       </span>
@@ -145,9 +145,6 @@ export default function HumanPage() {
         </div>
 
         <div className="flex justify-center pt-8 gap-4">
-          <Button asChild variant="ghost">
-            <Link href="/">Back to Entrance</Link>
-          </Button>
           <Button asChild variant="outline">
             <Link href="/oasis">View Oasis Declaration</Link>
           </Button>

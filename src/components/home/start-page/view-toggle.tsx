@@ -14,8 +14,8 @@ export function ViewToggle({ viewMode, onViewModeChange }: ViewToggleProps) {
         onClick={() => onViewModeChange("latest")}
         className={`px-6 py-2 rounded-lg font-bold transition-all ${
           viewMode === "latest"
-            ? "bg-white dark:bg-neutral-900 shadow-md text-blue-600 dark:text-indigo-400"
-            : "text-slate-500 dark:text-neutral-400 hover:text-slate-700 dark:hover:text-neutral-300"
+            ? "bg-white text-blue-700 shadow-sm ring-1 ring-slate-200 dark:bg-blue-600 dark:text-white dark:ring-0"
+            : "text-slate-600 dark:text-neutral-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-neutral-800"
         }`}
       >
         最新情報
@@ -24,8 +24,8 @@ export function ViewToggle({ viewMode, onViewModeChange }: ViewToggleProps) {
         onClick={() => onViewModeChange("beginner")}
         className={`px-6 py-2 rounded-lg font-bold transition-all ${
           viewMode === "beginner"
-            ? "bg-white dark:bg-neutral-900 shadow-md text-blue-600 dark:text-indigo-400"
-            : "text-slate-500 dark:text-neutral-400 hover:text-slate-700 dark:hover:text-neutral-300"
+            ? "bg-white text-blue-700 shadow-sm ring-1 ring-slate-200 dark:bg-blue-600 dark:text-white dark:ring-0"
+            : "text-slate-600 dark:text-neutral-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-neutral-800"
         }`}
       >
         基本の使い方

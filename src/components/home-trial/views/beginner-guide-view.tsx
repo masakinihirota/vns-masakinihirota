@@ -154,8 +154,7 @@ export function BeginnerGuideView() {
           <div
             key={step.title}
             className={cn(
-              "flex flex-col md:flex-row gap-8 items-start relative transition-all duration-300 z-10",
-              step.isRoot && "grayscale-[0.8]"
+              "flex flex-col md:flex-row gap-8 items-start relative transition-all duration-300 z-10"
             )}
           >
             {/* ステップドット (Stepper Node) */}
@@ -195,8 +194,9 @@ export function BeginnerGuideView() {
               </h4>
               <p
                 className={cn(
-                  "text-slate-600 dark:text-neutral-400 leading-relaxed font-bold transition-all",
-                  step.isRoot && "line-through text-slate-400 opacity-40"
+                  "text-slate-600 dark:text-neutral-100 leading-relaxed font-bold transition-all",
+                  step.isRoot &&
+                    "line-through text-slate-900 dark:text-neutral-100"
                 )}
               >
                 {step.desc}
@@ -252,7 +252,7 @@ export function BeginnerGuideView() {
                               <ExternalLink size={12} />
                             </Link>
                           </div>
-                          <p className="text-[16px] text-slate-500 dark:text-neutral-400 mt-1 leading-relaxed">
+                          <p className="text-[16px] text-slate-500 dark:text-neutral-200 mt-1 leading-relaxed">
                             ヘイト発言や誹謗中傷を行わず、安心・安全なコミュニティを作ります。
                           </p>
                         </div>
@@ -262,22 +262,27 @@ export function BeginnerGuideView() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       {/* 2. 星座 */}
                       <div className="space-y-3">
-                        <label className="block text-[16px] font-bold text-slate-700 dark:text-neutral-300 ml-1">
+                        <label className="block text-[16px] font-bold text-slate-700 dark:text-neutral-100 ml-1">
                           あなたの星座
                         </label>
                         <select
                           className={cn(
                             "w-full p-4 rounded-xl border-2 outline-none transition-all font-bold text-[18px] shadow-sm",
+                            "text-slate-900 dark:text-white",
                             zodiac
                               ? "border-blue-500 bg-blue-50/30 dark:bg-blue-900/10 ring-4 ring-blue-500/10"
-                              : "border-slate-100 dark:border-neutral-800 bg-white dark:bg-neutral-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                              : "border-slate-100 dark:border-neutral-800 bg-white dark:bg-neutral-800 focus:ring-2 focus:ring-blue-500"
                           )}
                           value={zodiac}
                           onChange={(e) => setZodiac(e.target.value)}
                         >
                           <option value="">選択してください</option>
                           {ZODIAC_SIGNS.map((s) => (
-                            <option key={s.value} value={s.value}>
+                            <option
+                              key={s.value}
+                              value={s.value}
+                              className="text-slate-900 bg-white dark:text-white dark:bg-neutral-800"
+                            >
                               {s.label}
                             </option>
                           ))}
@@ -286,26 +291,31 @@ export function BeginnerGuideView() {
 
                       {/* 3. 使用言語 */}
                       <div className="space-y-3">
-                        <label className="block text-[16px] font-bold text-slate-700 dark:text-neutral-300 ml-1">
+                        <label className="block text-[16px] font-bold text-slate-700 dark:text-neutral-100 ml-1">
                           使用言語
                         </label>
                         <select
                           className={cn(
                             "w-full p-4 rounded-xl border-2 outline-none transition-all font-bold text-[18px] shadow-sm",
+                            "text-slate-900 dark:text-white",
                             language
                               ? "border-blue-500 bg-blue-50/30 dark:bg-blue-900/10 ring-4 ring-blue-500/10"
-                              : "border-slate-100 dark:border-neutral-800 bg-white dark:bg-neutral-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                              : "border-slate-100 dark:border-neutral-800 bg-white dark:bg-neutral-800 focus:ring-2 focus:ring-blue-500"
                           )}
                           value={language}
                           onChange={(e) => setLanguage(e.target.value)}
                         >
                           {LANGUAGES.map((l) => (
-                            <option key={l.value} value={l.value}>
+                            <option
+                              key={l.value}
+                              value={l.value}
+                              className="text-slate-900 bg-white dark:text-white dark:bg-neutral-800"
+                            >
                               {l.label}
                             </option>
                           ))}
                         </select>
-                        <p className="text-[12px] text-slate-500 dark:text-neutral-500 mt-1 ml-1 font-medium">
+                        <p className="text-[12px] text-slate-500 dark:text-neutral-300 mt-1 ml-1 font-medium">
                           ※ブラウザ設定から自動取得しました。後で変更可能です。
                         </p>
                       </div>

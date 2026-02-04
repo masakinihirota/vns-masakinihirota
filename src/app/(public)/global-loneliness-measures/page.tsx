@@ -1,6 +1,3 @@
-import { MoveRight } from "lucide-react";
-import Link from "next/link";
-
 export const metadata = {
   title: "世界の孤独対策 | VNS",
   description:
@@ -710,15 +707,7 @@ export default function GlobalLonelinessMeasuresPage() {
         </div>
 
         {/* Footer Navigation */}
-        <div className="mt-20 border-t pt-8 flex justify-center">
-          <Link
-            href="/"
-            className="group inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-          >
-            <MoveRight className="h-4 w-4 rotate-180 transition-transform group-hover:-translate-x-1" />
-            トップページに戻る
-          </Link>
-        </div>
+        <div className="mt-20 border-t pt-8 flex justify-center"></div>
       </main>
     </div>
   );
