@@ -57,13 +57,12 @@ app.post("/user-profiles/:id/card", async (c: any) => {
 
   try {
     await upsertBusinessCard(profileId, data);
-    revalidatePath(`/ user - profiles / ${ profileId }/card`);
-revalidatePath(`/user-profiles/${profileId}`);
-return c.json({ success: true });
+    revalidatePath(`/ user - profiles / ${ profileId } `);
+    return c.json({ success: true });
   } catch (error) {
-  console.error("Failed to save business card settings:", error);
-  return c.json({ error: "Failed to save settings" }, 500);
-}
+    console.error("Failed to save business card settings:", error);
+    return c.json({ error: "Failed to save settings" }, 500);
+  }
 });
 
 // --- Works Endpoints ---
