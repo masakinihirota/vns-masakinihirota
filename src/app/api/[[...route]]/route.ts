@@ -9,7 +9,7 @@ export const runtime = "edge";
 
 const app = new Hono().basePath("/api");
 
-app.get("/hello", (c) => {
+app.get("/hello", (c: Context) => {
   return c.json({
     message: "Hello from Hono!",
   });
@@ -17,7 +17,7 @@ app.get("/hello", (c) => {
 
 // --- Auth Endpoints ---
 
-app.post("/auth/anonymous", async (c) => {
+app.post("/auth/anonymous", async (c: Context) => {
   const supabase = await createClient();
   const { error } = await supabase.auth.signInAnonymously();
 
@@ -30,7 +30,7 @@ app.post("/auth/anonymous", async (c) => {
 
 // --- User Profiles Endpoints ---
 
-app.post("/user-profiles/:id/card", async (c) => {
+app.post("/user-profiles/:id/card", async (c: Context) => {
   const profileId = c.req.param("id");
   const data = await c.req.json();
   const supabase = await createClient();
@@ -73,7 +73,7 @@ const WorkSchema = z.object({
   category: z.enum(["anime", "manga", "other"]),
 });
 
-app.post("/works", async (c) => {
+app.post("/works", async (c: Context) => {
   const supabase = await createClient();
   const {
     data: { user },
