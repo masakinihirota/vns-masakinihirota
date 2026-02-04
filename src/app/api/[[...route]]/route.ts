@@ -1,4 +1,3 @@
-```typescript
 import { upsertBusinessCard } from "@/lib/db/business-cards";
 import { createClient } from "@/lib/supabase/server";
 import { Hono } from "hono";
@@ -57,7 +56,7 @@ app.post("/user-profiles/:id/card", async (c: any) => {
 
   try {
     await upsertBusinessCard(profileId, data);
-    revalidatePath(`/ user - profiles / ${ profileId } `);
+    revalidatePath(`/user-profiles/${profileId}`);
     return c.json({ success: true });
   } catch (error) {
     console.error("Failed to save business card settings:", error);
