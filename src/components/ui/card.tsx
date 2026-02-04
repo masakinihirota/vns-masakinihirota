@@ -5,10 +5,8 @@ export const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className,
   ...props
 }) => (
-  // Provide sensible default spacing/rounded styling so content within cards
-  // isn't flush to the very edge. Consumers can still override by passing className.
   <div
-    className={`rounded-lg overflow-hidden ${className ?? ""}`}
+    className={`rounded-2xl overflow-hidden backdrop-blur-md bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 shadow-lg ${className ?? ""}`}
     data-testid="card"
     {...props}
   >

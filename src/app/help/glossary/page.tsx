@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  ArrowLeft,
   BookOpen,
   Briefcase,
   Quote,
@@ -37,11 +36,11 @@ const GLOSSARY_ITEMS = [
   },
   {
     id: "masakinihirota",
-    term: "masakinihirota (真っ先に拾った)",
+    term: "Concept",
     category: "concept",
     categoryLabel: "理念・基本",
     description:
-      "本サービスの名称。「インターネットという情報の洪水の中から真っ先に価値のあるものを拾い上げる」というコンセプトを表しています。",
+      "本サービスの基本コンセプト。「インターネットという情報の洪水の中から真っ先に価値のあるものを拾い上げる」という思いを表しています。",
   },
   {
     id: "honesty",
@@ -451,17 +450,6 @@ export default function GlossaryPage() {
       <div className="absolute top-0 left-0 w-full h-96 bg-gradient-to-b from-teal-500/10 via-transparent to-transparent pointer-events-none" />
 
       <div className="relative max-w-5xl mx-auto py-12 px-6 space-y-12">
-        {/* Navigation */}
-        <Link
-          href="/help"
-          className="inline-flex items-center gap-2 text-lg font-bold text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 transition-colors group"
-        >
-          <div className="p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl group-hover:border-teal-200 dark:group-hover:border-teal-800 shadow-sm transition-all">
-            <ArrowLeft className="w-4 h-4" />
-          </div>
-          <span>ヘルプセンターに戻る</span>
-        </Link>
-
         {/* Hero Section */}
         <div className="space-y-6 text-center md:text-left">
           <div className="flex flex-col md:flex-row md:items-end gap-6">
@@ -473,8 +461,7 @@ export default function GlossaryPage() {
                 用語集
               </h1>
               <p className="text-lg text-slate-600 dark:text-slate-400 font-medium max-w-2xl">
-                VNS (Value Network Service)
-                の独自の概念やシステムを理解するためのガイドです。
+                VNS の独自の概念やシステムを理解するためのガイドです。
               </p>
             </div>
           </div>

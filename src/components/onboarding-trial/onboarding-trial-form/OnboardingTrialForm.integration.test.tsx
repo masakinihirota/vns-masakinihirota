@@ -13,16 +13,16 @@ vi.mock("next/navigation", () => ({
 beforeEach(() => {
   // Mock ResizeObserver
   global.ResizeObserver = class ResizeObserver {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
+    observe() { }
+    unobserve() { }
+    disconnect() { }
   };
 
   // Spy on localStorage
   vi.spyOn(Storage.prototype, "setItem");
 
   // Mock window.alert
-  vi.spyOn(window, "alert").mockImplementation(() => {});
+  vi.spyOn(window, "alert").mockImplementation(() => { });
 
   vi.clearAllMocks();
   localStorage.clear();
@@ -79,10 +79,8 @@ describe("OnboardingTrialForm Integration", () => {
     // Since we spy on prototype in beforeEach, we can check that.
     const setItemSpy = vi.spyOn(Storage.prototype, "setItem");
     expect(setItemSpy).toHaveBeenCalled();
-    const mockSetItem = vi.mocked(localStorage.setItem);
-
     // Check the LAST call which should be the final save
-    const lastCall = mockSetItem.mock.calls[mockSetItem.mock.calls.length - 1];
+    const lastCall = setItemSpy.mock.calls[setItemSpy.mock.calls.length - 1];
     expect(lastCall).toBeTruthy();
     const [key, value] = lastCall!;
 

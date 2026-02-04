@@ -1,15 +1,36 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import useSWR from "swr";
+import { TrialStorage, VNSTrialData } from "@/lib/trial-storage";
 
 export type ViewMode = "beginner" | "latest";
 
 const STORAGE_KEY = "homeTrialConfig";
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export const useHomeTrialLogic = () => {
   const [viewMode, setViewMode] = useState<ViewMode>("beginner");
+  const [trialData, setTrialData] = useState<VNSTrialData | null>(null);
+
+  // Fetch Public Works
+  const { data: publicWorks, error: worksError } = useSWR(
+    "/api/public/works?limit=5",
+    fetcher
+  );
+
+  // Sync Trial Data
+  const refreshTrialData = () => {
+    const data = TrialStorage.init();
+    setTrialData(data);
+  };
 
   useEffect(() => {
+    // Initial load
+    refreshTrialData();
+
+    // Load config
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
       if (stored) {
@@ -38,5 +59,8 @@ export const useHomeTrialLogic = () => {
   return {
     viewMode,
     handleToggleView,
+    trialData,
+    publicWorks,
+    refreshTrialData,
   };
 };

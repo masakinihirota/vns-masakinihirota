@@ -1,4 +1,4 @@
-import { TalesClaireLP } from "@/components/landing-page/tales-claire/tales-claire-lp";
+import { TalesClaireLP } from "@/components/landing-page";
 
 export default function Home() {
   return <TalesClaireLP />;

@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 
 // UI-specific definitions (can be aligned with DB types later)
@@ -15,78 +17,51 @@ export type Profile = {
 
 export type SortKey = "displayName" | "role" | "purpose" | "type";
 
-const MOCK_PROFILES: Profile[] = [
-  {
-    id: "550e8400-e29b-41d4-a716-446655440000",
-    displayName: "佐藤 健太",
-    username: "kenta_dev",
-    role: "リーダー",
-    purpose: "仕事",
-    type: "本人",
-    avatar: null,
-    deleted: false,
-  },
-  {
-    id: "550e8400-e29b-41d4-a716-446655440001",
-    displayName: "田中 美咲",
-    username: "misaki_design",
-    role: "メンバー",
-    purpose: "仕事",
-    type: "本人",
-    avatar: null,
-    deleted: false,
-  },
-  {
-    id: "3",
-    displayName: "鈴木 一郎",
-    username: "ichiro_game",
-    role: "メンバー",
-    purpose: "遊び",
-    type: "インタビュー",
-    avatar: null,
-    deleted: false,
-  },
-  {
-    id: "4",
-    displayName: "高橋 エリカ",
-    username: "erika_match",
-    role: "メンバー",
-    purpose: "婚活",
-    type: "他人視点",
-    avatar: null,
-    deleted: false,
-  },
-  {
-    id: "5",
-    displayName: "AI アシスタント",
-    username: "ai_helper",
-    role: "メンバー",
-    purpose: "その他",
-    type: "AI",
-    avatar: null,
-    deleted: false,
-  },
-  {
-    id: "6",
-    displayName: "渡辺 直人",
-    username: "naoto_leader",
-    role: "リーダー",
-    purpose: "仕事",
-    type: "架空",
-    avatar: null,
-    deleted: false,
-  },
-  {
-    id: "7",
-    displayName: "小林 さくら",
-    username: "sakura_bloom",
-    role: "メンバー",
-    purpose: "遊び",
-    type: "ペルソナ",
-    avatar: null,
-    deleted: false,
-  },
-];
+const fetchProfiles = async (
+  setProfiles: React.Dispatch<React.SetStateAction<Profile[]>>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  try {
+    setLoading(true);
+    const { createClient } = await import("@/lib/supabase/client");
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setProfiles([]);
+      setLoading(false);
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("user_profiles")
+      .select("*")
+      .eq("root_account_id", user.id);
+
+    if (error) {
+      console.error("Error fetching profiles:", error);
+      setProfiles([]);
+    } else {
+      const mappedProfiles: Profile[] = (data || []).map((p: any) => ({
+        id: p.id,
+        displayName: p.display_name,
+        username: p.display_name, // Mapping display_name as username for UI if field missing
+        role: p.role === "leader" ? "リーダー" : "メンバー",
+        purpose: p.purpose || "未設定",
+        type: p.profile_type === "self" ? "本人" : p.profile_type,
+        avatar: p.avatar_url,
+        deleted: !p.is_active,
+      }));
+      setProfiles(mappedProfiles);
+    }
+    setLoading(false);
+  } catch (error) {
+    console.error("Unexpected error fetching profiles:", error);
+    setLoading(false);
+  }
+};
 
 export const useUserProfileManager = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -114,21 +89,8 @@ export const useUserProfileManager = () => {
     }
   }, [isDarkMode]);
 
-  const fetchProfiles = async () => {
-    try {
-      setLoading(true);
-      setTimeout(() => {
-        setProfiles(MOCK_PROFILES);
-        setLoading(false);
-      }, 500);
-    } catch (error) {
-      console.error("Error fetching profiles:", error);
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    void fetchProfiles();
+    void fetchProfiles(setProfiles, setLoading);
   }, []);
 
   const filteredProfiles = profiles

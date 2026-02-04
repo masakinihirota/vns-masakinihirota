@@ -9,14 +9,30 @@ export const LocalModeButton = () => {
   const router = useRouter();
 
   const handleLocalModeStart = () => {
-    startTransition(() => {
+    startTransition(async () => {
       // ローカルモード用クッキーを設定 (有効期限: 1年)
       document.cookie =
         "local_mode=true; path=/; max-age=31536000; SameSite=Lax";
 
-      // オンボーディングの起点へ遷移
-      router.push("/home-trial");
-      router.refresh();
+      try {
+        const response = await fetch("/api/auth/anonymous", {
+          method: "POST",
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          // オンボーディングの起点へ遷移
+          router.push(result.redirect || "/home-trial");
+          router.refresh();
+        } else {
+          console.error("Anonymous login failed:", result.error);
+        }
+      } catch (error) {
+        console.error(
+          "An unexpected error occurred during anonymous login:",
+          error
+        );
+      }
     });
   };
 

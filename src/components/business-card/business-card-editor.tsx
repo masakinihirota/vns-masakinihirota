@@ -3,7 +3,6 @@
 import { Loader2, Save } from "lucide-react";
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { saveBusinessCardSettings } from "@/app/(protected)/user-profiles/[id]/card/actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -14,7 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { BusinessCard, BusinessCardConfig } from "@/lib/db/business-cards";
 import { UserProfile } from "@/lib/db/user-profiles";
-import { Work, Skill, BusinessCardView } from "./business-card-view";
+import { BusinessCardView, Skill, Work } from "./business-card-view";
 
 type BusinessCardEditorProps = {
   profile: UserProfile;
@@ -80,16 +79,28 @@ export function BusinessCardEditor({
 
   const handleSave = () => {
     startTransition(async () => {
-      const result = await saveBusinessCardSettings(profile.id, {
-        is_published: card.is_published,
-        display_config: card.display_config,
-        content: card.content,
-      });
+      try {
+        const response = await fetch(`/api/user-profiles/${profile.id}/card`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            is_published: card.is_published,
+            display_config: card.display_config,
+            content: card.content,
+          }),
+        });
 
-      if (result.success) {
-        toast.success("Business card settings saved");
-      } else {
-        toast.error(result.error || "Failed to save settings");
+        const result = await response.json();
+
+        if (result.success) {
+          toast.success("Business card settings saved");
+        } else {
+          toast.error(result.error || "Failed to save settings");
+        }
+      } catch (error) {
+        toast.error("An unexpected error occurred");
       }
     });
   };

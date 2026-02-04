@@ -17,7 +17,6 @@ export function AccountCard({
     <div
       className={cn(
         "border-2 border-slate-300 dark:border-neutral-700 rounded-2xl bg-white dark:bg-neutral-900 overflow-hidden shadow-sm max-w-2xl mx-auto md:mx-0 relative",
-        isTrial && "opacity-50",
         className
       )}
     >
@@ -37,36 +36,31 @@ export function AccountCard({
 
       {/* アカウントアイテム */}
       <div className="p-6 space-y-4 text-[18px]">
-        <div
-          className={cn(
-            "text-slate-700 dark:text-neutral-300 font-bold",
-            isTrial && "line-through"
-          )}
-        >
+        <div className={cn("text-slate-700 dark:text-neutral-100 font-bold")}>
           ・プロフィールの管理（千の仮面）
         </div>
         {!isSimple && (
           <>
             <div
               className={cn(
-                "text-slate-700 dark:text-neutral-300 font-bold",
-                isTrial && "line-through"
+                "text-slate-700 dark:text-neutral-100 font-bold",
+                isTrial && "line-through text-slate-500 dark:text-neutral-100"
               )}
             >
               ・現実の情報（母語・居住エリア）
             </div>
             <div
               className={cn(
-                "text-slate-700 dark:text-neutral-300 font-bold",
-                isTrial && "line-through"
+                "text-slate-700 dark:text-neutral-100 font-bold",
+                isTrial && "line-through text-slate-500 dark:text-neutral-100"
               )}
             >
               ・ポイント・経済管理
             </div>
             <div
               className={cn(
-                "text-slate-700 dark:text-neutral-300 font-bold",
-                isTrial && "line-through"
+                "text-slate-700 dark:text-neutral-100 font-bold",
+                isTrial && "line-through text-slate-500 dark:text-neutral-100"
               )}
             >
               ・その他、非常時にする重要情報

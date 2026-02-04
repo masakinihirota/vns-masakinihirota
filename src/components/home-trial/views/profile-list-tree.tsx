@@ -79,11 +79,11 @@ export function ProfileListTree() {
                   </div>
                 ))
               ) : (
-                <div className="flex items-center gap-4 p-4 border-2 border-dashed border-blue-100 dark:border-blue-900 rounded-xl bg-white/50 dark:bg-neutral-900/50 w-full md:w-auto opacity-60">
+                <div className="flex items-center gap-4 p-4 border-2 border-dashed border-blue-100 dark:border-blue-900 rounded-xl bg-white/50 dark:bg-neutral-900/50 w-full md:w-auto">
                   <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-neutral-800 flex items-center justify-center text-slate-400">
                     <Briefcase size={22} />
                   </div>
-                  <span className="font-bold text-slate-500 dark:text-neutral-500">
+                  <span className="font-bold text-slate-500 dark:text-neutral-300">
                     仕事・クリエイション用（未作成）
                   </span>
                 </div>
@@ -94,11 +94,11 @@ export function ProfileListTree() {
           {/* 遊びプロフィール (省略形: 今回は作成フローで選択肢が限られているため、一旦枠だけ残すか、同様にマッピング) */}
           <div className="relative flex items-center">
             <div className="absolute -left-[36px] w-8 h-1 bg-blue-200 dark:bg-blue-900" />
-            <div className="flex items-center gap-4 p-4 border-2 border-dashed border-emerald-100 dark:border-emerald-900 rounded-xl bg-white/50 dark:bg-neutral-900/50 shadow-sm w-full md:w-auto opacity-60">
+            <div className="flex items-center gap-4 p-4 border-2 border-dashed border-emerald-100 dark:border-emerald-900 rounded-xl bg-white/50 dark:bg-neutral-900/50 shadow-sm w-full md:w-auto">
               <div className="w-10 h-10 rounded-lg bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                 <Gamepad2 size={22} />
               </div>
-              <span className="font-bold text-slate-500 dark:text-neutral-500">
+              <span className="font-bold text-slate-500 dark:text-neutral-300">
                 遊びが目的のプロフィール（未作成）
               </span>
             </div>
@@ -107,24 +107,24 @@ export function ProfileListTree() {
           {/* パートナー探しプロフィール */}
           <div className="relative flex items-center">
             <div className="absolute -left-[36px] w-8 h-1 bg-blue-200 dark:bg-blue-900" />
-            <div className="flex items-center gap-4 p-4 border-2 border-dashed border-rose-100 dark:border-rose-900 rounded-xl bg-white/50 dark:bg-neutral-900/50 shadow-sm w-full md:w-auto opacity-60">
+            <div className="flex items-center gap-4 p-4 border-2 border-dashed border-rose-100 dark:border-rose-900 rounded-xl bg-white/50 dark:bg-neutral-900/50 shadow-sm w-full md:w-auto">
               <div className="w-10 h-10 rounded-lg bg-rose-50 dark:bg-rose-950 flex items-center justify-center text-rose-600 dark:text-rose-400">
                 <Heart size={22} />
               </div>
-              <span className="font-bold text-slate-500 dark:text-neutral-500">
+              <span className="font-bold text-slate-500 dark:text-neutral-300">
                 パートナー探しが目的のプロフィール（未作成）
               </span>
             </div>
           </div>
 
           {/* 上限インジケーター */}
-          <div className="relative flex items-center gap-4 italic text-slate-400 dark:text-neutral-500 pt-2">
+          <div className="relative flex items-center gap-4 italic text-slate-400 dark:text-neutral-400 pt-2">
             <div className="absolute -left-[36px] w-8 h-1 bg-blue-200 dark:bg-blue-900" />
             <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-neutral-800 flex items-center justify-center">
               <Plus size={22} />
             </div>
             <div className="flex flex-col">
-              <span className="font-bold text-slate-500 dark:text-neutral-500">
+              <span className="font-bold text-slate-500 dark:text-neutral-300">
                 ...その他、最大1000個まで自由に作成可能
               </span>
             </div>
@@ -132,10 +132,10 @@ export function ProfileListTree() {
         </div>
       </div>
 
-      <p className="mt-10 text-slate-600 dark:text-neutral-400 leading-relaxed bg-white/60 dark:bg-neutral-900/60 p-6 rounded-2xl border border-slate-200 dark:border-neutral-800 font-medium backdrop-blur-sm">
+      <p className="mt-10 text-slate-600 dark:text-neutral-200 leading-relaxed bg-white/60 dark:bg-neutral-900/60 p-6 rounded-2xl border border-slate-200 dark:border-neutral-800 font-medium backdrop-blur-sm">
         プロフィールはあなたの「仮面」です。目的ごとに使い分けます、複数の目的を持ったプロフィールを作成することも可能です。
-        <span className="block mt-2 text-red-400/80 dark:text-red-400/60 text-sm">
-          ※1000のプロフィール作成は有料ユーザー向けのサービスとなります。
+        <span className="block mt-2 text-red-500/80 dark:text-red-400/80 text-sm font-bold">
+          ※1000のプロフィール作成は特別なユーザー向けのサービスとなります。
         </span>
       </p>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 // アイコンとしてlucide-reactのBookOpenを使用
-import { BookOpen, ChevronRight, Home, Lock } from "lucide-react";
+import { ChevronRight, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -61,7 +61,7 @@ const TERMS_CONTENT = [
       <a
         key="privacy-link"
         href="/privacy"
-        className="text-indigo-600 hover:text-indigo-800 font-bold flex items-center mt-4 transition-colors"
+        className="text-primary hover:underline font-bold flex items-center mt-4 transition-colors"
       >
         <Lock className="w-5 h-5 mr-1" />
         プライバシーポリシーを見る
@@ -121,40 +121,6 @@ const TERMS_CONTENT = [
   },
 ];
 
-// --- 共通のヘッダー/フッターの簡易的なプレースホルダー ---
-const Header = () => (
-  <header className="bg-white shadow-md border-b border-gray-100 sticky top-0 z-10">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a
-        href="/"
-        className="flex items-center text-xl font-extrabold text-indigo-600 tracking-wider"
-      >
-        <BookOpen className="w-6 h-6 mr-2" />
-        VNS masakinihirota
-      </a>
-      <a
-        href="/"
-        className="text-gray-600 hover:text-indigo-600 transition-colors flex items-center"
-      >
-        <Home className="w-5 h-5 mr-1" />
-        HOME
-      </a>
-    </div>
-  </header>
-);
-
-const Footer = () => (
-  <footer className="bg-gray-100 border-t border-gray-200 mt-12 py-8">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-500">
-      © 2024 VNS masakinihirota. All rights reserved. |{" "}
-      <a href="/privacy" className="hover:underline">
-        プライバシーポリシー
-      </a>
-    </div>
-  </footer>
-);
-
-// --- 利用規約ページコンポーネント ---
 const TermsOfServicePage = () => {
   const router = useRouter();
 
@@ -164,26 +130,18 @@ const TermsOfServicePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 font-sans antialiased text-gray-800">
-      <Header />
-
+    <div className="min-h-screen bg-background font-sans antialiased text-foreground pb-20">
       <main className="py-12 px-4 sm:px-6 lg:px-8">
-        {/* レスポンシブ対応:
-                    スマホ(767px以下): 全幅
-                    タブレット(768px〜1023px): max-w-3xl (約800px)
-                    PC(1024px以上): max-w-4xl (約900px)
-                    中央寄せ (mx-auto)
-                */}
-        <div className="md:max-w-3xl lg:max-w-4xl mx-auto bg-white p-8 sm:p-10 lg:p-12 shadow-2xl rounded-xl">
+        <div className="md:max-w-3xl lg:max-w-4xl mx-auto bg-card p-8 sm:p-10 lg:p-12 shadow-2xl rounded-xl border">
           {/* メインタイトルエリア */}
-          <header className="mb-10 sm:mb-12 border-b-2 border-indigo-100 pb-4">
-            <h1 className="text-4xl sm:text-5xl font-extrabold text-indigo-700 leading-tight">
+          <header className="mb-10 sm:mb-12 border-b-2 border-primary/20 pb-4">
+            <h1 className="text-4xl sm:text-5xl font-extrabold text-primary leading-tight">
               利用規約
             </h1>
-            <p className="text-xl sm:text-2xl text-gray-500 font-light mt-1 mb-4">
+            <p className="text-xl sm:text-2xl text-muted-foreground font-light mt-1 mb-4">
               Terms of Service
             </p>
-            <p className="text-lg sm:text-lg text-gray-500 italic">
+            <p className="text-lg sm:text-lg text-muted-foreground italic">
               最終更新日: 2024年12月31日
             </p>
           </header>
@@ -193,16 +151,23 @@ const TermsOfServicePage = () => {
             {TERMS_CONTENT.map((section, index) => (
               <section key={index} className="space-y-4 md:space-y-5">
                 {/* 記事タイトル (太字、プライマリーカラー) */}
-                <h2 className="text-xl sm:text-2xl font-bold border-b-4 border-indigo-400/50 pb-2 text-indigo-600">
+                <h2 className="text-xl sm:text-2xl font-bold border-b-4 border-primary/30 pb-2 text-primary">
                   【{section.article}】{section.title}
                 </h2>
 
                 {/* 記事内容 (可読性を考慮したフォントと行間) */}
-                <div className="text-lg sm:text-lg leading-relaxed text-gray-700 space-y-3">
+                <div className="text-lg sm:text-lg leading-relaxed text-foreground space-y-3">
                   {section.content.map((item, itemIndex) => {
                     if (React.isValidElement(item)) {
                       // リンク要素（第5条のプライバシーポリシーリンクなど）
-                      return item;
+                      return React.cloneElement(
+                        item as React.ReactElement<any>,
+                        {
+                          key: `${index}-${itemIndex}`,
+                          className:
+                            "text-primary hover:underline font-bold flex items-center mt-4 transition-colors",
+                        }
+                      );
                     }
                     if (Array.isArray(item)) {
                       // 禁止事項などのリスト
@@ -212,7 +177,7 @@ const TermsOfServicePage = () => {
                           className="list-disc pl-5 space-y-1 mt-2"
                         >
                           {item.map((listItem, listIndex) => (
-                            <li key={listIndex} className="text-gray-600">
+                            <li key={listIndex} className="text-foreground">
                               {listItem}
                             </li>
                           ))}
@@ -228,11 +193,11 @@ const TermsOfServicePage = () => {
           </div>
 
           {/* ボタンエリア */}
-          <div className="mt-16 pt-8 border-t border-gray-200">
+          <div className="mt-16 pt-8 border-t">
             {/* 認証が必須な場合はこのボタンを表示 */}
             <button
               onClick={handleRegister}
-              className="w-full sm:w-auto px-10 py-4 bg-indigo-600 text-white text-lg font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-indigo-300 flex items-center justify-center mx-auto"
+              className="w-full sm:w-auto px-10 py-4 bg-primary text-primary-foreground text-lg font-bold rounded-xl shadow-lg hover:opacity-90 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-4 focus:ring-primary/30 flex items-center justify-center mx-auto"
             >
               同意して新規会員登録へ進む
               <ChevronRight className="w-5 h-5 ml-2" />
@@ -240,8 +205,6 @@ const TermsOfServicePage = () => {
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 };
