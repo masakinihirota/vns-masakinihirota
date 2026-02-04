@@ -81,7 +81,7 @@
     "babel-plugin-react-compiler": "1.0.0",
     "baseline-browser-mapping": "^2.9.19",
     "eslint": "^9.39.2",
-    "eslint-config-next": "16.1.6",
+    "eslint-config-next": "16.0.8",
     "eslint-plugin-functional": "^9.0.2",
     "husky": "^9.1.7",
     "jsdom": "^27.4.0",
