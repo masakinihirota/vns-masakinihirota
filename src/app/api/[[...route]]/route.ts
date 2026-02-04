@@ -1,9 +1,9 @@
+import { upsertBusinessCard } from "@/lib/db/business-cards";
+import { createClient } from "@/lib/supabase/server";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { upsertBusinessCard } from "@/lib/db/business-cards";
-import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "edge";
 
