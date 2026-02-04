@@ -1,6 +1,6 @@
-import { ThemeProvider } from "@/components/theme-provider";
-import type { Metadata } from "next";
 import "./globals.css";
+import type { Metadata } from "next";
+import { ThemeProvider } from "@/components/theme-provider";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
