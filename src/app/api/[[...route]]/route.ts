@@ -1,3 +1,4 @@
+```typescript
 import { upsertBusinessCard } from "@/lib/db/business-cards";
 import { createClient } from "@/lib/supabase/server";
 import { Hono } from "hono";
@@ -9,7 +10,7 @@ export const runtime = "edge";
 
 const app = new Hono().basePath("/api");
 
-app.get("/hello", (c: Context) => {
+app.get("/hello", (c: any) => {
   return c.json({
     message: "Hello from Hono!",
   });
@@ -17,7 +18,7 @@ app.get("/hello", (c: Context) => {
 
 // --- Auth Endpoints ---
 
-app.post("/auth/anonymous", async (c: Context) => {
+app.post("/auth/anonymous", async (c: any) => {
   const supabase = await createClient();
   const { error } = await supabase.auth.signInAnonymously();
 
@@ -30,7 +31,7 @@ app.post("/auth/anonymous", async (c: Context) => {
 
 // --- User Profiles Endpoints ---
 
-app.post("/user-profiles/:id/card", async (c: Context) => {
+app.post("/user-profiles/:id/card", async (c: any) => {
   const profileId = c.req.param("id");
   const data = await c.req.json();
   const supabase = await createClient();
@@ -56,13 +57,13 @@ app.post("/user-profiles/:id/card", async (c: Context) => {
 
   try {
     await upsertBusinessCard(profileId, data);
-    revalidatePath(`/user-profiles/${profileId}/card`);
-    revalidatePath(`/user-profiles/${profileId}`);
-    return c.json({ success: true });
+    revalidatePath(`/ user - profiles / ${ profileId }/card`);
+revalidatePath(`/user-profiles/${profileId}`);
+return c.json({ success: true });
   } catch (error) {
-    console.error("Failed to save business card settings:", error);
-    return c.json({ error: "Failed to save settings" }, 500);
-  }
+  console.error("Failed to save business card settings:", error);
+  return c.json({ error: "Failed to save settings" }, 500);
+}
 });
 
 // --- Works Endpoints ---
@@ -73,7 +74,7 @@ const WorkSchema = z.object({
   category: z.enum(["anime", "manga", "other"]),
 });
 
-app.post("/works", async (c: Context) => {
+app.post("/works", async (c: any) => {
   const supabase = await createClient();
   const {
     data: { user },
