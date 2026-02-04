@@ -2,6 +2,7 @@
 
 import { MonitorSmartphone } from "lucide-react";
 import Link from "next/link";
+import { Suspense } from "react";
 import {
   AdToggle,
   HelpButton,
@@ -11,6 +12,7 @@ import {
   TrialButton,
 } from "@/components/layout";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import {
   Tooltip,
@@ -63,10 +65,16 @@ export const TalesClaireLP = () => {
 
         {/* Top Right Utility Buttons and Actions */}
         <div className="absolute top-4 right-4 z-50 flex items-center gap-2">
-          <div className="flex items-center gap-2 mr-4">
+          <div className="flex items-center gap-2">
             <TrialButton />
             <LoginButton />
           </div>
+
+          <Separator
+            orientation="vertical"
+            className="mx-2 h-4 hidden sm:block"
+          />
+
           <TooltipProvider>
             <AdToggle />
             <LanguageToggle />
@@ -96,7 +104,9 @@ export const TalesClaireLP = () => {
           <PurposeSection />
 
           {/* 4. Reference Video & Explanation */}
-          <InspirationSection />
+          <Suspense fallback={null}>
+            <InspirationSection />
+          </Suspense>
 
           {/* 5. Final Goal Section */}
           <FinalGoalSection />

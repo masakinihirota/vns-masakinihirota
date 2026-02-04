@@ -342,6 +342,7 @@ interface VNSButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     | "indigo";
   size?: "sm" | "md" | "lg" | "icon";
   icon?: React.ElementType;
+  iconPosition?: "left" | "right";
   loading?: boolean;
   href?: string;
 }
@@ -353,6 +354,7 @@ const VNSButton = React.forwardRef<HTMLButtonElement, VNSButtonProps>(
       variant = "primary",
       size = "md",
       icon: Icon,
+      iconPosition = "left",
       className = "",
       loading = false,
       href,
@@ -389,13 +391,19 @@ const VNSButton = React.forwardRef<HTMLButtonElement, VNSButtonProps>(
     const content = (
       <>
         <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out" />
-        {Icon && (
+        {Icon && iconPosition === "left" && (
           <Icon
             size={size === "sm" ? 16 : size === "lg" ? 24 : 20}
             className="relative z-10"
           />
         )}
         <span className="relative z-10">{children}</span>
+        {Icon && iconPosition === "right" && (
+          <Icon
+            size={size === "sm" ? 16 : size === "lg" ? 24 : 20}
+            className="relative z-10"
+          />
+        )}
         {loading && (
           <div className="absolute inset-0 bg-inherit flex items-center justify-center z-20">
             <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -448,6 +456,7 @@ export function TrialButton() {
       disabled={isPending}
       loading={isPending}
       icon={ArrowRight}
+      iconPosition="right"
       className="hidden sm:inline-flex"
     >
       {isPending ? "準備中..." : "お試し体験"}
@@ -457,7 +466,12 @@ export function TrialButton() {
 
 export function LoginButton() {
   return (
-    <VNSButton variant="indigo" icon={ArrowRight} href="/login">
+    <VNSButton
+      variant="indigo"
+      icon={ArrowRight}
+      iconPosition="right"
+      href="/login"
+    >
       メンバー登録 / ログイン
     </VNSButton>
   );
@@ -465,8 +479,10 @@ export function LoginButton() {
 
 export function GlobalHeader({
   showSidebarTrigger = true,
+  isPublic = false,
 }: {
   showSidebarTrigger?: boolean;
+  isPublic?: boolean;
 }) {
   const [user, setUser] = React.useState<User | null>(null);
   const [loading, setLoading] = React.useState(true);
@@ -532,17 +548,7 @@ export function GlobalHeader({
         <div className="flex items-center gap-2">
           {!loading && (
             <>
-              <AdToggle />
-              <LanguageToggle />
-              <ThemeToggle />
-              <HelpButton />
-
-              <Separator
-                orientation="vertical"
-                className="mx-2 h-4 hidden sm:block"
-              />
-
-              {user ? (
+              {!isPublic && user && user.id ? (
                 <>
                   <PointsDisplay />
                   <NotificationBell />
@@ -553,6 +559,16 @@ export function GlobalHeader({
                   <LoginButton />
                 </div>
               )}
+
+              <Separator
+                orientation="vertical"
+                className="mx-2 h-4 hidden sm:block"
+              />
+
+              <AdToggle />
+              <LanguageToggle />
+              <ThemeToggle />
+              <HelpButton />
             </>
           )}
         </div>

@@ -1,1 +1,1 @@
-export * from "./legendary-speech";
+export { LegendarySpeech } from "./legendary-speech";

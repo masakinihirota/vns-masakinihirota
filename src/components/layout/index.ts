@@ -4,19 +4,9 @@
  */
 
 // フォルダ化されたコンポーネント
-export { AppSidebar } from "./app-sidebar/AppSidebar";
-export { TrialSidebar } from "./app-sidebar/TrialSidebar";
-export { ConditionalFooter } from "./footer/ConditionalFooter";
-export { Footer } from "./footer/Footer";
-export {
-  AdToggle,
-  GlobalHeader,
-  HelpButton,
-  LanguageToggle,
-  LoginButton,
-  ThemeToggle,
-  TrialButton,
-} from "./global-header/GlobalHeader";
-export { MainContent } from "./main-content/MainContent";
-export { TrialOnboardingBackButton } from "./trial-onboarding-back-button/TrialOnboardingBackButton";
-export { TrialStatusBadge } from "./trial-status-badge/TrialStatusBadge";
+export * from "./app-sidebar";
+export * from "./footer";
+export * from "./global-header";
+export * from "./main-content";
+export * from "./trial-onboarding-back-button";
+export * from "./trial-status-badge";

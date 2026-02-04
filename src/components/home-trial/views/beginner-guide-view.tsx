@@ -20,7 +20,7 @@ import {
   Users,
 } from "lucide-react";
 import Link from "next/link";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { AccountCard } from "../../home/start-page/root-account-card";
 import { ProfileListTree } from "./profile-list-tree";
@@ -59,7 +59,18 @@ const LANGUAGES = [
 export function BeginnerGuideView() {
   const [oasisAgreed, setOasisAgreed] = useState(false);
   const [zodiac, setZodiac] = useState("");
-  const [language, setLanguage] = useState("ja");
+  const [language, setLanguage] = useState("");
+
+  // ブラウザの言語設定を自動取得
+  useEffect(() => {
+    const browserLang = navigator.language.split("-")[0];
+    const supportedLang = LANGUAGES.find((l) => l.value === browserLang);
+    if (supportedLang) {
+      setLanguage(supportedLang.value);
+    } else {
+      setLanguage("ja"); // デフォルト
+    }
+  }, []);
 
   type Step = {
     title: string;
@@ -164,6 +175,16 @@ export function BeginnerGuideView() {
 
             {/* コンテンツ */}
             <div className="flex-1 pb-12 border-b-4 border-slate-50 dark:border-neutral-800 last:border-0 w-full relative">
+              {step.isRoot && (
+                <div className="mb-6 p-5 bg-amber-50 dark:bg-amber-900/10 border-2 border-amber-200 dark:border-amber-800 rounded-2xl flex items-center gap-4">
+                  <div className="w-12 h-12 bg-amber-100 dark:bg-amber-800 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400">
+                    <ShieldCheck size={28} />
+                  </div>
+                  <p className="text-amber-700 dark:text-amber-300 font-bold text-[18px]">
+                    お試し体験中：アカウントの作成はスキップします。
+                  </p>
+                </div>
+              )}
               <h4
                 className={cn(
                   "text-[26px] font-black text-slate-800 dark:text-neutral-100 mb-4",
@@ -182,14 +203,9 @@ export function BeginnerGuideView() {
               </p>
               {step.isRoot && (
                 <div className="mt-8 space-y-6">
-                  {/* スキップメッセージ */}
-                  <div className="p-5 bg-amber-50 dark:bg-amber-900/10 border-2 border-amber-200 dark:border-amber-800 rounded-2xl flex items-center gap-4">
-                    <div className="w-12 h-12 bg-amber-100 dark:bg-amber-800 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400">
-                      <ShieldCheck size={28} />
-                    </div>
-                    <p className="text-amber-700 dark:text-amber-300 font-bold text-[18px]">
-                      お試し体験中：アカウントの作成はスキップします。
-                    </p>
+                  {/* アカウントカード（Step 1用） */}
+                  <div className="mt-8">
+                    <AccountCard isTrial={true} />
                   </div>
 
                   {/* 3つの質問フォーム */}
@@ -201,7 +217,14 @@ export function BeginnerGuideView() {
 
                     {/* 1. オアシス宣言 */}
                     <div className="space-y-4">
-                      <label className="group flex items-start gap-4 p-5 bg-white dark:bg-neutral-800 rounded-2xl border-2 border-slate-100 dark:border-neutral-800 cursor-pointer hover:border-blue-400 dark:hover:border-blue-600 transition-all shadow-sm has-[:checked]:border-blue-500 dark:has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/30 dark:has-[:checked]:bg-blue-900/10">
+                      <label
+                        className={cn(
+                          "group flex items-start gap-4 p-5 bg-white dark:bg-neutral-800 rounded-2xl border-2 transition-all cursor-pointer shadow-sm",
+                          oasisAgreed
+                            ? "border-blue-500 bg-blue-50/50 dark:bg-blue-900/20 ring-4 ring-blue-500/10 dark:ring-blue-500/5"
+                            : "border-slate-100 dark:border-neutral-800 hover:border-blue-400 dark:hover:border-blue-600"
+                        )}
+                      >
                         <div className="relative flex items-center mt-1">
                           <input
                             type="checkbox"
@@ -243,7 +266,12 @@ export function BeginnerGuideView() {
                           あなたの星座
                         </label>
                         <select
-                          className="w-full p-4 rounded-xl border-2 border-slate-100 dark:border-neutral-800 bg-white dark:bg-neutral-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all font-bold text-[18px]"
+                          className={cn(
+                            "w-full p-4 rounded-xl border-2 outline-none transition-all font-bold text-[18px] shadow-sm",
+                            zodiac
+                              ? "border-blue-500 bg-blue-50/30 dark:bg-blue-900/10 ring-4 ring-blue-500/10"
+                              : "border-slate-100 dark:border-neutral-800 bg-white dark:bg-neutral-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                          )}
                           value={zodiac}
                           onChange={(e) => setZodiac(e.target.value)}
                         >
@@ -262,7 +290,12 @@ export function BeginnerGuideView() {
                           使用言語
                         </label>
                         <select
-                          className="w-full p-4 rounded-xl border-2 border-slate-100 dark:border-neutral-800 bg-white dark:bg-neutral-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none transition-all font-bold text-[18px]"
+                          className={cn(
+                            "w-full p-4 rounded-xl border-2 outline-none transition-all font-bold text-[18px] shadow-sm",
+                            language
+                              ? "border-blue-500 bg-blue-50/30 dark:bg-blue-900/10 ring-4 ring-blue-500/10"
+                              : "border-slate-100 dark:border-neutral-800 bg-white dark:bg-neutral-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                          )}
                           value={language}
                           onChange={(e) => setLanguage(e.target.value)}
                         >
@@ -272,16 +305,12 @@ export function BeginnerGuideView() {
                             </option>
                           ))}
                         </select>
+                        <p className="text-[12px] text-slate-500 dark:text-neutral-500 mt-1 ml-1 font-medium">
+                          ※ブラウザ設定から自動取得しました。後で変更可能です。
+                        </p>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-
-              {/* アカウントカード（Step 1用） */}
-              {step.isRoot && (
-                <div className="mt-8">
-                  <AccountCard isTrial={true} />
                 </div>
               )}
 
