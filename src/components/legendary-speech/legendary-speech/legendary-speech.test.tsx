@@ -4,13 +4,13 @@ import { axe } from "vitest-axe";
 import { LegendarySpeech } from "./legendary-speech";
 
 describe("LegendarySpeech", () => {
-  it("指定されたYouTube動画が埋め込まれている", () => {
+  it("出典のYouTubeリンクが正しく設定されている", () => {
     render(<LegendarySpeech />);
-    const iframe = screen.getByTitle(/伝説のスピーチ/i);
-    expect(iframe).toBeInTheDocument();
-    expect(iframe).toHaveAttribute(
-      "src",
-      "https://www.youtube.com/embed/AZmYx5QBUNU"
+    const link = screen.getByRole("link", { name: /YouTube/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute(
+      "href",
+      "https://www.youtube.com/watch?v=q8_9ckoVV5M"
     );
   });
 
