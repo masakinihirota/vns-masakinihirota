@@ -16,6 +16,7 @@ export async function GET(request: Request) {
   const { data: works, error } = await supabase
     .from("works")
     .select("id, title, category, author, is_official, status")
+    .eq("status", "public")
     .limit(limit);
 
   if (error) {

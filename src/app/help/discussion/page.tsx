@@ -19,10 +19,11 @@ const DiscussionCard = ({ item }: { item: DiscussionItem }) => {
 
   return (
     <div
-      className={`group relative bg-card border rounded-3xl overflow-hidden transition-all duration-500 shadow-sm hover:shadow-2xl ${isExpanded
-        ? "border-primary/50 ring-1 ring-primary/20"
-        : "border-border hover:border-border/80"
-        }`}
+      className={`group relative bg-card border rounded-3xl overflow-hidden transition-all duration-500 shadow-sm hover:shadow-2xl ${
+        isExpanded
+          ? "border-primary/50 ring-1 ring-primary/20"
+          : "border-border hover:border-border/80"
+      }`}
     >
       <button
         onClick={() => setIsExpanded(!isExpanded)}
@@ -42,14 +43,16 @@ const DiscussionCard = ({ item }: { item: DiscussionItem }) => {
           </div>
         </div>
         <ChevronRight
-          className={`w-6 h-6 text-muted-foreground transition-transform duration-500 ${isExpanded ? "rotate-90 text-primary" : ""
-            }`}
+          className={`w-6 h-6 text-muted-foreground transition-transform duration-500 ${
+            isExpanded ? "rotate-90 text-primary" : ""
+          }`}
         />
       </button>
 
       <div
-        className={`transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden ${isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
-          }`}
+        className={`transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden ${
+          isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+        }`}
       >
         <div className="px-6 pb-8 md:px-8 md:pb-10 space-y-8">
           {/* Critique Section */}
