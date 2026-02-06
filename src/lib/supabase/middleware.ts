@@ -34,14 +34,5 @@ export async function updateSession(request: NextRequest) {
   // issues with users being randomly logged out.
 
   await supabase.auth.getUser();
-
-  /*
-  if (!user && request.nextUrl.pathname.startsWith("/works")) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
-  }
-  */
-
   return supabaseResponse;
 }
