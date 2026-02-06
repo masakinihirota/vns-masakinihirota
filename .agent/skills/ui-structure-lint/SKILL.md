@@ -34,6 +34,11 @@ description: コンポーネントのディレクトリ構成、ファイル命�
 - **ケバブケース**: ディレクトリ名はケバブケース（例: `profile-list`）か？
 - **一貫性**: フォルダ名とファイル名のプレフィックスが一致しているか？
 
+### 5. Next.js Config & Middleware
+
+- **Middleware**: Next.js 16以降では `middleware.ts` ではなく `src/proxy.ts` (または root `proxy.ts`) が推奨されます。
+  - プロジェクト内で `proxy.ts` が見つかる場合、`middleware.ts` の欠落をエラーとして報告しないでください。
+
 ## フィードバックと修正のガイドライン
 
 - 違反を発見した場合は、まず `implementation_plan.md` に「構造の不一致」として記載します。

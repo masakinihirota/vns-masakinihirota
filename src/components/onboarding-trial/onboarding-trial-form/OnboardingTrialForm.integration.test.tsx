@@ -13,16 +13,16 @@ vi.mock("next/navigation", () => ({
 beforeEach(() => {
   // Mock ResizeObserver
   global.ResizeObserver = class ResizeObserver {
-    observe() { }
-    unobserve() { }
-    disconnect() { }
+    observe() {}
+    unobserve() {}
+    disconnect() {}
   };
 
   // Spy on localStorage
   vi.spyOn(Storage.prototype, "setItem");
 
   // Mock window.alert
-  vi.spyOn(window, "alert").mockImplementation(() => { });
+  vi.spyOn(window, "alert").mockImplementation(() => {});
 
   vi.clearAllMocks();
   localStorage.clear();
