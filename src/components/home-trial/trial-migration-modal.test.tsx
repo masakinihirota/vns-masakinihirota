@@ -1,6 +1,6 @@
+import { TrialStorage } from "@/lib/trial-storage";
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { TrialStorage } from "@/lib/trial-storage";
 import { TrialMigrationModal } from "./trial-migration-modal";
 
 // Mocks
@@ -29,7 +29,7 @@ describe("TrialMigrationModal", () => {
       groups: [],
     } as any);
 
-    const { container } = render(<TrialMigrationModal />);
+    render(<TrialMigrationModal />);
 
     // Dialog is rendered in a portal, so we might need to check document.body or handle portal
     // For unit testing specifically accessibility of the *content*, we often need to rely on

@@ -2,7 +2,15 @@ import { type NextRequest } from "next/server";
 import { updateSession } from "@/lib/supabase/middleware";
 
 export async function proxy(request: NextRequest) {
-  return await updateSession(request);
+  const response = await updateSession(request);
+
+  // Security Headers for /api/public
+  if (request.nextUrl.pathname.startsWith("/api/public")) {
+    response.headers.set("Cache-Control", "no-store, max-age=0");
+    // TODO: Add Rate Limiting logic here in the future
+  }
+
+  return response;
 }
 
 export const config = {

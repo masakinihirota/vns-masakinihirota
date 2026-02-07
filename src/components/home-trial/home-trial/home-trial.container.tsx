@@ -4,7 +4,7 @@ import { HomeTrial } from "./home-trial";
 import { useHomeTrialLogic } from "./home-trial.logic";
 
 export const HomeTrialContainer = () => {
-  const { viewMode, handleToggleView, trialData, publicWorks } =
+  const { viewMode, handleToggleView, trialData, publicWorks, publicUsers } =
     useHomeTrialLogic();
 
   return (
@@ -13,6 +13,7 @@ export const HomeTrialContainer = () => {
       onToggleView={handleToggleView}
       points={trialData?.points?.current}
       works={publicWorks}
+      users={publicUsers}
     />
   );
 };

@@ -27,8 +27,8 @@ export function TrialMigrationModal() {
     if (
       trialData &&
       (trialData.points?.current > 2000 ||
-        trialData.profiles.length > 0 ||
-        trialData.groups.length > 0)
+        (trialData.profiles?.length ?? 0) > 0 ||
+        (trialData.groups?.length ?? 0) > 0)
     ) {
       // Only show if there is "meaningful" data (e.g. points change or content created)
       // Default points is 2000. If unmodified and no content, maybe don't bother?
@@ -120,7 +120,7 @@ export function TrialMigrationModal() {
               作成プロフィール:
             </span>
             <span className="text-slate-700 dark:text-neutral-200">
-              {data.profiles.length} 件
+              {data.profiles?.length ?? 0} 件
             </span>
           </div>
         </div>

@@ -6,6 +6,7 @@
  */
 
 import { Globe, Rss, Trophy, User, Users } from "lucide-react";
+import { PublicUser } from "../home-trial/home-trial.logic";
 
 export interface PublicWork {
   id: string;
@@ -17,6 +18,7 @@ export interface PublicWork {
 
 interface Props {
   works?: PublicWork[];
+  users?: PublicUser[];
 }
 
 /**
@@ -50,7 +52,7 @@ function getIcon(iconType: string) {
   }
 }
 
-export function LatestInfoView({ works = [] }: Props) {
+export function LatestInfoView({ works = [], users = [] }: Props) {
   // Convert works to feed items
   const workItems = works.map((w) => ({
     id: `work-${w.id}`,
@@ -98,6 +100,39 @@ export function LatestInfoView({ works = [] }: Props) {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* マッチング候補 (New Section) */}
+      <div className="space-y-6 pt-8 border-t border-slate-100 dark:border-neutral-800">
+        <h3 className="font-bold text-slate-700 dark:text-neutral-200 flex items-center gap-3 uppercase tracking-widest text-[16px]">
+          <Users size={20} /> マッチング候補（新着）
+        </h3>
+        {users.length === 0 && (
+          <p className="text-slate-500">現在表示できる候補者はいません。</p>
+        )}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {users.map((user) => (
+            <div
+              key={user.id}
+              className="p-6 border border-slate-100 dark:border-neutral-800 rounded-2xl bg-white/50 dark:bg-neutral-900/30 shadow-sm hover:border-purple-200 dark:hover:border-purple-800 transition-all backdrop-blur-sm flex items-center gap-4"
+            >
+              <div className="p-3 bg-purple-50 dark:bg-purple-900/20 rounded-full">
+                <User className="text-purple-500" size={20} />
+              </div>
+              <div>
+                <p className="font-bold text-slate-800 dark:text-neutral-200 text-[16px]">
+                  {user.display_name}
+                </p>
+                <div className="flex gap-2 text-[14px] text-slate-500 dark:text-neutral-400 mt-1">
+                  <span className="bg-slate-100 dark:bg-neutral-800 px-2 py-0.5 rounded text-xs">
+                    {user.role_type}
+                  </span>
+                  {user.purpose && <span>{user.purpose}</span>}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

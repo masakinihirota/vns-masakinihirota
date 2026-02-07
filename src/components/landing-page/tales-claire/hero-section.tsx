@@ -30,12 +30,6 @@ export const HeroSection = () => {
           インターネットという情報の洪水の中から真っ先に価値のあるものを拾い上げる
         </p>
       </div>
-
-      <style jsx>{`
-        .font-serif {
-          font-family: "Noto Serif JP", serif;
-        }
-      `}</style>
     </header>
   );
 };

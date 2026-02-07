@@ -103,15 +103,37 @@ export const TrialStorage = {
   init: (): VNSTrialData => {
     const existing = TrialStorage.load();
     if (existing) {
-      // Migrate old data if points are missing (for existing trial users)
+      let modified = false;
+
+      // Migrate points if missing
       if (!existing.points) {
         existing.points = {
           current: INITIAL_POINTS,
           lastActionAt: Date.now(),
           consecutiveFastActions: 0,
         };
-        existing.groups = existing.groups || [];
-        existing.nation = existing.nation || null;
+        modified = true;
+      }
+
+      // Ensure arrays exist
+      if (!existing.profiles) {
+        existing.profiles = [];
+        modified = true;
+      }
+      if (!existing.groups) {
+        existing.groups = [];
+        modified = true;
+      }
+      if (!existing.watchlist) {
+        existing.watchlist = [];
+        modified = true;
+      }
+      if (existing.nation === undefined) {
+        existing.nation = null;
+        modified = true;
+      }
+
+      if (modified) {
         TrialStorage.save(existing);
       }
       return existing;
