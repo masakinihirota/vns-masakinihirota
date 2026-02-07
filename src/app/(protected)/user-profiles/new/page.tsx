@@ -1,13 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { UserProfileCreationContainer } from "@/components/user-profiles/create";
 import {
   createLocalUserProfile,
   getDeviceId,
 } from "@/lib/db/local-storage-adapter";
 import { CreateProfileData } from "@/lib/types/user-profile";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 export default function CreateProfilePage() {
   const router = useRouter();

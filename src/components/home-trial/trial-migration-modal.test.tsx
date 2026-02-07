@@ -1,6 +1,6 @@
-import { TrialStorage } from "@/lib/trial-storage";
 import { render, screen } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { TrialStorage } from "@/lib/trial-storage";
 import { TrialMigrationModal } from "./trial-migration-modal";
 
 // Mocks
