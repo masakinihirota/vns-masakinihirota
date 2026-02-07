@@ -1,6 +1,6 @@
+import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { VNSTrialDataSchema } from "@/lib/trial-storage";
-import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -97,12 +97,14 @@ export async function POST(request: Request) {
 
   // 4c. Groups / Nations -> (Skipped as tables do not exist yet)
   if (trialData.groups.length > 0) {
-    console.info( // Changed from console.log to console.info
+    console.info(
+      // Changed from console.log to console.info
       `Skipping import of ${trialData.groups.length} groups (Not implemented yet)`
     );
   }
   if (trialData.nation) {
-    console.info( // Changed from console.log to console.info
+    console.info(
+      // Changed from console.log to console.info
       `Skipping import of nation: ${trialData.nation.name} (Not implemented yet)`
     );
   }

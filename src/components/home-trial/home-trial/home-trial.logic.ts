@@ -1,8 +1,8 @@
 "use client";
 
-import { TrialStorage, VNSTrialData } from "@/lib/trial-storage";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { TrialStorage, VNSTrialData } from "@/lib/trial-storage";
 
 export type ViewMode = "beginner" | "latest";
 
@@ -22,10 +22,7 @@ export const useHomeTrialLogic = () => {
   const [trialData, setTrialData] = useState<VNSTrialData | null>(null);
 
   // Fetch Public Works
-  const { data: publicWorks } = useSWR(
-    "/api/public/works?limit=5",
-    fetcher
-  );
+  const { data: publicWorks } = useSWR("/api/public/works?limit=5", fetcher);
 
   // Fetch Public Users (Matching Candidates)
   const { data: publicUsers } = useSWR<PublicUser[]>(
