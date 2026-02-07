@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { VNSTrialDataSchema } from "@/lib/trial-storage";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -68,7 +68,7 @@ export async function POST(request: Request) {
   const profilesToInsert = trialData.profiles.map((p) => ({
     id: p.id, // Use the same UUID from trial
     display_name: p.name,
-    role_type: p.type, // Assuming 'type' maps to 'role_type'
+    role_type: p.type, // Verified: 'type' (general/business/hobby) maps to 'role_type' string column
     root_account_id: rootAccount.id,
     is_active: true,
     // Default values for other fields
@@ -96,6 +96,16 @@ export async function POST(request: Request) {
   }
 
   // 4c. Groups / Nations -> (Skipped as tables do not exist yet)
+  if (trialData.groups.length > 0) {
+    console.info( // Changed from console.log to console.info
+      `Skipping import of ${trialData.groups.length} groups (Not implemented yet)`
+    );
+  }
+  if (trialData.nation) {
+    console.info( // Changed from console.log to console.info
+      `Skipping import of nation: ${trialData.nation.name} (Not implemented yet)`
+    );
+  }
 
   return NextResponse.json({
     success: true,

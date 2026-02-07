@@ -1,10 +1,17 @@
 "use client";
 
+import { TrialStorage, VNSTrialData } from "@/lib/trial-storage";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
-import { TrialStorage, VNSTrialData } from "@/lib/trial-storage";
 
 export type ViewMode = "beginner" | "latest";
+
+export type PublicUser = {
+  id: string;
+  display_name: string;
+  purpose: string | null;
+  role_type: string;
+};
 
 const STORAGE_KEY = "homeTrialConfig";
 
@@ -15,8 +22,14 @@ export const useHomeTrialLogic = () => {
   const [trialData, setTrialData] = useState<VNSTrialData | null>(null);
 
   // Fetch Public Works
-  const { data: publicWorks, error: worksError } = useSWR(
+  const { data: publicWorks } = useSWR(
     "/api/public/works?limit=5",
+    fetcher
+  );
+
+  // Fetch Public Users (Matching Candidates)
+  const { data: publicUsers } = useSWR<PublicUser[]>(
+    "/api/public/users?limit=8",
     fetcher
   );
 
@@ -61,6 +74,7 @@ export const useHomeTrialLogic = () => {
     handleToggleView,
     trialData,
     publicWorks,
+    publicUsers,
     refreshTrialData,
   };
 };

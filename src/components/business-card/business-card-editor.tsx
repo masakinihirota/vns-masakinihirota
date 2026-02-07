@@ -1,8 +1,5 @@
 "use client";
 
-import { Loader2, Save } from "lucide-react";
-import { useState, useTransition } from "react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -13,6 +10,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { BusinessCard, BusinessCardConfig } from "@/lib/db/business-cards";
 import { UserProfile } from "@/lib/db/user-profiles";
+import { Loader2, Save } from "lucide-react";
+import { useState, useTransition } from "react";
+import { toast } from "sonner";
 import { BusinessCardView, Skill, Work } from "./business-card-view";
 
 type BusinessCardEditorProps = {
@@ -99,7 +99,7 @@ export function BusinessCardEditor({
         } else {
           toast.error(result.error || "Failed to save settings");
         }
-      } catch (error) {
+      } catch (_error) {
         toast.error("An unexpected error occurred");
       }
     });
@@ -334,8 +334,8 @@ export function BusinessCardEditor({
                                 const newVal = checked
                                   ? [...current, item.id]
                                   : current.filter(
-                                      (i: string) => i !== item.id
-                                    );
+                                    (i: string) => i !== item.id
+                                  );
                                 handleContentChange(
                                   "value",
                                   "self_management",

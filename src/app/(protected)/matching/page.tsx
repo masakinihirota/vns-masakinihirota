@@ -1,19 +1,19 @@
 "use client";
 
 import {
-  Sparkles,
-  UserPlus,
-  ChevronRight,
-  Zap,
-  Info,
-  User,
+  AlertCircle,
   BookOpen,
   Briefcase,
+  ChevronRight,
   Ghost,
-  AlertCircle,
+  Info,
+  Sparkles,
+  User,
+  UserPlus,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function MatchingSelectionPage() {
   const [selectedProfileId, setSelectedProfileId] = useState<string | null>(
@@ -60,7 +60,7 @@ export default function MatchingSelectionPage() {
       icon: <Sparkles className="w-8 h-8 text-blue-500" />,
       features: ["高速検索", "スコアリング", "24時間対応"],
       color: "border-blue-500/20 bg-blue-50/50 dark:bg-blue-900/10",
-      href: "/matching/auto",
+      href: "/auto-matching",
     },
     {
       id: "manual",

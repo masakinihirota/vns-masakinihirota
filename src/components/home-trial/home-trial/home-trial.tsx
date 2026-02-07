@@ -4,16 +4,23 @@ import { ViewToggle } from "@/components/home/start-page/view-toggle";
 import { TrialBanner } from "../trial-banner";
 import { BeginnerGuideView } from "../views/beginner-guide-view";
 import { LatestInfoView, PublicWork } from "../views/latest-info-view";
-import { ViewMode } from "./home-trial.logic";
+import { PublicUser, ViewMode } from "./home-trial.logic";
 
 type Props = {
   viewMode: ViewMode;
   onToggleView: (mode: ViewMode) => void;
   points?: number;
   works?: PublicWork[];
+  users?: PublicUser[];
 };
 
-export const HomeTrial = ({ viewMode, onToggleView, points, works }: Props) => {
+export const HomeTrial = ({
+  viewMode,
+  onToggleView,
+  points,
+  works,
+  users,
+}: Props) => {
   return (
     <div className="flex flex-col text-[18px]">
       <TrialBanner points={points} />
@@ -28,7 +35,7 @@ export const HomeTrial = ({ viewMode, onToggleView, points, works }: Props) => {
       {/* メインコンテンツ */}
       <div className="flex-grow w-full">
         {viewMode === "latest" ? (
-          <LatestInfoView works={works} />
+          <LatestInfoView works={works} users={users} />
         ) : (
           <BeginnerGuideView />
         )}

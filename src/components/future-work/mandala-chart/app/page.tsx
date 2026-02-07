@@ -1,4 +1,4 @@
-import * as MandalaChart from "@/components/mandala-chart";
+import * as MandalaChart from "../components/mandala-chart/index";
 
 export default function MandalaChartPage() {
   return (

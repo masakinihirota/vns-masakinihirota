@@ -68,9 +68,14 @@ export function PortalDashboard() {
           desc: "自身のプロフィールの確認と編集。",
         },
         {
-          title: "オートマッチング",
-          path: "/matching/auto",
-          desc: "価値観に基づいた高度な自動マッチング。",
+          title: "国家ダッシュボード",
+          path: "/nation",
+          desc: "国の運営、市場、銀行などの統合管理。",
+        },
+        {
+          title: "グループ UI",
+          path: "/groups",
+          desc: "グループ（プラザ・評価・価値観・スキル・管理）の統合画面。",
         },
       ],
     },
@@ -214,25 +219,14 @@ export function PortalDashboard() {
       color: "text-cyan-500",
       routes: [
         {
-          title: "マンダラチャート",
-          path: "/mandala-chart",
-          desc: "AIがサポートする思考整理。",
-        },
-        {
-          title: "マンダラ (Legacy)",
-          path: "/mandala-chart-legacy",
-          desc: "旧式のマンダラ実装。",
-        },
-        {
           title: "マンダラチャート (Trial)",
           path: "/home-trial/mandala",
           desc: "【最新】お試し体験版マンダラ。",
         },
         {
-          title: "ホーム（旧体験版）",
+          title: "ホーム（お試し体験）",
           path: "/home-trial",
-          desc: "非推奨の体験版ホーム。",
-          isRetired: true,
+          desc: "トライアル用のhome画面。",
         },
       ],
     },
@@ -341,11 +335,17 @@ export function PortalDashboard() {
     if (savedStatuses) {
       setRouteStatuses(JSON.parse(savedStatuses));
     }
+
+    const defaultOrder = flattenedRoutes.map((r) => r.path);
     if (savedOrder) {
-      setRouteOrder(JSON.parse(savedOrder));
+      const parsedOrder = JSON.parse(savedOrder) as string[];
+      // 既存の順序にない新しいルートがあれば末尾に追加
+      const missingRoutes = defaultOrder.filter(
+        (path) => !parsedOrder.includes(path)
+      );
+      setRouteOrder([...parsedOrder, ...missingRoutes]);
     } else {
-      // 初期順序を生成
-      setRouteOrder(flattenedRoutes.map((r) => r.path));
+      setRouteOrder(defaultOrder);
     }
     setIsLoaded(true);
   }, []);

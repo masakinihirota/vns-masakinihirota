@@ -378,7 +378,7 @@ function NavMore({
                 <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
               </SidebarMenuButton>
             </CollapsibleTrigger>
-            <CollapsibleContent>
+            <CollapsibleContent id="sidebar-nav-more-content">
               <SidebarMenuSub>
                 {itemsWithState.map((item) => {
                   const feature = mapPathToFeature(item.url);
