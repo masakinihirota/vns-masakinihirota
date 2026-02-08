@@ -180,10 +180,11 @@ export function WorkList({
                       onActiveProfileChange(profile);
                       onIsProfileAccordionOpenChange(false);
                     }}
-                    className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all ${activeProfile.id === profile.id
+                    className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all ${
+                      activeProfile.id === profile.id
                         ? "bg-[var(--accent-bg)] text-[var(--accent-main)] ring-1 ring-inset ring-[var(--accent-main)]/30 font-bold"
                         : "hover:bg-[var(--card-glass)] text-[var(--text-sub)]"
-                      }`}
+                    }`}
                   >
                     <div
                       className={`w-8 h-8 ${profile.color} rounded-full flex items-center justify-center text-white text-xs`}
@@ -252,10 +253,11 @@ export function WorkList({
                         <button
                           key={r}
                           onClick={() => onRatingChange(r)}
-                          className={`py-3 rounded-lg font-bold border transition-all ${selectedWork.userRating === r
+                          className={`py-3 rounded-lg font-bold border transition-all ${
+                            selectedWork.userRating === r
                               ? "bg-[var(--accent-main)] text-white border-[var(--accent-main)] shadow-lg shadow-[var(--accent-main)]/30 transform scale-[1.02]"
                               : "bg-[var(--input-bg)] hover:bg-[var(--accent-bg)] text-[var(--text-main)] border-transparent"
-                            }`}
+                          }`}
                         >
                           {RATINGS[r].label}
                         </button>
@@ -264,10 +266,11 @@ export function WorkList({
                   ) : (
                     <button
                       onClick={() => onRatingChange("LIKE1")}
-                      className={`w-full py-4 rounded-lg font-bold border transition-all flex items-center justify-center gap-2 ${selectedWork.userRating === "LIKE1"
+                      className={`w-full py-4 rounded-lg font-bold border transition-all flex items-center justify-center gap-2 ${
+                        selectedWork.userRating === "LIKE1"
                           ? "bg-pink-500 text-white border-pink-600 shadow-lg shadow-pink-500/30 transform scale-[1.02]"
                           : "bg-[var(--input-bg)] hover:bg-pink-500/10 text-pink-500 border-transparent"
-                        }`}
+                      }`}
                     >
                       <Heart
                         size={20}
@@ -292,10 +295,11 @@ export function WorkList({
                     <button
                       key={r}
                       onClick={() => onRatingChange(r)}
-                      className={`w-full py-2.5 text-left px-4 rounded-lg border flex items-center justify-between transition-all ${selectedWork.userRating === r
+                      className={`w-full py-2.5 text-left px-4 rounded-lg border flex items-center justify-between transition-all ${
+                        selectedWork.userRating === r
                           ? "bg-slate-800 text-white border-slate-900 shadow-lg"
                           : "bg-[var(--input-bg)] hover:bg-[var(--card-glass)] text-[var(--text-sub)] border-transparent"
-                        }`}
+                      }`}
                     >
                       <span className="font-medium">{RATINGS[r].label}</span>
                       {selectedWork.userRating === r && (
@@ -369,10 +373,11 @@ export function WorkList({
             <div className="flex items-center gap-4 ml-auto">
               <button
                 onClick={() => onAdVisibleChange(!adVisible)}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full border transition-all font-bold ${adVisible
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full border transition-all font-bold ${
+                  adVisible
                     ? "border-orange-500/30 text-orange-600 bg-orange-500/10 shadow-sm"
                     : "border-[var(--card-border-glass)] text-[var(--text-sub)] bg-[var(--input-bg)] hover:bg-[var(--card-glass)]"
-                  }`}
+                }`}
               >
                 {adVisible ? <Eye size={20} /> : <EyeOff size={20} />}
                 <span className="whitespace-nowrap">
@@ -390,19 +395,21 @@ export function WorkList({
             <div className="flex gap-2">
               <button
                 onClick={() => onCategoryToggle("アニメ")}
-                className={`flex items-center gap-2 px-6 py-2 rounded-xl border font-bold transition-all ${enabledCategories.includes("アニメ")
+                className={`flex items-center gap-2 px-6 py-2 rounded-xl border font-bold transition-all ${
+                  enabledCategories.includes("アニメ")
                     ? "border-purple-500/30 bg-purple-500/10 text-purple-600 shadow-inner ring-1 ring-purple-500/20"
                     : "border-[var(--card-border-glass)] bg-[var(--card-glass)] text-[var(--text-sub)] hover:bg-[var(--input-bg)]"
-                  }`}
+                }`}
               >
                 <Tv size={18} /> アニメ
               </button>
               <button
                 onClick={() => onCategoryToggle("漫画")}
-                className={`flex items-center gap-2 px-6 py-2 rounded-xl border font-bold transition-all ${enabledCategories.includes("漫画")
+                className={`flex items-center gap-2 px-6 py-2 rounded-xl border font-bold transition-all ${
+                  enabledCategories.includes("漫画")
                     ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 shadow-inner ring-1 ring-emerald-500/20"
                     : "border-[var(--card-border-glass)] bg-[var(--card-glass)] text-[var(--text-sub)] hover:bg-[var(--input-bg)]"
-                  }`}
+                }`}
               >
                 <BookOpen size={18} /> 漫画
               </button>
@@ -468,20 +475,22 @@ export function WorkList({
                     <tr
                       key={work.id}
                       onClick={() => onSelectedWorkIdChange(work.id)}
-                      className={`hover:bg-[var(--accent-bg)] cursor-pointer transition-colors ${selectedWorkId === work.id
+                      className={`hover:bg-[var(--accent-bg)] cursor-pointer transition-colors ${
+                        selectedWorkId === work.id
                           ? "bg-[var(--accent-bg)] shadow-[inset_3px_0_0_var(--accent-main)]"
                           : ""
-                        }`}
+                      }`}
                     >
                       {/* カテゴリ */}
                       <td className="p-3 text-center">
                         <span
-                          className={`inline-block px-2.5 py-1 rounded-full border text-xs font-bold whitespace-nowrap ${work.category === "アニメ"
+                          className={`inline-block px-2.5 py-1 rounded-full border text-xs font-bold whitespace-nowrap ${
+                            work.category === "アニメ"
                               ? "border-purple-500/20 bg-purple-500/10 text-purple-600"
                               : work.category === "漫画"
                                 ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-600"
                                 : "border-slate-500/20 bg-slate-500/10 text-slate-600"
-                            }`}
+                          }`}
                         >
                           {work.category}
                         </span>
@@ -617,10 +626,11 @@ function Pagination({
                 <button
                   key={pageNum}
                   onClick={() => onPageChange(pageNum)}
-                  className={`w-10 h-10 border rounded-lg font-bold transition-all text-[16px] ${currentPage === pageNum
+                  className={`w-10 h-10 border rounded-lg font-bold transition-all text-[16px] ${
+                    currentPage === pageNum
                       ? "bg-[var(--accent-main)] text-white border-[var(--accent-main)] shadow-lg scale-105"
                       : "hover:bg-[var(--card-glass)] border-[var(--card-border-glass)] text-[var(--text-sub)]"
-                    }`}
+                  }`}
                 >
                   {pageNum}
                 </button>

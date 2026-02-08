@@ -1,3 +1,5 @@
+"use client";
+
 import {
   CheckCircle2,
   ChevronLeft,
@@ -104,13 +106,13 @@ const EditingModal = ({
 
         {((editingCell.gridIdx === 4 && editingCell.cellIdx !== 4) ||
           (editingCell.gridIdx !== 4 && editingCell.cellIdx === 4)) && (
-          <div className="mt-4 flex items-start gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-xs md:text-sm text-blue-700 dark:text-blue-300 shrink-0 border border-blue-100 dark:border-blue-800">
-            <Info size={18} className="shrink-0 mt-0.5" />
-            <span>
-              このセルは他のグリッドの中心と自動的に同期されます。ここを変更すると、関連するグリッドも更新されます。
-            </span>
-          </div>
-        )}
+            <div className="mt-4 flex items-start gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-xs md:text-sm text-blue-700 dark:text-blue-300 shrink-0 border border-blue-100 dark:border-blue-800">
+              <Info size={18} className="shrink-0 mt-0.5" />
+              <span>
+                このセルは他のグリッドの中心と自動的に同期されます。ここを変更すると、関連するグリッドも更新されます。
+              </span>
+            </div>
+          )}
       </div>
     </div>
   );
@@ -259,8 +261,8 @@ export const MandalaChart: React.FC<MandalaChartProps> = ({
 
             {((gridIdx === 4 && cellIdx !== 4) ||
               (gridIdx !== 4 && cellIdx === 4)) && (
-              <div className="absolute bottom-0.5 left-0.5 w-1.5 h-1.5 rounded-full bg-blue-400/60" />
-            )}
+                <div className="absolute bottom-0.5 left-0.5 w-1.5 h-1.5 rounded-full bg-blue-400/60" />
+              )}
           </button>
         ))}
       </div>
@@ -311,11 +313,10 @@ export const MandalaChart: React.FC<MandalaChartProps> = ({
               }}
               className={`
                  group relative p-3 rounded-xl cursor-pointer border transition-all select-none
-                 ${
-                   activeIndex === idx
-                     ? "bg-blue-50 border-blue-200 dark:bg-blue-900/30 dark:border-blue-800 ring-1 ring-blue-400"
-                     : "bg-white border-slate-100 hover:border-slate-300 dark:bg-slate-900 dark:border-slate-800"
-                 }
+                 ${activeIndex === idx
+                  ? "bg-blue-50 border-blue-200 dark:bg-blue-900/30 dark:border-blue-800 ring-1 ring-blue-400"
+                  : "bg-white border-slate-100 hover:border-slate-300 dark:bg-slate-900 dark:border-slate-800"
+                }
                `}
             >
               <div className="font-bold text-sm truncate pr-8">

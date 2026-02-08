@@ -6,7 +6,8 @@ import type { RegistrationFormValues } from "./schema";
 
 export function useAiAutocomplete(form: UseFormReturn<RegistrationFormValues>) {
   const [isSuggesting, setIsSuggesting] = useState(false);
-  const [suggestion, setSuggestion] = useState<Partial<RegistrationFormValues> | null>(null);
+  const [suggestion, setSuggestion] =
+    useState<Partial<RegistrationFormValues> | null>(null);
 
   const suggest = async (title: string) => {
     if (!title) return;
@@ -42,11 +43,16 @@ export function useAiAutocomplete(form: UseFormReturn<RegistrationFormValues>) {
   const applySuggestion = () => {
     if (suggestion && suggestion.work) {
       // Loop through keys and setValue
-      (Object.keys(suggestion.work) as Array<keyof typeof suggestion.work>).forEach((key) => {
+      (
+        Object.keys(suggestion.work) as Array<keyof typeof suggestion.work>
+      ).forEach((key) => {
         const value = suggestion.work?.[key];
         if (value !== undefined) {
           // @ts-ignore
-          form.setValue(`work.${key}`, value, { shouldDirty: true, shouldValidate: true });
+          form.setValue(`work.${key}`, value, {
+            shouldDirty: true,
+            shouldValidate: true,
+          });
         }
       });
     }

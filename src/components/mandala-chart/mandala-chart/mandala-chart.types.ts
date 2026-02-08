@@ -18,8 +18,8 @@ export interface MandalaChartData {
  * 表示モード定数
  */
 export const VIEW_MODES = {
-  FULL: 'full',
-  FOCUS: 'focus',
+  FULL: "full",
+  FOCUS: "focus",
 } as const;
 
 /**
@@ -40,4 +40,4 @@ export interface EditingCell {
 /**
  * ローカルストレージで使用するキー
  */
-export const STORAGE_KEY = 'mandala_charts_v2';
+export const STORAGE_KEY = "mandala_charts_v2";

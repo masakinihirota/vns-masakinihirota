@@ -1,14 +1,11 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  registrationFormSchema,
-  type RegistrationFormValues,
-} from "./schema";
+import { createClient } from "@/lib/supabase/client";
+import { registrationFormSchema, type RegistrationFormValues } from "./schema";
 
 export function useWorkRegistration() {
   const router = useRouter();
@@ -48,7 +45,10 @@ export function useWorkRegistration() {
       // 2. Insert Work
       // Note: tags is a comma-separated string in the form, needs to be converted to array
       const tagsArray = values.work.tags
-        ? values.work.tags.split(",").map((t) => t.trim()).filter(Boolean)
+        ? values.work.tags
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean)
         : [];
 
       const { data: workData, error: workError } = await supabase
@@ -89,13 +89,14 @@ export function useWorkRegistration() {
       if (entryError) {
         // If entry fails, we might want to delete the work or warn the user.
         // For now, just throw error.
-        throw new Error(`ユーザーステータスの登録に失敗しました: ${entryError.message}`);
+        throw new Error(
+          `ユーザーステータスの登録に失敗しました: ${entryError.message}`
+        );
       }
 
       // Success
       router.push("/works"); // Redirect to works list (to be implemented)
       router.refresh();
-
     } catch (e) {
       setError(e instanceof Error ? e.message : "予期せぬエラーが発生しました");
       console.error(e);

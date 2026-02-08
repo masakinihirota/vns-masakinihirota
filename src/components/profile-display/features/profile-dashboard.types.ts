@@ -2,15 +2,15 @@
  * 評価タイプの定義
  */
 export const RATING_TYPES = {
-  TIER1: 'Tier1',
-  TIER2: 'Tier2',
-  TIER3: 'Tier3',
-  NEUTRAL: 'Neutral', // 普通 or 自分には合わなかった
-  UNRATED: 'Unrated', // 未評価
-  INTERESTED_NONE: 'InterestedNone' // 興味無し
+  TIER1: "Tier1",
+  TIER2: "Tier2",
+  TIER3: "Tier3",
+  NEUTRAL: "Neutral", // 普通 or 自分には合わなかった
+  UNRATED: "Unrated", // 未評価
+  INTERESTED_NONE: "InterestedNone", // 興味無し
 } as const;
 
-export type RatingType = typeof RATING_TYPES[keyof typeof RATING_TYPES];
+export type RatingType = (typeof RATING_TYPES)[keyof typeof RATING_TYPES];
 
 /**
  * 評価のソート順序
@@ -51,7 +51,7 @@ export interface Work {
 export interface Favorite {
   readonly id: number;
   readonly title: string;
-  readonly subCategory: 'Manga' | 'Anime';
+  readonly subCategory: "Manga" | "Anime";
   readonly genre: string;
   readonly rating: RatingType;
 }
@@ -92,7 +92,7 @@ export interface DashboardData {
  */
 export interface SortConfig {
   readonly key: string | null;
-  readonly direction: 'asc' | 'desc';
+  readonly direction: "asc" | "desc";
 }
 
 /**

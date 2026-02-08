@@ -1,5 +1,5 @@
-import { Moon, Sun } from 'lucide-react';
-import { ThemeVars } from '../features/profile-dashboard.types';
+import { Moon, Sun } from "lucide-react";
+import { ThemeVars } from "../features/profile-dashboard.types";
 
 interface ThemeToggleProps {
   readonly isDarkMode: boolean;
@@ -10,7 +10,11 @@ interface ThemeToggleProps {
 /**
  * ダークモードとライトモードを切り替えるボタン
  */
-export const ThemeToggle = ({ isDarkMode, onClick, themeVars }: ThemeToggleProps) => (
+export const ThemeToggle = ({
+  isDarkMode,
+  onClick,
+  themeVars,
+}: ThemeToggleProps) => (
   <button
     onClick={onClick}
     className={`p-4 rounded-full border transition-all ${themeVars.btnPrimary}`}

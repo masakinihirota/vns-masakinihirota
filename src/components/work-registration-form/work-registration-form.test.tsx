@@ -8,7 +8,11 @@ expect.extend(axeMatchers);
 
 // Mocking heavy components or those with external dependencies if needed
 vi.mock("./features/search-screen", () => ({
-  SearchScreen: ({ onManualCreate }: { onManualCreate: (title?: string, category?: "manga" | "anime") => void }) => (
+  SearchScreen: ({
+    onManualCreate,
+  }: {
+    onManualCreate: (title?: string, category?: "manga" | "anime") => void;
+  }) => (
     <div data-testid="search-screen">
       <button onClick={() => onManualCreate("Test", "manga")}>
         Manual Create

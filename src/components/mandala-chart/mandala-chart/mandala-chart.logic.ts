@@ -1,5 +1,5 @@
-import { useCallback, useState } from 'react';
-import { MandalaChartData, STORAGE_KEY } from './mandala-chart.types';
+import { useCallback, useState } from "react";
+import { MandalaChartData, STORAGE_KEY } from "./mandala-chart.types";
 
 /**
  * 履歴管理用カスタムフック
@@ -49,10 +49,10 @@ export const useHistory = <T>(initialState: T) => {
 /**
  * 新しいチャートを生成する
  */
-export const createNewChart = (title = '新しい目標'): MandalaChartData => ({
+export const createNewChart = (title = "新しい目標"): MandalaChartData => ({
   id: crypto.randomUUID(),
   title,
-  grids: Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => '')),
+  grids: Array.from({ length: 9 }, () => Array.from({ length: 9 }, () => "")),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
 });
@@ -88,13 +88,13 @@ export const syncGrids = (
  * 初期データのロード
  */
 export const loadInitialCharts = (): MandalaChartData[] => {
-  if (typeof window === 'undefined') return [createNewChart('メイン目標')];
+  if (typeof window === "undefined") return [createNewChart("メイン目標")];
 
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : [createNewChart('メイン目標')];
+    return saved ? JSON.parse(saved) : [createNewChart("メイン目標")];
   } catch (error) {
-    console.error('Failed to load data from localStorage', error);
-    return [createNewChart('メイン目標')];
+    console.error("Failed to load data from localStorage", error);
+    return [createNewChart("メイン目標")];
   }
 };
