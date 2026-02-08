@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { useEffect, useMemo, useState } from "react";
 
 // --- 型定義 ---
 
@@ -173,7 +173,7 @@ export const useWorkListLogic = () => {
       }
     };
 
-    fetchWorks();
+    void fetchWorks();
   }, [supabase]); // activeProfileが変わったら再取得すべきかもしれないが、user_work_ratingsはログインユーザー依存
 
   /**
@@ -204,7 +204,7 @@ export const useWorkListLogic = () => {
     let result = [...works];
 
     // 1. カテゴリフィルタ
-    const targetCategories = AVAILABLE_CATEGORIES;
+    // const targetCategories = AVAILABLE_CATEGORIES;
     result = result.filter((w) => {
       // API側のカテゴリ定義と一致させる必要がある
       // DB: anime, manga, other

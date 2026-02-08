@@ -1,5 +1,9 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 import {
   ArrowDown,
   ArrowRight,
@@ -19,10 +23,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 
 interface RouteItem {
   title: string;
@@ -66,6 +66,11 @@ export function PortalDashboard() {
           title: "プロフィール",
           path: "/profile",
           desc: "自身のプロフィールの確認と編集。",
+        },
+        {
+          title: "プロフィール表示 (New)",
+          path: "/profile-display",
+          desc: "【新規】Glassmorphismを採用した新プロフィール表示画面。",
         },
         {
           title: "国家ダッシュボード",
@@ -145,6 +150,16 @@ export function PortalDashboard() {
           desc: "システム内の他ユーザーを探索。",
         },
         {
+          title: "ユーザー詳細 (ID指定)",
+          path: "/user-profiles/1",
+          desc: "個別ユーザーのカード表示。IDはサンプルとして1を指定。",
+        },
+        {
+          title: "ユーザー編集 (ID指定)",
+          path: "/user-profiles/1/edit",
+          desc: "個別ユーザーの編集画面。IDはサンプルとして1を指定。",
+        },
+        {
           title: "作品登録フォーム",
           path: "/work-registration-form",
           desc: "新しい作品を登録するためのエディタ。",
@@ -153,11 +168,6 @@ export function PortalDashboard() {
           title: "新規作品登録",
           path: "/works/new",
           desc: "作品の新規作成画面。",
-        },
-        {
-          title: "人気作品",
-          path: "/works/popular",
-          desc: "トレンドの作品を探索。",
         },
         {
           title: "作品評価シミュレーター",
@@ -283,7 +293,7 @@ export function PortalDashboard() {
       color: "text-zinc-500",
       routes: [
         {
-          title: "ヘルプセンター",
+          title: "ヘルプセンター (Top)",
           path: "/help",
           desc: "総合ヘルプポータル。",
         },
@@ -299,7 +309,7 @@ export function PortalDashboard() {
           desc: "コミュニティの議論場。",
         },
         {
-          title: "チュートリアルポータル",
+          title: "チュートリアルポータル (Top)",
           path: "/tutorial",
           desc: "使い方の総合ガイド。",
         },
@@ -312,6 +322,11 @@ export function PortalDashboard() {
           title: "ドキュメントガイド",
           path: "/tutorial/docs",
           desc: "文書作成のルール。",
+        },
+        {
+          title: "チュートリアル・ヘルプ",
+          path: "/tutorial/help",
+          desc: "個別ヘルプ。チュートリアル内の案内。",
         },
         {
           title: "開発者ダッシュボード",
@@ -501,7 +516,7 @@ export function PortalDashboard() {
                   className={cn(
                     "grid grid-cols-[180px_1.5fr_1.5fr_auto] gap-6 px-6 py-4 items-center transition-all group relative hover:bg-neutral-100 dark:hover:bg-white/10",
                     isDone &&
-                      "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
+                    "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
                     isFocus && "bg-amber-500/[0.1] dark:bg-amber-500/[0.08]"
                   )}
                 >

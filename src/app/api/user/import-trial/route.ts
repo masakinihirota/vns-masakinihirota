@@ -1,6 +1,6 @@
-import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { VNSTrialDataSchema } from "@/lib/trial-storage";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   const supabase = await createClient();
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   try {
     const json = await request.json();
     trialData = VNSTrialDataSchema.parse(json);
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Invalid trial data format" },
       { status: 400 }
