@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
 import * as axeMatchers from "vitest-axe/matchers";
 import { WorkRegistrationForm } from "./work-registration-form";
@@ -8,7 +8,7 @@ expect.extend(axeMatchers);
 
 // Mocking heavy components or those with external dependencies if needed
 vi.mock("./features/search-screen", () => ({
-  SearchScreen: ({ onManualCreate }: any) => (
+  SearchScreen: ({ onManualCreate }: { onManualCreate: (title?: string, category?: "manga" | "anime") => void }) => (
     <div data-testid="search-screen">
       <button onClick={() => onManualCreate("Test", "manga")}>
         Manual Create

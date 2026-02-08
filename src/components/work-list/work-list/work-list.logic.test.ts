@@ -153,8 +153,8 @@ describe("useWorkListLogic", () => {
     });
 
     // TIER2に変更
-    act(() => {
-      result.current.handleRatingChange("TIER2");
+    await act(async () => {
+      await result.current.handleRatingChange("TIER2");
     });
 
     const updatedWork = result.current.works.find(
