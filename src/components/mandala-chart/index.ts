@@ -1,2 +1,1 @@
-export { MandalaChart } from './mandala-chart/mandala-chart';
-
+export { MandalaChart } from "./mandala-chart/mandala-chart";

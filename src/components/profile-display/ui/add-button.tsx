@@ -1,5 +1,5 @@
-import { Plus } from 'lucide-react';
-import { ThemeVars } from '../features/profile-dashboard.types';
+import { Plus } from "lucide-react";
+import { ThemeVars } from "../features/profile-dashboard.types";
 
 interface AddButtonProps {
   readonly onClick: () => void;

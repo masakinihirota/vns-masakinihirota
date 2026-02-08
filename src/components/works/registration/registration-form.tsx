@@ -1,5 +1,6 @@
 "use client";
 
+import { Loader2, Wand2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -21,7 +22,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Loader2, Wand2 } from "lucide-react";
 import { AiSuggestionDiff } from "./ai-suggestion-diff";
 import { CATEGORIES, SCALES, STATUS_OPTIONS } from "./schema";
 import { ThemeSwitcher } from "./theme-switcher";
@@ -249,7 +249,10 @@ export function RegistrationForm() {
                   <FormItem className="col-span-2">
                     <FormLabel>タグ (カンマ区切り)</FormLabel>
                     <FormControl>
-                      <Input placeholder="ファンタジー, バトル, 冒険" {...field} />
+                      <Input
+                        placeholder="ファンタジー, バトル, 冒険"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

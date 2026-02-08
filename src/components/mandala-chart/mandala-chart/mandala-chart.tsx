@@ -1,3 +1,5 @@
+"use client";
+
 import {
   CheckCircle2,
   ChevronLeft,
@@ -8,16 +10,26 @@ import {
   LayoutGrid,
   Redo2,
   Save,
-  Undo2
-} from 'lucide-react';
-import React, { useEffect } from 'react';
-import { useMandalaChartContainer } from './mandala-chart.container';
-import { VIEW_MODES } from './mandala-chart.types';
-import { EditModal } from './ui/edit-modal';
-import { MiniGrid } from './ui/mini-grid';
-import { Sidebar } from './ui/sidebar';
+  Undo2,
+} from "lucide-react";
+import React, { useEffect } from "react";
+import { useMandalaChartContainer } from "./mandala-chart.container";
+import { VIEW_MODES } from "./mandala-chart.types";
+import { EditModal } from "./ui/edit-modal";
+import { MiniGrid } from "./ui/mini-grid";
+import { Sidebar } from "./ui/sidebar";
 
-const GRID_POSITIONS = ["左上", "上", "右上", "左", "中央", "右", "左下", "下", "右下"];
+const GRID_POSITIONS = [
+  "左上",
+  "上",
+  "右上",
+  "左",
+  "中央",
+  "右",
+  "左下",
+  "下",
+  "右下",
+];
 
 /**
  * マンダラチャートメインコンポーネント (View)
@@ -50,7 +62,7 @@ export const MandalaChart: React.FC = () => {
   // キーボードショートカット
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === 'z') {
+      if ((e.metaKey || e.ctrlKey) && e.key === "z") {
         e.preventDefault();
         if (e.shiftKey) {
           if (canRedo) redo();
@@ -59,14 +71,16 @@ export const MandalaChart: React.FC = () => {
         }
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [undo, redo, canUndo, canRedo]);
 
   const handleExport = () => {
-    const blob = new Blob([JSON.stringify(charts, null, 2)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(charts, null, 2)], {
+      type: "application/json",
+    });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = `mandala-backup-${new Date().toISOString().slice(0, 10)}.json`;
     a.click();
@@ -82,7 +96,11 @@ export const MandalaChart: React.FC = () => {
         onSelect={setActiveIndex}
         onAdd={addNewChart}
         onDelete={(id) => {
-          if (confirm("このチャートを削除してもよろしいですか？この操作は取り消せません。")) {
+          if (
+            confirm(
+              "このチャートを削除してもよろしいですか？この操作は取り消せません。"
+            )
+          ) {
             deleteChart(id);
           }
         }}
@@ -92,7 +110,11 @@ export const MandalaChart: React.FC = () => {
         {/* ヘッダー */}
         <header className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 py-3 md:px-6 md:py-4 flex items-center justify-between shrink-0 z-20 shadow-sm">
           <div className="flex items-center gap-3 flex-1 min-w-0">
-            <button onClick={() => setIsSidebarOpen(true)} className="md:hidden p-2 -ml-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500" aria-label="サイドバーを開く">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="md:hidden p-2 -ml-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg text-slate-500"
+              aria-label="サイドバーを開く"
+            >
               <LayoutGrid size={24} />
             </button>
             <div className="flex-1 min-w-0">
@@ -104,10 +126,14 @@ export const MandalaChart: React.FC = () => {
                 aria-label="チャートのタイトル"
               />
               <div className="flex items-center gap-3 text-[10px] md:text-xs h-5">
-                {saveStatus === 'saving' ? (
-                  <span className="text-slate-400 flex items-center gap-1"><Save size={10} className="animate-spin" /> 保存中...</span>
+                {saveStatus === "saving" ? (
+                  <span className="text-slate-400 flex items-center gap-1">
+                    <Save size={10} className="animate-spin" /> 保存中...
+                  </span>
                 ) : (
-                  <span className="text-emerald-500 flex items-center gap-1"><CheckCircle2 size={12} /> 自動保存済み</span>
+                  <span className="text-emerald-500 flex items-center gap-1">
+                    <CheckCircle2 size={12} /> 自動保存済み
+                  </span>
                 )}
               </div>
             </div>
@@ -137,14 +163,14 @@ export const MandalaChart: React.FC = () => {
             <div className="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1 border border-slate-200 dark:border-slate-700">
               <button
                 onClick={() => setViewMode(VIEW_MODES.FULL)}
-                className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${viewMode === VIEW_MODES.FULL ? 'bg-white dark:bg-slate-700 shadow text-blue-600 dark:text-blue-400' : 'text-slate-500 hover:text-slate-700'}`}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${viewMode === VIEW_MODES.FULL ? "bg-white dark:bg-slate-700 shadow text-blue-600 dark:text-blue-400" : "text-slate-500 hover:text-slate-700"}`}
               >
                 <LayoutGrid size={16} />
                 俯瞰
               </button>
               <button
                 onClick={() => setViewMode(VIEW_MODES.FOCUS)}
-                className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${viewMode === VIEW_MODES.FOCUS ? 'bg-white dark:bg-slate-700 shadow text-blue-600 dark:text-blue-400' : 'text-slate-500 hover:text-slate-700'}`}
+                className={`flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-bold transition-all ${viewMode === VIEW_MODES.FOCUS ? "bg-white dark:bg-slate-700 shadow text-blue-600 dark:text-blue-400" : "text-slate-500 hover:text-slate-700"}`}
               >
                 <Grid3X3 size={16} />
                 集中
@@ -154,7 +180,10 @@ export const MandalaChart: React.FC = () => {
         </header>
 
         {/* ワークスペース */}
-        <main role="main" className="flex-1 overflow-auto bg-slate-50/50 dark:bg-slate-950/50 p-2 md:p-6 lg:p-8 flex justify-center items-start md:items-center">
+        <main
+          role="main"
+          className="flex-1 overflow-auto bg-slate-50/50 dark:bg-slate-950/50 p-2 md:p-6 lg:p-8 flex justify-center items-start md:items-center"
+        >
           {viewMode === VIEW_MODES.FULL && (
             <div className="w-full max-w-6xl animate-in fade-in zoom-in duration-300">
               <div className="grid grid-cols-3 gap-1 md:gap-3 lg:gap-4 aspect-square max-h-[85vh] mx-auto p-1">
@@ -165,7 +194,9 @@ export const MandalaChart: React.FC = () => {
                       grids={currentChart.grids}
                       isFocusView={false}
                       focusIndex={focusIndex}
-                      onCellClick={(gIdx, cIdx) => setEditingCell({ gridIdx: gIdx, cellIdx: cIdx })}
+                      onCellClick={(gIdx, cIdx) =>
+                        setEditingCell({ gridIdx: gIdx, cellIdx: cIdx })
+                      }
                       onFocusGrid={setFocusIndex}
                     />
                     <div className="absolute -top-1.5 -left-1.5 md:-top-3 md:-left-3 px-1.5 md:px-2 py-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-[8px] md:text-[10px] font-bold text-slate-500 shadow-sm z-20 pointer-events-none">
@@ -181,7 +212,7 @@ export const MandalaChart: React.FC = () => {
             <div className="w-full max-w-xl flex flex-col items-center justify-center animate-in slide-in-from-bottom-4 duration-300 min-h-full py-4">
               <div className="w-full flex justify-between items-center mb-4 md:mb-8 px-2">
                 <button
-                  onClick={() => setFocusIndex(p => (p > 0 ? p - 1 : 8))}
+                  onClick={() => setFocusIndex((p) => (p > 0 ? p - 1 : 8))}
                   className="p-3 md:p-4 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 hover:scale-105 shadow-md transition-all text-slate-600 dark:text-slate-300"
                 >
                   <ChevronLeft size={24} />
@@ -192,11 +223,15 @@ export const MandalaChart: React.FC = () => {
                   </span>
                   <h2 className="text-xl md:text-3xl font-bold flex items-center justify-center gap-2 text-slate-800 dark:text-slate-100">
                     {GRID_POSITIONS[focusIndex]}
-                    {focusIndex === 4 && <span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full shadow-sm align-middle">MAIN</span>}
+                    {focusIndex === 4 && (
+                      <span className="bg-blue-600 text-white text-[10px] px-2 py-0.5 rounded-full shadow-sm align-middle">
+                        MAIN
+                      </span>
+                    )}
                   </h2>
                 </div>
                 <button
-                  onClick={() => setFocusIndex(p => (p < 8 ? p + 1 : 0))}
+                  onClick={() => setFocusIndex((p) => (p < 8 ? p + 1 : 0))}
                   className="p-3 md:p-4 rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 hover:scale-105 shadow-md transition-all text-slate-600 dark:text-slate-300"
                 >
                   <ChevronRight size={24} />
@@ -208,7 +243,9 @@ export const MandalaChart: React.FC = () => {
                   grids={currentChart.grids}
                   isFocusView={true}
                   focusIndex={focusIndex}
-                  onCellClick={(gIdx, cIdx) => setEditingCell({ gridIdx: gIdx, cellIdx: cIdx })}
+                  onCellClick={(gIdx, cIdx) =>
+                    setEditingCell({ gridIdx: gIdx, cellIdx: cIdx })
+                  }
                   onFocusGrid={setFocusIndex}
                 />
               </div>
@@ -222,7 +259,8 @@ export const MandalaChart: React.FC = () => {
 
         <footer className="hidden md:flex p-3 px-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 justify-between items-center text-xs text-slate-400 shrink-0">
           <div>
-            Last updated: {new Date(currentChart.updatedAt).toLocaleTimeString()}
+            Last updated:{" "}
+            {new Date(currentChart.updatedAt).toLocaleTimeString()}
           </div>
           <button
             onClick={handleExport}

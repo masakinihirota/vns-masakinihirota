@@ -1,5 +1,5 @@
-import { KeyboardEvent, useState } from 'react';
-import { ThemeVars } from '../features/profile-dashboard.types';
+import { KeyboardEvent, useState } from "react";
+import { ThemeVars } from "../features/profile-dashboard.types";
 
 interface EditableCellProps {
   readonly value: string;
@@ -16,7 +16,7 @@ export const EditableCell = ({
   value,
   onSave,
   extraClass = "",
-  isHeader = false
+  isHeader = false,
 }: EditableCellProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentValue, setCurrentValue] = useState(value);
@@ -27,20 +27,22 @@ export const EditableCell = ({
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSave();
     }
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       setIsEditing(false);
       setCurrentValue(value);
     }
   };
 
-  const Component = isHeader ? 'th' : 'td';
+  const Component = isHeader ? "th" : "td";
 
   if (isEditing) {
     return (
-      <Component className={`p-0 border-2 border-indigo-500/50 bg-indigo-500/5 ${extraClass}`}>
+      <Component
+        className={`p-0 border-2 border-indigo-500/50 bg-indigo-500/5 ${extraClass}`}
+      >
         <input
           autoFocus
           className="w-full h-full p-6 bg-transparent outline-none font-bold text-inherit"

@@ -1,4 +1,4 @@
-import { ProfileDashboard } from '@/components/profile-display';
+import { ProfileDashboard } from "@/components/profile-display";
 
 /**
  * プロフィール表示ページ
