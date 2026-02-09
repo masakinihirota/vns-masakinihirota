@@ -1,10 +1,10 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { Notification } from "@/components/groups/groups.types";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useMarkAsRead, useNotifications } from "./notifications.logic";
 
 export const NotificationList = () => {
@@ -21,13 +21,13 @@ export const NotificationList = () => {
       } = await supabase.auth.getUser();
       if (user) setUserId(user.id);
     };
-    fetchUser();
+    void fetchUser();
   }, []);
 
   const handleRead = async (notification: Notification) => {
     if (!notification.is_read) {
       await markAsRead(notification.id);
-      mutate(); // Optimistic update ideally
+      await mutate(); // Optimistic update ideally
     }
     if (notification.link_url) {
       router.push(notification.link_url);

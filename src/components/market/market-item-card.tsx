@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { MarketItem } from "@/components/groups/groups.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
+import { useEffect, useState } from "react";
 import { useBuyItem } from "./market.logic";
 
 interface MarketItemCardProps {
@@ -31,12 +31,14 @@ export const MarketItemCard = ({
 
   // Quick hack to get current user ID for MVP display logic
   // In production, use a proper AuthContext
-  if (!currentUserId) {
-    const supabase = createClient();
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user) setCurrentUserId(data.user.id);
-    });
-  }
+  useEffect(() => {
+    if (!currentUserId) {
+      const supabase = createClient();
+      void supabase.auth.getUser().then(({ data }) => {
+        if (data.user) setCurrentUserId(data.user.id);
+      });
+    }
+  }, [currentUserId]);
 
   const isOwner = currentUserId === item.seller_id;
 

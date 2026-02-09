@@ -1,0 +1,44 @@
+
+> vns-masakinihirota@0.43.0 lint U:\2026src\vns-masakinihirota.worktrees\anti
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  ! typescript-eslint(no-redundant-type-constituents): 'never' is overridden by other types in this union type.
+      ,-[src/types/database.types.ts:1049:7]
+ 1048 |   PublicCompositeTypeNameOrOptions extends
+ 1049 |     | keyof DefaultSchema["CompositeTypes"]
+      :       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 1050 |     | { schema: keyof DatabaseWithoutInternals },
+      `----
+
+  x typescript-eslint(no-floating-promises): Promises must be awaited.
+    ,-[src/components/market/market-item-card.tsx:36:5]
+ 35 |         const supabase = createClient();
+ 36 | ,->     supabase.auth.getUser().then(({ data }) => {
+ 37 | |         if (data.user) setCurrentUserId(data.user.id);
+ 38 | `->     });
+ 39 |       }
+    `----
+  help: The promise must end with a call to .catch, or end with a call to .then with a rejection handler, or be explicitly marked as ignored with the `void` operator.
+
+  x typescript-eslint(no-floating-promises): Promises must be awaited.
+    ,-[src/components/notifications/notification-list.tsx:24:5]
+ 23 |     };
+ 24 |     fetchUser();
+    :     ^^^^^^^^^^^^
+ 25 |   }, []);
+    `----
+  help: The promise must end with a call to .catch, or end with a call to .then with a rejection handler, or be explicitly marked as ignored with the `void` operator.
+
+  x typescript-eslint(no-floating-promises): Promises must be awaited.
+    ,-[src/components/notifications/notification-list.tsx:30:7]
+ 29 |       await markAsRead(notification.id);
+ 30 |       mutate(); // Optimistic update ideally
+    :       ^^^^^^^^^
+ 31 |     }
+    `----
+  help: The promise must end with a call to .catch, or end with a call to .then with a rejection handler, or be explicitly marked as ignored with the `void` operator.
+
+Found 1 warning and 3 errors.
+Finished in 5.0s on 549 files with 94 rules using 12 threads.
+ ELIFECYCLE  Command failed with exit code 1.
