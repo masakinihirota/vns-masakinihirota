@@ -135,7 +135,7 @@ describe("useWorkListLogic", () => {
     expect(workInTierMode?.userRating).toBe("TIER1");
   });
 
-  it("Tierモードでの評価変更がlastTierを更新する", () => {
+  it("Tierモードでの評価変更がlastTierを更新する", async () => {
     const { result } = renderHook(() => useWorkListLogic());
 
     act(() => {

@@ -1,3 +1,5 @@
+"use client";
+
 import { useMemo, useState } from "react";
 import { MOCK_MEMBERS, MOCK_WORKS, RATING_ORDER } from "./groups.mock";
 import {

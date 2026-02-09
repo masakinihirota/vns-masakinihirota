@@ -1,31 +1,30 @@
 import {
-  User,
-  Users,
-  Play,
-  Eye,
-  Layers,
-  Search,
-  Check,
-  ChevronRight,
-  ChevronLeft,
+  ArrowLeft,
   Briefcase,
-  Heart,
-  Zap,
-  Tag,
-  Square,
+  Check,
   CheckSquare,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Heart,
+  Layers,
+  LayoutDashboard,
+  ListFilter,
+  Moon,
+  Play,
+  RotateCcw,
+  Search,
+  Sparkles,
+  Square,
+  Sun,
+  Tag,
+  Target,
   UserMinus,
   UserPlus,
-  Target,
-  ArrowLeft,
-  ListFilter,
-  RotateCcw,
-  LayoutDashboard,
-  Moon,
-  Sun,
-  Sparkles,
+  Users,
+  Zap,
 } from "lucide-react";
-import React, { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // --- 定数 ---
 const CATEGORIES = [
@@ -143,7 +142,6 @@ const AutoMatching2 = () => {
   const [processLimit, setProcessLimit] = useState(3); // 人数指定用
   const [scoreThreshold, setScoreThreshold] = useState(2); // スコア指定用
 
-  const [isMatching, setIsMatching] = useState(false);
   const [watchedUsersPerProfile, setWatchedUsersPerProfile] = useState<
     Record<string, UserType[]>
   >({});
@@ -221,7 +219,6 @@ const AutoMatching2 = () => {
   };
 
   const runMatching = () => {
-    setIsMatching(true);
     setView("matching");
 
     setTimeout(() => {
@@ -301,7 +298,7 @@ const AutoMatching2 = () => {
         added: addedUsers.length,
         removed: removedUsers.length,
       });
-      setIsMatching(false);
+
       setView("result");
     }, 1500);
   };
@@ -332,8 +329,7 @@ const AutoMatching2 = () => {
   const textMain = "text-slate-900 dark:text-neutral-100"; // Darker slate
   const textSub = "text-slate-600 dark:text-neutral-400"; // Darker slate for subtext
   const textAccentLight = "text-indigo-700 dark:text-indigo-400"; // Darker indigo
-  const buttonPrimary =
-    "bg-indigo-700 hover:bg-indigo-800 text-white shadow-lg shadow-indigo-200/50 dark:shadow-none dark:bg-indigo-600/90 dark:hover:bg-indigo-600";
+
   const buttonSecondary =
     "bg-white/80 hover:bg-white text-slate-700 border border-slate-200 shadow-sm dark:bg-white/5 dark:text-neutral-300 dark:border-white/10 dark:hover:bg-white/10";
 
