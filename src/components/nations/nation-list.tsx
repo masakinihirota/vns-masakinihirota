@@ -1,5 +1,7 @@
 "use client";
 
+import { Users } from "lucide-react";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -8,14 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Users } from "lucide-react";
-import Link from "next/link";
 import { NationCreateModal } from "./nation-create-modal";
 import { useNations } from "./nations.logic";
 
 export const NationList = () => {
   const { nations, isLoading, isError, mutate } = useNations();
-
 
   if (isLoading) return <div>Loading nations...</div>;
   if (isError) return <div>Error loading nations</div>;

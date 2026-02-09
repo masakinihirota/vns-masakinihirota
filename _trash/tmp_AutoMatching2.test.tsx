@@ -5,9 +5,9 @@ import AutoMatching2 from "./tmp_AutoMatching2";
 
 // ResizeObserver mock
 global.ResizeObserver = class ResizeObserver {
-  observe() { }
-  unobserve() { }
-  disconnect() { }
+  observe() {}
+  unobserve() {}
+  disconnect() {}
 };
 
 describe("AutoMatching2 Accessibility", () => {
