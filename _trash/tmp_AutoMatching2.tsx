@@ -1,31 +1,30 @@
 import {
-  User,
-  Users,
-  Play,
-  Eye,
-  Layers,
-  Search,
-  Check,
-  ChevronRight,
-  ChevronLeft,
+  ArrowLeft,
   Briefcase,
-  Heart,
-  Zap,
-  Tag,
-  Square,
+  Check,
   CheckSquare,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Heart,
+  Layers,
+  LayoutDashboard,
+  ListFilter,
+  Moon,
+  Play,
+  RotateCcw,
+  Search,
+  Sparkles,
+  Square,
+  Sun,
+  Tag,
+  Target,
   UserMinus,
   UserPlus,
-  Target,
-  ArrowLeft,
-  ListFilter,
-  RotateCcw,
-  LayoutDashboard,
-  Moon,
-  Sun,
-  Sparkles,
+  Users,
+  Zap,
 } from "lucide-react";
-import React, { useState, useMemo, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 // --- 定数 ---
 const CATEGORIES = [
@@ -143,7 +142,7 @@ const AutoMatching2 = () => {
   const [processLimit, setProcessLimit] = useState(3); // 人数指定用
   const [scoreThreshold, setScoreThreshold] = useState(2); // スコア指定用
 
-  const [isMatching, setIsMatching] = useState(false);
+
   const [watchedUsersPerProfile, setWatchedUsersPerProfile] = useState<
     Record<string, UserType[]>
   >({});
@@ -221,7 +220,7 @@ const AutoMatching2 = () => {
   };
 
   const runMatching = () => {
-    setIsMatching(true);
+
     setView("matching");
 
     setTimeout(() => {
@@ -301,7 +300,7 @@ const AutoMatching2 = () => {
         added: addedUsers.length,
         removed: removedUsers.length,
       });
-      setIsMatching(false);
+
       setView("result");
     }, 1500);
   };
@@ -332,8 +331,7 @@ const AutoMatching2 = () => {
   const textMain = "text-slate-900 dark:text-neutral-100"; // Darker slate
   const textSub = "text-slate-600 dark:text-neutral-400"; // Darker slate for subtext
   const textAccentLight = "text-indigo-700 dark:text-indigo-400"; // Darker indigo
-  const buttonPrimary =
-    "bg-indigo-700 hover:bg-indigo-800 text-white shadow-lg shadow-indigo-200/50 dark:shadow-none dark:bg-indigo-600/90 dark:hover:bg-indigo-600";
+
   const buttonSecondary =
     "bg-white/80 hover:bg-white text-slate-700 border border-slate-200 shadow-sm dark:bg-white/5 dark:text-neutral-300 dark:border-white/10 dark:hover:bg-white/10";
 
@@ -382,11 +380,10 @@ const AutoMatching2 = () => {
             <button
               key={profile.id}
               onClick={() => handleProfileSwitch(profile.id)}
-              className={`w-full text-left p-3 rounded-2xl transition-all border flex items-center gap-3 relative overflow-hidden group ${
-                selectedProfileId === profile.id
-                  ? "bg-indigo-700 border-indigo-600 text-white shadow-md dark:shadow-indigo-900/20"
-                  : "bg-transparent border-transparent hover:bg-slate-100/50 dark:hover:bg-white/5 text-slate-600 dark:text-slate-400"
-              } ${isSidebarCollapsed ? "justify-center" : ""}`}
+              className={`w-full text-left p-3 rounded-2xl transition-all border flex items-center gap-3 relative overflow-hidden group ${selectedProfileId === profile.id
+                ? "bg-indigo-700 border-indigo-600 text-white shadow-md dark:shadow-indigo-900/20"
+                : "bg-transparent border-transparent hover:bg-slate-100/50 dark:hover:bg-white/5 text-slate-600 dark:text-slate-400"
+                } ${isSidebarCollapsed ? "justify-center" : ""}`}
             >
               <span className="text-2xl shrink-0 relative z-10 filter drop-shadow-sm">
                 {profile.icon}
@@ -440,11 +437,10 @@ const AutoMatching2 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <button
                   onClick={() => setMatchMode("expand")}
-                  className={`relative p-6 rounded-3xl border transition-all text-left space-y-4 overflow-hidden group ${
-                    matchMode === "expand"
-                      ? "bg-indigo-700 border-indigo-600 text-white shadow-xl shadow-indigo-200/50 dark:shadow-none"
-                      : `${cardGlass} ${textSub} hover:border-indigo-300 dark:hover:border-indigo-800`
-                  }`}
+                  className={`relative p-6 rounded-3xl border transition-all text-left space-y-4 overflow-hidden group ${matchMode === "expand"
+                    ? "bg-indigo-700 border-indigo-600 text-white shadow-xl shadow-indigo-200/50 dark:shadow-none"
+                    : `${cardGlass} ${textSub} hover:border-indigo-300 dark:hover:border-indigo-800`
+                    }`}
                 >
                   <div
                     className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${matchMode === "expand" ? "bg-white/20" : "bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400"}`}
@@ -470,11 +466,10 @@ const AutoMatching2 = () => {
 
                 <button
                   onClick={() => setMatchMode("refine")}
-                  className={`relative p-6 rounded-3xl border transition-all text-left space-y-4 overflow-hidden group ${
-                    matchMode === "refine"
-                      ? "bg-slate-800 dark:bg-slate-700 border-slate-700 text-white shadow-xl shadow-slate-200/50 dark:shadow-none"
-                      : `${cardGlass} ${textSub} hover:border-slate-300 dark:hover:border-slate-600`
-                  }`}
+                  className={`relative p-6 rounded-3xl border transition-all text-left space-y-4 overflow-hidden group ${matchMode === "refine"
+                    ? "bg-slate-800 dark:bg-slate-700 border-slate-700 text-white shadow-xl shadow-slate-200/50 dark:shadow-none"
+                    : `${cardGlass} ${textSub} hover:border-slate-300 dark:hover:border-slate-600`
+                    }`}
                 >
                   <div
                     className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${matchMode === "refine" ? "bg-white/20" : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"}`}
@@ -625,11 +620,10 @@ const AutoMatching2 = () => {
                   selectedCategories.length === 0 ||
                   (matchMode === "refine" && currentWatchList.length === 0)
                 }
-                className={`w-full py-6 rounded-2xl font-black text-xl shadow-xl transition-all flex items-center justify-center gap-3 transform hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${
-                  matchMode === "expand"
-                    ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200/50 dark:shadow-none"
-                    : "bg-slate-800 hover:bg-slate-900 text-white shadow-slate-200/50 dark:bg-slate-700 dark:hover:bg-slate-600 dark:shadow-none"
-                }`}
+                className={`w-full py-6 rounded-2xl font-black text-xl shadow-xl transition-all flex items-center justify-center gap-3 transform hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none ${matchMode === "expand"
+                  ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200/50 dark:shadow-none"
+                  : "bg-slate-800 hover:bg-slate-900 text-white shadow-slate-200/50 dark:bg-slate-700 dark:hover:bg-slate-600 dark:shadow-none"
+                  }`}
               >
                 {matchMode === "expand" ? (
                   <>
@@ -796,7 +790,7 @@ const AutoMatching2 = () => {
                                 selectedProfile[cat.id]?.includes(item)
                                   ? "bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-200/50 dark:shadow-none scale-105"
                                   : "bg-white/50 dark:bg-white/5 text-slate-600 dark:text-slate-400 border-indigo-100/50 dark:border-white/10"
-                              }`}
+                                }`}
                             >
                               {/* @ts-ignore */}
                               {selectedProfile[cat.id]?.includes(item) && (
@@ -903,11 +897,10 @@ const AutoMatching2 = () => {
             <div
               key={`${user.id}-${idx}`}
               onClick={() => handleViewUser(user)}
-              className={`w-full text-left p-3 rounded-2xl border transition-all flex items-center gap-3 group cursor-pointer ${
-                viewingUser?.id === user.id && view === "detail"
-                  ? "bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-500/50"
-                  : "bg-white dark:bg-white/5 border-transparent hover:bg-slate-50 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 shadow-sm"
-              } ${isRightSidebarCollapsed ? "justify-center" : ""}`}
+              className={`w-full text-left p-3 rounded-2xl border transition-all flex items-center gap-3 group cursor-pointer ${viewingUser?.id === user.id && view === "detail"
+                ? "bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-500/50"
+                : "bg-white dark:bg-white/5 border-transparent hover:bg-slate-50 dark:hover:bg-white/10 text-slate-600 dark:text-slate-400 shadow-sm"
+                } ${isRightSidebarCollapsed ? "justify-center" : ""}`}
             >
               <div
                 className={`w-10 h-10 ${user.color} rounded-xl flex items-center justify-center text-white font-black shrink-0 text-sm shadow-sm ${rightSidebarTab === "drift" ? "grayscale opacity-60" : ""}`}
@@ -937,18 +930,18 @@ const AutoMatching2 = () => {
 
           {(rightSidebarTab === "watch" ? currentWatchList : currentDriftList)
             .length === 0 && (
-            <div className="text-center py-20 opacity-50 px-6 flex flex-col items-center">
-              <Search
-                className="mb-3 text-slate-300 dark:text-slate-600"
-                size={32}
-              />
-              {!isRightSidebarCollapsed && (
-                <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
-                  No Profiles
-                </p>
-              )}
-            </div>
-          )}
+              <div className="text-center py-20 opacity-50 px-6 flex flex-col items-center">
+                <Search
+                  className="mb-3 text-slate-300 dark:text-slate-600"
+                  size={32}
+                />
+                {!isRightSidebarCollapsed && (
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                    No Profiles
+                  </p>
+                )}
+              </div>
+            )}
         </div>
       </aside>
     </div>

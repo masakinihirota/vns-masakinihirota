@@ -1,4 +1,4 @@
-import { type NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/session";
 
 export async function proxy(request: NextRequest) {
@@ -7,7 +7,32 @@ export async function proxy(request: NextRequest) {
   // Security Headers for /api/public
   if (request.nextUrl.pathname.startsWith("/api/public")) {
     response.headers.set("Cache-Control", "no-store, max-age=0");
-    // TODO: Add Rate Limiting logic here in the future
+  }
+
+  // CORS for API (Allow Extension)
+  if (request.nextUrl.pathname.startsWith("/api/")) {
+    const origin = request.headers.get("origin");
+    // Chrome拡張機能からのリクエスト、またはローカル開発環境を許可
+    if (
+      origin &&
+      (origin.startsWith("chrome-extension://") || origin.includes("localhost"))
+    ) {
+      response.headers.set("Access-Control-Allow-Origin", origin);
+      response.headers.set(
+        "Access-Control-Allow-Methods",
+        "GET, POST, PUT, DELETE, OPTIONS"
+      );
+      response.headers.set(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization"
+      );
+      response.headers.set("Access-Control-Allow-Credentials", "true");
+    }
+
+    // Preflight request handling
+    if (request.method === "OPTIONS") {
+      return new NextResponse(null, { status: 200, headers: response.headers });
+    }
   }
 
   return response;

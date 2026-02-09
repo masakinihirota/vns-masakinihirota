@@ -63,6 +63,11 @@ export function PortalDashboard() {
           desc: "登録された作品の一覧表示。",
         },
         {
+          title: "作品管理リスト",
+          path: "/work-list",
+          desc: "詳細な作品管理インターフェース。",
+        },
+        {
           title: "プロフィール",
           path: "/profile",
           desc: "自身のプロフィールの確認と編集。",
@@ -136,12 +141,12 @@ export function PortalDashboard() {
       routes: [
         {
           title: "オートマッチング (Legacy)",
-          path: "/auto-matching",
+          path: "/matching-auto",
           desc: "以前の自動マッチング実装。",
         },
         {
           title: "マニュアルマッチング",
-          path: "/matching/manual",
+          path: "/matching-manual",
           desc: "条件を指定して手動で相手を探す。",
         },
         {
@@ -149,15 +154,16 @@ export function PortalDashboard() {
           path: "/user-profiles",
           desc: "システム内の他ユーザーを探索。",
         },
-        {
-          title: "ユーザー詳細 (ID指定)",
-          path: "/user-profiles/1",
-          desc: "個別ユーザーのカード表示。IDはサンプルとして1を指定。",
-        },
+
         {
           title: "ユーザー編集 (ID指定)",
           path: "/user-profiles/1/edit",
           desc: "個別ユーザーの編集画面。IDはサンプルとして1を指定。",
+        },
+        {
+          title: "ユーザーカード (サンプル)",
+          path: "/user-profiles/1/card",
+          desc: "個別ユーザーの名刺表示画面。",
         },
         {
           title: "作品登録フォーム",
@@ -232,6 +238,16 @@ export function PortalDashboard() {
           title: "マンダラチャート (Trial)",
           path: "/home-trial/mandala",
           desc: "【最新】お試し体験版マンダラ。",
+        },
+        {
+          title: "マンダラチャート (Public)",
+          path: "/mandala-chart",
+          desc: "一般公開用の基本マンダラチャート。",
+        },
+        {
+          title: "体験版プロフィール作成",
+          path: "/user-profiles-trial/new",
+          desc: "ログイン不要で試せるプロフィール作成。",
         },
         {
           title: "ホーム（お試し体験）",

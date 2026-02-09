@@ -1,5 +1,4 @@
 import { CheckCircle2 } from "lucide-react";
-import React from "react";
 import { Step } from "../user-profile-creation.types";
 
 interface StepIndicatorProps {
@@ -14,7 +13,7 @@ export const StepIndicator = ({
   onStepClick,
 }: StepIndicatorProps) => {
   return (
-    <div className="w-64 bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 pt-10 px-6 hidden md:flex">
+    <div className="w-64 bg-slate-50 dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col h-screen sticky top-0 shrink-0 pt-10 px-6 hidden md:flex">
       <div className="mb-10">
         <h1 className="text-xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">
           プロフィールの作成

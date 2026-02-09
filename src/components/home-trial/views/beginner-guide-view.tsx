@@ -332,7 +332,7 @@ export function BeginnerGuideView() {
                   {/* アクションボタン */}
                   <div className="flex justify-center md:justify-start">
                     <Link
-                      href="/user-profiles/new"
+                      href="/user-profiles-trial/new"
                       className="group relative inline-flex items-center gap-3 px-8 py-4 bg-blue-600 dark:bg-indigo-600 text-white rounded-2xl font-black text-[18px] shadow-lg hover:shadow-blue-500/20 hover:bg-blue-700 dark:hover:bg-indigo-700 transition-all active:scale-95"
                     >
                       <span>プロフィール作成ページへ</span>

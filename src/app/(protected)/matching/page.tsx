@@ -60,7 +60,7 @@ export default function MatchingSelectionPage() {
       icon: <Sparkles className="w-8 h-8 text-blue-500" />,
       features: ["高速検索", "スコアリング", "24時間対応"],
       color: "border-blue-500/20 bg-blue-50/50 dark:bg-blue-900/10",
-      href: "/auto-matching",
+      href: "/matching-auto",
     },
     {
       id: "manual",
@@ -71,7 +71,7 @@ export default function MatchingSelectionPage() {
       icon: <UserPlus className="w-8 h-8 text-purple-500" />,
       features: ["コンシェルジュ介在", "精密な調整", "個別相談"],
       color: "border-purple-500/20 bg-purple-50/50 dark:bg-purple-900/10",
-      href: "/matching/manual",
+      href: "/matching-manual",
     },
   ];
 

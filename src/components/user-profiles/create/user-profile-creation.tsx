@@ -130,7 +130,7 @@ export const UserProfileCreation = (
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100">
+    <div className="flex min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100">
       {/* Sidebar: Step Indicator */}
       <StepIndicator
         currentStep={currentStep}
@@ -139,7 +139,7 @@ export const UserProfileCreation = (
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col h-full overflow-hidden relative">
+      <div className="flex-1 flex flex-col relative w-full">
         {/* Mobile Header (Visible only on small screens) */}
         <div className="md:hidden shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4 flex items-center justify-between z-20">
           <span className="font-bold text-slate-700 dark:text-slate-200">
@@ -164,8 +164,8 @@ export const UserProfileCreation = (
         </div>
 
         {/* Scrollable Content */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-12 pb-32">
-          <div className="max-w-4xl mx-auto h-full flex flex-col">
+        <div className="w-full p-4 md:p-12 pb-32">
+          <div className="max-w-4xl mx-auto flex flex-col">
             {/* Disclaimer Banner */}
             <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg p-3 text-white shadow-md mb-8 flex items-start gap-3 shrink-0">
               <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />
@@ -180,12 +180,12 @@ export const UserProfileCreation = (
             </div>
 
             {/* Dynamic Step Content */}
-            <div className="flex-1 relative min-h-0">{renderCurrentStep()}</div>
+            <div className="w-full relative">{renderCurrentStep()}</div>
           </div>
         </div>
 
         {/* Floating Footer Navigation */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 bg-gradient-to-t from-white via-white to-transparent dark:from-slate-950 dark:via-slate-950 z-10 pointer-events-none">
+        <div className="fixed bottom-0 left-0 right-0 md:left-64 p-4 md:p-8 bg-gradient-to-t from-white via-white to-transparent dark:from-slate-950 dark:via-slate-950 z-10 pointer-events-none">
           <div className="max-w-4xl mx-auto flex items-center justify-between pointer-events-auto">
             {currentStep > 1 ? (
               <button
