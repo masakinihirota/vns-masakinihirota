@@ -345,6 +345,7 @@ interface VNSButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   iconPosition?: "left" | "right";
   loading?: boolean;
   href?: string;
+  prefetch?: boolean;
 }
 
 const VNSButton = React.forwardRef<HTMLButtonElement, VNSButtonProps>(
@@ -358,6 +359,7 @@ const VNSButton = React.forwardRef<HTMLButtonElement, VNSButtonProps>(
       className = "",
       loading = false,
       href,
+      prefetch,
       ...props
     },
     ref
@@ -416,6 +418,7 @@ const VNSButton = React.forwardRef<HTMLButtonElement, VNSButtonProps>(
       return (
         <Link
           href={href}
+          prefetch={prefetch}
           className={`${baseStyles} ${sizes[size]} ${variants[variant]} ${className}`}
         >
           {content}
@@ -439,6 +442,10 @@ VNSButton.displayName = "VNSButton";
 export function TrialButton() {
   const [isPending, startTransition] = React.useTransition();
   const router = useRouter();
+
+  React.useEffect(() => {
+    router.prefetch("/home-trial");
+  }, [router]);
 
   const handleLocalModeStart = () => {
     startTransition(() => {
@@ -471,6 +478,7 @@ export function LoginButton() {
       icon={ArrowRight}
       iconPosition="right"
       href="/login"
+      prefetch={true}
     >
       メンバー登録 / ログイン
     </VNSButton>

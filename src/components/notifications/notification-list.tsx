@@ -21,13 +21,13 @@ export const NotificationList = () => {
       } = await supabase.auth.getUser();
       if (user) setUserId(user.id);
     };
-    fetchUser();
+    void fetchUser();
   }, []);
 
   const handleRead = async (notification: Notification) => {
     if (!notification.is_read) {
       await markAsRead(notification.id);
-      mutate(); // Optimistic update ideally
+      await mutate(); // Optimistic update ideally
     }
     if (notification.link_url) {
       router.push(notification.link_url);

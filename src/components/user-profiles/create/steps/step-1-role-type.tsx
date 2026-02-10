@@ -1,5 +1,5 @@
-import { Shield, Users, CheckCircle2, Info } from "lucide-react";
-import React from "react";
+import { CheckCircle2, Info, Shield, Users } from "lucide-react";
+import { useState } from "react";
 import { USER_TYPES } from "../user-profile-creation.constants";
 
 interface Step1RoleTypeProps {
@@ -11,8 +11,10 @@ interface Step1RoleTypeProps {
 }
 
 export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
+  const [isLeaderConfirmed, setIsLeaderConfirmed] = useState(false);
+
   return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="space-y-12 pb-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* 1. Role Section */}
       <section>
         <div className="flex items-center gap-3 mb-4">
@@ -24,17 +26,35 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
           </h2>
         </div>
 
-        <div className="bg-gradient-to-br from-indigo-50 to-white dark:from-slate-900 dark:to-slate-800 border border-indigo-100 dark:border-slate-700 rounded-xl p-6 shadow-sm">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-              Fixed
-            </span>
-            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">
-              リーダー (Leader)
-            </h3>
+        <div
+          className={`
+            transition-all duration-500 ease-in-out border rounded-xl p-6 shadow-sm relative overflow-hidden
+            ${
+              isLeaderConfirmed
+                ? "bg-indigo-50 dark:bg-indigo-900/30 border-indigo-500 ring-2 ring-indigo-500 ring-offset-2 dark:ring-offset-slate-900 shadow-indigo-200 dark:shadow-indigo-900/20"
+                : "bg-gradient-to-br from-indigo-50 to-white dark:from-slate-900 dark:to-slate-800 border-indigo-100 dark:border-slate-700"
+            }
+          `}
+        >
+          {/* Confetti/Highlight Effect Background */}
+          {isLeaderConfirmed && (
+            <div className="absolute inset-0 bg-indigo-500/5 pointer-events-none animate-pulse" />
+          )}
+
+          <div className="flex items-center justify-between mb-4 relative z-10">
+            <div className="flex items-center gap-3">
+              <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">
+                リーダー (Leader)
+              </h3>
+            </div>
           </div>
 
-          <div className="prose prose-sm prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 leading-relaxed bg-white/50 dark:bg-black/20 p-4 rounded-lg border border-indigo-50/50 dark:border-indigo-900/50">
+          <div
+            className={`
+              prose prose-sm prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 leading-relaxed bg-white/50 dark:bg-black/20 p-4 rounded-lg border border-indigo-50/50 dark:border-indigo-900/50 transition-all duration-500
+              ${isLeaderConfirmed ? "opacity-80" : "opacity-100"}
+            `}
+          >
             <p className="font-medium text-indigo-900 dark:text-indigo-400 mb-2">
               VNS masakinihirotaでは各ユーザーがリーダー役を担います。
             </p>
@@ -43,6 +63,55 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
               masakinihirotaにおけるリーダーは、価値観を共有する最小単位である「組織（グループ）」の創設者かつ運営責任者です。
               主な役割は、組織の目的やルールの設定、メンバーの招待、役割の任命です。また、リーダーはコミュニティの文化を守り、価値観の合う居場所を維持する調整役として役割を担ってもらいます。
             </p>
+          </div>
+
+          <div
+            className={`
+              mt-6 flex justify-start transition-all duration-500 transform
+              ${isLeaderConfirmed ? "translate-y-0 opacity-100" : "translate-y-0 opacity-100"}
+            `}
+          >
+            <label className="flex items-center gap-3 cursor-pointer group select-none bg-white/50 dark:bg-black/20 p-3 px-5 rounded-lg border border-transparent hover:bg-white/80 dark:hover:bg-slate-800/50 hover:shadow-sm transition-all">
+              <div
+                className={`
+                  w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-300
+                  ${
+                    isLeaderConfirmed
+                      ? "bg-indigo-600 border-indigo-600"
+                      : "bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 group-hover:border-indigo-400"
+                  }
+                `}
+              >
+                <CheckCircle2
+                  className={`w-4 h-4 text-white transition-all duration-300 ${
+                    isLeaderConfirmed
+                      ? "scale-100 opacity-100"
+                      : "scale-50 opacity-0"
+                  }`}
+                />
+              </div>
+              <input
+                type="checkbox"
+                className="hidden"
+                checked={isLeaderConfirmed}
+                onChange={(e) => setIsLeaderConfirmed(e.target.checked)}
+              />
+              <span
+                className={`
+                  text-sm font-bold transition-colors duration-300
+                  ${
+                    isLeaderConfirmed
+                      ? "text-indigo-700 dark:text-indigo-300"
+                      : "text-slate-500 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400"
+                  }
+                `}
+              >
+                リーダーとして行動する
+              </span>
+              <span className="ml-2 text-xs font-bold text-red-500 bg-red-100 dark:bg-red-900/30 dark:text-red-400 px-2 py-0.5 rounded">
+                必須
+              </span>
+            </label>
           </div>
         </div>
       </section>
@@ -64,7 +133,7 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
             <strong>仮面（プロフィール）について</strong>
             <br />
             VNS masakinihirotaでは、プロフィールを「仮面」と定義しています。
-            本来の自分（ルートアカウント）とは別に、対人関係や目的に応じた「仮面」を作成し、使い分けます。プロフィールを使い分けることで目的別にマッチングをしやすくします。
+            本来の自分（ルートアカウント）とは別に、対人関係や目的に応じた「仮面」を作成し、使い分けます。プロフィールを使い分けることで目的別のマッチングがしやすくなります。
           </p>
         </div>
 

@@ -16,7 +16,12 @@ export const InspirationSection = () => {
 
   // マウント時にURLパラメータを確認
   useEffect(() => {
-    if (tabParam && (tabParam === "rebirth" || tabParam === "sanibona")) {
+    if (
+      tabParam &&
+      (tabParam === "rebirth" ||
+        tabParam === "sanibona" ||
+        tabParam === "good-life")
+    ) {
       setActiveTab(tabParam);
     }
   }, [tabParam]);
@@ -51,11 +56,18 @@ export const InspirationSection = () => {
               >
                 断頭台の演説
               </TabsTrigger>
+
               <TabsTrigger
                 value="sanibona"
                 className="px-6 py-2.5 rounded-lg font-bold transition-all data-[state=active]:bg-white dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-sm"
               >
                 サニボナニ
+              </TabsTrigger>
+              <TabsTrigger
+                value="good-life"
+                className="px-6 py-2.5 rounded-lg font-bold transition-all data-[state=active]:bg-white dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-sm"
+              >
+                善き人生
               </TabsTrigger>
             </TabsList>
           </div>
@@ -176,7 +188,65 @@ export const InspirationSection = () => {
                       variant="outline"
                       className="rounded-full px-8 hover:bg-slate-100 dark:hover:bg-white/10 border-slate-200 dark:border-white/20"
                     >
-                      <Link href="/sanibonani">日本語版書き起こしを読む</Link>
+                      <Link href="/sanibonani">書き起こしを読む</Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="good-life">
+            <div className="p-8 bg-slate-50/30 dark:bg-white/[0.01] border-b border-black/5 dark:border-white/5">
+              <p className="text-slate-500 dark:text-neutral-400 text-lg">
+                愛のリスクと「弱さ」を共有することの重要性
+              </p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+              {/* Video Wrapper */}
+              <div className="aspect-video bg-black relative">
+                <iframe
+                  className="absolute inset-0 w-full h-full"
+                  src="https://www.youtube.com/embed/g83Xl4-mvF8"
+                  title="The Most Important Virtue for a Good Life"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+
+              {/* Explanation */}
+              <div className="p-8 flex flex-col justify-center space-y-6 bg-white/50 dark:bg-white/[0.02]">
+                <div>
+                  <h4 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">
+                    良い人生を送るための最も重要な美徳
+                  </h4>
+                  <p className="text-lg text-slate-500 dark:text-neutral-400 uppercase tracking-wider">
+                    Meghan Sullivan | TED
+                  </p>
+                </div>
+
+                <div className="space-y-4 text-lg leading-relaxed text-slate-700 dark:text-gray-300">
+                  <p>
+                    「もし、会う人全員を愛せるようになる薬があったら、あなたはそれを飲みますか？」
+                  </p>
+                  <p>
+                    哲学者のメーガン・サリバンは、愛には「リスク」が伴うと説きます。
+                    大切な人が苦しむとき、自分も同じ痛みを共有するというリスクです。
+                    しかし、その「弱さ」や「苦しみ」への共感こそが、本当の意味での人間同士のつながりを生み出します。
+                  </p>
+                  <p>
+                    <span className="text-slate-900 dark:text-white font-medium">
+                      「自分の弱さをさらけ出すことが、他人と深くつながって『善き人生』を送るための近道なのです。」
+                    </span>
+                  </p>
+                  <div className="pt-4">
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="rounded-full px-8 hover:bg-slate-100 dark:hover:bg-white/10 border-slate-200 dark:border-white/20"
+                    >
+                      <Link href="/good-life">雑談を読む</Link>
                     </Button>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
-import { CommunityDashboard } from "@/components/groups";
+import { GroupList } from "@/components/groups/group-list";
 
 export default function GroupsPage() {
-  return <CommunityDashboard />;
+  return <GroupList />;
 }

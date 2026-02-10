@@ -14,7 +14,10 @@ const fetcher = async (key: string) => {
     query = query.eq("nation_id", nationId);
   }
 
-  const { data, error } = await query.order("created_at", { ascending: false });
+  const { data, error } = await query
+    .order("created_at", { ascending: false })
+    .range(0, 99);
+
   if (error) throw error;
   return data as MarketItem[];
 };

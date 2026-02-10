@@ -3,6 +3,7 @@ import {
   Book,
   HelpCircle,
   MessageCircle,
+  ShieldAlert,
   ShieldCheck,
   Zap,
 } from "lucide-react";
@@ -19,6 +20,15 @@ export default function HelpPage() {
       icon: ShieldCheck,
       href: "/oasis",
       color: "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400",
+    },
+    {
+      title: "トラブル対応集 (Trouble Response)",
+      description:
+        "ネットトラブルの重大度レベル別対応ガイド。困ったときの羅針盤。",
+      icon: ShieldAlert,
+      href: "/help/trouble",
+      color:
+        "bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400",
     },
     {
       title: "用語集 (Glossary)",

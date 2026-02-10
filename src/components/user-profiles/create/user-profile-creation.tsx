@@ -1,4 +1,4 @@
-import { AlertCircle, ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { Step1RoleType } from "./steps/step-1-role-type";
 import { Step2PurposeIdentity } from "./steps/step-2-purpose-identity";
@@ -166,19 +166,6 @@ export const UserProfileCreation = (
         {/* Scrollable Content */}
         <div className="w-full p-4 md:p-12 pb-32">
           <div className="max-w-4xl mx-auto flex flex-col">
-            {/* Disclaimer Banner */}
-            <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg p-3 text-white shadow-md mb-8 flex items-start gap-3 shrink-0">
-              <AlertCircle className="w-5 h-5 mt-0.5 shrink-0" />
-              <div className="text-sm">
-                <p className="font-bold mb-1">
-                  これはVNS masakinihirotaのプロフィール作成画面です
-                </p>
-                <p className="opacity-90 leading-snug text-xs">
-                  すべての項目は後から変更可能です。直感的に選んで進んでください。
-                </p>
-              </div>
-            </div>
-
             {/* Dynamic Step Content */}
             <div className="w-full relative">{renderCurrentStep()}</div>
           </div>

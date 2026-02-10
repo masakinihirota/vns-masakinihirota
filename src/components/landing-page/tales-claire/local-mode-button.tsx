@@ -2,11 +2,15 @@
 
 import { MonitorSmartphone } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useEffect, useTransition } from "react";
 
 export const LocalModeButton = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch("/home-trial");
+  }, [router]);
 
   const handleLocalModeStart = () => {
     startTransition(async () => {
