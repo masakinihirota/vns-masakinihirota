@@ -128,6 +128,7 @@ async function runTests() {
     .select("id")
     .eq("auth_user_id", userA.user.id)
     .single();
+  if (!rootA) throw new Error("rootA not found");
   await adminClient
     .from("root_accounts")
     .update({ points: 5000 })

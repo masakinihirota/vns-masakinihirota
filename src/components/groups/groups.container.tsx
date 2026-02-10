@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Groups } from "./groups";
 import { getMyProfiles, useGroupLogic } from "./groups.logic";
