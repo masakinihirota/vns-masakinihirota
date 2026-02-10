@@ -1,10 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Notification } from "@/components/groups/groups.types";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { useMarkAsRead, useNotifications } from "./notifications.logic";
 
 export const NotificationList = () => {

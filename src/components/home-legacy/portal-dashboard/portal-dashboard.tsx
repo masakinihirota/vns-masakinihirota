@@ -87,6 +87,11 @@ export function PortalDashboard() {
           path: "/groups",
           desc: "グループ（プラザ・評価・価値観・スキル・管理）の統合画面。",
         },
+        {
+          title: "グループ詳細 (サンプルID)",
+          path: "/groups/sample-id",
+          desc: "特定のグループの詳細・管理画面（ID指定）。",
+        },
       ],
     },
     {
@@ -297,6 +302,11 @@ export function PortalDashboard() {
           desc: "アフリカ哲学のウェルカムページ。",
         },
         {
+          title: "Good Life",
+          path: "/good-life",
+          desc: "良き人生のための指針。",
+        },
+        {
           title: "利用規約",
           path: "/terms-service",
           desc: "サービスの利用規約。",
@@ -318,6 +328,11 @@ export function PortalDashboard() {
           title: "用語集",
           path: "/help/glossary",
           desc: "VNS独自の用語解説。",
+        },
+        {
+          title: "トラブル対応集",
+          path: "/help/trouble",
+          desc: "ネットトラブルのレベル別対応ガイド。",
         },
         {
           title: "ディスカッション",

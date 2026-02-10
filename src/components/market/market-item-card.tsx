@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { MarketItem } from "@/components/groups/groups.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
 import { useBuyItem } from "./market.logic";
 
 interface MarketItemCardProps {

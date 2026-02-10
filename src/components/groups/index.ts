@@ -1,8 +1,5 @@
-export * from "./community-dashboard";
-export * from "./group-list";
-export * from "./groups";
-export * from "./groups.container";
-export * from "./groups.list.logic";
+export { CreateGroupModal } from "./create-group-modal";
+export { GroupList } from "./group-list";
+export { Groups } from "./groups";
+export { GroupsContainer } from "./groups.container";
 export * from "./groups.logic";
-export * from "./groups.mock";
-export * from "./groups.types";

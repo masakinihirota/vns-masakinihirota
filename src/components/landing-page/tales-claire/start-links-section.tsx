@@ -2,7 +2,6 @@
 
 import { LogIn } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import { LocalModeButton } from "./local-mode-button";
 
 export const StartLinksSection = () => {
@@ -59,6 +58,7 @@ export const StartLinksSection = () => {
           <div className="flex flex-col gap-4">
             <Link
               href="/login"
+              prefetch={true}
               className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-700 dark:from-indigo-500 dark:to-blue-600 px-6 py-5 text-white transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-indigo-500/20 dark:shadow-indigo-500/40 ring-1 ring-white/20"
             >
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -115,6 +115,7 @@ export const StartLinksSection = () => {
           <div className="w-full">
             <Link
               href="/login"
+              prefetch={true}
               className="block group relative overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-600 to-blue-700 dark:from-indigo-500 dark:to-blue-600 px-6 py-5 text-white transition-all hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-indigo-500/20 dark:shadow-indigo-500/40 ring-1 ring-white/20"
             >
               <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>

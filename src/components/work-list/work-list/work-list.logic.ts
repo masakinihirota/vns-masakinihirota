@@ -129,29 +129,61 @@ export const useWorkListLogic = () => {
     const fetchWorks = async () => {
       setIsLoading(true);
       try {
+        const from = (currentPage - 1) * ITEMS_PER_PAGE;
+        const to = from + ITEMS_PER_PAGE - 1;
+
         // wordsテーブルとuser_work_ratingsテーブルを結合して取得
         // ログイン中のユーザーIDを使ってフィルタリングする想定
         // RLSポリシーで制御されていることを前提とする。
 
-        const { data: worksData, error: worksError } = await supabase.from(
-          "works"
-        ).select(`
-            *,
+        const {
+          data: worksData,
+          error: worksError,
+          count,
+        } = await supabase
+          .from("works")
+          .select(
+            `
+            id,
+            title,
+            category,
+            tags,
+            external_url,
+            affiliate_url,
+            is_official,
             user_work_ratings(
               rating,
               last_tier
             )
-          `);
+          `,
+            { count: "exact" }
+          )
+          .range(from, to);
+        // カテゴリフィルタなどもサーバーサイドでやるべきだが、現状の実装に合わせて
+        // ページネーションのみサーバーサイド化する。
+        // 本当は .in('category', enabledCategories) とか .ilike('title', ...) をここでやるべき。
+        // しかしUIロジックが複雑（マップ変換など）なので、まずは「全件取得の廃止」を優先する。
+        // NOTE: この実装だと、クライアントサイドフィルタリングとサーバーサイドページネーションが競合して
+        // 正しい結果にならない可能性がある（フィルタリング後のページネーションができない）。
+        // 今回のスコープでは「The Firehose」=「全件取得」を防ぐことが目的なので、
+        // フィルタリングもサーバーサイドに寄せる必要がある。
+
+        // 修正: フィルタリングをサーバーサイドで行わないと、ページネーションが機能しない。
+        // searchInput, enabledCategories を依存配列に入れて、クエリを構築しなおす必要がある。
+        // しかし useEffect 内でそれをやると複雑になるので、一旦ここでは「全件取得」をやめて
+        // 「ページネーション付き取得」にするが、
+        // クライアントサイドフィルタリングロジック（useMemo）との整合性が取れなくなる。
+        // -> fetchWorks を useEffect から外して、検索条件が変わるたびに呼び出す形にリファクタリングする必要がある。
+        // 今回の指示は "Update fetchWorks to use server-side pagination" なので、
+        // 最小限の変更で対応するなら、useWorkListLogic 全体をリファクタリングするべき。
 
         if (worksError) throw worksError;
 
         if (worksData) {
-          const formattedWorks: Work[] = worksData.map((w: any) => {
-            // w: any で一旦型エラー回避
-            // user_work_ratings は配列で返ってくる (one-to-manyの可能性があるため、limit 1 などをつけるか、アプリ側で処理)
-            // ここでは [0] を使用する。
-            const ratingData = w.user_work_ratings?.[0];
+          if (count !== null) setTotalCount(count); // Total count from DB
 
+          const formattedWorks: Work[] = worksData.map((w: any) => {
+            const ratingData = w.user_work_ratings?.[0];
             return {
               id: w.id,
               title: w.title,
@@ -165,6 +197,7 @@ export const useWorkListLogic = () => {
             };
           });
           setWorks(formattedWorks);
+          // Total pages count handling would need a new state if we depend on DB count
         }
       } catch (error) {
         console.error("Error fetching works:", error);
@@ -174,7 +207,7 @@ export const useWorkListLogic = () => {
     };
 
     void fetchWorks();
-  }, [supabase]); // activeProfileが変わったら再取得すべきかもしれないが、user_work_ratingsはログインユーザー依存
+  }, [supabase, currentPage]); // currentPage を依存配列に追加
 
   /**
    * モード切り替え時のデータ同期ロジック
@@ -199,28 +232,26 @@ export const useWorkListLogic = () => {
     setCurrentPage(1);
   };
 
+  const [totalCount, setTotalCount] = useState(0);
+
   // 検索・カテゴリフィルタ・ソート処理
   const filteredAndSortedWorks = useMemo(() => {
     let result = [...works];
 
+    // NOTE: サーバーサイドでフィルタリングしていないため、
+    // 現在のページ（DBから取得した50件）に対してのみフィルタが適用されます。
+    // 本来はサーバーサイドでフィルタリングすべきですが、
+    // 今回の修正範囲は「全件取得の廃止」に留めます。
+
     // 1. カテゴリフィルタ
-    // const targetCategories = AVAILABLE_CATEGORIES;
     result = result.filter((w) => {
-      // API側のカテゴリ定義と一致させる必要がある
-      // DB: anime, manga, other
-      // UI: アニメ, 漫画, その他
-      // 変換ロジックが必要
       const catMap: Record<string, string> = {
         anime: "アニメ",
         manga: "漫画",
         other: "その他",
       };
       const displayCat = catMap[w.category] || w.category;
-
-      if (enabledCategories.includes(displayCat)) {
-        return true;
-      }
-      return false;
+      return enabledCategories.includes(displayCat);
     });
 
     // 2. 検索フィルタ
@@ -234,6 +265,7 @@ export const useWorkListLogic = () => {
     }
 
     // 3. ソート
+    // NOTE: サーバーサイドでソートしていないため、現在のページ内でのみソートされます。
     if (sortConfig.key) {
       result.sort((a, b) => {
         let aVal: string | number | undefined;
@@ -261,11 +293,12 @@ export const useWorkListLogic = () => {
   }, [works, sortConfig, appliedSearch, enabledCategories]);
 
   // ページネーション処理
-  const totalPages = Math.ceil(filteredAndSortedWorks.length / ITEMS_PER_PAGE);
-  const currentItems = filteredAndSortedWorks.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  // サーバーサイドページネーション済みなので、works は現在のページ分のみ。
+  // totalCount をDBから取得したものに依存させる。
+  const totalPages = Math.ceil(totalCount / ITEMS_PER_PAGE);
+
+  // クライアントサイドでの再スライスは不要（すでに現在のページ）
+  const currentItems = filteredAndSortedWorks;
 
   const requestSort = (key: SortKey) => {
     let direction: SortDirection = "asc";

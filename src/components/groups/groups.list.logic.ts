@@ -6,7 +6,12 @@ import { Group } from "./groups.types";
 
 const fetcher = async () => {
   const supabase = createClient();
-  const { data, error } = await supabase.from("groups").select("*");
+  const { data, error } = await supabase
+    .from("groups")
+    .select("*")
+    .range(0, 99)
+    .order("created_at", { ascending: false });
+
   if (error) throw error;
   return data as Group[];
 };

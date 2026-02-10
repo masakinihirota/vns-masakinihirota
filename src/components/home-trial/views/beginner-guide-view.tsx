@@ -85,7 +85,7 @@ export function BeginnerGuideView() {
   const steps: Step[] = [
     {
       title: "1. アカウントの作成",
-      desc: "リアルな情報を入力(本人確認等)して作成します。主な目的は複数のプロフィールの管理です。",
+      desc: "リアルな情報を入力(本人確認等)して作成します。",
       icon: <ShieldCheck size={28} />,
       color: "text-slate-800 dark:text-slate-200",
       isRoot: true,
@@ -212,7 +212,7 @@ export function BeginnerGuideView() {
                   <div className="p-8 bg-slate-50/50 dark:bg-neutral-900/30 border border-slate-200 dark:border-neutral-800 rounded-3xl space-y-8 backdrop-blur-sm">
                     <h5 className="text-[20px] font-bold text-slate-800 dark:text-neutral-100 flex items-center gap-2">
                       <Check className="text-blue-600" />
-                      お試し版の基本設定
+                      アカウント作成の代わりのお試し版の基本設定
                     </h5>
 
                     {/* 1. オアシス宣言 */}
