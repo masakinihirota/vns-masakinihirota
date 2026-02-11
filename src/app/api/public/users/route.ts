@@ -1,5 +1,5 @@
-import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -17,7 +17,6 @@ export async function GET(request: Request) {
     .from("user_profiles")
     .select("id, display_name, purpose, role_type, is_active")
     .eq("is_active", true)
-    // .order("updated_at", { ascending: false }) // Show recently active
     .limit(limit);
 
   if (error) {

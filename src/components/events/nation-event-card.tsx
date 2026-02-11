@@ -1,7 +1,5 @@
 "use client";
 
-import { Calendar, Users } from "lucide-react";
-import { useState } from "react";
 import { NationEvent } from "@/components/groups/groups.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,6 +12,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
+import { Calendar, Users } from "lucide-react";
+import { useState } from "react";
 import { useJoinEvent } from "./events.logic";
 
 interface NationEventCardProps {
@@ -75,7 +75,7 @@ export const NationEventCard = ({
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <Users className="h-4 w-4" />
-          <span>Max Participants: {event.max_participants || "Unlimtied"}</span>
+          <span>Max Participants: {event.max_participants || "Unlimited"}</span>
         </div>
       </CardContent>
       <CardFooter>

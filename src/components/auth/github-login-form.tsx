@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,7 +10,13 @@ import {
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
 
+/**
+ * GitHub OAuth ログインフォームコンポーネント
+ * GitHubアカウントを使用したソーシャルログインを提供します
+ */
 export function GitHubLoginForm({
   className,
   ...props
@@ -68,7 +72,7 @@ export function GitHubLoginForm({
         <CardContent>
           <ul className="space-y-1 text-sm">
             {features.map((feature, index) => (
-              <li key={index} className="flex justify-between">
+              <li key={feature.label} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
                 <span
                   className={

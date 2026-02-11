@@ -1,16 +1,6 @@
-import "./globals.css";
-import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/providers";
-
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
+import type { Metadata } from "next";
+import "./globals.css";
 
 const geistSans = { variable: "font-sans" };
 const geistMono = { variable: "font-mono" };

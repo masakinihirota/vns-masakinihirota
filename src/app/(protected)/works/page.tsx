@@ -1,8 +1,8 @@
-import Link from "next/link";
-import { Suspense } from "react";
 import { Button } from "@/components/ui/button";
 import { WorkCatalogHeader } from "@/components/works/work-catalog-header";
 import { WorkList } from "@/components/works/work-list";
+import Link from "next/link";
+import { Suspense } from "react";
 import { getWorks } from "./actions"; // Import from local actions
 
 export default async function WorksPage(props: {
@@ -36,7 +36,6 @@ export default async function WorksPage(props: {
       <WorkCatalogHeader />
 
       <Suspense fallback={<div>Loading works...</div>}>
-        {/* @ts-ignore: Works type mismatch potential */}
         <WorkList works={works} />
       </Suspense>
     </div>

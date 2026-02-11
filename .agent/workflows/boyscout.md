@@ -50,6 +50,62 @@ Antigravityの.agent/rules内にあるルール、および `.agent/skills` 内�
   - これらは開発中にエラーを特定したり、修正状況を確認したりするために一時的に作成したものです。すべてのエラーが解消され、最終的なチェックに合格していれば、残しておく必要はありません。
   - ワークスペースをクリーンに保つために、不要な一時ファイルは削除することを強く推奨します。再確認が必要な場合は、その都度新しく生成すれば最新の状態を確認できます。
 
+## 4. テストスケルトンの自動生成 (Auto Test Scaffolding)
+
+監査対象のコンポーネントに対し、テストファイル（`*.test.tsx` / `*.logic.test.ts`）が存在しない場合、以下の手順でスケルトンを自動生成してください。
+
+### 対象判定
+
+- `src/components/` 配下のコンポーネント（`.tsx`）にテストファイルがない場合
+- `*.logic.ts` にユニットテストファイル（`*.logic.test.ts`）がない場合
+
+### 生成するテストの内容
+
+1. **UIコンポーネント（`*.test.tsx`）**
+   - コンポーネントの基本レンダリングテスト
+   - `vitest-axe` によるアクセシビリティチェック（`toHaveNoViolations`）
+   - テストケース名は日本語で記述
+   - AAA パターン（Arrange・Act・Assert）を明確に分離
+
+2. **ロジック（`*.logic.test.ts`）**
+   - エクスポートされた関数ごとに基本的なテストケースを生成
+   - エッジケース（null, undefined, 空配列等）のスケルトン
+
+### テンプレート例（UIコンポーネント）
+
+```typescript
+import { render } from "@testing-library/react";
+import { axe } from "vitest-axe";
+import { ComponentName } from "./component-name";
+
+describe("ComponentName", () => {
+  it("正常にレンダリングされる", () => {
+    // Arrange & Act
+    const { container } = render(<ComponentName />);
+
+    // Assert
+    expect(container).toBeTruthy();
+  });
+
+  it("アクセシビリティ違反がない", async () => {
+    // Arrange
+    const { container } = render(<ComponentName />);
+
+    // Act
+    const results = await axe(container);
+
+    // Assert
+    expect(results).toHaveNoViolations();
+  });
+});
+```
+
+### 注意事項
+
+- 生成するテストは **RED（失敗）状態でも構わない**。スケルトンの目的は「テストの土台を用意すること」であり、全テストを通すことではない。
+- `use client` コンポーネントのテストでは、Supabase等の外部依存をモックする `vi.mock()` のスケルトンも含める。
+- 生成後、必ず `npx vitest run --reporter=verbose <テストファイルパス>` で実行し、構文エラーがないことを確認する。
+
 # Output Process
 
 まず、思考プロセスとして以下の内容を出力し、その後に実行に移ってください。

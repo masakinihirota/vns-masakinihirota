@@ -1,7 +1,5 @@
+import * as Auth from "@/components/auth";
 import Link from "next/link";
-import { AnonymousLoginForm } from "@/components/auth/anonymous-login-form";
-import { GitHubLoginForm } from "@/components/auth/github-login-form";
-import { GoogleLoginForm } from "@/components/auth/google-login-form";
 
 export default async function Page(props: {
   searchParams?: Promise<{
@@ -39,14 +37,14 @@ export default async function Page(props: {
 
       {/* ログインフォーム */}
       <div className="flex flex-col md:flex-row gap-6 w-full max-w-5xl justify-center">
-        <AnonymousLoginForm
+        <Auth.AnonymousLoginForm
           className={isTrialMode ? "max-w-md mx-auto" : "flex-1 min-w-0"}
         />
 
         {!isTrialMode && (
           <>
-            <GoogleLoginForm className="flex-1 min-w-0" />
-            <GitHubLoginForm className="flex-1 min-w-0" />
+            <Auth.GoogleLoginForm className="flex-1 min-w-0" />
+            <Auth.GitHubLoginForm className="flex-1 min-w-0" />
           </>
         )}
       </div>
