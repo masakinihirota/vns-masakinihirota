@@ -1,4 +1,8 @@
-# Build Stability Rules
+---
+trigger: always_on
+---
+
+# ビルド安定化ルール (Build Stability Rules)
 
 ## Prevent Missing Module Errors
 
