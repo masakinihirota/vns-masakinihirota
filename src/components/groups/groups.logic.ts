@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import useSWR from "swr";
 import {
   createGroupAction,
   getGroupByIdAction,
@@ -7,8 +9,6 @@ import {
 } from "@/actions/groups";
 import { createClient } from "@/lib/supabase/client";
 import type { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
-import { useState } from "react";
-import useSWR from "swr";
 import { MOCK_MEMBERS, MOCK_WORKS } from "./groups.mock";
 import {
   AdminTab,
@@ -64,9 +64,7 @@ export async function getGroupById(id: string) {
  * @param groupData グループ作成データ
  * @returns 作成されたグループ
  */
-export async function createGroup(
-  groupData: GroupInsert
-) {
+export async function createGroup(groupData: GroupInsert) {
   if (!groupData.name) throw new Error("Group name is required");
   if (!groupData.leader_id) throw new Error("Leader ID is required");
 
@@ -123,10 +121,7 @@ export async function deleteGroup(
  * @param groupId 参加するグループID
  * @param userId 参加するユーザーID
  */
-export async function joinGroup(
-  groupId: string,
-  userId: string
-) {
+export async function joinGroup(groupId: string, userId: string) {
   // Client argument is ignored as we use server action
   return await joinGroupAction(groupId, userId);
 }
@@ -241,19 +236,19 @@ export const useGroupLogic = (groupId?: string) => {
 
   const members: Member[] = membersData
     ? membersData.map((m: any) => ({
-      id: m.user_profile_id,
-      name: m.user_profiles?.display_name || "Unknown",
-      role:
-        m.role === "leader"
-          ? "リーダー"
-          : m.role === "mediator"
-            ? "メディエーター"
-            : "一般",
-      avatar: m.user_profiles?.avatar_url || "😎", // Default avatar
-      traits: [], // Placeholder
-      ratings: {}, // Placeholder
-      values: {}, // Placeholder
-    }))
+        id: m.user_profile_id,
+        name: m.user_profiles?.display_name || "Unknown",
+        role:
+          m.role === "leader"
+            ? "リーダー"
+            : m.role === "mediator"
+              ? "メディエーター"
+              : "一般",
+        avatar: m.user_profiles?.avatar_url || "😎", // Default avatar
+        traits: [], // Placeholder
+        ratings: {}, // Placeholder
+        values: {}, // Placeholder
+      }))
     : []; // Or MOCK_MEMBERS if you want to keep mocks when no DB data
 
   // Event Handlers

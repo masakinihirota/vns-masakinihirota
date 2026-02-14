@@ -6,9 +6,9 @@ import { UserProfile } from "./auto-matching.logic";
 describe("AutoMatching UI", () => {
   beforeAll(() => {
     global.ResizeObserver = class ResizeObserver {
-      observe() { }
-      unobserve() { }
-      disconnect() { }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
     };
   });
 

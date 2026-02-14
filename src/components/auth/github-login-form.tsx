@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,8 +12,6 @@ import {
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { FaGithub } from "react-icons/fa";
 
 /**
  * GitHub OAuth ログインフォームコンポーネント

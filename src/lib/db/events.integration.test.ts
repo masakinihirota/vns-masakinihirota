@@ -1,3 +1,7 @@
+import { createClient } from "@supabase/supabase-js";
+import { sql } from "drizzle-orm";
+import { v4 as uuidv4 } from "uuid";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
   createEventDrizzle,
   getEventDrizzle,
@@ -7,10 +11,6 @@ import { createGroupDrizzle } from "@/lib/db/drizzle/groups.drizzle";
 import { createNationDrizzle } from "@/lib/db/drizzle/nations.drizzle";
 import { createUserProfileDrizzle } from "@/lib/db/drizzle/user-profiles.drizzle";
 import { db } from "@/lib/drizzle/client";
-import { createClient } from "@supabase/supabase-js";
-import { sql } from "drizzle-orm";
-import { v4 as uuidv4 } from "uuid";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 const SUPABASE_URL =
   process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:64321";

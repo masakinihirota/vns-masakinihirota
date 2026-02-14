@@ -1,7 +1,7 @@
-import type { Database } from "@/types/types_db";
 import { createClient } from "@supabase/supabase-js";
 import { v4 as uuidv4 } from "uuid";
 import { beforeAll, describe, expect, it, vi } from "vitest";
+import type { Database } from "@/types/types_db";
 import {
   createGroup,
   deleteGroup,
@@ -118,13 +118,11 @@ describe("Groups Logic Integration", () => {
     const groupName = `Integration Group ${uuidv4()}`;
 
     // 1. Leader creates group
-    const newGroup = await createGroup(
-      {
-        name: groupName,
-        leader_id: leaderProfileId,
-        description: "Integration Test Group",
-      }
-    );
+    const newGroup = await createGroup({
+      name: groupName,
+      leader_id: leaderProfileId,
+      description: "Integration Test Group",
+    });
 
     expect(newGroup).toBeDefined();
     expect(newGroup.leader_id).toBe(leaderProfileId);

@@ -1077,4 +1077,9 @@ export const Constants = {
     Enums: {},
   },
   public: {
-    E
+    Enums: {
+      alliance_status: ["requested", "pre_partner", "partner"],
+      follow_status: ["watch", "follow"],
+    },
+  },
+} as const;

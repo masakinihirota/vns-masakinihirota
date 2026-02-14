@@ -1,3 +1,7 @@
+import { createClient } from "@supabase/supabase-js";
+import { sql } from "drizzle-orm";
+import { v4 as uuidv4 } from "uuid";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import {
   createGroupDrizzle,
   getGroupByIdDrizzle,
@@ -5,10 +9,6 @@ import {
 } from "@/lib/db/drizzle/groups.drizzle";
 import { createUserProfileDrizzle } from "@/lib/db/drizzle/user-profiles.drizzle";
 import { db } from "@/lib/drizzle/client";
-import { createClient } from "@supabase/supabase-js";
-import { sql } from "drizzle-orm";
-import { v4 as uuidv4 } from "uuid";
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
 // Use Supabase Admin client to manage auth users
 const SUPABASE_URL =
@@ -66,10 +66,13 @@ describe("Groups Drizzle DAL Integration", () => {
     if (!rootAccountId) throw new Error("Leader root account not found");
 
     // Create Profile via Drizzle
-    const leaderProfile = await createUserProfileDrizzle(rootAccountId as string, {
-      display_name: "Drizzle Leader",
-      role_type: "leader",
-    });
+    const leaderProfile = await createUserProfileDrizzle(
+      rootAccountId as string,
+      {
+        display_name: "Drizzle Leader",
+        role_type: "leader",
+      }
+    );
     leaderProfileId = leaderProfile.id;
 
     // 2. Create Member User
@@ -90,10 +93,13 @@ describe("Groups Drizzle DAL Integration", () => {
     const memberRootId = memberRoots[0]?.id;
     if (!memberRootId) throw new Error("Member root account not found");
 
-    const memberProfile = await createUserProfileDrizzle(memberRootId as string, {
-      display_name: "Drizzle Member",
-      role_type: "member",
-    });
+    const memberProfile = await createUserProfileDrizzle(
+      memberRootId as string,
+      {
+        display_name: "Drizzle Member",
+        role_type: "member",
+      }
+    );
     memberProfileId = memberProfile.id;
   });
 

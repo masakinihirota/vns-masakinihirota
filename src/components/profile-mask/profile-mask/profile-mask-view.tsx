@@ -171,10 +171,11 @@ export const ProfileMaskView: React.FC<ProfileMaskViewProps> = ({
               <button
                 key={p.id}
                 onClick={() => onSwitchProfile(p.id)}
-                className={`w-full text-left p-6 rounded-[2rem] transition-all flex flex-col border-2 ${isActive
+                className={`w-full text-left p-6 rounded-[2rem] transition-all flex flex-col border-2 ${
+                  isActive
                     ? "bg-[var(--accent)] border-white/30 text-white shadow-xl scale-[1.02]"
                     : "bg-white/50 dark:bg-white/5 border-transparent hover:bg-white dark:hover:bg-white/10"
-                  }`}
+                }`}
               >
                 <div className="flex items-center w-full mb-2">
                   <div
@@ -244,8 +245,9 @@ export const ProfileMaskView: React.FC<ProfileMaskViewProps> = ({
             )}
             <button
               onClick={onSave}
-              className={`flex items-center space-x-3 px-8 py-3.5 text-white rounded-2xl font-black shadow-2xl transition-all active:scale-95 text-xl ${activeProfile.isGhost ? "bg-purple-600" : "bg-[var(--accent)]"
-                } ${!isDirty ? "opacity-40 grayscale pointer-events-none" : "animate-pulse"}`}
+              className={`flex items-center space-x-3 px-8 py-3.5 text-white rounded-2xl font-black shadow-2xl transition-all active:scale-95 text-xl ${
+                activeProfile.isGhost ? "bg-purple-600" : "bg-[var(--accent)]"
+              } ${!isDirty ? "opacity-40 grayscale pointer-events-none" : "animate-pulse"}`}
             >
               <Save size={24} />
               <span>{isDirty ? "保存する" : "保存済"}</span>
@@ -302,10 +304,11 @@ export const ProfileMaskView: React.FC<ProfileMaskViewProps> = ({
                 <button
                   key={name}
                   onClick={() => onSelectAnonym(name)}
-                  className={`p-6 rounded-[1.5rem] border-2 transition-all flex items-center justify-between ${activeProfile.constellationName === name
+                  className={`p-6 rounded-[1.5rem] border-2 transition-all flex items-center justify-between ${
+                    activeProfile.constellationName === name
                       ? "bg-[var(--accent)]/10 border-[var(--accent)] text-[var(--accent)]"
                       : "bg-white dark:bg-white/5 border-slate-100 dark:border-white/10 text-slate-500 dark:text-neutral-400"
-                    }`}
+                  }`}
                 >
                   <span className="font-bold">{name}</span>
                   {activeProfile.constellationName === name && (

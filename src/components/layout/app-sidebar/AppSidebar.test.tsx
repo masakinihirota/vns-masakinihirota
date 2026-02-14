@@ -1,7 +1,7 @@
+import "vitest-axe/extend-expect";
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { axe } from "vitest-axe";
-import "vitest-axe/extend-expect";
 import { AppSidebar } from "./AppSidebar";
 
 // Lucide-reactのアイコンをモック
