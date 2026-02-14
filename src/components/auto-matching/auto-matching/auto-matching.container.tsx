@@ -1,12 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 import { AutoMatching } from "./auto-matching";
 import {
-  CANDIDATE_POOL,
-  CATEGORIES,
-  filterCandidates,
   MY_PROFILES,
+  CANDIDATE_POOL,
+  filterCandidates,
+  CATEGORIES,
   UserProfile,
 } from "./auto-matching.logic";
 
@@ -103,7 +103,7 @@ export const AutoMatchingContainer = () => {
 
   const runMatching = () => {
     if (!selectedProfile) return;
-
+    // setIsMatching(true);
     setView("matching");
 
     setTimeout(() => {
@@ -152,6 +152,7 @@ export const AutoMatchingContainer = () => {
         setLastMatchStats({ added: 0, removed: removedUsers.length });
       }
 
+      // setIsMatching(false);
       setView("result");
     }, 1500);
   };

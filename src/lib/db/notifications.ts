@@ -1,11 +1,5 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/types/database.types";
-import { isDrizzle } from "./adapter";
-import {
-  createNotificationDrizzle,
-  getUnreadNotificationsDrizzle,
-  markNotificationAsReadDrizzle,
-} from "./drizzle";
 
 export type NotificationType = "system" | "invite" | "transaction" | "event";
 
@@ -19,11 +13,6 @@ export const createNotification = async (
     type: NotificationType;
   }
 ) => {
-  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
-  if (isDrizzle()) {
-    return createNotificationDrizzle(notificationData);
-  }
-
   const { data, error } = await supabase
     .from("notifications")
     .insert(notificationData)
@@ -38,11 +27,6 @@ export const getUnreadNotifications = async (
   supabase: SupabaseClient<Database>,
   userId: string
 ) => {
-  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
-  if (isDrizzle()) {
-    return getUnreadNotificationsDrizzle(userId);
-  }
-
   const { data, error } = await supabase
     .from("notifications")
     .select("*")
@@ -58,11 +42,6 @@ export const markNotificationAsRead = async (
   supabase: SupabaseClient<Database>,
   notificationId: string
 ) => {
-  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
-  if (isDrizzle()) {
-    return markNotificationAsReadDrizzle(notificationId);
-  }
-
   const { data, error } = await supabase
     .from("notifications")
     .update({ is_read: true })

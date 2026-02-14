@@ -1,4 +1,4 @@
-import { Briefcase, Heart, Tag, Zap } from "lucide-react";
+import { Heart, Briefcase, Tag, Zap } from "lucide-react";
 
 // --- Types ---
 export interface Category {
@@ -25,30 +25,13 @@ export interface UserProfile {
   skills: string[];
   stats?: UserStats;
   matchScore?: number;
+  // Index allow for category access
+  [key: string]: any;
 }
 
 export interface MatchStats {
   added: number;
   removed: number;
-}
-
-/** カテゴリIDに対応するプロフィールフィールドの値を型安全に取得する */
-export function getCategoryValues(
-  profile: UserProfile,
-  categoryId: string
-): string[] {
-  switch (categoryId) {
-    case "values":
-      return profile.values;
-    case "createdWorks":
-      return profile.createdWorks;
-    case "favoriteWorks":
-      return profile.favoriteWorks;
-    case "skills":
-      return profile.skills;
-    default:
-      return [];
-  }
 }
 
 // --- Constants ---
@@ -160,8 +143,8 @@ export const calculateUserScore = (
 ): UserProfile => {
   let score = 0;
   selectedCategories.forEach((cat) => {
-    const userItems = getCategoryValues(user, cat);
-    const targetItems = getCategoryValues(targetProfile, cat);
+    const userItems = user[cat] as string[] | undefined;
+    const targetItems = targetProfile[cat] as string[] | undefined;
 
     if (userItems && targetItems) {
       const matches = userItems.filter((item) => targetItems.includes(item));

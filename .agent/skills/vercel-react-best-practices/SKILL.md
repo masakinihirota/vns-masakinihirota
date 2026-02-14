@@ -1,109 +1,109 @@
 ---
 name: vercel-react-best-practices
-description: VercelエンジニアリングによるReactとNext.jsのパフォーマンス最適化ガイドライン。React/Next.jsコードの記述、レビュー、リファクタリング時に、最適なパフォーマンスパターンを保証するために使用します。Reactコンポーネント、Next.jsページ、データ取得、バンドル最適化、パフォーマンス改善に関するタスクでトリガーされます。
+description: React and Next.js performance optimization guidelines from Vercel Engineering. This skill should be used when writing, reviewing, or refactoring React/Next.js code to ensure optimal performance patterns. Triggers on tasks involving React components, Next.js pages, data fetching, bundle optimization, or performance improvements.
 ---
 
 # Vercel React Best Practices
 
-Vercelが管理する、ReactおよびNext.jsアプリケーションの包括的なパフォーマンス最適化ガイドです。8つのカテゴリにわたる45のルールが含まれており、自動リファクタリングとコード生成を導くために影響度順に優先順位付けされています。
+Comprehensive performance optimization guide for React and Next.js applications, maintained by Vercel. Contains 45 rules across 8 categories, prioritized by impact to guide automated refactoring and code generation.
 
-## 適用タイミング (When to Apply)
+## When to Apply
 
-以下の場合にこれらのガイドラインを参照してください：
+Reference these guidelines when:
 
-- 新しいReactコンポーネントやNext.jsページを作成する時
-- データ取得（クライアントまたはサーバーサイド）を実装する時
-- コードのパフォーマンス問題をレビューする時
-- 既存のReact/Next.jsコードをリファクタリングする時
-- バンドルサイズや読み込み時間を最適化する時
+- Writing new React components or Next.js pages
+- Implementing data fetching (client or server-side)
+- Reviewing code for performance issues
+- Refactoring existing React/Next.js code
+- Optimizing bundle size or load times
 
-## 優先度別ルールカテゴリ (Rule Categories by Priority)
+## Rule Categories by Priority
 
-| 優先度 | カテゴリ                     | 影響度   | プレフィックス |
-| ------ | ---------------------------- | -------- | -------------- |
-| 1      | ウォーターフォールの排除     | **重要** | `async-`       |
-| 2      | バンドルサイズ最適化         | **重要** | `bundle-`      |
-| 3      | サーバーサイドパフォーマンス | 高       | `server-`      |
-| 4      | クライアントサイドデータ取得 | 中〜高   | `client-`      |
-| 5      | 再レンダリング最適化         | 中       | `rerender-`    |
-| 6      | レンダリングパフォーマンス   | 中       | `rendering-`   |
-| 7      | JavaScriptパフォーマンス     | 低〜中   | `js-`          |
-| 8      | 高度なパターン               | 低       | `advanced-`    |
+| Priority | Category                  | Impact      | Prefix       |
+| -------- | ------------------------- | ----------- | ------------ |
+| 1        | Eliminating Waterfalls    | CRITICAL    | `async-`     |
+| 2        | Bundle Size Optimization  | CRITICAL    | `bundle-`    |
+| 3        | Server-Side Performance   | HIGH        | `server-`    |
+| 4        | Client-Side Data Fetching | MEDIUM-HIGH | `client-`    |
+| 5        | Re-render Optimization    | MEDIUM      | `rerender-`  |
+| 6        | Rendering Performance     | MEDIUM      | `rendering-` |
+| 7        | JavaScript Performance    | LOW-MEDIUM  | `js-`        |
+| 8        | Advanced Patterns         | LOW         | `advanced-`  |
 
-## クイックリファレンス (Quick Reference)
+## Quick Reference
 
-### 1. ウォーターフォールの排除 (CRITICAL)
+### 1. Eliminating Waterfalls (CRITICAL)
 
-- `async-defer-await` - awaitを実際に使用される分岐内に移動する
-- `async-parallel` - 独立した操作には Promise.all() を使用する
-- `async-dependencies` - 部分的な依存関係には better-all を使用する
-- `async-api-routes` - APIルートではPromiseを早く開始し、遅くawaitする
-- `async-suspense-boundaries` - コンテンツのストリーミングに Suspense を使用する
+- `async-defer-await` - Move await into branches where actually used
+- `async-parallel` - Use Promise.all() for independent operations
+- `async-dependencies` - Use better-all for partial dependencies
+- `async-api-routes` - Start promises early, await late in API routes
+- `async-suspense-boundaries` - Use Suspense to stream content
 
-### 2. バンドルサイズ最適化 (CRITICAL)
+### 2. Bundle Size Optimization (CRITICAL)
 
-- `bundle-barrel-imports` - バレルファイルを避け、直接インポートする
-- `bundle-dynamic-imports` - 重いコンポーネントには next/dynamic を使用する
-- `bundle-defer-third-party` - 分析やログ機能はハイドレーション後に読み込む
-- `bundle-conditional` - 機能が有効化された時のみモジュールを読み込む
-- `bundle-preload` - 体感速度向上のためホバーやフォーカスでプリロードする
+- `bundle-barrel-imports` - Import directly, avoid barrel files
+- `bundle-dynamic-imports` - Use next/dynamic for heavy components
+- `bundle-defer-third-party` - Load analytics/logging after hydration
+- `bundle-conditional` - Load modules only when feature is activated
+- `bundle-preload` - Preload on hover/focus for perceived speed
 
-### 3. サーバーサイドパフォーマンス (HIGH)
+### 3. Server-Side Performance (HIGH)
 
-- `server-cache-react` - リクエストごとの重複排除に React.cache() を使用する
-- `server-cache-lru` - リクエスト間のキャッシュに LRU キャッシュを使用する
-- `server-serialization` - クライアントコンポーネントに渡すデータを最小限にする
-- `server-parallel-fetching` - フェッチを並列化するようにコンポーネントを再構成する
-- `server-after-nonblocking` - ノンブロッキング操作には after() を使用する
+- `server-cache-react` - Use React.cache() for per-request deduplication
+- `server-cache-lru` - Use LRU cache for cross-request caching
+- `server-serialization` - Minimize data passed to client components
+- `server-parallel-fetching` - Restructure components to parallelize fetches
+- `server-after-nonblocking` - Use after() for non-blocking operations
 
-### 4. クライアントサイドデータ取得 (MEDIUM-HIGH)
+### 4. Client-Side Data Fetching (MEDIUM-HIGH)
 
-- `client-swr-dedup` - 自動リクエスト重複排除に SWR を使用する
-- `client-event-listeners` - グローバルイベントリスナーを重複排除する
+- `client-swr-dedup` - Use SWR for automatic request deduplication
+- `client-event-listeners` - Deduplicate global event listeners
 
-### 5. 再レンダリング最適化 (MEDIUM)
+### 5. Re-render Optimization (MEDIUM)
 
-- `rerender-defer-reads` - コールバックでのみ使用される状態を購読しない
-- `rerender-memo` - 重い処理をメモ化されたコンポーネントに抽出する
-- `rerender-dependencies` - エフェクトの依存関係にプリミティブ値を使用する
-- `rerender-derived-state` - 生の値ではなく、派生したブール値を購読する
-- `rerender-functional-setstate` - 安定したコールバックのために関数型 setState を使用する
-- `rerender-lazy-state-init` - 重い初期値には useState に関数を渡す
-- `rerender-transitions` - 緊急でない更新には startTransition を使用する
+- `rerender-defer-reads` - Don't subscribe to state only used in callbacks
+- `rerender-memo` - Extract expensive work into memoized components
+- `rerender-dependencies` - Use primitive dependencies in effects
+- `rerender-derived-state` - Subscribe to derived booleans, not raw values
+- `rerender-functional-setstate` - Use functional setState for stable callbacks
+- `rerender-lazy-state-init` - Pass function to useState for expensive values
+- `rerender-transitions` - Use startTransition for non-urgent updates
 
-### 6. レンダリングパフォーマンス (MEDIUM)
+### 6. Rendering Performance (MEDIUM)
 
-- `rendering-animate-svg-wrapper` - SVG要素ではなくdivラッパーをアニメーションさせる
-- `rendering-content-visibility` - 長いリストには content-visibility を使用する
-- `rendering-hoist-jsx` - 静的なJSXをコンポーネントの外に抽出する
-- `rendering-svg-precision` - SVGの座標精度を下げる
-- `rendering-hydration-no-flicker` - クライアント専用データにはインラインスクリプトを使用する
-- `rendering-activity` - 表示/非表示には Activity コンポーネントを使用する
-- `rendering-conditional-render` - 条件分岐には && ではなく三項演算子を使用する
+- `rendering-animate-svg-wrapper` - Animate div wrapper, not SVG element
+- `rendering-content-visibility` - Use content-visibility for long lists
+- `rendering-hoist-jsx` - Extract static JSX outside components
+- `rendering-svg-precision` - Reduce SVG coordinate precision
+- `rendering-hydration-no-flicker` - Use inline script for client-only data
+- `rendering-activity` - Use Activity component for show/hide
+- `rendering-conditional-render` - Use ternary, not && for conditionals
 
-### 7. JavaScriptパフォーマンス (LOW-MEDIUM)
+### 7. JavaScript Performance (LOW-MEDIUM)
 
-- `js-batch-dom-css` - クラスや cssText でCSS変更をまとめる
-- `js-index-maps` - 繰り返しの検索には Map を構築する
-- `js-cache-property-access` - ループ内でのオブジェクトプロパティアクセスをキャッシュする
-- `js-cache-function-results` - 関数の結果をモジュールレベルの Map にキャッシュする
-- `js-cache-storage` - localStorage/sessionStorage の読み取りをキャッシュする
-- `js-combine-iterations` - 複数の filter/map を1つのループにまとめる
-- `js-length-check-first` - 重い比較の前に配列の長さをチェックする
-- `js-early-exit` - 関数から早めにリターンする
-- `js-hoist-regexp` - RegExpの作成をループの外に移動する
-- `js-min-max-loop` - sort の代わりにループで最小/最大を求める
-- `js-set-map-lookups` - O(1) 検索のために Set/Map を使用する
-- `js-tosorted-immutable` - 不変性のために toSorted() を使用する
+- `js-batch-dom-css` - Group CSS changes via classes or cssText
+- `js-index-maps` - Build Map for repeated lookups
+- `js-cache-property-access` - Cache object properties in loops
+- `js-cache-function-results` - Cache function results in module-level Map
+- `js-cache-storage` - Cache localStorage/sessionStorage reads
+- `js-combine-iterations` - Combine multiple filter/map into one loop
+- `js-length-check-first` - Check array length before expensive comparison
+- `js-early-exit` - Return early from functions
+- `js-hoist-regexp` - Hoist RegExp creation outside loops
+- `js-min-max-loop` - Use loop for min/max instead of sort
+- `js-set-map-lookups` - Use Set/Map for O(1) lookups
+- `js-tosorted-immutable` - Use toSorted() for immutability
 
-### 8. 高度なパターン (LOW)
+### 8. Advanced Patterns (LOW)
 
-- `advanced-event-handler-refs` - イベントハンドラを ref に保存する
-- `advanced-use-latest` - 安定したコールバック ref に useLatest を使用する
+- `advanced-event-handler-refs` - Store event handlers in refs
+- `advanced-use-latest` - useLatest for stable callback refs
 
-## 使用方法 (How to Use)
+## How to Use
 
-詳細な説明とコード例については、個々のルールファイルを参照してください：
+Read individual rule files for detailed explanations and code examples:
 
 ```
 rules/async-parallel.md
@@ -111,13 +111,13 @@ rules/bundle-barrel-imports.md
 rules/_sections.md
 ```
 
-各ルールファイルには以下が含まれています：
+Each rule file contains:
 
-- なぜそれが重要かという簡潔な説明
-- 誤ったコード例とその説明
-- 正しいコード例とその説明
-- 追加のコンテキストと参照
+- Brief explanation of why it matters
+- Incorrect code example with explanation
+- Correct code example with explanation
+- Additional context and references
 
-## 完全なドキュメント (Full Compiled Document)
+## Full Compiled Document
 
-すべてのルールが展開された完全なガイドについては、`AGENTS.md` を参照してください。
+For the complete guide with all rules expanded: `AGENTS.md`

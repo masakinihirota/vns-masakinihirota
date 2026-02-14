@@ -1,7 +1,5 @@
 import { cache } from "react";
 import { createClient } from "@/lib/supabase/server";
-import { isDrizzle } from "./adapter";
-import { getRootAccountDrizzle } from "./drizzle";
 
 export type RootAccount = {
   id: string;
@@ -15,11 +13,6 @@ export type RootAccount = {
 };
 
 export const getRootAccount = cache(async () => {
-  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
-  if (isDrizzle()) {
-    return getRootAccountDrizzle();
-  }
-
   const supabase = await createClient();
   const {
     data: { user },

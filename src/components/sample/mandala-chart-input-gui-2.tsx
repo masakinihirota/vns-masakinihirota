@@ -1,21 +1,21 @@
 "use client";
 
 import {
+  Layout,
+  Maximize2,
+  List,
   ArrowDownCircle,
-  ArrowLeft,
-  BookOpen,
   CheckCircle2,
   CheckSquare,
-  ChevronRight,
-  HelpCircle,
-  Layout,
-  List,
-  Maximize2,
   Monitor,
-  MousePointer,
+  HelpCircle,
+  ArrowLeft,
+  BookOpen,
   MousePointer2,
+  MousePointer,
+  ChevronRight,
 } from "lucide-react";
-import React, { useMemo, useRef, useState } from "react";
+import React, { useState, useRef, useMemo } from "react";
 
 const INITIAL_MARKDOWN = `# [Main] 人生の目標
 - 1. 健康
@@ -627,6 +627,17 @@ const App = () => {
           Mandala System v2.1 Active
         </div>
       </footer>
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        textarea::-webkit-scrollbar { width: 4px; }
+        textarea::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .overflow-y-auto::-webkit-scrollbar { width: 4px; }
+        .overflow-y-auto::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+      `,
+        }}
+      />
     </div>
   );
 };

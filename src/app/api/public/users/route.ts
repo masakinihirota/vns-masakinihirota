@@ -17,6 +17,7 @@ export async function GET(request: Request) {
     .from("user_profiles")
     .select("id, display_name, purpose, role_type, is_active")
     .eq("is_active", true)
+    // .order("updated_at", { ascending: false }) // Show recently active
     .limit(limit);
 
   if (error) {

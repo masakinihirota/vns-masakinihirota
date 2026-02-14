@@ -15,10 +15,10 @@ const fetchNations = async () => {
   return data as Nation[];
 };
 
-const fetchNation = async (nationId: string): Promise<Nation> => {
+const fetchNation = async (key: string) => {
+  const [, nationId] = key.split(":");
   const supabase = createClient();
-  const result = await getNationById(supabase, nationId);
-  return result as Nation;
+  return await getNationById(supabase, nationId);
 };
 
 export const useNations = () => {
@@ -37,7 +37,7 @@ export const useNations = () => {
 
 export const useNation = (nationId: string) => {
   const { data, error, isLoading, mutate } = useSWR<Nation>(
-    nationId || null,
+    nationId ? `nation:${nationId}` : null,
     fetchNation
   );
 

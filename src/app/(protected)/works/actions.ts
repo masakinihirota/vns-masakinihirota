@@ -1,5 +1,4 @@
-// サーバーサイド専用: サーバーコンポーネントから直接呼び出すデータ取得ロジック
-// "use server" は使用しない（セキュリティルール準拠: 暗黙のRPCエンドポイント作成を防止）
+"use server";
 
 import { Work } from "@/components/works/common/types";
 import { fetchWorks } from "@/components/works/work-list/work-list.logic";

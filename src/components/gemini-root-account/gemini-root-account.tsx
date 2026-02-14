@@ -1,20 +1,20 @@
 import {
-  LucideBadgeCheck,
-  LucideCircleUser,
   LucideCopy,
   LucideExternalLink,
-  LucideEyeOff,
-  LucideFingerprint,
-  LucideGlobe,
-  LucideHeartHandshake,
-  LucideHourglass,
-  LucideShieldAlert,
   LucideShieldCheck,
   LucideShieldX,
+  LucideBadgeCheck,
+  LucideWallet,
+  LucideFingerprint,
+  LucideGlobe,
+  LucideHourglass,
   LucideSpeech,
   LucideUser,
   LucideUsers,
-  LucideWallet,
+  LucideCircleUser,
+  LucideHeartHandshake,
+  LucideShieldAlert,
+  LucideEyeOff,
 } from "lucide-react";
 import { IRootAccountData } from "./gemini-root-account.logic";
 
@@ -49,9 +49,7 @@ export const GeminiRootAccountView = ({
 
   // ポイントゲージのパーセンテージを計算
   const pointPercentage: number =
-    accountData.maxPoints > 0
-      ? (accountData.currentPoints / accountData.maxPoints) * 100
-      : 0;
+    (accountData.currentPoints / accountData.maxPoints) * 100;
   // 信頼度スコアの色を決定
   const trustColor: string =
     accountData.trustScore >= 90
@@ -244,9 +242,9 @@ export const GeminiRootAccountView = ({
             </a>
           </div>
           <div className="flex items-center space-x-4">
-            {accountData.oauthProviders.map((provider) => (
+            {accountData.oauthProviders.map((provider, index) => (
               <div
-                key={provider}
+                key={index}
                 className="flex items-center space-x-2 text-gray-400"
               >
                 <LucideBadgeCheck className="w-5 h-5 text-blue-400" />

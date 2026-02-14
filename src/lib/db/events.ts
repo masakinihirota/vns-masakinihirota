@@ -1,12 +1,5 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/types/database.types";
-import { isDrizzle } from "./adapter";
-import {
-  cancelEventParticipationDrizzle,
-  createEventDrizzle,
-  getEventDrizzle,
-  joinEventDrizzle,
-} from "./drizzle";
 
 export type EventStatus = "draft" | "published" | "cancelled" | "completed";
 export type ParticipantStatus = "going" | "cancelled" | "waitlist";
@@ -25,11 +18,6 @@ export const createEvent = async (
     type: "free" | "product_required" | "other";
   }
 ) => {
-  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
-  if (isDrizzle()) {
-    return createEventDrizzle(eventData);
-  }
-
   const { data, error } = await supabase
     .from("nation_events")
     .insert(eventData)
@@ -45,11 +33,6 @@ export const joinEvent = async (
   eventId: string,
   userId: string
 ) => {
-  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
-  if (isDrizzle()) {
-    return joinEventDrizzle(eventId, userId);
-  }
-
   const { data, error } = await supabase
     .from("nation_event_participants")
     .insert({ event_id: eventId, user_profile_id: userId, status: "going" })
@@ -65,11 +48,6 @@ export const cancelEventParticipation = async (
   eventId: string,
   userId: string
 ) => {
-  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
-  if (isDrizzle()) {
-    return cancelEventParticipationDrizzle(eventId, userId);
-  }
-
   const { data, error } = await supabase
     .from("nation_event_participants")
     .update({ status: "cancelled" })
@@ -86,11 +64,6 @@ export const getEvent = async (
   supabase: SupabaseClient<Database>,
   eventId: string
 ) => {
-  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
-  if (isDrizzle()) {
-    return getEventDrizzle(eventId);
-  }
-
   const { data, error } = await supabase
     .from("nation_events")
     .select(`

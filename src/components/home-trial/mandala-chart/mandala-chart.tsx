@@ -532,6 +532,24 @@ export const MandalaChart: React.FC<MandalaChartProps> = ({
           }
         />
       )}
+
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes zoom-in { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        @keyframes slide-in-from-bottom { from { transform: translateY(1rem); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .animate-in { animation: var(--tw-animate-duration, 150ms) ease-out both; }
+        .fade-in { animation-name: fade-in; }
+        .zoom-in { animation-name: zoom-in; }
+        .slide-in-from-bottom-4 { animation-name: slide-in-from-bottom; }
+      `,
+        }}
+      />
     </div>
   );
 };

@@ -1,51 +1,26 @@
 "use client";
 
+import React from "react";
+
 export const ConceptSection = () => {
   return (
-    <div className="bg-white/5 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-2xl animate-fade-in-up delay-200">
-      <div className="max-w-3xl mx-auto space-y-8 leading-relaxed text-lg text-slate-700 dark:text-muted-foreground">
-        <h3 className="text-2xl md:text-3xl font-bold text-slate-800 dark:text-white text-center mb-10">
-          このサイトの目的は、価値観で友達を作ることです。
+    <div className="bg-white/5 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-2xl space-y-8 animate-fade-in-up delay-200">
+      <div className="space-y-4">
+        <h3 className="text-2xl font-bold text-white border-l-4 border-blue-500 pl-4">
+          VNSとは価値観でつながるネットワーク
         </h3>
-
-        <div className="space-y-6">
-          <p>
-            最初はあなたの価値観のデータがないため、
-            <strong className="text-blue-600 dark:text-blue-400 font-bold">
-              「幽霊」
-            </strong>
-            の状態として始まります。
-            <br />
-            「幽霊」の状態はこの世界を見ることはできますが、相手からは見えません。
-          </p>
-
-          <p>
-            なので、自分の
-            <strong className="text-blue-600 dark:text-blue-400 font-bold">
-              「仮面（プロフィール）」
-            </strong>
-            を作ってください。
-            仮面とは、あなたの価値観を記した自己紹介データです。このデータを元に、あなたの価値観と合う人を探します。
-          </p>
-
-          <p>
-            <strong className="text-blue-600 dark:text-blue-400 font-bold">
-              「仮面（プロフィール）」
-            </strong>
-            を作って、
-            <strong className="text-blue-600 dark:text-blue-400 font-bold">
-              「マッチング機能」
-            </strong>
-            から価値観の近い人を探しましょう。
-          </p>
-
-          <p className="pt-6 border-t border-blue-500/10 dark:border-white/10">
-            価値観の近い人を見つけたら、一緒に何かをします。
-            例えば、遊んだり、ものを作ったり、パートナーを見つけたりします。
-            <br className="hidden md:inline" />
-            そのための機能（メッセージ機能、イベント機能、コミュニティ機能など）はこれから作成します。
-          </p>
-        </div>
+        <p className="text-lg text-slate-700 dark:text-muted-foreground leading-relaxed">
+          SNSが「社会的なつながり（Social）」を作る場所なら、
+          <br className="hidden md:inline" />
+          VNSは
+          <strong className="text-blue-600 dark:text-blue-400 font-bold mx-1">
+            「価値観（Value）」
+          </strong>
+          でつながる場所です。SNSとは別ベクトルのコミュニケーションを提供します。
+        </p>
+        <p className="text-lg text-slate-700 dark:text-muted-foreground leading-relaxed text-left max-w-2xl mx-auto">
+          あなたの「好きな作品」「大切にしている価値観」「スキル」を頼りに、話が合う仲間や、心地よい居場所（組織・国）を見つけましょう。
+        </p>
       </div>
     </div>
   );

@@ -1,25 +1,25 @@
 ---
 name: vitest-testing-strategies
-description: VitestとReact Testing Libraryを使用したテストのベストプラクティス。安定性、正しいモック、統合テストパターンに焦点を当てています。
+description: Best practices for testing with Vitest and React Testing Library, focusing on stability, correct mocking, and integration testing patterns.
 ---
 
 # Vitest Testing Strategies
 
-このスキルは、Vitestを使用して堅牢で壊れにくいテストを作成するための戦略を概説します。特に、モックや環境の差異に関する一般的な問題の解決に焦点を当てています。
+This skill outlines strategies to write robust, non-flaky tests using Vitest, specifically resolving common issues with mocking and environment differences.
 
-## 1. モック戦略 (Mocking Strategies)
+## 1. Mocking Strategies
 
 ### `vi.spyOn` vs `vi.mock`
 
-- **`vi.spyOn` を使用する場合**: _既存のオブジェクト_（`localStorage`、`window`、クラスインスタンスなど）のメソッドをモックし、後で元に戻したい場合。
-- **`vi.mock` を使用する場合**: _モジュール_ インポート全体を置き換えたい場合。
+- **Use `vi.spyOn`** when you need to mock a method on an _existing object_ (like `localStorage`, `window`, or a class instance) and want to restore it later.
+- **Use `vi.mock`** when you need to replace an entire _module_ import.
 
-### `localStorage` のモック
+### Mocking `localStorage`
 
-`localStorage` は jsdom で利用可能ですが、状態検証のために明示的なモックが必要な場合があります：
+Since `localStorage` is available in jsdom but sometimes needs explicit mocking for state verification:
 
 ```typescript
-// 手動でモックオブジェクトを定義するよりも良い方法
+// Better than defining a mock object manually
 const setItemSpy = vi.spyOn(Storage.prototype, 'setItem');
 
 // Act
@@ -29,50 +29,50 @@ userEvent.click(button);
 expect(setItemSpy).toHaveBeenCalledWith('key', 'value');
 ```
 
-## 2. 統合テストパターン (RGR + AAA)
+## 2. Integration Testing Pattern (RGR + AAA)
 
-**AAA** (Arrange, Act, Assert) パターンを厳密に守ってください。
+Follow the **AAA** (Arrange, Act, Assert) pattern strictly.
 
 ```typescript
 describe("Feature Integration", () => {
   it("should save data on submit", async () => {
-    // Arrange (準備)
+    // Arrange
     const user = userEvent.setup();
     render(<MyComponent />);
 
-    // Act (実行)
+    // Act
     await user.type(screen.getByRole("textbox"), "Hello");
     await user.click(screen.getByRole("button", { name: "Save" }));
 
-    // Assert (検証)
+    // Assert
     expect(await screen.findByText("Success")).toBeInTheDocument();
   });
 });
 ```
 
-## 3. 外部依存の処理 (Supabaseなど)
+## 3. Handling External Dependencies (Supabase, etc.)
 
-内部実装の詳細をモックすることは避けてください。境界（Boundaries）でモックします。
-Supabaseクライアントコンポーネントフックの場合：
+Avoid mocking internal implementation details. Mock at the boundaries.
+For Supabase client component hooks:
 
 ```typescript
 import * as SupabaseHooks from "@/lib/supabase/client";
 
-// テストセットアップにて
+// In test setup
 vi.mock("@/lib/supabase/client", () => ({
   createClient: vi.fn(() => mockSupabaseClient),
 }));
 ```
 
-## 4. 一般的な問題と修正 (Common Issues & Fixes)
+## 4. Common Issues & fixes
 
-- **モックでの "Module not found"**: `vi.mock` のパスがインポートパスと完全に一致しているか確認してください（エイリアス vs 相対パス）。
-- **巻き上げ (Hoisting)**: `vi.mock` は巻き上げられます。`vi.mock` 実装内で使用される変数は、グローバルでない限り、慎重に参照するか、ファクトリー内で定義する必要があります。
-- **Act 警告**: すべての非同期インタラクション（userEvent, revalidations）が await されていることを確認してください。
+- **"Module not found" in mocks**: Ensure paths in `vi.mock` match the import paths exactly (aliases vs relative).
+- **Hoisting**: `vi.mock` is hoisted. Variables used inside `vi.mock` implementations must be referenced carefully or defined inside the factory if they are not global.
+- **Act warnings**: Ensure all async interactions (userEvent, revalidations) are awaited.
 
-## 5. アクセシビリティテスト (Accessibility Testing)
+## 5. Accessibility Testing
 
-コンポーネントテストには必ず axe チェックを含めてください。
+Always include axe checks in component tests.
 
 ```typescript
 import { axe } from "vitest-axe";

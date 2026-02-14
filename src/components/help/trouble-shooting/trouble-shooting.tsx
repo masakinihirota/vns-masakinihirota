@@ -308,26 +308,6 @@ export function TroubleShooting() {
 
 // サブコンポーネント
 
-/**
- * **太字** パターンを安全にReact要素に変換するヘルパーコンポーネント。
- * dangerouslySetInnerHTML の安全な代替。
- */
-function ActionText({ text }: { readonly text: string }) {
-  // **text** パターンを<strong>に安全に変換
-  const parts = text.split(/(\*\*.*?\*\*)/g);
-  return (
-    <>
-      {parts.map((part, i) => {
-        const boldMatch = part.match(/^\*\*(.*)\*\*$/);
-        if (boldMatch) {
-          return <strong key={`bold-${boldMatch[1]}`}>{boldMatch[1]}</strong>;
-        }
-        return <span key={`text-${i}`}>{part}</span>;
-      })}
-    </>
-  );
-}
-
 function LevelSection({
   level,
   title,
@@ -396,9 +376,14 @@ function LevelSection({
                   {row.category}
                 </TableCell>
                 <TableCell className="align-top">{row.example}</TableCell>
-                <TableCell className="align-top">
-                  <ActionText text={row.action} />
-                </TableCell>
+                <TableCell
+                  className="align-top"
+                  dangerouslySetInnerHTML={{
+                    __html: row.action
+                      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // Simple markdown bold parser
+                      .replace(/\n/g, "<br/>"),
+                  }}
+                />
               </TableRow>
             ))}
           </TableBody>

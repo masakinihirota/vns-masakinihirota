@@ -13,10 +13,6 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
-/**
- * GitHub OAuth ログインフォームコンポーネント
- * GitHubアカウントを使用したソーシャルログインを提供します
- */
 export function GitHubLoginForm({
   className,
   ...props
@@ -71,8 +67,8 @@ export function GitHubLoginForm({
         </CardHeader>
         <CardContent>
           <ul className="space-y-1 text-sm">
-            {features.map((feature) => (
-              <li key={feature.label} className="flex justify-between">
+            {features.map((feature, index) => (
+              <li key={index} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
                 <span
                   className={

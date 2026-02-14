@@ -112,29 +112,6 @@
   .bg-accent-subtle {
     background-color: var(--accent-bg);
   }
-
-  /* スクロールバーカスタマイズ（dangerouslySetInnerHTML からの移行） */
-  .custom-scrollbar::-webkit-scrollbar,
-  .thin-scrollbar::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track,
-  .thin-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb,
-  .thin-scrollbar::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 10px;
-  }
-}
-
-/* ダークモード用スクロールバー */
-.dark .custom-scrollbar::-webkit-scrollbar-thumb,
-.dark .thin-scrollbar::-webkit-scrollbar-thumb {
-  background: #334155;
 }
 
 @keyframes fadeInUp {

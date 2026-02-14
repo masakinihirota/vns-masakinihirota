@@ -93,8 +93,8 @@ export const TalesClaireLP = () => {
 
           {/* 2. Description (Declarations & Concept) */}
           <section id="about" className="space-y-16">
-            <ConceptSection />
             <DeclarationsSection />
+            <ConceptSection />
           </section>
 
           {/* 3. Start Links (Trial Entry) */}

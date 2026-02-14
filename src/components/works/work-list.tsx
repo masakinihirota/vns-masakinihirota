@@ -1,12 +1,21 @@
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
+  CardDescription,
+  CardFooter,
 } from "@/components/ui/card";
-import { Work } from "./common/types";
+
+// Define type locally if not imported
+interface Work {
+  id: string;
+  title: string;
+  author: string | null;
+  category: string;
+  is_official: boolean;
+  status: string;
+}
 
 export function WorkList({ works }: { works: Work[] }) {
   if (works.length === 0) {

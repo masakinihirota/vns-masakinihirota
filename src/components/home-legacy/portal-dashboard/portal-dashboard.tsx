@@ -92,11 +92,6 @@ export function PortalDashboard() {
           path: "/groups/sample-id",
           desc: "特定のグループの詳細・管理画面（ID指定）。",
         },
-        {
-          title: "プロフィールマスク (Demo)",
-          path: "/profile-mask-demo",
-          desc: "【デモ】プロフィールマスク（多面性プロフィール）作成画面。",
-        },
       ],
     },
     {
@@ -142,11 +137,6 @@ export function PortalDashboard() {
           desc: "通常のユーザー登録フロー。",
         },
         { title: "ログイン", path: "/login", desc: "システムの認証入り口。" },
-        {
-          title: "Auth.js ログイン",
-          path: "/authjs-login",
-          desc: "Auth.js（GitHub/Google）を使用した新規認証画面。",
-        },
       ],
     },
     {
@@ -282,14 +272,14 @@ export function PortalDashboard() {
           desc: "VNSを紹介するメインLP。",
         },
         {
-          title: "ヒューマン・マニフェスト",
-          path: "/human",
-          desc: "デザイン哲学を紹介。",
-        },
-        {
           title: "オアシス宣言",
           path: "/oasis",
           desc: "コミュニティの理念とルール。",
+        },
+        {
+          title: "ヒューマン・マニフェスト",
+          path: "/human",
+          desc: "デザイン哲学を紹介。",
         },
         {
           title: "公式スピーチ",

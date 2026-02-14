@@ -1,15 +1,15 @@
 ---
 name: hono-nextjs-patterns
-description: HonoとNext.js App Routerの統合、Edge Runtimeの処理、および型定義のトラブルシューティングに関する標準パターン。
+description: Standard patterns for integrating Hono with Next.js App Router, handling Edge Runtime, and troubleshooting type definitions.
 ---
 
-# Hono x Next.js App Router 実装パターン
+# Hono x Next.js App Router Implementation Patterns
 
-このスキルは、Next.js App Router内でHonoを使用するための標準的なプラクティスを文書化したもので、特にEdge Runtimeの互換性とTypeScript設定に焦点を当てています。
+This skill documents standard practices for using Hono within Next.js App Router, specifically focusing on Edge Runtime compatibility and TypeScript configuration.
 
-## 1. 基本セットアップ (Route Handler)
+## 1. Basic Setup (Route Handler)
 
-Next.js App Routerでリクエストを処理するために `hono/vercel` アダプターを使用します。
+Use `hono/vercel` adapter to handle requests in Next.js App Router.
 
 **`src/app/api/[[...route]]/route.ts`**:
 
@@ -17,7 +17,7 @@ Next.js App Routerでリクエストを処理するために `hono/vercel` ア�
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
-// HonoのパフォーマンスのためにEdge Runtimeを強制する
+// Force Edge Runtime for Hono performance
 export const runtime = "edge";
 
 const app = new Hono().basePath("/api");
@@ -36,23 +36,23 @@ export const PATCH = handle(app);
 export const OPTIONS = handle(app);
 ```
 
-## 2. 型チェックと `Context` の問題
+## 2. Type Checking & `Context` Issues
 
-厳格なTypeScript環境（`isolatedModules` が有効な場合が多い）では、推論された型を直接使用したり `Context` をインポートしたりすると、`Cannot find name 'Context'` のようなビルドエラーや、型生成中のビルド失敗が発生することがあります。
+In strict TypeScript environments (often with `isolatedModules` enabled), directly using inferred types or importing `Context` can sometimes cause build errors like `Cannot find name 'Context'` or build failures during type generation.
 
-### 解決策 A: 暗黙的な型付け（推奨）
+### Solution A: Implicit Typing (Recommended)
 
-可能な限りHonoにコンテキストの型を推論させます。
+Let Hono infer the context type whenever possible.
 
 ```typescript
-app.get("/hello", (c) => { // c は推論される
+app.get("/hello", (c) => { // c is inferred
   return c.json({ ok: true });
 });
 ```
 
-### 解決策 B: 明示的な型インポート（推論が失敗する場合）
+### Solution B: Explicit Type Import (If inference fails)
 
-型注釈が必要な場合は、必ず `import type` を使用してください。
+If you must annotate, ensure you use `import type`.
 
 ```typescript
 import type { Context } from "hono";
@@ -62,28 +62,28 @@ app.get("/hello", (c: Context) => {
 });
 ```
 
-### 解決策 C: 最後の手段 (`any`)
+### Solution C: The Escape Hatch (`any`)
 
-Honoの型解決に関連する奇妙なビルドエラー（例えば `next build` の型生成中など）が続く場合は、リリースをブロックしないために局所的に `any` を使用し、技術的負債として文書化してください。
+If weird build errors persist (e.g., during `next build` type generation) specifically related to Hono types not resolving, use `any` locally to unblock the release, but document it as technical debt.
 
 ```typescript
-// TODO: Contextの型推論を修正する
+// TODO: Fix Context type inference
 app.get("/hello", (c: any) => {
   return c.json({ ok: true });
 });
 ```
 
-## 3. ディレクトリ構造
+## 3. Directory Structure
 
-APIエンドポイントは最小限に留めます。ロジックは機能固有のモジュールやライブラリに委譲してください。
+Keep the API entry point minimal. Delegate logic to feature-specific modules or libraries.
 
 ```
-src/app/api/[[...route]]/route.ts  <-- エントリーポイント、Honoセットアップ
-src/server/routers/               <-- アプリが成長した場合はルーターを分割
-src/lib/types.ts                  <-- 共有Zodスキーマ
+src/app/api/[[...route]]/route.ts  <-- Entry point, Hono setup
+src/server/routers/               <-- Split routers if app grows
+src/lib/types.ts                  <-- Shared Zod schemas
 ```
 
-## 4. よくある落とし穴 (Common Pitfalls)
+## 4. Common Pitfalls
 
-- **コード内のMarkdown**: `route.ts` を編集する際は注意してください。Markdown構文がTypeScriptファイルに漏れないようにしてください。
-- **Runtime変数**: Node.js APIを必要とする場合を除き、Honoの軽量機能を使用している場合は常に `export const runtime = 'edge';` をエクスポートしてください（Node.jsが必要な場合はこれを削除し、必要に応じて `nodejs` compatを使用してください）。
+- **Markdown in Code**: Be careful when editing `route.ts`. Ensure no Markdown syntax leaks into the TypeScript file.
+- **Runtime Variable**: Always export `export const runtime = 'edge';` if you are using Hono's lightweight features, unless you specifically need Node.js APIs (in which case, remove it and use `nodejs` compat if needed).

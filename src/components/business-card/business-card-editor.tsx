@@ -236,8 +236,8 @@ export function BusinessCardEditor({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label>Revision Policy</Label>
-                    {/* Using simple input selector for speed */}
+                    <Label>Revision Policy</Label> // Using simple input
+                    selector for speed
                     <select
                       className="w-full p-2 border rounded-md bg-white text-sm"
                       value={content.trust?.revision_policy || ""}

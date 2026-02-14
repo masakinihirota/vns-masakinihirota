@@ -1,59 +1,21 @@
 ---
 name: code-review
-description: バグ、スタイルの問題、ベストプラクティスについてコードの変更をレビューします。PRのレビューやコード品質のチェックに使用します。
+description: Reviews code changes for bugs, style issues, and best practices. Use when reviewing PRs or checking code quality.
 ---
 
-# コードレビュースキル (Code Review Skill)
+# Code Review Skill
 
-このスキルを使用して、徹底的で一貫性のある効果的なコードレビューを実施します。
+When reviewing code, follow these steps:
 
-## 1. レビューの原則
+## Review checklist
 
-- **スタイルではなくロジックに集中する**: スタイルはリンターやフォーマッターに任せます。正確性、セキュリティ、パフォーマンスに焦点を当ててください。
-- **建設的であること**: なぜ変更が必要なのか、「理由」を説明します。明確な代替案を提示してください。
-- **テストの検証**: テストが合格しているかだけでなく、*正しい*シナリオをカバーしているかを確認します。
+1. **Correctness**: Does the code do what it's supposed to?
+2. **Edge cases**: Are error conditions handled?
+3. **Style**: Does it follow project conventions?
+4. **Performance**: Are there obvious inefficiencies?
 
-## 2. レビューチェックリスト
+## How to provide feedback
 
-### 🚨 Critical (修正必須)
-
-- [ ] **正確性 (Correctness)**: コードは主張通りに動作するか？ ロジックは健全か？
-- [ ] **セキュリティ (Security)**:
-  - SQLインジェクションはないか？（パラメータ化されたクエリを使用しているか？）
-  - XSSはないか？（入力はサニタイズされているか？）
-  - 認証チェックは存在するか？（RLS、セッション検証）
-  - シークレット（機密情報）がコミットされていないか？
-- **パフォーマンス (Performance)**:
-  - N+1クエリはないか？
-  - Reactで不要な再レンダリングはないか？
-  - 効率的なデータ取得を行っているか？（ウォーターフォールの回避）
-- **完全性 (Completeness)**: エッジケースは処理されているか？（Null、undefined、空配列、ローディング状態）
-
-### ⚠️ Major (強く推奨)
-
-- [ ] **可読性 (Readability)**: コードは理解しやすいか？ 変数名は説明的か？
-- [ ] **モジュール性 (Modularity)**: 関数は小さく、焦点を絞っているか？ 単一責任の原則（SRP）に従っているか？
-- [ ] **テストカバレッジ (Test Coverage)**: 新機能に対するテストはあるか？ 失敗モード（異常系）をテストしているか？
-- [ ] **型安全性 (Type Safety)**: `any` 型を使用していないか？ インターフェースは正しく定義されているか？
-
-### ℹ️ Minor (あると良い)
-
-- [ ] **一貫性 (Consistency)**: 既存のパターンに従っているか？
-- [ ] **コメント (Comments)**: 複雑なブロックについて説明されているか？（「何を」ではなく「なぜ」を説明する）
-- [ ] **クリーンアップ (Cleanup)**: デバッグログやコメントアウトされたコードは削除されているか？
-
-## 3. フィードバックの提供方法
-
-- **Good**: 「このクエリはインデックスがないため、大規模なデータセットでは遅くなる可能性があります。`user_id` にインデックスを追加するか、最適化のために `supabase.rpc()` の使用を検討してください。」
-- **Bad**: 「このクエリを修正してください。」
-
-- **Good**: 「このコンポーネントはキー入力のたびに再レンダリングされます。`useMemo` を使用するか、ステートを下層に移動することを検討してください。」
-- **Bad**: 「パフォーマンスを最適化してください。」
-
-## 4. AI生成コードのレビュー
-
-AIのコードはもっともらしく見えますが、微妙なバグが含まれていることがよくあります。
-
-- **インポートの確認**: 存在しないモジュールをインポートしていないか（ハルシネーション）？
-- **ロジックの検証**: 実行パスを脳内でトレースしてください。
-- **セキュリティ監査**: AIはRLSやバリデーションルールを忘れがちです。
+- Be specific about what needs to change
+- Explain why, not just what
+- Suggest alternatives when possible

@@ -75,7 +75,7 @@ export const NationEventCard = ({
         </div>
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <Users className="h-4 w-4" />
-          <span>Max Participants: {event.max_participants || "Unlimited"}</span>
+          <span>Max Participants: {event.max_participants || "Unlimtied"}</span>
         </div>
       </CardContent>
       <CardFooter>

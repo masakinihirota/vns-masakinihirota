@@ -5,9 +5,9 @@ import { USER_TYPES } from "../user-profile-creation.constants";
 interface Step1RoleTypeProps {
   formData: {
     type: string;
-    [key: string]: unknown;
+    [key: string]: any;
   };
-  updateForm: (key: string, value: unknown) => void;
+  updateForm: (key: string, value: any) => void;
 }
 
 export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {

@@ -1,43 +1,43 @@
 ---
 name: supabase-postgres-best-practices
-description: SupabaseによるPostgresパフォーマンス最適化とベストプラクティス。Postgresクエリ、スキーマ設計、データベース設定の作成、レビュー、最適化時に使用します。
+description: Postgres performance optimization and best practices from Supabase. Use this skill when writing, reviewing, or optimizing Postgres queries, schema designs, or database configurations.
 license: MIT
 metadata:
   author: supabase
   version: "1.0.0"
 ---
 
-# Supabase Postgres ベストプラクティス
+# Supabase Postgres Best Practices
 
-Supabaseが管理する、Postgresの包括的なパフォーマンス最適化ガイドです。8つのカテゴリにわたるルールが含まれており、自動クエリ最適化とスキーマ設計を導くために影響度順に優先順位付けされています。
+Comprehensive performance optimization guide for Postgres, maintained by Supabase. Contains rules across 8 categories, prioritized by impact to guide automated query optimization and schema design.
 
-## 適用タイミング (When to Apply)
+## When to Apply
 
-以下の場合にこれらのガイドラインを参照してください：
+Reference these guidelines when:
 
-- SQLクエリの作成やスキーマの設計を行う時
-- インデックスの実装やクエリの最適化を行う時
-- データベースのパフォーマンス問題をレビューする時
-- コネクションプーリングやスケーリングの設定を行う時
-- Postgres固有の機能を最適化する時
-- 行レベルセキュリティ (RLS) を扱う時
+- Writing SQL queries or designing schemas
+- Implementing indexes or query optimization
+- Reviewing database performance issues
+- Configuring connection pooling or scaling
+- Optimizing for Postgres-specific features
+- Working with Row-Level Security (RLS)
 
-## 優先度別ルールカテゴリ (Rule Categories by Priority)
+## Rule Categories by Priority
 
-| 優先度 | カテゴリ               | 影響度   | プレフィックス |
-| ------ | ---------------------- | -------- | -------------- |
-| 1      | クエリパフォーマンス   | **重要** | `query-`       |
-| 2      | 接続管理               | **重要** | `conn-`        |
-| 3      | セキュリティ & RLS     | **重要** | `security-`    |
-| 4      | スキーマ設計           | 高       | `schema-`      |
-| 5      | 同時実行性とロック     | 中〜高   | `lock-`        |
-| 6      | データアクセスパターン | 中       | `data-`        |
-| 7      | 監視と診断             | 低〜中   | `monitor-`     |
-| 8      | 高度な機能             | 低       | `advanced-`    |
+| Priority | Category                 | Impact      | Prefix      |
+| -------- | ------------------------ | ----------- | ----------- |
+| 1        | Query Performance        | CRITICAL    | `query-`    |
+| 2        | Connection Management    | CRITICAL    | `conn-`     |
+| 3        | Security & RLS           | CRITICAL    | `security-` |
+| 4        | Schema Design            | HIGH        | `schema-`   |
+| 5        | Concurrency & Locking    | MEDIUM-HIGH | `lock-`     |
+| 6        | Data Access Patterns     | MEDIUM      | `data-`     |
+| 7        | Monitoring & Diagnostics | LOW-MEDIUM  | `monitor-`  |
+| 8        | Advanced Features        | LOW         | `advanced-` |
 
-## 使用方法 (How to Use)
+## How to Use
 
-詳細な説明とSQLの例については、個々のルールファイルを参照してください：
+Read individual rule files for detailed explanations and SQL examples:
 
 ```
 rules/query-missing-indexes.md
@@ -45,15 +45,15 @@ rules/schema-partial-indexes.md
 rules/_sections.md
 ```
 
-各ルールファイルには以下が含まれています：
+Each rule file contains:
 
-- なぜそれが重要かという簡潔な説明
-- 誤ったSQLの例とその説明
-- 正しいSQLの例とその説明
-- 任意のEXPLAIN出力またはメトリクス
-- 追加のコンテキストと参照
-- Supabase固有の注釈（該当する場合）
+- Brief explanation of why it matters
+- Incorrect SQL example with explanation
+- Correct SQL example with explanation
+- Optional EXPLAIN output or metrics
+- Additional context and references
+- Supabase-specific notes (when applicable)
 
-## 完全なドキュメント (Full Compiled Document)
+## Full Compiled Document
 
-すべてのルールが展開された完全なガイドについては、`AGENTS.md` を参照してください。
+For the complete guide with all rules expanded: `AGENTS.md`

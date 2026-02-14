@@ -44,6 +44,7 @@ export function AnonymousLoginForm({
 
     // ログイン成功後にリダイレクト（保護されたルートへ）
     router.push("/home");
+    // console.log("🚀 ~ handleAnonymousLogin ~ error:", error);
   };
 
   // 匿名認証の機能リスト
@@ -77,8 +78,8 @@ export function AnonymousLoginForm({
         </CardHeader>
         <CardContent>
           <ul className="space-y-1 text-sm">
-            {features.map((feature) => (
-              <li key={feature.label} className="flex justify-between">
+            {features.map((feature, index) => (
+              <li key={index} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
                 <span
                   className={
