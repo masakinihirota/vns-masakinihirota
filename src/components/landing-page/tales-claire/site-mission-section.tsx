@@ -2,7 +2,7 @@
 
 export const SiteMissionSection = () => {
   return (
-    <section className="space-y-6 font-serif max-w-3xl mx-auto text-center animate-fade-in-up delay-200">
+    <section className="space-y-6 font-sans max-w-3xl mx-auto text-center animate-fade-in-up delay-200">
       <p className="text-lg md:text-xl text-slate-700 dark:text-muted-foreground font-medium">
         サイトの目的
       </p>
