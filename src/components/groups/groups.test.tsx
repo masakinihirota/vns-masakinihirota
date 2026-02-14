@@ -25,21 +25,27 @@ const mockSupabaseChain = {
   limit: vi.fn().mockReturnThis(),
   order: vi.fn().mockReturnThis(),
   single: vi.fn().mockResolvedValue({ data: { id: "mock-id" }, error: null }),
-  maybeSingle: vi.fn().mockResolvedValue({ data: { id: "mock-id" }, error: null }),
-  then: vi.fn((resolve: (value: any) => void) => resolve({ data: [], error: null })), // Allow awaiting the chain directly
+  maybeSingle: vi
+    .fn()
+    .mockResolvedValue({ data: { id: "mock-id" }, error: null }),
+  then: vi.fn((resolve: (value: any) => void) =>
+    resolve({ data: [], error: null })
+  ), // Allow awaiting the chain directly
 };
 
 vi.mock("@/lib/supabase/client", () => ({
   createClient: vi.fn(() => ({
     from: vi.fn(() => mockSupabaseChain),
     auth: {
-      getUser: vi.fn(() => Promise.resolve({ data: { user: { id: "test-user" } }, error: null })),
+      getUser: vi.fn(() =>
+        Promise.resolve({ data: { user: { id: "test-user" } }, error: null })
+      ),
     },
   })),
 }));
 
 // Mock `scrollIntoView` as it's not implemented in jsdom
-window.HTMLElement.prototype.scrollIntoView = function () { };
+window.HTMLElement.prototype.scrollIntoView = function () {};
 
 describe("Groups Accessibility", () => {
   it("should have no accessibility violations", async () => {

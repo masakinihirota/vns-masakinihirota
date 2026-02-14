@@ -1,6 +1,5 @@
 "use client";
 
-
 export const PurposeSection = () => {
   const purposes = [
     {
@@ -41,7 +40,7 @@ export const PurposeSection = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {purposes.map((item, index) => (
+        {purposes.map((item) => (
           <div
             key={item.title}
             className="group relative p-6 rounded-2xl border border-white/50 dark:border-white/5 bg-white/60 dark:bg-white/5 hover:bg-white/80 dark:hover:bg-white/10 transition-colors duration-300 shadow-sm dark:shadow-none"

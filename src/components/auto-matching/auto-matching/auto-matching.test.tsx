@@ -1,22 +1,20 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi, beforeAll } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import { AutoMatching } from "./auto-matching";
 import { UserProfile } from "./auto-matching.logic";
 
 describe("AutoMatching UI", () => {
   beforeAll(() => {
     global.ResizeObserver = class ResizeObserver {
-      observe() {}
-      unobserve() {}
-      disconnect() {}
+      observe() { }
+      unobserve() { }
+      disconnect() { }
     };
   });
 
   const mockProfile: UserProfile = {
     id: "1",
     name: "User 1",
-    role: "Dev",
-    tags: ["React"],
     icon: "👤",
     color: "bg-blue-500",
     matchScore: 0,

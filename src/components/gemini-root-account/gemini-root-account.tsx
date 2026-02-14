@@ -244,7 +244,7 @@ export const GeminiRootAccountView = ({
             </a>
           </div>
           <div className="flex items-center space-x-4">
-            {accountData.oauthProviders.map((provider, index) => (
+            {accountData.oauthProviders.map((provider) => (
               <div
                 key={provider}
                 className="flex items-center space-x-2 text-gray-400"

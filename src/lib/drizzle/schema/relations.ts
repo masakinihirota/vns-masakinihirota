@@ -1,6 +1,13 @@
 import { relations } from "drizzle-orm";
 import { businessCards } from "./business-cards";
-import { groupMembers, groups, nationCitizens, nationGroups, nationPosts, nations } from "./community";
+import {
+  groupMembers,
+  groups,
+  nationCitizens,
+  nationGroups,
+  nationPosts,
+  nations,
+} from "./community";
 import { nationEventParticipants, nationEvents } from "./events";
 import { marketItems, marketTransactions } from "./market";
 import { notifications } from "./notifications";
@@ -15,31 +22,34 @@ export const rootAccountsRelations = relations(rootAccounts, ({ many }) => ({
 }));
 
 /** user_profiles のリレーション */
-export const userProfilesRelations = relations(userProfiles, ({ one, many }) => ({
-  rootAccount: one(rootAccounts, {
-    fields: [userProfiles.rootAccountId],
-    references: [rootAccounts.id],
-  }),
-  businessCard: one(businessCards, {
-    fields: [userProfiles.id],
-    references: [businessCards.userProfileId],
-  }),
-  // リレーションシップ
-  alliancesAsA: many(alliances, { relationName: "profileA" }),
-  alliancesAsB: many(alliances, { relationName: "profileB" }),
-  followers: many(follows, { relationName: "followed" }),
-  following: many(follows, { relationName: "follower" }),
-  // コミュニティ
-  ledGroups: many(groups),
-  groupMemberships: many(groupMembers),
-  nationCitizenships: many(nationCitizens),
-  nationPosts: many(nationPosts, { relationName: "postAuthor" }),
-  // イベント
-  organizedEvents: many(nationEvents),
-  eventParticipations: many(nationEventParticipants),
-  // 通知
-  notifications: many(notifications),
-}));
+export const userProfilesRelations = relations(
+  userProfiles,
+  ({ one, many }) => ({
+    rootAccount: one(rootAccounts, {
+      fields: [userProfiles.rootAccountId],
+      references: [rootAccounts.id],
+    }),
+    businessCard: one(businessCards, {
+      fields: [userProfiles.id],
+      references: [businessCards.userProfileId],
+    }),
+    // リレーションシップ
+    alliancesAsA: many(alliances, { relationName: "profileA" }),
+    alliancesAsB: many(alliances, { relationName: "profileB" }),
+    followers: many(follows, { relationName: "followed" }),
+    following: many(follows, { relationName: "follower" }),
+    // コミュニティ
+    ledGroups: many(groups),
+    groupMemberships: many(groupMembers),
+    nationCitizenships: many(nationCitizens),
+    nationPosts: many(nationPosts, { relationName: "postAuthor" }),
+    // イベント
+    organizedEvents: many(nationEvents),
+    eventParticipations: many(nationEventParticipants),
+    // 通知
+    notifications: many(notifications),
+  })
+);
 
 /** business_cards のリレーション */
 export const businessCardsRelations = relations(businessCards, ({ one }) => ({
@@ -160,29 +170,35 @@ export const nationPostsRelations = relations(nationPosts, ({ one }) => ({
 }));
 
 /** nation_events のリレーション */
-export const nationEventsRelations = relations(nationEvents, ({ one, many }) => ({
-  nation: one(nations, {
-    fields: [nationEvents.nationId],
-    references: [nations.id],
-  }),
-  organizer: one(userProfiles, {
-    fields: [nationEvents.organizerId],
-    references: [userProfiles.id],
-  }),
-  participants: many(nationEventParticipants),
-}));
+export const nationEventsRelations = relations(
+  nationEvents,
+  ({ one, many }) => ({
+    nation: one(nations, {
+      fields: [nationEvents.nationId],
+      references: [nations.id],
+    }),
+    organizer: one(userProfiles, {
+      fields: [nationEvents.organizerId],
+      references: [userProfiles.id],
+    }),
+    participants: many(nationEventParticipants),
+  })
+);
 
 /** nation_event_participants のリレーション */
-export const nationEventParticipantsRelations = relations(nationEventParticipants, ({ one }) => ({
-  event: one(nationEvents, {
-    fields: [nationEventParticipants.eventId],
-    references: [nationEvents.id],
-  }),
-  userProfile: one(userProfiles, {
-    fields: [nationEventParticipants.userProfileId],
-    references: [userProfiles.id],
-  }),
-}));
+export const nationEventParticipantsRelations = relations(
+  nationEventParticipants,
+  ({ one }) => ({
+    event: one(nationEvents, {
+      fields: [nationEventParticipants.eventId],
+      references: [nationEvents.id],
+    }),
+    userProfile: one(userProfiles, {
+      fields: [nationEventParticipants.userProfileId],
+      references: [userProfiles.id],
+    }),
+  })
+);
 
 /** market_items のリレーション */
 export const marketItemsRelations = relations(marketItems, ({ one, many }) => ({
@@ -202,20 +218,23 @@ export const marketItemsRelations = relations(marketItems, ({ one, many }) => ({
 }));
 
 /** market_transactions のリレーション */
-export const marketTransactionsRelations = relations(marketTransactions, ({ one }) => ({
-  item: one(marketItems, {
-    fields: [marketTransactions.itemId],
-    references: [marketItems.id],
-  }),
-  seller: one(userProfiles, {
-    fields: [marketTransactions.sellerId],
-    references: [userProfiles.id],
-  }),
-  buyer: one(userProfiles, {
-    fields: [marketTransactions.buyerId],
-    references: [userProfiles.id],
-  }),
-}));
+export const marketTransactionsRelations = relations(
+  marketTransactions,
+  ({ one }) => ({
+    item: one(marketItems, {
+      fields: [marketTransactions.itemId],
+      references: [marketItems.id],
+    }),
+    seller: one(userProfiles, {
+      fields: [marketTransactions.sellerId],
+      references: [userProfiles.id],
+    }),
+    buyer: one(userProfiles, {
+      fields: [marketTransactions.buyerId],
+      references: [userProfiles.id],
+    }),
+  })
+);
 
 /** notifications のリレーション */
 export const notificationsRelations = relations(notifications, ({ one }) => ({
@@ -232,17 +251,23 @@ export const worksRelations = relations(works, ({ many }) => ({
 }));
 
 /** user_work_entries のリレーション */
-export const userWorkEntriesRelations = relations(userWorkEntries, ({ one }) => ({
-  work: one(works, {
-    fields: [userWorkEntries.workId],
-    references: [works.id],
-  }),
-}));
+export const userWorkEntriesRelations = relations(
+  userWorkEntries,
+  ({ one }) => ({
+    work: one(works, {
+      fields: [userWorkEntries.workId],
+      references: [works.id],
+    }),
+  })
+);
 
 /** user_work_ratings のリレーション */
-export const userWorkRatingsRelations = relations(userWorkRatings, ({ one }) => ({
-  work: one(works, {
-    fields: [userWorkRatings.workId],
-    references: [works.id],
-  }),
-}));
+export const userWorkRatingsRelations = relations(
+  userWorkRatings,
+  ({ one }) => ({
+    work: one(works, {
+      fields: [userWorkRatings.workId],
+      references: [works.id],
+    }),
+  })
+);

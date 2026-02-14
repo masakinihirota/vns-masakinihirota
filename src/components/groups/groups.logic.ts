@@ -65,11 +65,8 @@ export async function getGroupById(id: string) {
  * @returns 作成されたグループ
  */
 export async function createGroup(
-  groupData: GroupInsert,
-  client?: ReturnType<typeof createClient>
+  groupData: GroupInsert
 ) {
-  const supabase = client ?? createClient();
-
   if (!groupData.name) throw new Error("Group name is required");
   if (!groupData.leader_id) throw new Error("Leader ID is required");
 
@@ -128,8 +125,7 @@ export async function deleteGroup(
  */
 export async function joinGroup(
   groupId: string,
-  userId: string,
-  client?: ReturnType<typeof createClient>
+  userId: string
 ) {
   // Client argument is ignored as we use server action
   return await joinGroupAction(groupId, userId);

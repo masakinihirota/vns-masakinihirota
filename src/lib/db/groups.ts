@@ -1,5 +1,5 @@
-import { Database } from "@/types/database.types";
 import { SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "@/types/database.types";
 import { isDrizzle } from "./adapter";
 import {
   createGroupDrizzle,

@@ -123,15 +123,14 @@ describe("Groups Logic Integration", () => {
         name: groupName,
         leader_id: leaderProfileId,
         description: "Integration Test Group",
-      },
-      leaderClient as any
+      }
     );
 
     expect(newGroup).toBeDefined();
     expect(newGroup.leader_id).toBe(leaderProfileId);
 
     // 2. Member joins group
-    await joinGroup(newGroup.id, memberProfileId, memberClient as any);
+    await joinGroup(newGroup.id, memberProfileId);
 
     // 3. Verify members list
     const members = await getGroupMembers(newGroup.id, leaderClient as any);

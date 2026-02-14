@@ -48,7 +48,7 @@ export const authjsAccounts = pgTable(
     primaryKey({
       columns: [account.provider, account.providerAccountId],
     }),
-  ],
+  ]
 );
 
 /** Auth.js セッションテーブル */
@@ -72,5 +72,5 @@ export const authjsVerificationTokens = pgTable(
     primaryKey({
       columns: [verificationToken.identifier, verificationToken.token],
     }),
-  ],
+  ]
 );

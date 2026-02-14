@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { CheckCircle2, Plus } from 'lucide-react';
-import React from 'react';
-import { Cassette } from '../../profile-mask/profile-mask.types';
+import { CheckCircle2, Plus } from "lucide-react";
+import React from "react";
+import { Cassette } from "../../profile-mask/profile-mask.types";
 
 export interface CassetteSelectorProps {
   readonly label: string;
@@ -26,11 +26,15 @@ export const CassetteSelector: React.FC<CassetteSelectorProps> = ({
   onSelect,
   onAction,
 }) => (
-  <div className={`p-8 bg-[var(--card)] backdrop-blur-md border border-white/20 dark:border-white/10 rounded-[2rem] shadow-xl border-l-8 ${colorClass}`}>
+  <div
+    className={`p-8 bg-[var(--card)] backdrop-blur-md border border-white/20 dark:border-white/10 rounded-[2rem] shadow-xl border-l-8 ${colorClass}`}
+  >
     <div className="flex items-center justify-between mb-8">
       <div className="flex items-center space-x-4">
-        <Icon size={28} className={colorClass.replace('border-l-', 'text-')} />
-        <span className="font-black text-lg uppercase tracking-widest text-[var(--text)]">{label}</span>
+        <Icon size={28} className={colorClass.replace("border-l-", "text-")} />
+        <span className="font-black text-lg uppercase tracking-widest text-[var(--text)]">
+          {label}
+        </span>
       </div>
       {onAction && (
         <button
@@ -47,10 +51,11 @@ export const CassetteSelector: React.FC<CassetteSelectorProps> = ({
         <button
           key={c.id}
           onClick={() => onSelect(c.id)}
-          className={`p-5 rounded-[1.25rem] text-sm font-bold text-left border-2 transition-all flex items-center justify-between ${selectedId === c.id
-            ? 'bg-[var(--accent)] text-white border-[var(--accent)] shadow-md'
-            : 'bg-white/50 dark:bg-white/5 text-slate-500 dark:text-neutral-400 border-slate-100 dark:border-white/10 hover:border-[var(--accent)]'
-            }`}
+          className={`p-5 rounded-[1.25rem] text-sm font-bold text-left border-2 transition-all flex items-center justify-between ${
+            selectedId === c.id
+              ? "bg-[var(--accent)] text-white border-[var(--accent)] shadow-md"
+              : "bg-white/50 dark:bg-white/5 text-slate-500 dark:text-neutral-400 border-slate-100 dark:border-white/10 hover:border-[var(--accent)]"
+          }`}
           aria-pressed={selectedId === c.id}
         >
           <span>{c.name}</span>

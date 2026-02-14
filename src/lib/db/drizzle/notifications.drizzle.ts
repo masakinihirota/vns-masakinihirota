@@ -1,6 +1,6 @@
+import { and, desc, eq } from "drizzle-orm";
 import { db } from "@/lib/drizzle/client";
 import { notifications } from "@/lib/drizzle/schema";
-import { and, desc, eq } from "drizzle-orm";
 
 type NotificationType = "system" | "invite" | "transaction" | "event";
 

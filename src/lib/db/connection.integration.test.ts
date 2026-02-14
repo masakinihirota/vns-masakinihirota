@@ -1,9 +1,9 @@
-import { db } from '@/lib/drizzle/client';
-import { sql } from 'drizzle-orm';
-import { describe, expect, it } from 'vitest';
+import { sql } from "drizzle-orm";
+import { describe, expect, it } from "vitest";
+import { db } from "@/lib/drizzle/client";
 
-describe('Database Connection Integration Test', () => {
-  it('should execute a simple query', async () => {
+describe("Database Connection Integration Test", () => {
+  it("should execute a simple query", async () => {
     // This test confirms that:
     // 1. Connection string is correct (loaded from .env)
     // 2. Drizzle client is properly configured

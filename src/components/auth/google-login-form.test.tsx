@@ -42,7 +42,9 @@ describe("GoogleLoginForm", () => {
     render(<GoogleLoginForm />);
 
     // Assert
-    expect(screen.getByRole("button", { name: "サインイン" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "サインイン" })
+    ).toBeInTheDocument();
   });
 
   it("Googleアカウントが必要であることが表示される", () => {
@@ -50,7 +52,9 @@ describe("GoogleLoginForm", () => {
     render(<GoogleLoginForm />);
 
     // Assert
-    expect(screen.getByText("必要なもの: Googleアカウント")).toBeInTheDocument();
+    expect(
+      screen.getByText("必要なもの: Googleアカウント")
+    ).toBeInTheDocument();
   });
 
   it("機能一覧が表示される", () => {

@@ -1,12 +1,12 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import {
   createGroup as createGroupDAL,
   getGroupById as getGroupByIdDAL,
   joinGroup as joinGroupDAL,
 } from "@/lib/db/groups";
 import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
 
 export async function createGroupAction(groupData: {
   name: string;

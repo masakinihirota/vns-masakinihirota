@@ -1,5 +1,8 @@
 "use client";
 
+import { MonitorSmartphone } from "lucide-react";
+import Link from "next/link";
+import { Suspense } from "react";
 import {
   AdToggle,
   HelpButton,
@@ -17,9 +20,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { MonitorSmartphone } from "lucide-react";
-import Link from "next/link";
-import { Suspense } from "react";
 import { TrialEntrySection } from "../trial-entry";
 import { BackgroundCanvas } from "./background-canvas";
 import { ConceptSection } from "./concept-section";

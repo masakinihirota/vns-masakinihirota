@@ -1,10 +1,13 @@
-import { COLORS, MATERIALS, OBJECTIVE_PRESETS } from './profile-mask.constants';
-import { ProfileMask } from './profile-mask.types';
+import { COLORS, MATERIALS, OBJECTIVE_PRESETS } from "./profile-mask.constants";
+import { ProfileMask } from "./profile-mask.types";
 
 /**
  * 星座匿名（識別ID）の候補セットを生成する
  */
-export const generateCandidateSet = (constellation: string, previousSet: readonly string[] = []): string[] => {
+export const generateCandidateSet = (
+  constellation: string,
+  previousSet: readonly string[] = []
+): string[] => {
   const newSet: string[] = [];
   while (newSet.length < 3) {
     const color = COLORS[Math.floor(Math.random() * COLORS.length)];
@@ -24,7 +27,10 @@ export const getNextAnonymsHistory = (
   constellationHistory: readonly (readonly string[])[],
   historyPointer: number,
   constellation: string
-): { constellationHistory: readonly (readonly string[])[]; historyPointer: number } => {
+): {
+  constellationHistory: readonly (readonly string[])[];
+  historyPointer: number;
+} => {
   if (historyPointer < constellationHistory.length - 1) {
     return {
       constellationHistory,
@@ -32,7 +38,10 @@ export const getNextAnonymsHistory = (
     };
   }
 
-  const newSet = generateCandidateSet(constellation, constellationHistory[historyPointer]);
+  const newSet = generateCandidateSet(
+    constellation,
+    constellationHistory[historyPointer]
+  );
   const newHistory = [...constellationHistory, newSet];
   let newPointer = newHistory.length - 1;
 
@@ -56,11 +65,14 @@ export const toggleObjectiveSlots = (
   objectiveId: string,
   currentObjectiveIds: readonly string[],
   currentSlots: readonly string[]
-): { selectedObjectiveIds: readonly string[]; selectedSlots: readonly string[] } => {
+): {
+  selectedObjectiveIds: readonly string[];
+  selectedSlots: readonly string[];
+} => {
   const isAdding = !currentObjectiveIds.includes(objectiveId);
 
   if (isAdding) {
-    const preset = OBJECTIVE_PRESETS.find(p => p.id === objectiveId);
+    const preset = OBJECTIVE_PRESETS.find((p) => p.id === objectiveId);
     const newObjectiveIds = [...currentObjectiveIds, objectiveId];
     const newSlotsSet = new Set([...currentSlots, ...(preset?.slots ?? [])]);
 
@@ -70,7 +82,9 @@ export const toggleObjectiveSlots = (
     };
   } else {
     return {
-      selectedObjectiveIds: currentObjectiveIds.filter(id => id !== objectiveId),
+      selectedObjectiveIds: currentObjectiveIds.filter(
+        (id) => id !== objectiveId
+      ),
       selectedSlots: currentSlots,
     };
   }
@@ -83,14 +97,17 @@ export const toggleSlotAndObjectives = (
   slotId: string,
   currentSlots: readonly string[],
   currentObjectiveIds: readonly string[]
-): { selectedSlots: readonly string[]; selectedObjectiveIds: readonly string[] } => {
+): {
+  selectedSlots: readonly string[];
+  selectedObjectiveIds: readonly string[];
+} => {
   const isCurrentlySelected = currentSlots.includes(slotId);
 
   if (isCurrentlySelected) {
-    const newSlots = currentSlots.filter(id => id !== slotId);
+    const newSlots = currentSlots.filter((id) => id !== slotId);
     // スロットを削除した場合、そのスロットに依存している目的も削除する
-    const newObjectiveIds = currentObjectiveIds.filter(objId => {
-      const preset = OBJECTIVE_PRESETS.find(p => p.id === objId);
+    const newObjectiveIds = currentObjectiveIds.filter((objId) => {
+      const preset = OBJECTIVE_PRESETS.find((p) => p.id === objId);
       return !preset?.slots.includes(slotId);
     });
     return {
@@ -113,10 +130,11 @@ export const validatePartnerObjective = (
   activeProfileId: string,
   allProfiles: readonly ProfileMask[]
 ): { isValid: boolean; message: string } => {
-  if (objectiveId !== 'partner') return { isValid: true, message: '' };
+  if (objectiveId !== "partner") return { isValid: true, message: "" };
 
   const otherProfileWithPartner = allProfiles.find(
-    p => p.id !== activeProfileId && p.selectedObjectiveIds.includes('partner')
+    (p) =>
+      p.id !== activeProfileId && p.selectedObjectiveIds.includes("partner")
   );
 
   if (otherProfileWithPartner) {
@@ -126,5 +144,5 @@ export const validatePartnerObjective = (
     };
   }
 
-  return { isValid: true, message: '' };
+  return { isValid: true, message: "" };
 };

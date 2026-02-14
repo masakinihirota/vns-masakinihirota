@@ -16,8 +16,12 @@ export const works = pgTable("works", {
   releaseYear: text("release_year"),
   scale: text("scale"),
   tags: text("tags").array(),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** user_work_entries テーブル定義 */
@@ -29,8 +33,12 @@ export const userWorkEntries = pgTable("user_work_entries", {
   status: text("status").notNull(),
   tier: text("tier"),
   memo: text("memo"),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** user_work_ratings テーブル定義 */
@@ -41,6 +49,10 @@ export const userWorkRatings = pgTable("user_work_ratings", {
     .references(() => works.id, { onDelete: "cascade" }),
   rating: text("rating").notNull(),
   lastTier: text("last_tier"),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });

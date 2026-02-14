@@ -1,5 +1,5 @@
-import * as Auth from "@/components/auth";
 import Link from "next/link";
+import * as Auth from "@/components/auth";
 
 export default async function Page(props: {
   searchParams?: Promise<{

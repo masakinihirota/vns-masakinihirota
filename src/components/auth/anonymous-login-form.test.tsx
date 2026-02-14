@@ -42,7 +42,9 @@ describe("AnonymousLoginForm", () => {
     render(<AnonymousLoginForm />);
 
     // Assert
-    expect(screen.getByRole("button", { name: "サインイン" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "サインイン" })
+    ).toBeInTheDocument();
   });
 
   it("機能一覧が表示される", () => {

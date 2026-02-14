@@ -1,3 +1,7 @@
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import NextAuth from "next-auth";
+import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
 import { authDb } from "@/lib/drizzle/authjs-client";
 import {
   authjsAccounts,
@@ -5,10 +9,6 @@ import {
   authjsUsers,
   authjsVerificationTokens,
 } from "@/lib/drizzle/schema/auth";
-import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
 
 /**
  * Auth.js v5 設定

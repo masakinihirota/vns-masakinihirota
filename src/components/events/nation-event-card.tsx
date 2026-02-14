@@ -1,5 +1,7 @@
 "use client";
 
+import { Calendar, Users } from "lucide-react";
+import { useState } from "react";
 import { NationEvent } from "@/components/groups/groups.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,8 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
-import { Calendar, Users } from "lucide-react";
-import { useState } from "react";
 import { useJoinEvent } from "./events.logic";
 
 interface NationEventCardProps {

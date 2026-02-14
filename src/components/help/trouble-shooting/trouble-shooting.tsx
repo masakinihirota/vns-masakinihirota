@@ -1,3 +1,4 @@
+import { Bot, HeartHandshake, ShieldAlert, Split, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -14,7 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Bot, HeartHandshake, ShieldAlert, Split, Star } from "lucide-react";
 
 export function TroubleShooting() {
   return (

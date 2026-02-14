@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  useEvents,
-  useJoinEvent,
-} from "./events.logic";
+import { useEvents, useJoinEvent } from "./events.logic";
 
 describe("events.logic", () => {
   describe("useEvents", () => {

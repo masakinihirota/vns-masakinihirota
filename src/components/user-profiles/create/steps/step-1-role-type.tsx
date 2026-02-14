@@ -29,9 +29,10 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
         <div
           className={`
             transition-all duration-500 ease-in-out border rounded-xl p-6 shadow-sm relative overflow-hidden
-            ${isLeaderConfirmed
-              ? "bg-indigo-50 dark:bg-indigo-900/30 border-indigo-500 ring-2 ring-indigo-500 ring-offset-2 dark:ring-offset-slate-900 shadow-indigo-200 dark:shadow-indigo-900/20"
-              : "bg-gradient-to-br from-indigo-50 to-white dark:from-slate-900 dark:to-slate-800 border-indigo-100 dark:border-slate-700"
+            ${
+              isLeaderConfirmed
+                ? "bg-indigo-50 dark:bg-indigo-900/30 border-indigo-500 ring-2 ring-indigo-500 ring-offset-2 dark:ring-offset-slate-900 shadow-indigo-200 dark:shadow-indigo-900/20"
+                : "bg-gradient-to-br from-indigo-50 to-white dark:from-slate-900 dark:to-slate-800 border-indigo-100 dark:border-slate-700"
             }
           `}
         >
@@ -74,17 +75,19 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
               <div
                 className={`
                   w-6 h-6 rounded-md border-2 flex items-center justify-center transition-all duration-300
-                  ${isLeaderConfirmed
-                    ? "bg-indigo-600 border-indigo-600"
-                    : "bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 group-hover:border-indigo-400"
+                  ${
+                    isLeaderConfirmed
+                      ? "bg-indigo-600 border-indigo-600"
+                      : "bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 group-hover:border-indigo-400"
                   }
                 `}
               >
                 <CheckCircle2
-                  className={`w-4 h-4 text-white transition-all duration-300 ${isLeaderConfirmed
+                  className={`w-4 h-4 text-white transition-all duration-300 ${
+                    isLeaderConfirmed
                       ? "scale-100 opacity-100"
                       : "scale-50 opacity-0"
-                    }`}
+                  }`}
                 />
               </div>
               <input
@@ -96,9 +99,10 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
               <span
                 className={`
                   text-sm font-bold transition-colors duration-300
-                  ${isLeaderConfirmed
-                    ? "text-indigo-700 dark:text-indigo-300"
-                    : "text-slate-500 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400"
+                  ${
+                    isLeaderConfirmed
+                      ? "text-indigo-700 dark:text-indigo-300"
+                      : "text-slate-500 dark:text-slate-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400"
                   }
                 `}
               >
@@ -140,18 +144,20 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
               onClick={() => updateForm("type", t.id)}
               className={`
                 cursor-pointer p-5 rounded-xl border-2 transition-all duration-200 hover:shadow-md
-                ${formData.type === t.id
-                  ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 ring-2 ring-blue-200 dark:ring-blue-800 ring-offset-1 dark:ring-offset-slate-900"
-                  : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-blue-300 dark:hover:border-blue-700"
+                ${
+                  formData.type === t.id
+                    ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30 ring-2 ring-blue-200 dark:ring-blue-800 ring-offset-1 dark:ring-offset-slate-900"
+                    : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-blue-300 dark:hover:border-blue-700"
                 }
               `}
             >
               <div className="flex items-start justify-between mb-2">
                 <div
-                  className={`p-2 rounded-lg ${formData.type === t.id
+                  className={`p-2 rounded-lg ${
+                    formData.type === t.id
                       ? "bg-blue-200 dark:bg-blue-800 text-blue-700 dark:text-blue-200"
                       : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400"
-                    }`}
+                  }`}
                 >
                   {t.icon}
                 </div>
@@ -188,9 +194,10 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
                   onClick={() => updateForm("type", t.id)}
                   className={`
                     cursor-pointer p-5 rounded-xl border-2 transition-all duration-200 hover:shadow-xl relative overflow-hidden group
-                    ${formData.type === t.id
-                      ? "border-amber-500 bg-amber-50 dark:bg-amber-900/20 ring-2 ring-amber-200 dark:ring-amber-800 ring-offset-1 dark:ring-offset-slate-900"
-                      : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-amber-300 dark:hover:border-amber-700"
+                    ${
+                      formData.type === t.id
+                        ? "border-amber-500 bg-amber-50 dark:bg-amber-900/20 ring-2 ring-amber-200 dark:ring-amber-800 ring-offset-1 dark:ring-offset-slate-900"
+                        : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:border-amber-300 dark:hover:border-amber-700"
                     }
                   `}
                 >
@@ -199,10 +206,11 @@ export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {
 
                   <div className="flex items-start justify-between mb-2 relative z-10">
                     <div
-                      className={`p-2 rounded-lg ${formData.type === t.id
+                      className={`p-2 rounded-lg ${
+                        formData.type === t.id
                           ? "bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-100"
                           : "bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 group-hover:text-amber-600 dark:group-hover:text-amber-400"
-                        }`}
+                      }`}
                     >
                       {t.icon}
                     </div>

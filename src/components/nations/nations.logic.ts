@@ -1,9 +1,9 @@
+import { SupabaseClient } from "@supabase/supabase-js";
+import useSWR from "swr";
 import { Nation } from "@/components/groups/groups.types";
 import { getNationById } from "@/lib/db/nations";
 import { createClient } from "@/lib/supabase/client";
 import { Database } from "@/types/database.types";
-import { SupabaseClient } from "@supabase/supabase-js";
-import useSWR from "swr";
 
 const fetchNations = async () => {
   const supabase = createClient();
@@ -20,8 +20,6 @@ const fetchNation = async (nationId: string): Promise<Nation> => {
   const result = await getNationById(supabase, nationId);
   return result as Nation;
 };
-
-
 
 export const useNations = () => {
   const { data, error, isLoading, mutate } = useSWR<Nation[]>(
@@ -42,11 +40,6 @@ export const useNation = (nationId: string) => {
     nationId || null,
     fetchNation
   );
-
-
-
-
-
 
   return {
     nation: data,

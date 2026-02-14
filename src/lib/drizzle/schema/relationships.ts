@@ -1,4 +1,11 @@
-import { pgEnum, pgTable, primaryKey, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  pgEnum,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { userProfiles } from "./user-profiles";
 
 /** alliance_status 列挙型 */
@@ -9,10 +16,7 @@ export const allianceStatusEnum = pgEnum("alliance_status", [
 ]);
 
 /** follow_status 列挙型 */
-export const followStatusEnum = pgEnum("follow_status", [
-  "watch",
-  "follow",
-]);
+export const followStatusEnum = pgEnum("follow_status", ["watch", "follow"]);
 
 /** alliances テーブル定義 */
 export const alliances = pgTable("alliances", {
@@ -26,8 +30,12 @@ export const alliances = pgTable("alliances", {
   status: allianceStatusEnum("status").notNull().default("requested"),
   metadata: text("metadata"),
   expiresAt: timestamp("expires_at", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** follows テーブル定義 */
@@ -41,9 +49,11 @@ export const follows = pgTable(
       .notNull()
       .references(() => userProfiles.id, { onDelete: "cascade" }),
     status: followStatusEnum("status").notNull().default("watch"),
-    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
   },
   (table) => [
     primaryKey({ columns: [table.followerProfileId, table.followedProfileId] }),
-  ],
+  ]
 );

@@ -1,6 +1,6 @@
+import { eq } from "drizzle-orm";
 import { db } from "@/lib/drizzle/client";
 import { businessCards } from "@/lib/drizzle/schema";
-import { eq } from "drizzle-orm";
 import type {
   BusinessCard,
   BusinessCardConfig,
@@ -50,7 +50,8 @@ export async function upsertBusinessCardDrizzle(
   };
 
   if (data.is_published !== undefined) values.isPublished = data.is_published;
-  if (data.display_config !== undefined) values.displayConfig = data.display_config;
+  if (data.display_config !== undefined)
+    values.displayConfig = data.display_config;
   if (data.content !== undefined) values.content = data.content;
 
   const result = await db

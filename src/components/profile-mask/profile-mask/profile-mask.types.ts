@@ -1,4 +1,4 @@
-import { LucideIcon } from 'lucide-react';
+import { LucideIcon } from "lucide-react";
 
 /**
  * プロフィールのタイプ
@@ -60,7 +60,7 @@ export type ProfileMask = {
   readonly constellationName: string;
   readonly constellationHistory: readonly (readonly string[])[];
   readonly historyPointer: number;
-  readonly avatarType: 'ghost' | 'user';
+  readonly avatarType: "ghost" | "user";
   readonly maskId: string;
   readonly isGhost: boolean;
   readonly selectedTypeId: string | null;
@@ -76,7 +76,13 @@ export type ProfileMask = {
  */
 export type ModalState = {
   readonly isOpen: boolean;
-  readonly type: 'error' | 'success' | 'confirm_exit' | 'confirm_create' | 'info' | '';
+  readonly type:
+    | "error"
+    | "success"
+    | "confirm_exit"
+    | "confirm_create"
+    | "info"
+    | "";
   readonly targetId?: string | null;
   readonly message: string;
   readonly action?: () => void;

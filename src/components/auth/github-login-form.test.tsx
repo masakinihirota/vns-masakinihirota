@@ -42,7 +42,9 @@ describe("GitHubLoginForm", () => {
     render(<GitHubLoginForm />);
 
     // Assert
-    expect(screen.getByRole("button", { name: "サインイン" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "サインイン" })
+    ).toBeInTheDocument();
   });
 
   it("GitHubアカウントが必要であることが表示される", () => {
@@ -50,7 +52,9 @@ describe("GitHubLoginForm", () => {
     render(<GitHubLoginForm />);
 
     // Assert
-    expect(screen.getByText("必要なもの: GitHubアカウント")).toBeInTheDocument();
+    expect(
+      screen.getByText("必要なもの: GitHubアカウント")
+    ).toBeInTheDocument();
   });
 
   it("機能一覧が表示される", () => {

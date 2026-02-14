@@ -50,6 +50,7 @@ function cosineSimilarity(vectorA: number[], vectorB: number[]): number {
 ```
 
 **利点**:
+
 - ベクトルの大きさに依存しない
 - 方向性（価値観の傾向）を重視
 - 計算効率が良い
@@ -75,6 +76,7 @@ function euclideanSimilarity(vectorA: number[], vectorB: number[]): number {
 ```
 
 **利点**:
+
 - 直感的
 - 絶対的な差を重視
 
@@ -146,6 +148,7 @@ LIMIT 20;
 ```
 
 **パフォーマンスチューニング**:
+
 - `lists`パラメータ: `sqrt(行数)`が目安
 - 定期的な`VACUUM ANALYZE`実行
 - インデックスの再構築（`REINDEX`）
@@ -242,10 +245,12 @@ async function batchCalculateMatchingScores(): Promise<void> {
 ```
 
 **利点**:
+
 - リアルタイムのレスポンス時間が短い
 - データベース負荷を分散
 
 **欠点**:
+
 - 最新の価値観変更が即座に反映されない
 
 ### ハイブリッドアプローチ
@@ -343,11 +348,13 @@ async function monitoredMatching(userId: string): Promise<MatchResult[]> {
 ### 問題: マッチング処理が遅い
 
 **原因**:
+
 - pgvectorインデックスが作成されていない
 - キャッシュが機能していない
 - 全ユーザーとの計算を行っている
 
 **解決策**:
+
 1. pgvectorインデックスを作成
 2. Redisキャッシュを実装
 3. 候補を絞ってから詳細計算
@@ -355,11 +362,13 @@ async function monitoredMatching(userId: string): Promise<MatchResult[]> {
 ### 問題: マッチング精度が低い
 
 **原因**:
+
 - ベクトル正規化が不適切
 - 重み付けが適切でない
 - データの偏りがある
 
 **解決策**:
+
 1. ベクトル正規化を確認
 2. カテゴリ重みを調整
 3. データ分布を分析

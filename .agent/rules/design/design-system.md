@@ -10,6 +10,7 @@ VNS masakinihirota アプリケーションの統一されたデザイン指針�
 ## 参考リポジトリ
 
 デジタル庁のリポジトリを参考にします。
+
 - `design-system-example-components-react/`
 
 デジタル庁UIのアクセシビリティ・構造思想を取り入れつつ、視覚的な装飾（Look & Feel）は独自のデザインシステムを採用します。

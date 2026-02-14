@@ -77,7 +77,7 @@ export function AnonymousLoginForm({
         </CardHeader>
         <CardContent>
           <ul className="space-y-1 text-sm">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <li key={feature.label} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
                 <span

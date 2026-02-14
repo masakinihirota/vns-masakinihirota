@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { ProfileMaskContainer } from '@/components/profile-mask';
+import { ProfileMaskContainer } from "@/components/profile-mask";
 
 export default function ProfileMaskDemoPage() {
   return (

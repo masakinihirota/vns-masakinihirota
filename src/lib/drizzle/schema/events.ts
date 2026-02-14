@@ -8,7 +8,9 @@ export const nationEvents = pgTable("nation_events", {
   nationId: uuid("nation_id")
     .notNull()
     .references(() => nations.id, { onDelete: "cascade" }),
-  organizerId: uuid("organizer_id").references(() => userProfiles.id, { onDelete: "set null" }),
+  organizerId: uuid("organizer_id").references(() => userProfiles.id, {
+    onDelete: "set null",
+  }),
   title: text("title").notNull(),
   description: text("description"),
   imageUrl: text("image_url"),
@@ -21,8 +23,12 @@ export const nationEvents = pgTable("nation_events", {
   sponsors: text("sponsors"),
   recruitmentStartAt: timestamp("recruitment_start_at", { withTimezone: true }),
   recruitmentEndAt: timestamp("recruitment_end_at", { withTimezone: true }),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** nation_event_participants テーブル定義 */
@@ -34,5 +40,7 @@ export const nationEventParticipants = pgTable("nation_event_participants", {
     .notNull()
     .references(() => userProfiles.id, { onDelete: "cascade" }),
   status: text("status").default("going"),
-  joinedAt: timestamp("joined_at", { withTimezone: true }).notNull().defaultNow(),
+  joinedAt: timestamp("joined_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });

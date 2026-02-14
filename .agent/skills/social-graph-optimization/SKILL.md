@@ -73,6 +73,7 @@ CREATE POLICY "Users can delete their own follows" ON user_follows
 ### 3. 隣接リスト vs 隣接行列
 
 **隣接リスト（推奨）**:
+
 - スパースなグラフに適している
 - ストレージ効率が良い
 - PostgreSQLの標準的なアプローチ
@@ -94,6 +95,7 @@ async function getFollowers(userId: string): Promise<User[]> {
 ```
 
 **隣接行列**:
+
 - 密なグラフに適している
 - クエリが高速（特定のエッジの存在確認）
 - ストレージ効率が悪い（N×N）
@@ -534,11 +536,13 @@ async function recommendGroupMembers(userId: string): Promise<User[]> {
 ### 問題: グラフクエリが遅い
 
 **原因**:
+
 - インデックスが不足
 - 再帰が深すぎる
 - キャッシュが機能していない
 
 **解決策**:
+
 1. インデックスを追加
 2. 再帰の深さを制限
 3. マテリアライズドビューを使用
@@ -547,10 +551,12 @@ async function recommendGroupMembers(userId: string): Promise<User[]> {
 ### 問題: メモリ不足
 
 **原因**:
+
 - 大規模なグラフを一度に処理
 - サイクル検出が不十分
 
 **解決策**:
+
 1. ページネーションを実装
 2. サイクル検出を追加
 3. バッチサイズを小さくする

@@ -12,5 +12,7 @@ export const notifications = pgTable("notifications", {
   type: text("type").notNull(),
   linkUrl: text("link_url"),
   isRead: boolean("is_read").default(false),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });

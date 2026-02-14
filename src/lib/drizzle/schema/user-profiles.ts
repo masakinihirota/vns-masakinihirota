@@ -1,4 +1,11 @@
-import { boolean, index, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  index,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { rootAccounts } from "./root-accounts";
 
 /** user_profiles テーブル定義 */
@@ -14,10 +21,14 @@ export const userProfiles = pgTable(
     roleType: text("role_type").notNull().default("member"),
     isActive: boolean("is_active").notNull().default(true),
     lastInteractedRecordId: uuid("last_interacted_record_id"),
-    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
   },
   (table) => [
     index("idx_user_profiles_root_account_id").on(table.rootAccountId),
-  ],
+  ]
 );

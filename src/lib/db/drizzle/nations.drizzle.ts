@@ -1,6 +1,6 @@
+import { eq } from "drizzle-orm";
 import { db } from "@/lib/drizzle/client";
 import { nations } from "@/lib/drizzle/schema";
-import { eq } from "drizzle-orm";
 
 /** Drizzle版: ネーション作成 */
 export const createNationDrizzle = async (nationData: {

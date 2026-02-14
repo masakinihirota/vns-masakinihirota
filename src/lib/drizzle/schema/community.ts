@@ -1,4 +1,11 @@
-import { boolean, integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  boolean,
+  integer,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { userProfiles } from "./user-profiles";
 
 /** groups テーブル定義 */
@@ -9,9 +16,15 @@ export const groups = pgTable("groups", {
   avatarUrl: text("avatar_url"),
   coverUrl: text("cover_url"),
   isOfficial: boolean("is_official").default(false),
-  leaderId: uuid("leader_id").references(() => userProfiles.id, { onDelete: "set null" }),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  leaderId: uuid("leader_id").references(() => userProfiles.id, {
+    onDelete: "set null",
+  }),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** group_members テーブル定義 */
@@ -23,7 +36,9 @@ export const groupMembers = pgTable("group_members", {
     .notNull()
     .references(() => userProfiles.id, { onDelete: "cascade" }),
   role: text("role").default("member"),
-  joinedAt: timestamp("joined_at", { withTimezone: true }).notNull().defaultNow(),
+  joinedAt: timestamp("joined_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** nations テーブル定義 */
@@ -34,12 +49,20 @@ export const nations = pgTable("nations", {
   avatarUrl: text("avatar_url"),
   coverUrl: text("cover_url"),
   isOfficial: boolean("is_official").default(false),
-  ownerUserId: uuid("owner_user_id").references(() => userProfiles.id, { onDelete: "set null" }),
-  ownerGroupId: uuid("owner_group_id").references(() => groups.id, { onDelete: "set null" }),
+  ownerUserId: uuid("owner_user_id").references(() => userProfiles.id, {
+    onDelete: "set null",
+  }),
+  ownerGroupId: uuid("owner_group_id").references(() => groups.id, {
+    onDelete: "set null",
+  }),
   transactionFeeRate: integer("transaction_fee_rate"),
   foundationFee: integer("foundation_fee"),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** nation_citizens テーブル定義 */
@@ -51,7 +74,9 @@ export const nationCitizens = pgTable("nation_citizens", {
     .notNull()
     .references(() => userProfiles.id, { onDelete: "cascade" }),
   role: text("role"),
-  joinedAt: timestamp("joined_at", { withTimezone: true }).notNull().defaultNow(),
+  joinedAt: timestamp("joined_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** nation_groups テーブル定義 */
@@ -63,7 +88,9 @@ export const nationGroups = pgTable("nation_groups", {
     .notNull()
     .references(() => groups.id, { onDelete: "cascade" }),
   role: text("role"),
-  joinedAt: timestamp("joined_at", { withTimezone: true }).notNull().defaultNow(),
+  joinedAt: timestamp("joined_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });
 
 /** nation_posts テーブル定義 */
@@ -72,10 +99,18 @@ export const nationPosts = pgTable("nation_posts", {
   nationId: uuid("nation_id")
     .notNull()
     .references(() => nations.id, { onDelete: "cascade" }),
-  authorId: uuid("author_id").references(() => userProfiles.id, { onDelete: "set null" }),
-  authorGroupId: uuid("author_group_id").references(() => groups.id, { onDelete: "set null" }),
+  authorId: uuid("author_id").references(() => userProfiles.id, {
+    onDelete: "set null",
+  }),
+  authorGroupId: uuid("author_group_id").references(() => groups.id, {
+    onDelete: "set null",
+  }),
   content: text("content").notNull(),
   type: text("type"),
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
 });

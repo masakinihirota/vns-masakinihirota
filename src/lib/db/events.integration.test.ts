@@ -1,7 +1,7 @@
 import {
   createEventDrizzle,
   getEventDrizzle,
-  joinEventDrizzle
+  joinEventDrizzle,
 } from "@/lib/db/drizzle/events.drizzle";
 import { createGroupDrizzle } from "@/lib/db/drizzle/groups.drizzle";
 import { createNationDrizzle } from "@/lib/db/drizzle/nations.drizzle";
@@ -12,11 +12,16 @@ import { sql } from "drizzle-orm";
 import { v4 as uuidv4 } from "uuid";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:64321";
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY;
+const SUPABASE_URL =
+  process.env.NEXT_PUBLIC_SUPABASE_URL || "http://127.0.0.1:64321";
+const SUPABASE_SERVICE_ROLE_KEY =
+  process.env.SUPABASE_SERVICE_ROLE_KEY ||
+  process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY;
 
 if (!SUPABASE_SERVICE_ROLE_KEY) {
-  throw new Error("SUPABASE_SERVICE_ROLE_KEY is required for integration tests");
+  throw new Error(
+    "SUPABASE_SERVICE_ROLE_KEY is required for integration tests"
+  );
 }
 
 const adminClient = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
@@ -47,7 +52,11 @@ describe("Events Drizzle DAL Integration", () => {
     });
     organizerUserId = orgAuth.user!.id;
     await new Promise((r) => setTimeout(r, 500));
-    const orgRoot = (await db.execute(sql`SELECT id FROM root_accounts WHERE auth_user_id = ${organizerUserId}`))[0] as { id: string };
+    const orgRoot = (
+      await db.execute(
+        sql`SELECT id FROM root_accounts WHERE auth_user_id = ${organizerUserId}`
+      )
+    )[0] as { id: string };
     const orgProfile = await createUserProfileDrizzle(orgRoot.id, {
       display_name: "Organizer",
       role_type: "leader",
@@ -63,7 +72,11 @@ describe("Events Drizzle DAL Integration", () => {
     });
     participantUserId = partAuth.user!.id;
     await new Promise((r) => setTimeout(r, 500));
-    const partRoot = (await db.execute(sql`SELECT id FROM root_accounts WHERE auth_user_id = ${participantUserId}`))[0] as { id: string };
+    const partRoot = (
+      await db.execute(
+        sql`SELECT id FROM root_accounts WHERE auth_user_id = ${participantUserId}`
+      )
+    )[0] as { id: string };
     const partProfile = await createUserProfileDrizzle(partRoot.id, {
       display_name: "Participant",
       role_type: "member",
@@ -88,9 +101,11 @@ describe("Events Drizzle DAL Integration", () => {
         transaction_fee_rate: 10.0,
       });
       nationId = nation.id;
-    } catch (e) {
+    } catch {
       // Fallback: direct insert if logic fails due to points
-      await db.execute(sql`UPDATE root_accounts SET points = 10000 WHERE id = ${orgRoot.id}`);
+      await db.execute(
+        sql`UPDATE root_accounts SET points = 10000 WHERE id = ${orgRoot.id}`
+      );
       const nation = await createNationDrizzle({
         name: `Nation ${uuidv4()}`,
         description: "Test Nation",
@@ -134,7 +149,10 @@ describe("Events Drizzle DAL Integration", () => {
       type: "free",
     });
 
-    const participation = await joinEventDrizzle(event.id, participantProfileId);
+    const participation = await joinEventDrizzle(
+      event.id,
+      participantProfileId
+    );
     expect(participation.status).toBe("going");
     expect(participation.userProfileId).toBe(participantProfileId);
   });

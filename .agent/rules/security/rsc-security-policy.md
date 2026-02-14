@@ -76,4 +76,5 @@ export async function POST(request: Request) {
 **注意**: この指示は、React/Next.jsの機能を全否定するものではないが、セキュリティと長期的な保守性を最優先する場合、フレームワーク固有の「魔法」への依存を最小限に留め、枯れた技術（HTTP/JSON/REST）を採用するという強い指針である。
 
 **参考資料**:
+
 - [Lessons from React2Shell - DEV Community](https://dev.to/cheetah100/lessons-from-react2shell-1m8b)

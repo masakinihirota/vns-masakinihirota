@@ -1,3 +1,4 @@
+/* eslint-disable */
 export type Json =
   | string
   | number
@@ -1076,9 +1077,4 @@ export const Constants = {
     Enums: {},
   },
   public: {
-    Enums: {
-      alliance_status: ["requested", "pre_partner", "partner"],
-      follow_status: ["watch", "follow"],
-    },
-  },
-} as const;
+    E

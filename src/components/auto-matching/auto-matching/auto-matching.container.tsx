@@ -152,7 +152,6 @@ export const AutoMatchingContainer = () => {
         setLastMatchStats({ added: 0, removed: removedUsers.length });
       }
 
-
       setView("result");
     }, 1500);
   };

@@ -1,6 +1,5 @@
 "use client";
 
-
 export const ConceptSection = () => {
   return (
     <div className="bg-white/5 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-2xl animate-fade-in-up delay-200">
@@ -12,7 +11,9 @@ export const ConceptSection = () => {
         <div className="space-y-6">
           <p>
             最初はあなたの価値観のデータがないため、
-            <strong className="text-blue-600 dark:text-blue-400 font-bold">「幽霊」</strong>
+            <strong className="text-blue-600 dark:text-blue-400 font-bold">
+              「幽霊」
+            </strong>
             の状態として始まります。
             <br />
             「幽霊」の状態はこの世界を見ることはできますが、相手からは見えません。
@@ -20,15 +21,21 @@ export const ConceptSection = () => {
 
           <p>
             なので、自分の
-            <strong className="text-blue-600 dark:text-blue-400 font-bold">「仮面（プロフィール）」</strong>
+            <strong className="text-blue-600 dark:text-blue-400 font-bold">
+              「仮面（プロフィール）」
+            </strong>
             を作ってください。
             仮面とは、あなたの価値観を記した自己紹介データです。このデータを元に、あなたの価値観と合う人を探します。
           </p>
 
           <p>
-            <strong className="text-blue-600 dark:text-blue-400 font-bold">「仮面（プロフィール）」</strong>
+            <strong className="text-blue-600 dark:text-blue-400 font-bold">
+              「仮面（プロフィール）」
+            </strong>
             を作って、
-            <strong className="text-blue-600 dark:text-blue-400 font-bold">「マッチング機能」</strong>
+            <strong className="text-blue-600 dark:text-blue-400 font-bold">
+              「マッチング機能」
+            </strong>
             から価値観の近い人を探しましょう。
           </p>
 

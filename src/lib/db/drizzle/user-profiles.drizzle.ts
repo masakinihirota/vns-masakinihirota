@@ -1,7 +1,7 @@
+import { asc, eq } from "drizzle-orm";
 import { db } from "@/lib/drizzle/client";
 import { userProfiles } from "@/lib/drizzle/schema";
 import type { CreateProfileData, UserProfile } from "@/lib/types/user-profile";
-import { asc, eq } from "drizzle-orm";
 
 const MAX_PROFILES = 10;
 
@@ -28,7 +28,9 @@ function toUserProfile(row: typeof userProfiles.$inferSelect): UserProfile {
 }
 
 /** Drizzle版: ユーザープロフィール一覧取得 */
-export async function getUserProfilesDrizzle(rootAccountId: string): Promise<UserProfile[]> {
+export async function getUserProfilesDrizzle(
+  rootAccountId: string
+): Promise<UserProfile[]> {
   const rows = await db
     .select()
     .from(userProfiles)
@@ -67,7 +69,9 @@ export async function createUserProfileDrizzle(
 }
 
 /** Drizzle版: IDでユーザープロフィール取得 */
-export async function getUserProfileByIdDrizzle(id: string): Promise<UserProfile | null> {
+export async function getUserProfileByIdDrizzle(
+  id: string
+): Promise<UserProfile | null> {
   const rows = await db
     .select()
     .from(userProfiles)

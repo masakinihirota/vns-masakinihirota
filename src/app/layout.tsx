@@ -1,6 +1,6 @@
-import { ThemeProvider } from "@/components/providers";
-import type { Metadata } from "next";
 import "./globals.css";
+import type { Metadata } from "next";
+import { ThemeProvider } from "@/components/providers";
 
 const geistSans = { variable: "font-sans" };
 const geistMono = { variable: "font-mono" };

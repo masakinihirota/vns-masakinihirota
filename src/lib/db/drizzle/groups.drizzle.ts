@@ -1,6 +1,6 @@
+import { eq } from "drizzle-orm";
 import { db } from "@/lib/drizzle/client";
 import { groupMembers, groups } from "@/lib/drizzle/schema";
-import { eq } from "drizzle-orm";
 
 /** Drizzle版: グループ作成 */
 export const createGroupDrizzle = async (groupData: {
