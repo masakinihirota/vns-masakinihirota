@@ -42,6 +42,13 @@
     "visibleInMenu": true
   },
   {
+    "path": "/market",
+    "label": "マーケット",
+    "group": "main",
+    "order": 65,
+    "visibleInMenu": true
+  },
+  {
     "path": "/works/continuous-rating",
     "label": "作品連続評価",
     "group": "more",
@@ -109,6 +116,13 @@
     "label": "アチーブメント",
     "group": "more",
     "order": 50,
+    "visibleInMenu": true
+  },
+  {
+    "path": "/rewards",
+    "label": "リワード",
+    "group": "more",
+    "order": 55,
     "visibleInMenu": true
   },
   {

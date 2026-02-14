@@ -1,56 +1,61 @@
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardFooter,
-} from "@/components/ui/card";
+"use client";
 
-// Define type locally if not imported
-interface Work {
-  id: string;
-  title: string;
-  author: string | null;
-  category: string;
-  is_official: boolean;
-  status: string;
+import { getWorksAction } from "@/app/actions/works";
+import { Input } from "@/components/ui/input";
+import { Tables } from "@/types/types_db";
+import { useState } from "react";
+import { WorkCard } from "./work-card";
+import { WorkCreateModal } from "./work-create-modal";
+
+type Work = Tables<"works">;
+
+interface WorkListProps {
+  initialWorks?: Work[];
 }
 
-export function WorkList({ works }: { works: Work[] }) {
-  if (works.length === 0) {
-    return (
-      <div className="text-center py-10 text-gray-500">
-        作品が見つかりませんでした。
-      </div>
-    );
-  }
+export const WorkList = ({ initialWorks = [] }: WorkListProps) => {
+  const [works, setWorks] = useState<Work[]>(initialWorks);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const refreshWorks = async () => {
+    try {
+      const updatedWorks = (await getWorksAction()) as Work[];
+      setWorks(updatedWorks);
+    } catch (error) {
+      console.error("Failed to refresh works", error);
+    }
+  };
+
+  const filteredWorks = works.filter((work) =>
+    work.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {works.map((work) => (
-        <Card key={work.id} className="hover:shadow-md transition-shadow">
-          <CardHeader>
-            <div className="flex justify-between items-start">
-              <CardTitle className="text-lg line-clamp-2" title={work.title}>
-                {work.title}
-              </CardTitle>
-              {work.is_official && (
-                <Badge
-                  variant="secondary"
-                  className="bg-blue-100 text-blue-800"
-                >
-                  公式
-                </Badge>
-              )}
-            </div>
-            {work.author && <CardDescription>{work.author}</CardDescription>}
-          </CardHeader>
-          <CardFooter className="flex justify-between items-center text-sm text-gray-500">
-            <Badge variant="outline">{work.category}</Badge>
-          </CardFooter>
-        </Card>
-      ))}
+    <div className="container mx-auto py-8">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Works Catalog</h1>
+        <WorkCreateModal onSuccess={refreshWorks} />
+      </div>
+
+      <div className="mb-6">
+        <Input
+          placeholder="Search works..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="max-w-md"
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredWorks.map((work) => (
+          <WorkCard key={work.id} work={work} />
+        ))}
+        {filteredWorks.length === 0 && (
+          <div className="col-span-full text-center py-12 text-muted-foreground">
+            No works found.
+          </div>
+        )}
+      </div>
     </div>
   );
-}
+};

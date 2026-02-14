@@ -30,6 +30,7 @@ export const HeroSection = () => {
           インターネットという情報の洪水の中から真っ先に価値のあるものを拾い上げる
         </p>
       </div>
+
     </header>
   );
 };

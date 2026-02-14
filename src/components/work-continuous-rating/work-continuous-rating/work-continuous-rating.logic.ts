@@ -15,11 +15,11 @@ export type RatingValue =
 // Combined Rating Type
 export type Rating =
   | {
-      status: RatingStatus;
-      isLiked: boolean;
-      tier: "Tier1" | "Tier2" | "Tier3";
-      otherValue: RatingValue | null; // For "普通" etc.
-    }
+    status: RatingStatus;
+    isLiked: boolean;
+    tier: "Tier1" | "Tier2" | "Tier3";
+    otherValue: RatingValue | null; // For "普通" etc.
+  }
   // Legacy string support for backward compatibility during migration
   | RatingValue
   | null;
@@ -66,7 +66,7 @@ export const normalizeRating = (
     return {
       status: oldObj.status,
       isLiked: true,
-      tier: oldObj.value as any,
+      tier: oldObj.value as "Tier1" | "Tier2" | "Tier3",
       otherValue: null,
     };
   }

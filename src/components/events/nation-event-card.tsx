@@ -1,7 +1,5 @@
 "use client";
 
-import { Calendar, Users } from "lucide-react";
-import { useState } from "react";
 import { NationEvent } from "@/components/groups/groups.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -14,6 +12,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
+import { Calendar, Users } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import { useJoinEvent } from "./events.logic";
 
 interface NationEventCardProps {
@@ -37,7 +38,7 @@ export const NationEventCard = ({
     } = await supabase.auth.getUser();
 
     if (!user) {
-      alert("Please login");
+      toast.error("ログインが必要です");
       setLoading(false);
       return;
     }
@@ -46,9 +47,10 @@ export const NationEventCard = ({
       await joinEvent(event.id, user.id);
       setJoined(true);
       onJoinSuccess();
+      toast.success("イベントに参加しました");
     } catch (error) {
       console.error("Failed to join event", error);
-      alert("Failed to join event");
+      toast.error("イベントへの参加に失敗しました");
     } finally {
       setLoading(false);
     }

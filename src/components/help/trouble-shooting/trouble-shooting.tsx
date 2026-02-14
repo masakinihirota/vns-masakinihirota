@@ -1,4 +1,3 @@
-import { Bot, HeartHandshake, ShieldAlert, Split, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -15,6 +14,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Bot, HeartHandshake, ShieldAlert, Split, Star } from "lucide-react";
+import React from "react";
 
 export function TroubleShooting() {
   return (
@@ -81,22 +82,38 @@ export function TroubleShooting() {
             {
               category: "生命・身体への脅威",
               example: "殺害予告、爆破予告、ストーカー行為",
-              action: "**即時通報**（警察等へのログ開示協力）",
+              action: (
+                <>
+                  <strong>即時通報</strong>（警察等へのログ開示協力）
+                </>
+              ),
             },
             {
               category: "財産犯・組織犯罪",
               example: "結婚詐欺、投資詐欺、闇バイト募集",
-              action: "**即時通報**（警察・消費者庁）",
+              action: (
+                <>
+                  <strong>即時通報</strong>（警察・消費者庁）
+                </>
+              ),
             },
             {
               category: "深刻な人権侵害",
               example: "リベンジポルノ、児童ポルノ、極度な名誉毀損",
-              action: "**削除要請・法的措置**",
+              action: (
+                <>
+                  <strong>削除要請・法的措置</strong>
+                </>
+              ),
             },
             {
               category: "サイバー攻撃",
               example: "ハッキング、DDoS攻撃",
-              action: "**法的措置**（セキュリティチーム対応）",
+              action: (
+                <>
+                  <strong>法的措置</strong>（セキュリティチーム対応）
+                </>
+              ),
             },
           ]}
         />
@@ -155,22 +172,39 @@ export function TroubleShooting() {
             {
               category: "身元の詐称",
               example: "なりすまし、荒らし目的の複数アカウント",
-              action: "**【厳格認証】** eKYC、電話番号認証の導入",
+              action: (
+                <>
+                  <strong>【厳格認証】</strong> eKYC、電話番号認証の導入
+                </>
+              ),
             },
             {
               category: "反射的な暴言",
               example: "単純な罵詈雑言、ヘイトスピーチ",
-              action: "**【AIフィルター】** 投稿前の検知・警告・ブロック",
+              action: (
+                <>
+                  <strong>【AIフィルター】</strong> 投稿前の検知・警告・ブロック
+                </>
+              ),
             },
             {
               category: "自動化された攻撃",
               example: "広告スパム、スクレイピング",
-              action: "**【CAPTCHA/AI分析】** 非人間的な挙動を検知",
+              action: (
+                <>
+                  <strong>【CAPTCHA/AI分析】</strong> 非人間的な挙動を検知
+                </>
+              ),
             },
             {
               category: "不公正な行為",
               example: "初心者狩り（スマーフ）、偽装工作",
-              action: "**【1人1垢原則】** 認証によるサブ垢作成の封じ込め",
+              action: (
+                <>
+                  <strong>【1人1垢原則】</strong>{" "}
+                  認証によるサブ垢作成の封じ込め
+                </>
+              ),
             },
           ]}
         />
@@ -187,22 +221,39 @@ export function TroubleShooting() {
             {
               category: "情報消費マナー",
               example: "ネタバレ、リーク情報、早出し情報",
-              action: "**【タグ管理】** 嗜好タグによる表示の住み分け",
+              action: (
+                <>
+                  <strong>【タグ管理】</strong> 嗜好タグによる表示の住み分け
+                </>
+              ),
             },
             {
               category: "創作ガイドライン",
               example: "無断転載、加工、二次利用の範囲",
-              action: "**【啓蒙・教育】** CCライセンス等の周知徹底",
+              action: (
+                <>
+                  <strong>【啓蒙・教育】</strong> CCライセンス等の周知徹底
+                </>
+              ),
             },
             {
               category: "プレイスタイル不一致",
               example: "ガチ勢 vs エンジョイ勢、過度な指示",
-              action: "**【マッチング】** 価値観タグに基づき最適化",
+              action: (
+                <>
+                  <strong>【マッチング】</strong> 価値観タグに基づき最適化
+                </>
+              ),
             },
             {
               category: "日常の摩擦",
               example: "金銭感覚のズレ、些細な誤解、ドタキャン",
-              action: "**【事前選別/介入】** プロフ充実化と第三者仲裁",
+              action: (
+                <>
+                  <strong>【事前選別/介入】</strong>{" "}
+                  プロフ充実化と第三者仲裁
+                </>
+              ),
             },
           ]}
         />
@@ -219,17 +270,30 @@ export function TroubleShooting() {
             {
               category: "約束の軽視",
               example: "遅刻常習、頻繁なドタキャン、既読無視",
-              action: "**【可視化】** 負のエンゲージメント履歴の蓄積",
+              action: (
+                <>
+                  <strong>【可視化】</strong> 負のエンゲージメント履歴の蓄積
+                </>
+              ),
             },
             {
               category: "不快なパーソナリティ",
               example: "規約ギリギリの不快言動、粘着性",
-              action: "**【スコア制限】** 低評価者同士のみをマッチング",
+              action: (
+                <>
+                  <strong>【スコア制限】</strong>{" "}
+                  低評価者同士のみをマッチング
+                </>
+              ),
             },
             {
               category: "信用の毀損",
               example: "物品・金銭の些細な貸借トラブル",
-              action: "**【権限管理】** ランクに応じた機能利用制限",
+              action: (
+                <>
+                  <strong>【権限管理】</strong> ランクに応じた機能利用制限
+                </>
+              ),
             },
           ]}
         />
@@ -326,7 +390,7 @@ function LevelSection({
   tableData: {
     category: string;
     example: string;
-    action: string;
+    action: React.ReactNode;
     actionLabel?: string;
   }[];
 }) {
@@ -376,14 +440,7 @@ function LevelSection({
                   {row.category}
                 </TableCell>
                 <TableCell className="align-top">{row.example}</TableCell>
-                <TableCell
-                  className="align-top"
-                  dangerouslySetInnerHTML={{
-                    __html: row.action
-                      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>") // Simple markdown bold parser
-                      .replace(/\n/g, "<br/>"),
-                  }}
-                />
+                <TableCell className="align-top">{row.action}</TableCell>
               </TableRow>
             ))}
           </TableBody>

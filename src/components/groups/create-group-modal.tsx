@@ -1,7 +1,5 @@
 "use client";
 
-import { Plus } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,6 +21,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Tables } from "@/types/types_db";
+import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { createGroup, getMyProfiles } from "./groups.logic";
 
 export function CreateGroupModal({
@@ -63,9 +64,10 @@ export function CreateGroupModal({
       setName("");
       setDescription("");
       if (onGroupCreated) onGroupCreated();
+      toast.success("グループを作成しました");
     } catch (error) {
       console.error("Failed to create group:", error);
-      alert("Failed to create group");
+      toast.error("グループの作成に失敗しました");
     } finally {
       setLoading(false);
     }

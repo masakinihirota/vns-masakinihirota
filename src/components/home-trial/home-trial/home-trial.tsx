@@ -27,8 +27,8 @@ export const HomeTrial = ({
 
       <div className="flex items-center justify-end mb-8">
         <ViewToggle
-          viewMode={viewMode as any}
-          onViewModeChange={onToggleView as any}
+          viewMode={viewMode}
+          onViewModeChange={onToggleView}
         />
       </div>
 

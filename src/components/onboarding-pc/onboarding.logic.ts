@@ -67,20 +67,7 @@ export const useOnboarding = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    /* console.log({
-      selectedArea,
-      culturalSphere,
-      birthGeneration,
-      selectedCountry,
-      selectedRegion,
-      nativeLanguage,
-      availableLanguages,
-      coreActivityStart,
-      coreActivityEnd,
-      useAiTranslation,
-      isAdult,
-      agreements,
-    }); */
+
     alert("アカウント作成リクエストを送信しました（デモ）");
   };
 

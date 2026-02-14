@@ -1,8 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { TbUserQuestion } from "react-icons/tb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,6 +11,9 @@ import {
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { TbUserQuestion } from "react-icons/tb";
 
 /**
  * 匿名ログインフォームコンポーネント
@@ -44,7 +44,6 @@ export function AnonymousLoginForm({
 
     // ログイン成功後にリダイレクト（保護されたルートへ）
     router.push("/home");
-    // console.log("🚀 ~ handleAnonymousLogin ~ error:", error);
   };
 
   // 匿名認証の機能リスト
@@ -79,7 +78,7 @@ export function AnonymousLoginForm({
         <CardContent>
           <ul className="space-y-1 text-sm">
             {features.map((feature, index) => (
-              <li key={index} className="flex justify-between">
+              <li key={feature.label} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
                 <span
                   className={

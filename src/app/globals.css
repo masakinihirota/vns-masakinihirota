@@ -60,7 +60,7 @@
   --accent-bg: rgba(79, 70, 229, 0.1);
   --header-bg: rgba(255, 255, 255, 0.2);
   --input-bg: rgba(255, 255, 255, 0.5);
-  --bg-gradient: linear-gradient(135deg, #f6f7fb 0%, #eef2ff 100%);
+  --bg-gradient: linear-gradient(135deg, #ffffff 0%, #eff6ff 50%, #f5f3ff 100%);
 }
 
 .dark {
@@ -112,6 +112,50 @@
   .bg-accent-subtle {
     background-color: var(--accent-bg);
   }
+
+  /* Custom Scrollbar Utilities */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+  }
+  .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155;
+  }
+
+  textarea::-webkit-scrollbar {
+    width: 4px;
+  }
+  textarea::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+  }
+  .dark textarea::-webkit-scrollbar-thumb {
+    background: #334155;
+  }
+
+  /* Animations for Mandala Chart */
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes zoom-in {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  @keyframes slide-in-from-bottom {
+    from { transform: translateY(1rem); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .animate-fade-in { animation: fade-in 0.2s ease-out both; }
+  .animate-zoom-in { animation: zoom-in 0.2s ease-out both; }
+  .animate-slide-in-bottom { animation: slide-in-from-bottom 0.2s ease-out both; }
 }
 
 @keyframes fadeInUp {
@@ -152,6 +196,9 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    background: var(--bg-gradient);
+    color: var(--text-main);
+    min-height: 100vh;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }

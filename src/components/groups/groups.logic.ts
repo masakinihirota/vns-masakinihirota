@@ -1,9 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import useSWR from "swr";
+import {
+  createGroupAction,
+  deleteGroupAction,
+  getGroupByIdAction,
+  getGroupMembersAction,
+  getGroupsAction,
+  joinGroupAction,
+  leaveGroupAction,
+  updateGroupAction,
+} from "@/app/actions/groups";
 import { createClient } from "@/lib/supabase/client";
 import type { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
+import { useState } from "react";
+import useSWR from "swr";
 import { MOCK_MEMBERS, MOCK_WORKS } from "./groups.mock";
 import {
   AdminTab,
@@ -29,17 +39,9 @@ type GroupUpdate = TablesUpdate<"groups">;
  */
 export async function getGroups(
   limit = 20,
-  client?: ReturnType<typeof createClient>
+  _client?: ReturnType<typeof createClient>
 ) {
-  const supabase = client ?? createClient();
-  const { data, error } = await supabase
-    .from("groups")
-    .select("*")
-    .limit(limit)
-    .order("created_at", { ascending: false });
-
-  if (error) throw error;
-  return data;
+  return getGroupsAction(limit);
 }
 
 /**
@@ -48,15 +50,7 @@ export async function getGroups(
  * @returns グループ詳細
  */
 export async function getGroupById(id: string) {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("groups")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if (error) throw error;
-  return data;
+  return getGroupByIdAction(id);
 }
 
 /**
@@ -68,31 +62,14 @@ export async function getGroupById(id: string) {
  */
 export async function createGroup(
   groupData: GroupInsert,
-  client?: ReturnType<typeof createClient>
+  _client?: ReturnType<typeof createClient>
 ) {
-  const supabase = client ?? createClient();
-
-  // Use the new atomic RPC function
-  // groupData.name is required.
-  // leader_id is required for RPC, though it checks auth.
-  // RPC args: p_name, p_leader_id, p_description, p_avatar_url, p_cover_url
-
   if (!groupData.name) throw new Error("Group name is required");
   if (!groupData.leader_id) throw new Error("Leader ID is required");
 
-  const { data, error } = await supabase.rpc("create_group_with_leader", {
-    p_name: groupData.name,
-    p_leader_id: groupData.leader_id,
-    p_description: groupData.description || null,
-    p_avatar_url: groupData.avatar_url || null,
-    p_cover_url: groupData.cover_url || null,
-  });
+  const data = await createGroupAction(groupData);
 
-  if (error) throw error;
   if (!data) throw new Error("Group creation failed no data returned");
-
-  // The RPC returns { id, name, ... } as Json. We cast it to Group.
-  // Ensure the keys match the Table definition.
   return data as unknown as Group;
 }
 
@@ -105,18 +82,9 @@ export async function createGroup(
 export async function updateGroup(
   id: string,
   updateData: GroupUpdate,
-  client?: ReturnType<typeof createClient>
+  _client?: ReturnType<typeof createClient>
 ) {
-  const supabase = client ?? createClient();
-  const { data, error } = await supabase
-    .from("groups")
-    .update(updateData)
-    .eq("id", id)
-    .select()
-    .single();
-
-  if (error) throw error;
-  return data;
+  return updateGroupAction(id, updateData);
 }
 
 /**
@@ -125,12 +93,9 @@ export async function updateGroup(
  */
 export async function deleteGroup(
   id: string,
-  client?: ReturnType<typeof createClient>
+  _client?: ReturnType<typeof createClient>
 ) {
-  const supabase = client ?? createClient();
-  const { error } = await supabase.from("groups").delete().eq("id", id);
-
-  if (error) throw error;
+  await deleteGroupAction(id);
 }
 
 // --- Membership ---
@@ -143,16 +108,9 @@ export async function deleteGroup(
 export async function joinGroup(
   groupId: string,
   userId: string,
-  client?: ReturnType<typeof createClient>
+  _client?: ReturnType<typeof createClient>
 ) {
-  const supabase = client ?? createClient();
-  const { error } = await supabase.from("group_members").insert({
-    group_id: groupId,
-    user_profile_id: userId,
-    role: "member",
-  });
-
-  if (error) throw error;
+  await joinGroupAction(groupId, userId);
 }
 
 /**
@@ -163,15 +121,9 @@ export async function joinGroup(
 export async function leaveGroup(
   groupId: string,
   userId: string,
-  client?: ReturnType<typeof createClient>
+  _client?: ReturnType<typeof createClient>
 ) {
-  const supabase = client ?? createClient();
-  const { error } = await supabase
-    .from("group_members")
-    .delete()
-    .match({ group_id: groupId, user_profile_id: userId });
-
-  if (error) throw error;
+  await leaveGroupAction(groupId, userId);
 }
 
 /**
@@ -181,16 +133,9 @@ export async function leaveGroup(
  */
 export async function getGroupMembers(
   groupId: string,
-  client?: ReturnType<typeof createClient>
+  _client?: ReturnType<typeof createClient>
 ) {
-  const supabase = client ?? createClient();
-  const { data, error } = await supabase
-    .from("group_members")
-    .select("*, user_profiles(*)") // user_profilesの情報を結合
-    .eq("group_id", groupId);
-
-  if (error) throw error;
-  return data;
+  return getGroupMembersAction(groupId);
 }
 
 /**
@@ -265,19 +210,19 @@ export const useGroupLogic = (groupId?: string) => {
 
   const members: Member[] = membersData
     ? membersData.map((m: any) => ({
-        id: m.user_profile_id,
-        name: m.user_profiles?.display_name || "Unknown",
-        role:
-          m.role === "leader"
-            ? "リーダー"
-            : m.role === "mediator"
-              ? "メディエーター"
-              : "一般",
-        avatar: m.user_profiles?.avatar_url || "😎", // Default avatar
-        traits: [], // Placeholder
-        ratings: {}, // Placeholder
-        values: {}, // Placeholder
-      }))
+      id: m.user_profile_id,
+      name: m.user_profiles?.display_name || "Unknown",
+      role:
+        m.role === "leader"
+          ? "リーダー"
+          : m.role === "mediator"
+            ? "メディエーター"
+            : "一般",
+      avatar: m.user_profiles?.avatar_url || "😎", // Default avatar
+      traits: [], // Placeholder
+      ratings: {}, // Placeholder
+      values: {}, // Placeholder
+    }))
     : []; // Or MOCK_MEMBERS if you want to keep mocks when no DB data
 
   // Event Handlers

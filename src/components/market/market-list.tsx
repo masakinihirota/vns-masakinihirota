@@ -1,20 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { getMarketItemsAction } from "@/app/actions/market";
+import { MarketItem } from "@/components/groups/groups.types";
 import { MarketCreateModal } from "@/components/market/market-create-modal";
 import { MarketItemCard } from "@/components/market/market-item-card";
-import { useMarketItems } from "@/components/market/market.logic";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
 
 interface MarketListProps {
   nationId?: string;
+  initialItems?: MarketItem[];
 }
 
-export const MarketList = ({ nationId = "all" }: MarketListProps) => {
-  const { items, isLoading, isError, mutate } = useMarketItems(nationId);
+export const MarketList = ({
+  nationId = "all",
+  initialItems = [],
+}: MarketListProps) => {
+  const [items, setItems] = useState<MarketItem[]>(initialItems);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+
+  const refreshItems = async () => {
+    try {
+      const updatedItems = (await getMarketItemsAction(nationId)) as MarketItem[];
+      setItems(updatedItems);
+    } catch (error) {
+      console.error("Failed to refresh items", error);
+    }
+  };
 
   const filteredItems = items?.filter((item) => {
     const matchesSearch = item.title
@@ -27,14 +41,11 @@ export const MarketList = ({ nationId = "all" }: MarketListProps) => {
     return matchesSearch && matchesTab;
   });
 
-  if (isLoading) return <div>Loading market items...</div>;
-  if (isError) return <div>Error loading market items</div>;
-
   return (
     <div className="container mx-auto py-8">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Marketplace</h1>
-        <MarketCreateModal nationId={nationId} onSuccess={() => mutate()} />
+        <MarketCreateModal nationId={nationId} onSuccess={refreshItems} />
       </div>
 
       <div className="mb-6">
@@ -59,7 +70,7 @@ export const MarketList = ({ nationId = "all" }: MarketListProps) => {
           <MarketItemCard
             key={item.id}
             item={item}
-            onTransactionStart={() => mutate()}
+            onTransactionStart={refreshItems}
           />
         ))}
         {filteredItems?.length === 0 && (

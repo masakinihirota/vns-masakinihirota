@@ -1,17 +1,17 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useMemo } from "react";
-import { useForm, useWatch, Resolver } from "react-hook-form";
+import { useMemo, useState } from "react";
+import { Resolver, useForm, useWatch } from "react-hook-form";
 import { WorkRegistration } from "./work-registration";
 import {
+  BASE_POINTS,
+  DISCOUNT_TAGS,
+  DISCOUNT_URL,
   WorkFormValues,
   dummyFormValues,
   initialFormValues,
   workSchema,
-  BASE_POINTS,
-  DISCOUNT_TAGS,
-  DISCOUNT_URL,
 } from "./work-registration.logic";
 
 export function WorkRegistrationContainer() {
@@ -44,7 +44,7 @@ export function WorkRegistrationContainer() {
     };
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    // console.log("Form Submitted:", submissionData);
+
     alert(
       `登録完了！\n消費ポイント: ${requiredPoints}pt\n${JSON.stringify(submissionData, null, 2)}`
     );

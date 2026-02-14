@@ -1,4 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
+import { eq } from "drizzle-orm";
+import { db } from "./drizzle";
+import { businessCards } from "./schema";
 
 export type BusinessCardContent = {
   trust?: {
@@ -48,11 +51,31 @@ export type UpsertBusinessCardData = {
   content?: BusinessCardContent;
 };
 
+// Mapper Helper
+function mapCardToSupabase(bc: any): BusinessCard {
+  return {
+    id: bc.id,
+    user_profile_id: bc.userProfileId,
+    is_published: bc.isPublished,
+    display_config: bc.displayConfig as BusinessCardConfig,
+    content: bc.content as BusinessCardContent,
+    created_at: bc.createdAt,
+    updated_at: bc.updatedAt,
+  };
+}
+
 /**
  * Get the business card for a specific profile.
  * Returns null if not found (and strict is false).
  */
 export async function getBusinessCardByProfileId(profileId: string) {
+  if (process.env.USE_DRIZZLE === "true") {
+    const card = await db.query.businessCards.findFirst({
+      where: eq(businessCards.userProfileId, profileId)
+    });
+    return card ? mapCardToSupabase(card) : null;
+  }
+
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -79,6 +102,29 @@ export async function upsertBusinessCard(
   profileId: string,
   data: UpsertBusinessCardData
 ) {
+  if (process.env.USE_DRIZZLE === "true") {
+    // Prepare Drizzle input
+    const drizzleInput: any = {
+      userProfileId: profileId,
+      updatedAt: new Date().toISOString(),
+    };
+
+    if (data.is_published !== undefined) drizzleInput.isPublished = data.is_published;
+    if (data.display_config !== undefined) drizzleInput.displayConfig = data.display_config;
+    if (data.content !== undefined) drizzleInput.content = data.content;
+
+    // Upsert in Drizzle
+    const [result] = await db.insert(businessCards)
+      .values(drizzleInput)
+      .onConflictDoUpdate({
+        target: businessCards.userProfileId,
+        set: drizzleInput
+      })
+      .returning();
+
+    return mapCardToSupabase(result);
+  }
+
   const supabase = await createClient();
 
   const payload: any = {

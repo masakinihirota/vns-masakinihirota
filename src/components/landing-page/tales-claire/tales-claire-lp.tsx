@@ -1,8 +1,5 @@
 "use client";
 
-import { MonitorSmartphone } from "lucide-react";
-import Link from "next/link";
-import { Suspense } from "react";
 import {
   AdToggle,
   HelpButton,
@@ -20,6 +17,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { MonitorSmartphone } from "lucide-react";
+import Link from "next/link";
+import { Suspense } from "react";
 import { TrialEntrySection } from "../trial-entry";
 import { BackgroundCanvas } from "./background-canvas";
 import { ConceptSection } from "./concept-section";
@@ -29,6 +29,7 @@ import { Footer } from "./footer";
 import { HeroSection } from "./hero-section";
 import { InspirationSection } from "./inspiration-section";
 import { PurposeSection } from "./purpose-section";
+import { SiteMissionSection } from "./site-mission-section";
 
 export const TalesClaireLP = () => {
   return (
@@ -90,6 +91,7 @@ export const TalesClaireLP = () => {
         <main className="relative z-10 w-full max-w-5xl mx-auto px-6 pt-32 pb-20 flex flex-col gap-24">
           {/* 1. Name & Catchphrase */}
           <HeroSection />
+          <SiteMissionSection />
 
           {/* 2. Description (Declarations & Concept) */}
           <section id="about" className="space-y-16">

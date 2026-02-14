@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { startTransactionAction } from "@/app/actions/market";
 import { MarketItem } from "@/components/groups/groups.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
-import { useBuyItem } from "./market.logic";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 interface MarketItemCardProps {
   item: MarketItem;
@@ -24,13 +25,9 @@ export const MarketItemCard = ({
   item,
   onTransactionStart,
 }: MarketItemCardProps) => {
-  const { buyItem } = useBuyItem();
   const [loading, setLoading] = useState(false);
-  // In a real app, we'd get current user from context
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
-  // Quick hack to get current user ID for MVP display logic
-  // In production, use a proper AuthContext
   useEffect(() => {
     if (!currentUserId) {
       const supabase = createClient();
@@ -46,11 +43,12 @@ export const MarketItemCard = ({
     if (!currentUserId) return;
     setLoading(true);
     try {
-      await buyItem(item.id, currentUserId);
+      await startTransactionAction(item.id, currentUserId);
       onTransactionStart();
+      toast.success("Transaction started!");
     } catch (error) {
       console.error("Transaction failed", error);
-      alert("Failed to start transaction");
+      toast.error("Failed to start transaction");
     } finally {
       setLoading(false);
     }

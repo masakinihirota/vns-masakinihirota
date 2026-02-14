@@ -1,5 +1,9 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 import {
   ArrowDown,
   ArrowRight,
@@ -19,10 +23,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 
 interface RouteItem {
   title: string;
@@ -68,6 +68,11 @@ export function PortalDashboard() {
           desc: "詳細な作品管理インターフェース。",
         },
         {
+          title: "作品詳細 (サンプルID)",
+          path: "/works/sample-id",
+          desc: "作品の詳細表示画面。",
+        },
+        {
           title: "プロフィール",
           path: "/profile",
           desc: "自身のプロフィールの確認と編集。",
@@ -91,6 +96,11 @@ export function PortalDashboard() {
           title: "グループ詳細 (サンプルID)",
           path: "/groups/sample-id",
           desc: "特定のグループの詳細・管理画面（ID指定）。",
+        },
+        {
+          title: "報酬・ポイント (New)",
+          path: "/rewards",
+          desc: "【新規】ポイント獲得履歴と報酬受け取り。",
         },
       ],
     },
@@ -199,6 +209,11 @@ export function PortalDashboard() {
           title: "ユーザー作成",
           path: "/user-profiles/new",
           desc: "新規プロフィールの作成。",
+        },
+        {
+          title: "マーケット",
+          path: "/market",
+          desc: "アイテムの売買・取引。",
         },
       ],
     },
@@ -547,7 +562,7 @@ export function PortalDashboard() {
                   className={cn(
                     "grid grid-cols-[180px_1.5fr_1.5fr_auto] gap-6 px-6 py-4 items-center transition-all group relative hover:bg-neutral-100 dark:hover:bg-white/10",
                     isDone &&
-                      "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
+                    "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
                     isFocus && "bg-amber-500/[0.1] dark:bg-amber-500/[0.08]"
                   )}
                 >

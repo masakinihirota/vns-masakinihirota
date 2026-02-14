@@ -38,31 +38,31 @@ export const ProfileDashboardContainer = () => {
     () =>
       isDarkMode
         ? {
-            bg: "bg-[#0B0F1A]",
-            text: "text-neutral-200",
-            subText: "text-neutral-400",
-            card: "bg-white/5 backdrop-blur-md border-white/10 shadow-2xl",
-            accent: "text-indigo-400",
-            btnPrimary:
-              "bg-white/10 hover:bg-white/15 text-neutral-100 border-white/20",
-            btnSecondary: "bg-indigo-600 hover:bg-indigo-700 text-white",
-            rowHover: "hover:bg-white/[0.03]",
-            headerBg: "bg-neutral-900/50",
-            overlay: "bg-black/60",
-          }
+          bg: "bg-[#0B0F1A]",
+          text: "text-neutral-200",
+          subText: "text-neutral-400",
+          card: "bg-white/5 backdrop-blur-md border-white/10 shadow-2xl",
+          accent: "text-indigo-400",
+          btnPrimary:
+            "bg-white/10 hover:bg-white/15 text-neutral-100 border-white/20",
+          btnSecondary: "bg-indigo-600 hover:bg-indigo-700 text-white",
+          rowHover: "hover:bg-white/[0.03]",
+          headerBg: "bg-neutral-900/50",
+          overlay: "bg-black/60",
+        }
         : {
-            bg: "bg-gradient-to-br from-white via-blue-50 to-purple-50",
-            text: "text-gray-800",
-            subText: "text-gray-600",
-            card: "bg-white/40 backdrop-blur-md border-white/30 shadow-xl",
-            accent: "text-blue-700",
-            btnPrimary:
-              "bg-white/40 hover:bg-white/60 text-blue-900 border-white/50",
-            btnSecondary: "bg-blue-600 hover:bg-blue-700 text-white",
-            rowHover: "hover:bg-blue-500/5",
-            headerBg: "bg-white/20",
-            overlay: "bg-white/20",
-          },
+          bg: "bg-gradient-to-br from-white via-blue-50 to-purple-50",
+          text: "text-gray-800",
+          subText: "text-gray-600",
+          card: "bg-white/40 backdrop-blur-md border-white/30 shadow-xl",
+          accent: "text-blue-700",
+          btnPrimary:
+            "bg-white/40 hover:bg-white/60 text-blue-900 border-white/50",
+          btnSecondary: "bg-blue-600 hover:bg-blue-700 text-white",
+          rowHover: "hover:bg-blue-500/5",
+          headerBg: "bg-white/20",
+          overlay: "bg-white/20",
+        },
     [isDarkMode]
   );
 

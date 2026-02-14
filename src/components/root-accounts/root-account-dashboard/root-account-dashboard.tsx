@@ -2,38 +2,39 @@
 
 import * as Slider from "@radix-ui/react-slider";
 import {
-  User,
-  MapPin,
-  Globe,
-  Shield,
   Activity,
-  Edit3,
-  Save,
   AlertCircle,
-  Clock,
-  Plus,
-  Trash2,
-  X,
   AlertTriangle,
-  Trophy,
-  Star,
-  Medal,
+  Clock,
   Crown,
+  Edit3,
+  Globe,
+  MapPin,
+  Medal,
+  Plus,
+  Save,
+  Shield,
+  Star,
+  Trash2,
+  Trophy,
+  User,
+  X,
 } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
+import { toast } from "sonner";
 import { getZodiacSymbol } from "../../../lib/anonymous-name-generator";
 import {
+  AREA_DEFINITIONS,
+  hoursToTime,
   normalizeRootAccountData,
   timeToHours,
-  hoursToTime,
-  AREA_DEFINITIONS,
 } from "../../../lib/root-account-utils";
 import { PointManagementSection } from "./point-management";
 import {
-  LANGUAGES_MOCK,
   COUNTRIES_MOCK,
   dummyUserProfileList,
+  LANGUAGES_MOCK,
 } from "./root-account-dashboard.dummyData";
 import {
   RootAccount,
@@ -146,10 +147,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       // 保存成功後、元データを更新
       setOriginalData(formData);
       setIsEditing(false);
-      alert("変更を保存しました");
+      setOriginalData(formData);
+      setIsEditing(false);
+      toast.success("変更を保存しました");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
     } finally {
       setIsLoading(false);
     }
@@ -187,16 +190,16 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
           {
             from:
               originalArea &&
-              AREA_DEFINITIONS[originalArea as keyof typeof AREA_DEFINITIONS]
+                AREA_DEFINITIONS[originalArea as keyof typeof AREA_DEFINITIONS]
                 ? AREA_DEFINITIONS[
-                    originalArea as keyof typeof AREA_DEFINITIONS
-                  ].name
+                  originalArea as keyof typeof AREA_DEFINITIONS
+                ].name
                 : "未設定",
             to:
               targetArea &&
-              AREA_DEFINITIONS[targetArea as keyof typeof AREA_DEFINITIONS]
+                AREA_DEFINITIONS[targetArea as keyof typeof AREA_DEFINITIONS]
                 ? AREA_DEFINITIONS[targetArea as keyof typeof AREA_DEFINITIONS]
-                    .name
+                  .name
                 : "未設定",
             at: new Date().toISOString(),
           },
@@ -213,10 +216,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       // ここではformDataは更新されていないが、サーバー側で保存されたとみなす。
       // 必要ならhandleChangeでstateも更新すべきだが、onClick側で更新済み想定。
 
-      alert("エリア設定を保存しました（変更は10秒間制限されます）");
+      // 必要ならhandleChangeでstateも更新すべきだが、onClick側で更新済み想定。
+
+      toast.success("エリア設定を保存しました（変更は10秒間制限されます）");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
       // エラー時はクールダウン解除
       setCooldownRemaining(0);
       clearInterval(timer);
@@ -233,10 +238,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
       setOriginalData(formData);
       setIsEditingLanguages(false);
-      alert("言語を保存しました");
+      setOriginalData(formData);
+      setIsEditingLanguages(false);
+      toast.success("言語を保存しました");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
     } finally {
       setIsLoading(false);
     }
@@ -259,10 +266,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
       setOriginalData(formData);
       setIsEditingCoreHours(false);
-      alert("活動時間を保存しました");
+      setOriginalData(formData);
+      setIsEditingCoreHours(false);
+      toast.success("活動時間を保存しました");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
     } finally {
       setIsLoading(false);
     }
@@ -275,10 +284,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       // TODO: 実際のAPI呼び出しを実装
 
       setIsEditingCountries(false);
-      alert("管理国設定を保存しました");
+      setIsEditingCountries(false);
+      toast.success("管理国設定を保存しました");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
     } finally {
       setIsLoading(false);
     }
@@ -444,11 +454,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                           </span>
                         )}
                         <span
-                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
-                            profile.role_type === "leader"
+                          className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${profile.role_type === "leader"
                               ? "bg-purple-100 text-purple-800"
                               : "bg-blue-100 text-blue-800"
-                          }`}
+                            }`}
                         >
                           {profile.role_type}
                         </span>
@@ -599,7 +608,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   key={areaNum}
                   onClick={() => {
                     if (cooldownRemaining > 0) {
-                      alert(
+                      toast.warning(
                         `連続で変更できません。あと${cooldownRemaining}秒お待ちください。`
                       );
                       return;
@@ -608,7 +617,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     setSelectedArea(areaNum);
                     const def =
                       AREA_DEFINITIONS[
-                        areaNum as keyof typeof AREA_DEFINITIONS
+                      areaNum as keyof typeof AREA_DEFINITIONS
                       ];
 
                     // 楽観的更新のためにstateをセットするが、実際には別途Saveが必要だったものを即時実行へ変更
@@ -654,10 +663,9 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     transition-all duration-300 ease-in-out
                     flex flex-col h-full
                     hover:-translate-y-2 hover:shadow-xl
-                    ${
-                      selectedArea === areaNum
-                        ? "ring-4 ring-indigo-500 shadow-lg scale-105"
-                        : "ring-1 ring-slate-200 dark:ring-slate-700"
+                    ${selectedArea === areaNum
+                      ? "ring-4 ring-indigo-500 shadow-lg scale-105"
+                      : "ring-1 ring-slate-200 dark:ring-slate-700"
                     }
                   `}
                 >
@@ -888,7 +896,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   </label>
                   {selectedArea &&
                     AREA_DEFINITIONS[
-                      selectedArea as keyof typeof AREA_DEFINITIONS
+                    selectedArea as keyof typeof AREA_DEFINITIONS
                     ] && (
                       <span className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
                         {
@@ -899,7 +907,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         現地時間: {(() => {
                           const def =
                             AREA_DEFINITIONS[
-                              selectedArea as keyof typeof AREA_DEFINITIONS
+                            selectedArea as keyof typeof AREA_DEFINITIONS
                             ];
                           // UTC offset calculation (approximate/static for display)
                           // Ideally use a library like date-fns-tz or luxon, but for now simple mapping or just label
@@ -937,7 +945,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                   {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                   {timeToHours(formData.core_hours_end) < 24 ||
-                  nextDayEndHour === 0
+                    nextDayEndHour === 0
                     ? hoursToTime(timeToHours(formData.core_hours_end))
                     : "24:00"}
                 </span>
@@ -961,8 +969,8 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
                   const currentAreaDef = selectedArea
                     ? AREA_DEFINITIONS[
-                        selectedArea as keyof typeof AREA_DEFINITIONS
-                      ]
+                    selectedArea as keyof typeof AREA_DEFINITIONS
+                    ]
                     : null;
                   const offset = currentAreaDef
                     ? getOffset(currentAreaDef.timezone)
@@ -1053,7 +1061,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
                     {hoursToTime(timeToHours(formData.core_hours_start))} ～{" "}
                     {timeToHours(formData.core_hours_end) < 24 ||
-                    nextDayEndHour === 0
+                      nextDayEndHour === 0
                       ? hoursToTime(timeToHours(formData.core_hours_end))
                       : "24:00"}
                   </span>
@@ -1128,17 +1136,17 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   <div className="flex items-center gap-4">
                     <span className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                       {formData.core_hours_2_start &&
-                      formData.core_hours_2_end ? (
+                        formData.core_hours_2_end ? (
                         <>
                           {hoursToTime(
                             timeToHours(formData.core_hours_2_start)
                           )}{" "}
                           ～{" "}
                           {timeToHours(formData.core_hours_2_end) < 24 ||
-                          nextDayEndHour2 === 0
+                            nextDayEndHour2 === 0
                             ? hoursToTime(
-                                timeToHours(formData.core_hours_2_end)
-                              )
+                              timeToHours(formData.core_hours_2_end)
+                            )
                             : "24:00"}
                         </>
                       ) : (
@@ -1186,12 +1194,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                     value={
                       formData.core_hours_2_start && formData.core_hours_2_end
                         ? [
-                            timeToHours(formData.core_hours_2_start),
-                            Math.min(
-                              timeToHours(formData.core_hours_2_end),
-                              24
-                            ),
-                          ]
+                          timeToHours(formData.core_hours_2_start),
+                          Math.min(
+                            timeToHours(formData.core_hours_2_end),
+                            24
+                          ),
+                        ]
                         : [21, 23] // デフォルト値
                     }
                     onValueChange={(values) => {
@@ -1280,13 +1288,13 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                 <div className="h-12 flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg">
                   <span className="text-xl font-bold text-slate-900 dark:text-slate-50">
                     {isSubCoreHourEnabled &&
-                    formData.core_hours_2_start &&
-                    formData.core_hours_2_end ? (
+                      formData.core_hours_2_start &&
+                      formData.core_hours_2_end ? (
                       <>
                         {hoursToTime(timeToHours(formData.core_hours_2_start))}{" "}
                         ～{" "}
                         {timeToHours(formData.core_hours_2_end) < 24 ||
-                        nextDayEndHour2 === 0
+                          nextDayEndHour2 === 0
                           ? hoursToTime(timeToHours(formData.core_hours_2_end))
                           : "24:00"}
                       </>
@@ -1441,11 +1449,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         onChange={(e) =>
                           handleChange("display_name", e.target.value)
                         }
-                        className={`block w-full rounded-md sm:text-sm p-2 border ${
-                          isEditing
+                        className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing
                             ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                             : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
-                        }`}
+                          }`}
                       />
                     </div>
                   </div>
@@ -1483,11 +1490,10 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                         value={formData.birth_generation}
                         disabled={!isEditing}
                         onChange={(e) => handleGenerationChange(e.target.value)}
-                        className={`block w-full rounded-md sm:text-sm p-2 border ${
-                          isEditing
+                        className={`block w-full rounded-md sm:text-sm p-2 border ${isEditing
                             ? "border-slate-300 dark:border-slate-600 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                             : "bg-slate-50 dark:bg-slate-900 border-transparent text-slate-900 dark:text-slate-50"
-                        }`}
+                          }`}
                       >
                         <option value="">選択してください</option>
                         {generationOptions.map((range) => (

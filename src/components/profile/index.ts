@@ -1,7 +1,11 @@
-export * from "./ui";
-export * from "./header";
-export * from "./basic-info";
-export * from "./works-list";
-export * from "./evaluations";
-export * from "./values";
-export * from "./types";
+export { ProfileBasicInfo } from "./basic-info";
+export { ProfileEvaluations } from "./evaluations";
+export type { Evaluation } from "./evaluations";
+export { ProfileHeader } from "./header";
+export type { ProfileVariant } from "./types";
+export { MarkdownTable, StatBox } from "./ui";
+export type { TableCell, TableHeader, TableRow } from "./ui";
+export { ProfileValues } from "./values";
+export type { ValueItem } from "./values";
+export { ProfileWorksList } from "./works-list";
+

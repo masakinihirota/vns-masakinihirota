@@ -1,21 +1,21 @@
 "use client";
 
 import {
-  Layout,
-  Maximize2,
-  List,
   ArrowDownCircle,
-  CheckCircle2,
-  CheckSquare,
-  Monitor,
-  HelpCircle,
   ArrowLeft,
   BookOpen,
-  MousePointer2,
-  MousePointer,
+  CheckCircle2,
+  CheckSquare,
   ChevronRight,
+  HelpCircle,
+  Layout,
+  List,
+  Maximize2,
+  Monitor,
+  MousePointer,
+  MousePointer2,
 } from "lucide-react";
-import React, { useState, useRef, useMemo } from "react";
+import React, { useMemo, useRef, useState } from "react";
 
 const INITIAL_MARKDOWN = `# [Main] 人生の目標
 - 1. 健康
@@ -279,7 +279,7 @@ const App = () => {
           </div>
           <textarea
             ref={editorRef}
-            className="flex-1 p-8 font-mono text-[18px] opacity-90 leading-[28px] focus:outline-none resize-none bg-slate-50/5"
+            className="flex-1 p-8 font-mono text-[18px] opacity-90 leading-[28px] focus:outline-none resize-none bg-slate-50/5 custom-scrollbar"
             value={markdown}
             onChange={(e) => setMarkdown(e.target.value)}
             onKeyUp={handleEditorScroll}
@@ -305,7 +305,7 @@ const App = () => {
         </div>
 
         <div
-          className="flex-1 overflow-y-auto p-6 scroll-smooth"
+          className="flex-1 overflow-y-auto p-6 scroll-smooth custom-scrollbar"
           ref={previewRef}
         >
           {viewMode === "list" ? (
@@ -518,10 +518,9 @@ const App = () => {
               <button
                 onClick={() => setIsSyncEnabled(!isSyncEnabled)}
                 className={`flex items-center px-4 py-2 rounded-lg text-xs font-bold transition-all border-2
-                  ${
-                    isSyncEnabled
-                      ? "bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-200 ring-2 ring-indigo-100"
-                      : "bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600"
+                  ${isSyncEnabled
+                    ? "bg-indigo-600 border-indigo-600 text-white shadow-lg shadow-indigo-200 ring-2 ring-indigo-100"
+                    : "bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600"
                   }`}
               >
                 <ArrowDownCircle
@@ -534,10 +533,9 @@ const App = () => {
                 <button
                   onClick={() => setViewMode("list")}
                   className={`flex items-center px-4 py-2 rounded-lg text-xs font-bold transition-all
-                    ${
-                      viewMode === "list"
-                        ? "bg-indigo-600 text-white shadow-md"
-                        : "text-slate-400 hover:text-slate-600 hover:bg-slate-200/50"
+                    ${viewMode === "list"
+                      ? "bg-indigo-600 text-white shadow-md"
+                      : "text-slate-400 hover:text-slate-600 hover:bg-slate-200/50"
                     }`}
                 >
                   <List className="w-4 h-4 mr-2" />
@@ -546,10 +544,9 @@ const App = () => {
                 <button
                   onClick={() => setViewMode("grid")}
                   className={`flex items-center px-4 py-2 rounded-lg text-xs font-bold transition-all
-                    ${
-                      viewMode === "grid"
-                        ? "bg-indigo-600 text-white shadow-md"
-                        : "text-slate-400 hover:text-slate-600 hover:bg-slate-200/50"
+                    ${viewMode === "grid"
+                      ? "bg-indigo-600 text-white shadow-md"
+                      : "text-slate-400 hover:text-slate-600 hover:bg-slate-200/50"
                     }`}
                 >
                   <Maximize2 className="w-4 h-4 mr-2" />
@@ -558,10 +555,9 @@ const App = () => {
                 <button
                   onClick={() => setViewMode("full")}
                   className={`flex items-center px-4 py-2 rounded-lg text-xs font-bold transition-all
-                    ${
-                      viewMode === "full"
-                        ? "bg-indigo-600 text-white shadow-md"
-                        : "text-slate-400 hover:text-slate-600 hover:bg-slate-200/50"
+                    ${viewMode === "full"
+                      ? "bg-indigo-600 text-white shadow-md"
+                      : "text-slate-400 hover:text-slate-600 hover:bg-slate-200/50"
                     }`}
                 >
                   <Monitor className="w-4 h-4 mr-2" />
@@ -576,10 +572,9 @@ const App = () => {
               setCurrentPage(currentPage === "editor" ? "cheatsheet" : "editor")
             }
             className={`flex items-center px-4 py-2 rounded-lg text-xs font-bold transition-all border-2
-              ${
-                currentPage === "cheatsheet"
-                  ? "bg-amber-500 border-amber-500 text-white shadow-lg shadow-amber-100"
-                  : "bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600"
+              ${currentPage === "cheatsheet"
+                ? "bg-amber-500 border-amber-500 text-white shadow-lg shadow-amber-100"
+                : "bg-white border-slate-200 text-slate-400 hover:border-slate-300 hover:text-slate-600"
               }`}
           >
             {currentPage === "cheatsheet" ? (
@@ -610,7 +605,7 @@ const App = () => {
                     1,
                     mandalaData.reduce((acc, s) => acc + s.items.length, 0)
                   )) *
-                  100
+                100
               )}
               %
             </span>
@@ -627,17 +622,6 @@ const App = () => {
           Mandala System v2.1 Active
         </div>
       </footer>
-
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        textarea::-webkit-scrollbar { width: 4px; }
-        textarea::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .overflow-y-auto::-webkit-scrollbar { width: 4px; }
-        .overflow-y-auto::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-      `,
-        }}
-      />
     </div>
   );
 };

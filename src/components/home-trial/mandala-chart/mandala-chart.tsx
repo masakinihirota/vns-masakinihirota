@@ -60,7 +60,7 @@ const EditingModal = ({
       onClick={onClose}
     >
       <div
-        className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-lg shadow-2xl border border-slate-200 dark:border-slate-800 p-6 animate-in zoom-in-95 duration-200 flex flex-col max-h-[90vh]"
+        className="bg-white dark:bg-slate-900 rounded-2xl w-full max-w-lg shadow-2xl border border-slate-200 dark:border-slate-800 p-6 animate-zoom-in flex flex-col max-h-[90vh]"
         onClick={(e: React.MouseEvent) => e.stopPropagation()}
       >
         <div className="flex justify-between items-start mb-4 shrink-0">
@@ -106,13 +106,13 @@ const EditingModal = ({
 
         {((editingCell.gridIdx === 4 && editingCell.cellIdx !== 4) ||
           (editingCell.gridIdx !== 4 && editingCell.cellIdx === 4)) && (
-          <div className="mt-4 flex items-start gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-xs md:text-sm text-blue-700 dark:text-blue-300 shrink-0 border border-blue-100 dark:border-blue-800">
-            <Info size={18} className="shrink-0 mt-0.5" />
-            <span>
-              このセルは他のグリッドの中心と自動的に同期されます。ここを変更すると、関連するグリッドも更新されます。
-            </span>
-          </div>
-        )}
+            <div className="mt-4 flex items-start gap-3 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-xs md:text-sm text-blue-700 dark:text-blue-300 shrink-0 border border-blue-100 dark:border-blue-800">
+              <Info size={18} className="shrink-0 mt-0.5" />
+              <span>
+                このセルは他のグリッドの中心と自動的に同期されます。ここを変更すると、関連するグリッドも更新されます。
+              </span>
+            </div>
+          )}
       </div>
     </div>
   );
@@ -261,8 +261,8 @@ export const MandalaChart: React.FC<MandalaChartProps> = ({
 
             {((gridIdx === 4 && cellIdx !== 4) ||
               (gridIdx !== 4 && cellIdx === 4)) && (
-              <div className="absolute bottom-0.5 left-0.5 w-1.5 h-1.5 rounded-full bg-blue-400/60" />
-            )}
+                <div className="absolute bottom-0.5 left-0.5 w-1.5 h-1.5 rounded-full bg-blue-400/60" />
+              )}
           </button>
         ))}
       </div>
@@ -313,11 +313,10 @@ export const MandalaChart: React.FC<MandalaChartProps> = ({
               }}
               className={`
                  group relative p-3 rounded-xl cursor-pointer border transition-all select-none
-                 ${
-                   activeIndex === idx
-                     ? "bg-blue-50 border-blue-200 dark:bg-blue-900/30 dark:border-blue-800 ring-1 ring-blue-400"
-                     : "bg-white border-slate-100 hover:border-slate-300 dark:bg-slate-900 dark:border-slate-800"
-                 }
+                 ${activeIndex === idx
+                  ? "bg-blue-50 border-blue-200 dark:bg-blue-900/30 dark:border-blue-800 ring-1 ring-blue-400"
+                  : "bg-white border-slate-100 hover:border-slate-300 dark:bg-slate-900 dark:border-slate-800"
+                }
                `}
             >
               <div className="font-bold text-sm truncate pr-8">
@@ -424,7 +423,7 @@ export const MandalaChart: React.FC<MandalaChartProps> = ({
         {/* Workspace */}
         <main className="flex-1 overflow-auto bg-slate-50/50 dark:bg-slate-950/50 p-2 md:p-6 lg:p-8 flex justify-center items-start md:items-center">
           {viewMode === "full" && (
-            <div className="w-full max-w-6xl animate-in fade-in zoom-in duration-300">
+            <div className="w-full max-w-6xl animate-fade-in animate-zoom-in">
               <div className="md:hidden mb-4 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl text-amber-800 dark:text-amber-200 text-sm flex items-start gap-3 shadow-sm">
                 <Info size={18} className="shrink-0 mt-0.5" />
                 <div>
@@ -455,7 +454,7 @@ export const MandalaChart: React.FC<MandalaChartProps> = ({
           )}
 
           {viewMode === "focus" && (
-            <div className="w-full max-w-xl flex flex-col items-center justify-center animate-in slide-in-from-bottom-4 duration-300 min-h-full py-4">
+            <div className="w-full max-w-xl flex flex-col items-center justify-center animate-slide-in-bottom min-h-full py-4">
               <div className="w-full flex justify-between items-center mb-4 md:mb-8 px-2">
                 <button
                   onClick={() =>
@@ -532,24 +531,6 @@ export const MandalaChart: React.FC<MandalaChartProps> = ({
           }
         />
       )}
-
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; }
-        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes zoom-in { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        @keyframes slide-in-from-bottom { from { transform: translateY(1rem); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .animate-in { animation: var(--tw-animate-duration, 150ms) ease-out both; }
-        .fade-in { animation-name: fade-in; }
-        .zoom-in { animation-name: zoom-in; }
-        .slide-in-from-bottom-4 { animation-name: slide-in-from-bottom; }
-      `,
-        }}
-      />
     </div>
   );
 };

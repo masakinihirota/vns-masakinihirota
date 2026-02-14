@@ -1,22 +1,6 @@
 "use client";
 
-import { type User } from "@supabase/supabase-js";
-import {
-  ArrowRight,
-  Bell,
-  Coins,
-  Globe,
-  HelpCircle,
-  Megaphone,
-  MonitorSmartphone,
-  Moon,
-  Search,
-  Sun,
-} from "lucide-react";
-import { useTheme } from "next-themes";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import * as React from "react";
+import { WalletBadge } from "@/components/points/wallet-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -37,6 +21,22 @@ import {
 } from "@/components/ui/tooltip";
 import { createClient } from "@/lib/supabase/client";
 import { TrialStorage } from "@/lib/trial-storage";
+import { type User } from "@supabase/supabase-js";
+import {
+  ArrowRight,
+  Bell,
+  Globe,
+  HelpCircle,
+  Megaphone,
+  MonitorSmartphone,
+  Moon,
+  Search,
+  Sun
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import * as React from "react";
 import { TrialOnboardingBackButton } from "../trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TrialStatusBadge } from "../trial-status-badge/TrialStatusBadge";
 
@@ -47,7 +47,7 @@ const mockNotifications = [
   { id: "3", title: "プロフィールが更新されました", time: "昨日", read: true },
 ];
 
-const mockPoints = 1250;
+
 
 // 検索バーコンポーネント
 function HeaderSearch() {
@@ -233,27 +233,7 @@ export function ThemeToggle() {
   );
 }
 
-// ポイント表示
-function PointsDisplay() {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Link
-          href="/home/pricing"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors"
-        >
-          <Coins className="h-4 w-4" />
-          <span className="text-sm font-medium">
-            {mockPoints.toLocaleString()}
-          </span>
-        </Link>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>所持ポイント: {mockPoints.toLocaleString()} pt</p>
-      </TooltipContent>
-    </Tooltip>
-  );
-}
+
 
 // 通知ベル
 function NotificationBell() {
@@ -288,9 +268,8 @@ function NotificationBell() {
         {mockNotifications.map((notification) => (
           <DropdownMenuItem
             key={notification.id}
-            className={`flex flex-col items-start gap-1 ${
-              !notification.read ? "bg-accent/50" : ""
-            }`}
+            className={`flex flex-col items-start gap-1 ${!notification.read ? "bg-accent/50" : ""
+              }`}
           >
             <span className="text-sm">{notification.title}</span>
             <span className="text-xs text-muted-foreground">
@@ -333,13 +312,13 @@ export function HelpButton() {
 
 interface VNSButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
-    | "primary"
-    | "secondary"
-    | "ghost"
-    | "persona"
-    | "warm"
-    | "emerald"
-    | "indigo";
+  | "primary"
+  | "secondary"
+  | "ghost"
+  | "persona"
+  | "warm"
+  | "emerald"
+  | "indigo";
   size?: "sm" | "md" | "lg" | "icon";
   icon?: React.ElementType;
   iconPosition?: "left" | "right";
@@ -558,7 +537,7 @@ export function GlobalHeader({
             <>
               {!isPublic && user && user.id ? (
                 <>
-                  <PointsDisplay />
+                  <WalletBadge />
                   <NotificationBell />
                 </>
               ) : (

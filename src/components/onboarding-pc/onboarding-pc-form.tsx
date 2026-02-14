@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 import { StepBasicValuesPC } from "./steps/step-basic-values-pc";
 import { StepConfirmationPC } from "./steps/step-confirmation-pc";
 import { StepDeclarationsPC } from "./steps/step-declarations-pc";
@@ -81,7 +82,7 @@ export function OnboardingPCForm({
     // Validation for Step 5 (Identity) - Block minors
     if (currentStep === 5) {
       if (formData.is_minor === true) {
-        alert("未成年の方はご利用いただけません。");
+        toast.error("未成年の方はご利用いただけません。");
         return;
       }
       if (formData.is_minor === undefined) {
@@ -92,7 +93,7 @@ export function OnboardingPCForm({
         // Let's block if undefined for better UX, or just if check is true.
         // Let's enforce selection:
         if (formData.is_minor === undefined) {
-          alert("未成年かどうかの確認を選択してください。");
+          toast.warning("未成年かどうかの確認を選択してください。");
           return;
         }
       }
@@ -110,14 +111,12 @@ export function OnboardingPCForm({
 
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      alert("PCオンボーディング完了！ (デモ)");
-      alert("PCオンボーディング完了！ (デモ)");
-      alert("PCオンボーディング完了！ (デモ)");
+      toast.success("PCオンボーディング完了！ (デモ)");
       // Redirect to onboarding choice screen, where they choose their first action
       router.push("/onboarding-trial/choice");
     } catch (e) {
       console.error(e);
-      alert("エラーが発生しました");
+      toast.error("エラーが発生しました");
     } finally {
       setIsSubmitting(false);
     }
@@ -201,13 +200,12 @@ export function OnboardingPCForm({
                 }
                 className={`
                   px-8 py-2.5 rounded-lg font-medium transition-all transform
-                  ${
-                    (currentStep === 1 && !formData.agreed_oasis) ||
+                  ${(currentStep === 1 && !formData.agreed_oasis) ||
                     (currentStep === 5 &&
                       (formData.is_minor === true ||
                         formData.is_minor === undefined))
-                      ? "bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed shadow-none"
-                      : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 hover:-translate-y-0.5"
+                    ? "bg-slate-300 dark:bg-slate-700 text-slate-500 cursor-not-allowed shadow-none"
+                    : "bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-indigo-900/30 hover:-translate-y-0.5"
                   }
                 `}
               >
