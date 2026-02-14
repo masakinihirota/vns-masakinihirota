@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: VNS masakinihirotaアプリケーションの統一デザイン指針(ライト/ダークモード定義等)
 ---
 
 # デザインシステム (Design System)

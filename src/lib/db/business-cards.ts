@@ -1,4 +1,9 @@
 import { createClient } from "@/lib/supabase/server";
+import { isDrizzle } from "./adapter";
+import {
+  getBusinessCardByProfileIdDrizzle,
+  upsertBusinessCardDrizzle,
+} from "./drizzle";
 
 export type BusinessCardContent = {
   trust?: {
@@ -53,6 +58,8 @@ export type UpsertBusinessCardData = {
  * Returns null if not found (and strict is false).
  */
 export async function getBusinessCardByProfileId(profileId: string) {
+  if (isDrizzle()) return getBusinessCardByProfileIdDrizzle(profileId);
+
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -79,6 +86,8 @@ export async function upsertBusinessCard(
   profileId: string,
   data: UpsertBusinessCardData
 ) {
+  if (isDrizzle()) return upsertBusinessCardDrizzle(profileId, data);
+
   const supabase = await createClient();
 
   const payload: any = {

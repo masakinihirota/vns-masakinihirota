@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: TypeScriptにおけるイミュータブル(読み取り専用)ルールの定義とas constの活用指針
 ---
 
 # TypeScript Immutability Guidelines (Next.js + Supabase)

@@ -1,6 +1,9 @@
 ---
 trigger: always_on
+description: t-wada方式(RGRサイクル)に基づくテスト駆動開発(TDD)の実行手順と規約
 ---
+
+# TDDワークフロー (TDD Workflow)
 
 ## 1. TDD実行手順（AIへの依頼）
 

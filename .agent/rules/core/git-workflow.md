@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: VNS masakinihirotaプロジェクトにおける安全で効率的なGit運用ルールとコミット規約
 ---
 
 # Git ワークフロー基準 (Git Workflow Standards)

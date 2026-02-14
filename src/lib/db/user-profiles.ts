@@ -1,5 +1,11 @@
 import { createClient } from "@/lib/supabase/server";
 import { CreateProfileData, UserProfile } from "@/lib/types/user-profile";
+import { isDrizzle } from "./adapter";
+import {
+  createUserProfileDrizzle,
+  getUserProfileByIdDrizzle,
+  getUserProfilesDrizzle,
+} from "./drizzle";
 
 export type { CreateProfileData, UserProfile };
 
@@ -7,6 +13,8 @@ const MAX_PROFILES = 10;
 // TODO: Check anonymous limit (2) based on auth status or root account type
 
 export async function getUserProfiles(rootAccountId: string) {
+  if (isDrizzle()) return getUserProfilesDrizzle(rootAccountId);
+
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -27,6 +35,8 @@ export async function createUserProfile(
   rootAccountId: string,
   data: CreateProfileData
 ) {
+  if (isDrizzle()) return createUserProfileDrizzle(rootAccountId, data);
+
   const supabase = await createClient();
 
   // Check limit
@@ -62,6 +72,8 @@ export async function createUserProfile(
 }
 
 export async function getUserProfileById(id: string) {
+  if (isDrizzle()) return getUserProfileByIdDrizzle(id);
+
   const supabase = await createClient();
 
   const { data, error } = await supabase

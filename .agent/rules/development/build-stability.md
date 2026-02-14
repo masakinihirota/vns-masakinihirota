@@ -1,11 +1,12 @@
 ---
 trigger: always_on
+description: ビルドエラーを防ぐためのモジュール依存確認とスキャフォールディングのルール
 ---
 
 # ビルド安定化ルール (Build Stability Rules)
 
-## Prevent Missing Module Errors
+## モジュール欠落エラーの防止 (Prevent Missing Module Errors)
 
-- **Verify file existence:** Before adding an import statement, explicitly ensure that the target file exists in the codebase.
-- **Check build before completion:** Always run a build check (e.g., `npm run build` or `next build`) before marking a task as complete or requesting review. This ensures all dependencies are resolved.
-- **Scaffold dependencies first:** When implementing a feature that relies on new files (such as `actions.ts` for server actions), create these dependency files _before_ or _immediately after_ adding the import references in other components.
+- **ファイルの存在確認**: import文を追加する前に、対象のファイルがコードベースに存在することを必ず確認してください。
+- **完了前のビルドチェック**: タスクを完了したりレビューを依頼する前に、必ずビルドチェック（`npm run build` または `next build`）を実行してください。これにより、すべての依存関係が解決されていることを保証します。
+- **依存関係の先行作成**: Server Actions用の `actions.ts` など、新しいファイルに依存する機能を実装する場合は、他のコンポーネントからimport参照を追加する**前**、または**直後**に、それらの依存ファイルを作成してください。

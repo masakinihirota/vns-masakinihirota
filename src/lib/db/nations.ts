@@ -1,5 +1,7 @@
-import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/types/database.types";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { isDrizzle } from "./adapter";
+import { createNationDrizzle, getNationByIdDrizzle } from "./drizzle";
 
 export const createNation = async (
   supabase: SupabaseClient<Database>,
@@ -14,6 +16,11 @@ export const createNation = async (
     foundation_fee: number;
   }
 ) => {
+  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
+  if (isDrizzle()) {
+    return createNationDrizzle(nationData);
+  }
+
   const { data, error } = await supabase
     .from("nations")
     .insert(nationData)
@@ -28,6 +35,11 @@ export const getNationById = async (
   supabase: SupabaseClient<Database>,
   nationId: string
 ) => {
+  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
+  if (isDrizzle()) {
+    return getNationByIdDrizzle(nationId);
+  }
+
   const { data, error } = await supabase
     .from("nations")
     .select("*")

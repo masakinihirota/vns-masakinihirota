@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: 開発スピード維持と仕様変更管理のための決定ログ(Decision Log)運用ルール
 ---
 
 # Decision Log Protocol (決定ログ運用ルール)

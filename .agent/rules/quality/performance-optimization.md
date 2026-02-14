@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: React/Next.jsアプリケーションのレンダリング制御、バンドル削減、データ取得最適化の基準
 ---
 
 # パフォーマンス最適化基準 (Performance Optimization Standards)

@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: クライアント・サーバーサイド双方における堅牢でユーザーフレンドリーなエラーハンドリング基準
 ---
 
 # エラーハンドリング基準 (Error Handling Standards)

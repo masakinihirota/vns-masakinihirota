@@ -1,5 +1,11 @@
-import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "@/types/database.types";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { isDrizzle } from "./adapter";
+import {
+  completeTransactionDrizzle,
+  createMarketItemDrizzle,
+  startTransactionDrizzle,
+} from "./drizzle";
 
 export type MarketItemType = "sell" | "buy_request";
 export type MarketItemStatus = "open" | "sold" | "closed";
@@ -15,6 +21,11 @@ export const createMarketItem = async (
     type: MarketItemType;
   }
 ) => {
+  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
+  if (isDrizzle()) {
+    return createMarketItemDrizzle(itemData);
+  }
+
   const { data, error } = await supabase
     .from("market_items")
     .insert(itemData)
@@ -30,6 +41,11 @@ export const startTransaction = async (
   itemId: string,
   buyerId: string
 ) => {
+  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
+  if (isDrizzle()) {
+    return startTransactionDrizzle(itemId, buyerId);
+  }
+
   const { data, error } = await supabase.rpc("start_transaction", {
     p_item_id: itemId,
     p_counter_party_id: buyerId,
@@ -44,6 +60,11 @@ export const completeTransaction = async (
   transactionId: string,
   userId: string
 ) => {
+  // Drizzleアダプターが有効な場合はDrizzle実装に委譲
+  if (isDrizzle()) {
+    return completeTransactionDrizzle(transactionId, userId);
+  }
+
   const { data, error } = await supabase.rpc("complete_transaction", {
     p_transaction_id: transactionId,
     p_user_id: userId,

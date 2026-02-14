@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: IPA「安全なウェブサイトの作り方」に基づくSQLインジェクション、XSS、CSRF等のセキュリティ対策実装指針
 ---
 
 # IPA「安全なウェブサイトの作り方」実装指針

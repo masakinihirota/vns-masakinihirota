@@ -1,8 +1,5 @@
 "use client";
 
-import { MonitorSmartphone } from "lucide-react";
-import Link from "next/link";
-import { Suspense } from "react";
 import {
   AdToggle,
   HelpButton,
@@ -20,6 +17,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { MonitorSmartphone } from "lucide-react";
+import Link from "next/link";
+import { Suspense } from "react";
 import { TrialEntrySection } from "../trial-entry";
 import { BackgroundCanvas } from "./background-canvas";
 import { ConceptSection } from "./concept-section";
@@ -93,8 +93,8 @@ export const TalesClaireLP = () => {
 
           {/* 2. Description (Declarations & Concept) */}
           <section id="about" className="space-y-16">
-            <DeclarationsSection />
             <ConceptSection />
+            <DeclarationsSection />
           </section>
 
           {/* 3. Start Links (Trial Entry) */}

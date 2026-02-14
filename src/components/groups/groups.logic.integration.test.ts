@@ -1,7 +1,7 @@
+import type { Database } from "@/types/types_db";
 import { createClient } from "@supabase/supabase-js";
 import { v4 as uuidv4 } from "uuid";
-import { beforeAll, describe, expect, it } from "vitest";
-import type { Database } from "@/types/types_db";
+import { beforeAll, describe, expect, it, vi } from "vitest";
 import {
   createGroup,
   deleteGroup,
@@ -9,6 +9,15 @@ import {
   joinGroup,
   leaveGroup,
 } from "./groups.logic";
+
+// Mock Next.js cache and server utils for actions
+vi.mock("next/cache", () => ({
+  revalidatePath: vi.fn(),
+}));
+
+vi.mock("@/lib/supabase/server", () => ({
+  createClient: vi.fn().mockResolvedValue({} as any),
+}));
 
 // Use environment variables or defaults for local development
 const SUPABASE_URL =

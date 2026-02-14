@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: AIエージェントの出力形式、言語設定、Web検索およびMarkdown出力の基準
 ---
 
 # 出力基準 (Output Standards)

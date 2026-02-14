@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: Next.js 16におけるmiddleware.tsの廃止とproxy.tsパターンの採用ルール
 ---
 
 # Next.js 16 Proxy Pattern (`src/proxy.ts`)

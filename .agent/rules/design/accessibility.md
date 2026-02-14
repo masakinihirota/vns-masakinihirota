@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: AIエージェントが従うべきアクセシビリティ基準(vitest-axe, CUD, タイポグラフィ)の定義
 ---
 
 # アクセシビリティ基準 (Accessibility Standards)

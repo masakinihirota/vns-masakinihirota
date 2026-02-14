@@ -1,6 +1,7 @@
 ---
 globs:
 alwaysApply: true
+description: AIによるコンポーネント・ロジック新規作成時のテストファイル自動生成ルール
 ---
 
 # テストファイル自動生成ルール (Auto Test Scaffolding)

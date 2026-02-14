@@ -1,87 +1,87 @@
 ---
 name: safe-release-protocol
-description: Protocol for safely releasing code changes, including branch management, pre-release checks, and handling git hook failures.
+description: 安全にコード変更をリリースするためのプロトコル。ブランチ管理、リリース前チェック、gitフック失敗時の対応を含みます。
 ---
 
 # Safe Release Protocol
 
-This protocol defines the standard workflow for releasing changes to production (`main` branch) and managing version tags.
+このプロトコルは、本番環境（`main` ブランチ）への変更のリリースとバージョンダグ管理の標準ワークフローを定義します。
 
-## 1. Pre-Release Checklist
+## 1. リリース前チェックリスト (Pre-Release Checklist)
 
-Before merging to `main`, ensure the `anti` (development) branch is clean and verified.
+`main` にマージする前に、`anti`（開発）ブランチがクリーンで検証済みであることを確認してください。
 
-1.  **Static Analysis**:
+1.  **静的解析 (Static Analysis)**:
     ```bash
     pnpm run lint:fix
     pnpm run format:fix
     pnpm audit --audit-level=moderate
     ```
-2.  **Type Check**:
+2.  **型チェック (Type Check)**:
     ```bash
-    pnpm run check  # or tsc --noEmit
+    pnpm run check  # または tsc --noEmit
     ```
-3.  **Build Verification** (Crucial):
+3.  **ビルド検証 (Build Verification)** (重要):
     ```bash
     pnpm run build
     ```
-    _If build fails, DO NOT PROCEED. Fix the build on `anti` first._
+    _もしビルドが失敗した場合は、絶対に先に進まないでください。まず `anti` で修正してください。_
 
-## 2. Release Workflow
+## 2. リリースワークフロー (Release Workflow)
 
-1.  **Merge to Main**:
+1.  **Mainへのマージ**:
     ```bash
     git checkout main
     git pull origin main
     git merge anti
     ```
-2.  **Version Bump**:
+2.  **バージョン更新**:
     ```bash
-    npm version minor # or patch/major
-    # This creates a package.json update and a git tag
+    npm version minor # または patch/major
+    # これにより package.json の更新と git tag の作成が行われます
     ```
-3.  **Push to Remote**:
+3.  **リモートへのプッシュ**:
     ```bash
     git push origin main --tags
     ```
 
-## 3. Post-Release Sync
+## 3. リリース後の同期 (Post-Release Sync)
 
-Keep the development branch in sync.
+開発ブランチを同期された状態に保ちます。
 
-1.  **Sync Anti**:
+1.  **Antiの同期**:
     ```bash
     git checkout anti
     git merge main
     ```
-2.  **Push Anti**:
+2.  **Antiのプッシュ**:
     ```bash
     git push origin anti
     ```
 
-## 4. Troubleshooting
+## 4. トラブルシューティング (Troubleshooting)
 
-### Pre-push Hook Failures (Husky/Oxlint)
+### Pre-push Hook の失敗 (Husky/Oxlint)
 
-If `git push` fails due to a pre-push hook (e.g., exit code 139, segfault, or timeout), and you have **already verified** the build and linting manually in Step 1:
+`git push` が pre-push hook (例: exit code 139, segfault, timeout) により失敗し、**かつ** ステップ1で手動によるビルドとリントの検証が完了している場合:
 
-1.  **Retry**: Sometimes it's a transient issue.
-2.  **Bypass**: If the issue persists and you are confident in the code quality (because Step 1 passed):
+1.  **再試行**: 一時的な問題である場合があります。
+2.  **バイパス**: 問題が解決せず、コード品質に自信がある場合（ステップ1がパスしているため）:
     ```bash
     git push origin anti --no-verify
     ```
-    _Note: Do not use `--no-verify` to bypass legitimate lint errors. Only use it if the hook tool itself is crashing._
+    _注意: 正当なリントエラーを無視するために `--no-verify` を使用しないでください。ツール自体がクラッシュする場合のみ使用してください。_
 
-### Build Errors in `route.ts`
+### `route.ts` でのビルドエラー
 
-If `next build` fails on type errors in API routes:
+APIルートの型エラーで `next build` が失敗する場合:
 
-- Check for `Context` type imports.
-- Temporarily use `any` if strictly necessary to unblock a critical release, then create a follow-up task to fix types.
+- `Context` 型のインポートを確認してください。
+- 重大なリリースのブロックを解除するために厳密に必要な場合は、一時的に `any` を使用し、直後に型修正のタスクを作成してください。
 
-### Editor Corruptions
+### エディタの破損 (Editor Corruptions)
 
-If syntax errors appear that don't make sense (e.g., invisible characters, broken strings):
+意味不明な構文エラー（不可視文字、壊れた文字列など）が表示される場合:
 
-- Use `view_file` to inspect the raw content.
-- `write_to_file` (overwrite) the entire file with clean code rather than trying to patch it repeatedly.
+- `view_file` を使用して生のコンテンツを検査してください。
+- 何度もパッチを当てるのではなく、`write_to_file` (overwrite) でファイル全体をクリーンなコードで書き換えてください。

@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: React Server Components (RSC) とServer Actionsのセキュリティリスク回避およびAPI設計指針
 ---
 
 # React Server Components (RSC) セキュリティ方針

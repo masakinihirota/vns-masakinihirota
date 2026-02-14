@@ -1,5 +1,9 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 import {
   ArrowDown,
   ArrowRight,
@@ -19,10 +23,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 
 interface RouteItem {
   title: string;
@@ -92,6 +92,11 @@ export function PortalDashboard() {
           path: "/groups/sample-id",
           desc: "特定のグループの詳細・管理画面（ID指定）。",
         },
+        {
+          title: "プロフィールマスク (Demo)",
+          path: "/profile-mask-demo",
+          desc: "【デモ】プロフィールマスク（多面性プロフィール）作成画面。",
+        },
       ],
     },
     {
@@ -137,6 +142,11 @@ export function PortalDashboard() {
           desc: "通常のユーザー登録フロー。",
         },
         { title: "ログイン", path: "/login", desc: "システムの認証入り口。" },
+        {
+          title: "Auth.js ログイン",
+          path: "/authjs-login",
+          desc: "Auth.js（GitHub/Google）を使用した新規認証画面。",
+        },
       ],
     },
     {
@@ -272,14 +282,14 @@ export function PortalDashboard() {
           desc: "VNSを紹介するメインLP。",
         },
         {
-          title: "オアシス宣言",
-          path: "/oasis",
-          desc: "コミュニティの理念とルール。",
-        },
-        {
           title: "ヒューマン・マニフェスト",
           path: "/human",
           desc: "デザイン哲学を紹介。",
+        },
+        {
+          title: "オアシス宣言",
+          path: "/oasis",
+          desc: "コミュニティの理念とルール。",
         },
         {
           title: "公式スピーチ",
@@ -547,7 +557,7 @@ export function PortalDashboard() {
                   className={cn(
                     "grid grid-cols-[180px_1.5fr_1.5fr_auto] gap-6 px-6 py-4 items-center transition-all group relative hover:bg-neutral-100 dark:hover:bg-white/10",
                     isDone &&
-                      "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
+                    "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
                     isFocus && "bg-amber-500/[0.1] dark:bg-amber-500/[0.08]"
                   )}
                 >

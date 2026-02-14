@@ -1,5 +1,6 @@
 ---
 trigger: always_on
+description: Supabase (PostgreSQL) を利用したデータベース設計、クエリ実装、運用におけるベストプラクティス
 ---
 
 # データベース設計・運用基準 (Database Best Practices)
