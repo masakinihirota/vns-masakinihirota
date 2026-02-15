@@ -1,8 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { TbUserQuestion } from "react-icons/tb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +10,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { TbUserQuestion } from "react-icons/tb";
 
 /**
  * 匿名ログインフォームコンポーネント
@@ -25,7 +24,6 @@ export function AnonymousLoginForm({
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
 
   const handleAnonymousLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,7 +63,7 @@ export function AnonymousLoginForm({
         </CardHeader>
         <CardContent>
           <ul className="space-y-1 text-sm">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <li key={feature.label} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
                 <span

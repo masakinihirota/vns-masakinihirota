@@ -1,11 +1,11 @@
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { Notification } from "@/components/groups/groups.types";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useMarkAsRead, useNotifications } from "./notifications.logic";
 
 export const NotificationList = () => {
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const isLoggedIn = status === "authenticated";
   const { notifications, isLoading, mutate } = useNotifications(isLoggedIn);
   const { markAsRead } = useMarkAsRead();

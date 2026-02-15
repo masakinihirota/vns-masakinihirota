@@ -1,6 +1,3 @@
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,6 +7,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
 
 export function GitHubLoginForm({
   className,
@@ -59,7 +59,7 @@ export function GitHubLoginForm({
         </CardHeader>
         <CardContent>
           <ul className="space-y-1 text-sm">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <li key={feature.label} className="flex justify-between">
                 <span className="font-medium text-white">{feature.label}:</span>
                 <span

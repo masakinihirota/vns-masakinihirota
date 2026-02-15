@@ -1,10 +1,7 @@
 import { and, eq, sql } from "drizzle-orm";
-import { Tables } from "@/types/types_db";
 import { db } from "./drizzle-postgres";
 import { follows } from "./schema.postgres";
 
-// Types
-type Follow = Tables<"follows">;
 
 /**
  * Follow a profile (Watch)
