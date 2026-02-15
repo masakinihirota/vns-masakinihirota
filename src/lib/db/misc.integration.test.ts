@@ -1,9 +1,16 @@
 import { eq } from "drizzle-orm";
 import { beforeAll, describe, expect, it } from "vitest";
-import { getBusinessCardByProfileId, upsertBusinessCard } from "./business-cards";
-import { db } from "./drizzle";
-import { createNotification, getUnreadNotifications, markNotificationAsRead } from "./notifications";
-import { businessCards, notifications } from "./schema";
+import {
+  getBusinessCardByProfileId,
+  upsertBusinessCard,
+} from "./business-cards";
+import { db } from "./drizzle-postgres";
+import {
+  createNotification,
+  getUnreadNotifications,
+  markNotificationAsRead,
+} from "./notifications";
+import { businessCards, notifications } from "./schema.postgres";
 
 describe("Misc Integration (Drizzle)", () => {
   let testProfileId: string;
@@ -19,7 +26,7 @@ describe("Misc Integration (Drizzle)", () => {
     const cardData = {
       is_published: true,
       display_config: { show_role_type: true },
-      content: { value: { feedback_stance: "balanced" as const } }
+      content: { value: { feedback_stance: "balanced" as const } },
     };
 
     const card = await upsertBusinessCard(testProfileId, cardData);
@@ -35,7 +42,9 @@ describe("Misc Integration (Drizzle)", () => {
     expect(fetched?.is_published).toBe(true);
 
     // Cleanup card
-    await db.delete(businessCards).where(eq(businessCards.userProfileId, testProfileId));
+    await db
+      .delete(businessCards)
+      .where(eq(businessCards.userProfileId, testProfileId));
   });
 
   // Notifications Tests
@@ -46,10 +55,10 @@ describe("Misc Integration (Drizzle)", () => {
       user_profile_id: testProfileId,
       title: "Test Notification",
       message: "This is a test",
-      type: "system" as const
+      type: "system" as const,
     };
 
-    const notif = await createNotification(null, notifData);
+    const notif = await createNotification(notifData as any);
     expect(notif).toBeDefined();
     expect(notif.title).toBe("Test Notification");
     expect(notif.is_read).toBe(false);
@@ -60,7 +69,7 @@ describe("Misc Integration (Drizzle)", () => {
   it("should list unread notifications", async () => {
     expect(notificationId).toBeDefined();
 
-    const list = await getUnreadNotifications(null, testProfileId);
+    const list = await getUnreadNotifications(testProfileId);
     expect(list).toBeDefined();
     const found = list.find((n: any) => n.id === notificationId);
     expect(found).toBeDefined();
@@ -69,11 +78,11 @@ describe("Misc Integration (Drizzle)", () => {
   it("should mark notification as read", async () => {
     expect(notificationId).toBeDefined();
 
-    const updated = await markNotificationAsRead(null, notificationId);
+    const updated = await markNotificationAsRead(notificationId);
     expect(updated.is_read).toBe(true);
 
     // Verify it's gone from unread
-    const list = await getUnreadNotifications(null, testProfileId);
+    const list = await getUnreadNotifications(testProfileId);
     const found = list.find((n: any) => n.id === notificationId);
     expect(found).toBeUndefined();
 

@@ -1,10 +1,10 @@
 "use client";
 
+import { ArrowLeft, Edit, ExternalLink, Share2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button"; // For edit button in future
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Edit, ExternalLink, Share2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 // UI Type (matching what we use in list for consistency, but detail might have more)
 interface UIWorkDetail {
@@ -66,8 +66,11 @@ export const WorkDetail = ({ work, isOwner }: WorkDetailProps) => {
                       className="flex items-center text-sm text-blue-600 hover:underline"
                     >
                       <ExternalLink className="mr-2 h-3 w-3" />
-                      {url.type === "official" ? "Official Site" :
-                        url.type === "affiliate" ? "Affiliate Link" : "External Link"}
+                      {url.type === "official"
+                        ? "Official Site"
+                        : url.type === "affiliate"
+                          ? "Affiliate Link"
+                          : "External Link"}
                     </a>
                   ))}
                 </CardContent>
@@ -81,7 +84,9 @@ export const WorkDetail = ({ work, isOwner }: WorkDetailProps) => {
               <CardContent className="p-4 pt-0 space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Category</span>
-                  <span className="font-medium capitalize">{work.category}</span>
+                  <span className="font-medium capitalize">
+                    {work.category}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Release Year</span>
@@ -93,7 +98,9 @@ export const WorkDetail = ({ work, isOwner }: WorkDetailProps) => {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-500">Status</span>
-                  <Badge variant="outline" className="capitalize">{work.status}</Badge>
+                  <Badge variant="outline" className="capitalize">
+                    {work.status}
+                  </Badge>
                 </div>
               </CardContent>
             </Card>

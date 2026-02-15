@@ -1,7 +1,7 @@
 "use client";
 
-import { WorksList } from "@/components/works/work-list/work-list";
 import { useRouter } from "next/navigation";
+import { WorksList } from "@/components/works/work-list/work-list";
 
 // UI Type Definition (should match common/types)
 export interface UIWork {
@@ -22,5 +22,7 @@ export function ClientWorksWrapper({ works }: { works: UIWork[] }) {
     router.push("/works/new");
   };
 
-  return <WorksList works={works} loading={false} onCreateNew={handleCreateNew} />;
+  return (
+    <WorksList works={works} loading={false} onCreateNew={handleCreateNew} />
+  );
 }

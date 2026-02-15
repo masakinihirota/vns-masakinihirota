@@ -1,6 +1,8 @@
 "use client";
 
-import { NationEvent } from "@/components/groups/groups.types";
+import { Calendar, Users } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,11 +13,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/client";
-import { Calendar, Users } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
+import { Tables } from "@/types/types_db";
 import { useJoinEvent } from "./events.logic";
+type NationEvent = Tables<"nation_events">;
 
 interface NationEventCardProps {
   event: NationEvent;
@@ -32,25 +32,19 @@ export const NationEventCard = ({
 
   const handleJoin = async () => {
     setLoading(true);
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      toast.error("ログインが必要です");
-      setLoading(false);
-      return;
-    }
 
     try {
-      await joinEvent(event.id, user.id);
+      await joinEvent(event.id);
       setJoined(true);
       onJoinSuccess();
       toast.success("イベントに参加しました");
-    } catch (error) {
+    } catch (error: any) {
       console.error("Failed to join event", error);
-      toast.error("イベントへの参加に失敗しました");
+      if (error.message === "Unauthorized") {
+        toast.error("ログインが必要です");
+      } else {
+        toast.error("イベントへの参加に失敗しました");
+      }
     } finally {
       setLoading(false);
     }

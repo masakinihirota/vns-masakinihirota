@@ -32,21 +32,21 @@ export const ProfileEditContainer = ({
   const [profile, _setProfile] = useState<UserProfile>(
     isNew
       ? {
-        ...createInitialProfile(),
-        name: (initialData?.display_name as string) || "New User",
-        format: (initialData?.profile_format as string) || "profile",
-        role: (initialData?.role as string) || "member",
-        purposes: Array.isArray(initialData?.purposes)
-          ? initialData.purposes
-          : typeof initialData?.purposes === "string"
-            ? [initialData.purposes]
-            : ["work"],
-        type: (initialData?.profile_type as string) || "self",
-      }
+          ...createInitialProfile(),
+          name: (initialData?.display_name as string) || "New User",
+          format: (initialData?.profile_format as string) || "profile",
+          role: (initialData?.role as string) || "member",
+          purposes: Array.isArray(initialData?.purposes)
+            ? initialData.purposes
+            : typeof initialData?.purposes === "string"
+              ? [initialData.purposes]
+              : ["work"],
+          type: (initialData?.profile_type as string) || "self",
+        }
       : {
-        name: "マサキ・ニヒロタ", // Mock data for existing profile
-        stats: { works: 12, evals: 145, trustDays: 420, points: 12500 },
-      }
+          name: "マサキ・ニヒロタ", // Mock data for existing profile
+          stats: { works: 12, evals: 145, trustDays: 420, points: 12500 },
+        }
   );
 
   const [myWorks, _setMyWorks] = useState(isNew ? [] : MOCK_WORKS);

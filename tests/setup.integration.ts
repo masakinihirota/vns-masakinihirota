@@ -1,5 +1,5 @@
-import dotenv from "dotenv";
 import path from "path";
+import dotenv from "dotenv";
 
 // Load .env.local first
 dotenv.config({ path: path.resolve(process.cwd(), ".env.local") });

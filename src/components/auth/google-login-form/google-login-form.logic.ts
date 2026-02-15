@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/client";
 import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 export const useGoogleLoginLogic = () => {
   const [error, setError] = useState<string | null>(null);

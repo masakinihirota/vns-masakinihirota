@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import useSWR from "swr";
 import {
   createGroupAction,
   deleteGroupAction,
@@ -9,11 +11,9 @@ import {
   getMyProfilesAction,
   joinGroupAction,
   leaveGroupAction,
-  updateGroupAction
+  updateGroupAction,
 } from "@/app/actions/groups";
 import type { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
-import { useState } from "react";
-import useSWR from "swr";
 import { MOCK_MEMBERS, MOCK_WORKS } from "./groups.mock";
 import {
   AdminTab,
@@ -73,10 +73,7 @@ export async function createGroup(groupData: GroupInsert) {
  * @param updateData 更新データ
  * @returns 更新されたグループ
  */
-export async function updateGroup(
-  id: string,
-  updateData: GroupUpdate,
-) {
+export async function updateGroup(id: string, updateData: GroupUpdate) {
   return updateGroupAction(id, updateData);
 }
 
@@ -95,10 +92,7 @@ export async function deleteGroup(id: string) {
  * @param groupId 参加するグループID
  * @param userId 参加するユーザーID
  */
-export async function joinGroup(
-  groupId: string,
-  userId: string
-) {
+export async function joinGroup(groupId: string, userId: string) {
   await joinGroupAction(groupId, userId);
 }
 
@@ -107,10 +101,7 @@ export async function joinGroup(
  * @param groupId グループID
  * @param userId ユーザーID
  */
-export async function leaveGroup(
-  groupId: string,
-  userId: string
-) {
+export async function leaveGroup(groupId: string, userId: string) {
   await leaveGroupAction(groupId, userId);
 }
 
@@ -170,19 +161,19 @@ export const useGroupLogic = (groupId?: string) => {
 
   const members: Member[] = membersData
     ? membersData.map((m: any) => ({
-      id: m.user_profile_id,
-      name: m.user_profiles?.display_name || "Unknown",
-      role:
-        m.role === "leader"
-          ? "リーダー"
-          : m.role === "mediator"
-            ? "メディエーター"
-            : "一般",
-      avatar: m.user_profiles?.avatar_url || "😎", // Default avatar
-      traits: [], // Placeholder
-      ratings: {}, // Placeholder
-      values: {}, // Placeholder
-    }))
+        id: m.user_profile_id,
+        name: m.user_profiles?.display_name || "Unknown",
+        role:
+          m.role === "leader"
+            ? "リーダー"
+            : m.role === "mediator"
+              ? "メディエーター"
+              : "一般",
+        avatar: m.user_profiles?.avatar_url || "😎", // Default avatar
+        traits: [], // Placeholder
+        ratings: {}, // Placeholder
+        values: {}, // Placeholder
+      }))
     : []; // Or MOCK_MEMBERS if you want to keep mocks when no DB data
 
   // Event Handlers

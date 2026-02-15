@@ -1,7 +1,14 @@
-import { db } from "@/lib/db/drizzle-postgres";
-import { accounts, sessions, users, verificationTokens } from "@/lib/db/schema.postgres";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import NextAuth from "next-auth";
+import GitHub from "next-auth/providers/github";
+import Google from "next-auth/providers/google";
+import { db } from "@/lib/db/drizzle-postgres";
+import {
+  accounts,
+  sessions,
+  users,
+  verificationTokens,
+} from "@/lib/db/schema.postgres";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: DrizzleAdapter(db, {
@@ -10,7 +17,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     sessionsTable: sessions,
     verificationTokensTable: verificationTokens,
   }),
-  providers: [], // Providers will be added later (e.g. GitHub, Google, Credentials)
+  providers: [GitHub, Google],
   session: {
     strategy: "jwt", // Using JWT for session strategy initially
   },
@@ -23,6 +30,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
     async jwt({ token }) {
       return token;
-    }
-  }
+    },
+  },
 });

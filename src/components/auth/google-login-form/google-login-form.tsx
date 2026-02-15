@@ -1,5 +1,6 @@
 "use client";
 
+import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,14 +10,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { FcGoogle } from "react-icons/fc";
 import { useGoogleLoginLogic } from "./google-login-form.logic";
 
 export function GoogleLoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const { error, isLoading, handleSocialLogin, features } = useGoogleLoginLogic();
+  const { error, isLoading, handleSocialLogin, features } =
+    useGoogleLoginLogic();
 
   return (
     <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>

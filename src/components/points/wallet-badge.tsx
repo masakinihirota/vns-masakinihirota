@@ -1,9 +1,9 @@
 "use client";
 
-import { getRootAccountAction } from "@/app/actions/root-accounts";
-import { Badge } from "@/components/ui/badge";
 import { Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
+import { getRootAccountAction } from "@/app/actions/root-accounts";
+import { Badge } from "@/components/ui/badge";
 
 export const WalletBadge = () => {
   const [points, setPoints] = useState<number | null>(null);

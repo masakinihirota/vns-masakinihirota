@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { getMarketItemsAction } from "@/app/actions/market";
 import { MarketItem } from "@/components/groups/groups.types";
 import { MarketCreateModal } from "@/components/market/market-create-modal";
 import { MarketItemCard } from "@/components/market/market-item-card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
 
 interface MarketListProps {
   nationId?: string;
@@ -23,7 +23,9 @@ export const MarketList = ({
 
   const refreshItems = async () => {
     try {
-      const updatedItems = (await getMarketItemsAction(nationId)) as MarketItem[];
+      const updatedItems = (await getMarketItemsAction(
+        nationId
+      )) as MarketItem[];
       setItems(updatedItems);
     } catch (error) {
       console.error("Failed to refresh items", error);

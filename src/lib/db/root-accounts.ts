@@ -1,6 +1,6 @@
-import { auth } from "@/auth";
 import { eq } from "drizzle-orm";
 import { cache } from "react";
+import { auth } from "@/auth";
 import { db } from "./drizzle-postgres";
 import { rootAccounts } from "./schema.postgres";
 
@@ -34,7 +34,7 @@ export const getRootAccount = cache(async () => {
   if (!session?.user?.id) return null;
 
   const account = await db.query.rootAccounts.findFirst({
-    where: eq(rootAccounts.authUserId, session.user.id)
+    where: eq(rootAccounts.authUserId, session.user.id),
   });
   return account ? mapRootAccountToSupabase(account) : null;
 });

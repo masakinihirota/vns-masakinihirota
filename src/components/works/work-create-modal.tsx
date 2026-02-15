@@ -1,5 +1,8 @@
 "use client";
 
+import { Plus } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
 import { createWorkAction } from "@/app/actions/works";
 import { Button } from "@/components/ui/button";
 import {
@@ -22,9 +25,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { createClient } from "@/lib/supabase/client";
-import { Plus } from "lucide-react";
-import { useState } from "react";
-import { toast } from "sonner";
 
 interface WorkCreateModalProps {
   onSuccess: () => void;
@@ -62,7 +62,10 @@ export const WorkCreateModal = ({ onSuccess }: WorkCreateModalProps) => {
         author: formData.author,
         category: formData.category,
         description: formData.description,
-        tags: formData.tags.split(",").map((t) => t.trim()).filter(Boolean),
+        tags: formData.tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
         owner_user_id: user.id,
         is_official: false,
         status: "pending",

@@ -12,7 +12,10 @@ export async function getUserProfilesAction(rootAccountId: string) {
   return userProfilesDb.getUserProfiles(rootAccountId);
 }
 
-export async function createUserProfileAction(rootAccountId: string, data: CreateProfileData) {
+export async function createUserProfileAction(
+  rootAccountId: string,
+  data: CreateProfileData
+) {
   return userProfilesDb.createUserProfile(rootAccountId, data);
 }
 

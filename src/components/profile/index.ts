@@ -8,4 +8,3 @@ export type { TableCell, TableHeader, TableRow } from "./ui";
 export { ProfileValues } from "./values";
 export type { ValueItem } from "./values";
 export { ProfileWorksList } from "./works-list";
-

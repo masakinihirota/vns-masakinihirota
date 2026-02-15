@@ -1,12 +1,12 @@
 "use client";
 
+import useSWR from "swr";
 import {
   createNationAction,
   getNationByIdAction,
   getNationsAction,
 } from "@/app/actions/nations";
 import { Nation } from "@/components/groups/groups.types";
-import useSWR from "swr";
 
 const fetchNations = async () => {
   return (await getNationsAction()) as unknown as Nation[];

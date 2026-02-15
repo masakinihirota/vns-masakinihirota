@@ -1,5 +1,5 @@
-import type { TablesInsert } from "@/types/types_db";
 import { eq } from "drizzle-orm";
+import type { TablesInsert } from "@/types/types_db";
 import { db } from "./drizzle-postgres";
 import { marketItems, marketTransactions } from "./schema.postgres";
 
@@ -38,13 +38,11 @@ function mapTransactionToSupabase(tx: any): any {
     seller_revenue: tx.sellerRevenue,
     status: tx.status,
     created_at: tx.createdAt,
-    completed_at: tx.completedAt
+    completed_at: tx.completedAt,
   };
 }
 
-export const createMarketItem = async (
-  itemData: MarketItemInsert
-) => {
+export const createMarketItem = async (itemData: MarketItemInsert) => {
   const drizzleInput = {
     nationId: itemData.nation_id,
     sellerId: itemData.seller_id, // assuming seller_id is mapped to sellerId
@@ -57,7 +55,10 @@ export const createMarketItem = async (
     status: itemData.status ?? "open",
   };
 
-  const [newItem] = await db.insert(marketItems).values(drizzleInput).returning();
+  const [newItem] = await db
+    .insert(marketItems)
+    .values(drizzleInput)
+    .returning();
   return mapMarketItemToSupabase(newItem);
 };
 
@@ -70,11 +71,12 @@ export const startTransaction = async (
     where: eq(marketItems.id, itemId),
     with: {
       nation: true,
-    }
+    },
   });
 
   if (!item) throw new Error("Market item not found");
-  if (item.status !== "open") throw new Error("Item is not open for transaction");
+  if (item.status !== "open")
+    throw new Error("Item is not open for transaction");
   if (!item.nation) throw new Error("Nation not found for item");
 
   // Calculate fees
@@ -91,16 +93,19 @@ export const startTransaction = async (
   const sellerRevenue = price - feeAmount;
 
   // Transaction
-  const [newTx] = await db.insert(marketTransactions).values({
-    itemId: item.id,
-    buyerId: buyerId,
-    sellerId: item.sellerId, // Copy seller from item
-    price: price,
-    feeRate: feeRateVal.toString(), // Store as 10.0
-    feeAmount: feeAmount,
-    sellerRevenue: sellerRevenue,
-    status: "pending"
-  }).returning();
+  const [newTx] = await db
+    .insert(marketTransactions)
+    .values({
+      itemId: item.id,
+      buyerId: buyerId,
+      sellerId: item.sellerId, // Copy seller from item
+      price: price,
+      feeRate: feeRateVal.toString(), // Store as 10.0
+      feeAmount: feeAmount,
+      sellerRevenue: sellerRevenue,
+      status: "pending",
+    })
+    .returning();
 
   return newTx.id; // RPC returns ID? Original logic returned data?
   // check original: return data; (likely ID or full object)
@@ -118,11 +123,12 @@ export const completeTransaction = async (
   // Transaction Logic
   return await db.transaction(async (tx) => {
     const txRecord = await tx.query.marketTransactions.findFirst({
-      where: eq(marketTransactions.id, transactionId)
+      where: eq(marketTransactions.id, transactionId),
     });
 
     if (!txRecord) throw new Error("Transaction not found");
-    if (txRecord.status !== "pending") throw new Error("Transaction is not pending");
+    if (txRecord.status !== "pending")
+      throw new Error("Transaction is not pending");
 
     // Verify user is buyer or seller?
     // If userId corresponds to buyer or seller?
@@ -130,16 +136,18 @@ export const completeTransaction = async (
     // If txRecord.buyerId !== userId && txRecord.sellerId !== userId ...
 
     // Update Transaction
-    const [updatedTx] = await tx.update(marketTransactions)
+    const [updatedTx] = await tx
+      .update(marketTransactions)
       .set({
         status: "completed",
-        completedAt: new Date().toISOString()
+        completedAt: new Date().toISOString(),
       })
       .where(eq(marketTransactions.id, transactionId))
       .returning();
 
     // Update Item
-    await tx.update(marketItems)
+    await tx
+      .update(marketItems)
       .set({ status: "sold" })
       .where(eq(marketItems.id, txRecord.itemId));
 
@@ -147,18 +155,14 @@ export const completeTransaction = async (
   });
 };
 
-export const getMarketItemById = async (
-  itemId: string
-) => {
+export const getMarketItemById = async (itemId: string) => {
   const item = await db.query.marketItems.findFirst({
-    where: eq(marketItems.id, itemId)
+    where: eq(marketItems.id, itemId),
   });
   return item ? mapMarketItemToSupabase(item) : null;
 };
 
-export const getMarketItems = async (
-  nationId: string = "all"
-) => {
+export const getMarketItems = async (nationId: string = "all") => {
   // Drizzle Implementation
   const items = await db.query.marketItems.findMany({
     where: (table, { and, eq }) => {

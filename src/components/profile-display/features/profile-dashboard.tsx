@@ -19,7 +19,7 @@ import {
   RatingType,
   SectionVisibility,
   SortConfig,
-  ThemeVars
+  ThemeVars,
 } from "./profile-dashboard.types";
 
 interface ProfileDashboardProps {

@@ -1,5 +1,6 @@
-"use client";
-
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,10 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { FaGithub } from "react-icons/fa";
 
 export function GitHubLoginForm({
   className,
@@ -22,19 +20,13 @@ export function GitHubLoginForm({
 
   const handleSocialLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "github",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/home`,
-      },
-    });
-
-    if (error) {
-      setError(error.message);
+    try {
+      await signIn("github", { callbackUrl: "/home" });
+    } catch (err: any) {
+      setError(err.message || "An error occurred during login");
       setIsLoading(false);
     }
   };

@@ -1,10 +1,9 @@
+import { notFound } from "next/navigation";
 import { getWorkByIdAction } from "@/app/actions/works";
 import { WorkDetail } from "@/components/works/work-detail"; // Import the detail component
 import { createClient } from "@/lib/supabase/server";
 import { isValidUUID } from "@/lib/utils";
 import { Tables } from "@/types/types_db";
-import { notFound } from "next/navigation";
-
 
 // UI Type Definition (matching WorkDetail component)
 interface UIWorkDetail {
@@ -25,7 +24,8 @@ interface UIWorkDetail {
 function mapDbWorkToUIDetail(work: Tables<"works">): UIWorkDetail {
   const urls: { type: string; value: string }[] = [];
   if (work.external_url) urls.push({ type: "link", value: work.external_url });
-  if (work.affiliate_url) urls.push({ type: "affiliate", value: work.affiliate_url });
+  if (work.affiliate_url)
+    urls.push({ type: "affiliate", value: work.affiliate_url });
   // if (work.official_url) ... (removed per schema)
 
   return {
@@ -57,13 +57,14 @@ export default async function WorkDetailPage({ params }: PageProps) {
 
   const work = (await getWorkByIdAction(id)) as Tables<"works">;
 
-
   if (!work) {
     notFound();
   }
 
   const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
   const isOwner = user?.id === work.owner_user_id;
 
   const uiWork = mapDbWorkToUIDetail(work);

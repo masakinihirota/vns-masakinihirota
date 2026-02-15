@@ -11,7 +11,7 @@ import {
   SectionVisibility,
   Skill,
   SortConfig,
-  Work
+  Work,
 } from "./profile-dashboard.types";
 
 // Removed local definition
@@ -103,23 +103,29 @@ export const useProfileDashboard = () => {
   /**
    * データのソート処理
    */
-  const getSortedData = useCallback(<T extends { [key: string]: any }>(list: readonly T[], config: SortConfig): T[] => {
-    if (!config.key) return [...list];
+  const getSortedData = useCallback(
+    <T extends { [key: string]: any }>(
+      list: readonly T[],
+      config: SortConfig
+    ): T[] => {
+      if (!config.key) return [...list];
 
-    return [...list].sort((a, b) => {
-      let valA = a[config.key!];
-      let valB = b[config.key!];
+      return [...list].sort((a, b) => {
+        let valA = a[config.key!];
+        let valB = b[config.key!];
 
-      if (config.key === "rating") {
-        valA = RATING_ORDER[valA as RatingType] ?? 99;
-        valB = RATING_ORDER[valB as RatingType] ?? 99;
-      }
+        if (config.key === "rating") {
+          valA = RATING_ORDER[valA as RatingType] ?? 99;
+          valB = RATING_ORDER[valB as RatingType] ?? 99;
+        }
 
-      if (valA < valB) return config.direction === "asc" ? -1 : 1;
-      if (valA > valB) return config.direction === "asc" ? 1 : -1;
-      return 0;
-    });
-  }, []);
+        if (valA < valB) return config.direction === "asc" ? -1 : 1;
+        if (valA > valB) return config.direction === "asc" ? 1 : -1;
+        return 0;
+      });
+    },
+    []
+  );
 
   /**
    * ソートヘッダーのクリックハンドラ
@@ -222,7 +228,9 @@ export const useProfileDashboard = () => {
     const { section, id } = pendingDelete;
     setData((prev) => ({
       ...prev,
-      [section]: (prev[section] as DashboardArrayItem[]).filter((item) => item.id !== id),
+      [section]: (prev[section] as DashboardArrayItem[]).filter(
+        (item) => item.id !== id
+      ),
     }));
     setPendingDelete(null);
   }, [pendingDelete]);

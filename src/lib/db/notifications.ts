@@ -1,5 +1,5 @@
-import type { TablesInsert } from "@/types/types_db";
 import { and, desc, eq } from "drizzle-orm";
+import type { TablesInsert } from "@/types/types_db";
 import { db } from "./drizzle-postgres";
 import { notifications } from "./schema.postgres";
 
@@ -33,13 +33,14 @@ export const createNotification = async (
     isRead: false,
   };
 
-  const [newNotification] = await db.insert(notifications).values(drizzleInput).returning();
+  const [newNotification] = await db
+    .insert(notifications)
+    .values(drizzleInput)
+    .returning();
   return mapNotificationToSupabase(newNotification);
 };
 
-export const getUnreadNotifications = async (
-  userId: string
-) => {
+export const getUnreadNotifications = async (userId: string) => {
   const result = await db.query.notifications.findMany({
     where: and(
       eq(notifications.userProfileId, userId),
@@ -50,10 +51,9 @@ export const getUnreadNotifications = async (
   return result.map(mapNotificationToSupabase);
 };
 
-export const markNotificationAsRead = async (
-  notificationId: string
-) => {
-  const [updated] = await db.update(notifications)
+export const markNotificationAsRead = async (notificationId: string) => {
+  const [updated] = await db
+    .update(notifications)
     .set({ isRead: true })
     .where(eq(notifications.id, notificationId))
     .returning();

@@ -1,5 +1,5 @@
-import { Tables } from "@/types/types_db";
 import { and, eq, sql } from "drizzle-orm";
+import { Tables } from "@/types/types_db";
 import { db } from "./drizzle-postgres";
 import { follows } from "./schema.postgres";
 
@@ -30,10 +30,14 @@ export const followProfile = async (
   };
 
   // @ts-ignore
-  const [inserted] = await db.insert(follows).values(newFollow).onConflictDoUpdate({
-    target: [follows.followerProfileId, follows.followedProfileId],
-    set: { status: status }
-  }).returning();
+  const [inserted] = await db
+    .insert(follows)
+    .values(newFollow)
+    .onConflictDoUpdate({
+      target: [follows.followerProfileId, follows.followedProfileId],
+      set: { status: status },
+    })
+    .returning();
 
   return inserted;
 };
@@ -53,11 +57,14 @@ export const unfollowProfile = async (
 
   if (!followerProfile) throw new Error("Follower profile not found");
 
-  const [deleted] = await db.delete(follows)
-    .where(and(
-      eq(follows.followerProfileId, followerProfile.id),
-      eq(follows.followedProfileId, followedProfileId)
-    ))
+  const [deleted] = await db
+    .delete(follows)
+    .where(
+      and(
+        eq(follows.followerProfileId, followerProfile.id),
+        eq(follows.followedProfileId, followedProfileId)
+      )
+    )
     .returning();
   return deleted;
-}
+};

@@ -1,13 +1,13 @@
 "use client";
 
+import useSWR from "swr";
 import {
   completeTransactionAction,
   createMarketItemAction,
   getMarketItemsAction,
-  startTransactionAction
+  startTransactionAction,
 } from "@/app/actions/market";
 import { MarketItem } from "@/components/groups/groups.types";
-import useSWR from "swr";
 
 const fetcher = async (key: string) => {
   const [, nationId] = key.split(":");

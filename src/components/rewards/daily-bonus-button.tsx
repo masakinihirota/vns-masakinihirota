@@ -1,9 +1,9 @@
 "use client";
 
-import { claimDailyBonusAction } from "@/app/actions/rewards";
-import { Button } from "@/components/ui/button";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import { claimDailyBonusAction } from "@/app/actions/rewards";
+import { Button } from "@/components/ui/button";
 
 export function DailyBonusButton() {
   const [isPending, startTransition] = useTransition();

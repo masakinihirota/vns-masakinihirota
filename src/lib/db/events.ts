@@ -1,5 +1,5 @@
-import type { Tables, TablesInsert } from "@/types/types_db";
 import { and, asc, eq } from "drizzle-orm";
+import type { Tables, TablesInsert } from "@/types/types_db";
 import { db } from "./drizzle-postgres";
 import { nationEventParticipants, nationEvents } from "./schema.postgres";
 
@@ -41,7 +41,7 @@ export const getEvents = async (nationId: string = "all") => {
 
   const events = await db.query.nationEvents.findMany({
     where: whereClause,
-    orderBy: [asc(nationEvents.startAt)]
+    orderBy: [asc(nationEvents.startAt)],
   });
 
   return events.map(mapEventToSupabase);
@@ -64,25 +64,28 @@ export const createEvent = async (eventData: NationEventInsert) => {
     type: eventData.type,
     status: eventData.status ?? "draft",
   };
-  const [newEvent] = await db.insert(nationEvents).values(drizzleInput).returning();
+  const [newEvent] = await db
+    .insert(nationEvents)
+    .values(drizzleInput)
+    .returning();
   return mapEventToSupabase(newEvent);
 };
 
-export const joinEvent = async (
-  eventId: string,
-  userId: string
-) => {
-  const [participant] = await db.insert(nationEventParticipants).values({
-    eventId,
-    userProfileId: userId,
-    status: "going"
-  }).returning();
+export const joinEvent = async (eventId: string, userId: string) => {
+  const [participant] = await db
+    .insert(nationEventParticipants)
+    .values({
+      eventId,
+      userProfileId: userId,
+      status: "going",
+    })
+    .returning();
 
   return {
     event_id: participant.eventId,
     user_profile_id: participant.userProfileId,
     status: participant.status,
-    joined_at: participant.joinedAt
+    joined_at: participant.joinedAt,
   };
 };
 
@@ -90,20 +93,22 @@ export const cancelEventParticipation = async (
   eventId: string,
   userId: string
 ) => {
-  const [updated] = await db.update(nationEventParticipants)
+  const [updated] = await db
+    .update(nationEventParticipants)
     .set({ status: "cancelled" })
     .where(
       and(
         eq(nationEventParticipants.eventId, eventId),
         eq(nationEventParticipants.userProfileId, userId)
       )
-    ).returning();
+    )
+    .returning();
 
   return {
     event_id: updated.eventId,
     user_profile_id: updated.userProfileId,
     status: updated.status,
-    joined_at: updated.joinedAt
+    joined_at: updated.joinedAt,
   };
 };
 
@@ -113,7 +118,7 @@ export const getEvent = async (eventId: string) => {
     with: {
       nation: true,
       userProfile: true,
-    }
+    },
   });
 
   if (!event) return null;
@@ -122,10 +127,14 @@ export const getEvent = async (eventId: string) => {
 
   return {
     ...mapped,
-    nation: event.nation ? { ...event.nation, created_at: event.nation.createdAt } : null,
-    organizer: event.userProfile ? {
-      ...event.userProfile,
-      display_name: event.userProfile.displayName,
-    } : null
+    nation: event.nation
+      ? { ...event.nation, created_at: event.nation.createdAt }
+      : null,
+    organizer: event.userProfile
+      ? {
+          ...event.userProfile,
+          display_name: event.userProfile.displayName,
+        }
+      : null,
   };
 };

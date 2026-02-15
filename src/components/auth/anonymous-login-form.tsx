@@ -1,5 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { TbUserQuestion } from "react-icons/tb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,11 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { TbUserQuestion } from "react-icons/tb";
 
 /**
  * 匿名ログインフォームコンポーネント
@@ -30,20 +29,9 @@ export function AnonymousLoginForm({
 
   const handleAnonymousLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const supabase = createClient();
     setIsLoading(true);
-    setError(null);
-
-    const { error } = await supabase.auth.signInAnonymously();
-
-    if (error) {
-      setError(error.message);
-      setIsLoading(false);
-      return;
-    }
-
-    // ログイン成功後にリダイレクト（保護されたルートへ）
-    router.push("/home");
+    setError("現在、匿名ログインはメンテナンス中のためご利用いただけません。");
+    setIsLoading(false);
   };
 
   // 匿名認証の機能リスト

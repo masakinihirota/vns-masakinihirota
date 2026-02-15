@@ -1,5 +1,5 @@
-import { CreateProfileData, UserProfile } from "@/lib/types/user-profile";
 import { asc, count, eq } from "drizzle-orm";
+import { CreateProfileData, UserProfile } from "@/lib/types/user-profile";
 import { db } from "./drizzle-postgres";
 import { rootAccounts, userProfiles } from "./schema.postgres";
 
@@ -80,7 +80,10 @@ export async function createUserProfile(
     externalLinks: data.external_links ?? null,
   };
 
-  const [newProfile] = await db.insert(userProfiles).values(drizzleInput).returning();
+  const [newProfile] = await db
+    .insert(userProfiles)
+    .values(drizzleInput)
+    .returning();
   return mapUserProfileToSupabase(newProfile);
 }
 

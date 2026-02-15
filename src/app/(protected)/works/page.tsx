@@ -1,12 +1,13 @@
+import { Suspense } from "react";
 import { getWorksAction } from "@/app/actions/works";
 import { Tables } from "@/types/types_db";
-import { Suspense } from "react";
 import { ClientWorksWrapper, UIWork } from "./client-works-wrapper";
 
 function mapDbWorkToUI(work: Tables<"works">): UIWork {
   const urls: { type: string; value: string }[] = [];
   if (work.external_url) urls.push({ type: "link", value: work.external_url });
-  if (work.affiliate_url) urls.push({ type: "affiliate", value: work.affiliate_url });
+  if (work.affiliate_url)
+    urls.push({ type: "affiliate", value: work.affiliate_url });
 
   let category: UIWork["category"] = "other";
   const catLower = work.category?.toLowerCase() || "other";
@@ -36,11 +37,13 @@ export default async function WorksPage() {
          Ideally WorksList should accept a simple link or handle navigation internally.
          But keeping it simple to reuse existing component.
        */}
-      <Suspense fallback={<div className="container mx-auto py-8">Loading works...</div>}>
+      <Suspense
+        fallback={
+          <div className="container mx-auto py-8">Loading works...</div>
+        }
+      >
         <ClientWorksWrapper works={uiWorks} />
       </Suspense>
     </div>
   );
 }
-
-

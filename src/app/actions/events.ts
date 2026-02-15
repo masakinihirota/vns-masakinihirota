@@ -1,5 +1,4 @@
-"use server";
-
+import { auth } from "@/auth";
 import * as eventsDb from "@/lib/db/events";
 import type { TablesInsert } from "@/types/types_db";
 
@@ -13,12 +12,16 @@ export async function createEventAction(eventData: NationEventInsert) {
   return eventsDb.createEvent(eventData);
 }
 
-export async function joinEventAction(eventId: string, userId: string) {
-  return eventsDb.joinEvent(eventId, userId);
+export async function joinEventAction(eventId: string) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+  return eventsDb.joinEvent(eventId, session.user.id);
 }
 
-export async function cancelEventParticipationAction(eventId: string, userId: string) {
-  return eventsDb.cancelEventParticipation(eventId, userId);
+export async function cancelEventParticipationAction(eventId: string) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+  return eventsDb.cancelEventParticipation(eventId, session.user.id);
 }
 
 export async function getEventAction(eventId: string) {

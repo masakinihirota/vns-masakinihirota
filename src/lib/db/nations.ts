@@ -1,5 +1,5 @@
-import type { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
 import { desc, eq } from "drizzle-orm";
+import type { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
 import { db } from "./drizzle-postgres";
 import { nations } from "./schema.postgres";
 
@@ -71,11 +71,18 @@ export const updateNation = async (
 ) => {
   const drizzleUpdate: any = {};
   if (updateData.name !== undefined) drizzleUpdate.name = updateData.name;
-  if (updateData.description !== undefined) drizzleUpdate.description = updateData.description;
-  if (updateData.avatar_url !== undefined) drizzleUpdate.avatarUrl = updateData.avatar_url;
-  if (updateData.cover_url !== undefined) drizzleUpdate.coverUrl = updateData.cover_url;
+  if (updateData.description !== undefined)
+    drizzleUpdate.description = updateData.description;
+  if (updateData.avatar_url !== undefined)
+    drizzleUpdate.avatarUrl = updateData.avatar_url;
+  if (updateData.cover_url !== undefined)
+    drizzleUpdate.coverUrl = updateData.cover_url;
   // add other fields as needed
 
-  const [updated] = await db.update(nations).set(drizzleUpdate).where(eq(nations.id, nationId)).returning();
+  const [updated] = await db
+    .update(nations)
+    .set(drizzleUpdate)
+    .where(eq(nations.id, nationId))
+    .returning();
   return mapNationToSupabase(updated);
 };

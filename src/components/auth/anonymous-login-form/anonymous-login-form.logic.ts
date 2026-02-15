@@ -1,6 +1,6 @@
-import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 export const useAnonymousLoginLogic = () => {
   const [error, setError] = useState<string | null>(null);

@@ -124,10 +124,11 @@ export const Matching: React.FC<MatchingProps> = ({
             <button
               key={profile.id}
               onClick={() => onProfileSwitch(profile.id)}
-              className={`w-full text-left p-2.5 rounded-xl transition-all border flex items-center gap-3 ${selectedProfileId === profile.id
-                ? "bg-indigo-600 border-indigo-600 text-white shadow-md"
-                : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
-                } ${isSidebarCollapsed ? "justify-center" : ""}`}
+              className={`w-full text-left p-2.5 rounded-xl transition-all border flex items-center gap-3 ${
+                selectedProfileId === profile.id
+                  ? "bg-indigo-600 border-indigo-600 text-white shadow-md"
+                  : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
+              } ${isSidebarCollapsed ? "justify-center" : ""}`}
             >
               <span className="text-2xl shrink-0">{profile.icon}</span>
               {!isSidebarCollapsed && (
@@ -319,10 +320,11 @@ export const Matching: React.FC<MatchingProps> = ({
                 selectedCategories.length === 0 ||
                 (matchMode === "refine" && currentWatchList.length === 0)
               }
-              className={`w-full py-5 rounded-2xl font-black text-xl shadow-xl transition-all flex items-center justify-center gap-3 transform hover:-translate-y-1 active:scale-95 ${matchMode === "expand"
-                ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200"
-                : "bg-slate-800 hover:bg-slate-900 text-white shadow-slate-200"
-                } ${(selectedCategories.length === 0 || (matchMode === "refine" && currentWatchList.length === 0)) && "opacity-50 cursor-not-allowed transform-none"}`}
+              className={`w-full py-5 rounded-2xl font-black text-xl shadow-xl transition-all flex items-center justify-center gap-3 transform hover:-translate-y-1 active:scale-95 ${
+                matchMode === "expand"
+                  ? "bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-200"
+                  : "bg-slate-800 hover:bg-slate-900 text-white shadow-slate-200"
+              } ${(selectedCategories.length === 0 || (matchMode === "refine" && currentWatchList.length === 0)) && "opacity-50 cursor-not-allowed transform-none"}`}
             >
               {matchMode === "expand" ? (
                 <>
@@ -473,10 +475,11 @@ export const Matching: React.FC<MatchingProps> = ({
                         {(viewingUser[cat.id] as string[])?.map((item) => (
                           <span
                             key={item}
-                            className={`px-4 py-2 rounded-2xl text-sm font-bold border transition-all ${selectedProfile?.[cat.id]?.includes(item)
-                              ? "bg-indigo-600 text-white border-indigo-600 shadow-md scale-105"
-                              : "bg-white text-slate-500 border-slate-100"
-                              }`}
+                            className={`px-4 py-2 rounded-2xl text-sm font-bold border transition-all ${
+                              selectedProfile?.[cat.id]?.includes(item)
+                                ? "bg-indigo-600 text-white border-indigo-600 shadow-md scale-105"
+                                : "bg-white text-slate-500 border-slate-100"
+                            }`}
                           >
                             {selectedProfile?.[cat.id]?.includes(item) && (
                               <Check
@@ -562,10 +565,11 @@ export const Matching: React.FC<MatchingProps> = ({
             <div
               key={`${user.id}-${idx}`}
               onClick={() => onViewUser(user)}
-              className={`w-full text-left p-2.5 rounded-xl border transition-all flex items-center gap-3 group cursor-pointer ${viewingUser?.id === user.id && view === "detail"
-                ? "bg-indigo-50 border-indigo-200 ring-2 ring-indigo-50"
-                : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
-                } ${isRightSidebarCollapsed ? "justify-center" : ""}`}
+              className={`w-full text-left p-2.5 rounded-xl border transition-all flex items-center gap-3 group cursor-pointer ${
+                viewingUser?.id === user.id && view === "detail"
+                  ? "bg-indigo-50 border-indigo-200 ring-2 ring-indigo-50"
+                  : "bg-white border-transparent hover:bg-slate-50 text-slate-600"
+              } ${isRightSidebarCollapsed ? "justify-center" : ""}`}
             >
               <div
                 className={`w-9 h-9 ${user.color} rounded-lg flex items-center justify-center text-white font-black shrink-0 text-sm shadow-sm ${rightSidebarTab === "drift" ? "grayscale opacity-60" : ""}`}
@@ -592,15 +596,15 @@ export const Matching: React.FC<MatchingProps> = ({
 
           {(rightSidebarTab === "watch" ? currentWatchList : currentDriftList)
             .length === 0 && (
-              <div className="text-center py-16 text-slate-300 px-6 animate-in fade-in duration-500">
-                <Search className="mx-auto mb-2 opacity-10" size={32} />
-                {!isRightSidebarCollapsed && (
-                  <p className="text-[10px] font-bold uppercase tracking-widest">
-                    No Data
-                  </p>
-                )}
-              </div>
-            )}
+            <div className="text-center py-16 text-slate-300 px-6 animate-in fade-in duration-500">
+              <Search className="mx-auto mb-2 opacity-10" size={32} />
+              {!isRightSidebarCollapsed && (
+                <p className="text-[10px] font-bold uppercase tracking-widest">
+                  No Data
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
         {!isRightSidebarCollapsed && (

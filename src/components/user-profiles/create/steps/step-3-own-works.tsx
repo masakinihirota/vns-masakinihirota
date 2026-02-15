@@ -84,10 +84,11 @@ export const Step3OwnWorks = ({
           <button
             onClick={addOwnWork}
             disabled={formData.ownWorks.some((w) => !w.title.trim())}
-            className={`flex items-center gap-2 font-medium px-4 py-2 rounded-lg transition-colors ${formData.ownWorks.some((w) => !w.title.trim())
-              ? "text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 cursor-not-allowed"
-              : "text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30"
-              }`}
+            className={`flex items-center gap-2 font-medium px-4 py-2 rounded-lg transition-colors ${
+              formData.ownWorks.some((w) => !w.title.trim())
+                ? "text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 cursor-not-allowed"
+                : "text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-orange-900/30"
+            }`}
           >
             <Plus className="w-4 h-4" />
             作品を追加する

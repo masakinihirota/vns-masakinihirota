@@ -1,8 +1,8 @@
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { db } from "./drizzle";
+import { db } from "./drizzle-postgres";
 import { createNation, getNationById, getNations } from "./nations";
-import { nations } from "./schema";
+import { nations } from "./schema.postgres";
 
 describe("Nations Integration (Drizzle)", () => {
   let testUserId: string;
@@ -12,7 +12,9 @@ describe("Nations Integration (Drizzle)", () => {
     // Find a user to be the owner
     const profile = await db.query.userProfiles.findFirst();
     if (!profile) {
-      throw new Error("Integration test requires at least one UserProfile in DB.");
+      throw new Error(
+        "Integration test requires at least one UserProfile in DB."
+      );
     }
     testUserId = profile.id;
     console.log("Using Test User ID:", testUserId);
@@ -40,8 +42,7 @@ describe("Nations Integration (Drizzle)", () => {
       // If it fails, we know we need it.
     };
 
-
-    const nation = await createNation(null, newNationData);
+    const nation = await createNation(newNationData as any);
 
     expect(nation).toBeDefined();
     expect(nation.id).toBeDefined();
@@ -53,17 +54,17 @@ describe("Nations Integration (Drizzle)", () => {
 
   it("should get a nation by ID", async () => {
     expect(createdNationId).toBeDefined();
-    const nation = await getNationById(null, createdNationId);
+    const nation = await getNationById(createdNationId);
     expect(nation).toBeDefined();
     expect(nation?.id).toBe(createdNationId);
     expect(nation?.name).toBe("Integration Test Nation");
   });
 
   it("should list nations", async () => {
-    const list = await getNations(null, 10);
+    const list = await getNations(10);
     expect(list).toBeDefined();
     expect(Array.isArray(list)).toBe(true);
-    const found = list?.find(n => n.id === createdNationId);
+    const found = list?.find((n) => n.id === createdNationId);
     expect(found).toBeDefined();
   });
 });

@@ -13,9 +13,7 @@ export async function followProfileAction(
   return followsDb.followProfile(session.user.id, followedProfileId, status);
 }
 
-export async function unfollowProfileAction(
-  followedProfileId: string
-) {
+export async function unfollowProfileAction(followedProfileId: string) {
   const session = await auth();
   if (!session?.user?.id) throw new Error("Unauthorized");
 

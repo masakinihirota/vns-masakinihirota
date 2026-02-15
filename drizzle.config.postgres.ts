@@ -5,6 +5,8 @@ export default defineConfig({
   out: "./drizzle/migrations", // Separate migrations folder for postgres
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.POSTGRES_URL || "postgres://postgres:password@localhost:5432/local_db",
+    url:
+      process.env.POSTGRES_URL ||
+      "postgres://postgres:password@localhost:5432/local_db",
   },
 });

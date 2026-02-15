@@ -1,5 +1,6 @@
 "use client";
 
+import { FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,14 +10,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { FaGithub } from "react-icons/fa";
 import { useGitHubLoginLogic } from "./github-login-form.logic";
 
 export function GitHubLoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  const { error, isLoading, handleSocialLogin, features } = useGitHubLoginLogic();
+  const { error, isLoading, handleSocialLogin, features } =
+    useGitHubLoginLogic();
 
   return (
     <div className={cn("flex flex-col gap-6 w-full", className)} {...props}>

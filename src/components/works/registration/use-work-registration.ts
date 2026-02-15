@@ -1,11 +1,11 @@
 "use client";
 
-import { createWorkWithEntryAction } from "@/app/actions/works";
-import { createClient } from "@/lib/supabase/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { createWorkWithEntryAction } from "@/app/actions/works";
+import { createClient } from "@/lib/supabase/client";
 import { registrationFormSchema, type RegistrationFormValues } from "./schema";
 
 export function useWorkRegistration() {
@@ -47,9 +47,9 @@ export function useWorkRegistration() {
       // Note: tags is a comma-separated string in the form, needs to be converted to array
       const tagsArray = values.work.tags
         ? values.work.tags
-          .split(",")
-          .map((t) => t.trim())
-          .filter(Boolean)
+            .split(",")
+            .map((t) => t.trim())
+            .filter(Boolean)
         : [];
 
       await createWorkWithEntryAction(

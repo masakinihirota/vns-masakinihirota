@@ -2,8 +2,10 @@ export { RootAccountOverview } from "./root-account-overview/root-account-overvi
 
 export { RootAccountDashboard } from "./root-account-dashboard/root-account-dashboard";
 export {
-  COUNTRIES_MOCK, LANGUAGES_MOCK, dummyRootAccountData,
-  dummyUserProfileList
+  COUNTRIES_MOCK,
+  LANGUAGES_MOCK,
+  dummyRootAccountData,
+  dummyUserProfileList,
 } from "./root-account-dashboard/root-account-dashboard.dummyData";
 export type {
   Award,
@@ -11,6 +13,5 @@ export type {
   Language,
   PenaltyStatus,
   RootAccount,
-  UserProfileSummary
+  UserProfileSummary,
 } from "./root-account-dashboard/root-account-dashboard.types";
-

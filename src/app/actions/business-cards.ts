@@ -7,6 +7,9 @@ export async function getBusinessCardAction(profileId: string) {
   return bcDb.getBusinessCardByProfileId(profileId);
 }
 
-export async function upsertBusinessCardAction(profileId: string, data: UpsertBusinessCardData) {
+export async function upsertBusinessCardAction(
+  profileId: string,
+  data: UpsertBusinessCardData
+) {
   return bcDb.upsertBusinessCard(profileId, data);
 }

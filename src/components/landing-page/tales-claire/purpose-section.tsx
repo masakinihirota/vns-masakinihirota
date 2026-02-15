@@ -1,6 +1,5 @@
 "use client";
 
-
 export const PurposeSection = () => {
   const purposes = [
     {

@@ -69,7 +69,7 @@ function mapCardToSupabase(bc: any): BusinessCard {
  */
 export async function getBusinessCardByProfileId(profileId: string) {
   const card = await db.query.businessCards.findFirst({
-    where: eq(businessCards.userProfileId, profileId)
+    where: eq(businessCards.userProfileId, profileId),
   });
   return card ? mapCardToSupabase(card) : null;
 }
@@ -87,16 +87,19 @@ export async function upsertBusinessCard(
     updatedAt: new Date().toISOString(),
   };
 
-  if (data.is_published !== undefined) drizzleInput.isPublished = data.is_published;
-  if (data.display_config !== undefined) drizzleInput.displayConfig = data.display_config;
+  if (data.is_published !== undefined)
+    drizzleInput.isPublished = data.is_published;
+  if (data.display_config !== undefined)
+    drizzleInput.displayConfig = data.display_config;
   if (data.content !== undefined) drizzleInput.content = data.content;
 
   // Upsert in Drizzle
-  const [result] = await db.insert(businessCards)
+  const [result] = await db
+    .insert(businessCards)
     .values(drizzleInput)
     .onConflictDoUpdate({
       target: businessCards.userProfileId,
-      set: drizzleInput
+      set: drizzleInput,
     })
     .returning();
 

@@ -1,7 +1,12 @@
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { db } from "./drizzle";
-import { cancelEventParticipation, createEvent, getEvent, joinEvent } from "./events";
+import {
+  cancelEventParticipation,
+  createEvent,
+  getEvent,
+  joinEvent,
+} from "./events";
 import { nationEvents } from "./schema";
 
 describe("Events Integration (Drizzle)", () => {
@@ -13,7 +18,9 @@ describe("Events Integration (Drizzle)", () => {
     // Find a user
     const profile = await db.query.userProfiles.findFirst();
     if (!profile) {
-      throw new Error("Integration test requires at least one UserProfile in DB.");
+      throw new Error(
+        "Integration test requires at least one UserProfile in DB."
+      );
     }
     testUserId = profile.id;
 
@@ -30,7 +37,9 @@ describe("Events Integration (Drizzle)", () => {
   afterAll(async () => {
     if (createdEventId) {
       try {
-        await db.delete(nationEvents).where(eq(nationEvents.id, createdEventId));
+        await db
+          .delete(nationEvents)
+          .where(eq(nationEvents.id, createdEventId));
       } catch (e) {
         console.log("Cleanup failed or event already deleted");
       }
@@ -45,9 +54,8 @@ describe("Events Integration (Drizzle)", () => {
       description: "Testing Drizzle Events",
       start_at: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
       type: "free",
-      status: "published"
+      status: "published",
     };
-
 
     // createEvent takes NationEventInsert which expects snake_case.
     const event = await createEvent(newEventData);

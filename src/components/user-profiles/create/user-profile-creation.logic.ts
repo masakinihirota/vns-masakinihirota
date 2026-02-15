@@ -1,5 +1,5 @@
-import { generateUniqueCandidates } from "@/lib/anonymous-name-generator";
 import { useEffect, useMemo, useState } from "react";
+import { generateUniqueCandidates } from "@/lib/anonymous-name-generator";
 import { generateDummyWorks } from "./user-profile-creation.constants";
 import {
   FavWork,

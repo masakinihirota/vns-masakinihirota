@@ -9,7 +9,11 @@ import {
 } from "lucide-react";
 import React from "react";
 import { ERAS, WORK_CATEGORIES } from "../user-profile-creation.constants";
-import { MasterWork, Period, UserProfile } from "../user-profile-creation.types";
+import {
+  MasterWork,
+  Period,
+  UserProfile,
+} from "../user-profile-creation.types";
 
 interface Step4FavoriteWorksProps {
   formData: UserProfile;
@@ -84,10 +88,11 @@ export const Step4FavoriteWorks = ({
           <button
             key={p}
             onClick={() => setActivePeriod(p)}
-            className={`pb-3 px-2 text-sm font-bold border-b-2 transition-colors ${activePeriod === p
+            className={`pb-3 px-2 text-sm font-bold border-b-2 transition-colors ${
+              activePeriod === p
                 ? "border-pink-500 text-pink-600"
                 : "border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 hover:border-slate-300 dark:hover:border-slate-600"
-              }`}
+            }`}
           >
             {p === "LIFE" && "人生 (Life)"}
             {p === "NOW" && "今 (Now)"}
@@ -180,10 +185,11 @@ export const Step4FavoriteWorks = ({
                         onClick={() =>
                           setWorkTier(work.id, activePeriod, "normal")
                         }
-                        className={`text-[10px] font-bold px-2 py-1 rounded transition-colors ${work.tier === "normal"
+                        className={`text-[10px] font-bold px-2 py-1 rounded transition-colors ${
+                          work.tier === "normal"
                             ? "bg-slate-400 dark:bg-slate-600 text-white shadow-sm"
                             : "text-slate-300 dark:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-500 dark:hover:text-slate-400"
-                          }`}
+                        }`}
                       >
                         普通
                       </button>
@@ -196,7 +202,8 @@ export const Step4FavoriteWorks = ({
                           onClick={() =>
                             setWorkTier(work.id, activePeriod, t as any)
                           }
-                          className={`h-6 px-2 text-[10px] font-bold rounded flex items-center justify-center transition-all ${work.tier === t
+                          className={`h-6 px-2 text-[10px] font-bold rounded flex items-center justify-center transition-all ${
+                            work.tier === t
                               ? t === 1
                                 ? "bg-purple-600 text-white shadow-sm"
                                 : t === 2
@@ -205,7 +212,7 @@ export const Step4FavoriteWorks = ({
                                     ? "bg-teal-500 text-white"
                                     : "bg-slate-400 dark:bg-slate-500 text-white"
                               : "text-slate-300 dark:text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-600"
-                            }`}
+                          }`}
                         >
                           {t === "normal" ? "普通" : `T${t}`}
                         </button>
@@ -269,10 +276,11 @@ export const Step4FavoriteWorks = ({
                             : [...prev, cat]
                         );
                       }}
-                      className={`text-xs px-3 py-1.5 rounded-md border transition-all ${isSelected
+                      className={`text-xs px-3 py-1.5 rounded-md border transition-all ${
+                        isSelected
                           ? "bg-indigo-600 text-white border-indigo-600 font-bold shadow-md"
                           : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:border-indigo-300 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400"
-                        }`}
+                      }`}
                     >
                       {cat}
                     </button>
@@ -293,10 +301,11 @@ export const Step4FavoriteWorks = ({
                             : [...prev, era]
                         );
                       }}
-                      className={`text-[10px] px-2 py-1 rounded-full border transition-all ${isSelected
+                      className={`text-[10px] px-2 py-1 rounded-full border transition-all ${
+                        isSelected
                           ? "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-700 font-bold shadow-sm"
                           : "bg-white dark:bg-slate-800 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-indigo-300 hover:text-indigo-500"
-                        }`}
+                      }`}
                     >
                       {era}
                     </button>
@@ -335,10 +344,11 @@ export const Step4FavoriteWorks = ({
                   <div
                     key={work.id}
                     onClick={() => !isAdded && addFavWorkFromMaster(work)}
-                    className={`flex items-start justify-between p-2 rounded border transition-all group ${isAdded
+                    className={`flex items-start justify-between p-2 rounded border transition-all group ${
+                      isAdded
                         ? "bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 opacity-60 cursor-default"
                         : "bg-white dark:bg-slate-900 border-transparent hover:bg-indigo-50 dark:hover:bg-indigo-900/20 hover:border-indigo-100 dark:hover:border-indigo-800 cursor-pointer shadow-sm hover:shadow-md"
-                      }`}
+                    }`}
                   >
                     <div className="min-w-0 pr-2 pointer-events-none">
                       <div className="font-bold text-slate-700 dark:text-slate-200 text-sm truncate">
@@ -360,10 +370,11 @@ export const Step4FavoriteWorks = ({
                     </div>
                     <button
                       disabled={isAdded}
-                      className={`shrink-0 p-1.5 rounded-full transition-all pointer-events-none ${isAdded
+                      className={`shrink-0 p-1.5 rounded-full transition-all pointer-events-none ${
+                        isAdded
                           ? "text-slate-400 bg-slate-200 dark:bg-slate-700"
                           : "text-slate-300 group-hover:text-indigo-600 group-hover:bg-indigo-100 dark:group-hover:bg-indigo-900"
-                        }`}
+                      }`}
                     >
                       {isAdded ? (
                         <CheckCircle2 className="w-5 h-5" />

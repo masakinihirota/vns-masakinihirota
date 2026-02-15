@@ -12,6 +12,5 @@ export {
   joinGroup,
   leaveGroup,
   updateGroup,
-  useGroupLogic
+  useGroupLogic,
 } from "./groups.logic";
-

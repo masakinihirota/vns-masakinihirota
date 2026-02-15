@@ -13,7 +13,10 @@ export async function startTransactionAction(itemId: string, buyerId: string) {
   return marketDb.startTransaction(itemId, buyerId);
 }
 
-export async function completeTransactionAction(transactionId: string, userId: string) {
+export async function completeTransactionAction(
+  transactionId: string,
+  userId: string
+) {
   return marketDb.completeTransaction(transactionId, userId);
 }
 

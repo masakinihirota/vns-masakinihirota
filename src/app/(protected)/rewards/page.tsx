@@ -1,9 +1,9 @@
+import { Metadata } from "next";
 import { getPointHistoryAction } from "@/app/actions/rewards";
 import { DailyBonusButton } from "@/components/rewards/daily-bonus-button";
 import { PointHistory } from "@/components/rewards/point-history";
 import { Separator } from "@/components/ui/separator";
 import { type PointTransaction } from "@/lib/db/rewards";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "報酬・ポイント | VNS",

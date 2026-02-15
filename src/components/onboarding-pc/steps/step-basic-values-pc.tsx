@@ -85,8 +85,9 @@ export function StepBasicValuesPC({ data, onUpdate }: StepBasicValuesPCProps) {
               </h3>
 
               <div
-                className={`flex gap-3 ${question.id === "opinion_diversity" ? "flex-col" : "flex-wrap"
-                  }`}
+                className={`flex gap-3 ${
+                  question.id === "opinion_diversity" ? "flex-col" : "flex-wrap"
+                }`}
               >
                 {question.options.map((option) => {
                   const val = selectedValues[question.id];
@@ -99,9 +100,10 @@ export function StepBasicValuesPC({ data, onUpdate }: StepBasicValuesPCProps) {
                       onClick={() => handleChange(question.id, option.value)}
                       className={`
                         px-4 py-2 rounded-lg text-sm transition-all border text-left
-                        ${isSelected
-                          ? "bg-teal-500 text-white border-teal-500 shadow-md shadow-teal-500/20"
-                          : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-teal-300 dark:hover:border-teal-700 hover:bg-teal-50 dark:hover:bg-teal-900/30"
+                        ${
+                          isSelected
+                            ? "bg-teal-500 text-white border-teal-500 shadow-md shadow-teal-500/20"
+                            : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 border-slate-200 dark:border-slate-700 hover:border-teal-300 dark:hover:border-teal-700 hover:bg-teal-50 dark:hover:bg-teal-900/30"
                         }
                       `}
                     >

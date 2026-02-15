@@ -1,9 +1,14 @@
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { db } from "./drizzle";
-import { completeTransaction, createMarketItem, getMarketItemById, startTransaction } from "./market";
+import { db } from "./drizzle-postgres";
+import {
+  completeTransaction,
+  createMarketItem,
+  getMarketItemById,
+  startTransaction,
+} from "./market";
 import { createNation } from "./nations";
-import { marketItems, marketTransactions, nations } from "./schema";
+import { marketItems, marketTransactions, nations } from "./schema.postgres";
 import { createUserProfile, getUserProfiles } from "./user-profiles";
 
 describe("Market Integration (Drizzle)", () => {
@@ -17,7 +22,8 @@ describe("Market Integration (Drizzle)", () => {
   beforeAll(async () => {
     // Setup: Get Root Account
     const profile = await db.query.userProfiles.findFirst();
-    if (!profile) throw new Error("Need at least one profile to find root account");
+    if (!profile)
+      throw new Error("Need at least one profile to find root account");
     rootAccountId = profile.rootAccountId;
 
     // Ensure we have 2 profiles (Seller, Buyer)
@@ -40,12 +46,15 @@ describe("Market Integration (Drizzle)", () => {
       try {
         const buyer = await createUserProfile(rootAccountId, {
           display_name: "Market Test Buyer",
-          role_type: "member"
+          role_type: "member",
         });
         buyerId = buyer.id;
       } catch (e) {
         // If limit reached, reuse seller as buyer (self-trade)
-        console.warn("Could not create buyer profile, using seller checking self-trade", e);
+        console.warn(
+          "Could not create buyer profile, using seller checking self-trade",
+          e
+        );
         buyerId = sellerId;
       }
     }
@@ -56,9 +65,9 @@ describe("Market Integration (Drizzle)", () => {
       description: "For Market Tests",
       owner_user_id: sellerId,
       transaction_fee_rate: 10.0, // 10%
-      foundation_fee: 1000
+      foundation_fee: 1000,
     };
-    const nation = await createNation(null, nationData);
+    const nation = await createNation(nationData as any);
     nationId = nation.id;
   });
 
@@ -67,12 +76,12 @@ describe("Market Integration (Drizzle)", () => {
     if (itemId) {
       try {
         await db.delete(marketItems).where(eq(marketItems.id, itemId));
-      } catch { }
+      } catch {}
     }
     if (nationId) {
       try {
         await db.delete(nations).where(eq(nations.id, nationId));
-      } catch { }
+      } catch {}
     }
     // Buyer profile cleanup? Maybe leave it or cascade deletes?
     // user_profiles are expensive to delete if linked.
@@ -86,10 +95,10 @@ describe("Market Integration (Drizzle)", () => {
       description: "An item for sale",
       price: 1000,
       type: "sell" as const,
-      status: "open" as const
+      status: "open" as const,
     };
 
-    const item = await createMarketItem(null, itemData);
+    const item = await createMarketItem(itemData as any);
     expect(item).toBeDefined();
     expect(item.id).toBeDefined();
     expect(item.price).toBe(1000);
@@ -101,14 +110,14 @@ describe("Market Integration (Drizzle)", () => {
   it("should start a transaction", async () => {
     expect(itemId).toBeDefined();
     // Buyer buys
-    const txId = await startTransaction(null, itemId, buyerId);
+    const txId = await startTransaction(itemId, buyerId);
     expect(txId).toBeDefined();
     transactionId = txId; // Wait, startTransaction returns ID or Object?
     // My implementation in market.ts returns newTx.id (string).
 
     // Verify transaction record
     const tx = await db.query.marketTransactions.findFirst({
-      where: eq(marketTransactions.id, txId)
+      where: eq(marketTransactions.id, txId),
     });
     expect(tx).toBeDefined();
     expect(tx?.status).toBe("pending");
@@ -122,13 +131,13 @@ describe("Market Integration (Drizzle)", () => {
   it("should complete a transaction", async () => {
     expect(transactionId).toBeDefined();
 
-    const completed = await completeTransaction(null, transactionId, buyerId);
+    const completed = await completeTransaction(transactionId, buyerId);
     expect(completed).toBeDefined();
     expect(completed.status).toBe("completed");
     expect(completed.completed_at).toBeDefined();
 
     // Verify Item status
-    const item = await getMarketItemById(null, itemId);
+    const item = await getMarketItemById(itemId);
     expect(item?.status).toBe("sold");
   });
 });

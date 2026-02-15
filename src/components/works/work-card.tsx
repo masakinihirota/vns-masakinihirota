@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -10,7 +11,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Tables } from "@/types/types_db";
-import Link from "next/link";
 
 type Work = Tables<"works">;
 
@@ -28,7 +28,9 @@ export const WorkCard = ({ work }: WorkCardProps) => {
             {work.category}
           </Badge>
         </div>
-        <CardDescription className="line-clamp-1">{work.author}</CardDescription>
+        <CardDescription className="line-clamp-1">
+          {work.author}
+        </CardDescription>
       </CardHeader>
       <CardContent className="flex-grow">
         <p className="text-sm text-muted-foreground line-clamp-3">

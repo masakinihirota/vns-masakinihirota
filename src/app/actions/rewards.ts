@@ -1,8 +1,8 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import { getPointHistory, grantPoints } from "@/lib/db/rewards";
-import { revalidatePath } from "next/cache";
 
 export async function claimDailyBonusAction() {
   const session = await auth();
@@ -15,10 +15,11 @@ export async function claimDailyBonusAction() {
   try {
     // Check if user already claimed today
     const history = await getPointHistory(user.id, 100);
-    const today = new Date().toISOString().split('T')[0];
-    const hasClaimed = history.some((h) =>
-      h.type === 'daily_login' &&
-      new Date(h.createdAt).toISOString().split('T')[0] === today
+    const today = new Date().toISOString().split("T")[0];
+    const hasClaimed = history.some(
+      (h) =>
+        h.type === "daily_login" &&
+        new Date(h.createdAt).toISOString().split("T")[0] === today
     );
 
     if (hasClaimed) {

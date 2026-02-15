@@ -1,9 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { getWorksAction } from "@/app/actions/works";
 import { Input } from "@/components/ui/input";
 import { Tables } from "@/types/types_db";
-import { useState } from "react";
 import { WorkCard } from "./work-card";
 import { WorkCreateModal } from "./work-create-modal";
 

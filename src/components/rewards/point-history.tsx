@@ -17,7 +17,9 @@ interface PointHistoryProps {
 
 export function PointHistory({ transactions }: PointHistoryProps) {
   if (transactions.length === 0) {
-    return <div className="text-gray-500 text-center py-4">履歴はありません。</div>;
+    return (
+      <div className="text-gray-500 text-center py-4">履歴はありません。</div>
+    );
   }
 
   return (
@@ -29,15 +31,21 @@ export function PointHistory({ transactions }: PointHistoryProps) {
           const date = dateStr ? new Date(dateStr) : new Date();
 
           return (
-            <li key={tx.id} className="flex justify-between items-center p-3 border rounded-lg bg-white/50 dark:bg-black/20 backdrop-blur-sm">
+            <li
+              key={tx.id}
+              className="flex justify-between items-center p-3 border rounded-lg bg-white/50 dark:bg-black/20 backdrop-blur-sm"
+            >
               <div>
                 <div className="font-semibold">{tx.description || tx.type}</div>
                 <div className="text-sm text-gray-500">
                   {format(date, "yyyy/MM/dd HH:mm", { locale: ja })}
                 </div>
               </div>
-              <div className={`font-bold ${tx.amount > 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
-                {tx.amount > 0 ? "+" : ""}{tx.amount} pt
+              <div
+                className={`font-bold ${tx.amount > 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}
+              >
+                {tx.amount > 0 ? "+" : ""}
+                {tx.amount} pt
               </div>
             </li>
           );

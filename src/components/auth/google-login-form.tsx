@@ -1,5 +1,6 @@
-"use client";
-
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,10 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 
 export function GoogleLoginForm({
   className,
@@ -22,19 +20,13 @@ export function GoogleLoginForm({
 
   const handleSocialLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/home`,
-      },
-    });
-
-    if (error) {
-      setError(error.message);
+    try {
+      await signIn("google", { callbackUrl: "/home" });
+    } catch (err: any) {
+      setError(err.message || "An error occurred during login");
       setIsLoading(false);
     }
   };

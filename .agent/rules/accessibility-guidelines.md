@@ -12,6 +12,7 @@ UIコンポーネントのテストには、必ず `vitest-axe` を導入して�
 
 - **原則**: 全てのUIコンポーネント（Button, Modal, Page等）に対し、`toHaveNoViolations` のチェックを行う。
 - **実装例**:
+
   ```typescript
   import { render } from '@testing-library/react';
   import { axe } from 'vitest-axe';
@@ -25,6 +26,7 @@ UIコンポーネントのテストには、必ず `vitest-axe` を導入して�
     });
   });
   ```
+
 - **注意**: ラベル不足などのエラーは、`aria-hidden` で逃げず、適切なマークアップやProps修正で解決すること。
 
 ## 2. Color Universal Design (CUD・配色)
@@ -35,6 +37,7 @@ UIコンポーネントのテストには、必ず `vitest-axe` を導入して�
 - **コントラスト**: 文字と背景のコントラスト比は **4.5:1 以上 (WCAG AA)** を確保する。
 
 ### 推奨パレット (Tailwind)
+
 - **Error**: `red-600` or `orange-700` (朱色寄り)
 - **Success**: `teal-600` or `emerald-600` (青み寄り)
 - **Text**: `neutral-800` (完全な黒より目に優しい)

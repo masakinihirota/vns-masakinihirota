@@ -12,20 +12,25 @@ description: Protocol for safely releasing code changes, including branch manage
 `main` にマージする前に、以下のコマンドを順に実行し、全て成功することを確認します。
 
 1.  **Static Analysis & Audit**:
+
     ```bash
     pnpm run lint:fix
     pnpm run format:fix
     pnpm audit --audit-level=moderate
     ```
+
     - `Critical`/`High` の脆弱性は必ず修正してください。
+
 2.  **Type Check**:
     ```bash
     pnpm run check
     ```
 3.  **Build Verification** (最重要):
+
     ```bash
     pnpm run build
     ```
+
     - ビルドが失敗した状態でのリリースは**厳禁**です。
 
 ## 2. Release Execution (リリース実行)

@@ -16,10 +16,10 @@ description: Review 指示書
 
 3.  **レビュー実行**:
     - 以下の観点でコードをチェックします。
-        - **機能性**: バグはないか？ 仕様通りか？
-        - **セキュリティ**: 入力バリデーション、認証・認可、SQLインジェクション対策などは十分か？ ([Security Review](./skills/code-review/SKILL.md#2-security-review) 参照)
-        - **パフォーマンス**: 無駄な再レンダリングやN+1問題はないか？ ([Performance Review](./skills/code-review/SKILL.md#3-performance-review) 参照)
-        - **可読性・保守性**: 命名規則、ディレクトリ構造、設計原則（DRY, SOLIDなど）に従っているか？
+      - **機能性**: バグはないか？ 仕様通りか？
+      - **セキュリティ**: 入力バリデーション、認証・認可、SQLインジェクション対策などは十分か？ ([Security Review](./skills/code-review/SKILL.md#2-security-review) 参照)
+      - **パフォーマンス**: 無駄な再レンダリングやN+1問題はないか？ ([Performance Review](./skills/code-review/SKILL.md#3-performance-review) 参照)
+      - **可読性・保守性**: 命名規則、ディレクトリ構造、設計原則（DRY, SOLIDなど）に従っているか？
 
 4.  **レポート作成**:
     - 検出された問題を優先度（Critical, Major, Minor）と共にリストアップします。

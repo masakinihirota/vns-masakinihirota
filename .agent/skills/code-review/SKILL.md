@@ -25,6 +25,7 @@ description: Comprehensive code review skill including security, database, UI st
 ## 3. Domain-Specific Checks (領域別チェック)
 
 ### 🛡️ Security & RSC Audit
+
 - **Secrets**: APIキーやパスワードがハードコードされていないか？ (`process.env` を使用)
 - **Server Actions**: `use server` をRPCとして乱用していないか？ (Route Handlers推奨)
 - **Input Validation**: サーバーサイドで **Zod** 等によるバリデーションを行っているか？
@@ -32,17 +33,20 @@ description: Comprehensive code review skill including security, database, UI st
 - **XSS**: `dangerouslySetInnerHTML` を使用していないか？
 
 ### 💾 Database & SQL
+
 - **RLS**: テーブル作成時に RLS (`ENABLE ROW LEVEL SECURITY`) を有効化しているか？
 - **Indexes**: 外部キーや検索列にインデックスが貼られているか？ (`Index Shotgun` アンチパターン回避)
 - **N+1**: ループ内でクエリを発行していないか？
 - **Data Types**: 適切なデータ型（`timestamptz`, `jsonb`）を使用しているか？
 
 ### 🏗️ UI Structure & Components
+
 - **Collocation**: `src/components/<page>/<feature>/` の構成を守っているか？
 - **Separation**: UI (`.tsx`) とロジック (`.logic.ts`) が分離されているか？
 - **Barrel Export**: `index.ts` で適切なエクスポートが行われているか？
 
 ### 🧹 Tech Debt & Refactoring
+
 - **Duplication**: 3回以上繰り返されるロジックは共通化されているか？
 - **Dead Code**: 未使用の変数やインポート、デバッグログは削除されているか？
 - **Complexity**: ネストが深すぎる箇所はガード節で平坦化されているか？

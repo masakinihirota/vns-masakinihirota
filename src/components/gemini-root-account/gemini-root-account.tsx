@@ -280,7 +280,7 @@ export const GeminiRootAccountView = ({
           </div>
         </section>
 
-        { }
+        {}
         <section className="p-6 bg-gray-800 shadow-lg rounded-xl">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-100">

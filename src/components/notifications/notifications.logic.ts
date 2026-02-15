@@ -1,23 +1,19 @@
 "use client";
 
 import useSWR from "swr";
-import { Notification } from "@/components/groups/groups.types";
 import {
-  getUnreadNotifications,
-  markNotificationAsRead,
-} from "@/lib/db/notifications";
-import { createClient } from "@/lib/supabase/client";
+  getUnreadNotificationsAction,
+  markNotificationAsReadAction,
+} from "@/app/actions/notifications";
+import { Notification } from "@/components/groups/groups.types";
 
-const fetcher = async (key: string) => {
-  const [, userId] = key.split(":");
-  if (!userId) return [];
-  const supabase = createClient();
-  return (await getUnreadNotifications(supabase, userId)) as Notification[];
+const fetcher = async () => {
+  return (await getUnreadNotificationsAction()) as Notification[];
 };
 
-export const useNotifications = (userId: string | undefined) => {
+export const useNotifications = (isLoggedIn: boolean) => {
   const { data, error, isLoading, mutate } = useSWR<Notification[]>(
-    userId ? `notifications:${userId}` : null,
+    isLoggedIn ? "notifications" : null,
     fetcher
   );
 
@@ -31,8 +27,7 @@ export const useNotifications = (userId: string | undefined) => {
 
 export const useMarkAsRead = () => {
   const markAsRead = async (notificationId: string) => {
-    const supabase = createClient();
-    return await markNotificationAsRead(supabase, notificationId);
+    return await markNotificationAsReadAction(notificationId);
   };
   return { markAsRead };
 };

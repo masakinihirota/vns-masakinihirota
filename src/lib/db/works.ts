@@ -1,5 +1,5 @@
-import { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
 import { eq } from "drizzle-orm";
+import { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
 import { db } from "./drizzle-postgres";
 import { userWorkEntries, works } from "./schema.postgres";
 
@@ -33,9 +33,7 @@ function mapWorkToSupabase(w: any): Work {
 /**
  * Get works with optional limit
  */
-export const getWorks = async (
-  limit = 20
-) => {
+export const getWorks = async (limit = 20) => {
   const records = await db.query.works.findMany({
     limit,
     orderBy: (table, { desc }) => [desc(table.createdAt)],
@@ -48,9 +46,7 @@ import { isValidUUID } from "@/lib/utils";
 /**
  * Get work by ID
  */
-export const getWorkById = async (
-  workId: string
-) => {
+export const getWorkById = async (workId: string) => {
   if (!isValidUUID(workId)) {
     return null;
   }
@@ -64,9 +60,7 @@ export const getWorkById = async (
 /**
  * Create a new work
  */
-export const createWork = async (
-  workData: WorkInsert
-) => {
+export const createWork = async (workData: WorkInsert) => {
   // Map snake_case to camelCase for Drizzle
   const newWork = {
     title: workData.title,
@@ -136,24 +130,28 @@ export const createWorkWithEntry = async (
 /**
  * Update a work
  */
-export const updateWork = async (
-  workId: string,
-  updateData: WorkUpdate
-) => {
+export const updateWork = async (workId: string, updateData: WorkUpdate) => {
   // Map snake_case to camelCase for Drizzle update
   const mappedData: any = {};
   if (updateData.title !== undefined) mappedData.title = updateData.title;
   if (updateData.author !== undefined) mappedData.author = updateData.author;
-  if (updateData.category !== undefined) mappedData.category = updateData.category;
-  if (updateData.is_official !== undefined) mappedData.isOfficial = updateData.is_official;
+  if (updateData.category !== undefined)
+    mappedData.category = updateData.category;
+  if (updateData.is_official !== undefined)
+    mappedData.isOfficial = updateData.is_official;
   if (updateData.status !== undefined) mappedData.status = updateData.status;
-  if (updateData.description !== undefined) mappedData.description = updateData.description;
+  if (updateData.description !== undefined)
+    mappedData.description = updateData.description;
   if (updateData.tags !== undefined) mappedData.tags = updateData.tags;
-  if (updateData.external_url !== undefined) mappedData.externalUrl = updateData.external_url;
-  if (updateData.affiliate_url !== undefined) mappedData.affiliateUrl = updateData.affiliate_url;
-  if (updateData.release_year !== undefined) mappedData.releaseYear = updateData.release_year;
+  if (updateData.external_url !== undefined)
+    mappedData.externalUrl = updateData.external_url;
+  if (updateData.affiliate_url !== undefined)
+    mappedData.affiliateUrl = updateData.affiliate_url;
+  if (updateData.release_year !== undefined)
+    mappedData.releaseYear = updateData.release_year;
   if (updateData.scale !== undefined) mappedData.scale = updateData.scale;
-  if (updateData.is_purchasable !== undefined) mappedData.isPurchasable = updateData.is_purchasable;
+  if (updateData.is_purchasable !== undefined)
+    mappedData.isPurchasable = updateData.is_purchasable;
 
   mappedData.updatedAt = new Date().toISOString();
 

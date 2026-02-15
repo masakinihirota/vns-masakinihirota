@@ -1,6 +1,6 @@
-import { createClient } from "@supabase/supabase-js";
 import fs from "fs";
 import path from "path";
+import { createClient } from "@supabase/supabase-js";
 
 // Load env vars manually
 const envPath = path.resolve(__dirname, "../.env.local");
@@ -70,8 +70,6 @@ async function runTests() {
   const clientA = createClient(supabaseUrl, supabaseAnonKey, {
     global: { headers: { Authorization: `Bearer ${sessionA?.access_token}` } },
   });
-
-
 
   // 2. Test: Secure create_group_with_leader (Atomic)
   console.log("\n[Test] Atomic Group Creation...");

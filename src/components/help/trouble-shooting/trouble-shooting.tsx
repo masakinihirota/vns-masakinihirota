@@ -1,3 +1,5 @@
+import { Bot, HeartHandshake, ShieldAlert, Split, Star } from "lucide-react";
+import React from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -14,8 +16,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Bot, HeartHandshake, ShieldAlert, Split, Star } from "lucide-react";
-import React from "react";
 
 export function TroubleShooting() {
   return (
@@ -201,8 +201,7 @@ export function TroubleShooting() {
               example: "初心者狩り（スマーフ）、偽装工作",
               action: (
                 <>
-                  <strong>【1人1垢原則】</strong>{" "}
-                  認証によるサブ垢作成の封じ込め
+                  <strong>【1人1垢原則】</strong> 認証によるサブ垢作成の封じ込め
                 </>
               ),
             },
@@ -250,8 +249,7 @@ export function TroubleShooting() {
               example: "金銭感覚のズレ、些細な誤解、ドタキャン",
               action: (
                 <>
-                  <strong>【事前選別/介入】</strong>{" "}
-                  プロフ充実化と第三者仲裁
+                  <strong>【事前選別/介入】</strong> プロフ充実化と第三者仲裁
                 </>
               ),
             },
@@ -281,8 +279,7 @@ export function TroubleShooting() {
               example: "規約ギリギリの不快言動、粘着性",
               action: (
                 <>
-                  <strong>【スコア制限】</strong>{" "}
-                  低評価者同士のみをマッチング
+                  <strong>【スコア制限】</strong> 低評価者同士のみをマッチング
                 </>
               ),
             },

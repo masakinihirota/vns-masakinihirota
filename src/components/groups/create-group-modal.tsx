@@ -1,5 +1,8 @@
 "use client";
 
+import { Plus } from "lucide-react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -21,9 +24,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Tables } from "@/types/types_db";
-import { Plus } from "lucide-react";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { createGroup, getMyProfiles } from "./groups.logic";
 
 export function CreateGroupModal({

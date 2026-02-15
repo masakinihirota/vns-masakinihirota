@@ -1,5 +1,21 @@
 "use client";
 
+import {
+  ArrowRight,
+  Bell,
+  Globe,
+  HelpCircle,
+  Megaphone,
+  MonitorSmartphone,
+  Moon,
+  Search,
+  Sun,
+} from "lucide-react";
+import { useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import * as React from "react";
 import { WalletBadge } from "@/components/points/wallet-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,24 +35,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { createClient } from "@/lib/supabase/client";
 import { TrialStorage } from "@/lib/trial-storage";
-import { type User } from "@supabase/supabase-js";
-import {
-  ArrowRight,
-  Bell,
-  Globe,
-  HelpCircle,
-  Megaphone,
-  MonitorSmartphone,
-  Moon,
-  Search,
-  Sun
-} from "lucide-react";
-import { useTheme } from "next-themes";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import * as React from "react";
 import { TrialOnboardingBackButton } from "../trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TrialStatusBadge } from "../trial-status-badge/TrialStatusBadge";
 
@@ -46,8 +45,6 @@ const mockNotifications = [
   { id: "2", title: "作品にいいねがつきました", time: "1時間前", read: false },
   { id: "3", title: "プロフィールが更新されました", time: "昨日", read: true },
 ];
-
-
 
 // 検索バーコンポーネント
 function HeaderSearch() {
@@ -233,8 +230,6 @@ export function ThemeToggle() {
   );
 }
 
-
-
 // 通知ベル
 function NotificationBell() {
   const unreadCount = mockNotifications.filter((n) => !n.read).length;
@@ -268,8 +263,9 @@ function NotificationBell() {
         {mockNotifications.map((notification) => (
           <DropdownMenuItem
             key={notification.id}
-            className={`flex flex-col items-start gap-1 ${!notification.read ? "bg-accent/50" : ""
-              }`}
+            className={`flex flex-col items-start gap-1 ${
+              !notification.read ? "bg-accent/50" : ""
+            }`}
           >
             <span className="text-sm">{notification.title}</span>
             <span className="text-xs text-muted-foreground">
@@ -312,13 +308,13 @@ export function HelpButton() {
 
 interface VNSButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
-  | "primary"
-  | "secondary"
-  | "ghost"
-  | "persona"
-  | "warm"
-  | "emerald"
-  | "indigo";
+    | "primary"
+    | "secondary"
+    | "ghost"
+    | "persona"
+    | "warm"
+    | "emerald"
+    | "indigo";
   size?: "sm" | "md" | "lg" | "icon";
   icon?: React.ElementType;
   iconPosition?: "left" | "right";
@@ -471,24 +467,9 @@ export function GlobalHeader({
   showSidebarTrigger?: boolean;
   isPublic?: boolean;
 }) {
-  const [user, setUser] = React.useState<User | null>(null);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    const supabase = createClient();
-    void supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+  const { data: session, status } = useSession();
+  const user = session?.user;
+  const loading = status === "loading";
 
   const [isTrial, setIsTrial] = React.useState(false);
 

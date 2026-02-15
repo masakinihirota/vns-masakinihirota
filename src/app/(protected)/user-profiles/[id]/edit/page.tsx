@@ -1,6 +1,6 @@
+import { notFound } from "next/navigation";
 import { ProfileEditContainer } from "@/components/profile-edit";
 import { isValidUUID } from "@/lib/utils";
-import { notFound } from "next/navigation";
 
 export default async function ProfileEditPage({
   params,

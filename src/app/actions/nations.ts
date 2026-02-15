@@ -18,6 +18,9 @@ export async function getNationByIdAction(nationId: string) {
   return nationsDb.getNationById(nationId);
 }
 
-export async function updateNationAction(nationId: string, updateData: NationUpdate) {
+export async function updateNationAction(
+  nationId: string,
+  updateData: NationUpdate
+) {
   return nationsDb.updateNation(nationId, updateData);
 }

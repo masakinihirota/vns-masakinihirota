@@ -1,5 +1,5 @@
-import { getZodiacSymbol } from "@/lib/anonymous-name-generator";
 import { Star } from "lucide-react";
+import { getZodiacSymbol } from "@/lib/anonymous-name-generator";
 import {
   PURPOSES,
   USER_TYPES,
@@ -183,10 +183,11 @@ export const Step6Confirmation = ({
                       {formData.favWorks.map((w) => (
                         <span
                           key={w.id}
-                          className={`text-sm px-3 py-1 rounded-full border ${w.isBest
-                            ? "bg-yellow-50 dark:bg-yellow-900/30 border-yellow-200 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200"
-                            : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300"
-                            }`}
+                          className={`text-sm px-3 py-1 rounded-full border ${
+                            w.isBest
+                              ? "bg-yellow-50 dark:bg-yellow-900/30 border-yellow-200 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200"
+                              : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300"
+                          }`}
                         >
                           {w.isBest && (
                             <Star className="inline w-3 h-3 mr-1 -mt-0.5 fill-current" />

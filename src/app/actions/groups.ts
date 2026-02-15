@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import * as groupsDb from "@/lib/db/groups";
+import { getUserProfilesByAuthUserId } from "@/lib/db/user-profiles";
 import type { TablesInsert, TablesUpdate } from "@/types/types_db";
 
 type GroupInsert = TablesInsert<"groups">;
@@ -15,7 +16,10 @@ export async function createGroupAction(groupData: GroupInsert) {
   return groupsDb.createGroup(groupData);
 }
 
-export async function updateGroupAction(groupId: string, updateData: GroupUpdate) {
+export async function updateGroupAction(
+  groupId: string,
+  updateData: GroupUpdate
+) {
   return groupsDb.updateGroup(groupId, updateData);
 }
 
