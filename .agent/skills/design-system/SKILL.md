@@ -46,6 +46,16 @@ description: VNS Design System (Glassmorphism/Elegant), UI constraints, and impl
 - **余白不足**: 要素間が詰まりすぎている。`gap-4` や `p-6` など、十分な余白を取る。
 - **プレースホルダー不足**: 画像読み込み中やデータ取得中に何も表示しない（スケルトンスクリーンを使うこと）。
 
-## 4. Reference (参考)
+## 4. Resources (詳細リソース)
+
+以下のディレクトリに対応する詳細なガイドラインが含まれています。
+
+- [DADS実装指示 (Design Tokens)](./resources/ui-dadsi-instruction.md)
+- [HID 24指針 (UI Principles)](./resources/ui-principles-instruction.md)
+- [HID 24指針 Part 2](./resources/ui-principles-instruction2.md)
+- [Shadcn UI実装ガイド](./resources/ui-shadcn-instruction.md)
+- [UXガイドライン](./resources/ux-instruction.md)
+
+## 5. Reference (参考)
 
 - **Web Design Guidelines**: 外部ガイドラインやトレンドを参照する場合は、一般的な「モダンWebデザイン」のベストプラクティス（Apple Human Interface Guidelines, Material Design 3）の概念を取り入れる。

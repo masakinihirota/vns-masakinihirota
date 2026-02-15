@@ -64,8 +64,11 @@ it('should submit form when valid', async () => {
 
 ## 4. 命名規則と配置
 
+詳細は [Vitest Naming Rules](./rules/naming.md) を参照してください。
+
 | テスト種別 | ファイル名 |
 | :--- | :--- |
-| UIテスト | `src/components/**/[Name].test.tsx` |
-| ロジックテスト | `src/components/**/[Name].logic.test.ts` |
+| 表示確認・スモークテスト | `src/components/**/[Name].view.test.tsx` |
+| 全項目・ロジックテスト | `src/components/**/[Name].spec.tsx` |
+| ロジック単体テスト | `src/components/**/[Name].logic.test.ts` |
 | 結合テスト | `src/components/**/[Name].logic.integration.test.ts` |
