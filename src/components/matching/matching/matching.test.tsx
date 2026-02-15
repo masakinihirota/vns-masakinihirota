@@ -1,14 +1,14 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi, beforeAll } from "vitest";
-import { AutoMatching } from "./auto-matching";
-import { UserProfile } from "./auto-matching.logic";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { beforeAll, describe, expect, it, vi } from "vitest";
+import { Matching } from "./matching";
+import { UserProfile } from "./matching.logic";
 
-describe("AutoMatching UI", () => {
+describe("Matching UI", () => {
   beforeAll(() => {
     global.ResizeObserver = class ResizeObserver {
-      observe() {}
-      unobserve() {}
-      disconnect() {}
+      observe() { }
+      unobserve() { }
+      disconnect() { }
     };
   });
 
@@ -62,19 +62,19 @@ describe("AutoMatching UI", () => {
   };
 
   it("設定画面が正しくレンダリングされること", () => {
-    render(<AutoMatching {...defaultProps} />);
+    render(<Matching {...defaultProps} />);
     expect(screen.getByText("自動マッチング設定")).toBeInTheDocument();
     expect(screen.getByText("Matching Management")).toBeInTheDocument();
   });
 
   it("マッチングモードの切り替えボタンが表示されること", () => {
-    render(<AutoMatching {...defaultProps} />);
+    render(<Matching {...defaultProps} />);
     expect(screen.getByText("新規プロフィールの追加")).toBeInTheDocument();
     expect(screen.getByText("既存リストの整理")).toBeInTheDocument();
   });
 
   it("サイドバーのプロファイル切り替え", () => {
-    render(<AutoMatching {...defaultProps} />);
+    render(<Matching {...defaultProps} />);
     const profileButton = screen.getByText("User 1");
     fireEvent.click(profileButton);
     expect(defaultProps.onProfileSwitch).toHaveBeenCalledWith("1");

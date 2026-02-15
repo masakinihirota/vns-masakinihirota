@@ -18,9 +18,9 @@ export async function claimDailyBonusAction() {
     // Check if user already claimed today
     const history = await getPointHistory(supabase, user.id, 100);
     const today = new Date().toISOString().split('T')[0];
-    const hasClaimed = history.some((h: any) => // any type for now as we might have inconsistent types from Drizzle/Supabase
+    const hasClaimed = history.some((h) =>
       h.type === 'daily_login' &&
-      new Date(h.created_at || h.createdAt).toISOString().split('T')[0] === today
+      new Date(h.createdAt).toISOString().split('T')[0] === today
     );
 
     if (hasClaimed) {

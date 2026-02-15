@@ -2,6 +2,7 @@ import { getPointHistoryAction } from "@/app/actions/rewards";
 import { DailyBonusButton } from "@/components/rewards/daily-bonus-button";
 import { PointHistory } from "@/components/rewards/point-history";
 import { Separator } from "@/components/ui/separator";
+import { type PointTransaction } from "@/lib/db/rewards";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RewardsPage() {
-  const transactions: any[] = await getPointHistoryAction();
+  const transactions: PointTransaction[] = await getPointHistoryAction();
 
   return (
     <div className="container max-w-4xl py-6 space-y-8">

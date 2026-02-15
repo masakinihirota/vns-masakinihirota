@@ -2,6 +2,8 @@
 trigger: always_on
 ---
 
+# Directory Structure & File Organization
+
 ## ファイル・ディレクトリ構成
 
 重要: このプロジェクトでは「ルーティング（ページ）」と「コンポーネント（UI/ビジネスロジック）」を明確に分離し、さらにコンポーネントごとに責務を分けることで可読性とテスト容易性を高めます。(バレルファイル)
@@ -73,7 +75,7 @@ export default function SamplePage() {
 | **ページ側**       | 原則フェッチ禁止（表示・組み立て専念）                             | テストとモックが容易                                        |
 | **例外**           | ページレベル集約が必要な場合のみ `page.tsx` に配置可（推奨しない） | 現実的制約への対応                                          |
 | **データ受け渡し** | props 経由を優先                                                   | 依存関係の明示化                                            |
-| **Server Actions** | **原則禁止** (REST API推奨)                                        | [セキュリティ基準](./ai_instruction_react_security.md) 準拠 |
+| **Server Actions** | **原則禁止** (REST API推奨)                                        | [セキュリティ基準](./security-architecture.md) 準拠         |
 
 ### 5. 命名とエクスポート方針
 

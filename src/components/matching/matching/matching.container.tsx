@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { AutoMatching } from "./auto-matching";
+import { useMemo, useState } from "react";
+import { Matching } from "./matching";
 import {
-  MY_PROFILES,
   CANDIDATE_POOL,
-  filterCandidates,
   CATEGORIES,
+  filterCandidates,
+  MY_PROFILES,
   UserProfile,
-} from "./auto-matching.logic";
+} from "./matching.logic";
 
-export const AutoMatchingContainer = () => {
+export const MatchingContainer = () => {
   // 状態管理
   const [selectedProfileId, setSelectedProfileId] = useState(MY_PROFILES[0].id);
   const [selectedCategories, setSelectedCategories] = useState<string[]>(
@@ -191,7 +191,7 @@ export const AutoMatchingContainer = () => {
   };
 
   return (
-    <AutoMatching
+    <Matching
       selectedProfileId={selectedProfileId}
       selectedCategories={selectedCategories}
       matchCriterion={matchCriterion}

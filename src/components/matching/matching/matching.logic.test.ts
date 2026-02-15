@@ -1,9 +1,9 @@
-import { describe, it, expect } from "vitest";
+import { describe, expect, it } from "vitest";
 import {
   calculateUserScore,
   filterCandidates,
   UserProfile,
-} from "./auto-matching.logic";
+} from "./matching.logic";
 
 // Mock Data
 const mockTargetProfile: UserProfile = {
@@ -24,7 +24,7 @@ const mockCandidate: UserProfile = {
   skills: ["Skill1", "Skill2"], // 1 match
 };
 
-describe("AutoMatching Logic", () => {
+describe("Matching Logic", () => {
   describe("calculateUserScore", () => {
     it("should calculate score correctly based on selected categories", () => {
       // Match in values (1), createdWorks (1), skills (1) -> Total 3 matches * 2 points = 6

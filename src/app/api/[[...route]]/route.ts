@@ -1,9 +1,9 @@
+import { upsertBusinessCard } from "@/lib/db/business-cards";
+import { createClient } from "@/lib/supabase/server";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { upsertBusinessCard } from "@/lib/db/business-cards";
-import { createClient } from "@/lib/supabase/server";
 
 export const runtime = "edge";
 
@@ -17,6 +17,7 @@ app.get("/hello", (c: any) => {
 
 // --- Auth Endpoints ---
 
+// TODO: Fix Hono Context type definition
 app.post("/auth/anonymous", async (c: any) => {
   const supabase = await createClient();
   const { error } = await supabase.auth.signInAnonymously();
@@ -70,6 +71,42 @@ const WorkSchema = z.object({
   title: z.string().min(1, "Title is required").max(100),
   author: z.string().optional(),
   category: z.enum(["anime", "manga", "other"]),
+});
+
+app.get("/business-cards", async (c: any) => {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return c.json({ error: "Unauthorized" }, 401);
+  }
+
+  const { data: businessCards, error } = await supabase
+    .from("business_cards")
+    .select("*")
+    .eq("owner_user_id", user.id);
+
+  if (error) {
+    return c.json({ error: "Failed to fetch business cards" }, 500);
+  }
+
+  return c.json({ success: true, data: businessCards });
+});
+
+app.post("/scan-card", async (c: any) => {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return c.json({ error: "Unauthorized" }, 401);
+  }
+
+  // TODO: Implement card scanning logic
+  return c.json({ success: true, message: "Card scanned successfully (mock)" });
 });
 
 app.post("/works", async (c: any) => {

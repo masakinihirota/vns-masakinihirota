@@ -1,9 +1,12 @@
-import { desc, eq, sql } from "drizzle-orm";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { type InferSelectModel, desc, eq, sql } from "drizzle-orm";
 import { db } from "./drizzle";
 import { pointTransactions, rootAccounts } from "./schema";
 
+export type PointTransaction = InferSelectModel<typeof pointTransactions>;
+
 export const grantPoints = async (
-  supabase: any, // Pass supabase client if using Supabase directly, or null if using Drizzle
+  supabase: SupabaseClient | null, // Pass supabase client if using Supabase directly, or null if using Drizzle
   userId: string, // Auth User ID
   amount: number,
   type: string,
@@ -61,10 +64,10 @@ export const grantPoints = async (
 };
 
 export const getPointHistory = async (
-  supabase: any,
+  supabase: SupabaseClient | null,
   userId: string,
   limit = 20
-) => {
+): Promise<PointTransaction[]> => {
   if (process.env.USE_DRIZZLE === "true") {
     const rootAccount = await db.query.rootAccounts.findFirst({
       where: eq(rootAccounts.authUserId, userId),
@@ -96,5 +99,14 @@ export const getPointHistory = async (
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  return data || [];
+  if (!data) return [];
+
+  return data.map((t) => ({
+    id: t.id,
+    rootAccountId: t.root_account_id,
+    amount: t.amount,
+    type: t.type,
+    description: t.description,
+    createdAt: t.created_at,
+  })) as PointTransaction[];
 };
