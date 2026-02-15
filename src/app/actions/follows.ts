@@ -1,31 +1,23 @@
 "use server";
 
+import { auth } from "@/auth";
 import * as followsDb from "@/lib/db/follows";
-import { createClient } from "@/lib/supabase/server";
 
 export async function followProfileAction(
   followedProfileId: string,
   status: "watch" | "follow" = "follow"
 ) {
-  const isDrizzle = process.env.USE_DRIZZLE === "true";
-  const supabase = isDrizzle ? null : await createClient();
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
 
-  const authClient = await createClient();
-  const { data: { user } } = await authClient.auth.getUser();
-  if (!user) throw new Error("Unauthorized");
-
-  return followsDb.followProfile(supabase, user.id, followedProfileId, status);
+  return followsDb.followProfile(session.user.id, followedProfileId, status);
 }
 
 export async function unfollowProfileAction(
   followedProfileId: string
 ) {
-  const isDrizzle = process.env.USE_DRIZZLE === "true";
-  const supabase = isDrizzle ? null : await createClient();
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
 
-  const authClient = await createClient();
-  const { data: { user } } = await authClient.auth.getUser();
-  if (!user) throw new Error("Unauthorized");
-
-  return followsDb.unfollowProfile(supabase, user.id, followedProfileId);
+  return followsDb.unfollowProfile(session.user.id, followedProfileId);
 }

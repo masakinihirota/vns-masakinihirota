@@ -1,8 +1,8 @@
 import { Database, Tables } from "@/types/types_db";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { notInArray, sql } from "drizzle-orm";
-import { db } from "./drizzle";
-import { alliances, userProfiles } from "./schema";
+import { db } from "./drizzle-postgres";
+import { alliances, userProfiles } from "./schema.postgres";
 
 // Types
 type Profile = Tables<"user_profiles">;
@@ -17,7 +17,7 @@ export const getMatchingCandidates = async (
   userId: string,
   limit = 10
 ) => {
-  if (process.env.USE_DRIZZLE === "true") {
+  if (true) {
     // 1. Get current user's profile ID
     const currentProfile = await db.query.userProfiles.findFirst({
       where: sql`root_account_id IN (SELECT id FROM root_accounts WHERE auth_user_id = ${userId})`,
@@ -93,7 +93,7 @@ export const createMatchingRequest = async (
   userId: string,
   targetProfileId: string
 ) => {
-  if (process.env.USE_DRIZZLE === "true") {
+  if (true) {
     // 1. Get current user's profile ID
     const currentProfile = await db.query.userProfiles.findFirst({
       where: sql`root_account_id IN (SELECT id FROM root_accounts WHERE auth_user_id = ${userId})`,

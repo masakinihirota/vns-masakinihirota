@@ -1,7 +1,6 @@
-import { createClient } from "@/lib/supabase/server";
 import { eq } from "drizzle-orm";
-import { db } from "./drizzle";
-import { businessCards } from "./schema";
+import { db } from "./drizzle-postgres";
+import { businessCards } from "./schema.postgres";
 
 export type BusinessCardContent = {
   trust?: {
@@ -69,30 +68,10 @@ function mapCardToSupabase(bc: any): BusinessCard {
  * Returns null if not found (and strict is false).
  */
 export async function getBusinessCardByProfileId(profileId: string) {
-  if (process.env.USE_DRIZZLE === "true") {
-    const card = await db.query.businessCards.findFirst({
-      where: eq(businessCards.userProfileId, profileId)
-    });
-    return card ? mapCardToSupabase(card) : null;
-  }
-
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("business_cards")
-    .select("*")
-    .eq("user_profile_id", profileId)
-    .single();
-
-  if (error) {
-    if (error.code === "PGRST116") {
-      return null; // Not found
-    }
-    console.error("Error fetching business card:", error);
-    throw new Error("Failed to fetch business card");
-  }
-
-  return data as BusinessCard;
+  const card = await db.query.businessCards.findFirst({
+    where: eq(businessCards.userProfileId, profileId)
+  });
+  return card ? mapCardToSupabase(card) : null;
 }
 
 /**
@@ -102,51 +81,24 @@ export async function upsertBusinessCard(
   profileId: string,
   data: UpsertBusinessCardData
 ) {
-  if (process.env.USE_DRIZZLE === "true") {
-    // Prepare Drizzle input
-    const drizzleInput: any = {
-      userProfileId: profileId,
-      updatedAt: new Date().toISOString(),
-    };
-
-    if (data.is_published !== undefined) drizzleInput.isPublished = data.is_published;
-    if (data.display_config !== undefined) drizzleInput.displayConfig = data.display_config;
-    if (data.content !== undefined) drizzleInput.content = data.content;
-
-    // Upsert in Drizzle
-    const [result] = await db.insert(businessCards)
-      .values(drizzleInput)
-      .onConflictDoUpdate({
-        target: businessCards.userProfileId,
-        set: drizzleInput
-      })
-      .returning();
-
-    return mapCardToSupabase(result);
-  }
-
-  const supabase = await createClient();
-
-  const payload: any = {
-    user_profile_id: profileId,
-    updated_at: new Date().toISOString(),
+  // Prepare Drizzle input
+  const drizzleInput: any = {
+    userProfileId: profileId,
+    updatedAt: new Date().toISOString(),
   };
 
-  if (data.is_published !== undefined) payload.is_published = data.is_published;
-  if (data.display_config !== undefined)
-    payload.display_config = data.display_config;
-  if (data.content !== undefined) payload.content = data.content;
+  if (data.is_published !== undefined) drizzleInput.isPublished = data.is_published;
+  if (data.display_config !== undefined) drizzleInput.displayConfig = data.display_config;
+  if (data.content !== undefined) drizzleInput.content = data.content;
 
-  const { data: result, error } = await supabase
-    .from("business_cards")
-    .upsert(payload, { onConflict: "user_profile_id" })
-    .select()
-    .single();
+  // Upsert in Drizzle
+  const [result] = await db.insert(businessCards)
+    .values(drizzleInput)
+    .onConflictDoUpdate({
+      target: businessCards.userProfileId,
+      set: drizzleInput
+    })
+    .returning();
 
-  if (error) {
-    console.error("Error upserting business card:", error);
-    throw new Error("Failed to save business card settings");
-  }
-
-  return result as BusinessCard;
+  return mapCardToSupabase(result);
 }

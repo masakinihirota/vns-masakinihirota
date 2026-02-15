@@ -30,7 +30,7 @@ export const useEvents = (nationId: string = "all") => {
 };
 
 export const useCreateEvent = () => {
-  const create = async (eventData: Parameters<typeof createEvent>[1]) => {
+  const create = async (eventData: Parameters<typeof createEvent>[0]) => {
     return await createEventAction(eventData);
   };
   return { createEvent: create };

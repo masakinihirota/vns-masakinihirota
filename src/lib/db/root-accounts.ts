@@ -1,8 +1,8 @@
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/auth";
 import { eq } from "drizzle-orm";
 import { cache } from "react";
-import { db } from "./drizzle";
-import { rootAccounts } from "./schema";
+import { db } from "./drizzle-postgres";
+import { rootAccounts } from "./schema.postgres";
 
 export type RootAccount = {
   id: string;
@@ -30,36 +30,11 @@ function mapRootAccountToSupabase(ra: any): RootAccount {
 }
 
 export const getRootAccount = cache(async () => {
-  // We always need Supabase Auth to get the current user ID from the session (cookie).
-  // Drizzle doesn't handle Auth state from cookies inherently.
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const session = await auth();
+  if (!session?.user?.id) return null;
 
-  if (!user) return null;
-
-  if (process.env.USE_DRIZZLE === "true") {
-    const account = await db.query.rootAccounts.findFirst({
-      where: eq(rootAccounts.authUserId, user.id)
-    });
-    return account ? mapRootAccountToSupabase(account) : null;
-  }
-
-  const { data, error } = await supabase
-    .from("root_accounts")
-    .select("*")
-    .eq("auth_user_id", user.id)
-    .single();
-
-  if (error) {
-    if (error.code === "PGRST116") {
-      // No root account found
-      return null;
-    }
-    console.error("Error fetching root account:", error);
-    return null;
-  }
-
-  return data as RootAccount;
+  const account = await db.query.rootAccounts.findFirst({
+    where: eq(rootAccounts.authUserId, session.user.id)
+  });
+  return account ? mapRootAccountToSupabase(account) : null;
 });

@@ -1,22 +1,20 @@
 "use server";
 
+import { auth } from "@/auth";
 import { getPointHistory, grantPoints } from "@/lib/db/rewards";
-import { createClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 
 export async function claimDailyBonusAction() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const session = await auth();
+  const user = session?.user;
 
-  if (!user) {
+  if (!user?.id) {
     return { success: false, message: "Login required" };
   }
 
   try {
     // Check if user already claimed today
-    const history = await getPointHistory(supabase, user.id, 100);
+    const history = await getPointHistory(user.id, 100);
     const today = new Date().toISOString().split('T')[0];
     const hasClaimed = history.some((h) =>
       h.type === 'daily_login' &&
@@ -27,7 +25,7 @@ export async function claimDailyBonusAction() {
       return { success: false, message: "Already claimed today" };
     }
 
-    await grantPoints(supabase, user.id, 100, "daily_login", "Daily Login Bonus");
+    await grantPoints(user.id, 100, "daily_login", "Daily Login Bonus");
 
     revalidatePath("/rewards");
     revalidatePath("/", "layout"); // Update header points possibly
@@ -39,11 +37,10 @@ export async function claimDailyBonusAction() {
 }
 
 export async function getPointHistoryAction() {
-  const supabase = await createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const session = await auth();
+  const user = session?.user;
 
-  if (!user) return [];
+  if (!user?.id) return [];
 
-  // Pass supabase client for fallback
-  return await getPointHistory(supabase, user.id);
+  return await getPointHistory(user.id);
 }

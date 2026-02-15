@@ -1,9 +1,7 @@
-import { Database } from "@/types/database.types";
 import type { TablesInsert } from "@/types/types_db";
-import { SupabaseClient } from "@supabase/supabase-js";
 import { and, desc, eq } from "drizzle-orm";
-import { db } from "./drizzle";
-import { notifications } from "./schema";
+import { db } from "./drizzle-postgres";
+import { notifications } from "./schema.postgres";
 
 export type NotificationType = "system" | "invite" | "transaction" | "event";
 
@@ -24,84 +22,40 @@ function mapNotificationToSupabase(n: any): any {
 }
 
 export const createNotification = async (
-  supabase: SupabaseClient<Database> | null,
   notificationData: NotificationInsert
 ) => {
-  if (process.env.USE_DRIZZLE === "true") {
-    const drizzleInput = {
-      userProfileId: notificationData.user_profile_id,
-      title: notificationData.title,
-      message: notificationData.message,
-      linkUrl: notificationData.link_url,
-      type: notificationData.type,
-      isRead: false,
-    };
+  const drizzleInput = {
+    userProfileId: notificationData.user_profile_id,
+    title: notificationData.title,
+    message: notificationData.message,
+    linkUrl: notificationData.link_url,
+    type: notificationData.type,
+    isRead: false,
+  };
 
-    const [newNotification] = await db.insert(notifications).values(drizzleInput).returning();
-    return mapNotificationToSupabase(newNotification);
-  }
-
-  if (!supabase) throw new Error("Supabase client required when USE_DRIZZLE is false");
-
-  const { data, error } = await supabase
-    .from("notifications")
-    .insert(notificationData)
-    .select()
-    .single();
-
-  if (error) throw error;
-  return data;
+  const [newNotification] = await db.insert(notifications).values(drizzleInput).returning();
+  return mapNotificationToSupabase(newNotification);
 };
 
 export const getUnreadNotifications = async (
-  supabase: SupabaseClient<Database> | null,
   userId: string
 ) => {
-  if (process.env.USE_DRIZZLE === "true") {
-    const result = await db.query.notifications.findMany({
-      where: and(
-        eq(notifications.userProfileId, userId),
-        eq(notifications.isRead, false)
-      ),
-      orderBy: [desc(notifications.createdAt)],
-    });
-    return result.map(mapNotificationToSupabase);
-  }
-
-  if (!supabase) throw new Error("Supabase client required when USE_DRIZZLE is false");
-
-  const { data, error } = await supabase
-    .from("notifications")
-    .select("*")
-    .eq("user_profile_id", userId)
-    .eq("is_read", false)
-    .order("created_at", { ascending: false });
-
-  if (error) throw error;
-  return data;
+  const result = await db.query.notifications.findMany({
+    where: and(
+      eq(notifications.userProfileId, userId),
+      eq(notifications.isRead, false)
+    ),
+    orderBy: [desc(notifications.createdAt)],
+  });
+  return result.map(mapNotificationToSupabase);
 };
 
 export const markNotificationAsRead = async (
-  supabase: SupabaseClient<Database> | null,
   notificationId: string
 ) => {
-  if (process.env.USE_DRIZZLE === "true") {
-    const [updated] = await db.update(notifications)
-      .set({ isRead: true })
-      .where(eq(notifications.id, notificationId))
-      .returning();
-    return mapNotificationToSupabase(updated);
-  }
-
-  if (!supabase) throw new Error("Supabase client required when USE_DRIZZLE is false");
-
-  const { data, error } = await supabase
-    .from("notifications")
-    .update({ is_read: true })
-    .eq("id", notificationId)
-    .select()
-    .single();
-
-  if (error) throw error;
-  return data;
+  const [updated] = await db.update(notifications)
+    .set({ isRead: true })
+    .where(eq(notifications.id, notificationId))
+    .returning();
+  return mapNotificationToSupabase(updated);
 };

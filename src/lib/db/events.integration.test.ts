@@ -50,7 +50,7 @@ describe("Events Integration (Drizzle)", () => {
 
 
     // createEvent takes NationEventInsert which expects snake_case.
-    const event = await createEvent(null, newEventData);
+    const event = await createEvent(newEventData);
 
     expect(event).toBeDefined();
     expect(event.id).toBeDefined();
@@ -62,7 +62,7 @@ describe("Events Integration (Drizzle)", () => {
 
   it("should get an event", async () => {
     expect(createdEventId).toBeDefined();
-    const event = await getEvent(null, createdEventId);
+    const event = await getEvent(createdEventId);
     expect(event).toBeDefined();
     expect(event?.id).toBe(createdEventId);
     expect(event?.title).toBe("Integration Test Event");
@@ -78,7 +78,7 @@ describe("Events Integration (Drizzle)", () => {
     // But joinEvent is for participants.
     // Let's rely on joinEvent returning success.
 
-    const participation = await joinEvent(null, createdEventId, testUserId);
+    const participation = await joinEvent(createdEventId, testUserId);
     expect(participation).toBeDefined();
     expect(participation.event_id).toBe(createdEventId);
     expect(participation.user_profile_id).toBe(testUserId);
@@ -87,7 +87,7 @@ describe("Events Integration (Drizzle)", () => {
 
   it("should cancel participation", async () => {
     expect(createdEventId).toBeDefined();
-    const updated = await cancelEventParticipation(null, createdEventId, testUserId);
+    const updated = await cancelEventParticipation(createdEventId, testUserId);
     expect(updated).toBeDefined();
     expect(updated.status).toBe("cancelled");
   });

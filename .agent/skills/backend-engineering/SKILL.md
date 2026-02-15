@@ -7,30 +7,34 @@ description: Backend development skill covering Postgres best practices, Hono in
 
 このスキルは、バックエンド開発（データベース、API、エッジランタイム）におけるベストプラクティスと実装パターンを提供します。
 
-## 1. Postgres & Supabase Best Practices
+## 1. Drizzle ORM & Postgres Best Practices
 
-### Query Performance
-- **Missing Indexes**: フィルタ（`WHERE`）、結合（`JOIN`）、ソート（`ORDER BY`）に使用する列にはインデックスを作成する。
-- **Selectivity**: `SELECT *` は避け、必要なカラムのみを指定する（例: `.select('id, name')`）。
+本プロジェクトでは **Drizzle ORM** をデータベース操作の標準として採用しています。
 
-### Schema Design
-- **Keys**: 主キー（PK）と外部キー（FK）を必ず定義する。FKにはインデックスを貼る。
-- **JSONB**: 柔軟なスキーマが必要な場合は `JSONB` を使用する（EAVアンチパターン回避）。
-- **Normalization**: 適切な正規化を行うが、パフォーマンスのために意図的に非正規化する場合はドキュメントに残す。
+### Schema Definition
+- **Type Safety**: カラム定義時には必ず適切な型を使用し、`notNull()` 制約を基本とする。
+- **Relations**: `relations` ヘルパーを使用して、テーブル間のリレーションを明示的に定義する。
+
+### Query Patterns
+- **Query Builder**: 複雑なSQLを書く代わりに、Drizzleの `db.query.users.findMany(...)` や `db.select().from(...)` を使用する。
+- **Performance**: `with: { ... }` を使用した効率的なリレーション取得を行い、N+1問題を回避する。
+- **Partial Select**: 必要なカラムのみを選択し、帯域幅を節約する。
+
+### Migrations
+- **Generation**: `pnpm db:generate` (または `db:generate:postgres`) でマイグレーションファイルを生成する。
+- **Application**: 開発環境では `pnpm db:migrate` で適用し、本番環境への適用フローを確認する。
+- **Validation**: 生成されたSQLを目視確認し、予期せぬ破壊的変更（DROP TABLE等）が含まれていないかチェックする。
+
+## 2. Supabase Specifics
 
 ### Security (RLS)
-- すべてのテーブルで `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` を実行する。
+- すべてのテーブルで `ALTER TABLE ... ENABLE ROW LEVEL SECURITY` を実行する（DrizzleマイグレーションまたはSQLエディタで管理）。
 - `auth.uid()` を使用したポリシーを定義し、行レベルでのアクセス制御を徹底する。
 
-### Migration Validation (マイグレーション検証)
-マイグレーションファイル作成時は以下の黄金律を遵守してください。
+### Direct Usage
+Drizzleでカバーできない操作（Storage, Auth管理など）および、RLSを完全に活用するクライアントサイド取得には、`@supabase/supabase-js` クライアントを使用する。
 
-1.  **必ず `db reset` で検証する**: 新規作成後は `npx supabase db reset` を実行し、既存のマイグレーションと矛盾がないか確認する。
-2.  **無効な文を含めない**: PL/pgSQL内で単独の変数名（例: `v_item;`）などは構文エラーになる。
-3.  **認証チェックの徹底**: `SECURITY DEFINER` 関数を作成する場合は、必ず冒頭で `IF auth.uid() != ...` 等の認証チェックを行う。
-4.  **デバッグコードの削除**: `RAISE NOTICE` 等のデバッグ出力はコミット前に削除する。
-
-## 2. Hono x Next.js Patterns
+## 3. Hono x Next.js Patterns
 
 Next.js App Router 上で Hono を使用する場合の標準パターンです。
 
@@ -58,7 +62,7 @@ export const POST = handle(app);
 - **Implicit Inference**: `Context` の型は可能な限り推論させる（明示的な `import type { Context }` はビルドエラーの要因になりやすいため）。
 - **Edge Cases**: ビルド時に型エラーが発生する場合は、局所的に `any` を使用して回避し、TODOコメントを残す（技術的負債として管理）。
 
-## 3. API Design
+## 4. API Design
 - **RESTful**: リソース指向のURL設計を行う（例: `GET /api/users`, `POST /api/users`）。
 - **Status Codes**: 適切なHTTPステータスコードを返す（200, 201, 400, 401, 403, 404, 500）。
 - **Error Handling**: クライアントには汎用的なエラーメッセージを返し、内部詳細はサーバーログにのみ記録する。

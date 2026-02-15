@@ -6,11 +6,11 @@ import {
   getGroupByIdAction,
   getGroupMembersAction,
   getGroupsAction,
+  getMyProfilesAction,
   joinGroupAction,
   leaveGroupAction,
-  updateGroupAction,
+  updateGroupAction
 } from "@/app/actions/groups";
-import { createClient } from "@/lib/supabase/client";
 import type { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
 import { useState } from "react";
 import useSWR from "swr";
@@ -37,10 +37,7 @@ type GroupUpdate = TablesUpdate<"groups">;
  * @param limit 取得件数
  * @returns グループリスト
  */
-export async function getGroups(
-  limit = 20,
-  _client?: ReturnType<typeof createClient>
-) {
+export async function getGroups(limit = 20) {
   return getGroupsAction(limit);
 }
 
@@ -60,10 +57,7 @@ export async function getGroupById(id: string) {
  * @param groupData グループ作成データ
  * @returns 作成されたグループ
  */
-export async function createGroup(
-  groupData: GroupInsert,
-  _client?: ReturnType<typeof createClient>
-) {
+export async function createGroup(groupData: GroupInsert) {
   if (!groupData.name) throw new Error("Group name is required");
   if (!groupData.leader_id) throw new Error("Leader ID is required");
 
@@ -82,7 +76,6 @@ export async function createGroup(
 export async function updateGroup(
   id: string,
   updateData: GroupUpdate,
-  _client?: ReturnType<typeof createClient>
 ) {
   return updateGroupAction(id, updateData);
 }
@@ -91,10 +84,7 @@ export async function updateGroup(
  * グループを削除する
  * @param id グループID
  */
-export async function deleteGroup(
-  id: string,
-  _client?: ReturnType<typeof createClient>
-) {
+export async function deleteGroup(id: string) {
   await deleteGroupAction(id);
 }
 
@@ -107,8 +97,7 @@ export async function deleteGroup(
  */
 export async function joinGroup(
   groupId: string,
-  userId: string,
-  _client?: ReturnType<typeof createClient>
+  userId: string
 ) {
   await joinGroupAction(groupId, userId);
 }
@@ -120,8 +109,7 @@ export async function joinGroup(
  */
 export async function leaveGroup(
   groupId: string,
-  userId: string,
-  _client?: ReturnType<typeof createClient>
+  userId: string
 ) {
   await leaveGroupAction(groupId, userId);
 }
@@ -131,10 +119,7 @@ export async function leaveGroup(
  * @param groupId グループID
  * @returns メンバーリスト
  */
-export async function getGroupMembers(
-  groupId: string,
-  _client?: ReturnType<typeof createClient>
-) {
+export async function getGroupMembers(groupId: string) {
   return getGroupMembersAction(groupId);
 }
 
@@ -142,33 +127,8 @@ export async function getGroupMembers(
  * 自分のプロフィール一覧を取得する
  * @returns プロフィールリスト
  */
-export async function getMyProfiles(client?: ReturnType<typeof createClient>) {
-  const supabase = client ?? createClient();
-
-  // 1. Get Current Auth User
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-  if (authError || !user) return [];
-
-  // 2. Get Root Account
-  const { data: rootAccount, error: rootError } = await supabase
-    .from("root_accounts")
-    .select("id")
-    .eq("auth_user_id", user.id)
-    .single();
-
-  if (rootError || !rootAccount) return [];
-
-  // 3. Get Profiles
-  const { data: profiles, error: profilesError } = await supabase
-    .from("user_profiles")
-    .select("*")
-    .eq("root_account_id", rootAccount.id);
-
-  if (profilesError) throw profilesError;
-  return profiles;
+export async function getMyProfiles() {
+  return getMyProfilesAction();
 }
 
 // --- Logic Hook ---

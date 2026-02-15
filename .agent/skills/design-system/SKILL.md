@@ -24,8 +24,8 @@ description: VNS Design System (Glassmorphism/Elegant), UI constraints, and impl
 
 ## 2. Implementation Rules (実装ルール)
 
-### CSS & Tailwind
-- **Tailwind使用**: スタイリングは全て Tailwind CSS のユーティリティクラスで行う。
+### CSS & Tailwind (v4)
+- **Tailwind v4**: 本プロジェクトは Tailwind CSS v4 を採用しています。設定は `globals.css` 内の `@theme` ブロックで行うのが基本です。
 - **CSS変数**: 色や値はハードコードせず、`globals.css` で定義された CSS変数（`--bg`, `--foreground` 等）を使用する。
     - 例: `bg-[var(--bg)]` ではなく `bg-background` (Tailwind config経由) を推奨。
 - **Ad-hoc禁止**: 頻出するスタイルはコンポーネント化するか、共通クラス（`@layer components`）に定義する。
