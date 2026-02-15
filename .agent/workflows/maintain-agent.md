@@ -41,7 +41,22 @@ description: .agent ディレクトリ（rules, skills, workflows）の構成を
 - **DELETE**: 削除が必要（不要になった、または他のスキルに吸収された）。
 - **CREATE**: 新規作成が必要（新しい技術スタックやワークフローの導入）。
 
-## 4. 実行 (Execution)
+## 4. 依存関係の可視化 (Dependency Mapping)
+
+ワークフロー間の呼び出し関係（依存関係）を整理し、ドキュメント化します。
+例えば、`commit` ワークフローが `generate-docs` を呼び出している場合、その関係性を明示します。
+
+- **Dependency Map Example**:
+  ```mermaid
+  graph TD
+    boyscout-all --> boyscout
+    code-review-all --> code-review
+    code-review --> skill(code-review skill)
+    commit --> generate-docs
+  ```
+- アクション: 複雑な依存関係がある場合は、各ワークフローファイルの `description` やコメントに追記することを検討してください。
+
+## 5. 実行 (Execution)
 
 1.  **計画の提示**: ユーザーに改善計画（`implementation_plan.md`）を提示し、承認を得ます。
 2.  **ファイルの操作**:

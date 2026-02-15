@@ -12,12 +12,16 @@ description: Vercel React Best Practicesに基づき、コードベース（特�
    - 以下のコマンドまたは類似の検索を行い、現状を把握します。
    - **Client Components**: `"use client"` の使用数をカウントします。
      - `grep -r "use client" src/components | wc -l`
+     - Windows (PS): `(Select-String -Path "src/components/**/*.tsx" -Pattern '"use client"' -Recurse).Count`
    - **画像の最適化**: `next/image` ではなく `<img>` タグが使用されている箇所をチェックします。
      - `grep -r "<img" src/components`
+     - Windows (PS): `Select-String -Path "src/components/**/*.tsx" -Pattern "<img" -Recurse`
    - **Barrel Imports**: `..` からのインポートなど、不要なバンドル肥大化や循環参照の可能性がある箇所をチェックします。
      - `grep -r "from '\.\.'" src/components`
+     - Windows (PS): `Select-String -Path "src/components/**/*.tsx" -Pattern "from '\.\.'" -Recurse`
    - **Waterfalls (ウォーターフォール)**: 連続した `await` 文を検索し、並列化可能な処理が直列になっていないか確認します。
      - `grep -r -A 1 "await " src/components`
+     - Windows (PS): `Select-String -Path "src/components/**/*.ts*" -Pattern "await " -Context 0,1 -Recurse`
 
 4. 詳細監査 (Deep Dive)
    - 代表的なコンポーネントを3〜5個選定します（例: `profile-list`, `onboarding-pc` など、ロジックが複雑そうなもの）。

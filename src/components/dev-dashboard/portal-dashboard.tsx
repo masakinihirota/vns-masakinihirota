@@ -1,5 +1,9 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 import {
   ArrowDown,
   ArrowRight,
@@ -19,10 +23,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 
 interface RouteItem {
   title: string;
@@ -56,6 +56,7 @@ export function PortalDashboard() {
           title: "マッチングハブ",
           path: "/matching",
           desc: "マッチング機能の起点となる画面。",
+          badge: "Phase 5",
         },
         {
           title: "作品リスト",
@@ -78,9 +79,10 @@ export function PortalDashboard() {
           desc: "自身のプロフィールの確認と編集。",
         },
         {
-          title: "プロフィール表示 (New)",
+          title: "プロフィール表示",
           path: "/profile-display",
           desc: "【新規】Glassmorphismを採用した新プロフィール表示画面。",
+          badge: "New",
         },
         {
           title: "国家ダッシュボード",
@@ -98,9 +100,10 @@ export function PortalDashboard() {
           desc: "特定のグループの詳細・管理画面（ID指定）。",
         },
         {
-          title: "報酬・ポイント (New)",
+          title: "報酬・ポイント",
           path: "/rewards",
           desc: "【新規】ポイント獲得履歴と報酬受け取り。",
+          badge: "New",
         },
       ],
     },
@@ -214,6 +217,7 @@ export function PortalDashboard() {
           title: "マーケット",
           path: "/market",
           desc: "アイテムの売買・取引。",
+          badge: "Phase 4",
         },
       ],
     },
@@ -562,7 +566,7 @@ export function PortalDashboard() {
                   className={cn(
                     "grid grid-cols-[180px_1.5fr_1.5fr_auto] gap-6 px-6 py-4 items-center transition-all group relative hover:bg-neutral-100 dark:hover:bg-white/10",
                     isDone &&
-                      "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
+                    "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
                     isFocus && "bg-amber-500/[0.1] dark:bg-amber-500/[0.08]"
                   )}
                 >
@@ -629,6 +633,14 @@ export function PortalDashboard() {
                           className="px-3 py-1 text-lg font-black uppercase"
                         >
                           RETIRED
+                        </Badge>
+                      )}
+                      {route.badge && (
+                        <Badge
+                          variant="secondary"
+                          className="px-2 py-0.5 text-xs font-bold uppercase bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-100"
+                        >
+                          {route.badge}
                         </Badge>
                       )}
                     </div>

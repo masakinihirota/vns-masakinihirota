@@ -1,6 +1,6 @@
+import { Suspense } from "react";
 import { getWorksAction } from "@/app/actions/works";
 import { Tables } from "@/types/types_db";
-import { Suspense } from "react";
 import { ClientWorksWrapper, UIWork } from "./client-works-wrapper";
 
 function mapDbWorkToUI(work: Tables<"works">): UIWork {

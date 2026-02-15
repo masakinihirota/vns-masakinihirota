@@ -33,20 +33,20 @@ pnpm audit --audit-level=moderate
 `git commit -m "chore: pre-merge checks and updates"`
 `git push origin [現在のブランチ名]`
 
-### 3. 上流（main）の取り込み
+### 4. 上流（main）の取り込み
 
 最新の `main` を作業ブランチにマージし、競合がないか確認します。
 `git fetch origin main`
 `git merge origin/main`
 ※ コンフリクトが発生した場合は、エージェントが解消を支援します。
 
-### 4. ビルド確認
+### 5. ビルド確認
 
 マージ後の状態でビルドが通るか最終確認します。
 // turbo
 pnpm run build
 
-### 5. main ブランチへのマージとリリース
+### 6. main ブランチへのマージとリリース
 
 全てのチェックが通過したら、`main` ブランチに切り替えてマージし、バージョンを上げます。
 
@@ -59,12 +59,12 @@ pnpm run build
 `npm version minor`
 ※ このコマンドにより、`package.json` の更新、Git コミット、および Git タグの作成が自動的に行われます。
 
-### 6. リモートへの最終プッシュ
+### 7. リモートへの最終プッシュ
 
 作成されたコミットとタグを `main` にプッシュします。
 `git push origin main --tags`
 
-### 7. 元のブランチへの復帰
+### 8. 元のブランチへの復帰
 
 作業を継続するため、元のブランチに戻ります。
 `git checkout [作業ブランチ名]`
