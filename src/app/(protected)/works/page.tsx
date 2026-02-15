@@ -1,6 +1,6 @@
-import { Suspense } from "react";
 import { getWorksAction } from "@/app/actions/works";
 import { Tables } from "@/types/types_db";
+import { Suspense } from "react";
 import { ClientWorksWrapper, UIWork } from "./client-works-wrapper";
 
 function mapDbWorkToUI(work: Tables<"works">): UIWork {
@@ -25,6 +25,8 @@ function mapDbWorkToUI(work: Tables<"works">): UIWork {
     creatorName: work.author || undefined,
   };
 }
+
+export const dynamic = "force-dynamic";
 
 export default async function WorksPage() {
   const dbWorks = (await getWorksAction(100)) as Tables<"works">[];

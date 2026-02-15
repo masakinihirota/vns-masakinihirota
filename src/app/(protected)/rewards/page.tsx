@@ -1,14 +1,16 @@
-import { Metadata } from "next";
 import { getPointHistoryAction } from "@/app/actions/rewards";
 import { DailyBonusButton } from "@/components/rewards/daily-bonus-button";
 import { PointHistory } from "@/components/rewards/point-history";
 import { Separator } from "@/components/ui/separator";
 import { type PointTransaction } from "@/lib/db/rewards";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "報酬・ポイント | VNS",
   description: "ポイントの獲得履歴と報酬の確認",
 };
+
+export const dynamic = "force-dynamic";
 
 export default async function RewardsPage() {
   const transactions: PointTransaction[] = await getPointHistoryAction();
