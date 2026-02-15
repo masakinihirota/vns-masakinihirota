@@ -1,14 +1,16 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import { BusinessCardEditor } from "@/components/business-card/business-card-editor";
 import {
   BusinessCardView,
-  Work,
   Skill,
+  Work,
 } from "@/components/business-card/business-card-view";
 import { getBusinessCardByProfileId } from "@/lib/db/business-cards";
 import { getUserProfileById } from "@/lib/db/user-profiles";
 import { createClient } from "@/lib/supabase/server";
+import { isValidUUID } from "@/lib/utils";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -28,10 +30,18 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   };
 }
 
+
+
 export default async function BusinessCardPage(props: Props) {
   const params = await props.params;
   const profileId = params.id;
+
+  if (!isValidUUID(profileId)) {
+    notFound();
+  }
+
   const supabase = await createClient();
+
 
   const {
     data: { user },

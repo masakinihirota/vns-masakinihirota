@@ -156,10 +156,16 @@ export const deleteGroup = async (
   if (error) throw error;
 }
 
+import { isValidUUID } from "@/lib/utils";
+
 export const getGroupById = async (
   supabase: SupabaseClient<Database> | null,
   groupId: string
 ) => {
+  if (!isValidUUID(groupId)) {
+    return null;
+  }
+
   if (process.env.USE_DRIZZLE === "true") {
     const group = await db.query.groups.findFirst({
       where: eq(groups.id, groupId),

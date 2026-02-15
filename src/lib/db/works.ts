@@ -58,6 +58,8 @@ export const getWorks = async (
   return data;
 };
 
+import { isValidUUID } from "@/lib/utils";
+
 /**
  * Get work by ID
  */
@@ -65,6 +67,10 @@ export const getWorkById = async (
   supabase: SupabaseClient<Database> | null,
   workId: string
 ) => {
+  if (!isValidUUID(workId)) {
+    return null;
+  }
+
   if (process.env.USE_DRIZZLE === "true") {
     const record = await db.query.works.findFirst({
       where: eq(works.id, workId),

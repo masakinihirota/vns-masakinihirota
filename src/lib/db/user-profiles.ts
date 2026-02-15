@@ -148,7 +148,13 @@ export async function createUserProfile(
   return profile as UserProfile;
 }
 
+import { isValidUUID } from "@/lib/utils";
+
 export async function getUserProfileById(id: string) {
+  if (!isValidUUID(id)) {
+    return null;
+  }
+
   if (process.env.USE_DRIZZLE === "true") {
     const profile = await db.query.userProfiles.findFirst({
       where: eq(userProfiles.id, id),

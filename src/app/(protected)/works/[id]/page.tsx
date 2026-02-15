@@ -1,8 +1,10 @@
 import { getWorkByIdAction } from "@/app/actions/works";
 import { WorkDetail } from "@/components/works/work-detail"; // Import the detail component
 import { createClient } from "@/lib/supabase/server";
+import { isValidUUID } from "@/lib/utils";
 import { Tables } from "@/types/types_db";
 import { notFound } from "next/navigation";
+
 
 // UI Type Definition (matching WorkDetail component)
 interface UIWorkDetail {
@@ -48,7 +50,13 @@ interface PageProps {
 
 export default async function WorkDetailPage({ params }: PageProps) {
   const { id } = await params;
+
+  if (!isValidUUID(id)) {
+    notFound();
+  }
+
   const work = (await getWorkByIdAction(id)) as Tables<"works">;
+
 
   if (!work) {
     notFound();
