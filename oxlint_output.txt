@@ -1,0 +1,166 @@
+
+> vns-masakinihirota@0.45.0 lint
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  ! eslint(no-unused-vars): Variable 'editingCell' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/profile-display/features/profile-dashboard.hook.ts:50:10]
+ 49 | 
+ 50 |   const [editingCell, setEditingCell] = useState<{
+    :          ^^^^^|^^^^^
+    :               `-- 'editingCell' is declared here
+ 51 |     section: DashboardArrayKey;
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'setEditingCell' is declared but never used. Unused variables should start with a '_'.
+    ,-[src/components/profile-display/features/profile-dashboard.hook.ts:50:23]
+ 49 | 
+ 50 |   const [editingCell, setEditingCell] = useState<{
+    :                       ^^^^^^^|^^^^^^
+    :                              `-- 'setEditingCell' is declared here
+ 51 |     section: DashboardArrayKey;
+    `----
+  help: Consider removing this declaration.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/lib/db/groups.integration.test.ts:45:5]
+ 44 |     testUserId = profile.id;
+ 45 |     console.log("Using Test User ID:", testUserId);
+    :     ^^^^^^^^^^^
+ 46 |   });
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/lib/db/groups.integration.test.ts:54:9]
+ 53 |       } catch (e) {
+ 54 |         console.log("Cleanup failed or group already deleted");
+    :         ^^^^^^^^^^^
+ 55 |       }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Catch parameter 'e' is caught but never used. Unused caught errors should start with a '_'.
+    ,-[src/lib/db/groups.integration.test.ts:53:16]
+ 52 |         await deleteGroup(createdGroupId);
+ 53 |       } catch (e) {
+    :                |
+    :                `-- 'e' is declared here
+ 54 |         console.log("Cleanup failed or group already deleted");
+    `----
+  help: Consider handling this error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/lib/db/events.integration.test.ts:33:5]
+ 32 |     testNationId = nation.id;
+ 33 |     console.log("Using Test User ID:", testUserId);
+    :     ^^^^^^^^^^^
+ 34 |     console.log("Using Test Nation ID:", testNationId);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/lib/db/events.integration.test.ts:34:5]
+ 33 |     console.log("Using Test User ID:", testUserId);
+ 34 |     console.log("Using Test Nation ID:", testNationId);
+    :     ^^^^^^^^^^^
+ 35 |   });
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/lib/db/events.integration.test.ts:44:9]
+ 43 |       } catch (e) {
+ 44 |         console.log("Cleanup failed or event already deleted");
+    :         ^^^^^^^^^^^
+ 45 |       }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Catch parameter 'e' is caught but never used. Unused caught errors should start with a '_'.
+    ,-[src/lib/db/events.integration.test.ts:43:16]
+ 42 |           .where(eq(nationEvents.id, createdEventId));
+ 43 |       } catch (e) {
+    :                |
+    :                `-- 'e' is declared here
+ 44 |         console.log("Cleanup failed or event already deleted");
+    `----
+  help: Consider handling this error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/lib/db/nations.integration.test.ts:20:5]
+ 19 |     testUserId = profile.id;
+ 20 |     console.log("Using Test User ID:", testUserId);
+    :     ^^^^^^^^^^^
+ 21 |   });
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/lib/db/nations.integration.test.ts:28:9]
+ 27 |       } catch (e) {
+ 28 |         console.log("Cleanup failed or nation already deleted");
+    :         ^^^^^^^^^^^
+ 29 |       }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Catch parameter 'e' is caught but never used. Unused caught errors should start with a '_'.
+    ,-[src/lib/db/nations.integration.test.ts:27:16]
+ 26 |         await db.delete(nations).where(eq(nations.id, createdNationId));
+ 27 |       } catch (e) {
+    :                |
+    :                `-- 'e' is declared here
+ 28 |         console.log("Cleanup failed or nation already deleted");
+    `----
+  help: Consider handling this error.
+
+  ! eslint(no-unused-vars): Parameter 'userId' is declared but never used. Unused parameters should start with a '_'.
+     ,-[src/lib/db/market.ts:120:3]
+ 119 |   transactionId: string,
+ 120 |   userId: string // Who is completing? Usually buyer or seller or system?
+     :   ^^^|^^
+     :      `-- 'userId' is declared here
+ 121 |   // RPC p_user_id. Likely validation that user is authorized.
+     `----
+  help: Consider removing this parameter.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/lib/db/user-profiles.integration.test.ts:25:5]
+ 24 |     testRootAccountId = profile.rootAccountId;
+ 25 |     console.log("Using Test Root Account ID:", testRootAccountId);
+    :     ^^^^^^^^^^^
+ 26 |   });
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[src/lib/db/user-profiles.integration.test.ts:35:9]
+ 34 |       } catch (e) {
+ 35 |         console.log("Cleanup failed or profile already deleted");
+    :         ^^^^^^^^^^^
+ 36 |       }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Catch parameter 'e' is caught but never used. Unused caught errors should start with a '_'.
+    ,-[src/lib/db/user-profiles.integration.test.ts:34:16]
+ 33 |           .where(eq(userProfiles.id, createdProfileId));
+ 34 |       } catch (e) {
+    :                |
+    :                `-- 'e' is declared here
+ 35 |         console.log("Cleanup failed or profile already deleted");
+    `----
+  help: Consider handling this error.
+
+  ! typescript-eslint(no-redundant-type-constituents): 'never' is overridden by other types in this union type.
+      ,-[src/types/types_db.ts:1056:7]
+ 1055 |   PublicCompositeTypeNameOrOptions extends
+ 1056 |     | keyof DefaultSchema["CompositeTypes"]
+      :       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 1057 |     | { schema: keyof DatabaseWithoutInternals },
+      `----
+
+Found 8 warnings and 9 errors.
+Finished in 8.1s on 610 files with 94 rules using 12 threads.

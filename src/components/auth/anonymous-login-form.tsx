@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+import { TbUserQuestion } from "react-icons/tb";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,8 +12,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { TbUserQuestion } from "react-icons/tb";
 
 /**
  * 匿名ログインフォームコンポーネント
@@ -23,7 +23,6 @@ export function AnonymousLoginForm({
 }: React.ComponentPropsWithoutRef<"div">) {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-
 
   const handleAnonymousLogin = async (e: React.FormEvent) => {
     e.preventDefault();

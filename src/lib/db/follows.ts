@@ -2,7 +2,6 @@ import { and, eq, sql } from "drizzle-orm";
 import { db } from "./drizzle-postgres";
 import { follows } from "./schema.postgres";
 
-
 /**
  * Follow a profile (Watch)
  * Resolves follower profile from User ID

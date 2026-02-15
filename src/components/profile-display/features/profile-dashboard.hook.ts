@@ -47,12 +47,6 @@ export const useProfileDashboard = () => {
     title: string;
   } | null>(null);
 
-  const [editingCell, setEditingCell] = useState<{
-    section: DashboardArrayKey;
-    id: number;
-    field: string;
-  } | null>(null);
-
   // ダークモードの適用
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDarkMode);

@@ -117,7 +117,7 @@ export const startTransaction = async (
 
 export const completeTransaction = async (
   transactionId: string,
-  userId: string // Who is completing? Usually buyer or seller or system?
+  _userId: string // Who is completing? Usually buyer or seller or system?
   // RPC p_user_id. Likely validation that user is authorized.
 ) => {
   // Transaction Logic

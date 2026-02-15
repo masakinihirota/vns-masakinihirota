@@ -22,7 +22,7 @@ describe("User Profiles Integration (Drizzle)", () => {
       );
     }
     testRootAccountId = profile.rootAccountId;
-    console.log("Using Test Root Account ID:", testRootAccountId);
+    console.info("Using Test Root Account ID:", testRootAccountId);
   });
 
   afterAll(async () => {
@@ -31,8 +31,8 @@ describe("User Profiles Integration (Drizzle)", () => {
         await db
           .delete(userProfiles)
           .where(eq(userProfiles.id, createdProfileId));
-      } catch (e) {
-        console.log("Cleanup failed or profile already deleted");
+      } catch (_e) {
+        console.info("Cleanup failed or profile already deleted");
       }
     }
   });

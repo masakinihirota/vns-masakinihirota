@@ -17,15 +17,15 @@ describe("Nations Integration (Drizzle)", () => {
       );
     }
     testUserId = profile.id;
-    console.log("Using Test User ID:", testUserId);
+    console.info("Using Test User ID:", testUserId);
   });
 
   afterAll(async () => {
     if (createdNationId) {
       try {
         await db.delete(nations).where(eq(nations.id, createdNationId));
-      } catch (e) {
-        console.log("Cleanup failed or nation already deleted");
+      } catch (_e) {
+        console.info("Cleanup failed or nation already deleted");
       }
     }
   });

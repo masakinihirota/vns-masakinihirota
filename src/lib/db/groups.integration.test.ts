@@ -42,7 +42,7 @@ describe("Groups Integration (Drizzle)", () => {
       );
     }
     testUserId = profile.id;
-    console.log("Using Test User ID:", testUserId);
+    console.info("Using Test User ID:", testUserId);
   });
 
   afterAll(async () => {
@@ -50,8 +50,8 @@ describe("Groups Integration (Drizzle)", () => {
     if (createdGroupId) {
       try {
         await deleteGroup(createdGroupId);
-      } catch (e) {
-        console.log("Cleanup failed or group already deleted");
+      } catch (_e) {
+        console.info("Cleanup failed or group already deleted");
       }
     }
   });

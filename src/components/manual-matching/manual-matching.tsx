@@ -27,23 +27,6 @@ import {
 } from "lucide-react";
 import React, { useMemo, useState } from "react";
 
-interface MyProfile {
-  id: string;
-  name: string;
-  icon: string;
-  role: string;
-  purposes: string[];
-  values: string[];
-  createdWorks: string[];
-  favoriteWorks: string[];
-  skills: string[];
-  stats: {
-    follows: number;
-    watches: number;
-    partners: number;
-  };
-}
-
 interface Candidate {
   id: string;
   name: string;

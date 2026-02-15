@@ -1,0 +1,15 @@
+
+> vns-masakinihirota@0.45.0 lint
+> oxlint --tsconfig ./tsconfig.json --type-aware --type-check ./src
+
+
+  ! typescript-eslint(no-redundant-type-constituents): 'never' is overridden by other types in this union type.
+      ,-[src/types/types_db.ts:1056:7]
+ 1055 |   PublicCompositeTypeNameOrOptions extends
+ 1056 |     | keyof DefaultSchema["CompositeTypes"]
+      :       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 1057 |     | { schema: keyof DatabaseWithoutInternals },
+      `----
+
+Found 1 warning and 0 errors.
+Finished in 9.1s on 610 files with 94 rules using 12 threads.

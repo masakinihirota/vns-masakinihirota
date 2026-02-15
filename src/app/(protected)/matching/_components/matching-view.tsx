@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, RefreshCw } from "lucide-react";
+import { RefreshCw, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  findMatches,
   activeWatchlist,
+  findMatches,
   UserProfile,
 } from "../_logic/mock-matching";
 import { ProfileCard } from "./profile-card";

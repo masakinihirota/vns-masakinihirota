@@ -1,7 +1,7 @@
-import { Notification } from "@/components/groups/groups.types";
-import { cn } from "@/lib/utils";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Notification } from "@/components/groups/groups.types";
+import { cn } from "@/lib/utils";
 import { useMarkAsRead, useNotifications } from "./notifications.logic";
 
 export const NotificationList = () => {

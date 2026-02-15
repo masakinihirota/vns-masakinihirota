@@ -30,8 +30,8 @@ describe("Events Integration (Drizzle)", () => {
       throw new Error("Integration test requires at least one Nation in DB.");
     }
     testNationId = nation.id;
-    console.log("Using Test User ID:", testUserId);
-    console.log("Using Test Nation ID:", testNationId);
+    console.info("Using Test User ID:", testUserId);
+    console.info("Using Test Nation ID:", testNationId);
   });
 
   afterAll(async () => {
@@ -40,8 +40,8 @@ describe("Events Integration (Drizzle)", () => {
         await db
           .delete(nationEvents)
           .where(eq(nationEvents.id, createdEventId));
-      } catch (e) {
-        console.log("Cleanup failed or event already deleted");
+      } catch (_e) {
+        console.info("Cleanup failed or event already deleted");
       }
     }
   });

@@ -1,3 +1,6 @@
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,9 +10,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 
 export function GoogleLoginForm({
   className,
