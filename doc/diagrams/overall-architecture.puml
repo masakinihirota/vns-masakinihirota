@@ -1,0 +1,32 @@
+@startuml "overall-architecture"
+
+skinparam componentStyle uml2
+skinparam packageStyle rectangle
+
+package "Client Layer (Browser)" #FFE4E1 {
+    [UI Components]
+    [Auth Client]
+    [Supabase Browser Client]
+}
+
+package "Next.js Core (Server Layer)" #E1F5FE {
+    [src/proxy.ts]
+    [App Router (RSC)]
+    [Route Handlers (API)]
+    [Business Logic / src/lib]
+}
+
+package "External & Backend Services" #E8F5E9 {
+    database "Supabase DB"
+    database "Auth.js"
+}
+
+[UI Components] --> [src/proxy.ts]
+[src/proxy.ts] --> [App Router (RSC)]
+[App Router (RSC)] --> [Business Logic / src/lib]
+[Route Handlers (API)] --> [Business Logic / src/lib]
+
+[Business Logic / src/lib] --> [Supabase DB]
+[Business Logic / src/lib] --> [Auth.js]
+
+@enduml

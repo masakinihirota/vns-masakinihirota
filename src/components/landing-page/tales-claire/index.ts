@@ -1,1 +1,13 @@
+export * from "./background-canvas";
+export * from "./concept-section";
+export * from "./declarations-section";
+export * from "./final-goal-section";
+export * from "./footer";
+export * from "./hero-section";
+export * from "./identity-section";
+export * from "./inspiration-section";
+export * from "./local-mode-button";
+export * from "./purpose-section";
+export * from "./site-mission-section";
 export * from "./tales-claire-lp";
+

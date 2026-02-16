@@ -105,6 +105,12 @@ export function PortalDashboard() {
           desc: "【新規】ポイント獲得履歴と報酬受け取り。",
           badge: "New",
         },
+        {
+          title: "プロフィール作成 (1000 Masks)",
+          path: "/profile/creation-1000masks",
+          desc: "千の仮面を作成・管理する新プロフィール作成フロー。",
+          badge: "New",
+        },
       ],
     },
     {
@@ -250,6 +256,12 @@ export function PortalDashboard() {
           title: "価値観管理",
           path: "/values",
           desc: "登録済み価値観の管理。",
+        },
+        {
+          title: "アイデンティティ可視化",
+          path: "/identity",
+          desc: "アカウントとプロフィールの関係を視覚化します。",
+          badge: "New",
         },
       ],
     },

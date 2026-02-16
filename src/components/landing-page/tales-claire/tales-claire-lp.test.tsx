@@ -12,6 +12,15 @@ vi.mock("./inspiration-section", () => ({
   ),
 }));
 
+// Mock IdentitySection
+vi.mock("./identity-section", () => ({
+  IdentitySection: () => (
+    <div role="region" aria-label="Identity Section">
+      Mock Identity
+    </div>
+  ),
+}));
+
 // Mock Canvas API
 HTMLCanvasElement.prototype.getContext = vi.fn(() => ({
   clearRect: vi.fn(),

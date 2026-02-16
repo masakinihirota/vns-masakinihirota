@@ -191,6 +191,12 @@ export const INITIAL_SKILL_CASSETTES: Cassette[] = [
 
 // --- Utilities ---
 
+/**
+ * 魚座をベースとした候補名のセットを生成する
+ * @param constellation 星座名
+ * @param previousSet 以前のセット（重複回避用）
+ * @returns 3つの候補名配列
+ */
 export const generateCandidateSet = (constellation: string, previousSet: string[] = []) => {
   const newSet: string[] = [];
   while (newSet.length < 3) {
@@ -202,15 +208,17 @@ export const generateCandidateSet = (constellation: string, previousSet: string[
   return newSet;
 };
 
+/**
+ * マスクIDとアバタータイプに応じたアイコンを取得する
+ * @param maskId マスクID
+ * @param avatarType アバタータイプ
+ * @returns LucideIcon
+ */
 export const getMaskIcon = (maskId: MaskId, avatarType: AvatarType) => {
   if (avatarType === 'ghost') return Ghost;
   const mask = MASK_ICONS.find(m => m.id === maskId);
   return mask ? mask.icon : User;
 };
-
-// Import Ghost from lucide-react if not already imported?
-// logic.ts imports: Anchor, Aperture, ..., Ghost is NOT imported. I need to check imports.
-
 
 const INITIAL_GHOST_HISTORY = [generateCandidateSet(USER_BASE_CONSTELLATION, [])];
 
@@ -298,16 +306,16 @@ export const useProfileCreation = () => {
     setTimeout(() => setModal(prev => prev.type === 'success' ? { ...prev, isOpen: false } : prev), 2000);
   };
 
+  /**
+   * 次の候補名セットを生成・表示する
+   */
   const handleNextAnonyms = () => {
     const { constellationHistory, historyPointer } = activeProfile;
     if (historyPointer < constellationHistory.length - 1) {
       handleUpdateDraft({ historyPointer: historyPointer + 1 });
       return;
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const currentSet = constellationHistory[historyPointer];
     const newSet = generateCandidateSet(USER_BASE_CONSTELLATION, constellationHistory[historyPointer]);
-    // eslint-disable-next-line prefer-const
     let newHistory = [...constellationHistory, newSet];
     let newPointer = newHistory.length - 1;
     if (newHistory.length > 10) { newHistory.shift(); newPointer = 9; }
@@ -320,8 +328,11 @@ export const useProfileCreation = () => {
 
   const handleSelectAnonym = (name: string) => handleUpdateDraft({ constellationName: name });
 
+  /**
+   * 目的（Objective）の選択状態を切り替える
+   * プリセットの選択に伴い、スロットも連動して更新される
+   */
   const handleToggleObjective = (objId: ObjectiveId) => {
-    // eslint-disable-next-line prefer-const
     let newObjectiveIds = [...activeProfile.selectedObjectiveIds];
     const isAdding = !newObjectiveIds.includes(objId);
     if (isAdding) {

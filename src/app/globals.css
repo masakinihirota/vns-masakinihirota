@@ -210,7 +210,7 @@
 
 /* Force Sidebar Font Size to prevent scaling issues */
 [data-slot="sidebar"] {
-  font-size: 0.875rem;
+  font-size: 1.125rem;
 }
 
 @layer base {
@@ -221,6 +221,7 @@
     background: var(--bg-gradient);
     color: var(--text-main);
     min-height: 100vh;
+    font-size: 1.125rem; /* 18px */
     font-feature-settings:
       "rlig" 1,
       "calt" 1;

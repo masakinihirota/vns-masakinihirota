@@ -6,7 +6,7 @@ export const SiteMissionSection = () => {
       <p className="text-lg md:text-xl text-slate-700 dark:text-muted-foreground font-medium">
         サイトの目的
       </p>
-      <div className="text-base md:text-lg text-slate-600 dark:text-muted-foreground space-y-4 leading-relaxed">
+      <div className="text-lg text-slate-600 dark:text-muted-foreground space-y-4 leading-relaxed">
         <p>このサイトの目的は、価値観で友達を作ることです。</p>
         <p>
           最初はあなたの価値観のデータがないため、「幽霊」の状態として始まります。

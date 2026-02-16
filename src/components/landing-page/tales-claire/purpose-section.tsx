@@ -49,7 +49,7 @@ export const PurposeSection = () => {
             <h3 className="text-xl font-bold text-slate-800 dark:text-blue-100 mb-2 group-hover:text-slate-900 dark:group-hover:text-white transition-colors">
               {item.title}
             </h3>
-            <p className="text-slate-600 dark:text-indigo-200/80 text-lg">
+            <p className="text-slate-600 dark:text-indigo-200/80 text-lg leading-relaxed">
               {item.description}
             </p>
           </div>
