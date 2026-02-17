@@ -1,13 +1,12 @@
 "use client";
 
 import {
-  MonitorSmartphone,
-  UserCircle2,
-  Sparkles,
   ArrowRight,
+  MonitorSmartphone,
+  Sparkles,
+  UserCircle2,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import { useTrialEntry } from "./trial-entry.logic";
 
 export const TrialEntrySection = () => {
@@ -18,7 +17,7 @@ export const TrialEntrySection = () => {
       <div className="max-w-4xl mx-auto w-full px-4">
         {/* Title for Context */}
         <div className="text-center mb-12 space-y-4">
-          <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-indigo-600 dark:from-emerald-400 dark:to-indigo-400">
+          <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-emerald-700 to-indigo-700 dark:from-emerald-400 dark:to-indigo-400">
             VNS <br />
             masakinihirotaの世界に入る
           </h3>

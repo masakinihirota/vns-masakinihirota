@@ -361,6 +361,12 @@ export function PortalDashboard() {
           desc: "VNS独自の用語解説。",
         },
         {
+          title: "グループと国の説明",
+          path: "/group-nation-explanation",
+          desc: "VNSにおける「グループ」と「国」の概念を対比して説明します。",
+          badge: "New",
+        },
+        {
           title: "トラブル対応集",
           path: "/help/trouble",
           desc: "ネットトラブルのレベル別対応ガイド。",

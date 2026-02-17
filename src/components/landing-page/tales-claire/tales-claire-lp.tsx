@@ -1,5 +1,6 @@
 "use client";
 
+import * as GroupNation from "@/components/group-nation";
 import {
   AdToggle,
   HelpButton,
@@ -95,8 +96,11 @@ export const TalesClaireLP = () => {
           <SiteMissionSection />
 
           {/* 2. Description (Declarations & Concept) */}
-          <section id="about" className="space-y-16">
+          <section id="about" className="space-y-24">
             <IdentitySection />
+            <div className="animate-fade-in-up delay-500">
+              <GroupNation.GroupNationComparison />
+            </div>
             <DeclarationsSection />
             <ConceptSection />
           </section>

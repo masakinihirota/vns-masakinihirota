@@ -57,21 +57,21 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
   const isGhost = activeProfile === 'ghost';
 
   return (
-    <div className="flex flex-col h-full w-full bg-slate-950 text-slate-100 font-sans p-4 md:p-8 overflow-visible md:overflow-hidden rounded-3xl border border-slate-800/50 backdrop-blur-sm shadow-2xl">
+    <div className="flex flex-col h-full w-full bg-white/10 dark:bg-slate-950/80 text-slate-900 dark:text-slate-100 font-sans p-4 md:p-8 overflow-visible md:overflow-hidden rounded-3xl border border-white/20 dark:border-slate-800/50 backdrop-blur-md dark:backdrop-blur-sm shadow-2xl transition-colors duration-500">
       {/* Header */}
       <header className="mb-8 flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-white mb-2">
-            Identity Visualization <span className="text-slate-500 font-normal">| 千の仮面</span>
+          <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white mb-2">
+            Identity Visualization <span className="text-slate-500 dark:text-slate-500 font-normal">| 千の仮面</span>
           </h1>
-          <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
+          <p className="text-slate-600 dark:text-slate-400 text-lg max-w-2xl leading-relaxed">
             {account.name} が様々な仮面を被り、幽霊状態から各アイデンティティへ実体化する過程を可視化します。
           </p>
         </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 relative viz-container bg-slate-900/30 rounded-3xl border border-slate-800/40 overflow-visible flex items-center justify-center">
+      <main className="flex-1 relative viz-container bg-white/20 dark:bg-slate-900/30 rounded-3xl border border-white/30 dark:border-slate-800/40 overflow-visible flex items-center justify-center transition-colors">
         {/* Connection Line Layer (SVG) */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" aria-hidden="true">
           <defs>
@@ -79,7 +79,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
               <stop offset="0%" stopColor="#6366f1" stopOpacity="0.1" />
               <stop
                 offset="100%"
-                stopColor={isGhost ? '#94a3b8' : currentProfile.color ?? '#6366f1'}
+                stopColor={isGhost ? '#64748b' : currentProfile.color ?? '#6366f1'}
                 stopOpacity="0.5"
               />
             </linearGradient>
@@ -95,7 +95,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
           <path
             d={linePath}
             fill="none"
-            stroke={isGhost ? '#f8fafc' : currentProfile.color ?? '#6366f1'}
+            stroke={isGhost ? '#475569' : currentProfile.color ?? '#6366f1'}
             strokeWidth="2"
             strokeDasharray="12,16"
             className="transition-all duration-1000 ease-in-out opacity-60"
@@ -110,14 +110,14 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
             <div className="relative group">
               {/* Outer Glow Ring */}
               <div
-                className={`absolute -inset-8 rounded-full opacity-40 blur-3xl transition-all duration-1000 ${isGhost ? 'bg-slate-700' : 'bg-indigo-600 animate-pulse'
+                className={`absolute -inset-8 rounded-full opacity-40 blur-3xl transition-all duration-1000 ${isGhost ? 'bg-slate-200 dark:bg-slate-700' : 'bg-indigo-400 dark:bg-indigo-600 animate-pulse'
                   }`}
               />
 
               {/* Account Frame */}
               <div
                 ref={accountRef}
-                className={`w-48 h-48 rounded-full border-4 flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.5)] relative transition-all duration-700 bg-slate-900 overflow-hidden ${isGhost ? 'border-slate-800' : 'border-indigo-500 scale-110'
+                className={`w-48 h-48 rounded-full border-4 flex items-center justify-center shadow-[0_0_50px_rgba(0,0,0,0.3)] dark:shadow-[0_0_50px_rgba(0,0,0,0.5)] relative transition-all duration-700 bg-white dark:bg-slate-900 overflow-hidden ${isGhost ? 'border-slate-200 dark:border-slate-800' : 'border-indigo-500 scale-110'
                   }`}
               >
                 {/* Account Background (Subtle) */}
@@ -143,12 +143,12 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
 
               {/* Account Name & Status */}
               <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 text-center w-64">
-                <p className="font-black text-slate-100 text-2xl tracking-tight">{account.name}</p>
+                <p className="font-black text-slate-800 dark:text-slate-100 text-2xl tracking-tight">{account.name}</p>
                 <div className="flex items-center justify-center gap-2 mt-2">
                   <span
-                    className={`w-2.5 h-2.5 rounded-full ${isGhost ? 'bg-slate-600' : 'bg-green-500 animate-pulse'}`}
+                    className={`w-2.5 h-2.5 rounded-full ${isGhost ? 'bg-slate-300 dark:bg-slate-600' : 'bg-green-500 animate-pulse'}`}
                   ></span>
-                  <p className="text-lg text-slate-500 uppercase tracking-[0.2em] font-black">
+                  <p className="text-lg text-slate-500 dark:text-slate-500 uppercase tracking-[0.2em] font-black">
                     {isGhost ? 'Observer' : 'Materialized'}
                   </p>
                 </div>
@@ -160,15 +160,15 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
           <div className="flex flex-col gap-6 w-96">
             {/* Ghost Selector (Default State) */}
             <div className="relative">
-              <div className="absolute left-[-3.5rem] top-1/2 w-14 h-px bg-slate-800/60"></div>
+              <div className="absolute left-[-3.5rem] top-1/2 w-14 h-px bg-slate-200 dark:bg-slate-800/60"></div>
               <button
                 ref={(el) => {
                   profileRefs.current['ghost'] = el;
                 }}
                 onClick={() => onProfileSelect('ghost')}
                 className={`w-full p-4 rounded-3xl border-2 flex items-center gap-5 transition-all duration-500 group shadow-xl ${isGhost
-                  ? 'bg-white border-white scale-105'
-                  : 'bg-slate-900/60 border-slate-800/80 hover:border-slate-700 hover:bg-slate-800/50'
+                  ? 'bg-indigo-600 border-indigo-600 scale-105'
+                  : 'bg-white/60 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800/80 hover:border-indigo-300 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-800/50'
                   }`}
                 aria-pressed={isGhost}
               >
@@ -184,11 +184,11 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
                 </div>
                 <div className="text-left flex-1">
                   <p
-                    className={`text-lg font-black ${isGhost ? 'text-slate-950' : 'text-slate-200'}`}
+                    className={`text-lg font-black ${isGhost ? 'text-white' : 'text-slate-700 dark:text-slate-200'}`}
                   >
                     {IDENTITY_CONFIG.ghost.name}
                   </p>
-                  <p className="text-lg font-bold text-slate-500 mt-0.5">幽霊状態（デフォルト）</p>
+                  <p className={`text-lg font-bold mt-0.5 ${isGhost ? 'text-indigo-100' : 'text-slate-400 dark:text-slate-500'}`}>幽霊状態（デフォルト）</p>
                 </div>
                 {isGhost && (
                   <div className="mr-2">
@@ -199,11 +199,11 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
             </div>
 
             {/* Tree Connection Line */}
-            <div className="ml-10 h-8 border-l-2 border-dashed border-slate-800/60"></div>
+            <div className="ml-10 h-8 border-l-2 border-dashed border-slate-200 dark:border-slate-800/60"></div>
 
             {/* Masks List */}
-            <div className="flex flex-col gap-4 pl-10 border-l-2 border-slate-800/40">
-              <h2 className="text-lg font-black text-slate-600 uppercase tracking-[0.2em] mb-2 ml-2">
+            <div className="flex flex-col gap-4 pl-10 border-l-2 border-slate-200 dark:border-slate-800/40">
+              <h2 className="text-lg font-black text-slate-400 dark:text-slate-600 uppercase tracking-[0.2em] mb-2 ml-2">
                 千の仮面 (Available Identities)
               </h2>
 
@@ -211,7 +211,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
                 const isActive = activeProfile === mask.id;
                 return (
                   <div key={mask.id} className="relative">
-                    <div className="absolute left-[-2.5rem] top-1/2 w-10 h-px bg-slate-800/60"></div>
+                    <div className="absolute left-[-2.5rem] top-1/2 w-10 h-px bg-slate-200 dark:bg-slate-800/60"></div>
                     <button
                       ref={(el) => {
                         profileRefs.current[mask.id] = el;
@@ -232,15 +232,15 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
                       </div>
                       <div className="text-left flex-1 min-w-0">
                         <p
-                          className={`text-lg font-black truncate ${isActive ? 'text-slate-950' : 'text-slate-200'}`}
+                          className={`text-lg font-black truncate ${isActive ? 'text-slate-950 dark:text-white' : 'text-slate-700 dark:text-slate-200'}`}
                         >
                           {mask.name}
                         </p>
-                        <p className="text-lg text-slate-500 font-bold tracking-tight">{mask.label}</p>
+                        <p className={`text-lg font-bold tracking-tight ${isActive ? 'text-slate-500 dark:text-indigo-100' : 'text-slate-400 dark:text-slate-500'}`}>{mask.label}</p>
                       </div>
                       {isActive && (
                         <div
-                          className="bg-slate-100 p-2 rounded-lg text-slate-900 hover:bg-slate-200 transition-colors"
+                          className="bg-slate-100 dark:bg-slate-950/50 p-2 rounded-lg text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-900 transition-colors"
                           title="仮面を脱ぐ"
                         >
                           <X size={16} strokeWidth={3} />
@@ -253,9 +253,9 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
 
               <button
                 onClick={onCreateMask}
-                className="flex items-center gap-3 p-4 mt-2 text-lg font-black text-slate-600 hover:text-indigo-400 transition-all hover:translate-x-1 duration-300 uppercase tracking-widest"
+                className="flex items-center gap-3 p-4 mt-2 text-lg font-black text-slate-400 dark:text-slate-600 hover:text-indigo-500 dark:hover:text-indigo-400 transition-all hover:translate-x-1 duration-300 uppercase tracking-widest"
               >
-                <div className="w-10 h-10 rounded-xl border-2 border-dashed border-slate-800 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-800 flex items-center justify-center">
                   <Plus size={20} strokeWidth={3} />
                 </div>
                 仮面を新規作成
@@ -266,19 +266,19 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
 
         {/* Global Status Indicators */}
         <div className="absolute bottom-10 left-10 flex flex-col gap-3">
-          <Card className="bg-slate-950/90 px-5 py-2.5 rounded-xl border border-slate-800/60 backdrop-blur-xl flex items-center gap-4">
+          <Card className="bg-white/80 dark:bg-slate-950/90 px-5 py-2.5 rounded-xl border border-white/40 dark:border-slate-800/60 backdrop-blur-xl flex items-center gap-4 transition-colors">
             <div className="w-3.5 h-3.5 rounded-full bg-green-500 shadow-[0_0_12px_rgba(34,197,94,0.6)]"></div>
-            <span className="text-lg font-black text-slate-300 tracking-wide uppercase">
-              Current ID: <span className="text-white ml-2">{currentProfile.name}</span>
+            <span className="text-lg font-black text-slate-600 dark:text-slate-300 tracking-wide uppercase">
+              Current ID: <span className="text-slate-900 dark:text-white ml-2">{currentProfile.name}</span>
             </span>
           </Card>
-          <Card className="bg-slate-950/90 px-5 py-2.5 rounded-xl border border-slate-800/60 backdrop-blur-xl flex items-center gap-4">
+          <Card className="bg-white/80 dark:bg-slate-950/90 px-5 py-2.5 rounded-xl border border-white/40 dark:border-slate-800/60 backdrop-blur-xl flex items-center gap-4 transition-colors">
             <div
-              className={`w-3.5 h-3.5 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.4)] ${isGhost ? 'bg-slate-600' : 'bg-indigo-500'
+              className={`w-3.5 h-3.5 rounded-full shadow-[0_0_12px_rgba(99,102,241,0.4)] ${isGhost ? 'bg-slate-300 dark:bg-slate-600' : 'bg-indigo-500'
                 }`}
             ></div>
-            <span className="text-lg font-black text-slate-300 tracking-wide uppercase">
-              Mode: <span className="text-white ml-2">{isGhost ? 'Observing' : 'Materialized'}</span>
+            <span className="text-lg font-black text-slate-600 dark:text-slate-300 tracking-wide uppercase">
+              Mode: <span className="text-slate-900 dark:text-white ml-2">{isGhost ? 'Observing' : 'Materialized'}</span>
             </span>
           </Card>
         </div>
@@ -287,26 +287,26 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
       {/* Footer System Info */}
       <footer className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8 items-end opacity-80 hover:opacity-100 transition-opacity">
         <div className="space-y-2">
-          <h2 className="text-lg font-black text-slate-300 flex items-center gap-2 uppercase tracking-tighter">
-            <User size={14} className="text-indigo-500" /> Root Authentication
+          <h2 className="text-lg font-black text-slate-600 dark:text-slate-300 flex items-center gap-2 uppercase tracking-tighter">
+            <User size={14} className="text-indigo-600 dark:text-indigo-500" /> Root Authentication
           </h2>
-          <p className="text-lg text-slate-500 font-medium leading-relaxed">
+          <p className="text-lg text-slate-500 dark:text-slate-500 font-medium leading-relaxed">
             {account.name} は不変の存在です。状況に応じて異なる属性の仮面を投影することで、多層的な存在を確立します。
           </p>
         </div>
         <div className="space-y-2">
-          <h2 className="text-lg font-black text-slate-300 flex items-center gap-2 uppercase tracking-tighter">
-            <Ghost size={14} className="text-slate-400" /> Ground State
+          <h2 className="text-lg font-black text-slate-600 dark:text-slate-300 flex items-center gap-2 uppercase tracking-tighter">
+            <Ghost size={14} className="text-slate-500 dark:text-slate-400" /> Ground State
           </h2>
-          <p className="text-lg text-slate-500 font-medium leading-relaxed">
+          <p className="text-lg text-slate-500 dark:text-slate-500 font-medium leading-relaxed">
             {IDENTITY_CONFIG.ghost.name} は、すべての属性が未定義である状態。観測されるまで何者でもない自分自身。
           </p>
         </div>
         <div className="text-right pb-1">
-          <p className="text-lg text-slate-600 font-mono font-bold tracking-tight flex items-center justify-end gap-2">
-            SYSTEM_VER 2.1 <span className="text-slate-800">//</span> VNS_PROTOCOL_V4
+          <p className="text-lg text-slate-400 dark:text-slate-600 font-mono font-bold tracking-tight flex items-center justify-end gap-2">
+            SYSTEM_VER 2.1 <span className="text-slate-200 dark:text-slate-800">//</span> VNS_PROTOCOL_V4
           </p>
-          <p className="text-lg text-slate-700 font-black uppercase tracking-widest mt-1">
+          <p className="text-lg text-slate-300 dark:text-slate-700 font-black uppercase tracking-widest mt-1">
             © 2026 Value Network Service
           </p>
         </div>

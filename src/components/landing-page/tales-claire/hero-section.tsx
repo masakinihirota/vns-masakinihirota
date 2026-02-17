@@ -16,7 +16,7 @@ export const HeroSection = () => {
 
       <div className="h-px w-24 bg-gradient-to-r from-transparent via-slate-300 dark:via-neutral-400 to-transparent"></div>
 
-      <h2 className="text-2xl md:text-4xl font-light leading-relaxed font-serif bg-gradient-to-br from-indigo-800 to-blue-600 dark:from-white dark:to-indigo-300 bg-clip-text text-transparent max-w-3xl drop-shadow-sm dark:drop-shadow-none">
+      <h2 className="text-2xl md:text-4xl font-light leading-relaxed font-serif bg-gradient-to-br from-indigo-900 to-blue-700 dark:from-white dark:to-indigo-300 bg-clip-text text-transparent max-w-3xl drop-shadow-sm dark:drop-shadow-none">
         「昨日僕が感動した作品を、
         <br className="md:hidden" />
         今日の君はまだ知らない。」

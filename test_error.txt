@@ -1,0 +1,25 @@
+
+[1m[46m RUN [49m[22m [36mv4.0.18 [39m[90mU:/2026src/vns-masakinihirota.worktrees/anti[39m
+
+ [31m❯[39m src/components/group-nation/group-nation-comparison/group-nation-comparison.test.tsx [2m([22m[2m0 test[22m[2m)[22m
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/components/group-nation/group-nation-comparison/group-nation-comparison.test.tsx [ src/components/group-nation/group-nation-comparison/group-nation-comparison.test.tsx ]
+TypeError: Cannot convert undefined or null to object
+ ❯ src/components/group-nation/group-nation-comparison/group-nation-comparison.test.tsx:6:8
+      4| import { GroupNationComparison } from "./group-nation-comparison";
+      5| 
+      6| expect.extend(toHaveNoViolations);
+       |        ^
+      7| 
+      8| describe("GroupNationComparison", () => {
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [2mno tests[22m
+[2m   Start at [22m 08:28:02
+[2m   Duration [22m 3.33s[2m (transform 115ms, setup 240ms, import 0ms, tests 0ms, environment 1.50s)[22m
+
