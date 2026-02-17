@@ -13,7 +13,7 @@ description: Comprehensive code review skill including security, database, UI st
 
 - **Standard**: 通常のPRレビュー。機能要件、バグ、スタイルを確認。
 - **Security**: セキュリティ重点レビュー (`security-review`, `rsc-security-audit`)。
-- **Strict (Adversarial)**: 敵対的レビュー。シニアエンジニア視点で厳しく弱点を指摘する。
+- **Strict (Adversarial)**: 敵対的レビュー。シニアエンジニア視点で厳しく弱点を指摘する（アンチパターン、設計の甘さ、保守性の欠如など）。
 
 ## 2. Universal Checklist (共通チェックリスト)
 
@@ -56,6 +56,9 @@ description: Comprehensive code review skill including security, database, UI st
 「Strict」モード、または重要な設計変更時には以下を自問自答します。
 
 - **「なぜこの実装でなければならないのか？」**: よりシンプルで標準的な方法はないか？
+- **「設計の怠慢はないか？」**: タイポ、ディレクトリの重複、役割不明なファイルの放置など。
+- **「保守性への冒涜はないか？」**: 1000行超えの巨大ファイル、共通UIの無視、ハードコードされた文字列定数など。
+- **「型安全への思考停止はないか？」**: 安易な `any` 使用、`eslint-disable` による踏み倒しなど。
 - **「最悪のケース」**: DBがダウンしたら？ ネットワークが遅延したら？ 悪意ある入力が来たら？
 - **「YAGNI」**: 今必要ない機能を将来のために作っていないか？
 
