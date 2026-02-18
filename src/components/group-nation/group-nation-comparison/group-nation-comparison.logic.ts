@@ -22,7 +22,7 @@ export const COMPARISON_DATA: readonly ComparisonEntity[] = [
     id: "group",
     title: "グループ (Group)",
     items: {
-      origin: { label: "成り立ち", content: "自分の価値観・好きで「マッチング」" },
+      origin: { label: "成り立ち", content: "自分の価値観や好きで「マッチング」" },
       elements: { label: "構成要素", content: "価値観が似た個人" },
       nature_role: { label: "性質・役割", content: "集合の最小単位：居場所・似た価値観の集まり" },
     },

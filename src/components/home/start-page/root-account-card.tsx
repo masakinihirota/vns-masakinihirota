@@ -1,5 +1,5 @@
-import { ShieldCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { ShieldCheck } from "lucide-react";
 
 /**
  * アカウントの情報を表示するカードコンポーネント
@@ -20,49 +20,29 @@ export function AccountCard({
         className
       )}
     >
-      {/* アカウントヘッダー */}
       <div className="bg-slate-800 dark:bg-neutral-800 p-4 flex items-center gap-4 text-white">
         <div className="w-10 h-10 rounded-lg bg-slate-700 dark:bg-neutral-700 flex items-center justify-center">
           <ShieldCheck size={28} />
         </div>
         <div className="flex flex-col">
-          <span
-            className={cn("text-[20px] font-black", isTrial && "line-through")}
-          >
-            アカウント
-          </span>
+          <span className="text-[20px] font-black">アカウント</span>
         </div>
       </div>
 
       {/* アカウントアイテム */}
       <div className="p-6 space-y-4 text-[18px]">
-        <div className={cn("text-slate-700 dark:text-neutral-100 font-bold")}>
+        <div className="text-slate-700 dark:text-neutral-100 font-bold">
           ・プロフィールの管理（千の仮面）
         </div>
-        {!isSimple && (
+        {!isSimple && !isTrial && (
           <>
-            <div
-              className={cn(
-                "text-slate-700 dark:text-neutral-100 font-bold",
-                isTrial && "line-through text-slate-500 dark:text-neutral-100"
-              )}
-            >
+            <div className="text-slate-700 dark:text-neutral-100 font-bold">
               ・現実の情報（母語・居住エリア）
             </div>
-            <div
-              className={cn(
-                "text-slate-700 dark:text-neutral-100 font-bold",
-                isTrial && "line-through text-slate-500 dark:text-neutral-100"
-              )}
-            >
+            <div className="text-slate-700 dark:text-neutral-100 font-bold">
               ・ポイント・経済管理
             </div>
-            <div
-              className={cn(
-                "text-slate-700 dark:text-neutral-100 font-bold",
-                isTrial && "line-through text-slate-500 dark:text-neutral-100"
-              )}
-            >
+            <div className="text-slate-700 dark:text-neutral-100 font-bold">
               ・その他、非常時にする重要情報
             </div>
           </>

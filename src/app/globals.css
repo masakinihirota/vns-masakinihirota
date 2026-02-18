@@ -208,9 +208,8 @@
   animation-delay: 0.6s;
 }
 
-/* Force Sidebar Font Size to prevent scaling issues */
 [data-slot="sidebar"] {
-  font-size: 1.125rem;
+  font-size: 1rem;
 }
 
 @layer base {
@@ -221,7 +220,7 @@
     background: var(--bg-gradient);
     color: var(--text-main);
     min-height: 100vh;
-    font-size: 1.125rem; /* 18px */
+    font-size: 1rem;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;

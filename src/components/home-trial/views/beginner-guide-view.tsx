@@ -6,6 +6,7 @@
  * 体験版ではアカウント関連の手順に取り消し線を適用
  */
 
+import { cn } from "@/lib/utils";
 import {
   ArrowRightLeft,
   Check,
@@ -17,11 +18,10 @@ import {
   Store,
   Target,
   User,
-  Users,
+  Users
 } from "lucide-react";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import { AccountCard } from "../../home/start-page/root-account-card";
 import { ProfileListTree } from "./profile-list-tree";
 
@@ -85,14 +85,14 @@ export function BeginnerGuideView() {
   const steps: Step[] = [
     {
       title: "1. アカウントの作成",
-      desc: "リアルな情報を入力(本人確認等)して作成します。",
+      desc: "アカウントの管理（千の仮面）などを行います。",
       icon: <ShieldCheck size={28} />,
       color: "text-slate-800 dark:text-slate-200",
       isRoot: true,
     },
     {
       title: "2. プロフィールの作成",
-      desc: "一言で言うと「目的別の名刺」です。このプロフィールにはあなたの価値観を入力します。目的（創る・働く、遊び、パートナー探しなど）毎に作成して、他のユーザーとのマッチングに使用します。",
+      desc: "プロフィールは複数作れます。プロフィールにはあなたの価値観を入力します。 目的（創る・働く、遊び、パートナー探しなど）毎に作成ができ、他のユーザーとのマッチング等に使用します。",
       icon: <User size={28} />,
       color: "text-blue-500",
       hasProfileTree: true,
@@ -174,31 +174,10 @@ export function BeginnerGuideView() {
 
             {/* コンテンツ */}
             <div className="flex-1 pb-12 border-b-4 border-slate-50 dark:border-neutral-800 last:border-0 w-full relative">
-              {step.isRoot && (
-                <div className="mb-6 p-5 bg-amber-50 dark:bg-amber-900/10 border-2 border-amber-200 dark:border-amber-800 rounded-2xl flex items-center gap-4">
-                  <div className="w-12 h-12 bg-amber-100 dark:bg-amber-800 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400">
-                    <ShieldCheck size={28} />
-                  </div>
-                  <p className="text-amber-700 dark:text-amber-300 font-bold text-[18px]">
-                    お試し体験中：アカウントの作成はスキップします。
-                  </p>
-                </div>
-              )}
-              <h4
-                className={cn(
-                  "text-[26px] font-black text-slate-800 dark:text-neutral-100 mb-4",
-                  step.isRoot && "line-through"
-                )}
-              >
+              <h4 className="text-[26px] font-black text-slate-800 dark:text-neutral-100 mb-4">
                 {step.title}
               </h4>
-              <p
-                className={cn(
-                  "text-slate-600 dark:text-neutral-100 leading-relaxed font-bold transition-all",
-                  step.isRoot &&
-                    "line-through text-slate-900 dark:text-neutral-100"
-                )}
-              >
+              <p className="text-slate-600 dark:text-neutral-100 leading-relaxed font-bold transition-all">
                 {step.desc}
               </p>
               {step.isRoot && (
@@ -209,7 +188,7 @@ export function BeginnerGuideView() {
                   </div>
 
                   {/* 3つの質問フォーム */}
-                  <div className="p-8 bg-slate-50/50 dark:bg-neutral-900/30 border border-slate-200 dark:border-neutral-800 rounded-3xl space-y-8 backdrop-blur-sm">
+                  <div className="p-8 bg-slate-50/50 dark:bg-neutral-900/30 border border-slate-200 dark:border-neutral-800 rounded-3xl space-y-8 backdrop-blur-sm shadow-sm">
                     <h5 className="text-[20px] font-bold text-slate-800 dark:text-neutral-100 flex items-center gap-2">
                       <Check className="text-blue-600" />
                       アカウント作成の代わりのお試し版の基本設定
