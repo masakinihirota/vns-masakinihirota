@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
-import { AccountCard } from "../../home/start-page/root-account-card";
 import { ProfileListTree } from "./profile-list-tree";
 
 // 星座の定義
@@ -84,54 +83,54 @@ export function BeginnerGuideView() {
 
   const steps: Step[] = [
     {
-      title: "1. アカウントの作成",
-      desc: "アカウントの管理（千の仮面）などを行います。",
-      icon: <ShieldCheck size={28} />,
+      title: "アカウントの作成(体験版ではスキップ)",
+      desc: "アカウントはプロフィールやポイントの管理などを行います。",
+      icon: <ShieldCheck />,
       color: "text-slate-800 dark:text-slate-200",
       isRoot: true,
     },
     {
-      title: "2. プロフィールの作成",
-      desc: "プロフィールは複数作れます。プロフィールにはあなたの価値観を入力します。 目的（創る・働く、遊び、パートナー探しなど）毎に作成ができ、他のユーザーとのマッチング等に使用します。",
-      icon: <User size={28} />,
+      title: "プロフィールの作成",
+      desc: "１アカウントにつき複数のプロフィールを作れます。プロフィールにはあなたの価値観を入力し作成します。 目的（創る・働く、遊び、パートナー探しなど）毎に作成ができ、他のユーザーとのマッチング等に使用します。",
+      icon: <User />,
       color: "text-blue-500",
       hasProfileTree: true,
     },
     {
-      title: "3. 作品・価値観・スキルの登録",
+      title: "作品・価値観・スキルの登録",
       desc: "今、追っかけている作品(「今」)、これから発売される作品(「未来」)、今まで生きてきた中で最高の作品(「人生」)を登録します。自分が持っている価値観、スキルを登録します。",
-      icon: <Sparkles size={28} />,
+      icon: <Sparkles />,
       color: "text-amber-500",
     },
     {
-      title: "4. 目的別マッチング",
+      title: "目的別マッチング",
       desc: "作成したプロフィールの情報を基に、目的ごとに似た価値観を持つ人を探します。複数の目的を1つのプロフィールで兼ねることができます。例えば、「仕事」と「パートナー探し」の両方の目的を1つのプロフィールでマッチングできます。",
-      icon: <Target size={28} />,
+      icon: <Target />,
       color: "text-red-500",
       hasMatchingLink: true,
     },
     {
-      title: "5. グループの作成",
+      title: "グループの作成",
       desc: "グループはボトムアップ型の人の集まりです。マッチングで集めた人達で作ります。似たような価値観の人達と一緒に何かしたり、会話相手を探します。必ずリーダーになります。",
-      icon: <Layers size={28} />,
+      icon: <Layers />,
       color: "text-blue-400",
     },
     {
-      title: "6. 国を興す",
+      title: "国を興す",
       desc: "国とはトップダウン型の人の集まりです。少数の条件で人を集めます。例えば「ものづくりの国」を興し、ものづくりに興味がある人達を集めます。",
-      icon: <Globe size={28} />,
+      icon: <Globe />,
       color: "text-emerald-500",
     },
     {
-      title: "7. コミュニティと自治",
+      title: "コミュニティと自治",
       desc: "グループや国で問題が起こったときは（グループや国の）リーダーや調停者(メディエーター)が自治を行います。調停者は持ち回りで全員が行います。",
-      icon: <Users size={28} />,
+      icon: <Users />,
       color: "text-indigo-500",
     },
     {
-      title: "8. マーケット＆イベント",
+      title: "マーケット＆イベント",
       desc: "モノ作りやイベントを開催します。国やグループで集めた人達と一緒に何かをします。",
-      icon: <Store size={28} />,
+      icon: <Store />,
       color: "text-rose-500",
     },
   ];
@@ -182,15 +181,9 @@ export function BeginnerGuideView() {
               </p>
               {step.isRoot && (
                 <div className="mt-8 space-y-6">
-                  {/* アカウントカード（Step 1用） */}
-                  <div className="mt-8">
-                    <AccountCard isTrial={true} />
-                  </div>
-
                   {/* 3つの質問フォーム */}
                   <div className="p-8 bg-slate-50/50 dark:bg-neutral-900/30 border border-slate-200 dark:border-neutral-800 rounded-3xl space-y-8 backdrop-blur-sm shadow-sm">
                     <h5 className="text-[20px] font-bold text-slate-800 dark:text-neutral-100 flex items-center gap-2">
-                      <Check className="text-blue-600" />
                       アカウント作成の代わりのお試し版の基本設定
                     </h5>
 
@@ -219,26 +212,26 @@ export function BeginnerGuideView() {
                           </div>
                         </div>
                         <div className="flex-1">
-                          <div className="flex items-center justify-between gap-4">
-                            <div className="font-black text-[20px] text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
-                              オアシス宣言を守る
-                            </div>
-                            <Link
-                              href="/oasis"
-                              className="inline-flex items-center gap-1 px-3 py-1 text-xs font-bold text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 rounded-full hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors"
-                            >
-                              詳細を見る
-                              <ExternalLink size={12} />
-                            </Link>
+                          <div className="font-black text-[20px] text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                            オアシス宣言を守る
                           </div>
                           <p className="text-[16px] text-slate-500 dark:text-neutral-200 mt-1 leading-relaxed">
                             ヘイト発言や誹謗中傷を行わず、安心・安全なコミュニティを作ります。
                           </p>
                         </div>
                       </label>
+                      <div className="flex justify-end">
+                        <Link
+                          href="/oasis"
+                          className="inline-flex items-center gap-2 px-6 py-3 text-sm font-black text-blue-600 dark:text-blue-400 border-2 border-blue-200 dark:border-blue-800 rounded-2xl hover:bg-blue-600 hover:text-white dark:hover:bg-blue-900/50 transition-all shadow-sm"
+                        >
+                          オアシス宣言の詳細を確認する
+                          <ExternalLink size={16} />
+                        </Link>
+                      </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="flex flex-col gap-6">
                       {/* 2. 星座 */}
                       <div className="space-y-3">
                         <label className="block text-[16px] font-bold text-slate-700 dark:text-neutral-100 ml-1">
@@ -311,7 +304,7 @@ export function BeginnerGuideView() {
                   {/* アクションボタン */}
                   <div className="flex justify-center md:justify-start">
                     <Link
-                      href="/user-profiles-trial/new"
+                      href="/profile/creation-1000masks"
                       className="group relative inline-flex items-center gap-3 px-8 py-4 bg-blue-600 dark:bg-indigo-600 text-white rounded-2xl font-black text-[18px] shadow-lg hover:shadow-blue-500/20 hover:bg-blue-700 dark:hover:bg-indigo-700 transition-all active:scale-95"
                     >
                       <span>プロフィール作成ページへ</span>
@@ -342,9 +335,12 @@ export function BeginnerGuideView() {
 
       {/* CTAボタン */}
       <div className="flex justify-center py-12">
-        <button className="px-12 py-6 bg-blue-600 dark:bg-indigo-600 text-white font-black rounded-3xl hover:bg-blue-700 dark:hover:bg-indigo-700 hover:shadow-2xl transition-all flex items-center gap-4 active:scale-95 shadow-xl text-[20px]">
+        <Link
+          href="/profile/creation-1000masks"
+          className="px-12 py-6 bg-blue-600 dark:bg-indigo-600 text-white font-black rounded-3xl hover:bg-blue-700 dark:hover:bg-indigo-700 hover:shadow-2xl transition-all flex items-center gap-4 active:scale-95 shadow-xl text-[20px]"
+        >
           プロフィールを作成して始める <ArrowRightLeft size={28} />
-        </button>
+        </Link>
       </div>
     </div>
   );
