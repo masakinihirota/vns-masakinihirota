@@ -1,6 +1,5 @@
 "use client";
 
-
 export const ConceptSection = () => {
   return (
     <div className="bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/5 p-8 md:p-12 rounded-2xl space-y-8 animate-fade-in-up delay-200 shadow-sm dark:shadow-none">

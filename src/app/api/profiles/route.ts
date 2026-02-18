@@ -1,17 +1,19 @@
+import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { Profile } from "@/components/profile-creation-1000masks/profile-creation-1000masks.logic";
 import * as userProfilesDb from "@/lib/db/user-profiles";
-import { NextRequest, NextResponse } from "next/server";
 
 // DrizzleのUserProfile型と共通化しつつ、外のProfile型とのマッピングを行う
-export async function GET(req: NextRequest) {
+export async function GET(_req: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
-    const dbProfiles = await userProfilesDb.getUserProfilesByAuthUserId(session.user.id);
+    const dbProfiles = await userProfilesDb.getUserProfilesByAuthUserId(
+      session.user.id
+    );
 
     // DBの構造から ProfileCreation ツール用の型に変換
     const profiles: Profile[] = dbProfiles.map((p) => {
@@ -37,7 +39,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(profiles);
   } catch (error) {
     console.error("Failed to fetch profiles:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
@@ -49,10 +54,15 @@ export async function POST(req: NextRequest) {
 
   try {
     const profiles: Profile[] = await req.json();
-    const rootAccount = await userProfilesDb.getRootAccountByAuthUserId(session.user.id);
+    const rootAccount = await userProfilesDb.getRootAccountByAuthUserId(
+      session.user.id
+    );
 
     if (!rootAccount) {
-      return NextResponse.json({ error: "Root account not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Root account not found" },
+        { status: 404 }
+      );
     }
 
     const results = [];
@@ -83,17 +93,29 @@ export async function POST(req: NextRequest) {
       // IDが既存のUUIDなら更新、そうでなければ新規作成
       const existing = await userProfilesDb.getUserProfileById(profile.id);
       if (existing && existing.root_account_id === rootAccount.id) {
-        const updated = await userProfilesDb.updateUserProfile(profile.id, data);
+        const updated = await userProfilesDb.updateUserProfile(
+          profile.id,
+          data
+        );
         results.push(updated);
       } else {
-        const created = await userProfilesDb.createUserProfile(rootAccount.id, data);
+        const created = await userProfilesDb.createUserProfile(
+          rootAccount.id,
+          data
+        );
         results.push(created);
       }
     }
 
-    return NextResponse.json({ message: "Successfully synced profiles", results });
+    return NextResponse.json({
+      message: "Successfully synced profiles",
+      results,
+    });
   } catch (error) {
     console.error("Failed to save profiles:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

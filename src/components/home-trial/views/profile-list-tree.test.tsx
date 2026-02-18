@@ -16,16 +16,22 @@ vi.mock("../../home/start-page/root-account-card", () => ({
 describe("ProfileListTree", () => {
   it("「仕事が目的のプロフィール(未作成)」というラベルが表示されていること", () => {
     render(<ProfileListTree />);
-    expect(screen.getByText("仕事が目的のプロフィール(未作成)")).toBeInTheDocument();
+    expect(
+      screen.getByText("仕事が目的のプロフィール(未作成)")
+    ).toBeInTheDocument();
   });
 
   it("「遊びが目的のプロフィール(未作成)」というラベルが表示されていること", () => {
     render(<ProfileListTree />);
-    expect(screen.getByText("遊びが目的のプロフィール(未作成)")).toBeInTheDocument();
+    expect(
+      screen.getByText("遊びが目的のプロフィール(未作成)")
+    ).toBeInTheDocument();
   });
 
   it("「パートナー探しが目的のプロフィール(未作成)」というラベルが表示されていること", () => {
     render(<ProfileListTree />);
-    expect(screen.getByText("パートナー探しが目的のプロフィール(未作成)")).toBeInTheDocument();
+    expect(
+      screen.getByText("パートナー探しが目的のプロフィール(未作成)")
+    ).toBeInTheDocument();
   });
 });

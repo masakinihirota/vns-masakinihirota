@@ -3,11 +3,11 @@
  * @description アイデンティティ可視化ページ
  */
 
-import * as Identity from '@/components/identity-visualization';
+import * as Identity from "@/components/identity-visualization";
 
 export const metadata = {
-  title: 'Identity Visualization | 千の仮面',
-  description: 'ユーザー本体と複数の仮面（プロフィール）の関係を視覚化します。',
+  title: "Identity Visualization | 千の仮面",
+  description: "ユーザー本体と複数の仮面（プロフィール）の関係を視覚化します。",
 };
 
 export default function IdentityPage() {

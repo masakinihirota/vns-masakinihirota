@@ -1,28 +1,34 @@
 "use client";
 
-import { Sparkles, X } from 'lucide-react';
-import { useSearchParams } from 'next/navigation';
-import React, { Suspense } from 'react';
-import { LocalStorageAdapter } from './adapters/local-storage-adapter';
-import { PostgresAdapter } from './adapters/postgres-adapter';
-import { ModalState, useProfileCreation } from './profile-creation-1000masks.logic';
-import { ProfileStorageAdapter } from './profile-storage-adapter';
-import { Header } from './ui/header';
-import { Modal } from './ui/modal';
-import { Sidebar } from './ui/sidebar';
-import { GhostView } from './ui/steps/ghost-view';
-import { Step1Constellation } from './ui/steps/step1-constellation';
-import { Step2Type } from './ui/steps/step2-type';
-import { Step3Objective } from './ui/steps/step3-objective';
-import { Step4Slots } from './ui/steps/step4-slots';
-import { Step5Cassettes } from './ui/steps/step5-cassettes';
+import { Sparkles, X } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import React, { Suspense } from "react";
+import { LocalStorageAdapter } from "./adapters/local-storage-adapter";
+import { PostgresAdapter } from "./adapters/postgres-adapter";
+import {
+  ModalState,
+  useProfileCreation,
+} from "./profile-creation-1000masks.logic";
+import { ProfileStorageAdapter } from "./profile-storage-adapter";
+import { Header } from "./ui/header";
+import { Modal } from "./ui/modal";
+import { Sidebar } from "./ui/sidebar";
+import { GhostView } from "./ui/steps/ghost-view";
+import { Step1Constellation } from "./ui/steps/step1-constellation";
+import { Step2Type } from "./ui/steps/step2-type";
+import { Step3Objective } from "./ui/steps/step3-objective";
+import { Step4Slots } from "./ui/steps/step4-slots";
+import { Step5Cassettes } from "./ui/steps/step5-cassettes";
 
 interface ProfileCreationProps {
   adapter?: ProfileStorageAdapter;
   isTrial?: boolean;
 }
 
-export const ProfileCreation1000Masks: React.FC<ProfileCreationProps> = ({ adapter, isTrial }) => {
+export const ProfileCreation1000Masks: React.FC<ProfileCreationProps> = ({
+  adapter,
+  isTrial,
+}) => {
   return (
     <Suspense fallback={null}>
       <ProfileCreationContent adapter={adapter} isTrial={isTrial} />
@@ -30,14 +36,17 @@ export const ProfileCreation1000Masks: React.FC<ProfileCreationProps> = ({ adapt
   );
 };
 
-const ProfileCreationContent: React.FC<ProfileCreationProps> = ({ adapter, isTrial }) => {
+const ProfileCreationContent: React.FC<ProfileCreationProps> = ({
+  adapter,
+  isTrial,
+}) => {
   const storageAdapter = React.useMemo(() => {
     if (adapter) return adapter;
     return isTrial ? new LocalStorageAdapter() : new PostgresAdapter();
   }, [adapter, isTrial]);
 
   const searchParams = useSearchParams();
-  const fromTrial = searchParams.get('from') === 'trial';
+  const fromTrial = searchParams.get("from") === "trial";
   const [showReminder, setShowReminder] = React.useState(fromTrial);
 
   const {
@@ -65,8 +74,11 @@ const ProfileCreationContent: React.FC<ProfileCreationProps> = ({ adapter, isTri
   } = useProfileCreation(storageAdapter);
 
   // プロフィールが幽霊以外に存在しないかチェック
-  const realProfileCount = profiles.filter(p => !p.isGhost).length;
-  const needsCreation = realProfileCount === 0 || (realProfileCount === 1 && profiles.find(p => !p.isGhost)?.name === 'エンジニアとしての僕');
+  const realProfileCount = profiles.filter((p) => !p.isGhost).length;
+  const needsCreation =
+    realProfileCount === 0 ||
+    (realProfileCount === 1 &&
+      profiles.find((p) => !p.isGhost)?.name === "エンジニアとしての僕");
   const shouldShowBanner = showReminder && needsCreation;
 
   return (
@@ -81,14 +93,24 @@ const ProfileCreationContent: React.FC<ProfileCreationProps> = ({ adapter, isTri
         onCreateNew={createNewProfile}
       />
 
-      <main ref={mainScrollRef} className="flex-1 overflow-y-auto bg-white dark:bg-[#0B0F1A]/50 relative no-scrollbar transition-colors duration-300">
+      <main
+        ref={mainScrollRef}
+        className="flex-1 overflow-y-auto bg-white dark:bg-[#0B0F1A]/50 relative no-scrollbar transition-colors duration-300"
+      >
         <div className="max-w-5xl mx-auto min-h-screen flex flex-col">
           <Header
             activeProfile={activeProfile}
             isDirty={isDirty}
             onNameChange={(name) => handleUpdateDraft({ name })}
             onSave={handleSave}
-            onDelete={() => setModal({ isOpen: true, type: 'info', targetId: null, message: '削除機能は実装中です' })}
+            onDelete={() =>
+              setModal({
+                isOpen: true,
+                type: "info",
+                targetId: null,
+                message: "削除機能は実装中です",
+              })
+            }
           />
 
           {shouldShowBanner && (
@@ -128,7 +150,10 @@ const ProfileCreationContent: React.FC<ProfileCreationProps> = ({ adapter, isTri
               onNextAnonyms={handleNextAnonyms}
               onPrevAnonyms={handlePrevAnonyms}
               onSelectAnonym={handleSelectAnonym}
-              isAtHistoryEnd={activeProfile.historyPointer === activeProfile.constellationHistory.length - 1}
+              isAtHistoryEnd={
+                activeProfile.historyPointer ===
+                activeProfile.constellationHistory.length - 1
+              }
             />
 
             {activeProfile.isGhost ? (
@@ -151,7 +176,9 @@ const ProfileCreationContent: React.FC<ProfileCreationProps> = ({ adapter, isTri
                 <Step5Cassettes
                   activeProfile={activeProfile}
                   onUpdateDraft={handleUpdateDraft}
-                  onOpenModal={(type: ModalState['type'], message: string) => setModal({ isOpen: true, type, targetId: null, message })}
+                  onOpenModal={(type: ModalState["type"], message: string) =>
+                    setModal({ isOpen: true, type, targetId: null, message })
+                  }
                 />
               </>
             )}

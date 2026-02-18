@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { startTransactionAction } from "@/app/actions/market";
 import { MarketItem } from "@/components/groups/groups.types";
 import { Badge } from "@/components/ui/badge";
@@ -13,8 +15,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 interface MarketItemCardProps {
   item: MarketItem;
@@ -90,7 +90,9 @@ export const MarketItemCard = ({
         </div>
 
         <div className="mt-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-          <div className={`w-2 h-2 rounded-full ${item.status === 'open' ? 'bg-emerald-500 animate-pulse' : 'bg-neutral-500'}`} />
+          <div
+            className={`w-2 h-2 rounded-full ${item.status === "open" ? "bg-emerald-500 animate-pulse" : "bg-neutral-500"}`}
+          />
           {item.status}
         </div>
       </CardContent>
@@ -113,12 +115,20 @@ export const MarketItemCard = ({
           </Button>
         )}
         {item.status !== "open" && (
-          <Button className="w-full bg-neutral-200 dark:bg-white/5 text-neutral-500 dark:text-neutral-400 border-transparent" disabled variant="outline">
+          <Button
+            className="w-full bg-neutral-200 dark:bg-white/5 text-neutral-500 dark:text-neutral-400 border-transparent"
+            disabled
+            variant="outline"
+          >
             {item.status === "sold" ? "Sold Out" : "Closed"}
           </Button>
         )}
         {isOwner && (
-          <Button className="w-full border-dashed border-2 bg-transparent text-neutral-500" variant="outline" disabled>
+          <Button
+            className="w-full border-dashed border-2 bg-transparent text-neutral-500"
+            variant="outline"
+            disabled
+          >
             You Own This
           </Button>
         )}

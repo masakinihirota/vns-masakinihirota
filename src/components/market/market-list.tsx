@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { getMarketItemsAction } from "@/app/actions/market";
 import { MarketItem } from "@/components/groups/groups.types";
 import { MarketCreateModal } from "@/components/market/market-create-modal";
 import { MarketItemCard } from "@/components/market/market-item-card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
 
 interface MarketListProps {
   nationId?: string;
@@ -54,7 +54,10 @@ export const MarketList = ({
           <div className="flex flex-col md:flex-row justify-between items-center gap-6 relative z-10">
             <div className="space-y-2 text-center md:text-left">
               <h1 className="text-3xl md:text-4xl font-black tracking-tighter text-neutral-900 dark:text-neutral-100 uppercase italic">
-                VNS <span className="text-emerald-600 dark:text-emerald-400">Marketplace</span>
+                VNS{" "}
+                <span className="text-emerald-600 dark:text-emerald-400">
+                  Marketplace
+                </span>
               </h1>
               <p className="text-lg text-neutral-600 dark:text-neutral-400 font-medium">
                 価値と信頼の交換所
@@ -75,7 +78,12 @@ export const MarketList = ({
             />
           </div>
 
-          <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab} className="w-full md:w-auto">
+          <Tabs
+            defaultValue="all"
+            value={activeTab}
+            onValueChange={setActiveTab}
+            className="w-full md:w-auto"
+          >
             <TabsList className="w-full md:w-auto grid grid-cols-3 h-11 bg-neutral-200/50 dark:bg-black/20 p-1 rounded-xl">
               <TabsTrigger
                 value="all"

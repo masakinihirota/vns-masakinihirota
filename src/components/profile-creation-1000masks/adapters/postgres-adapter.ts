@@ -1,5 +1,5 @@
-import { Profile } from '../profile-creation-1000masks.logic';
-import { ProfileStorageAdapter } from '../profile-storage-adapter';
+import { Profile } from "../profile-creation-1000masks.logic";
+import { ProfileStorageAdapter } from "../profile-storage-adapter";
 
 /**
  * 本番用の Postgres アダプター (API経由)
@@ -10,13 +10,13 @@ export class PostgresAdapter implements ProfileStorageAdapter {
    */
   async loadProfiles(): Promise<Profile[]> {
     try {
-      const response = await fetch('/api/profiles');
+      const response = await fetch("/api/profiles");
       if (!response.ok) {
-        throw new Error('Failed to load profiles');
+        throw new Error("Failed to load profiles");
       }
       return await response.json();
     } catch (e) {
-      console.error('PostgresAdapter.loadProfiles failed', e);
+      console.error("PostgresAdapter.loadProfiles failed", e);
       return [];
     }
   }
@@ -27,19 +27,19 @@ export class PostgresAdapter implements ProfileStorageAdapter {
    */
   async saveProfiles(profiles: Profile[]): Promise<void> {
     try {
-      const response = await fetch('/api/profiles', {
-        method: 'POST',
+      const response = await fetch("/api/profiles", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(profiles),
       });
 
       if (!response.ok) {
-        throw new Error('Failed to save profiles');
+        throw new Error("Failed to save profiles");
       }
     } catch (e) {
-      console.error('PostgresAdapter.saveProfiles failed', e);
+      console.error("PostgresAdapter.saveProfiles failed", e);
       throw e; // 上位層でエラー表示するためスローする
     }
   }

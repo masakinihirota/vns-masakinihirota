@@ -6,7 +6,6 @@
  * 体験版ではアカウント関連の手順に取り消し線を適用
  */
 
-import { cn } from "@/lib/utils";
 import {
   ArrowRightLeft,
   Check,
@@ -18,10 +17,11 @@ import {
   Store,
   Target,
   User,
-  Users
+  Users,
 } from "lucide-react";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 import { ProfileListTree } from "./profile-list-tree";
 
 // 星座の定義

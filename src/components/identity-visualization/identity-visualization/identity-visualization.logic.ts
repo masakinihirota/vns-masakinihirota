@@ -3,7 +3,7 @@
  * @description アイデンティティ可視化機能のデータ型、定数、および計算ロジック
  */
 
-export type ProfileId = 'ghost' | string;
+export type ProfileId = string;
 
 export interface Profile {
   readonly id: ProfileId;
@@ -24,21 +24,45 @@ export interface Account {
  */
 export const IDENTITY_CONFIG = {
   account: {
-    name: 'M君',
-    label: 'ユーザー本体',
-    img: '/images/characters/identity/m-kun.png',
+    name: "M君",
+    label: "ユーザー本体",
+    img: "/images/characters/identity/m-kun.png",
   },
   ghost: {
-    id: 'ghost',
-    name: 'シュレディンガーちゃん',
-    label: '基本（幽霊）',
-    img: '/images/characters/identity/schrodinger.png',
+    id: "ghost",
+    name: "シュレディンガーちゃん",
+    label: "基本（幽霊）",
+    img: "/images/characters/identity/schrodinger.png",
   },
   masks: [
-    { id: 'mask-ai-chan', name: 'AIちゃん', label: '仮面A', color: '#f472b6', img: '/images/characters/identity/ai-chan.png' },
-    { id: 'mask-ai-kun', name: 'AI君', label: '仮面B', color: '#60a5fa', img: '/images/characters/identity/ai-kun.png' },
-    { id: 'mask-ao-chan', name: 'AOちゃん', label: '仮面C', color: '#818cf8', img: '/images/characters/identity/ao-chan.png' },
-    { id: 'mask-ao-kun', name: 'AO君', label: '仮面D', color: '#34d399', img: '/images/characters/identity/ao-kun.png' },
+    {
+      id: "mask-ai-chan",
+      name: "AIちゃん",
+      label: "仮面A",
+      color: "#f472b6",
+      img: "/images/characters/identity/ai-chan.png",
+    },
+    {
+      id: "mask-ai-kun",
+      name: "AI君",
+      label: "仮面B",
+      color: "#60a5fa",
+      img: "/images/characters/identity/ai-kun.png",
+    },
+    {
+      id: "mask-ao-chan",
+      name: "AOちゃん",
+      label: "仮面C",
+      color: "#818cf8",
+      img: "/images/characters/identity/ao-chan.png",
+    },
+    {
+      id: "mask-ao-kun",
+      name: "AO君",
+      label: "仮面D",
+      color: "#34d399",
+      img: "/images/characters/identity/ao-kun.png",
+    },
   ],
 } as const;
 
@@ -49,7 +73,7 @@ export const IDENTITY_CONFIG = {
  * @returns 該当する Profile オブジェクト。見つからない場合は ghost データを返す。
  */
 export const getProfileById = (id: ProfileId): Profile => {
-  if (id === 'ghost') return IDENTITY_CONFIG.ghost;
+  if (id === "ghost") return IDENTITY_CONFIG.ghost;
   const mask = IDENTITY_CONFIG.masks.find((m) => m.id === id);
   return mask ?? IDENTITY_CONFIG.ghost;
 };

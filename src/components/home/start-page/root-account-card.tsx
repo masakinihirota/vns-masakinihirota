@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { ShieldCheck } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 /**
  * アカウントの情報を表示するカードコンポーネント

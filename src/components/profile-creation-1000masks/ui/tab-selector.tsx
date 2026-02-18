@@ -1,6 +1,6 @@
-import { CheckCircle2, Disc, Info, Plus } from 'lucide-react';
-import React from 'react';
-import { Cassette } from '../profile-creation-1000masks.logic';
+import { CheckCircle2, Disc, Info, Plus } from "lucide-react";
+import React from "react";
+import { Cassette } from "../profile-creation-1000masks.logic";
 
 interface TabSelectorProps {
   label: string;
@@ -10,7 +10,13 @@ interface TabSelectorProps {
   onCreateNew?: () => void;
 }
 
-export const TabSelector: React.FC<TabSelectorProps> = ({ label, sets, selectedId, onSelect, onCreateNew }) => {
+export const TabSelector: React.FC<TabSelectorProps> = ({
+  label,
+  sets,
+  selectedId,
+  onSelect,
+  onCreateNew,
+}) => {
   return (
     <div className="mb-6 animate-in fade-in duration-500 transition-colors duration-300">
       <div className="flex items-center justify-between mb-4">
@@ -33,15 +39,18 @@ export const TabSelector: React.FC<TabSelectorProps> = ({ label, sets, selectedI
           <button
             key={set.id}
             onClick={() => onSelect(set.id)}
-            className={`px-8 py-5 rounded-[1.5rem] text-lg font-bold text-left border-4 transition-all flex items-center justify-between ${selectedId === set.id
-                ? 'bg-blue-600 dark:bg-blue-700 text-white border-blue-400 dark:border-blue-500 shadow-xl scale-[1.01]'
-                : 'bg-white dark:bg-white/5 text-slate-500 dark:text-slate-400 border-slate-100 dark:border-white/10 hover:border-blue-200 dark:hover:border-blue-900 shadow-sm'
-              }`}
+            className={`px-8 py-5 rounded-[1.5rem] text-lg font-bold text-left border-4 transition-all flex items-center justify-between ${
+              selectedId === set.id
+                ? "bg-blue-600 dark:bg-blue-700 text-white border-blue-400 dark:border-blue-500 shadow-xl scale-[1.01]"
+                : "bg-white dark:bg-white/5 text-slate-500 dark:text-slate-400 border-slate-100 dark:border-white/10 hover:border-blue-200 dark:hover:border-blue-900 shadow-sm"
+            }`}
           >
             <div className="flex flex-col text-left">
               <span>{set.name}</span>
-              <span className={`text-lg font-bold mt-1 ${selectedId === set.id ? 'text-blue-100 dark:text-blue-200/60' : 'text-slate-400 dark:text-slate-600'}`}>
-                Items: {set.items.join(', ')}
+              <span
+                className={`text-lg font-bold mt-1 ${selectedId === set.id ? "text-blue-100 dark:text-blue-200/60" : "text-slate-400 dark:text-slate-600"}`}
+              >
+                Items: {set.items.join(", ")}
               </span>
             </div>
             {selectedId === set.id && <CheckCircle2 size={24} />}
@@ -53,11 +62,16 @@ export const TabSelector: React.FC<TabSelectorProps> = ({ label, sets, selectedI
           <Info size={16} />
           <span>装着中の内容プレビュー</span>
         </p>
-        {sets.find(s => s.id === selectedId)?.items.map((item, i) => (
-          <span key={i} className="px-4 py-2 bg-white dark:bg-[#161B22] border border-slate-200 dark:border-white/10 rounded-xl text-lg font-bold text-slate-700 dark:text-neutral-300 shadow-sm transition-colors">
-            {item}
-          </span>
-        ))}
+        {sets
+          .find((s) => s.id === selectedId)
+          ?.items.map((item, i) => (
+            <span
+              key={i}
+              className="px-4 py-2 bg-white dark:bg-[#161B22] border border-slate-200 dark:border-white/10 rounded-xl text-lg font-bold text-slate-700 dark:text-neutral-300 shadow-sm transition-colors"
+            >
+              {item}
+            </span>
+          ))}
       </div>
     </div>
   );

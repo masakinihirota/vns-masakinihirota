@@ -21,6 +21,8 @@ describe("GroupNationComparison", () => {
     // 曖昧一致を使用して、一部の文字列が含まれているかチェック
     expect(screen.getByText(/個人の「マッチング」/)).toBeInTheDocument();
     expect(screen.getByText(/複数のグループの集合/)).toBeInTheDocument();
-    expect(screen.getByText(/外向き：社会・活動のインフラ/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/外向き：社会・活動のインフラ/)
+    ).toBeInTheDocument();
   });
 });

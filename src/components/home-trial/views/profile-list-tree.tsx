@@ -58,9 +58,7 @@ export function ProfileListTree() {
                 <span className="font-bold text-slate-700 dark:text-neutral-300">
                   遊びが目的のプロフィール(未作成)
                 </span>
-                <span className="text-xs text-slate-400">
-                  趣味・エンタメ
-                </span>
+                <span className="text-xs text-slate-400">趣味・エンタメ</span>
               </div>
             </div>
           </div>
@@ -76,9 +74,7 @@ export function ProfileListTree() {
                 <span className="font-bold text-slate-700 dark:text-neutral-300">
                   パートナー探しが目的のプロフィール(未作成)
                 </span>
-                <span className="text-xs text-slate-400">
-                  出会い・交流
-                </span>
+                <span className="text-xs text-slate-400">出会い・交流</span>
               </div>
             </div>
           </div>

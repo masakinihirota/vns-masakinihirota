@@ -11,6 +11,8 @@ describe("group-nation-comparison.logic", () => {
 
     const nation = COMPARISON_DATA.find((d) => d.id === "nation");
     expect(nation?.title).toBe("国 (Nation)");
-    expect(nation?.items.origin.content).toBe("あるグループが掲げた「目的」で集まる。");
+    expect(nation?.items.origin.content).toBe(
+      "あるグループが掲げた「目的」で集まる。"
+    );
   });
 });

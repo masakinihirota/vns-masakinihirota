@@ -1,4 +1,4 @@
-import { Profile } from './profile-creation-1000masks.logic';
+import { Profile } from "./profile-creation-1000masks.logic";
 
 /**
  * プロフィール作成画面で、プロフィールの永続化を担当するアダプターのインタフェース

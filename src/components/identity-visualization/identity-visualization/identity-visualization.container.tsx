@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
 /**
  * @file identity-visualization.container.tsx
  * @description ステート管理とパス計算ロジックを統合するコンテナコンポーネント
  */
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { IdentityVisualization } from './identity-visualization';
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { IdentityVisualization } from "./identity-visualization";
 import {
   IDENTITY_CONFIG,
   calculateBezierPath,
   getProfileById,
   type ProfileId,
-} from './identity-visualization.logic';
+} from "./identity-visualization.logic";
 
 export const IdentityVisualizationContainer: React.FC = () => {
-  const [activeProfile, setActiveProfile] = useState<ProfileId>('ghost');
-  const [linePath, setLinePath] = useState<string>('');
+  const [activeProfile, setActiveProfile] = useState<ProfileId>("ghost");
+  const [linePath, setLinePath] = useState<string>("");
 
   const accountRef = useRef<HTMLDivElement | null>(null);
   const profileRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -33,7 +33,7 @@ export const IdentityVisualizationContainer: React.FC = () => {
       const endRect = endEl.getBoundingClientRect();
 
       // コンテナ（viz-container）の相対位置を取得
-      const containerEl = startEl.closest('.viz-container');
+      const containerEl = startEl.closest(".viz-container");
       if (!containerEl) return;
 
       const containerRect = containerEl.getBoundingClientRect();
@@ -54,8 +54,8 @@ export const IdentityVisualizationContainer: React.FC = () => {
   // アクティブプロフィール変更時やリサイズ時にパスを更新
   useEffect(() => {
     updateLinePath();
-    window.addEventListener('resize', updateLinePath);
-    return () => window.removeEventListener('resize', updateLinePath);
+    window.addEventListener("resize", updateLinePath);
+    return () => window.removeEventListener("resize", updateLinePath);
   }, [updateLinePath]);
 
   const handleProfileSelect = (id: ProfileId) => {

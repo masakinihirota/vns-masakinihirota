@@ -10,4 +10,3 @@ export * from "./local-mode-button";
 export * from "./purpose-section";
 export * from "./site-mission-section";
 export * from "./tales-claire-lp";
-
