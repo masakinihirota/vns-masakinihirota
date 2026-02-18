@@ -1,21 +1,20 @@
 import {
-  CheckCircle2,
-  Heart,
-  Trophy,
-  HelpCircle,
   ArrowLeft,
   ArrowRight,
+  CheckCircle2,
+  Heart,
+  HelpCircle,
+  Info,
   Plus,
   Trash2,
-  Info,
+  Trophy,
 } from "lucide-react";
 import React from "react";
 import { PURPOSES, VALUE_QUESTIONS } from "../user-profile-creation.constants";
+import { UserProfile } from "../user-profile-creation.types";
 
 interface Step5ValuesProps {
-  formData: {
-    purposes: string[];
-  };
+  formData: UserProfile;
   togglePurpose: (id: string) => void;
   ratingType: "LIKE" | "TIER";
   setRatingType: (type: "LIKE" | "TIER") => void;

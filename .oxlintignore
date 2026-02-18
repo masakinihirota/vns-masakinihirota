@@ -1,0 +1,4 @@
+src/types/types_db.ts
+src/scripts/**
+src/**/*.test.ts
+src/**/*.test.tsx

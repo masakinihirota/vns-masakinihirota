@@ -1,24 +1,26 @@
 import {
-  Home,
-  User,
-  Search,
-  Heart,
-  Flag,
-  Users,
   Briefcase,
-  Lightbulb,
-  Wrench,
-  List,
-  Link2,
-  Grid,
-  Trophy,
-  Medal,
-  Star,
-  GraduationCap,
-  Settings,
   CreditCard,
+  Flag,
+  Gift,
+  GraduationCap,
+  Grid,
+  Heart,
+  Home,
+  Lightbulb,
+  Link2,
+  List,
+  Medal,
+  Search,
+  Settings,
+  ShoppingBag,
+  Star,
+  Trophy,
+  User,
   UserCircle,
   UserPlus,
+  Users,
+  Wrench,
   type LucideIcon,
 } from "lucide-react";
 
@@ -40,6 +42,7 @@ export const ICON_MAP: Record<string, LucideIcon> = {
   "/home/search": Search,
   "/recommendations": Star,
   "/works": Briefcase,
+  "/market": ShoppingBag,
   "/works/continuous-rating": Star,
 
   // features
@@ -52,6 +55,7 @@ export const ICON_MAP: Record<string, LucideIcon> = {
   // progress / gamification
   "/achievements": Trophy,
   "/badges": Medal,
+  "/rewards": Gift,
   "/results": Star,
 
   // misc

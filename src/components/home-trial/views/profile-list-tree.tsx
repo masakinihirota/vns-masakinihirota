@@ -7,37 +7,9 @@
  */
 
 import { Briefcase, Gamepad2, Heart, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
-import { UserProfile } from "@/lib/db/user-profiles";
 import { AccountCard } from "../../home/start-page/root-account-card";
 
 export function ProfileListTree() {
-  const [profiles, setProfiles] = useState<UserProfile[]>([]);
-  useEffect(() => {
-    // ローカルプロフィールの読み込み
-    const loadProfiles = async () => {
-      try {
-        const { getDeviceId, getLocalUserProfiles } =
-          await import("@/lib/db/local-storage-adapter");
-        const deviceId = getDeviceId();
-        const data = await getLocalUserProfiles(deviceId);
-        setProfiles(data);
-      } catch (e) {
-        console.error("Failed to load local profiles", e);
-      }
-    };
-    void loadProfiles();
-  }, []);
-
-  // 目的別に分類
-  const workProfiles = profiles.filter(
-    (p) => p.purposes?.includes("create_work") || p.purpose === "create_work"
-  );
-
-  // デフォルト表示（データがない場合）のためにダミーを残すか、または「未作成」を表示するか
-  // ここでは要件に合わせ、作成されたものがあればそれを表示、なければプレースホルダーのように振る舞うUIにするのが理想だが、
-  // 今回は「作成されたものが追加される」様子を見せる。
-
   return (
     <div className="mt-8 p-6 md:p-10 bg-slate-50 dark:bg-neutral-900/50 rounded-3xl border border-slate-100 dark:border-neutral-800 backdrop-blur-sm">
       <div className="flex flex-col gap-0">
@@ -59,61 +31,51 @@ export function ProfileListTree() {
           <div className="relative flex items-center">
             <div className="absolute -left-[36px] w-8 h-1 bg-blue-200 dark:bg-blue-900" />
             <div className="flex flex-col gap-2 w-full">
-              {workProfiles.length > 0 ? (
-                workProfiles.map((profile) => (
-                  <div
-                    key={profile.id}
-                    className="flex items-center gap-4 p-4 border-2 border-blue-100 dark:border-blue-900 rounded-xl bg-white dark:bg-neutral-900 shadow-sm w-full md:w-auto hover:border-blue-400 dark:hover:border-blue-600 transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950 flex items-center justify-center text-blue-600 dark:text-blue-400">
-                      <Briefcase size={22} />
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-bold text-slate-700 dark:text-neutral-300">
-                        {profile.display_name}
-                      </span>
-                      <span className="text-xs text-slate-400">
-                        仕事用・クリエイター
-                      </span>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="flex items-center gap-4 p-4 border-2 border-dashed border-blue-100 dark:border-blue-900 rounded-xl bg-white/50 dark:bg-neutral-900/50 w-full md:w-auto">
-                  <div className="w-10 h-10 rounded-lg bg-slate-100 dark:bg-neutral-800 flex items-center justify-center text-slate-400">
-                    <Briefcase size={22} />
-                  </div>
-                  <span className="font-bold text-slate-500 dark:text-neutral-300">
-                    仕事・クリエイション用（未作成）
+              <div className="flex items-center gap-4 p-4 border-2 border-blue-100 dark:border-blue-900 rounded-xl bg-white dark:bg-neutral-900 shadow-sm w-full md:w-auto hover:border-blue-400 dark:hover:border-blue-600 transition-colors">
+                <div className="w-10 h-10 rounded-lg bg-blue-50 dark:bg-blue-950 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                  <Briefcase size={22} />
+                </div>
+                <div className="flex flex-col">
+                  <span className="font-bold text-slate-700 dark:text-neutral-300">
+                    仕事が目的のプロフィール(未作成)
+                  </span>
+                  <span className="text-xs text-slate-400">
+                    仕事用・クリエイター
                   </span>
                 </div>
-              )}
+              </div>
             </div>
           </div>
 
-          {/* 遊びプロフィール (省略形: 今回は作成フローで選択肢が限られているため、一旦枠だけ残すか、同様にマッピング) */}
+          {/* 遊びプロフィール */}
           <div className="relative flex items-center">
             <div className="absolute -left-[36px] w-8 h-1 bg-blue-200 dark:bg-blue-900" />
-            <div className="flex items-center gap-4 p-4 border-2 border-dashed border-emerald-100 dark:border-emerald-900 rounded-xl bg-white/50 dark:bg-neutral-900/50 shadow-sm w-full md:w-auto">
+            <div className="flex items-center gap-4 p-4 border-2 border-emerald-100 dark:border-emerald-900 rounded-xl bg-white dark:bg-neutral-900 shadow-sm w-full md:w-auto hover:border-emerald-400 dark:hover:border-emerald-600 transition-colors">
               <div className="w-10 h-10 rounded-lg bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                 <Gamepad2 size={22} />
               </div>
-              <span className="font-bold text-slate-500 dark:text-neutral-300">
-                遊びが目的のプロフィール（未作成）
-              </span>
+              <div className="flex flex-col">
+                <span className="font-bold text-slate-700 dark:text-neutral-300">
+                  遊びが目的のプロフィール(未作成)
+                </span>
+                <span className="text-xs text-slate-400">趣味・エンタメ</span>
+              </div>
             </div>
           </div>
 
           {/* パートナー探しプロフィール */}
           <div className="relative flex items-center">
             <div className="absolute -left-[36px] w-8 h-1 bg-blue-200 dark:bg-blue-900" />
-            <div className="flex items-center gap-4 p-4 border-2 border-dashed border-rose-100 dark:border-rose-900 rounded-xl bg-white/50 dark:bg-neutral-900/50 shadow-sm w-full md:w-auto">
+            <div className="flex items-center gap-4 p-4 border-2 border-rose-100 dark:border-rose-900 rounded-xl bg-white dark:bg-neutral-900 shadow-sm w-full md:w-auto hover:border-rose-400 dark:hover:border-rose-600 transition-colors">
               <div className="w-10 h-10 rounded-lg bg-rose-50 dark:bg-rose-950 flex items-center justify-center text-rose-600 dark:text-rose-400">
                 <Heart size={22} />
               </div>
-              <span className="font-bold text-slate-500 dark:text-neutral-300">
-                パートナー探しが目的のプロフィール（未作成）
-              </span>
+              <div className="flex flex-col">
+                <span className="font-bold text-slate-700 dark:text-neutral-300">
+                  パートナー探しが目的のプロフィール(未作成)
+                </span>
+                <span className="text-xs text-slate-400">出会い・交流</span>
+              </div>
             </div>
           </div>
 
@@ -133,10 +95,7 @@ export function ProfileListTree() {
       </div>
 
       <p className="mt-10 text-slate-600 dark:text-neutral-200 leading-relaxed bg-white/60 dark:bg-neutral-900/60 p-6 rounded-2xl border border-slate-200 dark:border-neutral-800 font-medium backdrop-blur-sm">
-        プロフィールはあなたの「仮面」です。目的ごとに使い分けます、複数の目的を持ったプロフィールを作成することも可能です。
-        <span className="block mt-2 text-red-500/80 dark:text-red-400/80 text-sm font-bold">
-          ※1000のプロフィール作成は特別なユーザー向けのサービスとなります。
-        </span>
+        プロフィールはあなたの「仮面」です。目的ごとに使い分けます。
       </p>
     </div>
   );

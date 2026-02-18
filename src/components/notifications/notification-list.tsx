@@ -1,28 +1,15 @@
-"use client";
-
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { Notification } from "@/components/groups/groups.types";
-import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 import { useMarkAsRead, useNotifications } from "./notifications.logic";
 
 export const NotificationList = () => {
-  const [userId, setUserId] = useState<string | undefined>(undefined);
-  const { notifications, isLoading, mutate } = useNotifications(userId);
+  const { status } = useSession();
+  const isLoggedIn = status === "authenticated";
+  const { notifications, isLoading, mutate } = useNotifications(isLoggedIn);
   const { markAsRead } = useMarkAsRead();
   const router = useRouter();
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const supabase = createClient();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) setUserId(user.id);
-    };
-    void fetchUser();
-  }, []);
 
   const handleRead = async (notification: Notification) => {
     if (!notification.is_read) {
@@ -34,12 +21,12 @@ export const NotificationList = () => {
     }
   };
 
-  if (isLoading)
+  if (status === "loading" || isLoading)
     return (
       <div className="p-4 text-center text-sm text-gray-500">Loading...</div>
     );
 
-  if (!userId)
+  if (!isLoggedIn)
     return (
       <div className="p-4 text-center text-sm text-gray-500">
         Please login to see notifications.

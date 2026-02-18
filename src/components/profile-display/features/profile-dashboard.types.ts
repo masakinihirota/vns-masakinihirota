@@ -87,6 +87,8 @@ export interface DashboardData {
   readonly skills: readonly Skill[];
 }
 
+export type DashboardArrayKey = Exclude<keyof DashboardData, "profile">;
+
 /**
  * ソート設定
  */

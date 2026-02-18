@@ -6,7 +6,7 @@ export const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => (
   <div
-    className={`rounded-2xl overflow-hidden backdrop-blur-md bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 shadow-lg ${className ?? ""}`}
+    className={`rounded-2xl overflow-hidden backdrop-blur-md bg-white/10 dark:bg-white/5 border border-white/20 dark:border-white/10 shadow-lg dark:shadow-[0_8px_30px_rgba(0,0,0,0.4)] ${className ?? ""}`}
     data-testid="card"
     {...props}
   >

@@ -1,0 +1,2325 @@
+{
+  "id": "00000000-0000-0000-0000-000000000000",
+  "prevId": "",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.root_accounts": {
+      "name": "root_accounts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "auth_user_id": {
+          "name": "auth_user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "points": {
+          "name": "points",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 3000
+        },
+        "level": {
+          "name": "level",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 1
+        },
+        "trust_days": {
+          "name": "trust_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "data_retention_days": {
+          "name": "data_retention_days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 30
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "root_accounts_auth_user_id_fkey": {
+          "name": "root_accounts_auth_user_id_fkey",
+          "tableFrom": "root_accounts",
+          "tableTo": "users",
+          "schemaTo": "auth",
+          "columnsFrom": ["auth_user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "root_accounts_auth_user_id_key": {
+          "columns": ["auth_user_id"],
+          "nullsNotDistinct": false,
+          "name": "root_accounts_auth_user_id_key"
+        }
+      },
+      "checkConstraints": {
+        "root_accounts_points_check": {
+          "name": "root_accounts_points_check",
+          "value": "points >= 0"
+        },
+        "root_accounts_level_check": {
+          "name": "root_accounts_level_check",
+          "value": "level >= 1"
+        },
+        "root_accounts_trust_days_check": {
+          "name": "root_accounts_trust_days_check",
+          "value": "trust_days >= 0"
+        }
+      },
+      "policies": {
+        "Users can update own root account": {
+          "name": "Users can update own root account",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"],
+          "using": "(auth.uid() = auth_user_id)"
+        },
+        "Users can view own root account": {
+          "name": "Users can view own root account",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.user_profiles": {
+      "name": "user_profiles",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "root_account_id": {
+          "name": "root_account_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "purpose": {
+          "name": "purpose",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role_type": {
+          "name": "role_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'member'"
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": true
+        },
+        "last_interacted_record_id": {
+          "name": "last_interacted_record_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_user_profiles_root_account_id": {
+          "name": "idx_user_profiles_root_account_id",
+          "columns": [
+            {
+              "expression": "root_account_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "user_profiles_root_account_id_fkey": {
+          "name": "user_profiles_root_account_id_fkey",
+          "tableFrom": "user_profiles",
+          "tableTo": "root_accounts",
+          "schemaTo": "public",
+          "columnsFrom": ["root_account_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "role_type_check": {
+          "name": "role_type_check",
+          "value": "role_type = ANY (ARRAY['leader'::text, 'member'::text, 'admin'::text, 'mediator'::text])"
+        }
+      },
+      "policies": {
+        "Users can delete own profiles": {
+          "name": "Users can delete own profiles",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": ["public"],
+          "using": "(root_account_id IN ( SELECT root_accounts.id\n   FROM root_accounts\n  WHERE (root_accounts.auth_user_id = auth.uid())))"
+        },
+        "Users can update own profiles": {
+          "name": "Users can update own profiles",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"]
+        },
+        "Users can insert own profiles": {
+          "name": "Users can insert own profiles",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"]
+        },
+        "Users can view own profiles": {
+          "name": "Users can view own profiles",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.business_cards": {
+      "name": "business_cards",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_profile_id": {
+          "name": "user_profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_published": {
+          "name": "is_published",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "display_config": {
+          "name": "display_config",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "timezone('utc'::text, now())"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "timezone('utc'::text, now())"
+        },
+        "content": {
+          "name": "content",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::jsonb"
+        }
+      },
+      "indexes": {
+        "business_cards_user_profile_id_idx": {
+          "name": "business_cards_user_profile_id_idx",
+          "columns": [
+            {
+              "expression": "user_profile_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "business_cards_user_profile_id_fkey": {
+          "name": "business_cards_user_profile_id_fkey",
+          "tableFrom": "business_cards",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "business_cards_user_profile_id_key": {
+          "columns": ["user_profile_id"],
+          "nullsNotDistinct": false,
+          "name": "business_cards_user_profile_id_key"
+        }
+      },
+      "checkConstraints": {},
+      "policies": {
+        "Owners can create their own business card": {
+          "name": "Owners can create their own business card",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"],
+          "withCheck": "(EXISTS ( SELECT 1\n   FROM (user_profiles\n     JOIN root_accounts ON ((user_profiles.root_account_id = root_accounts.id)))\n  WHERE ((user_profiles.id = business_cards.user_profile_id) AND (root_accounts.auth_user_id = auth.uid()))))"
+        },
+        "Owners can update their own business card": {
+          "name": "Owners can update their own business card",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"]
+        },
+        "Public can view published business cards": {
+          "name": "Public can view published business cards",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        },
+        "Owners can view their own business card": {
+          "name": "Owners can view their own business card",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.alliances": {
+      "name": "alliances",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "profile_a_id": {
+          "name": "profile_a_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profile_b_id": {
+          "name": "profile_b_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "alliance_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'requested'"
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{}'::jsonb"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_alliances_profile_a": {
+          "name": "idx_alliances_profile_a",
+          "columns": [
+            {
+              "expression": "profile_a_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_alliances_profile_b": {
+          "name": "idx_alliances_profile_b",
+          "columns": [
+            {
+              "expression": "profile_b_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "alliances_profile_a_id_fkey": {
+          "name": "alliances_profile_a_id_fkey",
+          "tableFrom": "alliances",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["profile_a_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "alliances_profile_b_id_fkey": {
+          "name": "alliances_profile_b_id_fkey",
+          "tableFrom": "alliances",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["profile_b_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "alliances_unique_pair": {
+          "columns": ["profile_a_id", "profile_b_id"],
+          "nullsNotDistinct": false,
+          "name": "alliances_unique_pair"
+        }
+      },
+      "checkConstraints": {
+        "alliances_profile_order_check": {
+          "name": "alliances_profile_order_check",
+          "value": "profile_a_id < profile_b_id"
+        }
+      },
+      "policies": {
+        "Users can delete their own profiles' alliances": {
+          "name": "Users can delete their own profiles' alliances",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": ["public"],
+          "using": "((profile_a_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid()))))) OR (profile_b_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid()))))))"
+        },
+        "Users can update their own profiles' alliances": {
+          "name": "Users can update their own profiles' alliances",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"]
+        },
+        "Users can initiate alliances for their own profiles": {
+          "name": "Users can initiate alliances for their own profiles",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"]
+        },
+        "Users can view their own profiles' alliances": {
+          "name": "Users can view their own profiles' alliances",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.works": {
+      "name": "works",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "author": {
+          "name": "author",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "category": {
+          "name": "category",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_official": {
+          "name": "is_official",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "owner_user_id": {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'pending'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tags": {
+          "name": "tags",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{\"\"}'"
+        },
+        "external_url": {
+          "name": "external_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "affiliate_url": {
+          "name": "affiliate_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "release_year": {
+          "name": "release_year",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "scale": {
+          "name": "scale",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_purchasable": {
+          "name": "is_purchasable",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        }
+      },
+      "indexes": {
+        "idx_works_owner_status": {
+          "name": "idx_works_owner_status",
+          "columns": [
+            {
+              "expression": "owner_user_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "status",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "text_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "works_owner_user_id_fkey": {
+          "name": "works_owner_user_id_fkey",
+          "tableFrom": "works",
+          "tableTo": "users",
+          "schemaTo": "auth",
+          "columnsFrom": ["owner_user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "works_category_check": {
+          "name": "works_category_check",
+          "value": "category = ANY (ARRAY['anime'::text, 'manga'::text, 'other'::text])"
+        },
+        "works_status_check": {
+          "name": "works_status_check",
+          "value": "status = ANY (ARRAY['public'::text, 'pending'::text, 'private'::text])"
+        },
+        "works_scale_check": {
+          "name": "works_scale_check",
+          "value": "scale = ANY (ARRAY['half_day'::text, 'one_day'::text, 'one_week'::text, 'one_month'::text, 'one_cour'::text, 'long_term'::text])"
+        }
+      },
+      "policies": {
+        "Users can view their own pending/private works": {
+          "name": "Users can view their own pending/private works",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "(auth.uid() = owner_user_id)"
+        },
+        "Public works are viewable by everyone": {
+          "name": "Public works are viewable by everyone",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        },
+        "Users can update their own works": {
+          "name": "Users can update their own works",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"]
+        },
+        "Users can insert their own works": {
+          "name": "Users can insert their own works",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.groups": {
+      "name": "groups",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_official": {
+          "name": "is_official",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cover_url": {
+          "name": "cover_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leader_id": {
+          "name": "leader_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "groups_leader_id_fkey": {
+          "name": "groups_leader_id_fkey",
+          "tableFrom": "groups",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["leader_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {
+        "Leaders can delete groups": {
+          "name": "Leaders can delete groups",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": ["public"],
+          "using": "(leader_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid())))))"
+        },
+        "Leaders can update groups": {
+          "name": "Leaders can update groups",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"]
+        },
+        "Authenticated users can create groups": {
+          "name": "Authenticated users can create groups",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"]
+        },
+        "Public read access for groups": {
+          "name": "Public read access for groups",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.nations": {
+      "name": "nations",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_official": {
+          "name": "is_official",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "avatar_url": {
+          "name": "avatar_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "cover_url": {
+          "name": "cover_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "owner_user_id": {
+          "name": "owner_user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "owner_group_id": {
+          "name": "owner_group_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "transaction_fee_rate": {
+          "name": "transaction_fee_rate",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'10.0'"
+        },
+        "foundation_fee": {
+          "name": "foundation_fee",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "default": 1000
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "nations_owner_user_id_fkey": {
+          "name": "nations_owner_user_id_fkey",
+          "tableFrom": "nations",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["owner_user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "nations_owner_group_id_fkey": {
+          "name": "nations_owner_group_id_fkey",
+          "tableFrom": "nations",
+          "tableTo": "groups",
+          "schemaTo": "public",
+          "columnsFrom": ["owner_group_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {
+        "Public read access for nations": {
+          "name": "Public read access for nations",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "true"
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.market_items": {
+      "name": "market_items",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nation_id": {
+          "name": "nation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "seller_id": {
+          "name": "seller_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seller_group_id": {
+          "name": "seller_group_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price": {
+          "name": "price",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "currency": {
+          "name": "currency",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'point'"
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'sell'"
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'open'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "market_items_nation_id_fkey": {
+          "name": "market_items_nation_id_fkey",
+          "tableFrom": "market_items",
+          "tableTo": "nations",
+          "schemaTo": "public",
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "market_items_seller_id_fkey": {
+          "name": "market_items_seller_id_fkey",
+          "tableFrom": "market_items",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["seller_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "market_items_seller_group_id_fkey": {
+          "name": "market_items_seller_group_id_fkey",
+          "tableFrom": "market_items",
+          "tableTo": "groups",
+          "schemaTo": "public",
+          "columnsFrom": ["seller_group_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "market_items_price_check": {
+          "name": "market_items_price_check",
+          "value": "price >= 0"
+        },
+        "market_items_type_check": {
+          "name": "market_items_type_check",
+          "value": "type = ANY (ARRAY['sell'::text, 'buy_request'::text])"
+        },
+        "market_items_status_check": {
+          "name": "market_items_status_check",
+          "value": "status = ANY (ARRAY['open'::text, 'sold'::text, 'closed'::text])"
+        }
+      },
+      "policies": {
+        "Public read access for market items": {
+          "name": "Public read access for market items",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "true"
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.market_transactions": {
+      "name": "market_transactions",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "item_id": {
+          "name": "item_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "buyer_id": {
+          "name": "buyer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seller_id": {
+          "name": "seller_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "price": {
+          "name": "price",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fee_rate": {
+          "name": "fee_rate",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fee_amount": {
+          "name": "fee_amount",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "seller_revenue": {
+          "name": "seller_revenue",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'pending'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "completed_at": {
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "market_transactions_item_id_fkey": {
+          "name": "market_transactions_item_id_fkey",
+          "tableFrom": "market_transactions",
+          "tableTo": "market_items",
+          "schemaTo": "public",
+          "columnsFrom": ["item_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "market_transactions_buyer_id_fkey": {
+          "name": "market_transactions_buyer_id_fkey",
+          "tableFrom": "market_transactions",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["buyer_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "market_transactions_seller_id_fkey": {
+          "name": "market_transactions_seller_id_fkey",
+          "tableFrom": "market_transactions",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["seller_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "market_transactions_status_check": {
+          "name": "market_transactions_status_check",
+          "value": "status = ANY (ARRAY['pending'::text, 'completed'::text, 'cancelled'::text])"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": true
+    },
+    "public.nation_events": {
+      "name": "nation_events",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nation_id": {
+          "name": "nation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "organizer_id": {
+          "name": "organizer_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "start_at": {
+          "name": "start_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "end_at": {
+          "name": "end_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recruitment_start_at": {
+          "name": "recruitment_start_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "recruitment_end_at": {
+          "name": "recruitment_end_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "max_participants": {
+          "name": "max_participants",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "conditions": {
+          "name": "conditions",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "sponsors": {
+          "name": "sponsors",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'free'"
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'published'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "nation_events_nation_id_fkey": {
+          "name": "nation_events_nation_id_fkey",
+          "tableFrom": "nation_events",
+          "tableTo": "nations",
+          "schemaTo": "public",
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "nation_events_organizer_id_fkey": {
+          "name": "nation_events_organizer_id_fkey",
+          "tableFrom": "nation_events",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["organizer_id"],
+          "columnsTo": ["id"],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "nation_events_type_check": {
+          "name": "nation_events_type_check",
+          "value": "type = ANY (ARRAY['product_required'::text, 'free'::text, 'other'::text])"
+        },
+        "nation_events_status_check": {
+          "name": "nation_events_status_check",
+          "value": "status = ANY (ARRAY['draft'::text, 'published'::text, 'cancelled'::text, 'completed'::text])"
+        }
+      },
+      "policies": {
+        "Public read access for events": {
+          "name": "Public read access for events",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"],
+          "using": "true"
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.notifications": {
+      "name": "notifications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "user_profile_id": {
+          "name": "user_profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "link_url": {
+          "name": "link_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_read": {
+          "name": "is_read",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_notifications_user_profile_id_is_read": {
+          "name": "idx_notifications_user_profile_id_is_read",
+          "columns": [
+            {
+              "expression": "user_profile_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "bool_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "is_read",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "bool_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "notifications_user_profile_id_fkey": {
+          "name": "notifications_user_profile_id_fkey",
+          "tableFrom": "notifications",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {},
+      "isRLSEnabled": true
+    },
+    "public.nation_posts": {
+      "name": "nation_posts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "nation_id": {
+          "name": "nation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "author_id": {
+          "name": "author_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "author_group_id": {
+          "name": "author_group_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'chat'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "nation_posts_nation_id_fkey": {
+          "name": "nation_posts_nation_id_fkey",
+          "tableFrom": "nation_posts",
+          "tableTo": "nations",
+          "schemaTo": "public",
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "nation_posts_author_id_fkey": {
+          "name": "nation_posts_author_id_fkey",
+          "tableFrom": "nation_posts",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["author_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "nation_posts_author_group_id_fkey": {
+          "name": "nation_posts_author_group_id_fkey",
+          "tableFrom": "nation_posts",
+          "tableTo": "groups",
+          "schemaTo": "public",
+          "columnsFrom": ["author_group_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "nation_posts_type_check": {
+          "name": "nation_posts_type_check",
+          "value": "type = ANY (ARRAY['announcement'::text, 'chat'::text])"
+        },
+        "check_author_exclusive": {
+          "name": "check_author_exclusive",
+          "value": "((author_id IS NOT NULL) AND (author_group_id IS NULL)) OR ((author_id IS NULL) AND (author_group_id IS NOT NULL))"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": true
+    },
+    "public.follows": {
+      "name": "follows",
+      "schema": "",
+      "columns": {
+        "follower_profile_id": {
+          "name": "follower_profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "followed_profile_id": {
+          "name": "followed_profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "follow_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'follow'"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_follows_followed_profile": {
+          "name": "idx_follows_followed_profile",
+          "columns": [
+            {
+              "expression": "followed_profile_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "idx_follows_follower_profile": {
+          "name": "idx_follows_follower_profile",
+          "columns": [
+            {
+              "expression": "follower_profile_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "follows_follower_profile_id_fkey": {
+          "name": "follows_follower_profile_id_fkey",
+          "tableFrom": "follows",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["follower_profile_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "follows_followed_profile_id_fkey": {
+          "name": "follows_followed_profile_id_fkey",
+          "tableFrom": "follows",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["followed_profile_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "follows_pkey": {
+          "name": "follows_pkey",
+          "columns": ["follower_profile_id", "followed_profile_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "follows_self_check": {
+          "name": "follows_self_check",
+          "value": "follower_profile_id <> followed_profile_id"
+        }
+      },
+      "policies": {
+        "Users can delete follows for their own profiles": {
+          "name": "Users can delete follows for their own profiles",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": ["public"],
+          "using": "(follower_profile_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid())))))"
+        },
+        "Users can update follows for their own profiles": {
+          "name": "Users can update follows for their own profiles",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"]
+        },
+        "Users can create follows for their own profiles": {
+          "name": "Users can create follows for their own profiles",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"]
+        },
+        "Users can view their profiles' followers (excluding watches)": {
+          "name": "Users can view their profiles' followers (excluding watches)",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        },
+        "Users can view their own profiles' follows and watches": {
+          "name": "Users can view their own profiles' follows and watches",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.group_members": {
+      "name": "group_members",
+      "schema": "",
+      "columns": {
+        "group_id": {
+          "name": "group_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_profile_id": {
+          "name": "user_profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'member'"
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "group_members_group_id_fkey": {
+          "name": "group_members_group_id_fkey",
+          "tableFrom": "group_members",
+          "tableTo": "groups",
+          "schemaTo": "public",
+          "columnsFrom": ["group_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "group_members_user_profile_id_fkey": {
+          "name": "group_members_user_profile_id_fkey",
+          "tableFrom": "group_members",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "group_members_pkey": {
+          "name": "group_members_pkey",
+          "columns": ["group_id", "user_profile_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "group_members_role_check": {
+          "name": "group_members_role_check",
+          "value": "role = ANY (ARRAY['leader'::text, 'mediator'::text, 'member'::text])"
+        }
+      },
+      "policies": {
+        "Users can leave groups": {
+          "name": "Users can leave groups",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": ["public"],
+          "using": "(user_profile_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid())))))"
+        },
+        "Users can join groups": {
+          "name": "Users can join groups",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"]
+        },
+        "Leaders can remove members": {
+          "name": "Leaders can remove members",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": ["public"]
+        },
+        "Leaders can update members": {
+          "name": "Leaders can update members",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"]
+        },
+        "Leaders can add members": {
+          "name": "Leaders can add members",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"]
+        },
+        "Public read access for group_members": {
+          "name": "Public read access for group_members",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.nation_groups": {
+      "name": "nation_groups",
+      "schema": "",
+      "columns": {
+        "nation_id": {
+          "name": "nation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "group_id": {
+          "name": "group_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'member'"
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "nation_groups_nation_id_fkey": {
+          "name": "nation_groups_nation_id_fkey",
+          "tableFrom": "nation_groups",
+          "tableTo": "nations",
+          "schemaTo": "public",
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "nation_groups_group_id_fkey": {
+          "name": "nation_groups_group_id_fkey",
+          "tableFrom": "nation_groups",
+          "tableTo": "groups",
+          "schemaTo": "public",
+          "columnsFrom": ["group_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "nation_groups_pkey": {
+          "name": "nation_groups_pkey",
+          "columns": ["nation_id", "group_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "nation_groups_role_check": {
+          "name": "nation_groups_role_check",
+          "value": "role = ANY (ARRAY['deputy'::text, 'member'::text])"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": true
+    },
+    "public.nation_citizens": {
+      "name": "nation_citizens",
+      "schema": "",
+      "columns": {
+        "nation_id": {
+          "name": "nation_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_profile_id": {
+          "name": "user_profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'citizen'"
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "nation_citizens_nation_id_fkey": {
+          "name": "nation_citizens_nation_id_fkey",
+          "tableFrom": "nation_citizens",
+          "tableTo": "nations",
+          "schemaTo": "public",
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "nation_citizens_user_profile_id_fkey": {
+          "name": "nation_citizens_user_profile_id_fkey",
+          "tableFrom": "nation_citizens",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "nation_citizens_pkey": {
+          "name": "nation_citizens_pkey",
+          "columns": ["nation_id", "user_profile_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "nation_citizens_role_check": {
+          "name": "nation_citizens_role_check",
+          "value": "role = ANY (ARRAY['official'::text, 'citizen'::text])"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": true
+    },
+    "public.nation_event_participants": {
+      "name": "nation_event_participants",
+      "schema": "",
+      "columns": {
+        "event_id": {
+          "name": "event_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_profile_id": {
+          "name": "user_profile_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'going'"
+        },
+        "joined_at": {
+          "name": "joined_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "nation_event_participants_event_id_fkey": {
+          "name": "nation_event_participants_event_id_fkey",
+          "tableFrom": "nation_event_participants",
+          "tableTo": "nation_events",
+          "schemaTo": "public",
+          "columnsFrom": ["event_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "nation_event_participants_user_profile_id_fkey": {
+          "name": "nation_event_participants_user_profile_id_fkey",
+          "tableFrom": "nation_event_participants",
+          "tableTo": "user_profiles",
+          "schemaTo": "public",
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "nation_event_participants_pkey": {
+          "name": "nation_event_participants_pkey",
+          "columns": ["event_id", "user_profile_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "nation_event_participants_status_check": {
+          "name": "nation_event_participants_status_check",
+          "value": "status = ANY (ARRAY['going'::text, 'cancelled'::text, 'waitlist'::text])"
+        }
+      },
+      "policies": {},
+      "isRLSEnabled": true
+    },
+    "public.user_work_ratings": {
+      "name": "user_work_ratings",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "work_id": {
+          "name": "work_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "rating": {
+          "name": "rating",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "last_tier": {
+          "name": "last_tier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_user_work_ratings_user_work": {
+          "name": "idx_user_work_ratings_user_work",
+          "columns": [
+            {
+              "expression": "user_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "work_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "user_work_ratings_user_id_fkey": {
+          "name": "user_work_ratings_user_id_fkey",
+          "tableFrom": "user_work_ratings",
+          "tableTo": "users",
+          "schemaTo": "auth",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "user_work_ratings_work_id_fkey": {
+          "name": "user_work_ratings_work_id_fkey",
+          "tableFrom": "user_work_ratings",
+          "tableTo": "works",
+          "schemaTo": "public",
+          "columnsFrom": ["work_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "user_work_ratings_pkey": {
+          "name": "user_work_ratings_pkey",
+          "columns": ["user_id", "work_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {},
+      "policies": {
+        "Users can delete their own ratings": {
+          "name": "Users can delete their own ratings",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": ["public"],
+          "using": "(auth.uid() = user_id)"
+        },
+        "Users can update their own ratings": {
+          "name": "Users can update their own ratings",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"]
+        },
+        "Users can insert their own ratings": {
+          "name": "Users can insert their own ratings",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"]
+        },
+        "Users can view their own ratings": {
+          "name": "Users can view their own ratings",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    },
+    "public.user_work_entries": {
+      "name": "user_work_entries",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "work_id": {
+          "name": "work_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tier": {
+          "name": "tier",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "memo": {
+          "name": "memo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "idx_user_work_entries_user_work": {
+          "name": "idx_user_work_entries_user_work",
+          "columns": [
+            {
+              "expression": "user_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            },
+            {
+              "expression": "work_id",
+              "asc": true,
+              "nulls": "last",
+              "opclass": "uuid_ops",
+              "isExpression": false
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "user_work_entries_user_id_fkey": {
+          "name": "user_work_entries_user_id_fkey",
+          "tableFrom": "user_work_entries",
+          "tableTo": "users",
+          "schemaTo": "auth",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "user_work_entries_work_id_fkey": {
+          "name": "user_work_entries_work_id_fkey",
+          "tableFrom": "user_work_entries",
+          "tableTo": "works",
+          "schemaTo": "public",
+          "columnsFrom": ["work_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "user_work_entries_pkey": {
+          "name": "user_work_entries_pkey",
+          "columns": ["user_id", "work_id"]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraints": {
+        "user_work_entries_status_check": {
+          "name": "user_work_entries_status_check",
+          "value": "status = ANY (ARRAY['expecting'::text, 'reading'::text, 'interesting'::text])"
+        }
+      },
+      "policies": {
+        "Users can delete their own entries": {
+          "name": "Users can delete their own entries",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": ["public"],
+          "using": "(auth.uid() = user_id)"
+        },
+        "Users can update their own entries": {
+          "name": "Users can update their own entries",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": ["public"]
+        },
+        "Users can insert their own entries": {
+          "name": "Users can insert their own entries",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": ["public"]
+        },
+        "Users can view their own entries": {
+          "name": "Users can view their own entries",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": ["public"]
+        }
+      },
+      "isRLSEnabled": true
+    }
+  },
+  "enums": {
+    "public.alliance_status": {
+      "name": "alliance_status",
+      "values": ["requested", "pre_partner", "partner"],
+      "schema": "public"
+    },
+    "public.follow_status": {
+      "name": "follow_status",
+      "values": ["watch", "follow"],
+      "schema": "public"
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {
+      "works": {
+        "columns": {
+          "tags": {
+            "isArray": true,
+            "dimensions": 1,
+            "rawType": "text"
+          }
+        }
+      }
+    }
+  }
+}

@@ -109,23 +109,20 @@ describe("Groups Logic Integration", () => {
     const groupName = `Integration Group ${uuidv4()}`;
 
     // 1. Leader creates group
-    const newGroup = await createGroup(
-      {
-        name: groupName,
-        leader_id: leaderProfileId,
-        description: "Integration Test Group",
-      },
-      leaderClient as any
-    );
+    const newGroup = await createGroup({
+      name: groupName,
+      leader_id: leaderProfileId,
+      description: "Integration Test Group",
+    });
 
     expect(newGroup).toBeDefined();
     expect(newGroup.leader_id).toBe(leaderProfileId);
 
     // 2. Member joins group
-    await joinGroup(newGroup.id, memberProfileId, memberClient as any);
+    await joinGroup(newGroup.id, memberProfileId);
 
     // 3. Verify members list
-    const members = await getGroupMembers(newGroup.id, leaderClient as any);
+    const members = await getGroupMembers(newGroup.id);
     expect(members).toBeDefined();
     expect(members!.length).toBeGreaterThanOrEqual(2); // Leader + Member
 
@@ -135,20 +132,17 @@ describe("Groups Logic Integration", () => {
     expect(joinedMember).toBeDefined();
 
     // 4. Member leaves group
-    await leaveGroup(newGroup.id, memberProfileId, memberClient as any);
+    await leaveGroup(newGroup.id, memberProfileId);
 
     // 5. Verify members list again
-    const membersAfterLeave = await getGroupMembers(
-      newGroup.id,
-      leaderClient as any
-    );
+    const membersAfterLeave = await getGroupMembers(newGroup.id);
     const leftMember = membersAfterLeave!.find(
       (m: any) => m.user_profile_id === memberProfileId
     );
     expect(leftMember).toBeUndefined();
 
     // 6. Leader deletes group
-    await deleteGroup(newGroup.id, leaderClient as any);
+    await deleteGroup(newGroup.id);
 
     // 7. Verify group is gone
     const { data: deletedGroup } = await leaderClient

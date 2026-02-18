@@ -1,10 +1,8 @@
 "use client";
 
-import { type User } from "@supabase/supabase-js";
 import {
   ArrowRight,
   Bell,
-  Coins,
   Globe,
   HelpCircle,
   Megaphone,
@@ -13,10 +11,12 @@ import {
   Search,
   Sun,
 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import * as React from "react";
+import { WalletBadge } from "@/components/points/wallet-badge";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -35,7 +35,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { createClient } from "@/lib/supabase/client";
 import { TrialStorage } from "@/lib/trial-storage";
 import { TrialOnboardingBackButton } from "../trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TrialStatusBadge } from "../trial-status-badge/TrialStatusBadge";
@@ -46,8 +45,6 @@ const mockNotifications = [
   { id: "2", title: "作品にいいねがつきました", time: "1時間前", read: false },
   { id: "3", title: "プロフィールが更新されました", time: "昨日", read: true },
 ];
-
-const mockPoints = 1250;
 
 // 検索バーコンポーネント
 function HeaderSearch() {
@@ -228,28 +225,6 @@ export function ThemeToggle() {
       </TooltipTrigger>
       <TooltipContent>
         <p>テーマ切り替え</p>
-      </TooltipContent>
-    </Tooltip>
-  );
-}
-
-// ポイント表示
-function PointsDisplay() {
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <Link
-          href="/home/pricing"
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 hover:bg-amber-200 dark:hover:bg-amber-900/50 transition-colors"
-        >
-          <Coins className="h-4 w-4" />
-          <span className="text-sm font-medium">
-            {mockPoints.toLocaleString()}
-          </span>
-        </Link>
-      </TooltipTrigger>
-      <TooltipContent>
-        <p>所持ポイント: {mockPoints.toLocaleString()} pt</p>
       </TooltipContent>
     </Tooltip>
   );
@@ -492,24 +467,9 @@ export function GlobalHeader({
   showSidebarTrigger?: boolean;
   isPublic?: boolean;
 }) {
-  const [user, setUser] = React.useState<User | null>(null);
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    const supabase = createClient();
-    void supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
+  const { data: session, status } = useSession();
+  const user = session?.user;
+  const loading = status === "loading";
 
   const [isTrial, setIsTrial] = React.useState(false);
 
@@ -558,7 +518,7 @@ export function GlobalHeader({
             <>
               {!isPublic && user && user.id ? (
                 <>
-                  <PointsDisplay />
+                  <WalletBadge />
                   <NotificationBell />
                 </>
               ) : (

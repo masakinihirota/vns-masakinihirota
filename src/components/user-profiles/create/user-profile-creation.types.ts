@@ -48,3 +48,15 @@ export interface ValueQuestion {
   infoBlocks: { title: string; url: string; comment: string }[];
   relatedIds: string[];
 }
+
+export interface UserProfile {
+  role: string;
+  type: string;
+  purposes: string[];
+  zodiac: string;
+  displayName: string;
+  nameCandidates: string[];
+  ownWorks: { id: number; title: string; url: string }[];
+  favWorks: FavWork[];
+  valuesAnswer: string;
+}

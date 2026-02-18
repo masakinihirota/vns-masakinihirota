@@ -1,9 +1,15 @@
+import { notFound } from "next/navigation";
 import { ProfileEditContainer } from "@/components/profile-edit";
+import { isValidUUID } from "@/lib/utils";
 
-export default function ProfileEditPage({
+export default async function ProfileEditPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  return <ProfileEditContainer profileId={params.id} />;
+  const { id } = await params;
+  if (!isValidUUID(id)) {
+    notFound();
+  }
+  return <ProfileEditContainer profileId={id} />;
 }

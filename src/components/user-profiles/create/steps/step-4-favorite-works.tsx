@@ -1,20 +1,22 @@
 import {
+  CheckCircle2,
   Heart,
-  Trophy,
   HelpCircle,
-  Trash2,
   Plus,
   Search,
-  CheckCircle2,
+  Trash2,
+  Trophy,
 } from "lucide-react";
 import React from "react";
 import { ERAS, WORK_CATEGORIES } from "../user-profile-creation.constants";
-import { Period, FavWork, MasterWork } from "../user-profile-creation.types";
+import {
+  MasterWork,
+  Period,
+  UserProfile,
+} from "../user-profile-creation.types";
 
 interface Step4FavoriteWorksProps {
-  formData: {
-    favWorks: FavWork[];
-  };
+  formData: UserProfile;
   activePeriod: Period;
   setActivePeriod: (period: Period) => void;
   ratingType: "LIKE" | "TIER";

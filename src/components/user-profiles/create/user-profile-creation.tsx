@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { Step1RoleType } from "./steps/step-1-role-type";
 import { Step2PurposeIdentity } from "./steps/step-2-purpose-identity";
 import { Step3OwnWorks } from "./steps/step-3-own-works";
@@ -209,7 +210,7 @@ export const UserProfileCreation = (
                     props.onComplete(props.formData);
                   } else {
                     // Fallback for demo/dev
-                    alert("プロフィールを作成しました！（デモ）");
+                    toast.success("プロフィールを作成しました！（デモ）");
                     window.location.href = "/home";
                   }
                 }}

@@ -3,6 +3,7 @@
 import { MonitorSmartphone } from "lucide-react";
 import Link from "next/link";
 import { Suspense } from "react";
+import * as GroupNation from "@/components/group-nation";
 import {
   AdToggle,
   HelpButton,
@@ -27,8 +28,10 @@ import { DeclarationsSection } from "./declarations-section";
 import { FinalGoalSection } from "./final-goal-section";
 import { Footer } from "./footer";
 import { HeroSection } from "./hero-section";
+import { IdentitySection } from "./identity-section";
 import { InspirationSection } from "./inspiration-section";
 import { PurposeSection } from "./purpose-section";
+import { SiteMissionSection } from "./site-mission-section";
 
 export const TalesClaireLP = () => {
   return (
@@ -90,9 +93,14 @@ export const TalesClaireLP = () => {
         <main className="relative z-10 w-full max-w-5xl mx-auto px-6 pt-32 pb-20 flex flex-col gap-24">
           {/* 1. Name & Catchphrase */}
           <HeroSection />
+          <SiteMissionSection />
 
           {/* 2. Description (Declarations & Concept) */}
-          <section id="about" className="space-y-16">
+          <section id="about" className="space-y-24">
+            <IdentitySection />
+            <div className="animate-fade-in-up delay-500">
+              <GroupNation.GroupNationComparison />
+            </div>
             <DeclarationsSection />
             <ConceptSection />
           </section>

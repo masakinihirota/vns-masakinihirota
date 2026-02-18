@@ -1,82 +1,141 @@
-import { createClient } from "@/lib/supabase/server";
+import { asc, count, eq } from "drizzle-orm";
 import { CreateProfileData, UserProfile } from "@/lib/types/user-profile";
+import { db } from "./drizzle-postgres";
+import { rootAccounts, userProfiles } from "./schema.postgres";
 
 export type { CreateProfileData, UserProfile };
 
 const MAX_PROFILES = 10;
 // TODO: Check anonymous limit (2) based on auth status or root account type
 
+// Mapper Helper
+export function mapUserProfileToSupabase(p: any): UserProfile {
+  return {
+    id: p.id,
+    root_account_id: p.rootAccountId,
+    display_name: p.displayName,
+    purpose: p.purpose,
+    role_type: p.roleType,
+    is_active: p.isActive,
+    last_interacted_record_id: p.lastInteractedRecordId,
+    created_at: p.createdAt,
+    updated_at: p.updatedAt,
+    profile_format: p.profileFormat ?? "profile",
+    role: p.role ?? "member",
+    purposes: p.purposes ?? [],
+    profile_type: p.profileType ?? "self",
+    avatar_url: p.avatarUrl ?? null,
+    external_links: p.externalLinks ?? null,
+  } as unknown as UserProfile;
+}
+
+export async function getUserProfilesByAuthUserId(authUserId: string) {
+  // Find root_account_id for the auth_user_id
+  const rootAccount = await db.query.rootAccounts.findFirst({
+    where: eq(rootAccounts.authUserId, authUserId),
+  });
+
+  if (!rootAccount) return [];
+
+  const profiles = await db.query.userProfiles.findMany({
+    where: eq(userProfiles.rootAccountId, rootAccount.id),
+    orderBy: [asc(userProfiles.createdAt)],
+  });
+
+  return profiles.map(mapUserProfileToSupabase);
+}
+
 export async function getUserProfiles(rootAccountId: string) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("user_profiles")
-    .select("*")
-    .eq("root_account_id", rootAccountId)
-    .order("created_at", { ascending: true });
-
-  if (error) {
-    console.error("Error fetching user profiles:", error);
-    throw new Error("Failed to fetch profiles");
-  }
-
-  return data as UserProfile[];
+  const result = await db.query.userProfiles.findMany({
+    where: eq(userProfiles.rootAccountId, rootAccountId),
+    orderBy: [asc(userProfiles.createdAt)],
+  });
+  return result.map(mapUserProfileToSupabase);
 }
 
 export async function createUserProfile(
   rootAccountId: string,
   data: CreateProfileData
 ) {
-  const supabase = await createClient();
-
   // Check limit
-  const currentProfiles = await getUserProfiles(rootAccountId);
-  if (currentProfiles.length >= MAX_PROFILES) {
+  const [countRes] = await db
+    .select({ count: count() })
+    .from(userProfiles)
+    .where(eq(userProfiles.rootAccountId, rootAccountId));
+
+  if (countRes.count >= MAX_PROFILES) {
     throw new Error(`Profile limit reached (${MAX_PROFILES})`);
   }
 
-  const { data: profile, error } = await supabase
-    .from("user_profiles")
-    .insert({
-      root_account_id: rootAccountId,
-      display_name: data.display_name,
-      purpose: data.purpose ?? null, // Legacy field, maybe sync with purposes[0]
-      role_type: data.role_type ?? "member",
-      // New fields with defaults
-      profile_format: data.profile_format ?? "profile",
-      role: data.role ?? "member",
-      purposes: data.purposes ?? [],
-      profile_type: data.profile_type ?? "self",
-      avatar_url: data.avatar_url ?? null,
-      external_links: data.external_links ?? null,
-    })
-    .select()
-    .single();
+  const drizzleInput = {
+    rootAccountId: rootAccountId,
+    displayName: data.display_name,
+    purpose: data.purpose ?? null,
+    roleType: data.role_type ?? "member",
+    profileFormat: data.profile_format ?? "profile",
+    role: data.role ?? "member",
+    purposes: data.purposes ?? [],
+    profileType: data.profile_type ?? "self",
+    avatarUrl: data.avatar_url ?? null,
+    externalLinks: data.external_links ?? null,
+  };
 
-  if (error) {
-    console.error("Error creating user profile:", error);
-    throw new Error("Failed to create profile");
-  }
-
-  return profile as UserProfile;
+  const [newProfile] = await db
+    .insert(userProfiles)
+    .values(drizzleInput)
+    .returning();
+  return mapUserProfileToSupabase(newProfile);
 }
 
+import { isValidUUID } from "@/lib/utils";
+
 export async function getUserProfileById(id: string) {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("user_profiles")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if (error) {
-    if (error.code === "PGRST116") {
-      return null;
-    }
-    console.error("Error fetching user profile:", error);
-    throw new Error("Failed to fetch profile");
+  if (!isValidUUID(id)) {
+    return null;
   }
 
-  return data as UserProfile;
+  const profile = await db.query.userProfiles.findFirst({
+    where: eq(userProfiles.id, id),
+  });
+  return profile ? mapUserProfileToSupabase(profile) : null;
+}
+
+export async function updateUserProfile(
+  id: string,
+  data: Partial<CreateProfileData>
+) {
+  if (!isValidUUID(id)) {
+    throw new Error("Invalid UUID");
+  }
+
+  const drizzleInput: any = {};
+  if (data.display_name !== undefined)
+    drizzleInput.displayName = data.display_name;
+  if (data.purpose !== undefined) drizzleInput.purpose = data.purpose;
+  if (data.role_type !== undefined) drizzleInput.roleType = data.role_type;
+  if (data.profile_format !== undefined)
+    drizzleInput.profileFormat = data.profile_format;
+  if (data.role !== undefined) drizzleInput.role = data.role;
+  if (data.purposes !== undefined) drizzleInput.purposes = data.purposes;
+  if (data.profile_type !== undefined)
+    drizzleInput.profileType = data.profile_type;
+  if (data.avatar_url !== undefined) drizzleInput.avatarUrl = data.avatar_url;
+  if (data.external_links !== undefined)
+    drizzleInput.externalLinks = data.external_links;
+
+  drizzleInput.updatedAt = new Date().toISOString();
+
+  const [updated] = await db
+    .update(userProfiles)
+    .set(drizzleInput)
+    .where(eq(userProfiles.id, id))
+    .returning();
+
+  return updated ? mapUserProfileToSupabase(updated) : null;
+}
+
+export async function getRootAccountByAuthUserId(authUserId: string) {
+  return db.query.rootAccounts.findFirst({
+    where: eq(rootAccounts.authUserId, authUserId),
+  });
 }

@@ -1,21 +1,21 @@
 "use client";
 
 import {
-  Layout,
-  Maximize2,
-  List,
   ArrowDownCircle,
-  CheckCircle2,
-  CheckSquare,
-  Monitor,
-  HelpCircle,
   ArrowLeft,
   BookOpen,
-  MousePointer2,
-  MousePointer,
+  CheckCircle2,
+  CheckSquare,
   ChevronRight,
+  HelpCircle,
+  Layout,
+  List,
+  Maximize2,
+  Monitor,
+  MousePointer,
+  MousePointer2,
 } from "lucide-react";
-import React, { useState, useRef, useMemo } from "react";
+import React, { useMemo, useRef, useState } from "react";
 
 const INITIAL_MARKDOWN = `# [Main] 人生の目標
 - 1. 健康
@@ -279,7 +279,7 @@ const App = () => {
           </div>
           <textarea
             ref={editorRef}
-            className="flex-1 p-8 font-mono text-[18px] opacity-90 leading-[28px] focus:outline-none resize-none bg-slate-50/5"
+            className="flex-1 p-8 font-mono text-[18px] opacity-90 leading-[28px] focus:outline-none resize-none bg-slate-50/5 custom-scrollbar"
             value={markdown}
             onChange={(e) => setMarkdown(e.target.value)}
             onKeyUp={handleEditorScroll}
@@ -305,7 +305,7 @@ const App = () => {
         </div>
 
         <div
-          className="flex-1 overflow-y-auto p-6 scroll-smooth"
+          className="flex-1 overflow-y-auto p-6 scroll-smooth custom-scrollbar"
           ref={previewRef}
         >
           {viewMode === "list" ? (
@@ -627,17 +627,6 @@ const App = () => {
           Mandala System v2.1 Active
         </div>
       </footer>
-
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        textarea::-webkit-scrollbar { width: 4px; }
-        textarea::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        .overflow-y-auto::-webkit-scrollbar { width: 4px; }
-        .overflow-y-auto::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-      `,
-        }}
-      />
     </div>
   );
 };

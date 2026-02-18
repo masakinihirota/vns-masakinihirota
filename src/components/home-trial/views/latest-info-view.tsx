@@ -53,8 +53,11 @@ function getIcon(iconType: string) {
 }
 
 export function LatestInfoView({ works = [], users = [] }: Props) {
-  // Convert works to feed items
-  const workItems = works.map((w) => ({
+  // Convert works to feed items with safety check
+  const safeWorks = Array.isArray(works) ? works : [];
+  const safeUsers = Array.isArray(users) ? users : [];
+
+  const workItems = safeWorks.map((w) => ({
     id: `work-${w.id}`,
     source: w.author || "Unknown Author",
     content: `新作「${w.title}」(${w.category}) が登録されました。`,
@@ -111,7 +114,7 @@ export function LatestInfoView({ works = [], users = [] }: Props) {
           <p className="text-slate-500">現在表示できる候補者はいません。</p>
         )}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {users.map((user) => (
+          {safeUsers.map((user) => (
             <div
               key={user.id}
               className="p-6 border border-slate-100 dark:border-neutral-800 rounded-2xl bg-white/50 dark:bg-neutral-900/30 shadow-sm hover:border-purple-200 dark:hover:border-purple-800 transition-all backdrop-blur-sm flex items-center gap-4"

@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
+import { toast } from "sonner";
 import { ProfileEdit } from "./profile-edit";
 import {
   MOCK_EVALUATIONS,
@@ -54,13 +55,13 @@ export const ProfileEditContainer = ({
 
   // Handlers
   const handleAddWork = () => {
-    alert("作品追加機能は未実装です（モック）");
+    toast.info("作品追加機能は未実装です（モック）");
   };
   const handleAddEvaluation = () => {
-    alert("評価追加機能は未実装です（モック）");
+    toast.info("評価追加機能は未実装です（モック）");
   };
   const handleAddValue = () => {
-    alert("価値観追加機能は未実装です（モック）");
+    toast.info("価値観追加機能は未実装です（モック）");
   };
   const handleDeleteEvaluation = (id: number) => {
     if (confirm("削除しますか？")) {
@@ -75,12 +76,10 @@ export const ProfileEditContainer = ({
   const handleSave = () => {
     // 開発モードまたはデモ用のモック保存処理
     if (process.env.NODE_ENV === "development" || isNew) {
-      alert(
-        "【開発モード】プロフィールを保存しました（モック）\n\n※実際のデータベースには保存されていませんが、一覧へ戻ります。"
-      );
+      toast.success("【開発モード】プロフィールを保存しました（モック）");
       router.push("/user-profiles");
     } else {
-      alert("保存機能は未実装です");
+      toast.error("保存機能は未実装です");
     }
   };
 

@@ -80,7 +80,7 @@ export const Footer = () => {
         ))}
       </div>
 
-      <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-slate-200 dark:border-white/5 text-[10px] text-slate-500 dark:text-muted-foreground uppercase tracking-widest font-bold">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-12 border-t border-slate-200 dark:border-white/5 text-lg text-slate-500 dark:text-muted-foreground uppercase tracking-widest font-bold">
         <p>© 2026 VNS masakinihirota Project. All rights reserved.</p>
         <p>No BAN, Just Drift. Welcome to the Oasis.</p>
       </div>

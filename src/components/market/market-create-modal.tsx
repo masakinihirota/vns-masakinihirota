@@ -2,6 +2,8 @@
 
 import { Plus } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
+import { createMarketItemAction } from "@/app/actions/market";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -23,7 +25,6 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { createClient } from "@/lib/supabase/client";
-import { useCreateItem } from "./market.logic";
 
 interface MarketCreateModalProps {
   nationId: string;
@@ -34,7 +35,6 @@ export const MarketCreateModal = ({
   nationId,
   onSuccess,
 }: MarketCreateModalProps) => {
-  const { createItem } = useCreateItem();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -54,15 +54,15 @@ export const MarketCreateModal = ({
     } = await supabase.auth.getUser();
 
     if (!user) {
-      alert("Please login");
+      toast.error("ログインが必要です");
       setLoading(false);
       return;
     }
 
     try {
-      await createItem({
+      await createMarketItemAction({
         nation_id: nationId,
-        seller_id: user.id, // Or owner_id based on schema update discussion
+        seller_id: user.id,
         seller_group_id: null,
         title: formData.title,
         description: formData.description,
@@ -80,9 +80,10 @@ export const MarketCreateModal = ({
         type: "sell",
         currency: "point",
       });
+      toast.success("出品しました");
     } catch (error) {
       console.error("Failed to create item", error);
-      alert("Failed to create item");
+      toast.error("出品に失敗しました");
     } finally {
       setLoading(false);
     }

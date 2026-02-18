@@ -2,38 +2,39 @@
 
 import * as Slider from "@radix-ui/react-slider";
 import {
-  User,
-  MapPin,
-  Globe,
-  Shield,
   Activity,
-  Edit3,
-  Save,
   AlertCircle,
-  Clock,
-  Plus,
-  Trash2,
-  X,
   AlertTriangle,
-  Trophy,
-  Star,
-  Medal,
+  Clock,
   Crown,
+  Edit3,
+  Globe,
+  MapPin,
+  Medal,
+  Plus,
+  Save,
+  Shield,
+  Star,
+  Trash2,
+  Trophy,
+  User,
+  X,
 } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
+import { toast } from "sonner";
 import { getZodiacSymbol } from "../../../lib/anonymous-name-generator";
 import {
+  AREA_DEFINITIONS,
+  hoursToTime,
   normalizeRootAccountData,
   timeToHours,
-  hoursToTime,
-  AREA_DEFINITIONS,
 } from "../../../lib/root-account-utils";
 import { PointManagementSection } from "./point-management";
 import {
-  LANGUAGES_MOCK,
   COUNTRIES_MOCK,
   dummyUserProfileList,
+  LANGUAGES_MOCK,
 } from "./root-account-dashboard.dummyData";
 import {
   RootAccount,
@@ -146,10 +147,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       // 保存成功後、元データを更新
       setOriginalData(formData);
       setIsEditing(false);
-      alert("変更を保存しました");
+      setOriginalData(formData);
+      setIsEditing(false);
+      toast.success("変更を保存しました");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
     } finally {
       setIsLoading(false);
     }
@@ -213,10 +216,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       // ここではformDataは更新されていないが、サーバー側で保存されたとみなす。
       // 必要ならhandleChangeでstateも更新すべきだが、onClick側で更新済み想定。
 
-      alert("エリア設定を保存しました（変更は10秒間制限されます）");
+      // 必要ならhandleChangeでstateも更新すべきだが、onClick側で更新済み想定。
+
+      toast.success("エリア設定を保存しました（変更は10秒間制限されます）");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
       // エラー時はクールダウン解除
       setCooldownRemaining(0);
       clearInterval(timer);
@@ -233,10 +238,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
       setOriginalData(formData);
       setIsEditingLanguages(false);
-      alert("言語を保存しました");
+      setOriginalData(formData);
+      setIsEditingLanguages(false);
+      toast.success("言語を保存しました");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
     } finally {
       setIsLoading(false);
     }
@@ -259,10 +266,12 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
 
       setOriginalData(formData);
       setIsEditingCoreHours(false);
-      alert("活動時間を保存しました");
+      setOriginalData(formData);
+      setIsEditingCoreHours(false);
+      toast.success("活動時間を保存しました");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
     } finally {
       setIsLoading(false);
     }
@@ -275,10 +284,11 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
       // TODO: 実際のAPI呼び出しを実装
 
       setIsEditingCountries(false);
-      alert("管理国設定を保存しました");
+      setIsEditingCountries(false);
+      toast.success("管理国設定を保存しました");
     } catch (error) {
       console.error("保存エラー:", error);
-      alert("保存に失敗しました");
+      toast.error("保存に失敗しました");
     } finally {
       setIsLoading(false);
     }
@@ -599,7 +609,7 @@ export function RootAccountDashboard({ data }: RootAccountDashboardProps) {
                   key={areaNum}
                   onClick={() => {
                     if (cooldownRemaining > 0) {
-                      alert(
+                      toast.warning(
                         `連続で変更できません。あと${cooldownRemaining}秒お待ちください。`
                       );
                       return;

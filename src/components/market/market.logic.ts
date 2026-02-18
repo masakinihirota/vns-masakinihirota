@@ -1,25 +1,17 @@
 "use client";
 
 import useSWR from "swr";
+import {
+  completeTransactionAction,
+  createMarketItemAction,
+  getMarketItemsAction,
+  startTransactionAction,
+} from "@/app/actions/market";
 import { MarketItem } from "@/components/groups/groups.types";
-import { completeTransaction, startTransaction } from "@/lib/db/market";
-import { createClient } from "@/lib/supabase/client";
 
 const fetcher = async (key: string) => {
   const [, nationId] = key.split(":");
-  const supabase = createClient();
-  let query = supabase.from("market_items").select("*").eq("status", "open");
-
-  if (nationId && nationId !== "all") {
-    query = query.eq("nation_id", nationId);
-  }
-
-  const { data, error } = await query
-    .order("created_at", { ascending: false })
-    .range(0, 99);
-
-  if (error) throw error;
-  return data as MarketItem[];
+  return (await getMarketItemsAction(nationId)) as unknown as MarketItem[];
 };
 
 export const useMarketItems = (nationId: string = "all") => {
@@ -40,23 +32,16 @@ export const useCreateItem = () => {
   const createItem = async (
     item: Omit<MarketItem, "id" | "created_at" | "updated_at">
   ) => {
-    const supabase = createClient();
-    const { data, error } = await supabase
-      .from("market_items")
-      .insert(item)
-      .select()
-      .single();
-    if (error) throw error;
-    return data as MarketItem;
+    // @ts-ignore
+    return await createMarketItemAction(item);
   };
   return { createItem };
 };
 
 export const useBuyItem = () => {
   const buyItem = async (itemId: string, buyerId: string) => {
-    const supabase = createClient();
     try {
-      const result = await startTransaction(supabase, itemId, buyerId);
+      const result = await startTransactionAction(itemId, buyerId);
       return result;
     } catch (error) {
       console.error("Purchase failed:", error);
@@ -68,9 +53,8 @@ export const useBuyItem = () => {
 
 export const useConfirmDelivery = () => {
   const confirmDelivery = async (transactionId: string, userId: string) => {
-    const supabase = createClient();
     try {
-      const result = await completeTransaction(supabase, transactionId, userId);
+      const result = await completeTransactionAction(transactionId, userId);
       return result;
     } catch (error) {
       console.error("Confirmation failed:", error);

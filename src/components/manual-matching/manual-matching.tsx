@@ -1,31 +1,44 @@
 "use client";
 
 import {
-  Play,
-  Eye,
-  UserPlus,
   ArrowRightLeft,
-  Layers,
-  Search,
-  Check,
-  Split,
-  Plus,
-  ChevronRight,
-  ChevronLeft,
   Briefcase,
-  Heart,
-  Zap,
-  Tag,
-  Circle,
-  CheckSquare,
-  UserCheck,
-  Settings2,
-  Globe,
-  LayoutDashboard,
-  ClipboardList,
+  Check,
   CheckCircle,
+  CheckSquare,
+  ChevronLeft,
+  ChevronRight,
+  Circle,
+  ClipboardList,
+  Eye,
+  Globe,
+  Heart,
+  Layers,
+  LayoutDashboard,
+  Play,
+  Plus,
+  Search,
+  Settings2,
+  Split,
+  Tag,
+  UserCheck,
+  UserPlus,
+  Zap,
 } from "lucide-react";
-import React, { useState, useMemo } from "react";
+import React, { useMemo, useState } from "react";
+
+interface Candidate {
+  id: string;
+  name: string;
+  color: string;
+  values: string[];
+  createdWorks: string[];
+  favoriteWorks: string[];
+  skills: string[];
+  bio: string;
+}
+
+type CategoryKey = "values" | "createdWorks" | "favoriteWorks" | "skills";
 
 // --- モックデータ ---
 const MY_PROFILES = [
@@ -140,7 +153,7 @@ export const ManualMatching = () => {
 
   // プロフィールごとの状態管理 { [profileId]: User[] }
   const [candidatesPerProfile, setCandidatesPerProfile] = useState<
-    Record<string, any[]>
+    Record<string, Candidate[]>
   >({});
 
   const [view, setView] = useState("setup");
@@ -159,7 +172,7 @@ export const ManualMatching = () => {
   );
 
   const comparingUser = useMemo(
-    () => currentCandidates.find((u: any) => u.id === selectedMatchedUserId),
+    () => currentCandidates.find((u) => u.id === selectedMatchedUserId),
     [currentCandidates, selectedMatchedUserId]
   );
 
@@ -217,7 +230,7 @@ export const ManualMatching = () => {
     setCandidatesPerProfile((prev) => ({
       ...prev,
       [selectedProfileId]: prev[selectedProfileId].filter(
-        (u: any) => u.id !== userId
+        (u) => u.id !== userId
       ),
     }));
 
@@ -632,10 +645,9 @@ export const ManualMatching = () => {
 
                   {selectedCategories.length > 0 ? (
                     selectedCategories.map((catId) => {
-                      // @ts-ignore
                       const { common, onlyMe, onlyPartner } = compareItems(
-                        (selectedProfile as any)[catId],
-                        comparingUser[catId]
+                        selectedProfile[catId as CategoryKey],
+                        comparingUser[catId as CategoryKey]
                       );
                       const catInfo = CATEGORIES.find((c) => c.id === catId);
                       if (!catInfo) return null;
@@ -774,7 +786,7 @@ export const ManualMatching = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
-          {currentCandidates.map((user: any) => (
+          {currentCandidates.map((user) => (
             <button
               key={user.id}
               onClick={() => {

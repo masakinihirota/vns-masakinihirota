@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { AnonymousLoginForm } from "@/components/auth/anonymous-login-form";
-import { GitHubLoginForm } from "@/components/auth/github-login-form";
-import { GoogleLoginForm } from "@/components/auth/google-login-form";
+import {
+  AnonymousLoginForm,
+  GitHubLoginForm,
+  GoogleLoginForm,
+} from "@/components/auth";
 
 export default async function Page(props: {
   searchParams?: Promise<{

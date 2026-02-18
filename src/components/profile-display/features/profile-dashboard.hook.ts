@@ -1,13 +1,21 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { INITIAL_DATA } from "./profile-dashboard.constants";
 import {
+  CoreValue,
+  DashboardArrayKey,
   DashboardData,
+  Favorite,
   RATING_ORDER,
   RATING_TYPES,
   RatingType,
   SectionVisibility,
+  Skill,
   SortConfig,
+  Work,
 } from "./profile-dashboard.types";
+
+// Removed local definition
+type DashboardArrayItem = Work | Favorite | CoreValue | Skill;
 
 /**
  * プロフィールダッシュボードのビジネスロジックを管理するカスタムフック
@@ -34,7 +42,7 @@ export const useProfileDashboard = () => {
     direction: "asc",
   });
   const [pendingDelete, setPendingDelete] = useState<{
-    section: keyof DashboardData;
+    section: DashboardArrayKey;
     id: number;
     title: string;
   } | null>(null);
@@ -49,7 +57,7 @@ export const useProfileDashboard = () => {
    */
   const handleRatingChange = useCallback(
     (
-      section: keyof DashboardData,
+      section: DashboardArrayKey,
       id: number,
       newRating: RatingType | "Like"
     ) => {
@@ -63,7 +71,7 @@ export const useProfileDashboard = () => {
 
       setData((prev) => ({
         ...prev,
-        [section]: (prev[section] as any[]).map((item) =>
+        [section]: (prev[section] as DashboardArrayItem[]).map((item) =>
           item.id === id ? { ...item, rating: finalRating } : item
         ),
       }));
@@ -75,10 +83,10 @@ export const useProfileDashboard = () => {
    * セルの更新
    */
   const updateCell = useCallback(
-    (section: keyof DashboardData, id: number, field: string, value: any) => {
+    (section: DashboardArrayKey, id: number, field: string, value: unknown) => {
       setData((prev) => ({
         ...prev,
-        [section]: (prev[section] as any[]).map((item) =>
+        [section]: (prev[section] as DashboardArrayItem[]).map((item) =>
           item.id === id ? { ...item, [field]: value } : item
         ),
       }));
@@ -89,23 +97,29 @@ export const useProfileDashboard = () => {
   /**
    * データのソート処理
    */
-  const getSortedData = useCallback((list: any[], config: SortConfig) => {
-    if (!config.key) return list;
+  const getSortedData = useCallback(
+    <T extends { [key: string]: any }>(
+      list: readonly T[],
+      config: SortConfig
+    ): T[] => {
+      if (!config.key) return [...list];
 
-    return [...list].sort((a, b) => {
-      let valA = a[config.key!];
-      let valB = b[config.key!];
+      return [...list].sort((a, b) => {
+        let valA = a[config.key!];
+        let valB = b[config.key!];
 
-      if (config.key === "rating") {
-        valA = RATING_ORDER[valA as RatingType] ?? 99;
-        valB = RATING_ORDER[valB as RatingType] ?? 99;
-      }
+        if (config.key === "rating") {
+          valA = RATING_ORDER[valA as RatingType] ?? 99;
+          valB = RATING_ORDER[valB as RatingType] ?? 99;
+        }
 
-      if (valA < valB) return config.direction === "asc" ? -1 : 1;
-      if (valA > valB) return config.direction === "asc" ? 1 : -1;
-      return 0;
-    });
-  }, []);
+        if (valA < valB) return config.direction === "asc" ? -1 : 1;
+        if (valA > valB) return config.direction === "asc" ? 1 : -1;
+        return 0;
+      });
+    },
+    []
+  );
 
   /**
    * ソートヘッダーのクリックハンドラ
@@ -139,50 +153,52 @@ export const useProfileDashboard = () => {
    * 項目追加
    */
   const handleAdd = useCallback(
-    (section: keyof DashboardData) => {
+    (section: DashboardArrayKey) => {
       const id = Date.now();
-      let newItem: any = { id };
+      let newItem: DashboardArrayItem;
 
       switch (section) {
         case "works":
           newItem = {
-            ...newItem,
+            id,
             title: "新規プロジェクト",
             category: "カテゴリ",
             url: "https://",
             rating: RATING_TYPES.UNRATED,
-          };
+          } as Work;
           break;
         case "favorites":
           newItem = {
-            ...newItem,
+            id,
             title: "新規作品",
             subCategory: filter.Manga ? "Manga" : "Anime",
             genre: "ジャンル",
             rating: RATING_TYPES.UNRATED,
-          };
+          } as Favorite;
           break;
         case "values":
           newItem = {
-            ...newItem,
+            id,
             key: "新規の価値観",
             description: "価値観の詳細を入力してください",
             rating: RATING_TYPES.UNRATED,
-          };
+          } as CoreValue;
           break;
         case "skills":
           newItem = {
-            ...newItem,
+            id,
             name: "新しいスキル",
             level: "Lvl 1",
             category: "分類",
-          };
+          } as Skill;
           break;
+        default:
+          return;
       }
 
       setData((prev) => ({
         ...prev,
-        [section]: [...(prev[section] as any[]), newItem],
+        [section]: [...(prev[section] as DashboardArrayItem[]), newItem],
       }));
     },
     [filter]
@@ -192,7 +208,7 @@ export const useProfileDashboard = () => {
    * 削除のトリガー
    */
   const triggerDelete = useCallback(
-    (section: keyof DashboardData, id: number, title: string) => {
+    (section: DashboardArrayKey, id: number, title: string) => {
       setPendingDelete({ section, id, title });
     },
     []
@@ -206,7 +222,9 @@ export const useProfileDashboard = () => {
     const { section, id } = pendingDelete;
     setData((prev) => ({
       ...prev,
-      [section]: (prev[section] as any[]).filter((item) => item.id !== id),
+      [section]: (prev[section] as DashboardArrayItem[]).filter(
+        (item) => item.id !== id
+      ),
     }));
     setPendingDelete(null);
   }, [pendingDelete]);

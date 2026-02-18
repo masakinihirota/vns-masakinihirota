@@ -71,10 +71,6 @@ async function runTests() {
     global: { headers: { Authorization: `Bearer ${sessionA?.access_token}` } },
   });
 
-  const clientB = createClient(supabaseUrl, supabaseAnonKey, {
-    global: { headers: { Authorization: `Bearer ${sessionB?.access_token}` } },
-  });
-
   // 2. Test: Secure create_group_with_leader (Atomic)
   console.log("\n[Test] Atomic Group Creation...");
   const { data: groupA, error: groupError } = await clientA.rpc(

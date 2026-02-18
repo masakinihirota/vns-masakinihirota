@@ -1,43 +1,50 @@
-import Link from "next/link";
 import { Suspense } from "react";
-import { Button } from "@/components/ui/button";
-import { WorkCatalogHeader } from "@/components/works/work-catalog-header";
-import { WorkList } from "@/components/works/work-list";
-import { getWorks } from "./actions"; // Import from local actions
+import { getWorksAction } from "@/app/actions/works";
+import { Tables } from "@/types/types_db";
+import { ClientWorksWrapper, UIWork } from "./client-works-wrapper";
 
-export default async function WorksPage(props: {
-  searchParams?: Promise<{
-    q?: string;
-    tab?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const tab = searchParams?.tab || "official";
-  const query = searchParams?.q || "";
+function mapDbWorkToUI(work: Tables<"works">): UIWork {
+  const urls: { type: string; value: string }[] = [];
+  if (work.external_url) urls.push({ type: "link", value: work.external_url });
+  if (work.affiliate_url)
+    urls.push({ type: "affiliate", value: work.affiliate_url });
 
-  let is_official: boolean | undefined = undefined;
-  if (tab === "official") is_official = true;
-  else if (tab === "user") is_official = false;
+  let category: UIWork["category"] = "other";
+  const catLower = work.category?.toLowerCase() || "other";
+  if (["anime", "comic", "novel", "movie", "game"].includes(catLower)) {
+    category = catLower as UIWork["category"];
+  }
 
-  const works = await getWorks({ is_official, query, category: "all" });
+  return {
+    id: work.id,
+    title: work.title,
+    category,
+    period: work.release_year || "",
+    tags: work.tags || [],
+    urls,
+    creatorName: work.author || undefined,
+  };
+}
+
+export const dynamic = "force-dynamic";
+
+export default async function WorksPage() {
+  const dbWorks = (await getWorksAction(100)) as Tables<"works">[];
+  const uiWorks = dbWorks.map(mapDbWorkToUI);
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="flex justify-between items-center mb-4">
-        {/* Register button logic moved here for better UX */}
-      </div>
-
-      <div className="flex justify-end mb-4">
-        <Button asChild>
-          <Link href="/works/new">作品を登録する</Link>
-        </Button>
-      </div>
-
-      <WorkCatalogHeader />
-
-      <Suspense fallback={<div>Loading works...</div>}>
-        {/* @ts-ignore: Works type mismatch potential */}
-        <WorkList works={works} />
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
+      {/*
+         Note: passing mock handlers for now as WorksList expects them.
+         Ideally WorksList should accept a simple link or handle navigation internally.
+         But keeping it simple to reuse existing component.
+       */}
+      <Suspense
+        fallback={
+          <div className="container mx-auto py-8">Loading works...</div>
+        }
+      >
+        <ClientWorksWrapper works={uiWorks} />
       </Suspense>
     </div>
   );

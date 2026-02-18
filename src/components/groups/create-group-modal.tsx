@@ -2,6 +2,7 @@
 
 import { Plus } from "lucide-react";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -63,9 +64,10 @@ export function CreateGroupModal({
       setName("");
       setDescription("");
       if (onGroupCreated) onGroupCreated();
+      toast.success("グループを作成しました");
     } catch (error) {
       console.error("Failed to create group:", error);
-      alert("Failed to create group");
+      toast.error("グループの作成に失敗しました");
     } finally {
       setLoading(false);
     }

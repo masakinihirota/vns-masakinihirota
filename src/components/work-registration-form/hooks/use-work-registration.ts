@@ -54,7 +54,6 @@ export function useWorkRegistration(
 
   const onSubmit = useCallback(async (_data: RegistrationFormValues) => {
     try {
-      // console.log("Submitting:", _data);
       // API call to save data
       await new Promise((resolve) => setTimeout(resolve, 1000));
       alert("保存しました！");

@@ -25,7 +25,7 @@ export const StartLinksSection = () => {
                     <td className="py-2">
                       あなたのブラウザ
                       <br />
-                      <span className="text-base text-slate-500 dark:text-neutral-400">
+                      <span className="text-lg text-slate-500 dark:text-neutral-400">
                         (Cookie)
                       </span>
                     </td>
@@ -137,7 +137,7 @@ export const StartLinksSection = () => {
           </div>
           <div className="px-4 py-2 border-l border-slate-200 dark:border-white/10 text-slate-600 dark:text-neutral-300">
             あなたのブラウザ{" "}
-            <span className="text-base text-slate-500 dark:text-neutral-400">
+            <span className="text-lg text-slate-500 dark:text-neutral-400">
               (Cookie)
             </span>
           </div>

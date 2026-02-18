@@ -1,17 +1,19 @@
+"use client";
+
 import {
-  Plus,
   BookOpen,
+  ExternalLink,
   Film,
   Gamepad2,
+  Loader2,
   Monitor,
   MoreHorizontal,
-  Loader2,
-  ExternalLink,
+  Plus,
 } from "lucide-react";
 import React from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Work } from "../common/types";
 
 interface WorksListProps {

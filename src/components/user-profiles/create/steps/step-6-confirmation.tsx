@@ -1,24 +1,14 @@
 import { Star } from "lucide-react";
-import React from "react";
 import { getZodiacSymbol } from "@/lib/anonymous-name-generator";
 import {
-  USER_TYPES,
   PURPOSES,
+  USER_TYPES,
   VALUE_QUESTIONS,
 } from "../user-profile-creation.constants";
-import { FavWork } from "../user-profile-creation.types";
+import { UserProfile } from "../user-profile-creation.types";
 
 interface Step6ConfirmationProps {
-  formData: {
-    displayName: string;
-    role: string;
-    purposes: string[];
-    type: string;
-    zodiac: string;
-    valuesAnswer: string;
-    ownWorks: { id: number; title: string; url: string }[];
-    favWorks: FavWork[];
-  };
+  formData: UserProfile;
   valueSelections: Record<string, string[]>;
   valueTiers: Record<string, number>;
   addedQuestionIds: string[];

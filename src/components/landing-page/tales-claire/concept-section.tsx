@@ -1,12 +1,10 @@
 "use client";
 
-import React from "react";
-
 export const ConceptSection = () => {
   return (
-    <div className="bg-white/5 backdrop-blur-md border border-white/5 p-8 md:p-12 rounded-2xl space-y-8 animate-fade-in-up delay-200">
+    <div className="bg-white/40 dark:bg-white/5 backdrop-blur-md border border-slate-200 dark:border-white/5 p-8 md:p-12 rounded-2xl space-y-8 animate-fade-in-up delay-200 shadow-sm dark:shadow-none">
       <div className="space-y-4">
-        <h3 className="text-2xl font-bold text-white border-l-4 border-blue-500 pl-4">
+        <h3 className="text-2xl font-bold text-slate-900 dark:text-white border-l-4 border-blue-500 pl-4">
           VNSとは価値観でつながるネットワーク
         </h3>
         <p className="text-lg text-slate-700 dark:text-muted-foreground leading-relaxed">

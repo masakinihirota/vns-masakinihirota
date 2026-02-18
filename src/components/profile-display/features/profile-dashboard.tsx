@@ -14,6 +14,7 @@ import { DeleteConfirmModal } from "../ui/delete-confirm-modal";
 import { ThemeToggle } from "../ui/theme-toggle";
 import { VisibilityToggle } from "../ui/visibility-toggle";
 import {
+  DashboardArrayKey,
   DashboardData,
   RatingType,
   SectionVisibility,
@@ -44,19 +45,19 @@ interface ProfileDashboardProps {
   readonly onToggleSection: (section: keyof SectionVisibility) => void;
   readonly onSort: (section: "works" | "favorites", key: string) => void;
   readonly onUpdateCell: (
-    section: keyof DashboardData,
+    section: DashboardArrayKey,
     id: number,
     field: string,
     value: any
   ) => void;
   readonly onRatingChange: (
-    section: keyof DashboardData,
+    section: DashboardArrayKey,
     id: number,
     value: RatingType | "Like"
   ) => void;
-  readonly onAdd: (section: keyof DashboardData) => void;
+  readonly onAdd: (section: DashboardArrayKey) => void;
   readonly onDeleteTrigger: (
-    section: keyof DashboardData,
+    section: DashboardArrayKey,
     id: number,
     title: string
   ) => void;

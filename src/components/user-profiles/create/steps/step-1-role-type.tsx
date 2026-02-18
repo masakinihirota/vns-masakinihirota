@@ -1,13 +1,14 @@
 import { CheckCircle2, Info, Shield, Users } from "lucide-react";
 import { useState } from "react";
 import { USER_TYPES } from "../user-profile-creation.constants";
+import { UserProfile } from "../user-profile-creation.types";
 
 interface Step1RoleTypeProps {
-  formData: {
-    type: string;
-    [key: string]: any;
-  };
-  updateForm: (key: string, value: any) => void;
+  formData: UserProfile;
+  updateForm: <K extends keyof UserProfile>(
+    key: K,
+    value: UserProfile[K]
+  ) => void;
 }
 
 export const Step1RoleType = ({ formData, updateForm }: Step1RoleTypeProps) => {

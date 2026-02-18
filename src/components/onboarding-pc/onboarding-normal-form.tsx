@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 import { StepBasicValuesPC } from "./steps/step-basic-values-pc";
 import { StepConfirmationPC } from "./steps/step-confirmation-pc";
 import { StepDeclarationsPC } from "./steps/step-declarations-pc";
@@ -61,11 +62,11 @@ export function OnboardingNormalForm({
     if (currentStep === 1 && !formData.agreed_oasis) return;
     if (currentStep === 5) {
       if (formData.is_minor === true) {
-        alert("未成年の方はご利用いただけません。");
+        toast.error("未成年の方はご利用いただけません。");
         return;
       }
       if (formData.is_minor === undefined) {
-        alert("未成年かどうかの確認を選択してください。");
+        toast.warning("未成年かどうかの確認を選択してください。");
         return;
       }
     }
@@ -77,11 +78,11 @@ export function OnboardingNormalForm({
     setIsSubmitting(true);
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
-      alert("オンボーディングが完了しました。");
+      toast.success("オンボーディングが完了しました。");
       router.push("/onboarding-trial/choice");
     } catch (e) {
       console.error(e);
-      alert("エラーが発生しました。");
+      toast.error("エラーが発生しました。");
     } finally {
       setIsSubmitting(false);
     }

@@ -1,10 +1,8 @@
-import { BookOpen, Briefcase, Trash2, Plus } from "lucide-react";
-import React from "react";
+import { BookOpen, Briefcase, Plus, Trash2 } from "lucide-react";
+import { UserProfile } from "../user-profile-creation.types";
 
 interface Step3OwnWorksProps {
-  formData: {
-    ownWorks: { id: number; title: string; url: string }[];
-  };
+  formData: UserProfile;
   addOwnWork: () => void;
   updateOwnWork: (id: number, field: "title" | "url", value: string) => void;
   removeOwnWork: (id: number) => void;

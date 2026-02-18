@@ -1,14 +1,18 @@
 "use client";
 
-import React from "react";
 import {
   BASIC_VALUES_QUESTIONS,
   BasicValueQuestionId,
 } from "../onboarding.logic";
 
+interface OnboardingData {
+  basic_values?: Record<string, string | string[] | undefined>;
+  [key: string]: unknown;
+}
+
 interface StepBasicValuesPCProps {
-  data: any;
-  onUpdate: (data: any) => void;
+  data: OnboardingData;
+  onUpdate: (data: Partial<OnboardingData>) => void;
 }
 
 export function StepBasicValuesPC({ data, onUpdate }: StepBasicValuesPCProps) {
@@ -17,7 +21,7 @@ export function StepBasicValuesPC({ data, onUpdate }: StepBasicValuesPCProps) {
     const currentValues = data.basic_values || {};
     const question = BASIC_VALUES_QUESTIONS.find((q) => q.id === id);
 
-    let newValue: string | string[];
+    let newValue: string | string[] | undefined;
 
     if (question?.multiple) {
       const currentArray: string[] = Array.isArray(currentValues[id])
@@ -31,7 +35,7 @@ export function StepBasicValuesPC({ data, onUpdate }: StepBasicValuesPCProps) {
     } else {
       // Allow toggle off for single selection
       if (currentValues[id] === value) {
-        newValue = undefined as any; // or remove key, using undefined works with our validation filter
+        newValue = undefined; // or remove key, using undefined works with our validation filter
       } else {
         newValue = value;
       }

@@ -2,7 +2,17 @@
 
 import { useState } from "react";
 import useSWR from "swr";
-import { createClient } from "@/lib/supabase/client";
+import {
+  createGroupAction,
+  deleteGroupAction,
+  getGroupByIdAction,
+  getGroupMembersAction,
+  getGroupsAction,
+  getMyProfilesAction,
+  joinGroupAction,
+  leaveGroupAction,
+  updateGroupAction,
+} from "@/app/actions/groups";
 import type { Tables, TablesInsert, TablesUpdate } from "@/types/types_db";
 import { MOCK_MEMBERS, MOCK_WORKS } from "./groups.mock";
 import {
@@ -27,19 +37,8 @@ type GroupUpdate = TablesUpdate<"groups">;
  * @param limit 取得件数
  * @returns グループリスト
  */
-export async function getGroups(
-  limit = 20,
-  client?: ReturnType<typeof createClient>
-) {
-  const supabase = client ?? createClient();
-  const { data, error } = await supabase
-    .from("groups")
-    .select("*")
-    .limit(limit)
-    .order("created_at", { ascending: false });
-
-  if (error) throw error;
-  return data;
+export async function getGroups(limit = 20) {
+  return getGroupsAction(limit);
 }
 
 /**
@@ -48,15 +47,7 @@ export async function getGroups(
  * @returns グループ詳細
  */
 export async function getGroupById(id: string) {
-  const supabase = createClient();
-  const { data, error } = await supabase
-    .from("groups")
-    .select("*")
-    .eq("id", id)
-    .single();
-
-  if (error) throw error;
-  return data;
+  return getGroupByIdAction(id);
 }
 
 /**
@@ -66,33 +57,13 @@ export async function getGroupById(id: string) {
  * @param groupData グループ作成データ
  * @returns 作成されたグループ
  */
-export async function createGroup(
-  groupData: GroupInsert,
-  client?: ReturnType<typeof createClient>
-) {
-  const supabase = client ?? createClient();
-
-  // Use the new atomic RPC function
-  // groupData.name is required.
-  // leader_id is required for RPC, though it checks auth.
-  // RPC args: p_name, p_leader_id, p_description, p_avatar_url, p_cover_url
-
+export async function createGroup(groupData: GroupInsert) {
   if (!groupData.name) throw new Error("Group name is required");
   if (!groupData.leader_id) throw new Error("Leader ID is required");
 
-  const { data, error } = await supabase.rpc("create_group_with_leader", {
-    p_name: groupData.name,
-    p_leader_id: groupData.leader_id,
-    p_description: groupData.description || null,
-    p_avatar_url: groupData.avatar_url || null,
-    p_cover_url: groupData.cover_url || null,
-  });
+  const data = await createGroupAction(groupData);
 
-  if (error) throw error;
   if (!data) throw new Error("Group creation failed no data returned");
-
-  // The RPC returns { id, name, ... } as Json. We cast it to Group.
-  // Ensure the keys match the Table definition.
   return data as unknown as Group;
 }
 
@@ -102,35 +73,16 @@ export async function createGroup(
  * @param updateData 更新データ
  * @returns 更新されたグループ
  */
-export async function updateGroup(
-  id: string,
-  updateData: GroupUpdate,
-  client?: ReturnType<typeof createClient>
-) {
-  const supabase = client ?? createClient();
-  const { data, error } = await supabase
-    .from("groups")
-    .update(updateData)
-    .eq("id", id)
-    .select()
-    .single();
-
-  if (error) throw error;
-  return data;
+export async function updateGroup(id: string, updateData: GroupUpdate) {
+  return updateGroupAction(id, updateData);
 }
 
 /**
  * グループを削除する
  * @param id グループID
  */
-export async function deleteGroup(
-  id: string,
-  client?: ReturnType<typeof createClient>
-) {
-  const supabase = client ?? createClient();
-  const { error } = await supabase.from("groups").delete().eq("id", id);
-
-  if (error) throw error;
+export async function deleteGroup(id: string) {
+  await deleteGroupAction(id);
 }
 
 // --- Membership ---
@@ -140,19 +92,8 @@ export async function deleteGroup(
  * @param groupId 参加するグループID
  * @param userId 参加するユーザーID
  */
-export async function joinGroup(
-  groupId: string,
-  userId: string,
-  client?: ReturnType<typeof createClient>
-) {
-  const supabase = client ?? createClient();
-  const { error } = await supabase.from("group_members").insert({
-    group_id: groupId,
-    user_profile_id: userId,
-    role: "member",
-  });
-
-  if (error) throw error;
+export async function joinGroup(groupId: string, userId: string) {
+  await joinGroupAction(groupId, userId);
 }
 
 /**
@@ -160,18 +101,8 @@ export async function joinGroup(
  * @param groupId グループID
  * @param userId ユーザーID
  */
-export async function leaveGroup(
-  groupId: string,
-  userId: string,
-  client?: ReturnType<typeof createClient>
-) {
-  const supabase = client ?? createClient();
-  const { error } = await supabase
-    .from("group_members")
-    .delete()
-    .match({ group_id: groupId, user_profile_id: userId });
-
-  if (error) throw error;
+export async function leaveGroup(groupId: string, userId: string) {
+  await leaveGroupAction(groupId, userId);
 }
 
 /**
@@ -179,51 +110,16 @@ export async function leaveGroup(
  * @param groupId グループID
  * @returns メンバーリスト
  */
-export async function getGroupMembers(
-  groupId: string,
-  client?: ReturnType<typeof createClient>
-) {
-  const supabase = client ?? createClient();
-  const { data, error } = await supabase
-    .from("group_members")
-    .select("*, user_profiles(*)") // user_profilesの情報を結合
-    .eq("group_id", groupId);
-
-  if (error) throw error;
-  return data;
+export async function getGroupMembers(groupId: string) {
+  return getGroupMembersAction(groupId);
 }
 
 /**
  * 自分のプロフィール一覧を取得する
  * @returns プロフィールリスト
  */
-export async function getMyProfiles(client?: ReturnType<typeof createClient>) {
-  const supabase = client ?? createClient();
-
-  // 1. Get Current Auth User
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-  if (authError || !user) return [];
-
-  // 2. Get Root Account
-  const { data: rootAccount, error: rootError } = await supabase
-    .from("root_accounts")
-    .select("id")
-    .eq("auth_user_id", user.id)
-    .single();
-
-  if (rootError || !rootAccount) return [];
-
-  // 3. Get Profiles
-  const { data: profiles, error: profilesError } = await supabase
-    .from("user_profiles")
-    .select("*")
-    .eq("root_account_id", rootAccount.id);
-
-  if (profilesError) throw profilesError;
-  return profiles;
+export async function getMyProfiles() {
+  return getMyProfilesAction();
 }
 
 // --- Logic Hook ---

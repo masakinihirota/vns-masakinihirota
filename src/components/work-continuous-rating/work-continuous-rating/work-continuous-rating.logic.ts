@@ -66,7 +66,7 @@ export const normalizeRating = (
     return {
       status: oldObj.status,
       isLiked: true,
-      tier: oldObj.value as any,
+      tier: oldObj.value as "Tier1" | "Tier2" | "Tier3",
       otherValue: null,
     };
   }

@@ -1,25 +1,23 @@
 import {
-  Trophy,
+  ArrowLeft,
   Info,
+  RefreshCw,
   Smile,
   Sparkles,
+  Trophy,
   User,
-  ArrowLeft,
-  RefreshCw,
 } from "lucide-react";
-import React from "react";
 import { getZodiacSymbol } from "@/lib/anonymous-name-generator";
 import { PURPOSES } from "../user-profile-creation.constants";
+import { UserProfile } from "../user-profile-creation.types";
 
 interface Step2PurposeIdentityProps {
-  formData: {
-    purposes: string[];
-    zodiac: string;
-    displayName: string;
-    nameCandidates: string[];
-  };
+  formData: UserProfile;
   togglePurpose: (id: string) => void;
-  updateForm: (key: string, value: any) => void;
+  updateForm: <K extends keyof UserProfile>(
+    key: K,
+    value: UserProfile[K]
+  ) => void;
   handleUndoCandidates: () => void;
   historyIndex: number;
   handleGenerateCandidates: (zodiac: string) => void;

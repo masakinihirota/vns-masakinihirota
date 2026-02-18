@@ -1,7 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { generateUniqueCandidates } from "@/lib/anonymous-name-generator";
 import { generateDummyWorks } from "./user-profile-creation.constants";
-import { FavWork, MasterWork, Period } from "./user-profile-creation.types";
+import {
+  FavWork,
+  MasterWork,
+  Period,
+  UserProfile,
+} from "./user-profile-creation.types";
 
 export const useUserProfileCreation = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -21,15 +26,15 @@ export const useUserProfileCreation = () => {
   const [addedQuestionIds, setAddedQuestionIds] = useState<string[]>([]);
   const [removedQuestionIds, setRemovedQuestionIds] = useState<string[]>([]);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<UserProfile>({
     role: "Leader",
     type: "SELF",
-    purposes: ["create_work"] as string[],
+    purposes: ["create_work"],
     zodiac: "獅子座",
     displayName: "",
-    nameCandidates: [] as string[],
-    ownWorks: [] as { id: number; title: string; url: string }[],
-    favWorks: [] as FavWork[],
+    nameCandidates: [],
+    ownWorks: [],
+    favWorks: [],
     valuesAnswer: "",
   });
 

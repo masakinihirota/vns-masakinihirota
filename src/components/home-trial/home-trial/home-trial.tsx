@@ -26,10 +26,7 @@ export const HomeTrial = ({
       <TrialBanner points={points} />
 
       <div className="flex items-center justify-end mb-8">
-        <ViewToggle
-          viewMode={viewMode as any}
-          onViewModeChange={onToggleView as any}
-        />
+        <ViewToggle viewMode={viewMode} onViewModeChange={onToggleView} />
       </div>
 
       {/* メインコンテンツ */}

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 // Reuse existing components where possible
 import { Step1ResidencePC } from "@/components/onboarding-pc/steps/step1-residence-pc";
 import { Step2HoursPC } from "@/components/onboarding-pc/steps/step2-hours-pc";
@@ -86,13 +87,15 @@ export function OnboardingTrialForm() {
       // Save to localStorage using utility
       TrialStorage.setRootAccount(trialRootAccount);
 
-      alert(`体験版登録完了！\nあなたの星座名: ${constellationName}`);
+      toast.success("体験版登録完了！", {
+        description: `あなたの星座名: ${constellationName}`,
+      });
 
       // Redirect to Beginning Country
       router.push("/onboarding-trial/choice");
     } catch (e) {
-      console.error(e);
-      alert("エラーが発生しました");
+      console.error("Trial registration failed:", e);
+      toast.error("エラーが発生しました");
     } finally {
       setIsSubmitting(false);
     }

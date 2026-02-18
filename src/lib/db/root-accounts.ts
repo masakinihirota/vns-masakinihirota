@@ -1,5 +1,8 @@
+import { eq } from "drizzle-orm";
 import { cache } from "react";
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/auth";
+import { db } from "./drizzle-postgres";
+import { rootAccounts } from "./schema.postgres";
 
 export type RootAccount = {
   id: string;
@@ -12,29 +15,26 @@ export type RootAccount = {
   updated_at: string;
 };
 
+// Mapper Helper
+function mapRootAccountToSupabase(ra: any): RootAccount {
+  return {
+    id: ra.id,
+    auth_user_id: ra.authUserId,
+    points: ra.points,
+    level: ra.level,
+    trust_days: ra.trustDays,
+    data_retention_days: ra.dataRetentionDays,
+    created_at: ra.createdAt,
+    updated_at: ra.updatedAt,
+  };
+}
+
 export const getRootAccount = cache(async () => {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const session = await auth();
+  if (!session?.user?.id) return null;
 
-  if (!user) return null;
-
-  const { data, error } = await supabase
-    .from("root_accounts")
-    .select("*")
-    .eq("auth_user_id", user.id)
-    .single();
-
-  if (error) {
-    if (error.code === "PGRST116") {
-      // No root account found, might be race condition with trigger or old user?
-      // Should handle gracefully or return null
-      return null;
-    }
-    console.error("Error fetching root account:", error);
-    return null;
-  }
-
-  return data as RootAccount;
+  const account = await db.query.rootAccounts.findFirst({
+    where: eq(rootAccounts.authUserId, session.user.id),
+  });
+  return account ? mapRootAccountToSupabase(account) : null;
 });

@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, useState } from "react";
 import { ProfileList } from "./profile-list";
 import {
-  filterProfilesByRole,
   filterProfilesByName,
-  sortProfilesByName,
+  filterProfilesByRole,
   getUniqueRoles,
+  sortProfilesByName,
   type Profile,
 } from "./profile-list.logic";
 
