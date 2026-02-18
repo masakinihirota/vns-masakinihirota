@@ -290,6 +290,12 @@ export function PortalDashboard() {
           path: "/home-trial",
           desc: "トライアル用のhome画面。",
         },
+        {
+          title: "体験版プロフィール作成 (1000 Masks)",
+          path: "/home-trial/profile",
+          desc: "体験版用のプロフィール作成フロー（LocalStorage保存）。",
+          badge: "New",
+        },
       ],
     },
     {

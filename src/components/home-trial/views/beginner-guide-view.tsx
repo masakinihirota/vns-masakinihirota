@@ -304,7 +304,7 @@ export function BeginnerGuideView() {
                   {/* アクションボタン */}
                   <div className="flex justify-center md:justify-start">
                     <Link
-                      href="/profile/creation-1000masks"
+                      href="/home-trial/profile?from=trial"
                       className="group relative inline-flex items-center gap-3 px-8 py-4 bg-blue-600 dark:bg-indigo-600 text-white rounded-2xl font-black text-[18px] shadow-lg hover:shadow-blue-500/20 hover:bg-blue-700 dark:hover:bg-indigo-700 transition-all active:scale-95"
                     >
                       <span>プロフィール作成ページへ</span>
@@ -336,7 +336,7 @@ export function BeginnerGuideView() {
       {/* CTAボタン */}
       <div className="flex justify-center py-12">
         <Link
-          href="/profile/creation-1000masks"
+          href="/home-trial/profile?from=trial"
           className="px-12 py-6 bg-blue-600 dark:bg-indigo-600 text-white font-black rounded-3xl hover:bg-blue-700 dark:hover:bg-indigo-700 hover:shadow-2xl transition-all flex items-center gap-4 active:scale-95 shadow-xl text-[20px]"
         >
           プロフィールを作成して始める <ArrowRightLeft size={28} />

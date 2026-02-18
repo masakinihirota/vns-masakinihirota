@@ -32,9 +32,9 @@ import {
   Target,
   User,
   Zap,
-  Zap as ZapIcon
 } from 'lucide-react';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { ProfileStorageAdapter } from './profile-storage-adapter';
 
 // --- Types ---
 
@@ -123,7 +123,7 @@ export interface ModalState {
 
 export const MASK_ICONS: MaskIcon[] = [
   { id: 'mask_default', icon: User, label: '標準' },
-  { id: 'mask_zap', icon: ZapIcon, label: '電撃' },
+  { id: 'mask_zap', icon: Zap, label: '電撃' },
   { id: 'mask_shield', icon: Shield, label: '守護' },
   { id: 'mask_star', icon: Star, label: '希望' },
   { id: 'mask_target', icon: Target, label: '目的' },
@@ -224,7 +224,7 @@ const INITIAL_GHOST_HISTORY = [generateCandidateSet(USER_BASE_CONSTELLATION, [])
 
 // --- Hook ---
 
-export const useProfileCreation = () => {
+export const useProfileCreation = (adapter?: ProfileStorageAdapter) => {
   const mainScrollRef = useRef<HTMLDivElement>(null);
 
   const [profiles, setProfiles] = useState<Profile[]>([
@@ -264,6 +264,17 @@ export const useProfileCreation = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [modal, setModal] = useState<ModalState>({ isOpen: false, type: '', targetId: null, message: '' });
 
+  // 初期ロード
+  useEffect(() => {
+    if (adapter) {
+      adapter.loadProfiles().then(loadedProfiles => {
+        if (loadedProfiles.length > 0) {
+          setProfiles(loadedProfiles);
+        }
+      });
+    }
+  }, [adapter]);
+
   useEffect(() => {
     const profile = profiles.find(p => p.id === activeProfileId);
     if (profile) {
@@ -300,9 +311,20 @@ export const useProfileCreation = () => {
         return;
       }
     }
-    setProfiles(prev => prev.map(p => p.id === activeProfile.id ? { ...activeProfile } : p));
+    const updatedProfiles = profiles.map(p => p.id === activeProfile.id ? { ...activeProfile } : p);
+    setProfiles(updatedProfiles);
     setIsDirty(false);
-    setModal({ isOpen: true, type: 'success', targetId: null, message: '仮面の保存が完了しました。' });
+
+    if (adapter) {
+      adapter.saveProfiles(updatedProfiles).then(() => {
+        setModal({ isOpen: true, type: 'success', targetId: null, message: '仮面の保存が完了しました。' });
+      }).catch(err => {
+        setModal({ isOpen: true, type: 'error', targetId: null, message: '保存に失敗しました。' });
+      });
+    } else {
+      setModal({ isOpen: true, type: 'success', targetId: null, message: '仮面の保存が完了しました。' });
+    }
+
     setTimeout(() => setModal(prev => prev.type === 'success' ? { ...prev, isOpen: false } : prev), 2000);
   };
 

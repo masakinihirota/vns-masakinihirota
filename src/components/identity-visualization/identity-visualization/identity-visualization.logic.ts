@@ -44,6 +44,9 @@ export const IDENTITY_CONFIG = {
 
 /**
  * 指定されたプロフィールIDに対応する表示データを取得する
+ *
+ * @param id - プロフィールID（'ghost' または UUID）
+ * @returns 該当する Profile オブジェクト。見つからない場合は ghost データを返す。
  */
 export const getProfileById = (id: ProfileId): Profile => {
   if (id === 'ghost') return IDENTITY_CONFIG.ghost;
@@ -53,7 +56,13 @@ export const getProfileById = (id: ProfileId): Profile => {
 
 /**
  * 2点を結ぶ3次ベジェ曲線のCSSパス文字列を生成する
- * 始点から終点へ、水平方向の中間に制御点を置くS字カーブ
+ * 始点から終点へ、水平方向の中間に制御点を置くS字カーブを描画するパスコマンドを生成します。
+ *
+ * @param x1 - 始点 X 座標
+ * @param y1 - 始点 Y 座標
+ * @param x2 - 終点 X 座標
+ * @param y2 - 終点 Y 座標
+ * @returns SVG の d 属性に使用できるパス文字列
  */
 export const calculateBezierPath = (
   x1: number,

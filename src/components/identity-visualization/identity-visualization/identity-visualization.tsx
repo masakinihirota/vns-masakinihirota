@@ -171,6 +171,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
                   : 'bg-white/60 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800/80 hover:border-indigo-300 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-800/50'
                   }`}
                 aria-pressed={isGhost}
+                aria-label={isGhost ? '現在の状態：幽霊状態' : '幽霊状態（デフォルト）に切り替える'}
               >
                 <div
                   className={`w-16 h-16 rounded-full overflow-hidden flex items-center justify-center transition-all duration-500 ${isGhost ? 'ring-4 ring-indigo-500/20' : 'opacity-40 grayscale group-hover:grayscale-0'
@@ -222,6 +223,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
                         : 'bg-slate-900/50 border-slate-800/60 hover:bg-slate-800/80 hover:border-slate-600'
                         }`}
                       aria-pressed={isActive}
+                      aria-label={isActive ? `仮面 ${mask.name} を着用中。クリックで幽霊状態に戻る` : `仮面 ${mask.name} を着用する`}
                     >
                       <div
                         className={`w-14 h-14 rounded-xl overflow-hidden shadow-inner transition-all duration-500 ${isActive ? 'ring-4 ring-indigo-400/20' : 'opacity-60 group-hover:opacity-100'
@@ -242,6 +244,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProps> = ({
                         <div
                           className="bg-slate-100 dark:bg-slate-950/50 p-2 rounded-lg text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-900 transition-colors"
                           title="仮面を脱ぐ"
+                          aria-label="仮面を脱ぐ"
                         >
                           <X size={16} strokeWidth={3} />
                         </div>

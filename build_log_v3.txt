@@ -1,0 +1,101 @@
+
+> vns-masakinihirota@0.45.0 build
+> next build --profile
+
+⚠ Profiling is enabled. Note: This may affect performance.
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 22.3s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+⚠ Using edge runtime on a page currently disables static generation for that page
+  Generating static pages using 11 workers (0/65) ...
+  Generating static pages using 11 workers (16/65) 
+  Generating static pages using 11 workers (32/65) 
+  Generating static pages using 11 workers (48/65) 
+✓ Generating static pages using 11 workers (65/65) in 1084.5ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/[[...route]]
+├ ƒ /api/admin/seed-works
+├ ƒ /api/ai-test
+├ ƒ /api/auth/[...nextauth]
+├ ƒ /api/profiles
+├ ƒ /api/public/users
+├ ƒ /api/public/works
+├ ƒ /api/user/import-trial
+├ ƒ /api/works
+├ ƒ /auth/callback
+├ ○ /contact
+├ ○ /dev-dashboard
+├ ○ /global-loneliness-measures
+├ ○ /good-life
+├ ○ /group-nation-explanation
+├ ○ /groups
+├ ƒ /groups/[id]
+├ ○ /help
+├ ○ /help/discussion
+├ ○ /help/faq
+├ ○ /help/glossary
+├ ○ /help/trouble
+├ ƒ /home
+├ ○ /home-trial
+├ ○ /home-trial/mandala
+├ ○ /home-trial/profile
+├ ○ /human
+├ ○ /identity
+├ ○ /landing-page
+├ ○ /legendary-speech
+├ ƒ /login
+├ ○ /mandala-chart
+├ ƒ /market
+├ ○ /matching
+├ ○ /matching-manual
+├ ○ /nation
+├ ○ /oasis
+├ ƒ /onboarding-pc
+├ ○ /onboarding-trial
+├ ○ /onboarding-trial/choice
+├ ○ /onboarding/choice
+├ ƒ /onboarding/normal
+├ ○ /product-list
+├ ○ /profile
+├ ○ /profile-display
+├ ○ /profile-theme
+├ ○ /profile/creation-1000masks
+├ ƒ /rewards
+├ ○ /root-accounts
+├ ○ /root-accounts/create
+├ ○ /sanibonani
+├ ○ /terms-service
+├ ○ /tutorial
+├ ○ /tutorial/basic
+├ ○ /tutorial/docs
+├ ○ /tutorial/help
+├ ○ /user-edited-userprofiles
+├ ○ /user-profiles
+├ ○ /user-profiles-trial/new
+├ ƒ /user-profiles/[id]/card
+├ ƒ /user-profiles/[id]/edit
+├ ○ /user-profiles/new
+├ ○ /values
+├ ○ /values-input
+├ ○ /values-selection
+├ ○ /work-list
+├ ○ /work-registration-form
+├ ƒ /works
+├ ƒ /works/[id]
+├ ○ /works/continuous-rating
+└ ○ /works/new
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

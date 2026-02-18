@@ -1,5 +1,5 @@
-import { asc, count, eq } from "drizzle-orm";
 import { CreateProfileData, UserProfile } from "@/lib/types/user-profile";
+import { asc, count, eq } from "drizzle-orm";
 import { db } from "./drizzle-postgres";
 import { rootAccounts, userProfiles } from "./schema.postgres";
 
@@ -98,4 +98,40 @@ export async function getUserProfileById(id: string) {
     where: eq(userProfiles.id, id),
   });
   return profile ? mapUserProfileToSupabase(profile) : null;
+}
+
+export async function updateUserProfile(
+  id: string,
+  data: Partial<CreateProfileData>
+) {
+  if (!isValidUUID(id)) {
+    throw new Error("Invalid UUID");
+  }
+
+  const drizzleInput: any = {};
+  if (data.display_name !== undefined) drizzleInput.displayName = data.display_name;
+  if (data.purpose !== undefined) drizzleInput.purpose = data.purpose;
+  if (data.role_type !== undefined) drizzleInput.roleType = data.role_type;
+  if (data.profile_format !== undefined) drizzleInput.profileFormat = data.profile_format;
+  if (data.role !== undefined) drizzleInput.role = data.role;
+  if (data.purposes !== undefined) drizzleInput.purposes = data.purposes;
+  if (data.profile_type !== undefined) drizzleInput.profileType = data.profile_type;
+  if (data.avatar_url !== undefined) drizzleInput.avatarUrl = data.avatar_url;
+  if (data.external_links !== undefined) drizzleInput.externalLinks = data.external_links;
+
+  drizzleInput.updatedAt = new Date().toISOString();
+
+  const [updated] = await db
+    .update(userProfiles)
+    .set(drizzleInput)
+    .where(eq(userProfiles.id, id))
+    .returning();
+
+  return updated ? mapUserProfileToSupabase(updated) : null;
+}
+
+export async function getRootAccountByAuthUserId(authUserId: string) {
+  return db.query.rootAccounts.findFirst({
+    where: eq(rootAccounts.authUserId, authUserId),
+  });
 }
