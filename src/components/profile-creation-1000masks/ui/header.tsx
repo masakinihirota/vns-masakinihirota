@@ -8,6 +8,7 @@ interface HeaderProps {
   onNameChange: (name: string) => void;
   onSave: () => void;
   onDelete: () => void;
+  error?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   onNameChange,
   onSave,
   onDelete,
+  error,
 }) => {
   const Icon = getMaskIcon(activeProfile.maskId, activeProfile.avatarType);
 
@@ -45,6 +47,11 @@ export const Header: React.FC<HeaderProps> = ({
           <p className="text-lg font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">
             {activeProfile.constellationName}
           </p>
+          {error && (
+            <p className="text-rose-500 dark:text-rose-400 text-sm font-bold mt-2 animate-in fade-in duration-300">
+              ⚠️ {error}
+            </p>
+          )}
         </div>
       </div>
 
@@ -62,11 +69,10 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           onClick={onSave}
           disabled={!isDirty}
-          className={`flex items-center space-x-3 px-8 py-4 rounded-2xl font-black text-lg transition-all shadow-xl active:scale-95 ${
-            isDirty
+          className={`flex items-center space-x-3 px-8 py-4 rounded-2xl font-black text-lg transition-all shadow-xl active:scale-95 ${isDirty
               ? "bg-emerald-600 dark:bg-emerald-700 text-white shadow-emerald-100 dark:shadow-none hover:bg-emerald-700"
               : "bg-slate-100 dark:bg-[#161B22] text-slate-400 dark:text-slate-600 cursor-not-allowed opacity-50 shadow-none"
-          }`}
+            }`}
         >
           <Save size={20} />
           <span>{isDirty ? "仮面を保存" : "保存済"}</span>

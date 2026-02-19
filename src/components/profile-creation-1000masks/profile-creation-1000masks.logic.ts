@@ -34,6 +34,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { validateProfile } from "./profile-creation-1000masks.schema";
 import { ProfileStorageAdapter } from "./profile-storage-adapter";
 
 // --- Types ---
@@ -460,6 +461,8 @@ export const useProfileCreation = (adapter?: ProfileStorageAdapter) => {
     message: "",
   });
 
+  const [errors, setErrors] = useState<Record<string, string[] | undefined>>({});
+
   // 初期ロード
   useEffect(() => {
     if (adapter) {
@@ -481,6 +484,7 @@ export const useProfileCreation = (adapter?: ProfileStorageAdapter) => {
     if (profile) {
       setEditDraft({ ...profile });
       setIsDirty(false);
+      setErrors({});
       mainScrollRef.current?.scrollTo({ top: 0 });
     }
   }, [activeProfileId, profiles]);
@@ -491,6 +495,15 @@ export const useProfileCreation = (adapter?: ProfileStorageAdapter) => {
   const handleUpdateDraft = (updatedFields: Partial<Profile>) => {
     setEditDraft((prev) => (prev ? { ...prev, ...updatedFields } : null));
     setIsDirty(true);
+
+    // エラーがある場合は、更新されたフィールドのエラーをクリアする
+    if (Object.keys(errors).length > 0) {
+      const newErrors = { ...errors };
+      Object.keys(updatedFields).forEach((key) => {
+        delete newErrors[key as keyof typeof newErrors];
+      });
+      setErrors(newErrors);
+    }
   };
 
   const requestSwitchProfile = (id: string) => {
@@ -509,21 +522,14 @@ export const useProfileCreation = (adapter?: ProfileStorageAdapter) => {
 
   const handleSave = () => {
     if (!activeProfile.isGhost) {
-      if (!activeProfile.selectedTypeId) {
+      const result = validateProfile(activeProfile);
+      if (!result.success) {
+        setErrors(result.error.flatten().fieldErrors);
         setModal({
           isOpen: true,
           type: "error",
           targetId: null,
-          message: "STEP 2: プロフィールのタイプを選択してください。",
-        });
-        return;
-      }
-      if (activeProfile.selectedObjectiveIds.length === 0) {
-        setModal({
-          isOpen: true,
-          type: "error",
-          targetId: null,
-          message: "STEP 3: プロフィールの目的を1つ以上選択してください。",
+          message: "入力内容を確認してください。",
         });
         return;
       }
@@ -724,6 +730,7 @@ export const useProfileCreation = (adapter?: ProfileStorageAdapter) => {
     setSearchQuery,
     modal,
     setModal,
+    errors,
     mainScrollRef,
     handleUpdateDraft,
     requestSwitchProfile,

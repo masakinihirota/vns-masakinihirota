@@ -13,16 +13,23 @@ interface Step3ObjectiveProps {
   activeProfile: Profile;
   onToggleObjective: (id: ObjectiveId) => void;
   onToggleSlot: (id: SlotId) => void;
+  error?: string;
 }
 
 export const Step3Objective: React.FC<Step3ObjectiveProps> = ({
   activeProfile,
   onToggleObjective,
   onToggleSlot,
+  error,
 }) => {
   return (
     <section className="transition-colors duration-300">
       <StepHeader num="3" title="プロフィールの目的" subtitle="方向性の決定" />
+      {error && (
+        <div className="mb-6 p-4 rounded-2xl bg-rose-50 dark:bg-rose-900/20 border-2 border-rose-200 dark:border-rose-800 text-rose-600 dark:text-rose-400 font-bold flex items-center gap-3 animate-in slide-in-from-top-2 duration-300">
+          <span className="text-lg">⚠️ {error}</span>
+        </div>
+      )}
       <div className="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 p-8 rounded-[2.5rem] mb-12 space-y-4 shadow-sm text-left">
         <div className="flex items-center space-x-3 text-blue-700 dark:text-blue-400 font-black text-left uppercase tracking-widest">
           <Info size={24} />
@@ -47,11 +54,10 @@ export const Step3Objective: React.FC<Step3ObjectiveProps> = ({
             <button
               key={preset.id}
               onClick={() => onToggleObjective(preset.id)}
-              className={`flex flex-col items-center justify-center p-6 rounded-[2rem] border-2 transition-all space-y-4 group ${
-                isSelected
+              className={`flex flex-col items-center justify-center p-6 rounded-[2rem] border-2 transition-all space-y-4 group ${isSelected
                   ? "bg-blue-600 dark:bg-blue-700 border-blue-400 dark:border-blue-500 text-white shadow-xl scale-[1.05]"
                   : "bg-white dark:bg-white/5 border-slate-100 dark:border-white/10 text-slate-400 dark:text-slate-600 hover:border-blue-200 dark:hover:border-blue-900 shadow-md"
-              }`}
+                }`}
             >
               <div
                 className={`transition-all ${isSelected ? "scale-110" : "group-hover:scale-110 group-hover:text-blue-500"}`}
