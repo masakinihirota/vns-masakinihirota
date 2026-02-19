@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import * as groupsDb from "@/lib/db/groups";
 import { getUserProfilesByAuthUserId } from "@/lib/db/user-profiles";
 import type { TablesInsert, TablesUpdate } from "@/types/types_db";
@@ -52,3 +52,4 @@ export async function getMyProfilesAction() {
   const profiles = await getUserProfilesByAuthUserId(session.user.id);
   return profiles;
 }
+

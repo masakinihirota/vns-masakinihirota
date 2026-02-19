@@ -1,5 +1,9 @@
 "use client";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 import {
   ArrowDown,
   ArrowRight,
@@ -19,10 +23,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 
 interface RouteItem {
   title: string;
@@ -294,6 +294,12 @@ export function PortalDashboard() {
           title: "体験版プロフィール作成 (1000 Masks)",
           path: "/home-trial/profile",
           desc: "体験版用のプロフィール作成フロー（LocalStorage保存）。",
+          badge: "New",
+        },
+        {
+          title: "プロフィール比較分析",
+          path: "/comparison",
+          desc: "自己プロファイルと候補者を比較分析する機能。",
           badge: "New",
         },
       ],
@@ -590,7 +596,7 @@ export function PortalDashboard() {
                   className={cn(
                     "grid grid-cols-[180px_1.5fr_1.5fr_auto] gap-6 px-6 py-4 items-center transition-all group relative hover:bg-neutral-100 dark:hover:bg-white/10",
                     isDone &&
-                      "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
+                    "bg-emerald-500/[0.08] dark:bg-emerald-500/[0.05]",
                     isFocus && "bg-amber-500/[0.1] dark:bg-amber-500/[0.08]"
                   )}
                 >

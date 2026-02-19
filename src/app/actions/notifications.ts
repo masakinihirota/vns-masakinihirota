@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import * as notifDb from "@/lib/db/notifications";
 import type { TablesInsert } from "@/types/types_db";
 
@@ -21,3 +21,4 @@ export async function markNotificationAsReadAction(notificationId: string) {
   if (!session?.user?.id) throw new Error("Unauthorized");
   return notifDb.markNotificationAsRead(notificationId);
 }
+

@@ -1,12 +1,12 @@
-import { useSession } from "next-auth/react";
+import { useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { Notification } from "@/components/groups/groups.types";
 import { cn } from "@/lib/utils";
 import { useMarkAsRead, useNotifications } from "./notifications.logic";
 
 export const NotificationList = () => {
-  const { status } = useSession();
-  const isLoggedIn = status === "authenticated";
+  const { data: session, isPending } = useSession();
+  const isLoggedIn = !!session;
   const { notifications, isLoading, mutate } = useNotifications(isLoggedIn);
   const { markAsRead } = useMarkAsRead();
   const router = useRouter();
@@ -21,7 +21,7 @@ export const NotificationList = () => {
     }
   };
 
-  if (status === "loading" || isLoading)
+  if (isPending || isLoading)
     return (
       <div className="p-4 text-center text-sm text-gray-500">Loading...</div>
     );

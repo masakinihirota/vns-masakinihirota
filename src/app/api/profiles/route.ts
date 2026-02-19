@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import { Profile } from "@/components/profile-creation-1000masks/profile-creation-1000masks.logic";
 import * as userProfilesDb from "@/lib/db/user-profiles";
 
@@ -119,3 +119,4 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+

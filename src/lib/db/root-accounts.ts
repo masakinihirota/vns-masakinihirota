@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { cache } from "react";
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import { db } from "./drizzle-postgres";
 import { rootAccounts } from "./schema.postgres";
 
@@ -38,3 +38,4 @@ export const getRootAccount = cache(async () => {
   });
   return account ? mapRootAccountToSupabase(account) : null;
 });
+

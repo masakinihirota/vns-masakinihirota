@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import * as followsDb from "@/lib/db/follows";
 
 export async function followProfileAction(
@@ -19,3 +19,4 @@ export async function unfollowProfileAction(followedProfileId: string) {
 
   return followsDb.unfollowProfile(session.user.id, followedProfileId);
 }
+

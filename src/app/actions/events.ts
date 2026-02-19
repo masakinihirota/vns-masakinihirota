@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import * as eventsDb from "@/lib/db/events";
 import type { TablesInsert } from "@/types/types_db";
 
@@ -27,3 +27,4 @@ export async function cancelEventParticipationAction(eventId: string) {
 export async function getEventAction(eventId: string) {
   return eventsDb.getEvent(eventId);
 }
+

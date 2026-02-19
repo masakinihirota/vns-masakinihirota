@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import * as matchingDb from "@/lib/db/matching";
 
 export async function getMatchingCandidatesAction(limit = 10) {
@@ -16,3 +16,4 @@ export async function createMatchingRequestAction(targetProfileId: string) {
 
   return matchingDb.createMatchingRequest(userId, targetProfileId);
 }
+
