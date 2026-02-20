@@ -1,7 +1,7 @@
-import { auth } from "@/lib/auth";
-import { hasRootAccount } from "@/lib/auth/root-account-guard";
 import { headers } from "next/headers";
 import { type NextRequest, NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
+import { hasRootAccount } from "@/lib/auth/root-account-guard";
 
 /**
  * OAuth コールバックルート（Better-Auth 対応版）
@@ -41,9 +41,7 @@ export async function GET(request: NextRequest) {
 
   if (!session?.user) {
     // セッションがない場合 → エラーページへ
-    return NextResponse.redirect(
-      new URL("/auth/auth-code-error", request.url)
-    );
+    return NextResponse.redirect(new URL("/auth/auth-code-error", request.url));
   }
 
   // ルートアカウントのチェック & リダイレクト

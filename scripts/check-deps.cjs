@@ -65,7 +65,6 @@ async function checkDeps() {
             AND a.attname = 'auth_user_id';
     `);
     console.log("Indexes/Constraints:", indexes);
-
   } catch (e) {
     console.error("Error:", e);
   } finally {

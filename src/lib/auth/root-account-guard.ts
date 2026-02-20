@@ -1,6 +1,6 @@
+import { eq } from "drizzle-orm";
 import { db } from "@/lib/db/drizzle-postgres";
 import { rootAccounts } from "@/lib/db/schema.postgres";
-import { eq } from "drizzle-orm";
 
 /**
  * 指定されたユーザーIDにルートアカウントが存在するかチェックします

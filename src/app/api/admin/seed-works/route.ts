@@ -1,9 +1,9 @@
+import path from "path";
+import { headers } from "next/headers";
+import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { parseAnimeData, parseMangaData } from "@/lib/works/seed-utils";
-import { headers } from "next/headers";
-import { NextRequest, NextResponse } from "next/server";
-import path from "path";
 
 export async function POST(_req: NextRequest) {
   // Better-Auth による認証チェック

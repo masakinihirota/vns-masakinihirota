@@ -15,7 +15,10 @@ async function checkAllConstraints() {
   };
 
   try {
-    fs.writeFileSync(logFile, "Checking ALL constraints related to root_accounts...\n");
+    fs.writeFileSync(
+      logFile,
+      "Checking ALL constraints related to root_accounts...\n"
+    );
 
     // 1. Constraints ON root_accounts
     log("\n--- Constraints ON root_accounts (conrelid) ---");
@@ -24,7 +27,7 @@ async function checkAllConstraints() {
       FROM pg_constraint
       WHERE conrelid = 'root_accounts'::regclass;
     `);
-    onCon.forEach(c => log(`${c.conname} (${c.contype}): ${c.def}`));
+    onCon.forEach((c) => log(`${c.conname} (${c.contype}): ${c.def}`));
 
     // 2. Constraints REFERENCING root_accounts
     log("\n--- Constraints REFERENCING root_accounts (confrelid) ---");
@@ -33,7 +36,9 @@ async function checkAllConstraints() {
       FROM pg_constraint
       WHERE confrelid = 'root_accounts'::regclass;
     `);
-    refCon.forEach(c => log(`${c.source_table} -> ${c.conname} (${c.contype}): ${c.def}`));
+    refCon.forEach((c) =>
+      log(`${c.source_table} -> ${c.conname} (${c.contype}): ${c.def}`)
+    );
 
     // 3. Dependencies in pg_depend (for views etc)
     log("\n--- Dependencies in pg_depend ---");
@@ -51,8 +56,7 @@ async function checkAllConstraints() {
       WHERE source_table.relname = 'root_accounts';
     `);
     // pg_depend check is tricky, simplified version
-    deps.forEach(d => log(`${d.dependent_schema}.${d.dependent_object}`));
-
+    deps.forEach((d) => log(`${d.dependent_schema}.${d.dependent_object}`));
   } catch (e) {
     log("Error: " + e.message);
   } finally {

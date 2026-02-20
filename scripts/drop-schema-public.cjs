@@ -20,7 +20,6 @@ async function dropSchemaPublic() {
     await sql.unsafe(`GRANT ALL ON SCHEMA public TO postgres`);
     await sql.unsafe(`GRANT ALL ON SCHEMA public TO public`);
     console.log("Permissions granted.");
-
   } catch (e) {
     console.error("Error:", e);
   } finally {

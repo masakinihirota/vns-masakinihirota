@@ -1,5 +1,5 @@
-import { createClient } from "@/lib/supabase/client";
 import { useEffect, useMemo, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
 
 // --- 型定義 ---
 

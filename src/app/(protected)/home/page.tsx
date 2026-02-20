@@ -1,7 +1,7 @@
+import { redirect } from "next/navigation";
 import * as Home from "@/components/home";
 import { getSession } from "@/lib/auth/helper";
 import { hasRootAccount } from "@/lib/auth/root-account-guard";
-import { redirect } from "next/navigation";
 
 /**
  * ホームページ（スタートページ）

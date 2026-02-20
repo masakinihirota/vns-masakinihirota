@@ -59,7 +59,6 @@ async function checkDepsLog() {
             AND a.attname = 'auth_user_id';
     `);
     log(JSON.stringify(indexes, null, 2));
-
   } catch (e) {
     log("Error: " + e.message);
   } finally {

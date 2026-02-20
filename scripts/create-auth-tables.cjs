@@ -80,7 +80,6 @@ async function createTables() {
     `);
     console.log("\n=== 作成されたテーブル ===");
     tables.forEach((t) => console.log(`  public.${t.table_name}`));
-
   } catch (e) {
     console.error("Error:", e.message);
   } finally {

@@ -1,8 +1,8 @@
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { VNSTrialDataSchema } from "@/lib/trial-storage";
-import { headers } from "next/headers";
-import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   // 1. Better-Auth による認証チェック

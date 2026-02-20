@@ -1,9 +1,9 @@
+import { notFound } from "next/navigation";
 import { getWorkByIdAction } from "@/app/actions/works";
 import { WorkDetail } from "@/components/works/work-detail"; // Import the detail component
 import { getSession } from "@/lib/auth/helper";
 import { isValidUUID } from "@/lib/utils";
 import { Tables } from "@/types/types_db";
-import { notFound } from "next/navigation";
 
 // UI Type Definition (matching WorkDetail component)
 interface UIWorkDetail {

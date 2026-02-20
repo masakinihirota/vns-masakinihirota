@@ -63,10 +63,11 @@ export const CandidateList: React.FC<CandidateListProps> = ({
               <div key={c.id} className="flex group">
                 <button
                   onClick={() => onSelectTarget(c.id)}
-                  className={`flex-1 p-3 rounded-l-lg border text-left text-base font-bold transition-all flex justify-between items-center ${isSelected
+                  className={`flex-1 p-3 rounded-l-lg border text-left text-base font-bold transition-all flex justify-between items-center ${
+                    isSelected
                       ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-sm"
                       : "bg-white border-slate-100 hover:border-slate-200"
-                    }`}
+                  }`}
                 >
                   <span>{c.name}</span>
                   <span className="text-xs font-black bg-slate-100 px-2 py-1 rounded text-slate-500">
@@ -96,21 +97,23 @@ export const CandidateList: React.FC<CandidateListProps> = ({
             <div
               key={c.id}
               onClick={() => onSelectTarget(c.id)}
-              className={`p-6 rounded-2xl border-2 transition-all duration-300 cursor-pointer group relative ${isSelected
+              className={`p-6 rounded-2xl border-2 transition-all duration-300 cursor-pointer group relative ${
+                isSelected
                   ? "bg-white border-indigo-600 shadow-lg ring-4 ring-indigo-50 scale-[1.02]"
                   : "bg-white border-slate-100 hover:border-slate-300 shadow-sm"
-                }`}
+              }`}
             >
               <div className="flex justify-between items-start mb-3">
                 <div className="text-base font-black uppercase text-slate-800 tracking-tight flex items-center">
                   <span>{c.name}</span>
                   <span
-                    className={`ml-3 text-xs px-2.5 py-1 rounded-full font-black tabular-nums transition-colors ${masteryCount >= 6
+                    className={`ml-3 text-xs px-2.5 py-1 rounded-full font-black tabular-nums transition-colors ${
+                      masteryCount >= 6
                         ? "bg-indigo-600 text-white"
                         : masteryCount >= 3
                           ? "bg-blue-100 text-blue-600"
                           : "bg-slate-100 text-slate-500"
-                      }`}
+                    }`}
                   >
                     {masteryCount}/8
                   </span>

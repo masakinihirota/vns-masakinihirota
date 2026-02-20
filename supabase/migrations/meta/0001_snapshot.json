@@ -102,12 +102,8 @@
           "name": "alliances_profile_a_id_fkey",
           "tableFrom": "alliances",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "profile_a_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["profile_a_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -115,12 +111,8 @@
           "name": "alliances_profile_b_id_fkey",
           "tableFrom": "alliances",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "profile_b_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["profile_b_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -130,10 +122,7 @@
         "alliances_unique_pair": {
           "name": "alliances_unique_pair",
           "nullsNotDistinct": false,
-          "columns": [
-            "profile_a_id",
-            "profile_b_id"
-          ]
+          "columns": ["profile_a_id", "profile_b_id"]
         }
       },
       "policies": {
@@ -141,34 +130,26 @@
           "name": "Users can delete their own profiles' alliances",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "((profile_a_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid()))))) OR (profile_b_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid()))))))"
         },
         "Users can update their own profiles' alliances": {
           "name": "Users can update their own profiles' alliances",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can initiate alliances for their own profiles": {
           "name": "Users can initiate alliances for their own profiles",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can view their own profiles' alliances": {
           "name": "Users can view their own profiles' alliances",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {
@@ -255,12 +236,8 @@
           "name": "business_cards_user_profile_id_fkey",
           "tableFrom": "business_cards",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "user_profile_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -270,9 +247,7 @@
         "business_cards_user_profile_id_key": {
           "name": "business_cards_user_profile_id_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_profile_id"
-          ]
+          "columns": ["user_profile_id"]
         }
       },
       "policies": {
@@ -280,34 +255,26 @@
           "name": "Owners can create their own business card",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "withCheck": "(EXISTS ( SELECT 1\n   FROM (user_profiles\n     JOIN root_accounts ON ((user_profiles.root_account_id = root_accounts.id)))\n  WHERE ((user_profiles.id = business_cards.user_profile_id) AND (root_accounts.auth_user_id = auth.uid()))))"
         },
         "Owners can update their own business card": {
           "name": "Owners can update their own business card",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Public can view published business cards": {
           "name": "Public can view published business cards",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Owners can view their own business card": {
           "name": "Owners can view their own business card",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {},
@@ -384,12 +351,8 @@
           "name": "follows_follower_profile_id_fkey",
           "tableFrom": "follows",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "follower_profile_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["follower_profile_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -397,12 +360,8 @@
           "name": "follows_followed_profile_id_fkey",
           "tableFrom": "follows",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "followed_profile_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["followed_profile_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -410,10 +369,7 @@
       "compositePrimaryKeys": {
         "follows_pkey": {
           "name": "follows_pkey",
-          "columns": [
-            "follower_profile_id",
-            "followed_profile_id"
-          ]
+          "columns": ["follower_profile_id", "followed_profile_id"]
         }
       },
       "uniqueConstraints": {},
@@ -422,42 +378,32 @@
           "name": "Users can delete follows for their own profiles",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "(follower_profile_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid())))))"
         },
         "Users can update follows for their own profiles": {
           "name": "Users can update follows for their own profiles",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can create follows for their own profiles": {
           "name": "Users can create follows for their own profiles",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can view their profiles' followers (excluding watches)": {
           "name": "Users can view their profiles' followers (excluding watches)",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can view their own profiles' follows and watches": {
           "name": "Users can view their own profiles' follows and watches",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {
@@ -505,12 +451,8 @@
           "name": "group_members_group_id_fkey",
           "tableFrom": "group_members",
           "tableTo": "groups",
-          "columnsFrom": [
-            "group_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["group_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -518,12 +460,8 @@
           "name": "group_members_user_profile_id_fkey",
           "tableFrom": "group_members",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "user_profile_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -531,10 +469,7 @@
       "compositePrimaryKeys": {
         "group_members_pkey": {
           "name": "group_members_pkey",
-          "columns": [
-            "group_id",
-            "user_profile_id"
-          ]
+          "columns": ["group_id", "user_profile_id"]
         }
       },
       "uniqueConstraints": {},
@@ -543,50 +478,38 @@
           "name": "Users can leave groups",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "(user_profile_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid())))))"
         },
         "Users can join groups": {
           "name": "Users can join groups",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Leaders can remove members": {
           "name": "Leaders can remove members",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Leaders can update members": {
           "name": "Leaders can update members",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Leaders can add members": {
           "name": "Leaders can add members",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Public read access for group_members": {
           "name": "Public read access for group_members",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {
@@ -666,12 +589,8 @@
           "name": "groups_leader_id_fkey",
           "tableFrom": "groups",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "leader_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["leader_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -683,34 +602,26 @@
           "name": "Leaders can delete groups",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "(leader_id IN ( SELECT user_profiles.id\n   FROM user_profiles\n  WHERE (user_profiles.root_account_id IN ( SELECT root_accounts.id\n           FROM root_accounts\n          WHERE (root_accounts.auth_user_id = auth.uid())))))"
         },
         "Leaders can update groups": {
           "name": "Leaders can update groups",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Authenticated users can create groups": {
           "name": "Authenticated users can create groups",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Public read access for groups": {
           "name": "Public read access for groups",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {},
@@ -805,12 +716,8 @@
           "name": "market_items_nation_id_fkey",
           "tableFrom": "market_items",
           "tableTo": "nations",
-          "columnsFrom": [
-            "nation_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -818,12 +725,8 @@
           "name": "market_items_seller_id_fkey",
           "tableFrom": "market_items",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "seller_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["seller_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -831,12 +734,8 @@
           "name": "market_items_seller_group_id_fkey",
           "tableFrom": "market_items",
           "tableTo": "groups",
-          "columnsFrom": [
-            "seller_group_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["seller_group_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -848,9 +747,7 @@
           "name": "Public read access for market items",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "true"
         }
       },
@@ -950,12 +847,8 @@
           "name": "market_transactions_item_id_fkey",
           "tableFrom": "market_transactions",
           "tableTo": "market_items",
-          "columnsFrom": [
-            "item_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["item_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -963,12 +856,8 @@
           "name": "market_transactions_buyer_id_fkey",
           "tableFrom": "market_transactions",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "buyer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["buyer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -976,12 +865,8 @@
           "name": "market_transactions_seller_id_fkey",
           "tableFrom": "market_transactions",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "seller_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["seller_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1034,12 +919,8 @@
           "name": "nation_citizens_nation_id_fkey",
           "tableFrom": "nation_citizens",
           "tableTo": "nations",
-          "columnsFrom": [
-            "nation_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1047,12 +928,8 @@
           "name": "nation_citizens_user_profile_id_fkey",
           "tableFrom": "nation_citizens",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "user_profile_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1060,10 +937,7 @@
       "compositePrimaryKeys": {
         "nation_citizens_pkey": {
           "name": "nation_citizens_pkey",
-          "columns": [
-            "nation_id",
-            "user_profile_id"
-          ]
+          "columns": ["nation_id", "user_profile_id"]
         }
       },
       "uniqueConstraints": {},
@@ -1113,12 +987,8 @@
           "name": "nation_event_participants_event_id_fkey",
           "tableFrom": "nation_event_participants",
           "tableTo": "nation_events",
-          "columnsFrom": [
-            "event_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["event_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1126,12 +996,8 @@
           "name": "nation_event_participants_user_profile_id_fkey",
           "tableFrom": "nation_event_participants",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "user_profile_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1139,10 +1005,7 @@
       "compositePrimaryKeys": {
         "nation_event_participants_pkey": {
           "name": "nation_event_participants_pkey",
-          "columns": [
-            "event_id",
-            "user_profile_id"
-          ]
+          "columns": ["event_id", "user_profile_id"]
         }
       },
       "uniqueConstraints": {},
@@ -1273,12 +1136,8 @@
           "name": "nation_events_nation_id_fkey",
           "tableFrom": "nation_events",
           "tableTo": "nations",
-          "columnsFrom": [
-            "nation_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1286,12 +1145,8 @@
           "name": "nation_events_organizer_id_fkey",
           "tableFrom": "nation_events",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "organizer_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["organizer_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1303,9 +1158,7 @@
           "name": "Public read access for events",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "true"
         }
       },
@@ -1358,12 +1211,8 @@
           "name": "nation_groups_nation_id_fkey",
           "tableFrom": "nation_groups",
           "tableTo": "nations",
-          "columnsFrom": [
-            "nation_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1371,12 +1220,8 @@
           "name": "nation_groups_group_id_fkey",
           "tableFrom": "nation_groups",
           "tableTo": "groups",
-          "columnsFrom": [
-            "group_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["group_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1384,10 +1229,7 @@
       "compositePrimaryKeys": {
         "nation_groups_pkey": {
           "name": "nation_groups_pkey",
-          "columns": [
-            "nation_id",
-            "group_id"
-          ]
+          "columns": ["nation_id", "group_id"]
         }
       },
       "uniqueConstraints": {},
@@ -1463,12 +1305,8 @@
           "name": "nation_posts_nation_id_fkey",
           "tableFrom": "nation_posts",
           "tableTo": "nations",
-          "columnsFrom": [
-            "nation_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["nation_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1476,12 +1314,8 @@
           "name": "nation_posts_author_id_fkey",
           "tableFrom": "nation_posts",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "author_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["author_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         },
@@ -1489,12 +1323,8 @@
           "name": "nation_posts_author_group_id_fkey",
           "tableFrom": "nation_posts",
           "tableTo": "groups",
-          "columnsFrom": [
-            "author_group_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["author_group_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -1603,12 +1433,8 @@
           "name": "nations_owner_user_id_fkey",
           "tableFrom": "nations",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "owner_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["owner_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -1616,12 +1442,8 @@
           "name": "nations_owner_group_id_fkey",
           "tableFrom": "nations",
           "tableTo": "groups",
-          "columnsFrom": [
-            "owner_group_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["owner_group_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -1633,9 +1455,7 @@
           "name": "Public read access for nations",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "true"
         }
       },
@@ -1728,12 +1548,8 @@
           "name": "notifications_user_profile_id_fkey",
           "tableFrom": "notifications",
           "tableTo": "user_profiles",
-          "columnsFrom": [
-            "user_profile_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_profile_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1810,12 +1626,8 @@
           "name": "point_transactions_root_account_id_fkey",
           "tableFrom": "point_transactions",
           "tableTo": "root_accounts",
-          "columnsFrom": [
-            "root_account_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["root_account_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1827,9 +1639,7 @@
           "name": "Users can view own point transactions",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "(root_account_id IN ( SELECT root_accounts.id FROM root_accounts WHERE root_accounts.auth_user_id = auth.uid() ))"
         }
       },
@@ -1903,12 +1713,8 @@
           "tableFrom": "root_accounts",
           "tableTo": "users",
           "schemaTo": "auth",
-          "columnsFrom": [
-            "auth_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["auth_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1918,9 +1724,7 @@
         "root_accounts_auth_user_id_key": {
           "name": "root_accounts_auth_user_id_key",
           "nullsNotDistinct": false,
-          "columns": [
-            "auth_user_id"
-          ]
+          "columns": ["auth_user_id"]
         }
       },
       "policies": {
@@ -1928,18 +1732,14 @@
           "name": "Users can update own root account",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "(auth.uid() = auth_user_id)"
         },
         "Users can view own root account": {
           "name": "Users can view own root account",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {
@@ -2045,12 +1845,8 @@
           "name": "user_profiles_root_account_id_fkey",
           "tableFrom": "user_profiles",
           "tableTo": "root_accounts",
-          "columnsFrom": [
-            "root_account_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["root_account_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2062,34 +1858,26 @@
           "name": "Users can delete own profiles",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "(root_account_id IN ( SELECT root_accounts.id\n   FROM root_accounts\n  WHERE (root_accounts.auth_user_id = auth.uid())))"
         },
         "Users can update own profiles": {
           "name": "Users can update own profiles",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can insert own profiles": {
           "name": "Users can insert own profiles",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can view own profiles": {
           "name": "Users can view own profiles",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {
@@ -2180,12 +1968,8 @@
           "tableFrom": "user_work_entries",
           "tableTo": "users",
           "schemaTo": "auth",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2193,12 +1977,8 @@
           "name": "user_work_entries_work_id_fkey",
           "tableFrom": "user_work_entries",
           "tableTo": "works",
-          "columnsFrom": [
-            "work_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["work_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2206,10 +1986,7 @@
       "compositePrimaryKeys": {
         "user_work_entries_pkey": {
           "name": "user_work_entries_pkey",
-          "columns": [
-            "user_id",
-            "work_id"
-          ]
+          "columns": ["user_id", "work_id"]
         }
       },
       "uniqueConstraints": {},
@@ -2218,34 +1995,26 @@
           "name": "Users can delete their own entries",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "(auth.uid() = user_id)"
         },
         "Users can update their own entries": {
           "name": "Users can update their own entries",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can insert their own entries": {
           "name": "Users can insert their own entries",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can view their own entries": {
           "name": "Users can view their own entries",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {
@@ -2330,12 +2099,8 @@
           "tableFrom": "user_work_ratings",
           "tableTo": "users",
           "schemaTo": "auth",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -2343,12 +2108,8 @@
           "name": "user_work_ratings_work_id_fkey",
           "tableFrom": "user_work_ratings",
           "tableTo": "works",
-          "columnsFrom": [
-            "work_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["work_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -2356,10 +2117,7 @@
       "compositePrimaryKeys": {
         "user_work_ratings_pkey": {
           "name": "user_work_ratings_pkey",
-          "columns": [
-            "user_id",
-            "work_id"
-          ]
+          "columns": ["user_id", "work_id"]
         }
       },
       "uniqueConstraints": {},
@@ -2368,34 +2126,26 @@
           "name": "Users can delete their own ratings",
           "as": "PERMISSIVE",
           "for": "DELETE",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "(auth.uid() = user_id)"
         },
         "Users can update their own ratings": {
           "name": "Users can update their own ratings",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can insert their own ratings": {
           "name": "Users can insert their own ratings",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can view their own ratings": {
           "name": "Users can view their own ratings",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {},
@@ -2559,12 +2309,8 @@
           "tableFrom": "works",
           "tableTo": "users",
           "schemaTo": "auth",
-          "columnsFrom": [
-            "owner_user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["owner_user_id"],
+          "columnsTo": ["id"],
           "onDelete": "set null",
           "onUpdate": "no action"
         }
@@ -2576,34 +2322,26 @@
           "name": "Users can view their own pending/private works",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ],
+          "to": ["public"],
           "using": "(auth.uid() = owner_user_id)"
         },
         "Public works are viewable by everyone": {
           "name": "Public works are viewable by everyone",
           "as": "PERMISSIVE",
           "for": "SELECT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can update their own works": {
           "name": "Users can update their own works",
           "as": "PERMISSIVE",
           "for": "UPDATE",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         },
         "Users can insert their own works": {
           "name": "Users can insert their own works",
           "as": "PERMISSIVE",
           "for": "INSERT",
-          "to": [
-            "public"
-          ]
+          "to": ["public"]
         }
       },
       "checkConstraints": {
@@ -2627,19 +2365,12 @@
     "public.alliance_status": {
       "name": "alliance_status",
       "schema": "public",
-      "values": [
-        "requested",
-        "pre_partner",
-        "partner"
-      ]
+      "values": ["requested", "pre_partner", "partner"]
     },
     "public.follow_status": {
       "name": "follow_status",
       "schema": "public",
-      "values": [
-        "watch",
-        "follow"
-      ]
+      "values": ["watch", "follow"]
     }
   },
   "schemas": {

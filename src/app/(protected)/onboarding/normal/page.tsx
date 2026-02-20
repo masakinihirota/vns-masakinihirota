@@ -1,6 +1,6 @@
+import { redirect } from "next/navigation";
 import { OnboardingNormalForm } from "@/components/onboarding-pc/onboarding-normal-form";
 import { getSession } from "@/lib/auth/helper";
-import { redirect } from "next/navigation";
 
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };

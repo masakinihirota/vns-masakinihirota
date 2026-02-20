@@ -1,8 +1,8 @@
-import { auth } from "@/lib/auth";
-import { createClient } from "@/lib/supabase/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { auth } from "@/lib/auth";
+import { createClient } from "@/lib/supabase/server";
 
 const WorkSchema = z.object({
   title: z.string().min(1, "Title is required").max(100),

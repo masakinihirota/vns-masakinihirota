@@ -24,7 +24,7 @@ async function checkDDL() {
         FROM information_schema.columns
         WHERE table_name = 'root_accounts';
     `);
-    cols.forEach(c => log(`${c.column_name}: ${c.data_type}`));
+    cols.forEach((c) => log(`${c.column_name}: ${c.data_type}`));
 
     // 2. Indexes
     log("\n--- Indexes ---");
@@ -33,7 +33,7 @@ async function checkDDL() {
         FROM pg_indexes
         WHERE tablename = 'root_accounts';
     `);
-    indexes.forEach(i => log(`${i.indexname}: ${i.indexdef}`));
+    indexes.forEach((i) => log(`${i.indexname}: ${i.indexdef}`));
 
     // 3. Constraints
     log("\n--- Constraints ---");
@@ -42,8 +42,7 @@ async function checkDDL() {
         FROM pg_constraint
         WHERE conrelid = 'root_accounts'::regclass;
     `);
-    constraints.forEach(c => log(`${c.conname}: ${c.def}`));
-
+    constraints.forEach((c) => log(`${c.conname}: ${c.def}`));
   } catch (e) {
     log("Error: " + e.message);
   } finally {

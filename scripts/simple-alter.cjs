@@ -16,14 +16,15 @@ async function simpleAlter() {
     `);
     console.log(`Current type: ${cols[0]?.data_type}`);
 
-    if (cols[0]?.data_type === 'uuid') {
+    if (cols[0]?.data_type === "uuid") {
       console.log("Executing ALTER COLUMN...");
-      await sql.unsafe(`ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`);
+      await sql.unsafe(
+        `ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`
+      );
       console.log("Success: Column altered to text.");
     } else {
       console.log("Already text (or other type).");
     }
-
   } catch (e) {
     console.error("Error:", e);
   } finally {

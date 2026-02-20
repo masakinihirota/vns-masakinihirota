@@ -4,18 +4,18 @@
  */
 
 import "@testing-library/jest-dom";
+import "vitest-axe/extend-expect";
 import { expect, vi } from "vitest";
 import { type AxeMatchers } from "vitest-axe";
-import "vitest-axe/extend-expect";
 import * as matchers from "vitest-axe/matchers";
 
 expect.extend(matchers);
 
 declare module "vitest" {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-object-type
-  export interface Assertion extends AxeMatchers { }
+  export interface Assertion extends AxeMatchers {}
   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-  export interface AsymmetricMatchersContaining extends AxeMatchers { }
+  export interface AsymmetricMatchersContaining extends AxeMatchers {}
 }
 
 // next/fontのモック
@@ -31,7 +31,7 @@ vi.mock("next/font/google", () => ({
 }));
 
 global.ResizeObserver = class ResizeObserver {
-  observe() { }
-  unobserve() { }
-  disconnect() { }
+  observe() {}
+  unobserve() {}
+  disconnect() {}
 };

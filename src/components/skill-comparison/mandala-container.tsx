@@ -28,7 +28,9 @@ export const MandalaContainer: React.FC = () => {
   const [interactions, setInteractions] = useState<
     Record<string | number, { followed: boolean; watched: boolean }>
   >({});
-  const [lastLog, setLastLog] = useState<string>("スキル同期プロトコル オンライン");
+  const [lastLog, setLastLog] = useState<string>(
+    "スキル同期プロトコル オンライン"
+  );
 
   // メモ化されたデータ
   const currentMe = useMemo(
@@ -120,10 +122,11 @@ export const MandalaContainer: React.FC = () => {
               <button
                 key={p.id}
                 onClick={() => setSelectedMyId(p.id)}
-                className={`w-full p-4 rounded-xl text-left border transition-all duration-200 ${selectedMyId === p.id
-                  ? "bg-indigo-600 border-indigo-400 shadow-lg"
-                  : "bg-slate-900 border-slate-800 hover:border-slate-700 text-slate-400"
-                  }`}
+                className={`w-full p-4 rounded-xl text-left border transition-all duration-200 ${
+                  selectedMyId === p.id
+                    ? "bg-indigo-600 border-indigo-400 shadow-lg"
+                    : "bg-slate-900 border-slate-800 hover:border-slate-700 text-slate-400"
+                }`}
               >
                 <div
                   className={`text-sm font-black uppercase tracking-tighter ${selectedMyId === p.id ? "text-white" : ""}`}
@@ -146,7 +149,9 @@ export const MandalaContainer: React.FC = () => {
             <button
               onClick={toggleSort}
               className="flex items-center space-x-2 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 rounded text-[10px] font-black text-slate-600 transition-colors"
-              aria-label={sortOrder === "desc" ? "降順でソート" : "昇順でソート"}
+              aria-label={
+                sortOrder === "desc" ? "降順でソート" : "昇順でソート"
+              }
             >
               {sortOrder === "desc" ? (
                 <LucideIcons.SortDesc size={14} />
@@ -303,7 +308,9 @@ export const MandalaContainer: React.FC = () => {
               <button
                 onClick={toggleSort}
                 className="bg-indigo-600 text-white p-2 rounded shadow-md ring-2 ring-indigo-50"
-                aria-label={sortOrder === "desc" ? "降順でソート" : "昇順でソート"}
+                aria-label={
+                  sortOrder === "desc" ? "降順でソート" : "昇順でソート"
+                }
               >
                 {sortOrder === "desc" ? (
                   <LucideIcons.SortDesc size={18} />

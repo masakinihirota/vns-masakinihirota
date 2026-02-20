@@ -18,10 +18,16 @@ async function checkAndFixRootAccounts() {
     `);
 
     if (columns.length > 0) {
-      console.log("Current auth_user_id type:", columns[0].data_type, columns[0].udt_name);
+      console.log(
+        "Current auth_user_id type:",
+        columns[0].data_type,
+        columns[0].udt_name
+      );
 
-      if (columns[0].data_type === 'uuid') {
-        console.log("Type mismatch detected! Converting auth_user_id from UUID to TEXT...");
+      if (columns[0].data_type === "uuid") {
+        console.log(
+          "Type mismatch detected! Converting auth_user_id from UUID to TEXT..."
+        );
 
         // 外部キー制約の確認と削除
         const fkeys = await sql.unsafe(`
@@ -32,13 +38,17 @@ async function checkAndFixRootAccounts() {
 
         for (const fk of fkeys) {
           console.log(`Dropping FK: ${fk.conname}`);
-          await sql.unsafe(`ALTER TABLE root_accounts DROP CONSTRAINT "${fk.conname}"`);
+          await sql.unsafe(
+            `ALTER TABLE root_accounts DROP CONSTRAINT "${fk.conname}"`
+          );
         }
 
         // 型変換 (データが既にある場合は空にするか、変換を試みる)
         // ここでは安全のため、既存データを保持しつつ型変更を試みる (UUID -> TEXT は可能)
         console.log("Altering column type...");
-        await sql.unsafe(`ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`);
+        await sql.unsafe(
+          `ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`
+        );
 
         // 新しい外部キー制約を追加 (public.user へ)
         console.log("Adding new FK to public.user...");
@@ -73,10 +83,18 @@ async function checkAndFixRootAccounts() {
         console.log("Current FKs:", fkeys);
 
         // もしFKが auth.users を向いていたら修正
-        const badFk = fkeys.find(fk => fk.foreign_table_schema === 'auth' && fk.foreign_table_name === 'users');
+        const badFk = fkeys.find(
+          (fk) =>
+            fk.foreign_table_schema === "auth" &&
+            fk.foreign_table_name === "users"
+        );
         if (badFk) {
-          console.log(`Bad FK detected: ${badFk.constraint_name} -> auth.users. Fixing...`);
-          await sql.unsafe(`ALTER TABLE root_accounts DROP CONSTRAINT "${badFk.constraint_name}"`);
+          console.log(
+            `Bad FK detected: ${badFk.constraint_name} -> auth.users. Fixing...`
+          );
+          await sql.unsafe(
+            `ALTER TABLE root_accounts DROP CONSTRAINT "${badFk.constraint_name}"`
+          );
           await sql.unsafe(`
                 ALTER TABLE root_accounts
                 ADD CONSTRAINT root_accounts_auth_user_id_fkey
@@ -88,7 +106,6 @@ async function checkAndFixRootAccounts() {
     } else {
       console.log("root_accounts or auth_user_id not found.");
     }
-
   } catch (e) {
     console.error("Error:", e.message);
   } finally {

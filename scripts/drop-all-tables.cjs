@@ -19,7 +19,9 @@ async function dropAllTables() {
 
     for (const t of tables) {
       console.log(`Dropping table: ${t.tablename}`);
-      await sql.unsafe(`DROP TABLE IF EXISTS "public"."${t.tablename}" CASCADE`);
+      await sql.unsafe(
+        `DROP TABLE IF EXISTS "public"."${t.tablename}" CASCADE`
+      );
     }
 
     console.log("All tables dropped.");

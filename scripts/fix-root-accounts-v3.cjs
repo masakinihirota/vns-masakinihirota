@@ -11,9 +11,13 @@ async function fixRootAccountsV3() {
     console.log("Starting fixRootAccountsV3...");
 
     // 1. Drop Unique Constraint / Index
-    console.log("Dropping UNIQUE constraint 'root_accounts_auth_user_id_key'...");
+    console.log(
+      "Dropping UNIQUE constraint 'root_accounts_auth_user_id_key'..."
+    );
     try {
-      await sql.unsafe(`ALTER TABLE root_accounts DROP CONSTRAINT IF EXISTS "root_accounts_auth_user_id_key"`);
+      await sql.unsafe(
+        `ALTER TABLE root_accounts DROP CONSTRAINT IF EXISTS "root_accounts_auth_user_id_key"`
+      );
       // インデックスとしても存在する可能性があるため、念のためインデックスも削除試行
       // (CONSTRAINT削除で消えているはずだが)
       await sql.unsafe(`DROP INDEX IF EXISTS "root_accounts_auth_user_id_key"`);
@@ -36,12 +40,16 @@ async function fixRootAccountsV3() {
 
     for (const fk of fks) {
       console.log(`Dropping FK: ${fk.constraint_name}`);
-      await sql.unsafe(`ALTER TABLE root_accounts DROP CONSTRAINT "${fk.constraint_name}"`);
+      await sql.unsafe(
+        `ALTER TABLE root_accounts DROP CONSTRAINT "${fk.constraint_name}"`
+      );
     }
 
     // 3. Alter Column Type to text
     console.log("Altering column type to text...");
-    await sql.unsafe(`ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`);
+    await sql.unsafe(
+      `ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`
+    );
     console.log("Column type altered.");
 
     // 4. Cleanup Orphans (Better-Auth migration strategy: remove old data)
@@ -73,7 +81,6 @@ async function fixRootAccountsV3() {
     console.log("UNIQUE constraint restored.");
 
     console.log("All fixes completed successfully.");
-
   } catch (e) {
     console.error("Error:", e);
   } finally {

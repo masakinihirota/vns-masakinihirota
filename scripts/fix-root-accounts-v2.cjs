@@ -39,14 +39,18 @@ async function fixRootAccounts() {
 
     for (const fk of fks) {
       console.log(`Dropping FK: ${fk.constraint_name}`);
-      await sql.unsafe(`ALTER TABLE root_accounts DROP CONSTRAINT "${fk.constraint_name}"`);
+      await sql.unsafe(
+        `ALTER TABLE root_accounts DROP CONSTRAINT "${fk.constraint_name}"`
+      );
     }
 
     // 3. Alter Column Type to text if needed
-    if (currentType !== 'text' && currentType !== 'character varying') {
+    if (currentType !== "text" && currentType !== "character varying") {
       console.log("Altering column type to text...");
       // UUID -> Text conversion is safe
-      await sql.unsafe(`ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`);
+      await sql.unsafe(
+        `ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`
+      );
     } else {
       console.log("Column type is already text-compatible.");
     }
@@ -61,9 +65,14 @@ async function fixRootAccounts() {
       `);
       console.log("New FK added successfully.");
     } catch (e) {
-      if (e.code === '23503') { // foreign_key_violation
-        console.error("FK Violation detected! There are auth_user_ids in root_accounts that do not exist in public.user.");
-        console.log("Deleting orphaned records from root_accounts (and cascading)...");
+      if (e.code === "23503") {
+        // foreign_key_violation
+        console.error(
+          "FK Violation detected! There are auth_user_ids in root_accounts that do not exist in public.user."
+        );
+        console.log(
+          "Deleting orphaned records from root_accounts (and cascading)..."
+        );
         // Remove orphans
         await sql.unsafe(`
           DELETE FROM root_accounts
@@ -82,7 +91,6 @@ async function fixRootAccounts() {
     }
 
     console.log("Fix completed.");
-
   } catch (e) {
     console.error("Error:", e);
   } finally {

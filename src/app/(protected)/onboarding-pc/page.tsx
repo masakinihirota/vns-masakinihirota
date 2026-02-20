@@ -1,6 +1,6 @@
+import { redirect } from "next/navigation";
 import { OnboardingPCForm } from "@/components/onboarding-pc";
 import { getSession } from "@/lib/auth/helper";
-import { redirect } from "next/navigation";
 
 export default async function OnboardingPCPage() {
   const session = await getSession();
