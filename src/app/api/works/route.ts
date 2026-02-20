@@ -1,6 +1,8 @@
+import { auth } from "@/lib/auth";
+import { createClient } from "@/lib/supabase/server";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { createClient } from "@/lib/supabase/server";
 
 const WorkSchema = z.object({
   title: z.string().min(1, "Title is required").max(100),
@@ -10,14 +12,16 @@ const WorkSchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Better-Auth による認証チェック
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  if (!user) {
+  if (!session?.user) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
+
+  const supabase = await createClient();
 
   try {
     const json = await request.json();
@@ -40,7 +44,7 @@ export async function POST(request: Request) {
       author,
       category,
       description: description || null,
-      owner_user_id: user.id,
+      owner_user_id: session.user.id,
       is_official: false,
       status: "pending",
     });

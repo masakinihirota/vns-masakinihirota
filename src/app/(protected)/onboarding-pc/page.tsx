@@ -1,20 +1,17 @@
-import { redirect } from "next/navigation";
 import { OnboardingPCForm } from "@/components/onboarding-pc";
-import { createClient } from "@/lib/supabase/server";
+import { getSession } from "@/lib/auth/helper";
+import { redirect } from "next/navigation";
 
 export default async function OnboardingPCPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const session = await getSession();
 
-  if (!user) {
+  if (!session?.user) {
     redirect("/login");
   }
 
   return (
     <div className="container mx-auto py-10">
-      <OnboardingPCForm userId={user.id} />
+      <OnboardingPCForm userId={session.user.id} />
     </div>
   );
 }

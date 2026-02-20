@@ -1,18 +1,19 @@
 CREATE TYPE "public"."alliance_status" AS ENUM('requested', 'pre_partner', 'partner');--> statement-breakpoint
 CREATE TYPE "public"."follow_status" AS ENUM('watch', 'follow');--> statement-breakpoint
-CREATE TABLE "accounts" (
-	"userId" uuid NOT NULL,
-	"type" text NOT NULL,
-	"provider" text NOT NULL,
-	"providerAccountId" text NOT NULL,
-	"refresh_token" text,
-	"access_token" text,
-	"expires_at" integer,
-	"token_type" text,
+CREATE TABLE "account" (
+	"id" text PRIMARY KEY NOT NULL,
+	"accountId" text NOT NULL,
+	"providerId" text NOT NULL,
+	"userId" text NOT NULL,
+	"accessToken" text,
+	"refreshToken" text,
+	"idToken" text,
+	"accessTokenExpiresAt" timestamp,
+	"refreshTokenExpiresAt" timestamp,
 	"scope" text,
-	"id_token" text,
-	"session_state" text,
-	CONSTRAINT "accounts_provider_providerAccountId_pk" PRIMARY KEY("provider","providerAccountId")
+	"password" text,
+	"createdAt" timestamp NOT NULL,
+	"updatedAt" timestamp NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "alliances" (
@@ -201,7 +202,7 @@ CREATE TABLE "point_transactions" (
 --> statement-breakpoint
 CREATE TABLE "root_accounts" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"auth_user_id" uuid NOT NULL,
+	"auth_user_id" text NOT NULL,
 	"points" integer DEFAULT 3000 NOT NULL,
 	"level" integer DEFAULT 1 NOT NULL,
 	"trust_days" integer DEFAULT 0 NOT NULL,
@@ -214,10 +215,16 @@ CREATE TABLE "root_accounts" (
 	CONSTRAINT "root_accounts_trust_days_check" CHECK (trust_days >= 0)
 );
 --> statement-breakpoint
-CREATE TABLE "sessions" (
-	"sessionToken" text PRIMARY KEY NOT NULL,
-	"userId" uuid NOT NULL,
-	"expires" timestamp NOT NULL
+CREATE TABLE "session" (
+	"id" text PRIMARY KEY NOT NULL,
+	"expiresAt" timestamp NOT NULL,
+	"token" text NOT NULL,
+	"createdAt" timestamp NOT NULL,
+	"updatedAt" timestamp NOT NULL,
+	"ipAddress" text,
+	"userAgent" text,
+	"userId" text NOT NULL,
+	CONSTRAINT "session_token_unique" UNIQUE("token")
 );
 --> statement-breakpoint
 CREATE TABLE "user_profiles" (
@@ -228,13 +235,19 @@ CREATE TABLE "user_profiles" (
 	"role_type" text DEFAULT 'member' NOT NULL,
 	"is_active" boolean DEFAULT true NOT NULL,
 	"last_interacted_record_id" uuid,
+	"profile_format" text DEFAULT 'profile',
+	"role" text DEFAULT 'member',
+	"purposes" text[] DEFAULT '{}',
+	"profile_type" text DEFAULT 'self',
+	"avatar_url" text,
+	"external_links" jsonb,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
 	CONSTRAINT "role_type_check" CHECK (role_type = ANY (ARRAY['leader'::text, 'member'::text, 'admin'::text, 'mediator'::text]))
 );
 --> statement-breakpoint
 CREATE TABLE "user_work_entries" (
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"work_id" uuid NOT NULL,
 	"status" text NOT NULL,
 	"tier" integer,
@@ -246,7 +259,7 @@ CREATE TABLE "user_work_entries" (
 );
 --> statement-breakpoint
 CREATE TABLE "user_work_ratings" (
-	"user_id" uuid NOT NULL,
+	"user_id" text NOT NULL,
 	"work_id" uuid NOT NULL,
 	"rating" text NOT NULL,
 	"last_tier" text,
@@ -255,20 +268,25 @@ CREATE TABLE "user_work_ratings" (
 	CONSTRAINT "user_work_ratings_pkey" PRIMARY KEY("user_id","work_id")
 );
 --> statement-breakpoint
-CREATE TABLE "users" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"name" text,
-	"email" text,
-	"emailVerified" timestamp,
+CREATE TABLE "user" (
+	"id" text PRIMARY KEY NOT NULL,
+	"name" text NOT NULL,
+	"email" text NOT NULL,
+	"emailVerified" boolean NOT NULL,
 	"image" text,
-	CONSTRAINT "users_email_unique" UNIQUE("email")
+	"is_anonymous" boolean DEFAULT false,
+	"createdAt" timestamp NOT NULL,
+	"updatedAt" timestamp NOT NULL,
+	CONSTRAINT "user_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
-CREATE TABLE "verificationToken" (
+CREATE TABLE "verification" (
+	"id" text PRIMARY KEY NOT NULL,
 	"identifier" text NOT NULL,
-	"token" text NOT NULL,
-	"expires" timestamp NOT NULL,
-	CONSTRAINT "verificationToken_identifier_token_pk" PRIMARY KEY("identifier","token")
+	"value" text NOT NULL,
+	"expiresAt" timestamp NOT NULL,
+	"createdAt" timestamp,
+	"updatedAt" timestamp
 );
 --> statement-breakpoint
 CREATE TABLE "works" (
@@ -277,7 +295,7 @@ CREATE TABLE "works" (
 	"author" text,
 	"category" text NOT NULL,
 	"is_official" boolean DEFAULT false NOT NULL,
-	"owner_user_id" uuid,
+	"owner_user_id" text,
 	"status" text DEFAULT 'pending' NOT NULL,
 	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
 	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
@@ -293,7 +311,7 @@ CREATE TABLE "works" (
 	CONSTRAINT "works_scale_check" CHECK (scale = ANY (ARRAY['half_day'::text, 'one_day'::text, 'one_week'::text, 'one_month'::text, 'one_cour'::text, 'long_term'::text]))
 );
 --> statement-breakpoint
-ALTER TABLE "accounts" ADD CONSTRAINT "accounts_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "account" ADD CONSTRAINT "account_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "alliances" ADD CONSTRAINT "alliances_profile_a_id_fkey" FOREIGN KEY ("profile_a_id") REFERENCES "public"."user_profiles"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "alliances" ADD CONSTRAINT "alliances_profile_b_id_fkey" FOREIGN KEY ("profile_b_id") REFERENCES "public"."user_profiles"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "business_cards" ADD CONSTRAINT "business_cards_user_profile_id_fkey" FOREIGN KEY ("user_profile_id") REFERENCES "public"."user_profiles"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
@@ -323,22 +341,22 @@ ALTER TABLE "nations" ADD CONSTRAINT "nations_owner_user_id_fkey" FOREIGN KEY ("
 ALTER TABLE "nations" ADD CONSTRAINT "nations_owner_group_id_fkey" FOREIGN KEY ("owner_group_id") REFERENCES "public"."groups"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "notifications" ADD CONSTRAINT "notifications_user_profile_id_fkey" FOREIGN KEY ("user_profile_id") REFERENCES "public"."user_profiles"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "point_transactions" ADD CONSTRAINT "point_transactions_root_account_id_fkey" FOREIGN KEY ("root_account_id") REFERENCES "public"."root_accounts"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "root_accounts" ADD CONSTRAINT "root_accounts_auth_user_id_fkey" FOREIGN KEY ("auth_user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "sessions" ADD CONSTRAINT "sessions_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "root_accounts" ADD CONSTRAINT "root_accounts_auth_user_id_fkey" FOREIGN KEY ("auth_user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "session" ADD CONSTRAINT "session_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_profiles" ADD CONSTRAINT "user_profiles_root_account_id_fkey" FOREIGN KEY ("root_account_id") REFERENCES "public"."root_accounts"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "user_work_entries" ADD CONSTRAINT "user_work_entries_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "user_work_entries" ADD CONSTRAINT "user_work_entries_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_work_entries" ADD CONSTRAINT "user_work_entries_work_id_fkey" FOREIGN KEY ("work_id") REFERENCES "public"."works"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "user_work_ratings" ADD CONSTRAINT "user_work_ratings_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "user_work_ratings" ADD CONSTRAINT "user_work_ratings_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."user"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "user_work_ratings" ADD CONSTRAINT "user_work_ratings_work_id_fkey" FOREIGN KEY ("work_id") REFERENCES "public"."works"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
-ALTER TABLE "works" ADD CONSTRAINT "works_owner_user_id_fkey" FOREIGN KEY ("owner_user_id") REFERENCES "public"."users"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "works" ADD CONSTRAINT "works_owner_user_id_fkey" FOREIGN KEY ("owner_user_id") REFERENCES "public"."user"("id") ON DELETE set null ON UPDATE no action;--> statement-breakpoint
 CREATE INDEX "idx_alliances_profile_a" ON "alliances" USING btree ("profile_a_id" uuid_ops);--> statement-breakpoint
 CREATE INDEX "idx_alliances_profile_b" ON "alliances" USING btree ("profile_b_id" uuid_ops);--> statement-breakpoint
 CREATE INDEX "business_cards_user_profile_id_idx" ON "business_cards" USING btree ("user_profile_id" uuid_ops);--> statement-breakpoint
 CREATE INDEX "idx_follows_followed_profile" ON "follows" USING btree ("followed_profile_id" uuid_ops);--> statement-breakpoint
 CREATE INDEX "idx_follows_follower_profile" ON "follows" USING btree ("follower_profile_id" uuid_ops);--> statement-breakpoint
-CREATE INDEX "idx_notifications_user_profile_id_is_read" ON "notifications" USING btree ("user_profile_id" bool_ops,"is_read" bool_ops);--> statement-breakpoint
+CREATE INDEX "idx_notifications_user_profile_id_is_read" ON "notifications" USING btree ("user_profile_id" uuid_ops,"is_read" bool_ops);--> statement-breakpoint
 CREATE INDEX "idx_point_transactions_root_account" ON "point_transactions" USING btree ("root_account_id" uuid_ops);--> statement-breakpoint
 CREATE INDEX "idx_user_profiles_root_account_id" ON "user_profiles" USING btree ("root_account_id" uuid_ops);--> statement-breakpoint
-CREATE INDEX "idx_user_work_entries_user_work" ON "user_work_entries" USING btree ("user_id" uuid_ops,"work_id" uuid_ops);--> statement-breakpoint
-CREATE INDEX "idx_user_work_ratings_user_work" ON "user_work_ratings" USING btree ("user_id" uuid_ops,"work_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_user_work_entries_user_work" ON "user_work_entries" USING btree ("user_id" text_ops,"work_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_user_work_ratings_user_work" ON "user_work_ratings" USING btree ("user_id" text_ops,"work_id" uuid_ops);--> statement-breakpoint
 CREATE INDEX "idx_works_owner_status" ON "works" USING btree ("owner_user_id" text_ops,"status" text_ops);

@@ -20,7 +20,9 @@ describe("profile-creation-1000masks validation", () => {
     const result = validateProfile({ ...validProfile, name: "" });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.flatten().fieldErrors.name).toContain("名前を入力してください");
+      expect(result.error.flatten().fieldErrors.name).toContain(
+        "名前を入力してください"
+      );
     }
   });
 
@@ -28,15 +30,22 @@ describe("profile-creation-1000masks validation", () => {
     const result = validateProfile({ ...validProfile, selectedTypeId: null });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.flatten().fieldErrors.selectedTypeId).toContain("プロフィールのタイプを選択してください");
+      expect(result.error.flatten().fieldErrors.selectedTypeId).toContain(
+        "プロフィールのタイプを選択してください"
+      );
     }
   });
 
   it("目的が未選択の場合はエラーを返す", () => {
-    const result = validateProfile({ ...validProfile, selectedObjectiveIds: [] });
+    const result = validateProfile({
+      ...validProfile,
+      selectedObjectiveIds: [],
+    });
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.flatten().fieldErrors.selectedObjectiveIds).toContain("プロフィールの目的を1つ以上選択してください");
+      expect(result.error.flatten().fieldErrors.selectedObjectiveIds).toContain(
+        "プロフィールの目的を1つ以上選択してください"
+      );
     }
   });
 });

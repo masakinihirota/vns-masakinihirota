@@ -1,0 +1,808 @@
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-ddl.cjs:13:5]
+ 12 |   const log = (msg) => {
+ 13 |     console.log(msg);
+    :     ^^^^^^^^^^^
+ 14 |     fs.appendFileSync(logFile, msg + "\n");
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-all-constraints.cjs:13:5]
+ 12 |   const log = (msg) => {
+ 13 |     console.log(msg);
+    :     ^^^^^^^^^^^
+ 14 |     fs.appendFileSync(logFile, msg + "\n");
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-deps-log.cjs:13:5]
+ 12 |   const log = (msg) => {
+ 13 |     console.log(msg);
+    :     ^^^^^^^^^^^
+ 14 |     fs.appendFileSync(logFile, msg + "\n");
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-deps.cjs:11:5]
+ 10 |   try {
+ 11 |     console.log("Checking dependencies for root_accounts.auth_user_id...");
+    :     ^^^^^^^^^^^
+ 12 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-deps.cjs:24:5]
+ 23 |     `);
+ 24 |     console.log("Foreign Keys:", fks);
+    :     ^^^^^^^^^^^
+ 25 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-deps.cjs:45:5]
+ 44 |     `);
+ 45 |     console.log("Views depends on column:", views);
+    :     ^^^^^^^^^^^
+ 46 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-deps.cjs:67:5]
+ 66 |     `);
+ 67 |     console.log("Indexes/Constraints:", indexes);
+    :     ^^^^^^^^^^^
+ 68 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-tables.cjs:18:5]
+ 17 |     `);
+ 18 |     console.log("=== public スキーマのテーブル一覧 ===");
+    :     ^^^^^^^^^^^
+ 19 |     tables.forEach((t) => console.log(`  ${t.table_schema}.${t.table_name}`));
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-tables.cjs:19:27]
+ 18 |     console.log("=== public スキーマのテーブル一覧 ===");
+ 19 |     tables.forEach((t) => console.log(`  ${t.table_schema}.${t.table_name}`));
+    :                           ^^^^^^^^^^^
+ 20 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-tables.cjs:28:5]
+ 27 |     `);
+ 28 |     console.log("\n=== Better-Auth 関連テーブル ===");
+    :     ^^^^^^^^^^^
+ 29 |     userTables.forEach((t) =>
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/check-tables.cjs:30:7]
+ 29 |     userTables.forEach((t) =>
+ 30 |       console.log(`  ${t.table_schema}.${t.table_name}`)
+    :       ^^^^^^^^^^^
+ 31 |     );
+    `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Variable 'T' is declared but never used. Unused variables should start with a '_'.
+    ,-[tests/setup.ts:16:30]
+ 15 |   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-object-type
+ 16 |   export interface Assertion<T = any> extends AxeMatchers {}
+    :                              |
+    :                              `-- 'T' is declared here
+ 17 |   // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    `----
+  help: Consider removing this declaration.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/verify_db_fixes.ts:33:3]
+ 32 | async function runTests() {
+ 33 |   console.log("Starting DB Antipattern Fix Verification...");
+    :   ^^^^^^^^^^^
+ 34 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/verify_db_fixes.ts:36:3]
+ 35 |   // 1. Setup Test Users
+ 36 |   console.log("Setting up test users...");
+    :   ^^^^^^^^^^^
+ 37 |   const emailA = `test_a_${Date.now()}@example.com`;
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/verify_db_fixes.ts:54:3]
+ 53 | 
+ 54 |   console.log(`Created users: A(${userA.user.id}), B(${userB.user.id})`);
+    :   ^^^^^^^^^^^
+ 55 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/verify_db_fixes.ts:75:3]
+ 74 |   // 2. Test: Secure create_group_with_leader (Atomic)
+ 75 |   console.log("\n[Test] Atomic Group Creation...");
+    :   ^^^^^^^^^^^
+ 76 |   const { data: groupA, error: groupError } = await clientA.rpc(
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/verify_db_fixes.ts:88:5]
+ 87 |   } else {
+ 88 |     console.log("✅ Group created via RPC:", groupA.id);
+    :     ^^^^^^^^^^^
+ 89 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[scripts/verify_db_fixes.ts:99:7]
+  98 |     if (member && member.role === "leader") {
+  99 |       console.log("✅ Leader correctly added to group_members");
+     :       ^^^^^^^^^^^
+ 100 |     } else {
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[scripts/verify_db_fixes.ts:106:3]
+ 105 |   // 3. Test: Security Check in create_group_with_leader (Impersonation)
+ 106 |   console.log("\n[Test] Security Check: Impersonation in Group Creation...");
+     :   ^^^^^^^^^^^
+ 107 |   const { error: impError } = await clientA.rpc("create_group_with_leader", {
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[scripts/verify_db_fixes.ts:113:5]
+ 112 |   if (impError && impError.message.includes("Unauthorized")) {
+ 113 |     console.log("✅ Correctly rejected impersonation attempt");
+     :     ^^^^^^^^^^^
+ 114 |   } else {
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[scripts/verify_db_fixes.ts:119:3]
+ 118 |   // 4. Test: Nation Posts Constraint
+ 119 |   console.log("\n[Test] Nation Posts Exclusive Arc Constraint...");
+     :   ^^^^^^^^^^^
+ 120 |   // Create a nation first (need points, so giving points to root account)
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[scripts/verify_db_fixes.ts:153:5]
+ 152 |   if (postError && postError.message.includes("check_author_exclusive")) {
+ 153 |     console.log("✅ Correctly rejected post with both authors set");
+     :     ^^^^^^^^^^^
+ 154 |   } else {
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[scripts/verify_db_fixes.ts:159:3]
+ 158 |   // Cleanup
+ 159 |   console.log("\nCleaning up...");
+     :   ^^^^^^^^^^^
+ 160 |   await adminClient.auth.admin.deleteUser(userA.user.id);
+     `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+     ,-[scripts/verify_db_fixes.ts:162:3]
+ 161 |   await adminClient.auth.admin.deleteUser(userB.user.id);
+ 162 |   console.log("Done.");
+     :   ^^^^^^^^^^^
+ 163 | }
+     `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Variable 'sessionB' is declared but never used. Unused variables should start with a '_'.
+    ,-[scripts/verify_db_fixes.ts:64:22]
+ 63 |   const {
+ 64 |     data: { session: sessionB },
+    :                      ^^^^|^^^
+    :                          `-- 'sessionB' is declared here
+ 65 |   } = await adminClient.auth.signInWithPassword({
+    `----
+  help: Consider removing this declaration.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/simple-alter.cjs:11:5]
+ 10 |   try {
+ 11 |     console.log("Checking current type...");
+    :     ^^^^^^^^^^^
+ 12 |     const cols = await sql.unsafe(`
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/simple-alter.cjs:17:5]
+ 16 |     `);
+ 17 |     console.log(`Current type: ${cols[0]?.data_type}`);
+    :     ^^^^^^^^^^^
+ 18 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/simple-alter.cjs:20:7]
+ 19 |     if (cols[0]?.data_type === 'uuid') {
+ 20 |       console.log("Executing ALTER COLUMN...");
+    :       ^^^^^^^^^^^
+ 21 |       await sql.unsafe(`ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/simple-alter.cjs:22:7]
+ 21 |       await sql.unsafe(`ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`);
+ 22 |       console.log("Success: Column altered to text.");
+    :       ^^^^^^^^^^^
+ 23 |     } else {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/simple-alter.cjs:24:7]
+ 23 |     } else {
+ 24 |       console.log("Already text (or other type).");
+    :       ^^^^^^^^^^^
+ 25 |     }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/recreate-root-accounts.cjs:11:5]
+ 10 |   try {
+ 11 |     console.log("Dropping root_accounts table (CASCADE)...");
+    :     ^^^^^^^^^^^
+ 12 |     await sql.unsafe(`DROP TABLE IF EXISTS "root_accounts" CASCADE`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/recreate-root-accounts.cjs:13:5]
+ 12 |     await sql.unsafe(`DROP TABLE IF EXISTS "root_accounts" CASCADE`);
+ 13 |     console.log("Dropped root_accounts and dependents.");
+    :     ^^^^^^^^^^^
+ 14 |   } catch (e) {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/migrate.cjs:17:5]
+ 16 |   try {
+ 17 |     console.log("Running migrations...");
+    :     ^^^^^^^^^^^
+ 18 |     await migrate(db, { migrationsFolder: "drizzle/migrations" });
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/migrate.cjs:19:5]
+ 18 |     await migrate(db, { migrationsFolder: "drizzle/migrations" });
+ 19 |     console.log("Migrations complete!");
+    :     ^^^^^^^^^^^
+ 20 |   } catch (error) {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:11:5]
+ 10 |   try {
+ 11 |     console.log("Checking root_accounts table structure...");
+    :     ^^^^^^^^^^^
+ 12 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:21:7]
+ 20 |     if (columns.length > 0) {
+ 21 |       console.log("Current auth_user_id type:", columns[0].data_type, columns[0].udt_name);
+    :       ^^^^^^^^^^^
+ 22 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:24:9]
+ 23 |       if (columns[0].data_type === 'uuid') {
+ 24 |         console.log("Type mismatch detected! Converting auth_user_id from UUID to TEXT...");
+    :         ^^^^^^^^^^^
+ 25 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:34:11]
+ 33 |         for (const fk of fkeys) {
+ 34 |           console.log(`Dropping FK: ${fk.conname}`);
+    :           ^^^^^^^^^^^
+ 35 |           await sql.unsafe(`ALTER TABLE root_accounts DROP CONSTRAINT "${fk.conname}"`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:40:9]
+ 39 |         // ここでは安全のため、既存データを保持しつつ型変更を試みる (UUID -> TEXT は可能)
+ 40 |         console.log("Altering column type...");
+    :         ^^^^^^^^^^^
+ 41 |         await sql.unsafe(`ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:44:9]
+ 43 |         // 新しい外部キー制約を追加 (public.user へ)
+ 44 |         console.log("Adding new FK to public.user...");
+    :         ^^^^^^^^^^^
+ 45 |         await sql.unsafe(`
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:51:9]
+ 50 | 
+ 51 |         console.log("Fix completed successfully.");
+    :         ^^^^^^^^^^^
+ 52 |       } else {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:53:9]
+ 52 |       } else {
+ 53 |         console.log("Column type is already correct (text/varchar).");
+    :         ^^^^^^^^^^^
+ 54 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:73:9]
+ 72 | 
+ 73 |         console.log("Current FKs:", fkeys);
+    :         ^^^^^^^^^^^
+ 74 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:78:11]
+ 77 |         if (badFk) {
+ 78 |           console.log(`Bad FK detected: ${badFk.constraint_name} -> auth.users. Fixing...`);
+    :           ^^^^^^^^^^^
+ 79 |           await sql.unsafe(`ALTER TABLE root_accounts DROP CONSTRAINT "${badFk.constraint_name}"`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:85:11]
+ 84 |             `);
+ 85 |           console.log("FK fixed.");
+    :           ^^^^^^^^^^^
+ 86 |         }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts.cjs:89:7]
+ 88 |     } else {
+ 89 |       console.log("root_accounts or auth_user_id not found.");
+    :       ^^^^^^^^^^^
+ 90 |     }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:11:5]
+ 10 |   try {
+ 11 |     console.log("Starting fixRootAccountsV3...");
+    :     ^^^^^^^^^^^
+ 12 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:14:5]
+ 13 |     // 1. Drop Unique Constraint / Index
+ 14 |     console.log("Dropping UNIQUE constraint 'root_accounts_auth_user_id_key'...");
+    :     ^^^^^^^^^^^
+ 15 |     try {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:20:7]
+ 19 |       await sql.unsafe(`DROP INDEX IF EXISTS "root_accounts_auth_user_id_key"`);
+ 20 |       console.log("UNIQUE constraint/index dropped.");
+    :       ^^^^^^^^^^^
+ 21 |     } catch (e) {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:22:7]
+ 21 |     } catch (e) {
+ 22 |       console.log("Note: " + e.message);
+    :       ^^^^^^^^^^^
+ 23 |     }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:26:5]
+ 25 |     // 2. Drop existing FKs on auth_user_id
+ 26 |     console.log("Dropping related Foreign Keys...");
+    :     ^^^^^^^^^^^
+ 27 |     const fks = await sql.unsafe(`
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:38:7]
+ 37 |     for (const fk of fks) {
+ 38 |       console.log(`Dropping FK: ${fk.constraint_name}`);
+    :       ^^^^^^^^^^^
+ 39 |       await sql.unsafe(`ALTER TABLE root_accounts DROP CONSTRAINT "${fk.constraint_name}"`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:43:5]
+ 42 |     // 3. Alter Column Type to text
+ 43 |     console.log("Altering column type to text...");
+    :     ^^^^^^^^^^^
+ 44 |     await sql.unsafe(`ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:45:5]
+ 44 |     await sql.unsafe(`ALTER TABLE root_accounts ALTER COLUMN auth_user_id TYPE text`);
+ 45 |     console.log("Column type altered.");
+    :     ^^^^^^^^^^^
+ 46 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:50:5]
+ 49 |     // FK を張る前に不整合データを削除する必要がある。
+ 50 |     console.log("Deleting orphaned root_accounts...");
+    :     ^^^^^^^^^^^
+ 51 |     const deleted = await sql.unsafe(`
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:56:5]
+ 55 |     `);
+ 56 |     console.log(`Deleted ${deleted.length} orphaned records.`);
+    :     ^^^^^^^^^^^
+ 57 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:59:5]
+ 58 |     // 5. Add new FK to public.user(id)
+ 59 |     console.log("Adding new FK to public.user(id)...");
+    :     ^^^^^^^^^^^
+ 60 |     await sql.unsafe(`
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:65:5]
+ 64 |     `);
+ 65 |     console.log("New FK added.");
+    :     ^^^^^^^^^^^
+ 66 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:68:5]
+ 67 |     // 6. Restore Unique Constraint
+ 68 |     console.log("Restoring UNIQUE constraint...");
+    :     ^^^^^^^^^^^
+ 69 |     await sql.unsafe(`
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:73:5]
+ 72 |     `);
+ 73 |     console.log("UNIQUE constraint restored.");
+    :     ^^^^^^^^^^^
+ 74 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v3.cjs:75:5]
+ 74 | 
+ 75 |     console.log("All fixes completed successfully.");
+    :     ^^^^^^^^^^^
+ 76 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:11:5]
+ 10 |   try {
+ 11 |     console.log("Starting fixRootAccounts...");
+    :     ^^^^^^^^^^^
+ 12 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:21:7]
+ 20 |     if (columns.length === 0) {
+ 21 |       console.log("Column auth_user_id not found in root_accounts.");
+    :       ^^^^^^^^^^^
+ 22 |       return;
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:26:5]
+ 25 |     const currentType = columns[0].data_type;
+ 26 |     console.log(`Current auth_user_id type: ${currentType}`);
+    :     ^^^^^^^^^^^
+ 27 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:41:7]
+ 40 |     for (const fk of fks) {
+ 41 |       console.log(`Dropping FK: ${fk.constraint_name}`);
+    :       ^^^^^^^^^^^
+ 42 |       await sql.unsafe(`ALTER TABLE root_accounts DROP CONSTRAINT "${fk.constraint_name}"`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:47:7]
+ 46 |     if (currentType !== 'text' && currentType !== 'character varying') {
+ 47 |       console.log("Altering column type to text...");
+    :       ^^^^^^^^^^^
+ 48 |       // UUID -> Text conversion is safe
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:51:7]
+ 50 |     } else {
+ 51 |       console.log("Column type is already text-compatible.");
+    :       ^^^^^^^^^^^
+ 52 |     }
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:55:5]
+ 54 |     // 4. Add new FK to public.user(id)
+ 55 |     console.log("Adding new FK to public.user(id)...");
+    :     ^^^^^^^^^^^
+ 56 |     try {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:62:7]
+ 61 |       `);
+ 62 |       console.log("New FK added successfully.");
+    :       ^^^^^^^^^^^
+ 63 |     } catch (e) {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:66:9]
+ 65 |         console.error("FK Violation detected! There are auth_user_ids in root_accounts that do not exist in public.user.");
+ 66 |         console.log("Deleting orphaned records from root_accounts (and cascading)...");
+    :         ^^^^^^^^^^^
+ 67 |         // Remove orphans
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:72:9]
+ 71 |         `);
+ 72 |         console.log("Orphans deleted. Retrying FK addition...");
+    :         ^^^^^^^^^^^
+ 73 |         await sql.unsafe(`
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:78:9]
+ 77 |         `);
+ 78 |         console.log("New FK added successfully after cleanup.");
+    :         ^^^^^^^^^^^
+ 79 |       } else {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/fix-root-accounts-v2.cjs:84:5]
+ 83 | 
+ 84 |     console.log("Fix completed.");
+    :     ^^^^^^^^^^^
+ 85 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/drop-schema-public.cjs:11:5]
+ 10 |   try {
+ 11 |     console.log("Dropping SCHEMA public (CASCADE)...");
+    :     ^^^^^^^^^^^
+ 12 |     await sql.unsafe(`DROP SCHEMA IF EXISTS public CASCADE`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/drop-schema-public.cjs:13:5]
+ 12 |     await sql.unsafe(`DROP SCHEMA IF EXISTS public CASCADE`);
+ 13 |     console.log("Schema public dropped.");
+    :     ^^^^^^^^^^^
+ 14 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/drop-schema-public.cjs:15:5]
+ 14 | 
+ 15 |     console.log("Creating SCHEMA public...");
+    :     ^^^^^^^^^^^
+ 16 |     await sql.unsafe(`CREATE SCHEMA public`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/drop-schema-public.cjs:17:5]
+ 16 |     await sql.unsafe(`CREATE SCHEMA public`);
+ 17 |     console.log("Schema public created.");
+    :     ^^^^^^^^^^^
+ 18 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/drop-schema-public.cjs:22:5]
+ 21 |     await sql.unsafe(`GRANT ALL ON SCHEMA public TO public`);
+ 22 |     console.log("Permissions granted.");
+    :     ^^^^^^^^^^^
+ 23 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/drop-all-tables.cjs:11:5]
+ 10 |   try {
+ 11 |     console.log("Dropping ALL tables in public schema (CASCADE)...");
+    :     ^^^^^^^^^^^
+ 12 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/drop-all-tables.cjs:21:7]
+ 20 |     for (const t of tables) {
+ 21 |       console.log(`Dropping table: ${t.tablename}`);
+    :       ^^^^^^^^^^^
+ 22 |       await sql.unsafe(`DROP TABLE IF EXISTS "public"."${t.tablename}" CASCADE`);
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/drop-all-tables.cjs:25:5]
+ 24 | 
+ 25 |     console.log("All tables dropped.");
+    :     ^^^^^^^^^^^
+ 26 |   } catch (e) {
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/create-auth-tables.cjs:24:5]
+ 23 |     `);
+ 24 |     console.log("[OK] user テーブル作成完了");
+    :     ^^^^^^^^^^^
+ 25 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/create-auth-tables.cjs:39:5]
+ 38 |     `);
+ 39 |     console.log("[OK] session テーブル作成完了");
+    :     ^^^^^^^^^^^
+ 40 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/create-auth-tables.cjs:59:5]
+ 58 |     `);
+ 59 |     console.log("[OK] account テーブル作成完了");
+    :     ^^^^^^^^^^^
+ 60 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/create-auth-tables.cjs:72:5]
+ 71 |     `);
+ 72 |     console.log("[OK] verification テーブル作成完了");
+    :     ^^^^^^^^^^^
+ 73 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/create-auth-tables.cjs:81:5]
+ 80 |     `);
+ 81 |     console.log("\n=== 作成されたテーブル ===");
+    :     ^^^^^^^^^^^
+ 82 |     tables.forEach((t) => console.log(`  public.${t.table_name}`));
+    `----
+  help: Supported methods are: info, warn, error.
+
+  x eslint(no-console): Unexpected console statement.
+    ,-[scripts/create-auth-tables.cjs:82:27]
+ 81 |     console.log("\n=== 作成されたテーブル ===");
+ 82 |     tables.forEach((t) => console.log(`  public.${t.table_name}`));
+    :                           ^^^^^^^^^^^
+ 83 | 
+    `----
+  help: Supported methods are: info, warn, error.
+
+  ! eslint(no-unused-vars): Variable 'setSort' is declared but never used. Unused variables should start with a '_'.
+     ,-[src/components/profile-comparison/profile-comparison-container.tsx:105:16]
+ 104 | 
+ 105 |   const [sort, setSort] = useState<SortConfig>({
+     :                ^^^|^^^
+     :                   `-- 'setSort' is declared here
+ 106 |     key: "heat",
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Catch parameter 'e' is caught but never used. Unused caught errors should start with a '_'.
+    ,-[tailwind.config.ts:11:10]
+ 10 |   }
+ 11 | } catch (e) {
+    :          |
+    :          `-- 'e' is declared here
+ 12 |   // Plugin not available, continuing without it
+    `----
+  help: Consider handling this error.
+
+Found 4 warnings and 85 errors.
+Finished in 45ms on 717 files with 80 rules using 12 threads.

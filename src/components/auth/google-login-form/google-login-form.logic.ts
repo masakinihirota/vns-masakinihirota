@@ -1,29 +1,29 @@
+import { signIn } from "@/lib/auth-client";
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
 
+/**
+ * Google ソーシャルログインのカスタムフック
+ * Better-Auth の signIn.social API を使用してGoogle OAuth ログインを実行します
+ */
 export const useGoogleLoginLogic = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSocialLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Google認証ロジック
-    // クライアントサイドでのSupabaseクライアント作成
-    const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithOAuth({
+    const result = await signIn.social({
       provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/home`,
-      },
+      callbackURL: "/home",
     });
 
-    if (error) {
-      setError(error.message);
+    if (result.error) {
+      setError(result.error.message ?? "ログインに失敗しました");
       setIsLoading(false);
     }
+    // 成功時は Better-Auth が自動的にリダイレクトを処理
   };
 
   // Google認証で得られる機能リスト（表示用データ）

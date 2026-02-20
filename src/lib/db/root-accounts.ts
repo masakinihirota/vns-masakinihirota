@@ -38,4 +38,3 @@ export const getRootAccount = cache(async () => {
   });
   return account ? mapRootAccountToSupabase(account) : null;
 });
-

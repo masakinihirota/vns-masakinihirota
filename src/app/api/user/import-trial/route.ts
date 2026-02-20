@@ -1,19 +1,20 @@
-import { NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { VNSTrialDataSchema } from "@/lib/trial-storage";
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const supabase = await createClient();
+  // 1. Better-Auth による認証チェック
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  // 1. Authenticate
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-
-  if (authError || !user) {
+  if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  const supabase = await createClient();
 
   // 2. Validate Inputs
   let trialData;
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
   const { data: rootAccount, error: rootError } = await supabase
     .from("root_accounts")
     .select("id, points")
-    .eq("auth_user_id", user.id)
+    .eq("auth_user_id", session.user.id)
     .single();
 
   if (rootError || !rootAccount) {

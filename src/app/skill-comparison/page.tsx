@@ -1,9 +1,10 @@
-import * as SkillComparison from '@/components/skill-comparison';
-import { Metadata } from 'next';
+import { Metadata } from "next";
+import * as SkillComparison from "@/components/skill-comparison";
 
 export const metadata: Metadata = {
-  title: 'スキル比較 マンダラチャート | VNS Protocol',
-  description: 'ユーザーとターゲットのスキルマスタリーをマンダラチャートで可視化・比較します。',
+  title: "スキル比較 マンダラチャート | VNS Protocol",
+  description:
+    "ユーザーとターゲットのスキルマスタリーをマンダラチャートで可視化・比較します。",
 };
 
 /**

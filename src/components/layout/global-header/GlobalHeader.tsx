@@ -11,7 +11,6 @@ import {
   Search,
   Sun,
 } from "lucide-react";
-import { useSession } from "@/lib/auth-client";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -35,6 +34,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useSession } from "@/lib/auth-client";
 import { TrialStorage } from "@/lib/trial-storage";
 import { TrialOnboardingBackButton } from "../trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TrialStatusBadge } from "../trial-status-badge/TrialStatusBadge";
@@ -263,8 +263,9 @@ function NotificationBell() {
         {mockNotifications.map((notification) => (
           <DropdownMenuItem
             key={notification.id}
-            className={`flex flex-col items-start gap-1 ${!notification.read ? "bg-accent/50" : ""
-              }`}
+            className={`flex flex-col items-start gap-1 ${
+              !notification.read ? "bg-accent/50" : ""
+            }`}
           >
             <span className="text-sm">{notification.title}</span>
             <span className="text-xs text-muted-foreground">
@@ -307,13 +308,13 @@ export function HelpButton() {
 
 interface VNSButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?:
-  | "primary"
-  | "secondary"
-  | "ghost"
-  | "persona"
-  | "warm"
-  | "emerald"
-  | "indigo";
+    | "primary"
+    | "secondary"
+    | "ghost"
+    | "persona"
+    | "warm"
+    | "emerald"
+    | "indigo";
   size?: "sm" | "md" | "lg" | "icon";
   icon?: React.ElementType;
   iconPosition?: "left" | "right";

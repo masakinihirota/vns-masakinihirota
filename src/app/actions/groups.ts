@@ -52,4 +52,3 @@ export async function getMyProfilesAction() {
   const profiles = await getUserProfilesByAuthUserId(session.user.id);
   return profiles;
 }
-

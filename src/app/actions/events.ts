@@ -27,4 +27,3 @@ export async function cancelEventParticipationAction(eventId: string) {
 export async function getEventAction(eventId: string) {
   return eventsDb.getEvent(eventId);
 }
-

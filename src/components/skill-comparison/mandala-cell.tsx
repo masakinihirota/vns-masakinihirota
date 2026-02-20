@@ -1,8 +1,14 @@
 "use client";
 
-import { Activity, Brain, ChevronLeft, ChevronRight, HelpCircle } from 'lucide-react';
-import React from 'react';
-import { MANDALA_STATUS, MandalaStatus } from './skill-comparison.logic';
+import {
+  Activity,
+  Brain,
+  ChevronLeft,
+  ChevronRight,
+  HelpCircle,
+} from "lucide-react";
+import React from "react";
+import { MANDALA_STATUS, MandalaStatus } from "./skill-comparison.logic";
 
 interface MandalaCellProps {
   readonly label: string;
@@ -16,7 +22,11 @@ interface MandalaCellProps {
  * 指定されたステータスに応じて、背景色、文字色、およびアイコンを切り替えて表示します。
  * 全てのテキストは 1rem (16px) 以上を確保しています。
  */
-export const MandalaCell: React.FC<MandalaCellProps> = ({ label, status = MANDALA_STATUS.EMPTY, isCenter = false }) => {
+export const MandalaCell: React.FC<MandalaCellProps> = ({
+  label,
+  status = MANDALA_STATUS.EMPTY,
+  isCenter = false,
+}) => {
   if (isCenter) {
     return (
       <div
@@ -24,7 +34,9 @@ export const MandalaCell: React.FC<MandalaCellProps> = ({ label, status = MANDAL
         data-testid="mandala-cell-center"
       >
         <Brain size={24} className="mb-2 text-indigo-400" />
-        <span className="text-base font-black uppercase leading-tight tracking-tighter">{label}</span>
+        <span className="text-base font-black uppercase leading-tight tracking-tighter">
+          {label}
+        </span>
       </div>
     );
   }
@@ -47,19 +59,31 @@ export const MandalaCell: React.FC<MandalaCellProps> = ({ label, status = MANDAL
       className={`flex flex-col items-center justify-center rounded-xl border-2 p-4 text-center transition-all h-28 ${getStyle()}`}
       data-testid={`mandala-cell-${status}`}
     >
-      <span className="text-base font-bold leading-tight mb-2 px-1">{label}</span>
+      <span className="text-base font-bold leading-tight mb-2 px-1">
+        {label}
+      </span>
       <div className="flex items-center space-x-1 h-8">
         {status === MANDALA_STATUS.SYNC && (
-          <Activity size={24} className="text-indigo-500 animate-pulse" aria-label="Sync Mode" />
+          <Activity
+            size={24}
+            className="text-indigo-500 animate-pulse"
+            aria-label="Sync Mode"
+          />
         )}
         {status === MANDALA_STATUS.ADVICE && (
-          <div className="flex flex-col items-center text-[10px] font-black" aria-label="Advice Mode">
+          <div
+            className="flex flex-col items-center text-[10px] font-black"
+            aria-label="Advice Mode"
+          >
             <ChevronRight size={28} strokeWidth={3} />
             <span className="tracking-tighter">ADVICE</span>
           </div>
         )}
         {status === MANDALA_STATUS.LEARN && (
-          <div className="flex flex-col items-center text-[10px] font-black" aria-label="Learning Mode">
+          <div
+            className="flex flex-col items-center text-[10px] font-black"
+            aria-label="Learning Mode"
+          >
             <ChevronLeft size={28} strokeWidth={3} />
             <span className="tracking-tighter">LEARN</span>
           </div>

@@ -19,4 +19,3 @@ export async function unfollowProfileAction(followedProfileId: string) {
 
   return followsDb.unfollowProfile(session.user.id, followedProfileId);
 }
-

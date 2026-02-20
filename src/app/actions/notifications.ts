@@ -21,4 +21,3 @@ export async function markNotificationAsReadAction(notificationId: string) {
   if (!session?.user?.id) throw new Error("Unauthorized");
   return notifDb.markNotificationAsRead(notificationId);
 }
-

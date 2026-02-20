@@ -23,6 +23,7 @@ export const users = pgTable("user", {
   email: text("email").notNull().unique(),
   emailVerified: boolean("emailVerified").notNull(),
   image: text("image"),
+  isAnonymous: boolean("is_anonymous").default(false),
   createdAt: timestamp("createdAt").notNull(),
   updatedAt: timestamp("updatedAt").notNull(),
 });
@@ -224,7 +225,7 @@ export const works = pgTable(
     author: text(),
     category: text().notNull(),
     isOfficial: boolean("is_official").default(false).notNull(),
-    ownerUserId: uuid("owner_user_id"),
+    ownerUserId: text("owner_user_id"),
     status: text().default("pending").notNull(),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "string" })
       .defaultNow()
@@ -490,7 +491,7 @@ export const notifications = pgTable(
   (table) => [
     index("idx_notifications_user_profile_id_is_read").using(
       "btree",
-      table.userProfileId.asc().nullsLast().op("bool_ops"),
+      table.userProfileId.asc().nullsLast().op("uuid_ops"),
       table.isRead.asc().nullsLast().op("bool_ops")
     ),
     foreignKey({
@@ -715,7 +716,7 @@ export const nationEventParticipants = pgTable(
 export const userWorkRatings = pgTable(
   "user_work_ratings",
   {
-    userId: uuid("user_id").notNull(),
+    userId: text("user_id").notNull(),
     workId: uuid("work_id").notNull(),
     rating: text().notNull(),
     lastTier: text("last_tier"),
@@ -729,7 +730,7 @@ export const userWorkRatings = pgTable(
   (table) => [
     index("idx_user_work_ratings_user_work").using(
       "btree",
-      table.userId.asc().nullsLast().op("uuid_ops"),
+      table.userId.asc().nullsLast().op("text_ops"),
       table.workId.asc().nullsLast().op("uuid_ops")
     ),
     foreignKey({
@@ -752,7 +753,7 @@ export const userWorkRatings = pgTable(
 export const userWorkEntries = pgTable(
   "user_work_entries",
   {
-    userId: uuid("user_id").notNull(),
+    userId: text("user_id").notNull(),
     workId: uuid("work_id").notNull(),
     status: text().notNull(),
     tier: integer(),
@@ -767,7 +768,7 @@ export const userWorkEntries = pgTable(
   (table) => [
     index("idx_user_work_entries_user_work").using(
       "btree",
-      table.userId.asc().nullsLast().op("uuid_ops"),
+      table.userId.asc().nullsLast().op("text_ops"),
       table.workId.asc().nullsLast().op("uuid_ops")
     ),
     foreignKey({

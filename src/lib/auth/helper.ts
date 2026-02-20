@@ -1,5 +1,5 @@
-import { auth as serverAuth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { auth as serverAuth } from "@/lib/auth";
 
 /**
  * サーバーサイドで現在のセッション情報を取得します。

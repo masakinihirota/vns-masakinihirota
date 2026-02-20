@@ -461,7 +461,9 @@ export const useProfileCreation = (adapter?: ProfileStorageAdapter) => {
     message: "",
   });
 
-  const [errors, setErrors] = useState<Record<string, string[] | undefined>>({});
+  const [errors, setErrors] = useState<Record<string, string[] | undefined>>(
+    {}
+  );
 
   // 初期ロード
   useEffect(() => {

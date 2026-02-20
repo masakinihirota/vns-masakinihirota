@@ -5,7 +5,7 @@
 /**
  * カテゴリ定義
  */
-export type CategoryId = 'FRONTEND' | 'BACKEND_AI' | 'INFRA';
+export type CategoryId = "FRONTEND" | "BACKEND_AI" | "INFRA";
 
 export interface Category {
   readonly id: CategoryId;
@@ -43,7 +43,8 @@ export const MANDALA_STATUS = {
   SYNC: 3,
 } as const;
 
-export type MandalaStatus = typeof MANDALA_STATUS[keyof typeof MANDALA_STATUS];
+export type MandalaStatus =
+  (typeof MANDALA_STATUS)[keyof typeof MANDALA_STATUS];
 
 /**
  * セルの状態を判定するロジック
@@ -51,18 +52,24 @@ export type MandalaStatus = typeof MANDALA_STATUS[keyof typeof MANDALA_STATUS];
  * @param hasThem 相手が習得しているか
  * @returns MandalaStatus
  */
-export const calculateMandalaStatus = (hasMe: boolean, hasThem: boolean): MandalaStatus => {
+export const calculateMandalaStatus = (
+  hasMe: boolean,
+  hasThem: boolean
+): MandalaStatus => {
   return ((hasMe ? 1 : 0) + (hasThem ? 2 : 0)) as MandalaStatus;
 };
 
 /**
  * スキルの習得数を取得する
  */
-export const getMasteryCount = (profile: Profile | undefined, skillName: string): number => {
+export const getMasteryCount = (
+  profile: Profile | undefined,
+  skillName: string
+): number => {
   return profile?.mastery?.[skillName]?.length ?? 0;
 };
 
 /**
  * ソート順序
  */
-export type SortOrder = 'asc' | 'desc';
+export type SortOrder = "asc" | "desc";

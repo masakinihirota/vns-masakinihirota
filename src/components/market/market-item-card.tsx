@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
 import { startTransactionAction } from "@/app/actions/market";
 import { MarketItem } from "@/components/groups/groups.types";
 import { Badge } from "@/components/ui/badge";
@@ -14,7 +12,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { createClient } from "@/lib/supabase/client";
+import { useSession } from "@/lib/auth-client";
+import { useState } from "react";
+import { toast } from "sonner";
 
 interface MarketItemCardProps {
   item: MarketItem;
@@ -26,16 +26,8 @@ export const MarketItemCard = ({
   onTransactionStart,
 }: MarketItemCardProps) => {
   const [loading, setLoading] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!currentUserId) {
-      const supabase = createClient();
-      void supabase.auth.getUser().then(({ data }) => {
-        if (data.user) setCurrentUserId(data.user.id);
-      });
-    }
-  }, [currentUserId]);
+  const { data: session } = useSession();
+  const currentUserId = session?.user?.id ?? null;
 
   const isOwner = currentUserId === item.seller_id;
 

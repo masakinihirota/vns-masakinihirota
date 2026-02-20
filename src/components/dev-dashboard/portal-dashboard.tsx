@@ -297,9 +297,15 @@ export function PortalDashboard() {
           badge: "New",
         },
         {
-          title: "プロフィール比較分析",
+          title: "スキル比較マンダラ",
+          path: "/skill-comparison",
+          desc: "ユーザーと候補者のスキル習熟度を3x3のマンダラチャートで比較分析。",
+          badge: "New",
+        },
+        {
+          title: "プロフィール比較",
           path: "/comparison",
-          desc: "自己プロファイルと候補者を比較分析する機能。",
+          desc: "複数の自己プロファイルと候補者プロファイルを作品軸で比較分析。",
           badge: "New",
         },
       ],

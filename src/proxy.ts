@@ -1,5 +1,5 @@
-import { updateSession } from "@/lib/supabase/session";
 import { type NextRequest, NextResponse } from "next/server";
+import { updateSession } from "@/lib/supabase/session";
 
 export async function proxy(request: NextRequest) {
   // [Technical Debt] Supabase Session Management

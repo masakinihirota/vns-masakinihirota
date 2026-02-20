@@ -9,7 +9,7 @@ import {
   FilterConfig,
   TEMPORAL_AXIS,
   TierKey,
-  TIERS
+  TIERS,
 } from "./comparison.logic";
 
 interface VisibilityControlsProps {
@@ -22,7 +22,7 @@ interface VisibilityControlsProps {
  */
 export const VisibilityControls: React.FC<VisibilityControlsProps> = ({
   filters,
-  onChange
+  onChange,
 }) => {
   const toggleFilter = <K extends keyof FilterConfig>(
     group: K,
@@ -50,10 +50,11 @@ export const VisibilityControls: React.FC<VisibilityControlsProps> = ({
             <button
               key={key}
               onClick={() => toggleFilter("tier", key as TierKey)}
-              className={`px-4 py-1.5 rounded-lg border text-sm font-black transition-all duration-200 ${filters.tier[key as TierKey]
+              className={`px-4 py-1.5 rounded-lg border text-sm font-black transition-all duration-200 ${
+                filters.tier[key as TierKey]
                   ? `${tier.color} ${tier.text} border-transparent shadow-sm scale-105`
                   : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"
-                }`}
+              }`}
             >
               {tier.label}
             </button>
@@ -75,10 +76,11 @@ export const VisibilityControls: React.FC<VisibilityControlsProps> = ({
               <button
                 key={key}
                 onClick={() => toggleFilter("cat", key as CategoryKey)}
-                className={`flex items-center space-x-2.5 px-5 py-1.5 rounded-lg border text-sm font-black transition-all duration-200 ${active
+                className={`flex items-center space-x-2.5 px-5 py-1.5 rounded-lg border text-sm font-black transition-all duration-200 ${
+                  active
                     ? `${cat.bgColor} ${cat.color} border-current shadow-sm scale-105`
                     : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"
-                  }`}
+                }`}
               >
                 <Icon size={16} aria-hidden="true" />
                 <span>{cat.label}</span>
@@ -102,10 +104,11 @@ export const VisibilityControls: React.FC<VisibilityControlsProps> = ({
               <button
                 key={key}
                 onClick={() => toggleFilter("temporal", key as AxisKey)}
-                className={`flex items-center space-x-2.5 px-5 py-1.5 rounded-lg border text-sm font-black transition-all duration-200 ${active
+                className={`flex items-center space-x-2.5 px-5 py-1.5 rounded-lg border text-sm font-black transition-all duration-200 ${
+                  active
                     ? `${axis.bgColor} ${axis.color} border-current shadow-sm scale-105`
                     : "bg-white border-slate-200 text-slate-400 hover:border-slate-300"
-                  }`}
+                }`}
               >
                 <Icon size={16} aria-hidden="true" />
                 <span>{axis.label}</span>

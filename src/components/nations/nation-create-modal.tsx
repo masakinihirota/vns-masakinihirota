@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -14,7 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { createClient } from "@/lib/supabase/client";
+import { useSession } from "@/lib/auth-client";
+import { useState } from "react";
 import { useCreateNation } from "./nations.logic";
 
 interface NationCreateModalProps {
@@ -26,23 +26,20 @@ export const NationCreateModal = ({ onSuccess }: NationCreateModalProps) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
   const { createNation } = useCreateNation();
 
   const handleCreate = async () => {
     setLoading(true);
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
 
-    if (!user) {
-      alert("Please login");
+    if (!session?.user) {
+      alert("ログインしてください");
       setLoading(false);
       return;
     }
 
     try {
-      await createNation(name, description, user.id);
+      await createNation(name, description, session.user.id);
       setOpen(false);
       setName("");
       setDescription("");

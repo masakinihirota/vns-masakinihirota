@@ -8,7 +8,7 @@ try {
   if (tailwindThemePlugin) {
     plugins = [tailwindThemePlugin.default || tailwindThemePlugin];
   }
-} catch (e) {
+} catch (_e) {
   // Plugin not available, continuing without it
   console.warn("@digital-go-jp/tailwind-theme-plugin not found");
 }

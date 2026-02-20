@@ -45,4 +45,3 @@ export async function getPointHistoryAction() {
 
   return await getPointHistory(user.id);
 }
-

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/lib/auth/helper";
 import { Profile } from "@/components/profile-creation-1000masks/profile-creation-1000masks.logic";
+import { auth } from "@/lib/auth/helper";
 import * as userProfilesDb from "@/lib/db/user-profiles";
 
 // DrizzleのUserProfile型と共通化しつつ、外のProfile型とのマッピングを行う
@@ -119,4 +119,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-

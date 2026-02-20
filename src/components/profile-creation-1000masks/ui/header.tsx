@@ -69,10 +69,11 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           onClick={onSave}
           disabled={!isDirty}
-          className={`flex items-center space-x-3 px-8 py-4 rounded-2xl font-black text-lg transition-all shadow-xl active:scale-95 ${isDirty
+          className={`flex items-center space-x-3 px-8 py-4 rounded-2xl font-black text-lg transition-all shadow-xl active:scale-95 ${
+            isDirty
               ? "bg-emerald-600 dark:bg-emerald-700 text-white shadow-emerald-100 dark:shadow-none hover:bg-emerald-700"
               : "bg-slate-100 dark:bg-[#161B22] text-slate-400 dark:text-slate-600 cursor-not-allowed opacity-50 shadow-none"
-            }`}
+          }`}
         >
           <Save size={20} />
           <span>{isDirty ? "仮面を保存" : "保存済"}</span>

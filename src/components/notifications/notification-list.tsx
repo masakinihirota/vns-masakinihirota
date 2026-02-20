@@ -1,6 +1,6 @@
-import { useSession } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { Notification } from "@/components/groups/groups.types";
+import { useSession } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { useMarkAsRead, useNotifications } from "./notifications.logic";
 

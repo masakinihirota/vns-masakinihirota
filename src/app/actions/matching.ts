@@ -16,4 +16,3 @@ export async function createMatchingRequestAction(targetProfileId: string) {
 
   return matchingDb.createMatchingRequest(userId, targetProfileId);
 }
-

@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
+import { anonymous } from "better-auth/plugins/anonymous";
 import { db } from "./db/drizzle-postgres";
 import * as schema from "./db/schema.postgres";
 
@@ -37,5 +38,6 @@ export const auth = betterAuth({
   },
   plugins: [
     nextCookies(), // Next.js Server Components / Actions 用
+    anonymous(), // 匿名認証プラグイン
   ],
 });

@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { calculateSyncLevel, generateComparisonData, Profile } from "./comparison.logic";
+import {
+  calculateSyncLevel,
+  generateComparisonData,
+  Profile,
+} from "./comparison.logic";
 
 describe("Comparison Logic", () => {
   const mockMe: Profile = {
@@ -52,13 +56,25 @@ describe("Comparison Logic", () => {
   describe("generateComparisonData", () => {
     it("自分と相手の作品がマージされる", () => {
       const filters = {
-        tier: { T1: true, T2: true, T3: true, NORMAL: true, INTERESTLESS: true, UNRATED: true },
+        tier: {
+          T1: true,
+          T2: true,
+          T3: true,
+          NORMAL: true,
+          INTERESTLESS: true,
+          UNRATED: true,
+        },
         cat: { MANGA: true, MOVIE: true, OTHER: true },
         temporal: { LIFE: true, PRESENT: true, FUTURE: true },
       };
-      const data = generateComparisonData(mockMe, mockTarget, { key: "title", direction: "asc" }, filters);
+      const data = generateComparisonData(
+        mockMe,
+        mockTarget,
+        { key: "title", direction: "asc" },
+        filters
+      );
 
-      const titles = data.map(d => d.title);
+      const titles = data.map((d) => d.title);
       expect(titles).toContain("Work A");
       expect(titles).toContain("Work B");
       expect(titles).toContain("Work C");
@@ -66,13 +82,25 @@ describe("Comparison Logic", () => {
 
     it("フィルタによって除外される作品がある", () => {
       const filters = {
-        tier: { T1: false, T2: true, T3: true, NORMAL: true, INTERESTLESS: true, UNRATED: true },
+        tier: {
+          T1: false,
+          T2: true,
+          T3: true,
+          NORMAL: true,
+          INTERESTLESS: true,
+          UNRATED: true,
+        },
         cat: { MANGA: true, MOVIE: true, OTHER: true },
         temporal: { LIFE: true, PRESENT: true, FUTURE: true },
       };
-      const data = generateComparisonData(mockMe, mockTarget, { key: "title", direction: "asc" }, filters);
+      const data = generateComparisonData(
+        mockMe,
+        mockTarget,
+        { key: "title", direction: "asc" },
+        filters
+      );
 
-      const titles = data.map(d => d.title);
+      const titles = data.map((d) => d.title);
       expect(titles).not.toContain("Work A"); // T1 なので除外
       expect(titles).toContain("Work B"); // T2 なので残る
     });

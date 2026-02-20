@@ -1,18 +1,15 @@
-import { redirect } from "next/navigation";
 import { OnboardingNormalForm } from "@/components/onboarding-pc/onboarding-normal-form";
-import { createClient } from "@/lib/supabase/server";
+import { getSession } from "@/lib/auth/helper";
+import { redirect } from "next/navigation";
 
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
 export default async function OnboardingNormalPage({ searchParams }: Props) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const session = await getSession();
 
-  let userId = user?.id;
+  let userId = session?.user?.id;
 
   if (!userId) {
     if (process.env.NODE_ENV === "development") {

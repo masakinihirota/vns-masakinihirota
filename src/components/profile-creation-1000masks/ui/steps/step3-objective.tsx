@@ -54,10 +54,11 @@ export const Step3Objective: React.FC<Step3ObjectiveProps> = ({
             <button
               key={preset.id}
               onClick={() => onToggleObjective(preset.id)}
-              className={`flex flex-col items-center justify-center p-6 rounded-[2rem] border-2 transition-all space-y-4 group ${isSelected
+              className={`flex flex-col items-center justify-center p-6 rounded-[2rem] border-2 transition-all space-y-4 group ${
+                isSelected
                   ? "bg-blue-600 dark:bg-blue-700 border-blue-400 dark:border-blue-500 text-white shadow-xl scale-[1.05]"
                   : "bg-white dark:bg-white/5 border-slate-100 dark:border-white/10 text-slate-400 dark:text-slate-600 hover:border-blue-200 dark:hover:border-blue-900 shadow-md"
-                }`}
+              }`}
             >
               <div
                 className={`transition-all ${isSelected ? "scale-110" : "group-hover:scale-110 group-hover:text-blue-500"}`}

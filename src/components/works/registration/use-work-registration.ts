@@ -1,16 +1,16 @@
 "use client";
 
+import { createWorkWithEntryAction } from "@/app/actions/works";
+import { useSession } from "@/lib/auth-client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createWorkWithEntryAction } from "@/app/actions/works";
-import { createClient } from "@/lib/supabase/client";
 import { registrationFormSchema, type RegistrationFormValues } from "./schema";
 
 export function useWorkRegistration() {
   const router = useRouter();
-  const supabase = createClient();
+  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -33,13 +33,8 @@ export function useWorkRegistration() {
     setError(null);
 
     try {
-      // 1. Get current user
-      const {
-        data: { user },
-        error: userError,
-      } = await supabase.auth.getUser();
-
-      if (userError || !user) {
+      // 1. セッションからユーザーを取得
+      if (!session?.user) {
         throw new Error("ユーザーが認証されていません。");
       }
 
@@ -47,9 +42,9 @@ export function useWorkRegistration() {
       // Note: tags is a comma-separated string in the form, needs to be converted to array
       const tagsArray = values.work.tags
         ? values.work.tags
-            .split(",")
-            .map((t) => t.trim())
-            .filter(Boolean)
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean)
         : [];
 
       await createWorkWithEntryAction(
@@ -64,7 +59,7 @@ export function useWorkRegistration() {
           external_url: values.work.officialUrl || null,
           affiliate_url: values.work.affiliateUrl || null,
           tags: tagsArray,
-          owner_user_id: user.id, // Set owner to current user
+          owner_user_id: session.user.id, // オーナーを現在のユーザーに設定
           status: "published", // Default status for new work
         },
         {
