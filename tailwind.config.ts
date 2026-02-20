@@ -1,17 +1,7 @@
+// @ts-expect-error - No declaration file for this module
+import tailwindThemePlugin from "@digital-go-jp/tailwind-theme-plugin";
 import type { Config } from "tailwindcss";
 
-// Safely load the tailwind theme plugin if available
-let plugins: any[] = [];
-try {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const tailwindThemePlugin = require("@digital-go-jp/tailwind-theme-plugin");
-  if (tailwindThemePlugin) {
-    plugins = [tailwindThemePlugin.default || tailwindThemePlugin];
-  }
-} catch (_e) {
-  // Plugin not available, continuing without it
-  console.warn("@digital-go-jp/tailwind-theme-plugin not found");
-}
 
 const config: Config = {
   darkMode: "class",
@@ -23,6 +13,6 @@ const config: Config = {
   theme: {
     extend: {},
   },
-  plugins,
+  plugins: [tailwindThemePlugin.default || tailwindThemePlugin],
 };
 export default config;
