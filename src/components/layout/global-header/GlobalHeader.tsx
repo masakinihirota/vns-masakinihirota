@@ -11,7 +11,6 @@ import {
   Search,
   Sun,
 } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -35,6 +34,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useSession } from "@/lib/auth-client";
 import { TrialStorage } from "@/lib/trial-storage";
 import { TrialOnboardingBackButton } from "../trial-onboarding-back-button/TrialOnboardingBackButton";
 import { TrialStatusBadge } from "../trial-status-badge/TrialStatusBadge";
@@ -467,9 +467,9 @@ export function GlobalHeader({
   showSidebarTrigger?: boolean;
   isPublic?: boolean;
 }) {
-  const { data: session, status } = useSession();
+  const { data: session, isPending } = useSession();
   const user = session?.user;
-  const loading = status === "loading";
+  const loading = isPending;
 
   const [isTrial, setIsTrial] = React.useState(false);
 

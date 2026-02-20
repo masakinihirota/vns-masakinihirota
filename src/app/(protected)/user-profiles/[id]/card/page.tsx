@@ -6,6 +6,7 @@ import {
   Skill,
   Work,
 } from "@/components/business-card/business-card-view";
+import { getSession } from "@/lib/auth/helper";
 import { getBusinessCardByProfileId } from "@/lib/db/business-cards";
 import { getUserProfileById } from "@/lib/db/user-profiles";
 import { createClient } from "@/lib/supabase/server";
@@ -37,11 +38,9 @@ export default async function BusinessCardPage(props: Props) {
     notFound();
   }
 
+  const session = await getSession();
+  const user = session?.user;
   const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
   const profile = await getUserProfileById(profileId);
   if (!profile) {

@@ -332,10 +332,9 @@ export const useWorkListLogic = () => {
     );
 
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) throw new Error("No user logged in");
+      const { getSession } = await import("@/lib/auth-client");
+      const { data: session } = await getSession();
+      if (!session?.user) throw new Error("No user logged in");
 
       // 選択中のworkを取得して lastTier を計算
       const currentWork = works.find((w) => w.id === selectedWorkId);
@@ -343,7 +342,7 @@ export const useWorkListLogic = () => {
       const nextLastTier = isTier ? newRating : currentWork?.lastTier || null;
 
       const { error } = await supabase.from("user_work_ratings").upsert({
-        user_id: user.id,
+        user_id: session.user.id,
         work_id: selectedWorkId,
         rating: newRating,
         last_tier: nextLastTier,

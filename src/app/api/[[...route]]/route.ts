@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import { upsertBusinessCard } from "@/lib/db/business-cards";
 import { createWork } from "@/lib/db/works";
 

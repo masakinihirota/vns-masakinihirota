@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { getWorkByIdAction } from "@/app/actions/works";
 import { WorkDetail } from "@/components/works/work-detail"; // Import the detail component
-import { createClient } from "@/lib/supabase/server";
+import { getSession } from "@/lib/auth/helper";
 import { isValidUUID } from "@/lib/utils";
 import { Tables } from "@/types/types_db";
 
@@ -61,11 +61,8 @@ export default async function WorkDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const isOwner = user?.id === work.owner_user_id;
+  const session = await getSession();
+  const isOwner = session?.user?.id === work.owner_user_id;
 
   const uiWork = mapDbWorkToUIDetail(work);
 

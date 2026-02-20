@@ -1,7 +1,11 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { signIn } from "@/lib/auth-client";
 
+/**
+ * 匿名ログインのカスタムフック
+ * Better-Auth の signIn.anonymous API を使用して匿名認証を実行します
+ */
 export const useAnonymousLoginLogic = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -10,14 +14,13 @@ export const useAnonymousLoginLogic = () => {
 
   const handleAnonymousLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInAnonymously();
+    const result = await signIn.anonymous();
 
-    if (error) {
-      setError(error.message);
+    if (result.error) {
+      setError(result.error.message ?? "ログインに失敗しました");
       setIsLoading(false);
       return;
     }

@@ -8,6 +8,13 @@
       "when": 1771035703645,
       "tag": "0000_volatile_wrecking_crew",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1771548854457,
+      "tag": "0001_add_is_anonymous",
+      "breakpoints": true
     }
   ]
 }

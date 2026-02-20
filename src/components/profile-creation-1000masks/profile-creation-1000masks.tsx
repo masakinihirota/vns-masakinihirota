@@ -58,6 +58,7 @@ const ProfileCreationContent: React.FC<ProfileCreationProps> = ({
     setSearchQuery,
     modal,
     setModal,
+    errors,
     mainScrollRef,
     handleUpdateDraft,
     requestSwitchProfile,
@@ -101,6 +102,7 @@ const ProfileCreationContent: React.FC<ProfileCreationProps> = ({
           <Header
             activeProfile={activeProfile}
             isDirty={isDirty}
+            error={errors.name?.[0]}
             onNameChange={(name) => handleUpdateDraft({ name })}
             onSave={handleSave}
             onDelete={() =>
@@ -163,11 +165,13 @@ const ProfileCreationContent: React.FC<ProfileCreationProps> = ({
                 <Step2Type
                   activeProfile={activeProfile}
                   onUpdateDraft={handleUpdateDraft}
+                  error={errors.selectedTypeId?.[0]}
                 />
                 <Step3Objective
                   activeProfile={activeProfile}
                   onToggleObjective={handleToggleObjective}
                   onToggleSlot={toggleSlot}
+                  error={errors.selectedObjectiveIds?.[0]}
                 />
                 <Step4Slots
                   activeProfile={activeProfile}

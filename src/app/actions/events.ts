@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import * as eventsDb from "@/lib/db/events";
 import type { TablesInsert } from "@/types/types_db";
 

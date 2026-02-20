@@ -24,13 +24,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { createClient } from "@/lib/supabase/client";
+import { useSession } from "@/lib/auth-client";
 
 interface WorkCreateModalProps {
   onSuccess: () => void;
 }
 
 export const WorkCreateModal = ({ onSuccess }: WorkCreateModalProps) => {
+  const { data: session } = useSession();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -45,13 +46,8 @@ export const WorkCreateModal = ({ onSuccess }: WorkCreateModalProps) => {
     e.preventDefault();
     setLoading(true);
 
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-
-    if (!user) {
-      toast.error("Login required");
+    if (!session?.user) {
+      toast.error("ログインが必要です");
       setLoading(false);
       return;
     }
@@ -66,7 +62,7 @@ export const WorkCreateModal = ({ onSuccess }: WorkCreateModalProps) => {
           .split(",")
           .map((t) => t.trim())
           .filter(Boolean),
-        owner_user_id: user.id,
+        owner_user_id: session.user.id,
         is_official: false,
         status: "pending",
         is_purchasable: true,

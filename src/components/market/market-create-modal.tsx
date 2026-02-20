@@ -24,7 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { createClient } from "@/lib/supabase/client";
+import { useSession } from "@/lib/auth-client";
 
 interface MarketCreateModalProps {
   nationId: string;
@@ -44,16 +44,13 @@ export const MarketCreateModal = ({
     type: "sell" as "sell" | "buy_request",
     currency: "point",
   });
+  const { data: session } = useSession();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
 
-    if (!user) {
+    if (!session?.user) {
       toast.error("ログインが必要です");
       setLoading(false);
       return;
@@ -62,7 +59,7 @@ export const MarketCreateModal = ({
     try {
       await createMarketItemAction({
         nation_id: nationId,
-        seller_id: user.id,
+        seller_id: session.user.id,
         seller_group_id: null,
         title: formData.title,
         description: formData.description,

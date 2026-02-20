@@ -39,28 +39,28 @@ export const IDENTITY_CONFIG = {
       id: "mask-ai-chan",
       name: "AIちゃん",
       label: "仮面A",
-      color: "#f472b6",
+      color: "#ec4899", // pink-500
       img: "/images/characters/identity/ai-chan.png",
     },
     {
       id: "mask-ai-kun",
       name: "AI君",
       label: "仮面B",
-      color: "#60a5fa",
+      color: "#3b82f6", // blue-500
       img: "/images/characters/identity/ai-kun.png",
     },
     {
       id: "mask-ao-chan",
       name: "AOちゃん",
       label: "仮面C",
-      color: "#818cf8",
+      color: "#8b5cf6", // violet-500
       img: "/images/characters/identity/ao-chan.png",
     },
     {
       id: "mask-ao-kun",
       name: "AO君",
       label: "仮面D",
-      color: "#34d399",
+      color: "#10b981", // emerald-500
       img: "/images/characters/identity/ao-kun.png",
     },
   ],

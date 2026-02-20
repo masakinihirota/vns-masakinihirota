@@ -1,29 +1,32 @@
 import { useState } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { signIn } from "@/lib/auth-client";
 
+/**
+ * GitHub ソーシャルログインのカスタムフック
+ * Better-Auth の signIn.social API を使用してGitHub OAuth ログインを実行します
+ */
 export const useGitHubLoginLogic = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSocialLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const supabase = createClient();
     setIsLoading(true);
     setError(null);
 
-    const { error } = await supabase.auth.signInWithOAuth({
+    const result = await signIn.social({
       provider: "github",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback?next=/home`,
-      },
+      callbackURL: "/home",
     });
 
-    if (error) {
-      setError(error.message);
+    if (result.error) {
+      setError(result.error.message ?? "ログインに失敗しました");
       setIsLoading(false);
     }
+    // 成功時は Better-Auth が自動的にリダイレクトを処理
   };
 
+  // GitHub認証で得られる機能リスト（表示用データ）
   const features = [
     { label: "ルートアカウント", value: "1", isNegative: false },
     { label: "ユーザープロフィール", value: "15枚", isNegative: false },

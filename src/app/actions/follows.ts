@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import * as followsDb from "@/lib/db/follows";
 
 export async function followProfileAction(

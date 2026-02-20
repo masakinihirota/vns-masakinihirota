@@ -1,22 +1,20 @@
 import path from "path";
+import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
+import { auth } from "@/lib/auth";
 import { createClient } from "@/lib/supabase/server";
 import { parseAnimeData, parseMangaData } from "@/lib/works/seed-utils";
 
 export async function POST(_req: NextRequest) {
-  const supabase = await createClient();
-
-  // Ideally verify admin here, but for now we trust the caller (dev only)
-  // or check for a secret key header
-
-  // NOTE: In a real app, strict admin check is required.
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-  if (authError || !user) {
+  // Better-Auth による認証チェック
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session?.user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  const supabase = await createClient();
 
   // Double check if user is root/admin if needed, skipping for MVP/dev speed
 
@@ -42,7 +40,7 @@ export async function POST(_req: NextRequest) {
         ...w,
         is_official: true,
         status: "public",
-        owner_user_id: user.id, // Provide the seeder as owner
+        owner_user_id: session.user.id, // シーダーをオーナーとして設定
       }));
 
       const { error } = await supabase.from("works").insert(batch);

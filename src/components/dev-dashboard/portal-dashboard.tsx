@@ -296,6 +296,18 @@ export function PortalDashboard() {
           desc: "体験版用のプロフィール作成フロー（LocalStorage保存）。",
           badge: "New",
         },
+        {
+          title: "スキル比較マンダラ",
+          path: "/skill-comparison",
+          desc: "ユーザーと候補者のスキル習熟度を3x3のマンダラチャートで比較分析。",
+          badge: "New",
+        },
+        {
+          title: "プロフィール比較",
+          path: "/comparison",
+          desc: "複数の自己プロファイルと候補者プロファイルを作品軸で比較分析。",
+          badge: "New",
+        },
       ],
     },
     {

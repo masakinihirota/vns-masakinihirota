@@ -2,6 +2,11 @@ import { type NextRequest, NextResponse } from "next/server";
 import { updateSession } from "@/lib/supabase/session";
 
 export async function proxy(request: NextRequest) {
+  // [Technical Debt] Supabase Session Management
+  // 現状、Supabase Auth と Better-Auth が共存しています。
+  // Better-Auth への完全移行時には、この updateSession を Better-Auth の Middleware に置き換えるか、
+  // 完全に削除してアプリケーション側でセッション管理を行う必要があります。
+  // Ref: https://www.better-auth.com/docs/concepts/middleware
   const response = await updateSession(request);
 
   // Security Headers for /api/public

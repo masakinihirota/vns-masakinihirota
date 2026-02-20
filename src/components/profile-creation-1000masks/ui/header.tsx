@@ -8,6 +8,7 @@ interface HeaderProps {
   onNameChange: (name: string) => void;
   onSave: () => void;
   onDelete: () => void;
+  error?: string;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   onNameChange,
   onSave,
   onDelete,
+  error,
 }) => {
   const Icon = getMaskIcon(activeProfile.maskId, activeProfile.avatarType);
 
@@ -45,6 +47,11 @@ export const Header: React.FC<HeaderProps> = ({
           <p className="text-lg font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">
             {activeProfile.constellationName}
           </p>
+          {error && (
+            <p className="text-rose-500 dark:text-rose-400 text-sm font-bold mt-2 animate-in fade-in duration-300">
+              ⚠️ {error}
+            </p>
+          )}
         </div>
       </div>
 

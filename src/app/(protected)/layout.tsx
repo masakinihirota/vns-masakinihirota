@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import {
   AppSidebar,
   ConditionalFooter,
@@ -5,32 +6,23 @@ import {
   MainContent,
 } from "@/components/layout";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { getSession } from "@/lib/auth/helper";
 
 export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // 認証チェック
-  // const supabase = await createClient();
-  // const {
-  //   data: { user },
-  //   error,
-  // } = await supabase.auth.getUser();
+  // 開発環境での認証バイパス
+  const isAuthDisabled = process.env.NEXT_PUBLIC_DISABLE_AUTH === "true";
 
-  // ローカルモード（ユーザー登録なし）の確認
-  // Cookieに 'local_mode=true' がある場合は認証をスキップ
-  // const { cookies } = await import("next/headers");
-  // const cookieStore = await cookies();
-  // const isLocalMode = cookieStore.get("local_mode")?.value === "true";
-
-  // 開発環境でも、(protected)配下は基本的に認証を求めるべきだが、
-  // 開発初期の利便性のため、またはユーザー指示により調整可能。
-  // ここでは厳密にチェックする。
-
-  // if ((error || !user) && !isLocalMode) {
-  //   redirect("/login");
-  // }
+  if (!isAuthDisabled) {
+    // Better-Auth によるセッションチェック
+    const session = await getSession();
+    if (!session) {
+      redirect("/login");
+    }
+  }
 
   return (
     <SidebarProvider>

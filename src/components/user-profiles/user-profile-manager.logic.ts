@@ -23,22 +23,21 @@ const fetchProfiles = async (
 ) => {
   try {
     setLoading(true);
-    const { createClient } = await import("@/lib/supabase/client");
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const { getSession } = await import("@/lib/auth-client");
+    const { data: session } = await getSession();
 
-    if (!user) {
+    if (!session?.user) {
       setProfiles([]);
       setLoading(false);
       return;
     }
 
+    const { createClient } = await import("@/lib/supabase/client");
+    const supabase = createClient();
     const { data, error } = await supabase
       .from("user_profiles")
       .select("*")
-      .eq("root_account_id", user.id);
+      .eq("root_account_id", session.user.id);
 
     if (error) {
       console.error("Error fetching profiles:", error);

@@ -10,11 +10,13 @@ import { StepHeader } from "../step-header";
 interface Step2TypeProps {
   activeProfile: Profile;
   onUpdateDraft: (updatedFields: Partial<Profile>) => void;
+  error?: string;
 }
 
 export const Step2Type: React.FC<Step2TypeProps> = ({
   activeProfile,
   onUpdateDraft,
+  error,
 }) => {
   return (
     <section className="transition-colors duration-300">
@@ -23,6 +25,11 @@ export const Step2Type: React.FC<Step2TypeProps> = ({
         title="プロフィールのタイプ"
         subtitle="立脚点の決定"
       />
+      {error && (
+        <div className="mb-6 p-4 rounded-2xl bg-rose-50 dark:bg-rose-900/20 border-2 border-rose-200 dark:border-rose-800 text-rose-600 dark:text-rose-400 font-bold flex items-center gap-3 animate-in slide-in-from-top-2 duration-300">
+          <span className="text-lg">⚠️ {error}</span>
+        </div>
+      )}
       <div className="flex flex-col gap-4 text-left">
         {PROFILE_TYPES.map((type) => {
           const isSelected = activeProfile.selectedTypeId === type.id;

@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { auth } from "@/auth";
+import { auth } from "@/lib/auth/helper";
 import { getPointHistory, grantPoints } from "@/lib/db/rewards";
 
 export async function claimDailyBonusAction() {

@@ -1,7 +1,7 @@
 "use client";
 
-import { SessionProvider as NextAuthSessionProvider } from "next-auth/react";
-
 export function SessionProvider({ children }: { children: React.ReactNode }) {
-  return <NextAuthSessionProvider>{children}</NextAuthSessionProvider>;
+  // Better Auth doesn't require a session provider for client-side hooks
+  // The useSession hook in @/lib/auth-client handles everything
+  return <>{children}</>;
 }
