@@ -2,17 +2,14 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+開発環境をセットアップするには [docs/dev-setup.md](docs/dev-setup.md) を参照してください。
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# 開発サーバーを起動
 pnpm dev
-# or
-bun dev
 ```
+
+デフォルトでは認証をスキップして即座にテストを開始められます。
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

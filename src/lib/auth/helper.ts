@@ -1,11 +1,30 @@
 /* eslint-disable no-console */
 
 import { headers } from "next/headers";
+import { cache } from "react";
 import { eq } from "drizzle-orm";
 
 import { auth as serverAuth } from "@/lib/auth";
 import { db as database } from "@/lib/db/client";
 import * as schema from "@/lib/db/schema.postgres";
+import { createDummySession, DUMMY_USERS } from "@/lib/dev-auth";
+
+/**
+ * サーバーサイドで現在のセッション情報を取得します（キャッシュ付き）
+ *
+ * @description
+ * React の `cache()` を使用して、同一リクエスト内でのDB問い合わせを1回に制限します。
+ * これにより、複数のコンポーネント で getSession() を呼び出した場合でも、
+ * DB へのアクセスは1度のみになります。
+ *
+ * **開発時ダミー機能:**
+ * NEXT_PUBLIC_USE_REAL_AUTH=false の場合、ダミー認証を使用します。
+ *
+ *
+ * **優先順位ルール:**
+ * 1. OAuth (Google/GitHub) > 匿名
+ * 2. 同じカテゴリなら last_used_at が新しい順
+ */
 
 /**
  * ユーザーの認証方法情報を取得（優先順位付き）
@@ -50,36 +69,21 @@ async function getUserAuthMethods(userId: string) {
 
 /**
  * サーバーサイドで現在のセッション情報を取得します。
+ * React の cache() で同一リクエスト内では1回のみ実行されます。
  *
- * @description
- * Better-Auth の `api.getSession` を使用してセッションを検証します。
- * Better Auth が失敗する場合、DBで直接セッショントークンを検証します。
- *
- * **優先順位ルール:**
- * 1. OAuth (Google/GitHub) > 匿名
- * 2. 同じカテゴリなら last_used_at が新しい順
- *
- * **セキュリティ注意事項:**
- * - セッショントークンは絶対にログに出力しないこと
- * - PII (個人識別情報) は本番環境でログ出力禁止
- * - セッション有効期限を必ずチェック
- *
- * @returns {Promise<Object|null>} セッション情報、または無効な場合は null
- * @returns {Object} return.session - セッションデータ
- * @returns {Object} return.user - ユーザーデータ
- *
- * @example
- * const session = await getSession();
- * if (session?.user) {
- *   console.log("ログイン済み:", session.user.email);
- * }
- *
- * @see {@link https://better-auth.com/docs/session Better Auth Session Docs}
+ * @see https://react.dev/reference/react/cache
  */
-export const getSession = async () => {
+export const getSession = cache(async () => {
   try {
+    // 開発時ダミー認証機能
+    if (process.env.NEXT_PUBLIC_USE_REAL_AUTH !== "true" && process.env.NODE_ENV === "development") {
+      const dummySession = createDummySession("user");
+      console.log("[getSession] MOCK AUTH - Using dummy user:", dummySession.user.email);
+      return dummySession;
+    }
+
     const headersList = await headers();
-    const cookieHeader = headersList.get('cookie');
+    const cookieHeader = headersList.get("cookie");
 
     // Extract token from cookie
     const tokenMatch = cookieHeader?.match(/better-auth\.session_token=([^;]+)/);
@@ -93,17 +97,16 @@ export const getSession = async () => {
     // If Better Auth fails but we have a token, try direct DB lookup
     if (!betterAuthResult && tokenFromCookie) {
       const session = await database.query.sessions.findFirst({
-        where: (sessions, { eq }) => eq(sessions.token, tokenFromCookie),
+        where: (sessions, { eq: eqDrizzle }) => eqDrizzle(sessions.token, tokenFromCookie),
       });
 
       if (session) {
-
         // Check expiration
         if (new Date(session.expiresAt) < new Date()) {
           return null;
         }
 
-        // Development環境: 24時間以上前のセッションは除外（起動時の古いセッション排除）
+        // Development環境: 24時間以上前のセッションは除外
         if (process.env.NODE_ENV === "development") {
           const createdAtTime = new Date(session.createdAt).getTime();
           const nowTime = new Date().getTime();
@@ -112,47 +115,38 @@ export const getSession = async () => {
             return null;
           }
         }
+
         // If session is valid, fetch the user
         const user = await database.query.users.findFirst({
-          where: (users, { eq }) => eq(users.id, session.userId),
+          where: (users, { eq: eqDrizzle }) => eqDrizzle(users.id, session.userId),
         });
 
         if (user) {
-          console.log("[getSession] Custom session valid for user (cookie):", user.id);
           betterAuthResult = { user: user as any, session };
         }
       }
     }
 
-    // セッション取得後、認証方法の優先順位情報を追加
+    // Add auth methods priority info
     if (betterAuthResult?.user) {
       const authMethods = await getUserAuthMethods(betterAuthResult.user.id);
 
-      if (authMethods.length > 0) {
-        console.log(
-          "[getSession] Auth methods for user:",
-          authMethods.map(m => `${m.authType}(used:${m.lastUsedAt})`).join(", ")
-        );
-
-        // セッションに認証方法情報を追加
-        return {
-          ...betterAuthResult,
-          authMethods,
-          primaryAuthType: authMethods[0]?.authType || "unknown",
-        };
-      }
+      return {
+        ...betterAuthResult,
+        authMethods,
+        primaryAuthType: authMethods[0]?.authType || "oauth",
+      };
     }
 
     return betterAuthResult;
   } catch (error) {
     console.error(
       "[getSession] Error:",
-      error instanceof Error ? error.message : String(error),
-      error instanceof Error ? error.stack : ""
+      error instanceof Error ? error.message : String(error)
     );
     return null;
   }
-};
+});
 
 /**
  * 互換性のための auth エクスポート (getSession と同等)

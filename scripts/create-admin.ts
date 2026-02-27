@@ -13,6 +13,7 @@ import { sql } from 'drizzle-orm';
 import { db } from '../src/lib/db/client';
 import * as schema from '../src/lib/db/schema.postgres';
 import { hash } from 'bcrypt';
+import { v4 as uuidv4 } from 'uuid';
 
 const SALT_ROUNDS = 10;
 
@@ -61,7 +62,10 @@ async function createAdminUser() {
 
     // 管理者ユーザーを作成
     console.log('👤 管理者ユーザーを作成中...');
+    const adminId = uuidv4();
+
     const [newAdmin] = await db.insert(schema.users).values({
+      id: adminId,
       email: adminEmail,
       name: adminName,
       role: 'admin',
@@ -75,24 +79,20 @@ async function createAdminUser() {
     console.log(`   メール: ${newAdmin.email}`);
     console.log(`   ロール: ${newAdmin.role}\n`);
 
-    // パスワード認証情報を作成
-    console.log('🔑 パスワード認証情報を登録中...');
-    await db.insert(schema.accounts).values({
-      userId: newAdmin.id,
-      accountId: adminEmail, // email-password認証の場合、accountIdにメールアドレスを使用
-      providerId: 'email', // Better Authのemail-password provider
-      password: hashedPassword,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
+    // NOTE: Better Auth は OAuth-only 設定のため、email-password 認証は無効化
+    // admin ユーザーは以下の方法で作成/昇格してください:
+    // 1. OAuth (Google/GitHub) でログイン
+    // 2. DB で直接 role を 'admin' に更新
+    //    UPDATE users SET role = 'admin' WHERE email = '...';
+    // 3. または、このスクリプト実行後、admin ロールに変更してください
 
-    console.log('✅ パスワード認証情報を登録しました。\n');
     console.log('🎉 管理者ユーザーの作成が完了しました！\n');
-    console.log('次のステップ:');
-    console.log(`1. http://localhost:3000/login にアクセス`);
-    console.log(`2. メール: ${adminEmail}`);
-    console.log(`3. パスワード: ${adminPassword}`);
-    console.log('4. でログインしてください。\n');
+    console.log('next のステップ:');
+    console.log('1. OAuth (Google/GitHub) でログイン');
+    console.log('2. DB で以下のコマンドを実行:');
+    console.log(`   UPDATE users SET role = 'admin' WHERE email = '${adminEmail}';\n`);
+    console.log('または開発環境で .env.local を以下のように設定:');
+    console.log('   NEXT_PUBLIC_USE_REAL_AUTH=false\n');
 
   } catch (error) {
     console.error('❌ エラーが発生しました:', error);

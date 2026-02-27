@@ -20,10 +20,10 @@ export default async function AuthLayout({
   children: React.ReactNode;
 }) {
   // 開発環境での認証バイパス
-  const isAuthDisabled = process.env.NEXT_PUBLIC_DISABLE_AUTH === "true";
+  const useRealAuth = process.env.NEXT_PUBLIC_USE_REAL_AUTH === "true";
   let currentUser: Awaited<ReturnType<typeof getSession>>["user"] | null = null;
 
-  if (!isAuthDisabled) {
+  if (useRealAuth) {
     try {
       // Better-Auth によるセッションチェック
       const session = await getSession();

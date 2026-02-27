@@ -9,10 +9,11 @@ if (!isProduction) {
 }
 
 export default defineConfig({
-  schema: './src/db/schema.ts',
+  schema: './src/lib/db/schema.postgres.ts',
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
+  // NOTE: コネクションプーリングは DB クライアント (src/lib/db/client.ts) で設定
 });

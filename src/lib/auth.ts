@@ -1,47 +1,55 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { db } from "@/db/drizzle"; // your drizzle instance
+import { db } from "@/lib/db/client";
+import * as schema from "@/lib/db/schema.postgres";
 import { admin } from "better-auth/plugins/admin";
 import { nextCookies } from "better-auth/next-js";
-import { schema } from "@/db/schema";
+// import { rateLimit } from "better-auth/plugins"; // TODO: Better Auth 1.4.19 では利用不可 v1.5+ で対応予定
 
+/**
+ * OAuth特化型の Better Auth 設定
+ *
+ * @description
+ * メール/パスワード認証を無効化し、OAuth（Google/GitHub）のみを使用します。
+ * 将来的に他のOAuth（Facebook, Twitterなど）を追加する場合は、
+ * socialProviders オブジェクトに追加してください。
+ */
 export const auth = betterAuth({
-    // 1) 認証情報は `drizzle` 経由の `Postgres` へ格納する（Better Authが自動でテーブルを管理）
-    database: drizzleAdapter(db, {
-      provider: "pg",
-      schema: schema,
-    }),
+  database: drizzleAdapter(db, {
+    provider: "pg",
+    schema: schema,
+  }),
 
-  // 防衛ライン②: メール/パスワード認証 (bcrypt等は内部で自動処理)
-    // 認証はemail + パスワードで行う（必要に応じてOAuthも追加可能）
-  emailAndPassword: {
-    enabled: true,
-  },
+  // ❌ メール/パスワード認証は無効化（OAuth-only）
+  // emailAndPassword: { enabled: false },
 
-    // 防衛ライン③: セッション管理 (自動ログアウト)
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7日 (seconds)
     updateAge: 60 * 60 * 24 * 1, // 1日ごとに有効期限を更新
-
-    // 短期サンプル
-    // expiresIn: 60 * 30, // 30分 (seconds)
-    // updateAge: 60 * 5,  // 5分ごとに有効期限を更新
   },
 
-    // 防衛ライン④: 認可 (Role管理)
-  // NextAuthのように手動で型拡張せずとも、プラグインを入れるだけで完了
   plugins: [
     admin(),
-    nextCookies(), // 常に配列の最後に配置
+    nextCookies(), // 常に最後に配置
   ],
+
+  // OAuth プロバイダー設定
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     },
     github: {
-      clientId: process.env.GITHUB_CLIENT_ID as string,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      clientId: process.env.GITHUB_CLIENT_ID || "",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
     },
+    // 将来の拡張例:
+    // facebook: {
+    //   clientId: process.env.FACEBOOK_CLIENT_ID || "",
+    //   clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "",
+    // },
   },
 });
+
+export type Session = typeof auth.$Infer.Session;
+export type User = typeof auth.$Infer.Session.user;
