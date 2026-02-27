@@ -9,7 +9,17 @@ import * as schema from "@/lib/db/schema.postgres";
 
 /**
  * ユーザーの認証方法情報を取得（優先順位付き）
- * OAuth (Google/GitHub) > 匿名
+ *
+ * @description OAuth (Google/GitHub) を優先的に返します。
+ * これにより、匿名ログインからOAuthへ移行したユーザーに対して
+ * より信頼性の高い認証情報を提供します。
+ *
+ * @param {string} userId - ユーザーID
+ * @returns {Promise<Array>} 優先順位付き認証方法の配列
+ *
+ * @example
+ * const methods = await getUserAuthMethods("user123");
+ * // [{provider: "google", ...}, {provider: "anonymous", ...}]
  */
 async function getUserAuthMethods(userId: string) {
   try {
@@ -40,50 +50,56 @@ async function getUserAuthMethods(userId: string) {
 
 /**
  * サーバーサイドで現在のセッション情報を取得します。
- * Better-Auth の `api.getSession` を使用。
- * Better Auth が失敗する場合は、カスタム DB lookup で検証します。
  *
- * 複数の認証方法がある場合、優先順位に基づいて情報を返します：
+ * @description
+ * Better-Auth の `api.getSession` を使用してセッションを検証します。
+ * Better Auth が失敗する場合、DBで直接セッショントークンを検証します。
+ *
+ * **優先順位ルール:**
  * 1. OAuth (Google/GitHub) > 匿名
  * 2. 同じカテゴリなら last_used_at が新しい順
  *
- * @returns セッションオブジェクトとユーザーオブジェクト、認証方法の優先順位を含む Promise、またはエラーの場合は null
+ * **セキュリティ注意事項:**
+ * - セッショントークンは絶対にログに出力しないこと
+ * - PII (個人識別情報) は本番環境でログ出力禁止
+ * - セッション有効期限を必ずチェック
+ *
+ * @returns {Promise<Object|null>} セッション情報、または無効な場合は null
+ * @returns {Object} return.session - セッションデータ
+ * @returns {Object} return.user - ユーザーデータ
+ *
+ * @example
+ * const session = await getSession();
+ * if (session?.user) {
+ *   console.log("ログイン済み:", session.user.email);
+ * }
+ *
+ * @see {@link https://better-auth.com/docs/session Better Auth Session Docs}
  */
 export const getSession = async () => {
   try {
     const headersList = await headers();
     const cookieHeader = headersList.get('cookie');
-    console.log("[getSession] Cookie header:", cookieHeader);
 
     // Extract token from cookie
     const tokenMatch = cookieHeader?.match(/better-auth\.session_token=([^;]+)/);
     const tokenFromCookie = tokenMatch?.[1];
-    console.log("[getSession] Token from cookie:", tokenFromCookie);
 
     // Try Better Auth first
     let betterAuthResult = await serverAuth.api.getSession({
       headers: headersList,
     });
 
-    console.log("[getSession] Better Auth result:", betterAuthResult ? `User(${betterAuthResult.user.id})` : "null");
-
     // If Better Auth fails but we have a token, try direct DB lookup
     if (!betterAuthResult && tokenFromCookie) {
-      console.log("[getSession] Better Auth returned null, attempting custom validation with cookie token");
-
       const session = await database.query.sessions.findFirst({
         where: (sessions, { eq }) => eq(sessions.token, tokenFromCookie),
       });
 
       if (session) {
-        console.log("[getSession] Session found in DB from cookie token:", {
-          id: session.id,
-          userId: session.userId,
-        });
 
         // Check expiration
         if (new Date(session.expiresAt) < new Date()) {
-          console.log("[getSession] Session expired");
           return null;
         }
 
@@ -93,7 +109,6 @@ export const getSession = async () => {
           const nowTime = new Date().getTime();
           const ageInHours = (nowTime - createdAtTime) / (1000 * 60 * 60);
           if (ageInHours > 24) {
-            console.log(`[getSession] Session too old in dev (${ageInHours.toFixed(1)}h), ignoring`);
             return null;
           }
         }

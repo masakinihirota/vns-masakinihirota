@@ -2,6 +2,10 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Link from "next/link";
 
+/**
+ * 認証済みユーザー用ホームページ
+ * proxy.tsで認証チェック済み
+ */
 export default async function HomePage() {
     const session = await auth.api.getSession({ headers: await headers() });
 
@@ -40,8 +44,8 @@ export default async function HomePage() {
                             <dt className="text-sm font-medium text-gray-500">ロール</dt>
                             <dd className="mt-1">
                                 <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${session?.user?.role === "admin"
-                                        ? "bg-purple-100 text-purple-800"
-                                        : "bg-blue-100 text-blue-800"
+                                    ? "bg-purple-100 text-purple-800"
+                                    : "bg-blue-100 text-blue-800"
                                     }`}>
                                     {session?.user?.role || "user"}
                                 </span>

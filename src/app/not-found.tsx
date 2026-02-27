@@ -2,9 +2,13 @@
 
 import Link from "next/link";
 
+/**
+ * 404 Not Foundページ
+ * アクセシビリティ対応済み
+ */
 export default function NotFound() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-gray-100 px-4">
+        <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-gray-50 to-gray-100 px-4">
             <div className="max-w-md w-full text-center">
                 {/* 404アイコン */}
                 <div className="mb-8">
@@ -14,6 +18,8 @@ export default function NotFound() {
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
+                            role="img"
+                            aria-label="警告アイコン"
                         >
                             <path
                                 strokeLinecap="round"
@@ -23,7 +29,9 @@ export default function NotFound() {
                             />
                         </svg>
                     </div>
-                    <h1 className="text-6xl font-bold text-gray-900 mb-2">404</h1>
+                    <h1 className="text-6xl font-bold text-gray-900 mb-2" aria-label="エラーコード 404">
+                        404
+                    </h1>
                     <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                         ページが見つかりません
                     </h2>
@@ -35,16 +43,18 @@ export default function NotFound() {
                 </p>
 
                 {/* アクションボタン */}
-                <div className="space-y-3">
+                <div className="space-y-3" role="navigation" aria-label="エラーページナビゲーション">
                     <Link
                         href="/"
-                        className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200"
+                        className="block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        aria-label="トップページに戻る"
                     >
                         トップページに戻る
                     </Link>
                     <button
                         onClick={() => window.history.back()}
-                        className="block w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-6 rounded-lg transition-colors duration-200"
+                        className="block w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+                        aria-label="前のページに戻る"
                     >
                         前のページに戻る
                     </button>
@@ -54,7 +64,11 @@ export default function NotFound() {
                 <div className="mt-8 pt-8 border-t border-gray-200">
                     <p className="text-sm text-gray-500">
                         問題が解決しない場合は、
-                        <Link href="/login" className="text-blue-600 hover:text-blue-700 underline ml-1">
+                        <Link
+                            href="/login"
+                            className="text-blue-600 hover:text-blue-700 underline ml-1 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                            aria-label="ログインページへ移動"
+                        >
                             ログインページ
                         </Link>
                         からお試しください。
