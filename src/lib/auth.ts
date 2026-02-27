@@ -7,6 +7,31 @@ import { nextCookies } from "better-auth/next-js";
 // import { rateLimit } from "better-auth/plugins"; // TODO: Better Auth 1.4.19 では利用不可 v1.5+ で対応予定
 
 /**
+ * データベース接続文字列の検証
+ *
+ * @description
+ * PostgreSQL への接続に必須な DATABASE_URL が正しく設定されているかを検証します。
+ * 設定がない場合は、明示的にエラーを投げます。
+ */
+function validateDatabaseUrl() {
+  const databaseUrl = process.env.DATABASE_URL;
+
+  if (!databaseUrl) {
+    throw new Error(
+      '[DATABASE] DATABASE_URL is not set. Please configure it in your .env.local or production environment.\n' +
+      'Example: postgresql://user:password@localhost:5432/vns_app'
+    );
+  }
+
+  // 基本的な URL フォーマット検証
+  if (!databaseUrl.startsWith('postgresql://') && !databaseUrl.startsWith('postgres://')) {
+    throw new Error(
+      '[DATABASE] Invalid DATABASE_URL format. It must start with "postgresql://" or "postgres://"'
+    );
+  }
+}
+
+/**
  * OAuth 環境変数の検証
  *
  * @description
@@ -40,7 +65,8 @@ function validateOAuthCredentials() {
   }
 }
 
-// 起動時に OAuth 認証情報をチェック
+// 起動時に環境変数をチェック
+validateDatabaseUrl();
 validateOAuthCredentials();
 
 /**
