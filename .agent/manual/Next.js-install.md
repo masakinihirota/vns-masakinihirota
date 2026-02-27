@@ -1,0 +1,446 @@
+
+
+----------------------------------------
+----------------------------------------
+
+Next.js 16
+Drizzle
+Docker Postgre local版
+Better Auth
+
+/.env
+lib/auth.ts
+
+----------------------------------------
+
+# Next.js 16 インストール
+
+pnpm dlx create-next-app@latest . --yes
+
+秘密鍵の作成
+https://www.better-auth.com/docs/installation
+で作成ボタンが有る
+
+.env 作成
+
+```.env
+BETTER_AUTH_SECRET=j0G9w9Fa05FbGrLZFrrUuz452TQWdyH7
+BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app
+
+DATABASE_URL=
+
+```
+
+
+## Better Auth インストール
+
+インストール | Better Auth
+https://www.better-auth.com/docs/installation
+
+```terminal
+pnpm add better-auth
+
+```
+
+## auth.ts の作成
+
+src\lib\auth.ts
+
+Drizzleを使用
+
+```auth.ts
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { db } from "@/db"; // your drizzle instance
+
+export const auth = betterAuth({
+    database: drizzleAdapter(db, {
+        provider: "pg",
+    }),
+});
+
+```
+
+
+
+## Better Auth CLI
+
+CLI | Better Auth
+https://www.better-auth.com/docs/concepts/cli
+
+```terminal
+Better Auth に必要なスキーマを生成するには、次のコマンドを実行します。
+pnpm dlx @better-auth/cli@latest generate
+
+移行を生成して適用するには、次のコマンドを実行します。
+pnpm dlx drizzle-kit generate # generate the migration file
+
+```
+
+生成: このコマンドは、ORM スキーマまたは SQL 移行ファイルを生成します。
+
+### Drizzle
+
+https://www.better-auth.com/docs/adapters/drizzle
+
+
+#### Drizzle ORMのインストール
+
+始める前に、Drizzleがインストールされ、設定されていることを確認してください。
+
+Drizzle ORM - Why Drizzle?
+https://orm.drizzle.team/docs/overview
+
+📦 <project root>
+ ├ 📂 drizzle
+ ├ 📂 src
+ │   ├ 📂 db
+ │   │  └ 📜 schema.ts
+ │   └ 📜 index.ts
+ ├ 📜 .env
+ ├ 📜 drizzle.config.ts
+ ├ 📜 package.json
+ └ 📜 tsconfig.json
+
+
+
+パッケージをインストールする
+
+```terminla
+pnpm add drizzle-orm pg dotenv
+pnpm add -D drizzle-kit tsx @types/pg
+
+```
+
+
+
+DBに接続の基本形
+
+```??? (base)
+import 'dotenv/config';
+import { drizzle } from 'drizzle-orm/node-postgres';
+const db = drizzle(process.env.DATABASE_URL!);
+
+const result = await db.execute('select 1');
+
+```
+
+テーブルの作成
+
+src/db
+
+src/db/schema.ts
+
+```サンプル
+import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+
+export const usersTable = pgTable("users", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  name: varchar({ length: 255 }).notNull(),
+  age: integer().notNull(),
+  email: varchar({ length: 255 }).notNull().unique(),
+});
+
+```
+
+drizzle.config.ts
+
+```drizzle.config.ts
+import 'dotenv/config';
+import { defineConfig } from 'drizzle-kit';
+
+export default defineConfig({
+  out: './drizzle',
+  schema: './src/db/schema.ts',
+  dialect: 'postgresql',
+  dbCredentials: {
+    url: process.env.DATABASE_URL!,
+  },
+});
+
+```
+
+適用する
+
+```terminl
+直接適用(マイグレーション作成せず)
+npx drizzle-kit push
+
+マイグレーションの作成
+npx drizzle-kit generate
+
+マイグレーションの適用
+npx drizzle-kit migrate
+
+```
+
+データベースのシードとクエリ
+
+```src/index.ts
+import 'dotenv/config';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { eq } from 'drizzle-orm';
+import { usersTable } from './db/schema';
+
+const db = drizzle(process.env.DATABASE_URL!);
+
+async function main() {
+  const user: typeof usersTable.$inferInsert = {
+    name: 'John',
+    age: 30,
+    email: 'john@example.com',
+  };
+
+  await db.insert(usersTable).values(user);
+  console.log('New user created!')
+
+  const users = await db.select().from(usersTable);
+  console.log('Getting all users from the database: ', users)
+  /*
+  const users: {
+    id: number;
+    name: string;
+    age: number;
+    email: string;
+  }[]
+  */
+
+  await db
+    .update(usersTable)
+    .set({
+      age: 31,
+    })
+    .where(eq(usersTable.email, user.email));
+  console.log('User info updated!')
+
+  await db.delete(usersTable).where(eq(usersTable.email, user.email));
+  console.log('User deleted!')
+}
+
+main();
+
+```
+
+
+
+#### テーブル名の変更
+
+Drizzleアダプタは、定義したスキーマがテーブル名と一致することを前提としています。例えば、Drizzleスキーマがuserテーブルを にマッピングしている場合users、スキーマを手動で渡して user テーブルにマッピングする必要があります。
+
+上記の例のように提供されたスキーマ値を変更するか、認証設定のmodelNameプロパティを直接変更することができます。
+
+
+
+#### フィールド名の変更
+
+Drizzleスキーマに渡されたプロパティに基づいてフィールド名をマッピングします。例えば、フィールドemailを に変更したい場合はemail_address、Drizzleスキーマを次のように変更するだけです。
+
+上記の例のようにDrizzleスキーマを変更するか、認証設定のfieldsプロパティを直接変更することもできます。例えば：
+
+
+
+#### 複数のテーブル名の使用
+すべてのテーブルで複数形を使用している場合は、usePluralオプションを渡すだけです。
+
+```テーブル名が複数形のオプション
+export const auth = betterAuth({
+  database: drizzleAdapter(db, {
+    ...
+    usePlural: true,
+  }),
+});
+
+```
+
+
+
+----------------------------------------
+
+#
+
+
+## AI
+
+https://www.better-auth.com/llms.txt
+
+
+
+
+
+
+##
+
+
+
+
+
+##
+
+
+
+
+
+----------------------------------------
+
+#
+
+
+
+
+
+##
+
+
+
+
+
+##
+
+
+
+
+
+----------------------------------------
+
+#
+
+
+
+
+
+##
+
+
+
+
+
+##
+
+
+
+
+
+----------------------------------------
+
+#
+
+
+
+
+
+##
+
+
+
+
+
+##
+
+
+
+
+
+----------------------------------------
+
+#
+
+
+
+
+
+##
+
+
+
+
+
+##
+
+
+
+
+
+----------------------------------------
+
+#
+
+
+
+
+
+##
+
+
+
+
+
+##
+
+
+
+
+
+----------------------------------------
+
+#
+
+
+
+
+
+##
+
+
+
+
+
+##
+
+
+
+
+
+----------------------------------------
+
+#
+
+
+
+
+
+##
+
+
+
+
+
+##
+
+
+
+
+
+----------------------------------------
+
+#
+
+
+
+
+
+##
+
+
+
+
+
+##
+
+
+
+
+
+----------------------------------------
+----------------------------------------
+
+
