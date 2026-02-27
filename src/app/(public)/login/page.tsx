@@ -8,6 +8,9 @@ import {
 } from "@/components/auth";
 import { getSession } from "@/lib/auth/helper";
 
+// 動的レンダリングを強制（headers()を使用するため）
+export const dynamic = 'force-dynamic';
+
 /**
  *
  * @param properties
