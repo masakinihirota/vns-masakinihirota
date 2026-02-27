@@ -1,4 +1,4 @@
-# CLI
+# better-auth CLI
 
 Built-in CLI for managing your project.
 

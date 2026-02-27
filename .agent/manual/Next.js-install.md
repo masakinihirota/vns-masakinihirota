@@ -1,5 +1,10 @@
 
 
+
+npx drizzle-kit push
+
+
+
 ----------------------------------------
 ----------------------------------------
 
@@ -30,6 +35,13 @@ BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app
 DATABASE_URL=
 
 ```
+
+
+DockerでPostgresの作成
+docker-compose.yml
+
+docker compose up -d で DB を起動
+Drizzle のマイグレーションを pnpm db:generate → pnpm db:migrate で適用
 
 
 ## Better Auth インストール
