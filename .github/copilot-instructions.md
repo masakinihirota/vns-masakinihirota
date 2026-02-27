@@ -26,6 +26,32 @@ applyTo: "**"
 - システム全体の振る舞いを検証するテストは、専用のテストディレクトリ（例: `tests/`）に配置します。
 - これにより、システム全体のテストが一元管理され、実行しやすくなります。
 
+# Next.js 16 重要な変更点
+
+**Proxy (旧 Middleware)**:
+- ✅ ファイル名: `src/proxy.ts` (正)
+- ✅ 関数名: `export async function proxy()` (正)
+- ❌ `middleware.ts` や `middleware()` は非推奨（Next.js 16～）
+
+**Async Request APIs**:
+- ✅ `await params`, `await searchParams` (必須)
+- ✅ `await cookies()`, `await headers()`, `await draftMode()` (必須)
+- ❌ 同期的アクセスはエラー
+
+**Caching APIs**:
+- ✅ `revalidateTag(tag, "max")` - 第2引数必須
+- ✅ `updateTag(tag)` - Server Actions専用、即座に反映
+- ✅ `refresh()` - Server Actions専用、キャッシュ外データ更新
+
+**next/image**:
+- minimumCacheTTL: 60秒 → 4時間
+- ローカル画像のクエリ文字列: `images.localPatterns`必須
+
+**Parallel Routes**:
+- すべてのスロットに `default.js` 必須
+
+詳細は `.agent/rules/coding-standards.md` の「Next.js 16 Specific Rules」を参照
+
 # その他
 
 GitHub Copilot の返信の最後に、なにか Tips と関連するアドバイスがありましたら教えて下さい。
