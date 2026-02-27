@@ -29,8 +29,8 @@ psql -d $DATABASE_URL -f drizzle/rls-policies.sql
 
 ```sql
 -- RLS が有効か確認
-SELECT schemaname, tablename, rowsecurity 
-FROM pg_tables 
+SELECT schemaname, tablename, rowsecurity
+FROM pg_tables
 WHERE tablename IN ('user', 'session', 'account', 'verification');
 
 -- 結果例
@@ -74,8 +74,8 @@ export async function setCurrentUserId(userId: string): Promise<void> {
 CREATE ROLE anonymous_user;
 
 -- RLS ポリシーで「他のユーザーのデータは見えない」を強制
-ALTER DEFAULT PRIVILEGES IN SCHEMA public 
-  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES 
+ALTER DEFAULT PRIVILEGES IN SCHEMA public
+  GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES
   TO anonymous_user;
 ```
 
@@ -162,7 +162,7 @@ log_connections = on
 log_disconnections = on
 
 -- RLS 違反ログ
-SELECT * FROM pg_stat_statements 
+SELECT * FROM pg_stat_statements
 WHERE query LIKE '%permission denied%';
 ```
 

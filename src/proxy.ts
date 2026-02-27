@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-import { ROUTES, PUBLIC_PATHS } from "@/config/routes";
+import { ROUTES, PUBLIC_PATHS, STATIC_PATHS } from "@/config/routes";
 import { createDummySession } from "@/lib/dev-auth";
 
 // 環境変数で制御
@@ -64,6 +64,7 @@ export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
+  const isStaticPath = STATIC_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
   const isLandingPath = pathname === ROUTES.LANDING;
   const isAdminPath = pathname.startsWith(ROUTES.ADMIN);
 
@@ -100,6 +101,11 @@ export async function proxy(request: NextRequest) {
 
   // ケース1: ランディングページへのアクセス
   if (isLandingPath) {
+    return NextResponse.next();
+  }
+
+  // ケース1.5: 静的ページ（FAQ、HELP）へのアクセス（認証不要）
+  if (isStaticPath && !isLandingPath) {
     return NextResponse.next();
   }
 

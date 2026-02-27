@@ -294,9 +294,16 @@ https://www.better-auth.com/llms.txt
 
 ----------------------------------------
 
-#
+# NeonDB
+
+Connect your app to Neon with a single command
+! npx neonctl@latest --force-auth init --agent copilot
 
 
+
+# keep Neon credentials secure: do not expose them to client-side code
+
+DATABASE_URL='postgresql://neondb_owner:npg_Nqr2lFXLva3m@ep-spring-resonance-a1kmgeez-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
 
 
 
