@@ -3,11 +3,13 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/db/drizzle"; // your drizzle instance
 import { admin } from "better-auth/plugins/admin";
 import { nextCookies } from "better-auth/next-js";
+import { schema } from "@/db/schema";
 
 export const auth = betterAuth({
     // 1) 認証情報は `drizzle` 経由の `Postgres` へ格納する（Better Authが自動でテーブルを管理）
     database: drizzleAdapter(db, {
-        provider: "pg",
+      provider: "pg",
+      schema: schema,
     }),
 
   // 防衛ライン②: メール/パスワード認証 (bcrypt等は内部で自動処理)
