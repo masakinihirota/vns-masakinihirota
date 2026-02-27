@@ -41,7 +41,7 @@ describe("useAnonymousLoginLogic", () => {
     const mockFetch = vi.mocked(global.fetch);
     mockFetch.mockResolvedValue({
       ok: true,
-      json: async () => ({ success: true, redirectURL: "/home" }),
+      json: async () => ({ success: true, redirectURL: "/" }),
     } as Response);
 
     const { result } = renderHook(() => useAnonymousLoginLogic());
@@ -67,7 +67,7 @@ describe("useAnonymousLoginLogic", () => {
     });
 
     await waitFor(() => {
-      expect(mockPush).toHaveBeenCalledWith("/home");
+      expect(mockPush).toHaveBeenCalledWith("/");
       expect(mockRefresh).toHaveBeenCalled();
     });
   });

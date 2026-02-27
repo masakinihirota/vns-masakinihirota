@@ -20,7 +20,7 @@ export const useGitHubLoginLogic = () => {
     try {
       const result = await signIn.social({
         provider: "github",
-        callbackURL: "/home",
+        callbackURL: "/",
       });
 
       if (result.error) {

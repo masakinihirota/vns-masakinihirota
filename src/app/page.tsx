@@ -1,5 +1,7 @@
 "use client";
+import { LogoutButton } from "@/components/auth/logout-button/logout-button";
 import { signUp } from "@/lib/auth-client";
+import Link from "next/link";
 
 export default function Home() {
 
@@ -25,6 +27,13 @@ export default function Home() {
       >
         Sign Up
       </button>
+
+      {/* ログインボタン */}
+
+      <Link href="/login">Login</Link>
+      {/* ログアウトボタン */}
+      {/* 開発:コンソールに出力 */}
+      <LogoutButton />
     </div>
   );
 }

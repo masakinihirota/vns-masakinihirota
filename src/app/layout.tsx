@@ -44,6 +44,7 @@ export default function RootLayout({
         >
           {children}
         </ThemeProvider>
+        {/* Webアプリのどこからでも通知が可能 */}
         <Toaster />
       </body>
     </html>

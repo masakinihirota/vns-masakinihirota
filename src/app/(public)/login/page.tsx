@@ -22,7 +22,7 @@ export default async function Page(properties: {
   const session = await getSession();
 
   if (session) {
-    redirect("/home");
+    redirect("/");
   }
 
   const searchParameters = await properties.searchParams;
