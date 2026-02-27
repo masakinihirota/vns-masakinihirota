@@ -4,9 +4,28 @@ import { auth } from "@/lib/auth";
 import { ROUTES, PUBLIC_PATHS } from "@/config/routes";
 import { createDummySession } from "@/lib/dev-auth";
 
-// 環境変数で郸覚を制御
+// 環境変数で制御
 const DEBUG_LOGGING = process.env.PROXY_DEBUG === 'true';
 const USE_REAL_AUTH = process.env.NEXT_PUBLIC_USE_REAL_AUTH === 'true';
+
+/**
+ * 本番環境でのセキュリティ検証
+ *
+ * @description
+ * 本番環境ではダミー認証を使用することは許可されません。
+ * これにより、意図しない認証無効化を防止します。
+ */
+function validateProductionAuth() {
+  if (process.env.NODE_ENV === 'production' && !USE_REAL_AUTH) {
+    throw new Error(
+      '[SECURITY] USE_REAL_AUTH must be explicitly set to "true" in production environment. ' +
+      'Dummy authentication is not allowed in production.'
+    );
+  }
+}
+
+// 起動時にセキュリティ検証を実行
+validateProductionAuth();
 
 /**
  * 条件付きログ出力関数
@@ -61,9 +80,19 @@ export async function proxy(request: NextRequest) {
         headers: await headers(),
       });
     } catch (error) {
-      log('error', 'Session retrieval failed');
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorStack = error instanceof Error ? error.stack : undefined;
+
+      log('error', `[AUTH_ERROR] Session retrieval failed: ${errorMessage}`);
+
+      // 開発環境でのみスタックトレースを出力
+      if (process.env.DEBUG_LOGGING === 'true' && errorStack) {
+        console.error('[Proxy][Stack Trace]', errorStack);
+      }
+
+      // 保護されたパス（非公開・非ランディング）へのアクセス時はランディングへリダイレクト
       if (!isPublicPath && !isLandingPath) {
-        log('warn', 'Redirecting to landing due to session error', { path: pathname });
+        log('warn', `[REDIRECT_TO_LANDING] Unauthenticated access to protected path: ${pathname}`);
         return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
       }
     }
@@ -82,13 +111,18 @@ export async function proxy(request: NextRequest) {
 
   // ケース3：未ログイン ＋ 保護されたパスにアクセス
   if (!session && !isPublicPath) {
-    log('info', 'Unauthenticated user accessing protected path, redirecting to /', { path: pathname });
+    log('warn', `[UNAUTHENTICATED_ACCESS] Unauthenticated user accessing protected: ${pathname}`);
     return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
   }
 
   // ケース4：Admin専用パス ＋ 管理者以外がアクセス
   if (isAdminPath && session?.user?.role !== "admin") {
-    log('warn', 'Unauthorized admin access attempt', { path: pathname });
+    // セキュリティイベント: 権限のないユーザーが管理画面にアクセス
+    const userEmail = session?.user?.email || "unknown";
+    const userRole = session?.user?.role || "unauthenticated";
+    log('error',
+      `[SECURITY_EVENT] Unauthorized admin access attempt - User: ${userEmail}, Role: ${userRole}, Path: ${pathname}`
+    );
     return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
   }
 

@@ -72,3 +72,18 @@ export const authClient = createAuthClient({
 export const { useSession, signIn, signUp, signOut } = authClient;
 ```
 
+## 8. Related Rules
+
+詳細な実装ガイドは以下を参照してください:
+
+- **[Strict Review Standards](./strict-review-standards.md)**:
+  - 環境変数検証 (OAuth, 本番環境)
+  - Database Schema Design Rules (RLS, インデックス, N+1 対策)
+  - Error Handling & Logging (セキュリティイベント記録)
+  - Testing & TDD Requirements
+
+- **[Coding Standards](./coding-standards.md)**: 基本的なコーディング標準
+
+- **[Test Workflow](..skills/test-workflow/SKILL.md)**: テスト駆動開発ガイド
+
+

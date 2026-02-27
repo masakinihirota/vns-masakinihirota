@@ -25,7 +25,7 @@ const AdminPage: NextPage = async () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+        <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100">
             {/* ヘッダー */}
             <div className="bg-white shadow-sm border-b border-gray-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -181,7 +181,7 @@ const AdminPage: NextPage = async () => {
                 {/* 重要な通知 */}
                 <div className="mt-8 bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
                     <div className="flex">
-                        <div className="flex-shrink-0">
+                        <div className="shrink-0">
                             <span className="text-xl">⚠️</span>
                         </div>
                         <div className="ml-4">

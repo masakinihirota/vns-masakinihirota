@@ -234,3 +234,21 @@ export default function Default() {
 **参考**:
 - [Next.js 16 公式アップグレードガイド](https://nextjs.org/docs/app/guides/upgrading/version-16)
 - [Next.js 16 リリースノート](https://nextjs.org/blog/next-16)
+
+## 5. Strict Review Standards
+
+レビュー「現在のアプリを厳しくレビューしてください」で指摘された内容に基づくコーディングルールです。
+
+詳細は [Strict Review Standards](./strict-review-standards.md) を参照:
+
+- **環境変数検証**: OAuth credentials、本番環境設定の起動時検証
+- **Database Schema Rules**: RLS、インデックス戦略、タイムスタンプ型、N+1 対策
+- **Error Handling & Logging**: エラーメッセージ詳細化、セキュリティイベント記録
+- **Testing & TDD**: クリティカル機能のテスト必須化
+
+特に以下は **Critical** レベルの誤りです:
+
+- OAuth credentials の空文字列フォールバック
+- 本番環境でのダミー認証有効化
+- RLS ポリシーなしでの個人情報テーブル公開
+- エラー情報の無視

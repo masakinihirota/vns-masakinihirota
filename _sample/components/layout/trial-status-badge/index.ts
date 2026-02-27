@@ -1,1 +1,0 @@
-export { TrialStatusBadge } from "./TrialStatusBadge";

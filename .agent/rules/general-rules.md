@@ -60,3 +60,14 @@ trigger: always_on
 **シンプルさを最優先**: あらゆる変更を可能な限りシンプルにする。影響するコードを最小限に留める。
 **手を抜かない**: 根本原因を突き止める。一時しのぎの修正はしない。シニアエンジニアの水準で臨む。
 **影響を最小化する**: 変更は必要な箇所だけに留める。バグを新たに持ち込まない。
+
+## コード品質基準
+
+**厳格なコード審査基準** (.agent/rules/strict-review-standards.md) に従うこと。特にクリティカルな項目:
+
+- 🔴 **環境変数検証**: OAuth credentials と本番環境設定は起動時に検証
+- 🔴 **Database Security**: RLS ポリシー、インデックス戦略、N+1 防止
+- 🔴 **Error Handling**: エラーメッセージ詳細化、セキュリティイベント記録
+- 🔴 **Testing**: クリティカル機能にはテストを必須化
+
+詳細は [Strict Review Standards](./strict-review-standards.md) を参照。

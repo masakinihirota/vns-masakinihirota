@@ -1,6 +1,16 @@
 import { relations } from "drizzle-orm";
 import { pgTable, text, timestamp, boolean, index } from "drizzle-orm/pg-core";
 
+/**
+ * Better Auth スキーマ
+ *
+ * @security
+ * すべてのテーブルで Row Level Security (RLS) の有効化を推奨します。
+ * RLS ポリシーの定義は drizzle/rls-policies.sql を参照してください。
+ *
+ * 初期セットアップ: psql -d $DATABASE_URL -f drizzle/rls-policies.sql
+ */
+
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
@@ -98,3 +108,28 @@ export const accountRelations = relations(account, ({ one }) => ({
 }));
 
 export const schema = { user, session, account, verification };
+
+/**
+ * @note セキュリティ注記
+ *
+ * Better Auth + PostgreSQL を使用する場合、以下のセキュリティ対策が必須です：
+ *
+ * 1. Row Level Security (RLS)
+ *    - すべてのテーブルで ENABLE ROW LEVEL SECURITY を実行
+ *    - ポリシーは drizzle/rls-policies.sql を参照
+ *    - jwt_secret を使用した auth.uid() の JWT 検証が推奨
+ *
+ * 2. アカウントテーブル保護
+ *    - OAuth トークン (accessToken, refreshToken, idToken) を含むため最高レベルの保護が必要
+ *    - アプリケーションロジックでも userId チェックを行う
+ *
+ * 3. セッション管理
+ *    - token は unique 制約で保護されている
+ *    - expiresAt の自動削除ポリシーを定義することを推奨
+ *
+ * 4. インデックス戦略
+ *    - user.email には unique 制約があり、自動的にインデックスが作成される
+ *    - user_id 外部キーには明示的なインデックスが必要 (既に定義済み)
+ *
+ * より詳細な実装方法は、AI Design ドキュメントまたは Better Auth の公式ガイドを参照してください。
+ */
