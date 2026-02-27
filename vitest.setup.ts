@@ -9,4 +9,6 @@ afterEach(() => {
 
 // Mock environment variables
 process.env.NEXT_PUBLIC_USE_REAL_AUTH = 'false';
-process.env.NODE_ENV = 'test';
+
+// NODE_ENV は読み取り専用なため Object.defineProperty を使用
+// テスト環境では自動的に 'test' が設定される
