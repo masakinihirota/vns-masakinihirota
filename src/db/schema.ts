@@ -28,7 +28,6 @@ export const user = pgTable(
     banned: boolean("banned").default(false),
     banReason: text("ban_reason"),
     banExpires: timestamp("ban_expires"),
-    is_anonymous: boolean("is_anonymous").default(false),
   },
   (table) => [index("user_email_idx").on(table.email)],
 );

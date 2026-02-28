@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/lib/db/client";
-import * as schema from "@/lib/db/schema.postgres";
+import * as schema from "@/db/schema";
 import { admin } from "better-auth/plugins/admin";
 import { nextCookies } from "better-auth/next-js";
 // import { rateLimit } from "better-auth/plugins"; // TODO: Better Auth 1.4.19 では利用不可 v1.5+ で対応予定
