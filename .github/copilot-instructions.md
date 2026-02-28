@@ -52,6 +52,13 @@ applyTo: "**"
 
 詳細は `.agent/rules/coding-standards.md` の「Next.js 16 Specific Rules」を参照
 
+# Better Auth / Drizzle 運用の必須ルール
+
+- `auth.ts` が参照する Better Auth スキーマと、`drizzle.config.ts` の `schema` 参照先で、
+	`user` / `session` / `account` / `verification` テーブルの列名を必ず一致させること。
+- 特に `snake_case` と `camelCase` の混在を禁止。混在すると OAuth で `column does not exist` の 500 が発生します。
+- デプロイ前に `pnpm db:auth:check` を実行し、失敗した場合は `pnpm db:auth:fix-compat` で修復してから再デプロイすること。
+
 # その他
 
 GitHub Copilot の返信の最後に、なにか Tips と関連するアドバイスがありましたら教えて下さい。

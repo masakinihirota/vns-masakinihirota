@@ -1,7 +1,13 @@
-require('dotenv').config({ path: '.env.local' });
+const envPath = process.env.ENV_FILE || '.env.local';
+require('dotenv').config({ path: envPath });
 const postgres = require('postgres');
 
 (async () => {
+    if (!process.env.DATABASE_URL) {
+        console.error(`[DB_FIX] DATABASE_URL is missing in ${envPath}`);
+        process.exit(1);
+    }
+
     const sql = postgres(process.env.DATABASE_URL, { prepare: false });
 
     try {
@@ -69,9 +75,9 @@ const postgres = require('postgres');
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt")`;
 
-        console.log('Auth schema compatibility patch applied successfully.');
+        console.log(`[DB_FIX] Auth schema compatibility patch applied successfully (env: ${envPath}).`);
     } catch (error) {
-        console.error('Failed to apply auth schema compatibility patch');
+        console.error(`[DB_FIX] Failed to apply auth schema compatibility patch (env: ${envPath})`);
         console.error(error);
         process.exitCode = 1;
     } finally {

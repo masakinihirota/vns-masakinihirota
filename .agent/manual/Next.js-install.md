@@ -195,6 +195,22 @@ npx drizzle-kit migrate
 
 ```
 
+### Authスキーマ整合チェック（推奨）
+
+OAuth 500（`column ... does not exist`）の再発防止のため、デプロイ前に以下を実行します。
+
+```bash
+# auth4テーブル（user/session/account/verification）の
+# 必須snake_case列とRLS状態をチェック
+pnpm db:auth:check
+
+# 互換修復（camelCase列しかない環境向け）
+pnpm db:auth:fix-compat
+```
+
+`pnpm db:auth:check` が失敗した場合は、`pnpm db:auth:fix-compat` を実行し、
+再度 `pnpm db:auth:check` で PASS を確認してからデプロイしてください。
+
 データベースのシードとクエリ
 
 ```src/index.ts

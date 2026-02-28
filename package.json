@@ -10,7 +10,9 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "admin:create": "tsx scripts/create-admin.ts"
+    "admin:create": "tsx scripts/create-admin.ts",
+    "db:auth:check": "node scripts/check-auth-db-state.js",
+    "db:auth:fix-compat": "node scripts/fix-auth-schema-compat.js"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",
