@@ -28,7 +28,7 @@ import {
   isHttpError,
 } from '../errors';
 import * as userService from '../services/users';
-import type { ApiSuccessResponse, ApiErrorResponse } from '../types';
+import type { ApiSuccessResponse, ApiErrorResponse } from '../types/response';
 import type { SessionContext } from '../middleware/auth';
 
 const admin = new Hono<{ Variables: SessionContext }>();

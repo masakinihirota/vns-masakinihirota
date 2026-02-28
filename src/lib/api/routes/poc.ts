@@ -8,7 +8,7 @@
 
 import { Hono } from 'hono';
 import { requireAuth } from '../middleware';
-import type { ApiSuccessResponse, ApiErrorResponse } from '../types';
+import type { ApiSuccessResponse, ApiErrorResponse } from '../types/response';
 import { createApiError } from '../middleware/error-handler';
 
 const poc = new Hono();

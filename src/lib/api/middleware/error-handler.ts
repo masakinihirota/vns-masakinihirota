@@ -19,7 +19,7 @@ import {
   PermissionDeniedError,
   isHttpError,
 } from '../errors';
-import type { ApiErrorResponse, ErrorCode } from '../types';
+import type { ApiErrorResponse, ErrorCode } from '../types/response';
 
 /**
  * Hono のグローバルエラーハンドラー
@@ -128,6 +128,7 @@ export const errorHandler: ErrorHandler = (err, c) => {
       NOT_FOUND: 404,
       CONFLICT: 409,
       INTERNAL_ERROR: 500,
+      PARSE_ERROR: 400,
     };
 
     const customError = err as { code: ErrorCode; message: string; details?: Record<string, unknown> };

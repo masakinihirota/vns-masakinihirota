@@ -277,6 +277,106 @@ schedule_todo_list/YYYY-MM-DD_BACKLOG.md
 
 ---
 
+### R13: Session Completion Protocol ⚡ **MANDATORY**
+
+**Rule**: セッション終了時、エージェントは必ず TODO リストの進捗をチェックし、アーカイブ処理を実行する
+
+**Trigger Keywords** (これらの発言を検知):
+- "終了"
+- "完了"
+- "今日は以上"
+- "セッションを終了"
+- "TODO をチェック"
+- "アーカイブして"
+
+**Mandatory Steps**:
+
+```markdown
+STEP 1: Scan Active Files
+  → Read `schedule_todo_list/README.md`
+  → List all files in `schedule_todo_list/` (excluding archive/)
+  → Identify completion status (✅/⏳/❌)
+
+STEP 2: Evaluate Completion
+  For each file:
+    IF all checkboxes are [x] AND acceptance criteria met:
+      → Mark as "Ready for Archive"
+    ELSE IF file is reference doc (review, critique, options):
+      → Mark as "Reference Archive"
+    ELSE:
+      → Mark as "In Progress - Keep Active"
+
+STEP 3: Archive Files
+  For "Ready for Archive" files:
+    → Move to `schedule_todo_list/archive/`
+    → Update `archive/README.md`
+  For "Reference Archive" files:
+    → Move to `schedule_todo_list/archive/`
+    → Add note "参考資料" in archive README
+
+STEP 4: Update Documentation
+  → Update `schedule_todo_list/README.md` dashboard:
+    - Active Files count
+    - Archived count
+    - Last updated date
+  → Update archive/README.md with new entries
+
+STEP 5: Report to User
+  → Display concise summary (2-3 sentences):
+    - "✅ N個のタスクが完了し、archive に移動しました"
+    - "⏳ M個のタスクが進行中です"
+    - "次回セッションの開始ポイント: [最優先タスク]"
+```
+
+**Execution Guardrails**:
+
+| Check | Action | Blocker |
+|-------|--------|--------|
+| File has cross-references | Verify references still valid after move | ⚠️ WARNING |
+| README dashboard outdated | Update before archiving | 🔴 BLOCKER |
+| Multiple active backlogs | Consolidate into one | ⚠️ WARNING |
+| Archive README missing | Create it first | 🔴 BLOCKER |
+
+**Output Format**:
+
+```markdown
+## 🎯 セッション完了レポート
+
+**実施日時**: YYYY-MM-DD HH:MM
+
+**アーカイブ完了** (N個):
+- 📦 [File1.md](archive/File1.md) - 完了 100%
+- 📦 [File2.md](archive/File2.md) - 参考資料
+
+**進行中** (M個):
+- ⏳ [Active1.md](Active1.md) - 進捗 60%
+- ⏳ [Active2.md](Active2.md) - 進捗 40%
+
+**次回優先タスク**:
+1. 🔴 [最優先タスク名]
+2. 🟠 [次点タスク名]
+
+**Dashboard更新**: ✅ README.md updated
+```
+
+**Exception Cases**:
+
+| Situation | Resolution |
+|-----------|------------|
+| User says "終了" but critical task incomplete | ⚠️ Warn user: "🔴 CRITICAL タスクが未完了です。本当に終了しますか？" |
+| File移動権限エラー | Report error + provide manual PowerShell command |
+| README.md not found | Create new README with current state |
+| No files to archive | Report "すべてのタスクは進行中です" + skip archive |
+
+**Compliance**:
+- ✅ **MUST** execute when trigger keywords detected
+- ✅ **MUST** update dashboard after archiving
+- ✅ **MUST** provide summary report to user
+- ⚠️ **SHOULD** verify cross-references before moving
+- ⚠️ **SHOULD** consolidate multiple backlogs
+
+---
+
 ## 🎯 Compliance Checklist
 
 このファイルを読んだ AI Agents は以下を遵守：
@@ -293,6 +393,7 @@ schedule_todo_list/YYYY-MM-DD_BACKLOG.md
 - [ ] R10: 定期更新スケジュール遵守
 - [ ] R11: ドキュメント品質確認
 - [ ] R12: 例外はエスカレーション
+- [ ] R13: セッション終了時プロトコル実行 ⚡
 
 ---
 

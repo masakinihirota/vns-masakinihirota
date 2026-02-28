@@ -230,6 +230,100 @@ mv SECURITY_FIX_TODO.md archive/
 
 ---
 
+### Phase 6: セッション終了時プロトコル 🎯
+
+**目的**: セッション終了時に自動的にTODOリストの進捗をチェックし、完了したタスクをアーカイブする
+
+**トリガー**:
+- ユーザーが「終了」「完了」「今日は以上」「セッションを終了」などと発言
+- 大きなタスクブロックが完了した時
+- ユーザーが明示的に「TODOをチェックして」と要求
+
+**実行手順**:
+
+```markdown
+1. **進捗チェック**
+   - `schedule_todo_list/` 内のアクティブTODOファイルをスキャン
+   - 各ファイルの完了度（✅/⏳/❌）を確認
+   - `schedule_todo_list/README.md` のダッシュボードと照合
+
+2. **完了判定**
+   - すべてのチェックボックスが `[x]` か確認
+   - Acceptance Criteria がすべて満たされているか確認
+   - 関連ビルド・テストが成功しているか確認
+
+3. **アーカイブ判断**
+   条件A（完了ファイル）:
+     - ✅ すべてのタスクが完了
+     - ✅ テスト・ビルド成功
+     → `archive/` へ移動
+   
+   条件B（参考ドキュメント）:
+     - 📋 より新しい版が存在する
+     - 📋 レビュー・比較分析などの一時的ドキュメント
+     → `archive/` へ移動
+   
+   条件C（進行中）:
+     - ⏳ 1つ以上のタスクが未完了
+     → そのまま `schedule_todo_list/` に残す
+
+4. **ファイル移動**
+   ```powershell
+   # PowerShell コマンド例
+   Move-Item -Path "schedule_todo_list\COMPLETED_FILE.md" `
+             -Destination "schedule_todo_list\archive\"
+   ```
+
+5. **README更新**
+   - `schedule_todo_list/README.md` のダッシュボードを更新
+   - Active Files カウントを減算
+   - Archived カウントを加算
+   - 最終更新日を記載
+
+6. **archive/README.md 更新**
+   - アーカイブしたファイルをリストに追加
+   - 完了日、内容、参照順序を記載
+
+7. **完了レポート作成**
+   ```markdown
+   ## セッション完了サマリー
+   
+   **日時**: 2026-03-01 18:30
+   
+   **完了タスク**:
+   - ✅ HONO_INTEGRATION_TODO.md (100%)
+   - ✅ SECURITY_FIX_TODO.md (100%)
+   
+   **アーカイブ**:
+   - 📦 archive/HONO_INTEGRATION_TODO.md
+   - 📦 archive/HONO_REVIEW_CRITIQUE.md
+   - 📦 archive/SECURITY_FIX_TODO.md
+   
+   **進行中** (次回セッション継続):
+   - ⏳ 2026-03-01_BACKLOG.md (60%)
+   - ⏳ PRODUCTION_DEPLOYMENT_TODO.md (40%)
+   
+   **次回優先タスク**:
+   1. 🔴 Production Smoke Test
+   2. 🔴 Environment Variables Verification
+   ```
+
+8. **ユーザーへの報告**
+   - 簡潔な2-3文のサマリーを提示
+   - 次回セッションの開始ポイントを明示
+```
+
+**自動化レベル**:
+- 🟡 **半自動**: ユーザーのトリガーワード発言で実行
+- 🔴 **完全自動**: 現時点では技術的に困難（Copilot Chat仕様上）
+
+**エラーハンドリング**:
+- ファイルが見つからない場合: README.md との不整合を報告
+- 移動権限がない場合: PowerShell の `-WhatIf` で事前確認
+- 依存関係がある場合: 相互参照をチェックしてユーザーに確認
+
+---
+
 ## 📊 メトリクス追跡
 
 ### ダッシュボード（毎週更新）

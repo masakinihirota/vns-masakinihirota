@@ -1,7 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 
-import { ThemeProvider, QueryProvider } from "@/components/providers";
+import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
@@ -36,18 +36,16 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <QueryProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            {children}
-          </ThemeProvider>
-          {/* Webアプリのどこからでも通知が可能 */}
-          <Toaster />
-        </QueryProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
+        {/* Webアプリのどこからでも通知が可能 */}
+        <Toaster />
       </body>
     </html>
   );
