@@ -74,7 +74,7 @@ export const getSession = cache(async () => {
   try {
     // 開発時ダミー認証機能
     if (process.env.NEXT_PUBLIC_USE_REAL_AUTH !== "true" && process.env.NODE_ENV === "development") {
-      const dummySession = createDummySession("user");
+      const dummySession = createDummySession("USER1");
       console.log("[getSession] MOCK AUTH - Using dummy user:", dummySession.user.email);
       return dummySession;
     }

@@ -5,7 +5,7 @@
  * Flow: Cookie/ヘッダー → Better Auth セッション解析 → Hono コンテキストに注入
  */
 
-import { Hono } from 'hono';
+import { Hono, type Context, type Next } from 'hono';
 import type { User, Session } from 'better-auth';
 import { auth } from '@/lib/auth';
 
@@ -14,11 +14,12 @@ import { auth } from '@/lib/auth';
  */
 declare global {
   namespace Hono {
-    interface HonoRequest {
+    interface ContextData {
       session?: {
         user: User | null;
         session: Session | null;
       };
+      user?: User | null;
     }
   }
 }
@@ -32,7 +33,7 @@ declare global {
  * - Hono コンテキストに session 属性追加
  */
 export const betterAuthSessionMiddleware = () => {
-  return async (c: any, next: any) => {
+  return async (c: Context, next: Next): Promise<void> => {
     try {
       // ブラウザから送られてきたヘッダー（Cookie含む）を取得
       const cookieHeader = c.req.header('Cookie') || '';
@@ -46,15 +47,15 @@ export const betterAuthSessionMiddleware = () => {
       });
 
       // セッション情報をコンテキストに追加
-      c.session = session;
-      c.user = session?.user || null;
+      c.set('session', session);
+      c.set('user', session?.user || null);
 
       // 次のミドルウェアへ
       await next();
     } catch (error) {
       // セッション取得エラーはスキップ（未認証状態として扱う）
-      c.session = null;
-      c.user = null;
+      c.set('session', undefined);
+      c.set('user', null);
       await next();
     }
   };
@@ -67,8 +68,9 @@ export const betterAuthSessionMiddleware = () => {
  */
 export const requireAuth =
   () =>
-  async (c: any, next: any) => {
-    if (!c.session?.user) {
+  async (c: Context, next: Next): Promise<void | Response> => {
+    const session = c.get('session');
+    if (!session?.user) {
       return c.json(
         {
           success: false,
@@ -86,8 +88,9 @@ export const requireAuth =
 /**
  * 特定のロールが必須のミドルウェア
  */
-export const requireRole = (requiredRole: string) => async (c: any, next: any) => {
-  if (!c.session?.user) {
+export const requireRole = (requiredRole: string) => async (c: Context, next: Next): Promise<void | Response> => {
+  const session = c.get('session');
+  if (!session?.user) {
     return c.json(
       {
         success: false,
@@ -100,7 +103,7 @@ export const requireRole = (requiredRole: string) => async (c: any, next: any) =
     );
   }
 
-  if (c.session.user.role !== requiredRole) {
+  if ((session.user as any).role !== requiredRole) {
     return c.json(
       {
         success: false,

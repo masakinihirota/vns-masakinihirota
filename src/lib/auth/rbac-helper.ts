@@ -23,10 +23,12 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import * as postgres from "postgres";
 import {
   groupMembers,
-  nationMembers,
+  nationGroups,
   relationships,
-  user,
-} from "@/db/schema";
+  users,
+  rootAccounts,
+  userProfiles,
+} from "@/lib/db/schema.postgres";
 import { eq, and } from "drizzle-orm";
 import { RBAC_HIERARCHY } from "./rbac-constants";
 import type {
@@ -56,8 +58,155 @@ function getDatabaseConnection() {
 }
 
 // ============================================================================
-// Authorization Check Functions
+// User ID Conversion (userId → userProfileId)
 // ============================================================================
+
+/**
+ * ユーザーの text ID (users.id) から uuid ID (userProfiles.id) に変換
+ *
+ * @design
+ * - users.id (text) は Better Auth が提供する認証用 ID
+ * - userProfiles.id (uuid) はビジネスロジック（RBAC）の基本単位
+ * - 1ユーザー = 1 rootAccount = 1 userProfile という1対1関係
+ *
+ * @param userId - Better Auth ユーザー ID (text)
+ * @returns userProfiles の uuid | null （ユーザーが見つからない場合）
+ *
+ * @example
+ * const userProfileId = await cache(() => getUserProfileId(userId))();
+ */
+const _getUserProfileIdInternal = cache(async (userId: string): Promise<string | null> => {
+  const db = getDatabaseConnection();
+
+  try {
+    // users.id → rootAccounts.authUserId → rootAccounts.id → userProfiles.rootAccountId → userProfiles.id
+    const result = await db
+      .select({
+        userProfileId: userProfiles.id,
+      })
+      .from(users)
+      .innerJoin(
+        rootAccounts,
+        eq(users.id, rootAccounts.authUserId)
+      )
+      .innerJoin(
+        userProfiles,
+        eq(rootAccounts.id, userProfiles.rootAccountId)
+      )
+      .where(eq(users.id, userId))
+      .limit(1)
+      .then((rows) => rows[0] || null);
+
+    return result?.userProfileId ?? null;
+  } catch (error) {
+    console.error("getUserProfileId database error:", error);
+    return null;
+  }
+});
+
+// キャッシュ化したGetterを外部でも使用可能にする
+export async function getUserProfileId(userId: string): Promise<string | null> {
+  return await _getUserProfileIdInternal(userId);
+}
+
+// ============================================================================
+// Ghost Mask Interaction Check (幽霊権限チェック)
+// ============================================================================
+
+/**
+ * ユーザーの現在のマスク（userProfile）の mask_category を取得
+ *
+ * @param userId - Better Auth ユーザー ID (text)
+ * @returns mask_category ('ghost' | 'persona') | null
+ *
+ * @design
+ * - 1ユーザー = 1 rootAccount = 1 userProfile（デフォルト）
+ * - 幽霊の仮面が自動作成される
+ */
+const _getMaskCategoryInternal = cache(async (userId: string): Promise<string | null> => {
+  const db = getDatabaseConnection();
+
+  try {
+    const result = await db
+      .select({
+        maskCategory: userProfiles.maskCategory,
+      })
+      .from(users)
+      .innerJoin(
+        rootAccounts,
+        eq(users.id, rootAccounts.authUserId)
+      )
+      .innerJoin(
+        userProfiles,
+        eq(rootAccounts.id, userProfiles.rootAccountId)
+      )
+      .where(eq(users.id, userId))
+      .limit(1)
+      .then((rows) => rows[0] || null);
+
+    return result?.maskCategory ?? null;
+  } catch (error) {
+    console.error("getMaskCategory database error:", error);
+    return null;
+  }
+});
+
+export async function getMaskCategory(userId: string): Promise<string | null> {
+  return await _getMaskCategoryInternal(userId);
+}
+
+/**
+ * ユーザーが「幽霊」（観測者）ロールかどうかをチェック
+ *
+ * @param session - セッション情報
+ * @returns true: 幽霊（観測者）| false: ペルソナ（受肉）
+ *
+ * @design
+ * 幽霊権限の境界:
+ * - ALLOWED: 自身のルートアカウント設定（幽霊プロフィール自体の基本情報）の編集
+ * - DENIED: 他者への評価（ティア付与）、コメント、作品投稿、組織（国）への参加
+ *
+ * @example
+ * const isGhost = await isGhostMask(session);
+ * if (isGhost) throw new Error('Ghost masks cannot perform this interaction');
+ */
+export async function isGhostMask(session: AuthSession | null): Promise<boolean> {
+  if (!session?.user?.id) return false;
+
+  const maskCategory = await _getMaskCategoryInternal(session.user.id);
+  return maskCategory === "ghost";
+}
+
+/**
+ * インタラクション操作が許可されているかをチェック
+ *
+ * 幽霊の仮面は以下のインタラクションは実行不可:
+ * - 他者への評価（tier/rating 付与）
+ * - コメント投稿
+ * - 作品投稿
+ * - グループ/国への参加
+ *
+ * @param session - セッション情報
+ * @returns true: インタラクション可能(ペルソナ) | false: インタラクション不可(幽霊)
+ *
+ * @throws Error - SESSION_REQUIRED
+ *
+ * @example
+ * const canInteract = await checkInteractionAllowed(session);
+ * if (!canInteract) {
+ *   throw new Error('Ghost masks can only observe. Cannot perform this interaction.');
+ * }
+ */
+export async function checkInteractionAllowed(session: AuthSession | null): Promise<boolean> {
+  if (!session?.user?.id) return false;
+
+  // platform_admin は全操作が可能
+  if (session.user.role === "platform_admin") return true;
+
+  // 幽霊の仮面はインタラクション不可
+  const ghostMask = await isGhostMask(session);
+  return !ghostMask;
+}
 
 /**
  * プラットフォーム管理者かどうかをチェック
@@ -134,6 +283,10 @@ const _checkGroupRoleInternal = cache(
     groupId: string,
     role: GroupRole,
   ): Promise<boolean> => {
+    // userId (text) を userProfileId (uuid) に変換
+    const userProfileId = await _getUserProfileIdInternal(userId);
+    if (!userProfileId) return false; // ユーザーが見つからない
+
     const db = getDatabaseConnection();
 
     try {
@@ -142,8 +295,8 @@ const _checkGroupRoleInternal = cache(
         .from(groupMembers)
         .where(
           and(
-            eq(groupMembers.userId, userId as any),
-            eq(groupMembers.groupId, groupId as any),
+            eq(groupMembers.userProfileId, userProfileId),
+            eq(groupMembers.groupId, groupId),
           ),
         )
         .limit(1)
@@ -193,13 +346,13 @@ export async function checkGroupRole(
  * if (!isNationLeader) throw new Error('Unauthorized');
  *
  * @design
- * - nation_members テーブルで組織が国に参加していることを確認
+ * - nation_groups テーブルで組織が国に参加していることを確認
  * - ユーザーが属する組織のロール >= requiredRole を比較
  * - 階層チェック: higher role = より大きな権限
  *   leader (3) > sub_leader (2) > mediator (1) > member (0)
  * - チェック順序：
  *   1. platform_admin → 全国で操作可能
- *   2. nation_members で確認 (階層付き)
+ *   2. nation_groups で確認 (階層付き)
  *   3. デフォルト：拒否（Deny-by-default）
  */
 const _checkNationRoleInternal = cache(
@@ -208,24 +361,28 @@ const _checkNationRoleInternal = cache(
     nationId: string,
     role: NationRole,
   ): Promise<boolean> => {
+    // userId (text) を userProfileId (uuid) に変換
+    const userProfileId = await _getUserProfileIdInternal(userId);
+    if (!userProfileId) return false; // ユーザーが見つからない
+
     const db = getDatabaseConnection();
 
     try {
       // ユーザーが属する組織が、国内でどのロールを持っているかを取得
       // クエリ概要：
-      // - group_members から userId で属する組織を取得
-      // - nation_members で該当組織が nationId に属するかチェック
+      // - group_members から userProfileId で属する組織を取得
+      // - nation_groups で該当組織が nationId に属するかチェック
       const result = await db
-        .select({ nationRole: nationMembers.role })
+        .select({ nationRole: nationGroups.role })
         .from(groupMembers)
         .innerJoin(
-          nationMembers,
+          nationGroups,
           and(
-            eq(groupMembers.groupId, nationMembers.groupId),
-            eq(nationMembers.nationId, nationId as any),
+            eq(groupMembers.groupId, nationGroups.groupId),
+            eq(nationGroups.nationId, nationId),
           ),
         )
-        .where(eq(groupMembers.userId, userId as any))
+        .where(eq(groupMembers.userProfileId, userProfileId))
         .limit(1);
 
       if (result.length === 0) return false;
@@ -290,6 +447,11 @@ const _checkRelationshipInternal = cache(
     // 自分自身への関係チェックを拒否
     if (userId === targetUserId) return false;
 
+    // userId (text) を userProfileId (uuid) に変換
+    const userProfileId = await _getUserProfileIdInternal(userId);
+    const targetProfileId = await _getUserProfileIdInternal(targetUserId);
+    if (!userProfileId || !targetProfileId) return false; // いずれかが見つからない
+
     const db = getDatabaseConnection();
 
     try {
@@ -298,8 +460,8 @@ const _checkRelationshipInternal = cache(
         .from(relationships)
         .where(
           and(
-            eq(relationships.userId, userId as any),
-            eq(relationships.targetUserId, targetUserId as any),
+            eq(relationships.userProfileId, userProfileId),
+            eq(relationships.targetProfileId, targetProfileId),
             eq(relationships.relationship, relationship),
           ),
         )

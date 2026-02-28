@@ -32,10 +32,16 @@ export function zodValidator<T extends z.ZodSchema>(
       const validated = schema.parse(data);
 
       // Attach validated data to context
-      if (!c.req.valid) {
-        (c.req as any).valid = {};
+      // Store validated data in a map by target type
+      if (!(c.req as any)._validatedData) {
+        (c.req as any)._validatedData = new Map();
       }
-      (c.req as any).valid(target, validated);
+      (c.req as any)._validatedData.set(target, validated);
+
+      // Define the valid function to retrieve validated data
+      (c.req as any).valid = (t: string) => {
+        return (c.req as any)._validatedData?.get(t);
+      };
 
       await next();
     } catch (error) {

@@ -6,7 +6,7 @@ import { createDummySession } from "@/lib/dev-auth";
 
 // 環境変数で制御
 const DEBUG_LOGGING = process.env.PROXY_DEBUG === 'true';
-const USE_REAL_AUTH = process.env.NEXT_PUBLIC_USE_REAL_AUTH === 'true';
+const USE_REAL_AUTH = process.env.USE_REAL_AUTH === 'true'; // 🔴 内部変数のみ使用（NEXT_PUBLIC_ 非公開）
 
 /**
  * 本番環境でのセキュリティ検証
@@ -14,13 +14,32 @@ const USE_REAL_AUTH = process.env.NEXT_PUBLIC_USE_REAL_AUTH === 'true';
  * @description
  * 本番環境ではダミー認証を使用することは許可されません。
  * これにより、意図しない認証無効化を防止します。
+ *
+ * @security
+ * - 環境変数：USE_REAL_AUTH（内部のみ）
+ * - BETTER_AUTH_SECRET が必ず設定されていることを確認
+ * - NODE_ENV=production で自動検証
  */
 function validateProductionAuth() {
-  if (process.env.NODE_ENV === 'production' && !USE_REAL_AUTH) {
-    throw new Error(
-      '[SECURITY] USE_REAL_AUTH must be explicitly set to "true" in production environment. ' +
-      'Dummy authentication is not allowed in production.'
-    );
+  const isProduction = process.env.NODE_ENV === 'production';
+  const hasSecret = !!process.env.BETTER_AUTH_SECRET;
+
+  if (isProduction) {
+    // ✅ 本番環境では必ず実認証を有効化
+    if (!USE_REAL_AUTH) {
+      throw new Error(
+        '[CRITICAL] Production environment must use real authentication. ' +
+        'Set USE_REAL_AUTH=true in production environment variables.'
+      );
+    }
+
+    // ✅ BETTER_AUTH_SECRET が設定されていることを確認
+    if (!hasSecret) {
+      throw new Error(
+        '[CRITICAL] BETTER_AUTH_SECRET is required in production environment. ' +
+        'Configure it before starting the server.'
+      );
+    }
   }
 }
 
@@ -54,11 +73,28 @@ function log(level: 'info' | 'warn' | 'error', message: string, data?: Record<st
 
 /**
  * Next.js 16 Proxy (旧 Middleware)
- * 全ルートで認証・認可チェックを実施
+ * ルーティングと認証チェックを実施
+ * 
+ * @design
+ * このプロキシの責務:
+ * - ✅ 認証チェック（セッション有効性確認）
+ * - ✅ ルーティング（public / protected path の振り分け）
+ * - ✅ ログイン済みユーザーの逆流防止（/login へのアクセス回避）
+ * - ✅ ロギング・監視
+ * - ✅ セキュリティヘッダー制御
+ * 
+ * 認可（ロール based アクセス制御）は Server Action でのみ実施
+ * → Proxy での認可ロジック削除で矛盾を排除
  *
  * @description
- * 開発モード: NEXT_PUBLIC_USE_REAL_AUTH=false でダミー認証を使用
- * 本番モード: NEXT_PUBLIC_USE_REAL_AUTH=true で OAuth認証を使用
+ * 開発モード: USE_REAL_AUTH=false でダミー認証を使用
+ * 本番モード: USE_REAL_AUTH=true で OAuth認証を使用（必須）
+ *
+ * @security
+ * - 本番環境では USE_REAL_AUTH=true が必須
+ * - BETTER_AUTH_SECRET が設定されていることを確認
+ * - ダミー認証は開発環境のみで機能
+ * - RBAC 認可は Server Action で実施（セキュリティ二重防御）
  */
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -66,15 +102,15 @@ export async function proxy(request: NextRequest) {
   const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
   const isStaticPath = STATIC_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
   const isLandingPath = pathname === ROUTES.LANDING;
-  const isAdminPath = pathname.startsWith(ROUTES.ADMIN);
-  const isNationCreatePath = pathname === ROUTES.NATION_CREATE;
 
   let session = null;
 
-  // 開発時ダミー認証
+  // 開発時ダミー認証（本番環境では禁止）
   if (!USE_REAL_AUTH && process.env.NODE_ENV === "development") {
-    session = createDummySession("user");
-    log('warn', '🔓 MOCK AUTH: Using dummy user', { user: session.user.email });
+    // 環境変数で使用するテストユーザーを選択（デフォルト: USER1）
+    const dummyUserType = (process.env.DUMMY_USER_TYPE || "USER1") as 'USER1' | 'USER2' | 'USER3';
+    session = createDummySession(dummyUserType);
+    log('warn', `🔓 MOCK AUTH: Using dummy user (${dummyUserType})`, { user: session.user.email });
   } else {
     // 本番モード: Better Auth で認証
     try {
@@ -122,31 +158,8 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
   }
 
-  // ケース4：Admin専用パス ＋ 管理者以外がアクセス
-  if (isAdminPath && session?.user?.role !== "platform_admin") {
-    // セキュリティイベント: 権限のないユーザーが管理画面にアクセス
-    const userEmail = session?.user?.email || "unknown";
-    const userRole = session?.user?.role || "unauthenticated";
-    log('error',
-      `[SECURITY_EVENT] Unauthorized admin access attempt - User: ${userEmail}, Role: ${userRole}, Path: ${pathname}`
-    );
-    return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
-  }
-
-  // ケース5：国作成パス ＋ group_leaderまたはplatform_admin以外がアクセス
-  if (isNationCreatePath) {
-    const userRole = session?.user?.role;
-    const isAuthorized = userRole === "platform_admin" || userRole === "group_leader";
-
-    if (!isAuthorized) {
-      // セキュリティイベント: 権限のないユーザーが国作成ページにアクセス
-      const userEmail = session?.user?.email || "unknown";
-      log('error',
-        `[SECURITY_EVENT] Unauthorized nation create access attempt - User: ${userEmail}, Role: ${userRole || "unauthenticated"}, Path: ${pathname}`
-      );
-      return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
-    }
-  }
+  // 認可ロジック（ロール based アクセス制御）は Server Action で実施
+  // → Proxy はルーティングと認証チェックのみ
 
   return NextResponse.next();
 }

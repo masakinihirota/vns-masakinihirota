@@ -5,9 +5,20 @@
  * - すべてのエラーを統一フォーマットでキャッチ
  * - 本番環境と開発環境でエラーメッセージを切り替え
  * - Zod バリデーションエラーのハンドリング
+ * - カスタムエラークラスの型安全なハンドリング
  */
 
 import type { ErrorHandler } from 'hono';
+import { HTTPException } from 'hono/http-exception';
+import {
+  UserAlreadyExistsError,
+  UserNotFoundError,
+  GroupNotFoundError,
+  NationNotFoundError,
+  ValidationError,
+  PermissionDeniedError,
+  isHttpError,
+} from '../errors';
 import type { ApiErrorResponse, ErrorCode } from '../types';
 
 /**
@@ -17,6 +28,7 @@ import type { ApiErrorResponse, ErrorCode } from '../types';
  * - すべての未処理エラーをキャッチして統一フォーマットで返却
  * - 本番環境ではエラー詳細を隠蔽してセキュリティを確保
  * - 開発環境では詳細なエラーメッセージを表示してデバッグを支援
+ * - カスタムエラークラスを型安全にハンドリング
  *
  * @security
  * - スタックトレース、データベースクエリ、内部IDは含めない
@@ -29,14 +41,78 @@ export const errorHandler: ErrorHandler = (err, c) => {
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
   });
 
+  // HTTPException (from Hono validation, etc.)
+  if (err instanceof HTTPException) {
+    const response: ApiErrorResponse = {
+      success: false,
+      error: {
+        code: 'VALIDATION_ERROR',
+        message: err.message || 'Request error',
+      },
+    };
+    return c.json(response, err.status);
+  }
+
+  // Custom error classes (type-safe handling)
+  if (err instanceof UserAlreadyExistsError) {
+    const response: ApiErrorResponse = {
+      success: false,
+      error: {
+        code: 'CONFLICT',
+        message: 'Email already in use',
+      },
+    };
+    return c.json(response, 409);
+  }
+
+  if (
+    err instanceof UserNotFoundError ||
+    err instanceof GroupNotFoundError ||
+    err instanceof NationNotFoundError
+  ) {
+    const response: ApiErrorResponse = {
+      success: false,
+      error: {
+        code: 'NOT_FOUND',
+        message: 'Resource not found',
+      },
+    };
+    return c.json(response, 404);
+  }
+
+  if (err instanceof ValidationError) {
+    const response: ApiErrorResponse = {
+      success: false,
+      error: {
+        code: 'VALIDATION_ERROR',
+        message: 'Validation failed',
+        details: { details: err.message },
+      },
+    };
+    return c.json(response, 400);
+  }
+
+  if (err instanceof PermissionDeniedError) {
+    const response: ApiErrorResponse = {
+      success: false,
+      error: {
+        code: 'FORBIDDEN',
+        message: 'Permission denied',
+      },
+    };
+    return c.json(response, 403);
+  }
+
   // Zod バリデーションエラー
   if (err.name === 'ZodError') {
+    const zodError = err as any;
+    const details = zodError.flatten?.() || { fieldErrors: {}, formErrors: [] };
     const response: ApiErrorResponse = {
       success: false,
       error: {
         code: 'VALIDATION_ERROR',
         message: 'Invalid request data',
-        details: (err as any).flatten?.() || { issues: (err as any).issues },
+        details: details,
       },
     };
     return c.json(response, 400);
@@ -54,16 +130,17 @@ export const errorHandler: ErrorHandler = (err, c) => {
       INTERNAL_ERROR: 500,
     };
 
+    const customError = err as { code: ErrorCode; message: string; details?: Record<string, unknown> };
     const response: ApiErrorResponse = {
       success: false,
       error: {
         code: errorCode,
-        message: err.message,
-        details: (err as any).details,
+        message: customError.message,
+        details: customError.details,
       },
     };
-    const status = statusMap[errorCode] || 500;
-    return c.json(response, status as any);
+    const status = (statusMap[errorCode] || 500) as any;
+    return c.json(response, status);
   }
 
   // デフォルトエラー（予期しないエラー）

@@ -164,6 +164,9 @@ export const rootAccounts = pgTable(
   ]
 );
 
+// Mask Category Enum: 幽霊（観測者）vs ペルソナ（受肉）
+export const maskCategory = pgEnum("mask_category", ["ghost", "persona"]);
+
 export const userProfiles = pgTable(
   "user_profiles",
   {
@@ -173,6 +176,7 @@ export const userProfiles = pgTable(
     purpose: text(),
     roleType: text("role_type").default("member").notNull(),
     isActive: boolean("is_active").default(true).notNull(),
+    maskCategory: maskCategory("mask_category").default("persona").notNull(),
     lastInteractedRecordId: uuid("last_interacted_record_id"),
     // Added columns to match usage
     profileFormat: text("profile_format").default("profile"),

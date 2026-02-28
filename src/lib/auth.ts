@@ -1,7 +1,7 @@
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/lib/db/client";
-import * as schema from "@/db/schema";
+import * as schema from "@/lib/db/schema.postgres";
 import { admin } from "better-auth/plugins/admin";
 import { nextCookies } from "better-auth/next-js";
 import { startRateLimitCleanup } from "@/lib/auth/rate-limiter";

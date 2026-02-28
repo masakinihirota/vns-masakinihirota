@@ -22,7 +22,7 @@ import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 describe('Admin User API Routes', () => {
   let testUserId: string;
   const baseUrl = 'http://localhost:3000/api/admin';
-  
+
   describe('POST /api/admin/users', () => {
     it.skip('should create a new user', async () => {
       // NOTE: Skip until database is properly setup
@@ -30,7 +30,7 @@ describe('Admin User API Routes', () => {
       // 1. Database connection configured
       // 2. Admin authentication/session
       // 3. Test database seeded with admin user
-      
+
       const response = await fetch(`${baseUrl}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -45,7 +45,7 @@ describe('Admin User API Routes', () => {
       const data = await response.json();
       expect(data.success).toBe(true);
       expect(data.data.email).toBe('test@example.com');
-      
+
       testUserId = data.data.id;
     });
 

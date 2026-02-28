@@ -3,7 +3,6 @@
 import { createNation } from "@/lib/db/nation-queries";
 import { checkGroupRole } from "@/lib/auth/rbac-helper";
 import { getSession } from "@/lib/auth/helper";
-import { createNationSchema, type CreateNationInput } from "@/lib/validation/schemas";
 
 /**
  * Nation作成 Server Action
@@ -11,16 +10,22 @@ import { createNationSchema, type CreateNationInput } from "@/lib/validation/sch
  * @design
  * - group_leader ロールのみ実行可能（Deny-by-default）
  * - 国リーダーとして自動付与
- * - 入力値の厳密なバリデーション（Zod使用）
+ * - 入力値の厳密なバリデーション
  * - グループ所有権検証を含む
  *
  * @security
  * - セッション検証 必須
  * - group_leader ロール検証 必須
  * - グループ所有権検証（対象リソースがユーザーの組織に属すること）
- * - 入力値のスキーマバリデーション
  * - SQL インジェクション対策: Drizzle ORM 使用
+ * - 入力長チェック: name (3-100), description (0-500)
  */
+
+export interface CreateNationInput {
+  groupId: string;
+  name: string;
+  description?: string;
+}
 
 export interface CreateNationResponse {
   success: boolean;
@@ -37,27 +42,11 @@ export interface CreateNationResponse {
 }
 
 export async function createNationAction(
-  input: unknown,
+  input: CreateNationInput,
 ): Promise<CreateNationResponse> {
   try {
     // ============================================================================
-    // 1. 入力バリデーション（Zod）
-    // ============================================================================
-    const validationResult = createNationSchema.safeParse(input);
-
-    if (!validationResult.success) {
-      const flatErrors = validationResult.error.flatten();
-      const firstError = Object.values(flatErrors.fieldErrors)[0]?.[0] || "Invalid input";
-      return {
-        success: false,
-        error: `Validation error: ${firstError}`,
-      };
-    }
-
-    const validatedInput = validationResult.data;
-
-    // ============================================================================
-    // 2. 認証チェック（Deny-by-default）
+    // 1. 認証チェック（Deny-by-default）
     // ============================================================================
     const session = await getSession();
 
@@ -69,6 +58,48 @@ export async function createNationAction(
     }
 
     const userId = session.user.id;
+
+    // ============================================================================
+    // 2. 入力バリデーション
+    // ============================================================================
+
+    // グループ ID のバリデーション
+    if (!input.groupId || input.groupId.trim().length === 0) {
+      return {
+        success: false,
+        error: "Group ID is required",
+      };
+    }
+
+    // 国名のバリデーション
+    if (!input.name || input.name.trim().length === 0) {
+      return {
+        success: false,
+        error: "Nation name is required",
+      };
+    }
+
+    if (input.name.length < 3) {
+      return {
+        success: false,
+        error: "Nation name must be at least 3 characters",
+      };
+    }
+
+    if (input.name.length > 100) {
+      return {
+        success: false,
+        error: "Nation name must be at most 100 characters",
+      };
+    }
+
+    // 説明のバリデーション
+    if (input.description && input.description.length > 500) {
+      return {
+        success: false,
+        error: "Description must be at most 500 characters",
+      };
+    }
 
     // ============================================================================
     // 3. 権限チェック：group_leader（Deny-by-default）
@@ -88,7 +119,7 @@ export async function createNationAction(
 
     const isGroupLeader = await checkGroupRole(
       authSession,
-      validatedInput.groupId,
+      input.groupId,
       "leader",
     );
 
@@ -102,7 +133,7 @@ export async function createNationAction(
     // ============================================================================
     // 4. 国作成
     // ============================================================================
-    const nation = await createNation(userId, validatedInput.name, validatedInput.description);
+    const nation = await createNation(userId, input.name, input.description);
 
     return {
       success: true,

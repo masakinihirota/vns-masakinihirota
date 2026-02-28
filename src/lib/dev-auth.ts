@@ -3,15 +3,35 @@
  *
  * @description
  * NEXT_PUBLIC_USE_REAL_AUTH=false の場合、このダミーデータを使用します。
- * 霬番環境では使用されません。
+ * 本番環境では使用されません。
  */
 
 export const DUMMY_USERS = {
-  /** 通常ユーザー */
-  USER: {
+  /** 通常ユーザー 1 */
+  USER1: {
     id: "dev-user-001",
-    email: "user@example.com",
-    name: "開発用ユーザー",
+    email: "user1@example.com",
+    name: "テストユーザー1",
+    role: "user" as const,
+    createdAt: new Date("2026-01-01"),
+    updatedAt: new Date("2026-02-28"),
+  },
+
+  /** 通常ユーザー 2 */
+  USER2: {
+    id: "dev-user-002",
+    email: "user2@example.com",
+    name: "テストユーザー2",
+    role: "user" as const,
+    createdAt: new Date("2026-01-01"),
+    updatedAt: new Date("2026-02-28"),
+  },
+
+  /** 通常ユーザー 3 */
+  USER3: {
+    id: "dev-user-003",
+    email: "user3@example.com",
+    name: "テストユーザー3",
     role: "user" as const,
     createdAt: new Date("2026-01-01"),
     updatedAt: new Date("2026-02-28"),
@@ -28,9 +48,23 @@ export const DUMMY_USERS = {
   },
 } as const;
 
-/** ダミーセッション */
-export const createDummySession = (userType: "user" | "admin" = "user") => {
-  const user = userType === "admin" ? DUMMY_USERS.ADMIN : DUMMY_USERS.USER;
+/**
+ * ユーザタイプ（鍵）
+ */
+export type DummyUserType = keyof typeof DUMMY_USERS;
+
+/**
+ * データミーセッション生成関数
+ *
+ * @param userType - ユーザーキー（USER1, USER2, USER3, ADMIN）
+ * @returns Better Auth 互換のセッションオブジェクト
+ */
+export const createDummySession = (userType: DummyUserType = "USER1") => {
+  const user = DUMMY_USERS[userType];
+
+  if (!user) {
+    throw new Error(`Invalid user type: ${userType}. Valid types are: ${Object.keys(DUMMY_USERS).join(', ')}`);
+  }
 
   return {
     user,

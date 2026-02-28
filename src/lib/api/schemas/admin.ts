@@ -16,6 +16,43 @@ import { z } from 'zod';
 // ============================================================================
 
 /**
+ * セキュアなメタデータ値型
+ * - XSS や SSRF を防ぐため、安全な型のみを許可
+ * - 複雑な JSON は許可しない（セキュリティ重視）
+ */
+const SafeMetadataValue = z.union([
+  z.string().max(500),
+  z.number().finite(),
+  z.boolean(),
+  z.null(),
+  z.array(z.string().max(500)).max(50),
+  z.array(z.number().finite()).max(50),
+]);
+
+/**
+ * セキュアなメタデータスキーマ
+ * - キーは alphanumeric + underscore のみ
+ * - 値は安全な型のみ
+ */
+export const safeMetadataSchema = z
+  .record(
+    z.string().regex(/^[a-zA-Z0-9_]+$/, 'Metadata keys must contain only alphanumeric characters and underscores'),
+    SafeMetadataValue
+  )
+  .optional();
+
+/**
+ * セキュアな設定スキーマ
+ * - ui, notifications, privacy など特定のカテゴリに限定
+ */
+export const safeSettingsSchema = z
+  .record(
+    z.string().regex(/^[a-zA-Z0-9_]+$/, 'Settings keys must contain only alphanumeric characters and underscores'),
+    SafeMetadataValue
+  )
+  .optional();
+
+/**
  * UUID形式またはCUIDのID
  */
 export const idSchema = z
@@ -94,6 +131,39 @@ export const nationRoleSchema = z
   .describe('Nation role: member, leader, or governor');
 
 // ============================================================================
+// Path Parameter Schemas
+// ============================================================================
+
+/**
+ * User ID パラメータ (PATH)
+ *
+ * GET/PATCH/DELETE /api/admin/users/:id
+ */
+export const userIdParamSchema = z.object({
+  id: idSchema,
+});
+
+export type UserIdParam = z.infer<typeof userIdParamSchema>;
+
+/**
+ * Group ID パラメータ (PATH)
+ */
+export const groupIdParamSchema = z.object({
+  id: idSchema,
+});
+
+export type GroupIdParam = z.infer<typeof groupIdParamSchema>;
+
+/**
+ * Nation ID パラメータ (PATH)
+ */
+export const nationIdParamSchema = z.object({
+  id: idSchema,
+});
+
+export type NationIdParam = z.infer<typeof nationIdParamSchema>;
+
+// ============================================================================
 // User API Schemas
 // ============================================================================
 
@@ -105,7 +175,7 @@ export const createUserRequestSchema = z.object({
   name: userNameSchema,
   password: passwordSchema,
   role: userRoleSchema.optional().default('user'),
-  metadata: z.record(z.string(), z.any()).optional(),
+  metadata: safeMetadataSchema,
 });
 
 export type CreateUserRequest = z.infer<typeof createUserRequestSchema>;
@@ -117,7 +187,7 @@ export const updateUserRequestSchema = z.object({
   name: userNameSchema.optional(),
   email: emailSchema.optional(),
   role: userRoleSchema.optional(),
-  metadata: z.record(z.string(), z.any()).optional(),
+  metadata: safeMetadataSchema,
 });
 
 export type UpdateUserRequest = z.infer<typeof updateUserRequestSchema>;
@@ -146,7 +216,7 @@ export const userResponseSchema = z.object({
   role: userRoleSchema,
   createdAt: z.date(),
   updatedAt: z.date(),
-  metadata: z.record(z.string(), z.any()).nullable(),
+  metadata: safeMetadataSchema,
 });
 
 export type UserResponse = z.infer<typeof userResponseSchema>;
@@ -174,7 +244,7 @@ export const createGroupRequestSchema = z.object({
   name: groupNameSchema,
   description: descriptionSchema,
   isPublic: z.boolean().optional().default(true),
-  settings: z.record(z.string(), z.any()).optional(),
+  settings: safeSettingsSchema,
 });
 
 export type CreateGroupRequest = z.infer<typeof createGroupRequestSchema>;
@@ -186,7 +256,7 @@ export const updateGroupRequestSchema = z.object({
   name: groupNameSchema.optional(),
   description: descriptionSchema,
   isPublic: z.boolean().optional(),
-  settings: z.record(z.string(), z.any()).optional(),
+  settings: safeSettingsSchema,
 });
 
 export type UpdateGroupRequest = z.infer<typeof updateGroupRequestSchema>;
@@ -218,7 +288,7 @@ export const groupResponseSchema = z.object({
   memberCount: z.number().int(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  settings: z.record(z.string(), z.any()).nullable(),
+  settings: safeSettingsSchema,
 });
 
 export type GroupResponse = z.infer<typeof groupResponseSchema>;
@@ -265,7 +335,7 @@ export const createNationRequestSchema = z.object({
   name: groupNameSchema,
   description: descriptionSchema,
   governorId: idSchema.optional(), // 指定されない場合は作成者
-  settings: z.record(z.string(), z.any()).optional(),
+  settings: safeSettingsSchema,
 });
 
 export type CreateNationRequest = z.infer<typeof createNationRequestSchema>;
@@ -276,7 +346,7 @@ export type CreateNationRequest = z.infer<typeof createNationRequestSchema>;
 export const updateNationRequestSchema = z.object({
   name: groupNameSchema.optional(),
   description: descriptionSchema,
-  settings: z.record(z.string(), z.any()).optional(),
+  settings: safeSettingsSchema,
 });
 
 export type UpdateNationRequest = z.infer<typeof updateNationRequestSchema>;
@@ -307,7 +377,7 @@ export const nationResponseSchema = z.object({
   groupCount: z.number().int(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  settings: z.record(z.string(), z.any()).nullable(),
+  settings: safeSettingsSchema,
 });
 
 export type NationResponse = z.infer<typeof nationResponseSchema>;
@@ -366,7 +436,7 @@ export const errorResponseSchema = z.object({
   error: z.object({
     code: z.string(),
     message: z.string(),
-    details: z.record(z.string(), z.any()).optional(),
+    details: safeMetadataSchema,
   }),
 });
 

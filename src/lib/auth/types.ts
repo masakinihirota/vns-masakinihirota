@@ -4,6 +4,12 @@
  */
 
 /**
+ * マスク（仮面）カテゴリー
+ * @see docs/
+ */
+export type MaskCategory = "ghost" | "persona";
+
+/**
  * グループロールの型
  * @see docs/rbac-group-nation-separation.md
  */
