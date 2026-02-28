@@ -13,9 +13,14 @@ import * as schema from './schema.postgres';
  * PostgreSQL connection
  */
 
-const databaseUrl =
-  process.env.DATABASE_URL ||
-  "postgresql://vns_user@localhost:5433/vns_db";
+const databaseUrl = process.env.DATABASE_URL;
+
+if (!databaseUrl) {
+  throw new Error(
+    'DATABASE_URL environment variable is required. ' +
+    'Set it in your .env.local file or deployment environment.'
+  );
+}
 
 /**
  * コネクションプーリング設定

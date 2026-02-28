@@ -16,7 +16,8 @@ export type ErrorCode =
   | 'FORBIDDEN'         // 403: 権限不足
   | 'NOT_FOUND'         // 404: リソースが見つからない
   | 'CONFLICT'          // 409: リソースの競合（例: 既に存在する）
-  | 'INTERNAL_ERROR';   // 500: サーバー内部エラー
+  | 'INTERNAL_ERROR'    // 500: サーバー内部エラー
+  | 'PARSE_ERROR';      // JSON パースエラー
 
 // ============================================================================
 // Response Types
@@ -38,6 +39,7 @@ export interface ApiErrorResponse {
   error: {
     code: ErrorCode;
     message: string;
+    status?: number;
     details?: Record<string, any>;
   };
 }
@@ -83,4 +85,5 @@ export const ERROR_STATUS_MAP: Record<ErrorCode, number> = {
   NOT_FOUND: 404,
   CONFLICT: 409,
   INTERNAL_ERROR: 500,
+  PARSE_ERROR: 500,
 } as const;

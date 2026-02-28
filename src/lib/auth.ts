@@ -2,10 +2,10 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/lib/db/client";
 import * as schema from "@/lib/db/schema.postgres";
+import { eq } from "drizzle-orm";
 import { admin } from "better-auth/plugins/admin";
 import { nextCookies } from "better-auth/next-js";
 import { startRateLimitCleanup } from "@/lib/auth/rate-limiter";
-// import { rateLimit } from "better-auth/plugins"; // TODO: Better Auth 1.4.19 では利用不可 v1.5+ で対応予定
 
 /**
  * データベース接続文字列の検証
@@ -123,6 +123,51 @@ export const auth = betterAuth({
   session: {
     expiresIn: 60 * 60 * 24 * 7, // 7日 (seconds)
     updateAge: 60 * 60 * 24 * 1, // 1日ごとに有効期限を更新
+
+    // Session callback: activeProfileId を追加
+    // (現在被っている仮面のIDをセッションに含める)
+    async callback({
+      session,
+      user,
+    }: {
+      session: { user: { id: string; email: string; role?: string } };
+      user: { id: string; email: string };
+    }) {
+      try {
+        // rootAccount から activeProfileId を取得
+        const rootAccount = await db
+          .select({ activeProfileId: schema.rootAccounts.activeProfileId })
+          .from(schema.rootAccounts)
+          .where(eq(schema.rootAccounts.authUserId, user.id))
+          .limit(1)
+          .then((rows) => rows[0]);
+
+        const activeProfileId = rootAccount?.activeProfileId ?? null;
+
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            activeProfileId,
+          },
+        };
+      } catch (error) {
+        // ✅ FIXED: エラー時はデフォルトで ghost を設定
+        // activeProfileId がない場合、ghost mask として扱う（conservative approach）
+        console.error('[AUTH] Failed to get activeProfileId - defaulting to ghost', {
+          userId: user.id,
+          error: error instanceof Error ? error.message : String(error),
+        });
+
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            activeProfileId: null, // Ghost as default
+          },
+        };
+      }
+    },
   },
 
   plugins: [

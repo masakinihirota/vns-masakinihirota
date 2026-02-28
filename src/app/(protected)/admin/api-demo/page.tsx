@@ -1,53 +1,84 @@
 /**
- * API Demo - サーバーコンポーネント
+ * API Demo Page
  *
- * 第1段階実装例：Honoバックエンドとの通信確認
- * - クライアントコンポーネント経由でRPC Client使用
- * - 型推論の動作確認
- * - エンドツーエンドのレスポンス取得
+ * @description
+ * - Hono RPC + TanStack Query の実装例を表示
+ * - GET, POST リクエストのデモ
+ * - キャッシュ管理のデモ
  */
 
-import { ApiTestClientComponent } from '@/components/api-test-client';
+import { HealthCheckDemo, UserInfoDemo } from '@/components/examples/api-demo';
+import { EchoTestDemo, QueryInvalidationDemo } from '@/components/examples/mutation-demo';
 
-export default async function ApiDemoPage() {
-    return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8">
-            <div className="max-w-2xl mx-auto">
-                {/* ヘッダー */}
-                <div className="mb-12">
-                    <h1 className="text-4xl font-bold text-white mb-2">
-                        🚀 API Demo - Hono × Next.js
-                    </h1>
-                    <p className="text-slate-400">
-                        第1段階：バックエンド通信の土台確認
-                    </p>
-                </div>
+export default function ApiDemoPage() {
+  return (
+    <div className="container mx-auto py-8 space-y-8">
+      <div>
+        <h1 className="text-3xl font-bold mb-2">Hono RPC + TanStack Query Demo</h1>
+        <p className="text-muted-foreground">
+          Honoを使った型安全なAPIクライアントとTanStack Queryによるデータフェッチングのデモ
+        </p>
+      </div>
 
-                {/* クライアントサイド実行 */}
-                <div className="bg-slate-800 rounded-lg p-6 border border-slate-700">
-                    <h2 className="text-xl font-semibold text-white mb-4 flex items-center">
-                        <span className="mr-2">💻</span>
-                        クライアントサイド実行
-                    </h2>
+      <div className="grid gap-6 md:grid-cols-2">
+        {/* Query Examples */}
+        <HealthCheckDemo />
+        <UserInfoDemo />
 
-                    <ApiTestClientComponent />
+        {/* Mutation Examples */}
+        <EchoTestDemo />
+        <QueryInvalidationDemo />
+      </div>
 
-                    <div className="mt-4 text-sm text-slate-400">
-                        <p>
-                            ✅ ボタン操作により
-                            <span className="text-blue-400">クライアントコンポーネント</span>から
-                            APIを呼び出し
-                        </p>
-                        <p className="mt-1">
-                            ✅ JSON レスポンスを画面に表示
-                        </p>
-                    </div>
-                </div>
+      <div className="rounded-lg border bg-card p-6">
+        <h2 className="text-xl font-semibold mb-4">実装パターン</h2>
+        <div className="space-y-4 text-sm">
+          <div>
+            <h3 className="font-medium mb-2">🔍 Query (GET)</h3>
+            <pre className="rounded bg-muted p-4 overflow-x-auto">
+              <code>{`const { data, isLoading, error } = useApiQuery(
+  ['users', 'me'],
+  async () => {
+    const res = await client.users.me.$get();
+    return handleApiResponse(res);
+  }
+);`}</code>
+            </pre>
+          </div>
 
-                {/* チェックリスト */}
-                <div className="mt-8 bg-slate-800 rounded-lg p-6 border border-slate-700">
-                    <h2 className="text-xl font-semibold text-white mb-4">
-                        📋 第1段階 チェックリスト
+          <div>
+            <h3 className="font-medium mb-2">✏️ Mutation (POST/PUT/DELETE)</h3>
+            <pre className="rounded bg-muted p-4 overflow-x-auto">
+              <code>{`const createUser = useApiMutation(
+  async (input: CreateUserInput) => {
+    const res = await client.admin.users.$post({ json: input });
+    return handleApiResponse(res);
+  },
+  {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  }
+);
+
+createUser.mutate({ name: 'John' });`}</code>
+            </pre>
+          </div>
+
+          <div>
+            <h3 className="font-medium mb-2">🎯 特徴</h3>
+            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+              <li>完全な型安全性（サーバー側の型定義から自動推論）</li>
+              <li>自動的なキャッシング・リトライ・エラーハンドリング</li>
+              <li>楽観的更新（Optimistic Update）サポート</li>
+              <li>DevToolsによるデバッグ（開発環境）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
                     </h2>
                     <ul className="space-y-2 text-slate-300">
                         <li className="flex items-center">

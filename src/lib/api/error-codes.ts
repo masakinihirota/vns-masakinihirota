@@ -1,0 +1,247 @@
+/**
+ * API エラーコード定義
+ *
+ * @description
+ * API全体で統一されたエラーコードを使用し、
+ * クライアント側が処理を適切に分岐できるようにします。
+ *
+ * エラーコード命名規則:
+ * - INVALID_*: 入力値が無効
+ * - DUPLICATE_*: 重複リソース
+ * - NOT_FOUND: リソースが見つからない
+ * - UNAUTHORIZED: 認証が必要
+ * - FORBIDDEN_*: 権限がない
+ * - RESOURCE_IN_USE: リソースがロック中
+ * - DATABASE_*: DBエラー
+ * - INTERNAL_SERVER_ERROR: 予期しないサーバーエラー
+ */
+
+export const ErrorCode = {
+  // 入力エラー (validation)
+  INVALID_INPUT: 'INVALID_INPUT',
+  INVALID_NAME: 'INVALID_NAME',
+  INVALID_EMAIL: 'INVALID_EMAIL',
+  INVALID_ID: 'INVALID_ID',
+  INVALID_GROUP_ID: 'INVALID_GROUP_ID',
+  INVALID_NATION_ID: 'INVALID_NATION_ID',
+  INVALID_USER_ID: 'INVALID_USER_ID',
+
+  // 重複エラー
+  DUPLICATE_GROUP: 'DUPLICATE_GROUP',
+  DUPLICATE_NATION: 'DUPLICATE_NATION',
+  DUPLICATE_EMAIL: 'DUPLICATE_EMAIL',
+
+  // リソースエラー
+  NOT_FOUND: 'NOT_FOUND',
+  GROUP_NOT_FOUND: 'GROUP_NOT_FOUND',
+  NATION_NOT_FOUND: 'NATION_NOT_FOUND',
+  USER_NOT_FOUND: 'USER_NOT_FOUND',
+  RESOURCE_IN_USE: 'RESOURCE_IN_USE',
+
+  // 認可エラー
+  UNAUTHORIZED: 'UNAUTHORIZED',
+  SESSION_REQUIRED: 'SESSION_REQUIRED',
+  SESSION_EXPIRED: 'SESSION_EXPIRED',
+
+  // 権限エラー (RBAC)
+  FORBIDDEN: 'FORBIDDEN',
+  FORBIDDEN_GROUP_ROLE: 'FORBIDDEN_GROUP_ROLE',
+  FORBIDDEN_NATION_ROLE: 'FORBIDDEN_NATION_ROLE',
+  FORBIDDEN_OWNER_ONLY: 'FORBIDDEN_OWNER_ONLY',
+  GHOST_MASK_INTERACTION_DENIED: 'GHOST_MASK_INTERACTION_DENIED',
+
+  // RBAC内部エラー
+  PROFILE_LOOKUP_FAILED: 'PROFILE_LOOKUP_FAILED',
+  MASK_LOOKUP_FAILED: 'MASK_LOOKUP_FAILED',
+  GROUP_ROLE_CHECK_FAILED: 'GROUP_ROLE_CHECK_FAILED',
+  NATION_ROLE_CHECK_FAILED: 'NATION_ROLE_CHECK_FAILED',
+  RELATIONSHIP_CHECK_FAILED: 'RELATIONSHIP_CHECK_FAILED',
+  INTERACTION_CHECK_FAILED: 'INTERACTION_CHECK_FAILED',
+
+  // DB エラー
+  DATABASE_ERROR: 'DATABASE_ERROR',
+  DATABASE_CONNECTION_ERROR: 'DATABASE_CONNECTION_ERROR',
+  TRANSACTION_FAILED: 'TRANSACTION_FAILED',
+  CONSTRAINT_VIOLATION: 'CONSTRAINT_VIOLATION',
+
+  // クライアント側エラー
+  RATE_LIMIT_EXCEEDED: 'RATE_LIMIT_EXCEEDED',
+  OPERATION_NOT_ALLOWED: 'OPERATION_NOT_ALLOWED',
+  METHOD_NOT_ALLOWED: 'METHOD_NOT_ALLOWED',
+
+  // サーバーエラー
+  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  SERVICE_UNAVAILABLE: 'SERVICE_UNAVAILABLE',
+} as const;
+
+export type ErrorCode = typeof ErrorCode[keyof typeof ErrorCode];
+
+/**
+ * エラーコードと HTTP ステータスコードのマッピング
+ */
+export const ErrorCodeToHttpStatus: Record<ErrorCode, number> = {
+  // 4xx Client Errors
+  INVALID_INPUT: 400,
+  INVALID_NAME: 400,
+  INVALID_EMAIL: 400,
+  INVALID_ID: 400,
+  INVALID_GROUP_ID: 400,
+  INVALID_NATION_ID: 400,
+  INVALID_USER_ID: 400,
+
+  DUPLICATE_GROUP: 409,
+  DUPLICATE_NATION: 409,
+  DUPLICATE_EMAIL: 409,
+
+  NOT_FOUND: 404,
+  GROUP_NOT_FOUND: 404,
+  NATION_NOT_FOUND: 404,
+  USER_NOT_FOUND: 404,
+  RESOURCE_IN_USE: 409,
+
+  UNAUTHORIZED: 401,
+  SESSION_REQUIRED: 401,
+  SESSION_EXPIRED: 401,
+
+  FORBIDDEN: 403,
+  FORBIDDEN_GROUP_ROLE: 403,
+  FORBIDDEN_NATION_ROLE: 403,
+  FORBIDDEN_OWNER_ONLY: 403,
+  GHOST_MASK_INTERACTION_DENIED: 403,
+
+  PROFILE_LOOKUP_FAILED: 500,
+  MASK_LOOKUP_FAILED: 500,
+  GROUP_ROLE_CHECK_FAILED: 500,
+  NATION_ROLE_CHECK_FAILED: 500,
+  RELATIONSHIP_CHECK_FAILED: 500,
+  INTERACTION_CHECK_FAILED: 500,
+
+  RATE_LIMIT_EXCEEDED: 429,
+  OPERATION_NOT_ALLOWED: 400,
+  METHOD_NOT_ALLOWED: 405,
+
+  // 5xx Server Errors
+  DATABASE_ERROR: 500,
+  DATABASE_CONNECTION_ERROR: 500,
+  TRANSACTION_FAILED: 500,
+  CONSTRAINT_VIOLATION: 500,
+
+  INTERNAL_SERVER_ERROR: 500,
+  SERVICE_UNAVAILABLE: 503,
+};
+
+/**
+ * エラーコードに対応するユーザーフレンドリーなメッセージ（日本語）
+ */
+export const ErrorCodeToMessage: Record<ErrorCode, string> = {
+  // 入力エラー
+  INVALID_INPUT: '入力値が正しくありません。',
+  INVALID_NAME: '名前は1～100文字である必要があります。',
+  INVALID_EMAIL: 'メールアドレスの形式が正しくありません。',
+  INVALID_ID: '無効なIDです。',
+  INVALID_GROUP_ID: '無効なグループIDです。',
+  INVALID_NATION_ID: '無効な国IDです。',
+  INVALID_USER_ID: '無効なユーザーIDです。',
+
+  // 重複エラー
+  DUPLICATE_GROUP: 'このグループ名は既に使用されています。',
+  DUPLICATE_NATION: 'この国の名前は既に使用されています。',
+  DUPLICATE_EMAIL: 'このメールアドレスは既に登録されています。',
+
+  // リソースエラー
+  NOT_FOUND: 'リソースが見つかりません。',
+  GROUP_NOT_FOUND: 'グループが見つかりません。',
+  NATION_NOT_FOUND: '国が見つかりません。',
+  USER_NOT_FOUND: 'ユーザーが見つかりません。',
+  RESOURCE_IN_USE: 'このリソースは現在使用中です。',
+
+  // 認可エラー
+  UNAUTHORIZED: '認証が必要です。ログインしてください。',
+  SESSION_REQUIRED: 'セッションが必要です。',
+  SESSION_EXPIRED: 'セッションが有効期限切れです。再度ログインしてください。',
+
+  // 権限エラー
+  FORBIDDEN: 'この操作を実行する権限がありません。',
+  FORBIDDEN_GROUP_ROLE: 'グループ内での権限が不足しています。',
+  FORBIDDEN_NATION_ROLE: '国内での権限が不足しています。',
+  FORBIDDEN_OWNER_ONLY: 'オーナーのみがこの操作を実行できます。',
+  GHOST_MASK_INTERACTION_DENIED: '観測者は操作を実行できません。',
+
+  // RBAC内部エラー
+  PROFILE_LOOKUP_FAILED: 'ユーザー情報の確認に失敗しました。しばらく経ってからお試しください。',
+  MASK_LOOKUP_FAILED: 'アカウント情報の確認に失敗しました。',
+  GROUP_ROLE_CHECK_FAILED: 'グループの権限確認に失敗しました。',
+  NATION_ROLE_CHECK_FAILED: '国の権限確認に失敗しました。',
+  RELATIONSHIP_CHECK_FAILED: 'ユーザー関係の確認に失敗しました。',
+  INTERACTION_CHECK_FAILED: '操作の許可確認に失敗しました。',
+
+  // DB エラー
+  DATABASE_ERROR: 'データベースエラーが発生しました。',
+  DATABASE_CONNECTION_ERROR: 'データベースに接続できません。',
+  TRANSACTION_FAILED: 'トランザクションが失敗しました。',
+  CONSTRAINT_VIOLATION: 'データ制約エラーが発生しました。',
+
+  // クライアント側エラー
+  RATE_LIMIT_EXCEEDED: 'リクエストが多すぎます。しばらく待ってからお試しください。',
+  OPERATION_NOT_ALLOWED: 'この操作は許可されていません。',
+  METHOD_NOT_ALLOWED: 'このメソッドは許可されていません。',
+
+  // サーバーエラー
+  INTERNAL_SERVER_ERROR: '予期しないエラーが発生しました。',
+  SERVICE_UNAVAILABLE: 'サービスが一時的に利用できません。',
+};
+
+/**
+ * エラーコードがサーバー側で記録すべきかを判定
+ *
+ * true = サーバーログに出力
+ * false = ユーザー向けエラーのため詳細なログは不要
+ */
+export const ErrorCodeShouldLog: Record<ErrorCode, boolean> = {
+  INVALID_INPUT: false,
+  INVALID_NAME: false,
+  INVALID_EMAIL: false,
+  INVALID_ID: false,
+  INVALID_GROUP_ID: false,
+  INVALID_NATION_ID: false,
+  INVALID_USER_ID: false,
+
+  DUPLICATE_GROUP: false,
+  DUPLICATE_NATION: false,
+  DUPLICATE_EMAIL: false,
+
+  NOT_FOUND: false,
+  GROUP_NOT_FOUND: false,
+  NATION_NOT_FOUND: false,
+  USER_NOT_FOUND: false,
+  RESOURCE_IN_USE: false,
+
+  UNAUTHORIZED: false,
+  SESSION_REQUIRED: false,
+  SESSION_EXPIRED: false,
+
+  FORBIDDEN: false,
+  FORBIDDEN_GROUP_ROLE: false,
+  FORBIDDEN_NATION_ROLE: false,
+  FORBIDDEN_OWNER_ONLY: false,
+  GHOST_MASK_INTERACTION_DENIED: false,
+
+  PROFILE_LOOKUP_FAILED: true,  // ← ログ出力
+  MASK_LOOKUP_FAILED: true,
+  GROUP_ROLE_CHECK_FAILED: true,
+  NATION_ROLE_CHECK_FAILED: true,
+  RELATIONSHIP_CHECK_FAILED: true,
+  INTERACTION_CHECK_FAILED: true,
+
+  DATABASE_ERROR: true,
+  DATABASE_CONNECTION_ERROR: true,
+  TRANSACTION_FAILED: true,
+  CONSTRAINT_VIOLATION: true,
+
+  RATE_LIMIT_EXCEEDED: false,
+  OPERATION_NOT_ALLOWED: false,
+  METHOD_NOT_ALLOWED: false,
+
+  INTERNAL_SERVER_ERROR: true,
+  SERVICE_UNAVAILABLE: true,
+};

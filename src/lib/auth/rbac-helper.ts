@@ -19,8 +19,7 @@
  */
 
 import { cache } from "react";
-import { drizzle } from "drizzle-orm/postgres-js";
-import * as postgres from "postgres";
+import { db } from "@/lib/db/client";
 import {
   groupMembers,
   nationGroups,
@@ -38,24 +37,26 @@ import type {
   AuthSession,
 } from "./types";
 
-
-// ============================================================================
-// Database Connection Setup
-// ============================================================================
-
-function getDatabaseConnection() {
-  if (!process.env.DATABASE_URL) {
-    throw new Error("DATABASE_URL is not set");
+/**
+ * RBACエラークラス
+ *
+ * @design
+ * - キャッシュやDB接続以外の予期しないエラーを区別可能
+ * - ユーザー向けとログ用で異なるメッセージを保持
+ */
+class RBACError extends Error {
+  constructor(
+    public message: string,
+    public code: string,
+    public context?: Record<string, unknown>
+  ) {
+    super(message);
+    this.name = 'RBACError';
   }
-
-  // Singleton パターンでコネクションを共有
-  // (production では コネクションプーリング推奨)
-  const client = postgres.default(process.env.DATABASE_URL, {
-    prepare: false,
-  });
-
-  return drizzle(client);
 }
+
+
+// Database client is imported from @/lib/db/client (singleton with connection pooling)
 
 // ============================================================================
 // User ID Conversion (userId → userProfileId)
@@ -68,16 +69,22 @@ function getDatabaseConnection() {
  * - users.id (text) は Better Auth が提供する認証用 ID
  * - userProfiles.id (uuid) はビジネスロジック（RBAC）の基本単位
  * - 1ユーザー = 1 rootAccount = 1 userProfile という1対1関係
+ * - React cache() による同一リクエスト内キャッシュで複数呼び出しを最適化
+ *
+ * @caching
+ * - Strategy: React cache() によるリクエスト内キャッシュ
+ * - Scope: 同一 Server Action エクスキューション内
+ * - TTL: request end でリセット（明示的な削除なし）
  *
  * @param userId - Better Auth ユーザー ID (text)
  * @returns userProfiles の uuid | null （ユーザーが見つからない場合）
  *
+ * @throws RBACError - DB接続やクエリが失敗した場合
+ *
  * @example
- * const userProfileId = await cache(() => getUserProfileId(userId))();
+ * const userProfileId = await getUserProfileId(userId);
  */
 const _getUserProfileIdInternal = cache(async (userId: string): Promise<string | null> => {
-  const db = getDatabaseConnection();
-
   try {
     // users.id → rootAccounts.authUserId → rootAccounts.id → userProfiles.rootAccountId → userProfiles.id
     const result = await db
@@ -97,10 +104,25 @@ const _getUserProfileIdInternal = cache(async (userId: string): Promise<string |
       .limit(1)
       .then((rows) => rows[0] || null);
 
-    return result?.userProfileId ?? null;
+    if (!result) {
+      // ユーザーが見つからない場合は構成エラー
+      console.warn(`[RBAC] User profile not found for userId: ${userId}`);
+      return null;
+    }
+
+    return result.userProfileId;
   } catch (error) {
-    console.error("getUserProfileId database error:", error);
-    return null;
+    console.error('[RBAC] Failed to get user profile', {
+      userId,
+      errorType: error instanceof Error ? error.name : 'Unknown',
+      errorMessage: error instanceof Error ? error.message : String(error),
+    });
+
+    throw new RBACError(
+      'Failed to verify user profile. Please try again.',
+      'PROFILE_LOOKUP_FAILED',
+      { userId }
+    );
   }
 });
 
@@ -124,8 +146,6 @@ export async function getUserProfileId(userId: string): Promise<string | null> {
  * - 幽霊の仮面が自動作成される
  */
 const _getMaskCategoryInternal = cache(async (userId: string): Promise<string | null> => {
-  const db = getDatabaseConnection();
-
   try {
     const result = await db
       .select({
@@ -144,10 +164,24 @@ const _getMaskCategoryInternal = cache(async (userId: string): Promise<string | 
       .limit(1)
       .then((rows) => rows[0] || null);
 
-    return result?.maskCategory ?? null;
+    if (!result) {
+      console.warn(`[RBAC] Mask category not found for userId: ${userId}`);
+      return null;
+    }
+
+    return result.maskCategory;
   } catch (error) {
-    console.error("getMaskCategory database error:", error);
-    return null;
+    console.error('[RBAC] Failed to get mask category', {
+      userId,
+      errorType: error instanceof Error ? error.name : 'Unknown',
+      errorMessage: error instanceof Error ? error.message : String(error),
+    });
+
+    throw new RBACError(
+      'Failed to verify account type.',
+      'MASK_LOOKUP_FAILED',
+      { userId }
+    );
   }
 });
 
@@ -166,6 +200,7 @@ export async function getMaskCategory(userId: string): Promise<string | null> {
  * - ALLOWED: 自身のルートアカウント設定（幽霊プロフィール自体の基本情報）の編集
  * - DENIED: 他者への評価（ティア付与）、コメント、作品投稿、組織（国）への参加
  *
+ * @throws RBACError - ユーザープロフィール取得失敗時
  * @example
  * const isGhost = await isGhostMask(session);
  * if (isGhost) throw new Error('Ghost masks cannot perform this interaction');
@@ -173,8 +208,18 @@ export async function getMaskCategory(userId: string): Promise<string | null> {
 export async function isGhostMask(session: AuthSession | null): Promise<boolean> {
   if (!session?.user?.id) return false;
 
-  const maskCategory = await _getMaskCategoryInternal(session.user.id);
-  return maskCategory === "ghost";
+  try {
+    const maskCategory = await _getMaskCategoryInternal(session.user.id);
+    return maskCategory === "ghost";
+  } catch (error) {
+    // ✅ FIXED: DB エラー時は安全側に倒す（false ではなく throw）
+    // 幽霊チェックが失敗した場合、その操作を拒否すべき
+    console.error('[RBAC] Ghost mask check failed - BLOCKING INTERACTION', {
+      userId: session.user.id,
+      error: error instanceof Error ? error.message : String(error),
+    });
+    throw error; // 呼び出し元で処理させる
+  }
 }
 
 /**
@@ -189,12 +234,12 @@ export async function isGhostMask(session: AuthSession | null): Promise<boolean>
  * @param session - セッション情報
  * @returns true: インタラクション可能(ペルソナ) | false: インタラクション不可(幽霊)
  *
- * @throws Error - SESSION_REQUIRED
+ * @throws RBACError - ユーザープロフィール取得失敗時
  *
  * @example
  * const canInteract = await checkInteractionAllowed(session);
  * if (!canInteract) {
- *   throw new Error('Ghost masks can only observe. Cannot perform this interaction.');
+ *   throw new RBACError('Ghost masks can only observe.', 'GHOST_MASK_INTERACTION_DENIED');
  * }
  */
 export async function checkInteractionAllowed(session: AuthSession | null): Promise<boolean> {
@@ -203,9 +248,21 @@ export async function checkInteractionAllowed(session: AuthSession | null): Prom
   // platform_admin は全操作が可能
   if (session.user.role === "platform_admin") return true;
 
-  // 幽霊の仮面はインタラクション不可
-  const ghostMask = await isGhostMask(session);
-  return !ghostMask;
+  try {
+    // 幽霊の仮面はインタラクション不可
+    const ghostMask = await isGhostMask(session);
+    return !ghostMask;
+  } catch (error) {
+    // エラー時は安全側に倒す（拒否）
+    if (error instanceof RBACError) {
+      throw error;
+    }
+    throw new RBACError(
+      'Unable to verify interaction permissions.',
+      'INTERACTION_CHECK_FAILED',
+      { userId: session.user.id }
+    );
+  }
 }
 
 /**
@@ -260,16 +317,21 @@ function hasRoleOrHigher(
  * React cache() を使用して、同一リクエスト内での複数DB発行を回避します。
  * キャッシュキーは [userId, groupId, role] の組みなっています。
  *
+ * @caching
+ * - Strategy: React cache() によるリクエスト内キャッシュ
+ * - Scope: 同一 Server Action エクスキューション内
+ * - 注意: 取り消し不可の操作（削除等）については checkGroupRoleWithoutCache() を使用推奨
+ *
  * @param session - セッション情報
  * @param groupId - グループID
  * @param role - チェック対象ロール
  * @returns true: 権限あり | false: 権限なし
  *
- * @throws Error - SESSION_REQUIRED
+ * @throws RBACError - DB接続またはユーザープロフィール取得失敗時
  * @example
  * // sub_leader 権限が必要な操作に対し、leader ユーザーがアクセス可能
  * const isLeader = await checkGroupRole(session, groupId, 'sub_leader');
- * if (!isLeader) throw new Error('Unauthorized by group');
+ * if (!isLeader) throw new RBACError('Unauthorized by group', 'FORBIDDEN_GROUP_ROLE');
  *
  * @design
  * - platform_admin は全グループで操作可能（管理者権限）
@@ -283,13 +345,13 @@ const _checkGroupRoleInternal = cache(
     groupId: string,
     role: GroupRole,
   ): Promise<boolean> => {
-    // userId (text) を userProfileId (uuid) に変換
-    const userProfileId = await _getUserProfileIdInternal(userId);
-    if (!userProfileId) return false; // ユーザーが見つからない
-
-    const db = getDatabaseConnection();
-
     try {
+      // userId (text) を userProfileId (uuid) に変換
+      const userProfileId = await _getUserProfileIdInternal(userId);
+      if (!userProfileId) {
+        return false;  // ユーザーが見つからない
+      }
+
       const member = await db
         .select()
         .from(groupMembers)
@@ -302,13 +364,26 @@ const _checkGroupRoleInternal = cache(
         .limit(1)
         .then((rows) => rows[0] || null);
 
-      if (!member) return false;
+      if (!member) {
+        return false;  // グループメンバーシップがない
+      }
 
       // 階層チェック: ユーザーが必要な権限以上を持っているか確認
       return hasRoleOrHigher(member.role as GroupRole, role);
     } catch (error) {
-      console.error("checkGroupRole database error:", error);
-      return false;
+      console.error('[RBAC] Failed to check group role', {
+        userId,
+        groupId,
+        role,
+        errorType: error instanceof Error ? error.name : 'Unknown',
+        errorMessage: error instanceof Error ? error.message : String(error),
+      });
+
+      throw new RBACError(
+        'Failed to verify group permission.',
+        'GROUP_ROLE_CHECK_FAILED',
+        { userId, groupId, role }
+      );
     }
   },
 );
@@ -323,8 +398,17 @@ export async function checkGroupRole(
   // platform_admin は全リソースへの操作が可能
   if (session.user.role === "platform_admin") return true;
 
-  // ロール権限チェック
-  return await _checkGroupRoleInternal(session.user.id, groupId, role);
+  try {
+    // ロール権限チェック
+    return await _checkGroupRoleInternal(session.user.id, groupId, role);
+  } catch (error) {
+    // エラーが発生した場合は安全側に倒す（拒否）
+    if (error instanceof RBACError) {
+      console.error('[RBAC] Group role check error', error.context);
+      return false;  // デフォルト: 権限なし
+    }
+    throw error;
+  }
 }
 
 /**
@@ -333,17 +417,22 @@ export async function checkGroupRole(
  * React cache() を使用して、同一リクエスト内での複数DB発行を回避。
  * キャッシュキー: [userId, nationId, role]
  *
+ * @caching
+ * - Strategy: React cache() によるリクエスト内キャッシュ
+ * - Scope: 同一 Server Action エクスキューション内
+ * - 注意: 取り消し不可の操作（削除等）については checkNationRoleWithoutCache() を使用推奨
+ *
  * @param session - セッション情報
  * @param nationId - 国ID
  * @param role - チェック対象ロール
  * @returns true: 権限あり | false: 権限なし
  *
- * @throws Error - SESSION_REQUIRED
+ * @throws RBACError - DB接続またはユーザープロフィール取得失敗時
  * @example
  * // sub_leader 権限が必要な操作
  * // leader ユーザーは higher hierarchy なので通過可能
  * const isNationLeader = await checkNationRole(session, nationId, 'sub_leader');
- * if (!isNationLeader) throw new Error('Unauthorized');
+ * if (!isNationLeader) throw new RBACError('Unauthorized', 'FORBIDDEN_NATION_ROLE');
  *
  * @design
  * - nation_groups テーブルで組織が国に参加していることを確認
@@ -361,13 +450,13 @@ const _checkNationRoleInternal = cache(
     nationId: string,
     role: NationRole,
   ): Promise<boolean> => {
-    // userId (text) を userProfileId (uuid) に変換
-    const userProfileId = await _getUserProfileIdInternal(userId);
-    if (!userProfileId) return false; // ユーザーが見つからない
-
-    const db = getDatabaseConnection();
-
     try {
+      // userId (text) を userProfileId (uuid) に変換
+      const userProfileId = await _getUserProfileIdInternal(userId);
+      if (!userProfileId) {
+        return false;  // ユーザーが見つからない
+      }
+
       // ユーザーが属する組織が、国内でどのロールを持っているかを取得
       // クエリ概要：
       // - group_members から userProfileId で属する組織を取得
@@ -385,16 +474,31 @@ const _checkNationRoleInternal = cache(
         .where(eq(groupMembers.userProfileId, userProfileId))
         .limit(1);
 
-      if (result.length === 0) return false;
+      if (result.length === 0) {
+        return false;  // 組織が国に属していない
+      }
 
       const userNationRole = result[0]?.nationRole as NationRole | undefined;
-      if (!userNationRole) return false;
+      if (!userNationRole) {
+        return false;  // ロール情報がない
+      }
 
       // 階層チェック: ユーザーが必要な権限以上を持っているか確認
       return hasRoleOrHigher(userNationRole, role);
     } catch (error) {
-      console.error("checkNationRole database error:", error);
-      return false;
+      console.error('[RBAC] Failed to check nation role', {
+        userId,
+        nationId,
+        role,
+        errorType: error instanceof Error ? error.name : 'Unknown',
+        errorMessage: error instanceof Error ? error.message : String(error),
+      });
+
+      throw new RBACError(
+        'Failed to verify nation permission.',
+        'NATION_ROLE_CHECK_FAILED',
+        { userId, nationId, role }
+      );
     }
   },
 );
@@ -409,8 +513,17 @@ export async function checkNationRole(
   // platform_admin は全リソースへの操作が可能
   if (session.user.role === "platform_admin") return true;
 
-  // ロール権限チェック
-  return await _checkNationRoleInternal(session.user.id, nationId, role);
+  try {
+    // ロール権限チェック
+    return await _checkNationRoleInternal(session.user.id, nationId, role);
+  } catch (error) {
+    // エラーが発生した場合は安全側に倒す（拒否）
+    if (error instanceof RBACError) {
+      console.error('[RBAC] Nation role check error', error.context);
+      return false;  // デフォルト: 権限なし
+    }
+    throw error;
+  }
 }
 
 /**
@@ -419,15 +532,20 @@ export async function checkNationRole(
  * React cache() を使用して、同一リクエスト内での複数DB発行を回避。
  * キャッシュキー: [userId, targetUserId, relationship]
  *
+ * @caching
+ * - Strategy: React cache() によるリクエスト内キャッシュ
+ * - Scope: 同一 Server Action エクスキューション内
+ * - 注意: 取り消し不可の操作（削除等）については checkRelationshipWithoutCache() を使用推奨
+ *
  * @param session - セッション情報
  * @param targetUserId - チェック対象ユーザーID
  * @param relationship - チェック対象関係シンボル
  * @returns true: 関係あり | false: 関係なし
  *
- * @throws Error - SESSION_REQUIRED | INVALID_USER
+ * @throws RBACError - DB接続またはユーザープロフィール取得失敗時
  * @example
  * const isFriend = await checkRelationship(session, targetUserId, 'friend');
- * if (!isFriend) throw new Error('Not friends');
+ * if (!isFriend) throw new RBACError('Not friends', 'RELATIONSHIP_NOT_FOUND');
  *
  * @design
  * - 非対称関係：ユーザーAからBへの 'friend' と、BからAへの 'friend' は異なる
@@ -444,17 +562,17 @@ const _checkRelationshipInternal = cache(
     targetUserId: string,
     relationship: RelationshipType,
   ): Promise<boolean> => {
-    // 自分自身への関係チェックを拒否
-    if (userId === targetUserId) return false;
-
-    // userId (text) を userProfileId (uuid) に変換
-    const userProfileId = await _getUserProfileIdInternal(userId);
-    const targetProfileId = await _getUserProfileIdInternal(targetUserId);
-    if (!userProfileId || !targetProfileId) return false; // いずれかが見つからない
-
-    const db = getDatabaseConnection();
-
     try {
+      // 自分自身への関係チェックを拒否
+      if (userId === targetUserId) return false;
+
+      // userId (text) を userProfileId (uuid) に変換
+      const userProfileId = await _getUserProfileIdInternal(userId);
+      const targetProfileId = await _getUserProfileIdInternal(targetUserId);
+      if (!userProfileId || !targetProfileId) {
+        return false;  // いずれかが見つからない
+      }
+
       const rel = await db
         .select()
         .from(relationships)
@@ -470,8 +588,19 @@ const _checkRelationshipInternal = cache(
 
       return rel !== null;
     } catch (error) {
-      console.error("checkRelationship database error:", error);
-      return false;
+      console.error('[RBAC] Failed to check relationship', {
+        userId,
+        targetUserId,
+        relationship,
+        errorType: error instanceof Error ? error.name : 'Unknown',
+        errorMessage: error instanceof Error ? error.message : String(error),
+      });
+
+      throw new RBACError(
+        'Failed to verify user relationship.',
+        'RELATIONSHIP_CHECK_FAILED',
+        { userId, targetUserId, relationship }
+      );
     }
   },
 );
@@ -486,12 +615,21 @@ export async function checkRelationship(
   // platform_admin は全ユーザー間の関係にアクセス可能
   if (session.user.role === "platform_admin") return true;
 
-  // 関係チェック
-  return await _checkRelationshipInternal(
-    session.user.id,
-    targetUserId,
-    relationship,
-  );
+  try {
+    // 関係チェック
+    return await _checkRelationshipInternal(
+      session.user.id,
+      targetUserId,
+      relationship,
+    );
+  } catch (error) {
+    // エラーが発生した場合は安全側に倒す（拒否）
+    if (error instanceof RBACError) {
+      console.error('[RBAC] Relationship check error', error.context);
+      return false;  // デフォルト: 関係なし
+    }
+    throw error;
+  }
 }
 
 // ============================================================================
