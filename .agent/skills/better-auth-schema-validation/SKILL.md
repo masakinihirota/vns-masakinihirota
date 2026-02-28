@@ -16,9 +16,9 @@ description: Better Auth と Drizzle ORM のスキーマ命名規則一貫性を
 ### 発生した問題
 
 ```
-ERROR [Better Auth]: Failed query: insert into "verification" 
+ERROR [Better Auth]: Failed query: insert into "verification"
   ("id", "identifier", "value", "expires_at", "created_at", "updated_at") ...
-[cause]: null value in column "expiresAt" of relation "verification" 
+[cause]: null value in column "expiresAt" of relation "verification"
   violates not-null constraint
 ```
 
