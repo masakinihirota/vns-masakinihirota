@@ -65,8 +65,41 @@ function validateOAuthCredentials() {
   }
 }
 
+/**
+ * Better Auth コア環境変数の検証
+ */
+function validateBetterAuthCoreEnv() {
+  const secret = process.env.BETTER_AUTH_SECRET;
+  const authUrl = process.env.BETTER_AUTH_URL;
+
+  if (!secret) {
+    throw new Error(
+      '[AUTH] BETTER_AUTH_SECRET is not set. Please configure it in your .env.local or production environment.'
+    );
+  }
+
+  if (secret.length < 32) {
+    throw new Error(
+      '[AUTH] BETTER_AUTH_SECRET must be at least 32 characters for production-safe security.'
+    );
+  }
+
+  if (!authUrl) {
+    throw new Error(
+      '[AUTH] BETTER_AUTH_URL is not set. Please configure it in your .env.local or production environment.'
+    );
+  }
+
+  if (!authUrl.startsWith('http://') && !authUrl.startsWith('https://')) {
+    throw new Error(
+      '[AUTH] BETTER_AUTH_URL must start with "http://" or "https://".'
+    );
+  }
+}
+
 // 起動時に環境変数をチェック
 validateDatabaseUrl();
+validateBetterAuthCoreEnv();
 validateOAuthCredentials();
 
 /**

@@ -29,7 +29,7 @@ https://www.better-auth.com/docs/installation
 .env 作成
 
 ```.env
-BETTER_AUTH_SECRET=j0G9w9Fa05FbGrLZFrrUuz452TQWdyH7
+BETTER_AUTH_SECRET=*32文字以上のランダム文字列* # Better Auth 署名鍵（必須）
 BETTER_AUTH_URL=http://localhost:3000 # Base URL of your app
 
 DATABASE_URL=
@@ -333,6 +333,7 @@ Vercel Dashboard（https://vercel.com/dashboard）で以下の手順を実行し
 
 | キー | 値 | 説明 |
 |------|-----|------|
+| `BETTER_AUTH_SECRET` | *32文字以上のランダム文字列* | Better Auth 署名鍵（必須） |
 | `BETTER_AUTH_URL` | `https://vns-masakinihirota.vercel.app` | Better Auth ベース URL |
 | `NEXT_PUBLIC_APP_URL` | `https://vns-masakinihirota.vercel.app` | フロントエンド URL |
 | `NEXT_PUBLIC_BETTER_AUTH_URL` | `https://vns-masakinihirota.vercel.app` | 公開 Better Auth URL |
