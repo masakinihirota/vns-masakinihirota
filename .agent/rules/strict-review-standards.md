@@ -159,6 +159,7 @@ const usersWithSessions = await db.query.user.findMany({
 **ルール**:
 - ✅ Drizzle ORM の `.with()` / `.leftJoin()` を活用
 - ✅ リレーション定義は `src/db/schema.ts` で事前に定義
+- ✅ Better Auth の4テーブル（`user` / `session` / `account` / `verification`）は、`auth.ts` 側スキーマと `drizzle.config.ts` 側スキーマで列名（snake_case/camelCase）を厳密一致させる
 - ❌ ループ内でのクエリ発行は原則禁止
 
 ## 3. Error Handling & Logging

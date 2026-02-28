@@ -172,6 +172,15 @@ export default defineConfig({
 
 ```
 
+### ⚠️ このリポジトリ固有の重要ルール（Authスキーマ同期）
+
+- `auth.ts` が参照する Better Auth スキーマ（`src/db/schema.ts`）と、
+  `drizzle.config.ts` が参照するスキーマ（現行: `src/lib/db/schema.postgres.ts`）で、
+  **auth4テーブル（`user` / `session` / `account` / `verification`）の列名を必ず一致**させること。
+- 特に列命名（`snake_case` / `camelCase`）が不一致だと、
+  `POST /api/auth/sign-in/social` で 500 (`column ... does not exist`) を引き起こします。
+- 変更時は、`information_schema.columns` を使って本番DBの実カラム名を検証してからデプロイすること。
+
 適用する
 
 ```terminl
