@@ -74,7 +74,7 @@ function log(level: 'info' | 'warn' | 'error', message: string, data?: Record<st
 /**
  * Next.js 16 Proxy (旧 Middleware)
  * ルーティングと認証チェックを実施
- * 
+ *
  * @design
  * このプロキシの責務:
  * - ✅ 認証チェック（セッション有効性確認）
@@ -82,7 +82,7 @@ function log(level: 'info' | 'warn' | 'error', message: string, data?: Record<st
  * - ✅ ログイン済みユーザーの逆流防止（/login へのアクセス回避）
  * - ✅ ロギング・監視
  * - ✅ セキュリティヘッダー制御
- * 
+ *
  * 認可（ロール based アクセス制御）は Server Action でのみ実施
  * → Proxy での認可ロジック削除で矛盾を排除
  *
