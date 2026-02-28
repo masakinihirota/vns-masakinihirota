@@ -1,3 +1,5 @@
+CREATE TYPE "public"."alliance_status" AS ENUM('requested', 'pre_partner', 'partner');--> statement-breakpoint
+CREATE TYPE "public"."follow_status" AS ENUM('watch', 'follow');--> statement-breakpoint
 CREATE TABLE "account" (
 	"id" text PRIMARY KEY NOT NULL,
 	"accountId" text NOT NULL,

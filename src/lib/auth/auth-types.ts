@@ -119,3 +119,103 @@ export function isSession(obj: unknown): obj is Session {
     isUser((obj as Session).user)
   );
 }
+
+// ============================================================================
+// RBAC: Role-Based Access Control
+// ============================================================================
+
+/**
+ * 役割型（RoleType）
+ *
+ * ユーザーがシステム内で持つ役職・権限を表す。
+ * 階層的な権限管理を実現するための基本型。
+ *
+ * ## カテゴリ
+ * - **プラットフォーム管理権限**: `platform_admin`
+ * - **基本ロール**: `leader`, `member`
+ * - **組織ロール**: `group_*`
+ * - **国ロール**: `nation_*`
+ *
+ * ## 原則
+ * - 役割型と関係性型（RelationshipType）は明確に分離する
+ * - 役割型は「組織内の権限」を表す
+ * - 関係性型は「ユーザー間の関係」を表す
+ */
+export type RoleType =
+  // プラットフォーム管理権限（単独フル権限）
+  | "platform_admin"
+  // 基本ロール（組織/国未所属時）
+  | "leader"
+  | "member"
+  // 組織ロール
+  | "group_leader"
+  | "group_sub_leader"
+  | "group_member"
+  | "group_mediator"
+  // 国ロール
+  | "nation_leader"
+  | "nation_sub_leader"
+  | "nation_member"
+  | "nation_mediator";
+
+/**
+ * 関係性型（RelationshipType）
+ *
+ * ユーザー間の関係性を表す。
+ * アクセス権限の判定に使用される。
+ *
+ * ## 関係性レベル（低→高）
+ * 1. `watch`: 監視関係（一方的な観察）
+ * 2. `follow`: フォロー関係（興味あり）
+ * 3. `business_partner`: ビジネスパートナー（仕事関係）
+ * 4. `friend`: 友人関係（プライベート共有可）
+ * 5. `pre_partner`: パートナー予備（相互理解進行中）
+ * 6. `partner`: パートナー（最高レベルの信頼関係）
+ *
+ * ## 原則
+ * - 役割型（RoleType）と関係性型は明確に分離する
+ * - 関係性型は「ユーザー間の信頼レベル」を表す
+ * - 役割型は「組織内の権限」を表す
+ */
+export type RelationshipType =
+  | "watch"
+  | "follow"
+  | "business_partner"
+  | "friend"
+  | "pre_partner"
+  | "partner";
+
+/**
+ * 型ガード: 文字列がRoleTypeかどうか
+ */
+export function isRoleType(value: string): value is RoleType {
+  const validRoles: RoleType[] = [
+    "platform_admin",
+    "leader",
+    "member",
+    "group_leader",
+    "group_sub_leader",
+    "group_member",
+    "group_mediator",
+    "nation_leader",
+    "nation_sub_leader",
+    "nation_member",
+    "nation_mediator",
+  ];
+  return validRoles.includes(value as RoleType);
+}
+
+/**
+ * 型ガード: 文字列がRelationshipTypeかどうか
+ */
+export function isRelationshipType(value: string): value is RelationshipType {
+  const validRelationships: RelationshipType[] = [
+    "watch",
+    "follow",
+    "business_partner",
+    "friend",
+    "pre_partner",
+    "partner",
+  ];
+  return validRelationships.includes(value as RelationshipType);
+}

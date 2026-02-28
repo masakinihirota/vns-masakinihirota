@@ -22,8 +22,10 @@ vi.mock('@/config/routes', () => ({
     SIGNUP: '/signup',
     HOME: '/home',
     ADMIN: '/admin',
+    NATION_CREATE: '/nation/create',
   },
   PUBLIC_PATHS: ['/login', '/signup'],
+  STATIC_PATHS: ['/', '/faq', '/help'],
 }));
 
 import { auth } from '@/lib/auth';
@@ -85,7 +87,32 @@ describe('proxy (Next.js 16 Middleware)', () => {
     const request = new NextRequest(new URL('http://localhost:3000/admin'));
     (getHeaders as any).mockResolvedValue({});
     (auth.api.getSession as any).mockResolvedValue({
-      user: { id: '1', email: 'admin@example.com', role: 'admin' },
+      user: { id: '1', email: 'admin@example.com', role: 'platform_admin' },
+    });
+
+    const response = await proxy(request);
+
+    expect(response.status).toBe(200);
+  });
+
+  it('should block non-group_leader users from /nation/create', async () => {
+    const request = new NextRequest(new URL('http://localhost:3000/nation/create'));
+    (getHeaders as any).mockResolvedValue({});
+    (auth.api.getSession as any).mockResolvedValue({
+      user: { id: '1', email: 'member@example.com', role: 'member' },
+    });
+
+    const response = await proxy(request);
+
+    expect(response.status).toBe(307);
+    expect(response.headers.get('location')).toContain('/');
+  });
+
+  it('should allow group_leader users to access /nation/create', async () => {
+    const request = new NextRequest(new URL('http://localhost:3000/nation/create'));
+    (getHeaders as any).mockResolvedValue({});
+    (auth.api.getSession as any).mockResolvedValue({
+      user: { id: '1', email: 'leader@example.com', role: 'group_leader' },
     });
 
     const response = await proxy(request);

@@ -8,6 +8,13 @@ import { auth as serverAuth } from "@/lib/auth";
 import { db as database } from "@/lib/db/client";
 import * as schema from "@/lib/db/schema.postgres";
 import { createDummySession, DUMMY_USERS } from "@/lib/dev-auth";
+import {
+  checkPlatformAdmin,
+  checkGroupRole,
+  checkNationRole,
+  checkRelationship,
+} from "./rbac-helper";
+import { withAuth } from "./with-auth";
 
 /**
  * サーバーサイドで現在のセッション情報を取得します（キャッシュ付き）
@@ -190,4 +197,12 @@ export const getAuthMethodsForUser = async (userId: string) => {
     console.warn("[getAuthMethodsForUser] Error:", error instanceof Error ? error.message : String(error));
     return [];
   }
+};
+
+export {
+  checkPlatformAdmin,
+  checkGroupRole,
+  checkNationRole,
+  checkRelationship,
+  withAuth,
 };

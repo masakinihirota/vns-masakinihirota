@@ -67,6 +67,7 @@ export async function proxy(request: NextRequest) {
   const isStaticPath = STATIC_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`));
   const isLandingPath = pathname === ROUTES.LANDING;
   const isAdminPath = pathname.startsWith(ROUTES.ADMIN);
+  const isNationCreatePath = pathname === ROUTES.NATION_CREATE;
 
   let session = null;
 
@@ -122,7 +123,7 @@ export async function proxy(request: NextRequest) {
   }
 
   // ケース4：Admin専用パス ＋ 管理者以外がアクセス
-  if (isAdminPath && session?.user?.role !== "admin") {
+  if (isAdminPath && session?.user?.role !== "platform_admin") {
     // セキュリティイベント: 権限のないユーザーが管理画面にアクセス
     const userEmail = session?.user?.email || "unknown";
     const userRole = session?.user?.role || "unauthenticated";
@@ -130,6 +131,21 @@ export async function proxy(request: NextRequest) {
       `[SECURITY_EVENT] Unauthorized admin access attempt - User: ${userEmail}, Role: ${userRole}, Path: ${pathname}`
     );
     return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
+  }
+
+  // ケース5：国作成パス ＋ group_leaderまたはplatform_admin以外がアクセス
+  if (isNationCreatePath) {
+    const userRole = session?.user?.role;
+    const isAuthorized = userRole === "platform_admin" || userRole === "group_leader";
+
+    if (!isAuthorized) {
+      // セキュリティイベント: 権限のないユーザーが国作成ページにアクセス
+      const userEmail = session?.user?.email || "unknown";
+      log('error',
+        `[SECURITY_EVENT] Unauthorized nation create access attempt - User: ${userEmail}, Role: ${userRole || "unauthenticated"}, Path: ${pathname}`
+      );
+      return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
+    }
   }
 
   return NextResponse.next();

@@ -25,6 +25,43 @@ import {
   userProfiles
 } from './schema.postgres';
 
+export interface AdminDashboardStats {
+  unresolvedReports: number;
+  pendingApprovals: number;
+  adminLogCount24h: number;
+}
+
+export async function getAdminDashboardStats(): Promise<AdminDashboardStats> {
+  try {
+    const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+
+    const [pendingApprovalsResult, adminLogResult] = await Promise.all([
+      database
+        .select({ count: count() })
+        .from(approvals)
+        .where(eq(approvals.status, 'pending')),
+      database
+        .select({ count: count() })
+        .from(auditLogs)
+        .where(gte(auditLogs.timestamp, since)),
+    ]);
+
+    return {
+      unresolvedReports: 0,
+      pendingApprovals: Number(pendingApprovalsResult[0]?.count ?? 0),
+      adminLogCount24h: Number(adminLogResult[0]?.count ?? 0),
+    };
+  } catch (error) {
+    console.error('[getAdminDashboardStats] failed:', error);
+
+    return {
+      unresolvedReports: 0,
+      pendingApprovals: 0,
+      adminLogCount24h: 0,
+    };
+  }
+}
+
 // ============================================
 // ユーザー検索・フィルタ関連
 // ============================================

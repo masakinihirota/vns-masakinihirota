@@ -46,6 +46,12 @@ export const ROUTES = {
   /** ヘルプ（静的ページ） */
   HELP: '/help',
 
+  /** 組織作成（認証済みユーザー） */
+  ORGANIZATION_CREATE: '/organization/create',
+
+  /** 国作成（group_leaderのみ） */
+  NATION_CREATE: '/nation/create',
+
   /** 404ページ */
   NOT_FOUND: '/_not-found',
 } as const;

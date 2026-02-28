@@ -642,6 +642,68 @@ export const follows = pgTable(
   ]
 );
 
+/**
+ * Relationships Table（ユーザー間の関係）
+ *
+ * 2ユーザー間の多様な関係性を記録するテーブル。
+ * 関係性は非対称（方向性あり）：ユーザーAからユーザーBへの関係と、ユーザーBからユーザーAへの関係は異なる。
+ *
+ * @design
+ * - relationship: 'follow' | 'friend' | 'business_partner' | 'watch' | 'pre_partner' | 'partner'
+ * - 同一ユーザー・同一相手・同一関係の重複は不可（UNIQUE制約）
+ * - userId と targetUserId は異なる必要がある（CHECK制約）
+ * - 関係性のスケーリングや拡張を考慮した設計
+ *
+ * @example
+ * UserA -（follow）-> UserB: ユーザーAがユーザーBをフォロー
+ * UserB -（friend）-> UserA: ユーザーBとユーザーAが友達関係
+ * UserA -（business_partner）-> UserC: ユーザーAとユーザーCがビジネスパートナー
+ */
+export const relationships = pgTable(
+  "relationships",
+  {
+    id: uuid().defaultRandom().primaryKey().notNull(),
+    userProfileId: uuid("user_profile_id")
+      .notNull()
+      .references(() => userProfiles.id, { onDelete: "cascade" }), // 関係性の発端ユーザー
+    targetProfileId: uuid("target_profile_id")
+      .notNull()
+      .references(() => userProfiles.id, { onDelete: "cascade" }), // 関係対象ユーザー
+    relationship: text("relationship").notNull(), // 'follow', 'friend', 'business_partner', 'watch', 'pre_partner', 'partner'
+    createdAt: timestamp("created_at", { withTimezone: true, mode: "string" })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true, mode: "string" })
+      .defaultNow()
+      .notNull(),
+  },
+  (table) => [
+    index("idx_relationships_userProfileId").using(
+      "btree",
+      table.userProfileId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_relationships_targetProfileId").using(
+      "btree",
+      table.targetProfileId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_relationships_relationship").using(
+      "btree",
+      table.relationship.asc().nullsLast().op("text_ops")
+    ),
+    // 同一ユーザーが同一相手に同じ関係を重複設定することを防止
+    unique("relationships_userProfileId_targetProfileId_relationship_unique").on(
+      table.userProfileId,
+      table.targetProfileId,
+      table.relationship,
+    ),
+    // 自分自身を関係対象にすることを防止
+    check(
+      "relationships_self_check",
+      sql`user_profile_id <> target_profile_id`,
+    ),
+  ]
+);
+
 export const groupMembers = pgTable(
   "group_members",
   {
@@ -932,6 +994,12 @@ export const userProfilesRelations = relations(
     groupMembers: many(groupMembers),
     nationCitizens: many(nationCitizens),
     nationEventParticipants: many(nationEventParticipants),
+    relationships_userProfile: many(relationships, {
+      relationName: "relationships_userProfile",
+    }),
+    relationships_targetProfile: many(relationships, {
+      relationName: "relationships_targetProfile",
+    }),
   })
 );
 
@@ -1096,6 +1164,19 @@ export const groupMembersRelations = relations(groupMembers, ({ one }) => ({
   userProfile: one(userProfiles, {
     fields: [groupMembers.userProfileId],
     references: [userProfiles.id],
+  }),
+}));
+
+export const relationshipsRelations = relations(relationships, ({ one }) => ({
+  userProfile: one(userProfiles, {
+    fields: [relationships.userProfileId],
+    references: [userProfiles.id],
+    relationName: "relationships_userProfile",
+  }),
+  targetProfile: one(userProfiles, {
+    fields: [relationships.targetProfileId],
+    references: [userProfiles.id],
+    relationName: "relationships_targetProfile",
   }),
 }));
 

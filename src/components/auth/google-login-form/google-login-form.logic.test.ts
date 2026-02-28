@@ -53,7 +53,7 @@ describe("useGoogleLoginLogic", () => {
     expect(mockEvent.preventDefault).toHaveBeenCalled();
     expect(mockSignIn).toHaveBeenCalledWith({
       provider: "google",
-      callbackURL: "/",
+      callbackURL: "/home",
     });
   });
 

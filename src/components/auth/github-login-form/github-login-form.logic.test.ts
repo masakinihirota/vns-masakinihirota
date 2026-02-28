@@ -53,7 +53,7 @@ describe("useGitHubLoginLogic", () => {
     expect(mockEvent.preventDefault).toHaveBeenCalled();
     expect(mockSignIn).toHaveBeenCalledWith({
       provider: "github",
-      callbackURL: "/",
+      callbackURL: "/home",
     });
   });
 
