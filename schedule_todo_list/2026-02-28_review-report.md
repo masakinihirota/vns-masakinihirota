@@ -57,7 +57,7 @@ const session = await auth(); // ❌ 問題1と同じ
 const isGroupLeader = await checkGroupRole(userId, ...); // ❌ 型不一致
 ```
 
-**原因**: 
+**原因**:
 1. `auth()` 関数呼び出しが存在しない
 2. `checkGroupRole()` の第1引数は `userId` ではなく `AuthSession` を期待
 
@@ -222,7 +222,7 @@ Test Files  12 failed | 9 passed | 1 skipped (22)
       Tests  5 failed | 64 passed | 8 skipped (115)
 ```
 
-**分析**: 
+**分析**:
 - ❌ 5件の失敗は `DATABASE_URL` 環境変数の不在が原因（新規コード由来ではない）
 - ✅ `create-group.ts`, `create-nation.ts`, `rbac-deny-by-default.test.ts` は影響なし
 - ✅ 前のセッション「32/32 PASS」の status は維持（回帰なし）
@@ -362,7 +362,7 @@ interface AuthSession {
 
 function toAuthSession(session: any): AuthSession | null {
   if (!session?.user?.id) return null; // ランタイムチェック
-  
+
   return {
     user: {
       id: session.user.id,

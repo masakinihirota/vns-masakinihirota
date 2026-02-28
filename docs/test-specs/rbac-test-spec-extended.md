@@ -72,7 +72,7 @@
   ✓ /admin (role: platform_admin) → 200 OK
   ✓ /(protected) (未認証) → 302 Redirect
   ✓ /(protected) (role: user) → 200 OK
-  ✓ /nation/create (未認証) → 302 Redirect  
+  ✓ /nation/create (未認証) → 302 Redirect
   ✓ /nation/create (group_member) → 403 Forbidden
   ✓ /nation/create (group_leader) → 200 OK
 ```
@@ -93,7 +93,7 @@
 シナリオ:
   1. UserA が GroupA のリーダーとして作成
   2. UserA が GroupB のリスト取得を試行
-  
+
 期待: RLS により GroupB のデータは見えない
 ```
 
@@ -105,7 +105,7 @@
 シナリオ:
   1. UserB が GroupA のメンバーとして参加
   2. UserB がメンバー追加を試行（leader権限が必要）
-  
+
 期待: Server Actionで "Forbidden" エラー
 ```
 
@@ -118,7 +118,7 @@
   1. UserA: GroupA に属するメンバー
   2. UserB: GroupB に属するメンバー
   3. UserA が UserB と同じクエリを実行
-  
+
 期待:
   - UserA は GroupA メンバーのみ表示
   - UserB は GroupB メンバーのみ表示
@@ -142,7 +142,7 @@
   1. UserA: GroupA リーダー
   2. UserB: GroupA メンバー
   3. 両者が国作成を試行
-  
+
 期待:
   - UserA: 成功（Nation作成）
   - UserB: Forbidden エラー
@@ -156,7 +156,7 @@
 シナリオ:
   1. UserA: Nation A のメンバー
   2. UserA が Nation B のポリシー更新を試行
-  
+
 期待: RLS + Server Action チェックで拒否
 ```
 
@@ -170,7 +170,7 @@
   2. GroupB は NationY に参加
   3. UserA (GroupA) が NationX の詳細取得
   4. UserA が NationY の詳細取得を試行
-  
+
 期待:
   - NationX データ: 表示
   - NationY データ: RLS で拒否
@@ -182,7 +182,7 @@
 
 **目的**: Admin ページへのアクセスと権限検証
 
-**テストファイル**: 
+**テストファイル**:
 - `src/app/(protected)/admin/page.test.tsx`
 - `src/lib/db/__tests__/admin-queries.test.ts`
 
