@@ -6,7 +6,16 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
+    // デフォルト: happy-dom (コンポーネント・ロジックテスト用)
     environment: 'happy-dom',
+    // API テストは Node 環境に切り替え
+    environmentMatcherRegex: /\.(test|spec)\.[jt]sx?$/,
+    // API テストファイルは Node 環境で実行
+    poolOptions: {
+      threads: {
+        isolate: true,
+      },
+    },
     setupFiles: './vitest.setup.ts',
     coverage: {
       provider: 'v8',
