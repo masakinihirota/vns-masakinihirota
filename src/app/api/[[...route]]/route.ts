@@ -15,7 +15,10 @@
 import { Hono } from 'hono';
 import { handle } from 'hono/vercel';
 import { errorHandler } from '@/lib/api/middleware/error-handler';
+import { betterAuthSessionMiddleware } from '@/lib/api/middleware/auth-session';
 import health from '@/lib/api/routes/health';
+import users from '@/lib/api/routes/users';
+import admin from '@/lib/api/routes/admin';
 import poc from '@/lib/api/routes/poc';
 
 // ============================================================================
@@ -31,11 +34,24 @@ const app = new Hono().basePath('/api');
 app.onError(errorHandler);
 
 // ============================================================================
+// Global Middleware
+// ============================================================================
+
+// Better Auth セッション取得ミドルウェア - すべてのルートで実行
+app.use('*', betterAuthSessionMiddleware());
+
+// ============================================================================
 // Routes
 // ============================================================================
 
 // Health Check
 app.route('/health', health);
+
+// Users
+app.route('/users', users);
+
+// Admin (User/Group/Nation Management)
+app.route('/admin', admin);
 
 // PoC (Proof of Concept) - RPC Client テスト用
 app.route('/poc', poc);

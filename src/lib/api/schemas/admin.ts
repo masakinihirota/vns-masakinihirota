@@ -16,12 +16,12 @@ import { z } from 'zod';
 // ============================================================================
 
 /**
- * UUID形式のID
+ * UUID形式またはCUIDのID
  */
 export const idSchema = z
   .string()
-  .uuid()
-  .describe('UUID format ID');
+  .min(1)
+  .describe('UUID or CUID format ID');
 
 /**
  * メールアドレス
@@ -105,7 +105,7 @@ export const createUserRequestSchema = z.object({
   name: userNameSchema,
   password: passwordSchema,
   role: userRoleSchema.optional().default('user'),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
 export type CreateUserRequest = z.infer<typeof createUserRequestSchema>;
@@ -117,7 +117,7 @@ export const updateUserRequestSchema = z.object({
   name: userNameSchema.optional(),
   email: emailSchema.optional(),
   role: userRoleSchema.optional(),
-  metadata: z.record(z.any()).optional(),
+  metadata: z.record(z.string(), z.any()).optional(),
 });
 
 export type UpdateUserRequest = z.infer<typeof updateUserRequestSchema>;
@@ -146,7 +146,7 @@ export const userResponseSchema = z.object({
   role: userRoleSchema,
   createdAt: z.date(),
   updatedAt: z.date(),
-  metadata: z.record(z.any()).nullable(),
+  metadata: z.record(z.string(), z.any()).nullable(),
 });
 
 export type UserResponse = z.infer<typeof userResponseSchema>;
@@ -174,7 +174,7 @@ export const createGroupRequestSchema = z.object({
   name: groupNameSchema,
   description: descriptionSchema,
   isPublic: z.boolean().optional().default(true),
-  settings: z.record(z.any()).optional(),
+  settings: z.record(z.string(), z.any()).optional(),
 });
 
 export type CreateGroupRequest = z.infer<typeof createGroupRequestSchema>;
@@ -186,7 +186,7 @@ export const updateGroupRequestSchema = z.object({
   name: groupNameSchema.optional(),
   description: descriptionSchema,
   isPublic: z.boolean().optional(),
-  settings: z.record(z.any()).optional(),
+  settings: z.record(z.string(), z.any()).optional(),
 });
 
 export type UpdateGroupRequest = z.infer<typeof updateGroupRequestSchema>;
@@ -218,7 +218,7 @@ export const groupResponseSchema = z.object({
   memberCount: z.number().int(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  settings: z.record(z.any()).nullable(),
+  settings: z.record(z.string(), z.any()).nullable(),
 });
 
 export type GroupResponse = z.infer<typeof groupResponseSchema>;
@@ -265,7 +265,7 @@ export const createNationRequestSchema = z.object({
   name: groupNameSchema,
   description: descriptionSchema,
   governorId: idSchema.optional(), // 指定されない場合は作成者
-  settings: z.record(z.any()).optional(),
+  settings: z.record(z.string(), z.any()).optional(),
 });
 
 export type CreateNationRequest = z.infer<typeof createNationRequestSchema>;
@@ -276,7 +276,7 @@ export type CreateNationRequest = z.infer<typeof createNationRequestSchema>;
 export const updateNationRequestSchema = z.object({
   name: groupNameSchema.optional(),
   description: descriptionSchema,
-  settings: z.record(z.any()).optional(),
+  settings: z.record(z.string(), z.any()).optional(),
 });
 
 export type UpdateNationRequest = z.infer<typeof updateNationRequestSchema>;
@@ -307,7 +307,7 @@ export const nationResponseSchema = z.object({
   groupCount: z.number().int(),
   createdAt: z.date(),
   updatedAt: z.date(),
-  settings: z.record(z.any()).nullable(),
+  settings: z.record(z.string(), z.any()).nullable(),
 });
 
 export type NationResponse = z.infer<typeof nationResponseSchema>;
@@ -366,8 +366,9 @@ export const errorResponseSchema = z.object({
   error: z.object({
     code: z.string(),
     message: z.string(),
-    details: z.record(z.any()).optional(),
+    details: z.record(z.string(), z.any()).optional(),
   }),
 });
 
 export type ErrorResponse = z.infer<typeof errorResponseSchema>;
+

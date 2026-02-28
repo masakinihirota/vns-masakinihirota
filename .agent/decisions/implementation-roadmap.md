@@ -1,7 +1,7 @@
 # Hono API 実装ロードマップ - 実行計画書
 
-**作成日**: 2026-03-01  
-**Status**: 🚀 実装開始準備完了  
+**作成日**: 2026-03-01
+**Status**: 🚀 実装開始準備完了
 **総工数**: 約 20-25時間
 
 ---
@@ -53,7 +53,7 @@
 ## 🏗️ 第1段階: API通信の土台作り
 
 ### 目標
-✅ Next.jsコンポーネントからHono APIへのRPC通信開通  
+✅ Next.jsコンポーネントからHono APIへのRPC通信開通
 ✅ フロントエンドで型推論が効く相互運用性確認
 
 ### チェックリスト
@@ -77,7 +77,7 @@ export default async function DashboardPage() {
   // サーバー側でのRPC呼び出し
   const healthRes = await client.api.health.$get();
   const healthData = await healthRes.json();
-  
+
   return (
     <div>
       <h1>Dashboard</h1>
@@ -137,7 +137,7 @@ export function ApiTestButton() {
 ## 🔐 第2段階: 認証の壁（Better Auth セッション取得）
 
 ### 目標
-✅ Hono側で Better Auth のセッション情報を受け取る  
+✅ Hono側で Better Auth のセッション情報を受け取る
 ✅ `GET /api/users/me` で現在のログインユーザー情報を返す
 
 ### チェックリスト
@@ -177,14 +177,14 @@ export const users = new Hono();
 users.get('/me', async (c) => {
   const headers = c.req.raw.headers;
   const session = await getBetterAuthSession(headers);
-  
+
   if (!session?.user) {
     return c.json(
       { success: false, error: { code: 'UNAUTHORIZED', message: 'Not logged in' } },
       401
     );
   }
-  
+
   return c.json({
     success: true,
     data: {
@@ -208,7 +208,7 @@ users.get('/me', async (c) => {
 ## 👑 第3段階: 権限の壁（RBAC）
 
 ### 目標
-✅ 管理者のみアクセス可能なAPIエンドポイント作成  
+✅ 管理者のみアクセス可能なAPIエンドポイント作成
 ✅ RBAC ミドルウェアの実装・テスト
 
 ### チェックリスト
@@ -235,7 +235,7 @@ users.get('/me', async (c) => {
 ## 🔍 第4段階: データの壁（Zod バリデーション）
 
 ### 目標
-✅ Zod スキーマベースの安全なAPI実装  
+✅ Zod スキーマベースの安全なAPI実装
 ✅ バリデーション済みデータのみDB保存
 
 ### チェックリスト
@@ -261,7 +261,7 @@ users.get('/me', async (c) => {
 ## ✨ 第5段階: UX向上（nuqs）
 
 ### 目標
-✅ 検索・フィルタ条件をURLに同期  
+✅ 検索・フィルタ条件をURLに同期
 ✅ ブラウザ戻る/進むボタン機能
 
 ### チェックリスト
@@ -283,7 +283,7 @@ import { useQueryState } from 'nuqs';
 export function UserSearch() {
   const [search, setSearch] = useQueryState('q');
   const [page, setPage] = useQueryState('page', { defaultValue: '1' });
-  
+
   return (
     <div>
       <input value={search ?? ''} onChange={e => setSearch(e.target.value)} />
