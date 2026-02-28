@@ -11,16 +11,25 @@ const postgres = require('postgres');
     const sql = postgres(process.env.DATABASE_URL, { prepare: false });
 
     try {
+        // Step 1: Add snake_case columns to verification
         await sql`ALTER TABLE "verification"
       ADD COLUMN IF NOT EXISTS "expires_at" timestamp,
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
       ADD COLUMN IF NOT EXISTS "updated_at" timestamp`;
 
+        // Step 2: Backfill snake_case from camelCase
         await sql`UPDATE "verification"
       SET "expires_at" = COALESCE("expires_at", "expiresAt"),
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt")`;
 
+        // Step 3: Drop NOT NULL constraints from old camelCase columns
+        await sql.unsafe(`ALTER TABLE "verification"
+      ALTER COLUMN "expiresAt" DROP NOT NULL,
+      ALTER COLUMN "createdAt" DROP NOT NULL,
+      ALTER COLUMN "updatedAt" DROP NOT NULL`);
+
+        // Session table
         await sql`ALTER TABLE "session"
       ADD COLUMN IF NOT EXISTS "expires_at" timestamp,
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
@@ -38,6 +47,15 @@ const postgres = require('postgres');
           "user_agent" = COALESCE("user_agent", "userAgent"),
           "user_id" = COALESCE("user_id", "userId")`;
 
+        await sql.unsafe(`ALTER TABLE "session"
+      ALTER COLUMN "expiresAt" DROP NOT NULL,
+      ALTER COLUMN "createdAt" DROP NOT NULL,
+      ALTER COLUMN "updatedAt" DROP NOT NULL,
+      ALTER COLUMN "ipAddress" DROP NOT NULL,
+      ALTER COLUMN "userAgent" DROP NOT NULL,
+      ALTER COLUMN "userId" DROP NOT NULL`);
+
+        // Account table
         await sql`ALTER TABLE "account"
       ADD COLUMN IF NOT EXISTS "account_id" text,
       ADD COLUMN IF NOT EXISTS "provider_id" text,
@@ -62,6 +80,19 @@ const postgres = require('postgres');
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt")`;
 
+        await sql.unsafe(`ALTER TABLE "account"
+      ALTER COLUMN "accountId" DROP NOT NULL,
+      ALTER COLUMN "providerId" DROP NOT NULL,
+      ALTER COLUMN "userId" DROP NOT NULL,
+      ALTER COLUMN "accessToken" DROP NOT NULL,
+      ALTER COLUMN "refreshToken" DROP NOT NULL,
+      ALTER COLUMN "idToken" DROP NOT NULL,
+      ALTER COLUMN "accessTokenExpiresAt" DROP NOT NULL,
+      ALTER COLUMN "refreshTokenExpiresAt" DROP NOT NULL,
+      ALTER COLUMN "createdAt" DROP NOT NULL,
+      ALTER COLUMN "updatedAt" DROP NOT NULL`);
+
+        // User table
         await sql`ALTER TABLE "user"
       ADD COLUMN IF NOT EXISTS "email_verified" boolean DEFAULT false,
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
@@ -74,6 +105,11 @@ const postgres = require('postgres');
       SET "email_verified" = COALESCE("email_verified", "emailVerified", false),
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt")`;
+
+        await sql.unsafe(`ALTER TABLE "user"
+      ALTER COLUMN "emailVerified" DROP NOT NULL,
+      ALTER COLUMN "createdAt" DROP NOT NULL,
+      ALTER COLUMN "updatedAt" DROP NOT NULL`);
 
         console.log(`[DB_FIX] Auth schema compatibility patch applied successfully (env: ${envPath}).`);
     } catch (error) {
