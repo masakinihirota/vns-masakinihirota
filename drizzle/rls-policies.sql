@@ -265,3 +265,45 @@ CREATE POLICY "nation_groups_admin_read_all" ON "nation_groups"
 -- RLS が有効化されているか確認
 -- SELECT tablename, (SELECT count(*) FROM pg_policies WHERE pg_policies.tablename = pg_tables.tablename) as policy_count
 -- FROM pg_tables WHERE schemaname = 'public' AND tablename IN ('user', 'session', 'account', 'verification', 'groups', 'group_members', 'nations', 'nation_groups');
+
+-- ============================================================================
+-- Session Expiration Cleanup
+-- ============================================================================
+
+/**
+ * cleanup_expired_sessions() - 期限切れセッションを削除
+ *
+ * @description
+ * この関数は、expires_at が過去になったセッションを削除します。
+ * PostgreSQL の cron job (pg_cron) で定期的に実行されます。
+ *
+ * @installation
+ * 1. pg_cron extension をインストール:
+ *    CREATE EXTENSION IF NOT EXISTS pg_cron;
+ *
+ * 2. この関数を定義:
+ *    psql -d <DATABASE_URL> -f drizzle/rls-policies.sql
+ *
+ * 3. Cron job をスケジュール:
+ *    SELECT cron.schedule('cleanup-expired-sessions', '0 3 * * *', 'SELECT cleanup_expired_sessions()');
+ */
+
+CREATE OR REPLACE FUNCTION cleanup_expired_sessions()
+RETURNS TABLE(deleted_count BIGINT) AS $$
+DECLARE
+  deleted_rows BIGINT;
+BEGIN
+  -- 期限切れセッションの数をカウント
+  SELECT COUNT(*)
+  INTO deleted_rows
+  FROM "session"
+  WHERE "expires_at" < NOW();
+
+  -- 期限切れセッションを削除
+  DELETE FROM "session"
+  WHERE "expires_at" < NOW();
+
+  -- 削除された行数を返す
+  RETURN QUERY SELECT deleted_rows;
+END;
+$$ LANGUAGE plpgsql;

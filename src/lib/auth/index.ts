@@ -61,7 +61,6 @@ export {
   getSession,
   auth,
   getCurrentUser,
-  getAuthMethodsForUser,
 } from "./helper";
 
 // ルートアカウントガード
@@ -75,6 +74,9 @@ export type {
   AuthSession,
   GroupRole,
   NationRole,
+} from "./types";
+
+export type {
   AuthCheck,
   AuthCheckResult,
 } from "./rbac-helper";

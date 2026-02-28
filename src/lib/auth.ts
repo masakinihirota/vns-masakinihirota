@@ -4,6 +4,7 @@ import { db } from "@/lib/db/client";
 import * as schema from "@/db/schema";
 import { admin } from "better-auth/plugins/admin";
 import { nextCookies } from "better-auth/next-js";
+import { startRateLimitCleanup } from "@/lib/auth/rate-limiter";
 // import { rateLimit } from "better-auth/plugins"; // TODO: Better Auth 1.4.19 では利用不可 v1.5+ で対応予定
 
 /**
@@ -149,3 +150,10 @@ export const auth = betterAuth({
 
 export type Session = typeof auth.$Infer.Session;
 export type User = typeof auth.$Infer.Session.user;
+/**
+ * サーバー起動時にレート制限のクリーンアップを初期化
+ * (メモリリーク防止)
+ */
+if (typeof window === 'undefined') {
+  startRateLimitCleanup();
+}

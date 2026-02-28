@@ -28,51 +28,14 @@ import {
   user,
 } from "@/db/schema";
 import { eq, and } from "drizzle-orm";
+import { RBAC_HIERARCHY } from "./rbac-constants";
+import type {
+  GroupRole,
+  NationRole,
+  RelationshipType,
+  AuthSession,
+} from "./types";
 
-// ============================================================================
-// Type Definitions & Interfaces
-// ============================================================================
-
-/**
- * Server Actionで受け取るセッション情報の型
- * Better Auth のセッション + ユーザー情報アグリゲー
- */
-export interface AuthSession {
-  user: {
-    id: string;
-    email: string | null;
-    name: string | null;
-    role: string | null; // 'platform_admin' | 'user' | null
-  };
-  session: {
-    id: string;
-    expiresAt: Date;
-  };
-}
-
-/**
- * グループロールの型
- * @see docs/rbac-group-nation-separation.md
- */
-export type GroupRole = "leader" | "sub_leader" | "member" | "mediator";
-
-/**
- * 国ロールの型
- * @see docs/rbac-group-nation-separation.md
- */
-export type NationRole = "leader" | "sub_leader" | "member" | "mediator";
-
-/**
- * ユーザー間関係の型
- * @see docs/rbac-group-nation-separation.md
- */
-export type RelationshipType =
-  | "follow"
-  | "friend"
-  | "business_partner"
-  | "watch"
-  | "pre_partner"
-  | "partner";
 
 // ============================================================================
 // Database Connection Setup
@@ -115,7 +78,35 @@ export async function checkPlatformAdmin(session: AuthSession | null): Promise<b
 }
 
 /**
- * グループロール権限をチェック (キャッシュ対応)
+ * ユーザーが必要な権限以上のロールを持っているかをチェック (階層判定)
+ *
+ * @param userRole - ユーザーの現在のロール
+ * @param requiredRole - 必要な権限レベル
+ * @returns true: 権限あり | false: 権限不足
+ *
+ * @example
+ * // leader は sub_leader 権限が必要な操作に使用可
+ * hasRoleOrHigher('leader', 'sub_leader') // true
+ *
+ * // member は sub_leader 権限に使用不可
+ * hasRoleOrHigher('member', 'sub_leader') // false
+ *
+ * @design
+ * - RBAC_HIERARCHY を使用した階層比較
+ * - インデックスが高いほど、より多くの権限を持つ
+ */
+function hasRoleOrHigher(
+  userRole: GroupRole | NationRole,
+  requiredRole: GroupRole | NationRole,
+): boolean {
+  const userLevel = RBAC_HIERARCHY[userRole];
+  const requiredLevel = RBAC_HIERARCHY[requiredRole];
+  return userLevel >= requiredLevel;
+}
+
+
+/**
+ * グループロール権限をチェック (キャッシュ対応・階層対応)
  *
  * React cache() を使用して、同一リクエスト内での複数DB発行を回避します。
  * キャッシュキーは [userId, groupId, role] の組みなっています。
@@ -127,13 +118,15 @@ export async function checkPlatformAdmin(session: AuthSession | null): Promise<b
  *
  * @throws Error - SESSION_REQUIRED
  * @example
- * const isLeader = await checkGroupRole(session, groupId, 'leader');
+ * // sub_leader 権限が必要な操作に対し、leader ユーザーがアクセス可能
+ * const isLeader = await checkGroupRole(session, groupId, 'sub_leader');
  * if (!isLeader) throw new Error('Unauthorized by group');
  *
  * @design
  * - platform_admin は全グループで操作可能（管理者権限）
- * - 指定ロール以上の権限テストを想定（'leader' で leader/sub_leader など）
- * - 実装はシンプルに "exact match" とする（権限階層管理は別機能）
+ * - 階層チェック: userRole >= requiredRole を比較
+ * - 例）leader は sub_leader, mediator, member 権限で操作可能
+ * - React cache() による同一リクエスト内キャッシュで、複数のDB発行を最適化
  */
 const _checkGroupRoleInternal = cache(
   async (
@@ -151,13 +144,15 @@ const _checkGroupRoleInternal = cache(
           and(
             eq(groupMembers.userId, userId as any),
             eq(groupMembers.groupId, groupId as any),
-            eq(groupMembers.role, role),
           ),
         )
         .limit(1)
         .then((rows) => rows[0] || null);
 
-      return member !== null;
+      if (!member) return false;
+
+      // 階層チェック: ユーザーが必要な権限以上を持っているか確認
+      return hasRoleOrHigher(member.role as GroupRole, role);
     } catch (error) {
       console.error("checkGroupRole database error:", error);
       return false;
@@ -180,7 +175,7 @@ export async function checkGroupRole(
 }
 
 /**
- * 国ロール権限をチェック (organizationキャッシュ対応)
+ * 国ロール権限をチェック (キャッシュ対応・階層対応)
  *
  * React cache() を使用して、同一リクエスト内での複数DB発行を回避。
  * キャッシュキー: [userId, nationId, role]
@@ -192,15 +187,19 @@ export async function checkGroupRole(
  *
  * @throws Error - SESSION_REQUIRED
  * @example
- * const isNationLeader = await checkNationRole(session, nationId, 'leader');
+ * // sub_leader 権限が必要な操作
+ * // leader ユーザーは higher hierarchy なので通過可能
+ * const isNationLeader = await checkNationRole(session, nationId, 'sub_leader');
  * if (!isNationLeader) throw new Error('Unauthorized');
  *
  * @design
  * - nation_members テーブルで組織が国に参加していることを確認
- * - ユーザーが属する組織が国内で指定ロールを持つかをチェック
+ * - ユーザーが属する組織のロール >= requiredRole を比較
+ * - 階層チェック: higher role = より大きな権限
+ *   leader (3) > sub_leader (2) > mediator (1) > member (0)
  * - チェック順序：
  *   1. platform_admin → 全国で操作可能
- *   2. nation_leaders テーブルで確認
+ *   2. nation_members で確認 (階層付き)
  *   3. デフォルト：拒否（Deny-by-default）
  */
 const _checkNationRoleInternal = cache(
@@ -212,25 +211,30 @@ const _checkNationRoleInternal = cache(
     const db = getDatabaseConnection();
 
     try {
-      // ユーザーが属する組織が、国内で指定ロールを持つかをチェック
+      // ユーザーが属する組織が、国内でどのロールを持っているかを取得
       // クエリ概要：
       // - group_members から userId で属する組織を取得
-      // - nation_members で該当組織が nationId で指定ロールを持つかをチェック
+      // - nation_members で該当組織が nationId に属するかチェック
       const result = await db
-        .selectDistinct({ count: groupMembers.groupId })
+        .select({ nationRole: nationMembers.role })
         .from(groupMembers)
         .innerJoin(
           nationMembers,
           and(
             eq(groupMembers.groupId, nationMembers.groupId),
             eq(nationMembers.nationId, nationId as any),
-            eq(nationMembers.role, role),
           ),
         )
         .where(eq(groupMembers.userId, userId as any))
         .limit(1);
 
-      return result.length > 0;
+      if (result.length === 0) return false;
+
+      const userNationRole = result[0]?.nationRole as NationRole | undefined;
+      if (!userNationRole) return false;
+
+      // 階層チェック: ユーザーが必要な権限以上を持っているか確認
+      return hasRoleOrHigher(userNationRole, role);
     } catch (error) {
       console.error("checkNationRole database error:", error);
       return false;

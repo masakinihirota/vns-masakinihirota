@@ -5,9 +5,8 @@ import { ROUTES } from "@/config/routes";
 import { getSession } from "@/lib/auth/helper";
 import {
     checkGroupRole,
-    type AuthSession,
-    type GroupRole,
 } from "@/lib/auth/rbac-helper";
+import type { AuthSession, GroupRole } from "@/lib/auth/types";
 
 type GroupScopedRole =
     | "group_leader"

@@ -2,6 +2,7 @@
 
 import { createGroup } from "@/lib/db/group-queries";
 import { getSession } from "@/lib/auth/helper";
+import { createGroupSchema, type CreateGroupInput } from "@/lib/validation/schemas";
 
 /**
  * Group作成 Server Action
@@ -9,18 +10,13 @@ import { getSession } from "@/lib/auth/helper";
  * @design
  * - 認証済みユーザーのみ実行可能（Deny-by-default）
  * - グループリーダーとして自動付与
- * - 入力値の厳密なバリデーション
+ * - 入力値の厳密なバリデーション（Zod使用）
  *
  * @security
  * - セッション検証 必須
+ * - 入力値のスキーマバリデーション
  * - SQL インジェクション対策: Drizzle ORM 使用
- * - 入力長チェック: name (3-100), description (0-500)
  */
-
-export interface CreateGroupInput {
-  name: string;
-  description?: string;
-}
 
 export interface CreateGroupResponse {
   success: boolean;
@@ -36,11 +32,27 @@ export interface CreateGroupResponse {
 }
 
 export async function createGroupAction(
-  input: CreateGroupInput,
+  input: unknown,
 ): Promise<CreateGroupResponse> {
   try {
     // ============================================================================
-    // 1. 認証チェック（Deny-by-default）
+    // 1. 入力バリデーション（Zod）
+    // ============================================================================
+    const validationResult = createGroupSchema.safeParse(input);
+
+    if (!validationResult.success) {
+      const flatErrors = validationResult.error.flatten();
+      const firstError = Object.values(flatErrors.fieldErrors)[0]?.[0] || "Invalid input";
+      return {
+        success: false,
+        error: `Validation error: ${firstError}`,
+      };
+    }
+
+    const validatedInput = validationResult.data;
+
+    // ============================================================================
+    // 2. 認証チェック（Deny-by-default）
     // ============================================================================
     const session = await getSession();
 
@@ -54,43 +66,9 @@ export async function createGroupAction(
     const userId = session.user.id;
 
     // ============================================================================
-    // 2. 入力バリデーション
-    // ============================================================================
-
-    // グループ名のバリデーション
-    if (!input.name || input.name.trim().length === 0) {
-      return {
-        success: false,
-        error: "Group name is required",
-      };
-    }
-
-    if (input.name.length < 3) {
-      return {
-        success: false,
-        error: "Group name must be at least 3 characters",
-      };
-    }
-
-    if (input.name.length > 100) {
-      return {
-        success: false,
-        error: "Group name must be at most 100 characters",
-      };
-    }
-
-    // 説明のバリデーション
-    if (input.description && input.description.length > 500) {
-      return {
-        success: false,
-        error: "Description must be at most 500 characters",
-      };
-    }
-
-    // ============================================================================
     // 3. グループ作成
     // ============================================================================
-    const group = await createGroup(userId, input.name, input.description);
+    const group = await createGroup(userId, validatedInput.name, validatedInput.description);
 
     return {
       success: true,
