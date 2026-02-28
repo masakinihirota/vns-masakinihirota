@@ -2,20 +2,20 @@ require('dotenv').config({ path: '.env.local' });
 const postgres = require('postgres');
 
 (async () => {
-  const sql = postgres(process.env.DATABASE_URL, { prepare: false });
+    const sql = postgres(process.env.DATABASE_URL, { prepare: false });
 
-  try {
-    await sql`ALTER TABLE "verification"
+    try {
+        await sql`ALTER TABLE "verification"
       ADD COLUMN IF NOT EXISTS "expires_at" timestamp,
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
       ADD COLUMN IF NOT EXISTS "updated_at" timestamp`;
 
-    await sql`UPDATE "verification"
+        await sql`UPDATE "verification"
       SET "expires_at" = COALESCE("expires_at", "expiresAt"),
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt")`;
 
-    await sql`ALTER TABLE "session"
+        await sql`ALTER TABLE "session"
       ADD COLUMN IF NOT EXISTS "expires_at" timestamp,
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
       ADD COLUMN IF NOT EXISTS "updated_at" timestamp,
@@ -24,7 +24,7 @@ const postgres = require('postgres');
       ADD COLUMN IF NOT EXISTS "user_id" text,
       ADD COLUMN IF NOT EXISTS "impersonated_by" text`;
 
-    await sql`UPDATE "session"
+        await sql`UPDATE "session"
       SET "expires_at" = COALESCE("expires_at", "expiresAt"),
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt"),
@@ -32,7 +32,7 @@ const postgres = require('postgres');
           "user_agent" = COALESCE("user_agent", "userAgent"),
           "user_id" = COALESCE("user_id", "userId")`;
 
-    await sql`ALTER TABLE "account"
+        await sql`ALTER TABLE "account"
       ADD COLUMN IF NOT EXISTS "account_id" text,
       ADD COLUMN IF NOT EXISTS "provider_id" text,
       ADD COLUMN IF NOT EXISTS "user_id" text,
@@ -44,7 +44,7 @@ const postgres = require('postgres');
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
       ADD COLUMN IF NOT EXISTS "updated_at" timestamp`;
 
-    await sql`UPDATE "account"
+        await sql`UPDATE "account"
       SET "account_id" = COALESCE("account_id", "accountId"),
           "provider_id" = COALESCE("provider_id", "providerId"),
           "user_id" = COALESCE("user_id", "userId"),
@@ -56,7 +56,7 @@ const postgres = require('postgres');
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt")`;
 
-    await sql`ALTER TABLE "user"
+        await sql`ALTER TABLE "user"
       ADD COLUMN IF NOT EXISTS "email_verified" boolean DEFAULT false,
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
       ADD COLUMN IF NOT EXISTS "updated_at" timestamp,
@@ -64,17 +64,17 @@ const postgres = require('postgres');
       ADD COLUMN IF NOT EXISTS "ban_reason" text,
       ADD COLUMN IF NOT EXISTS "ban_expires" timestamp`;
 
-    await sql`UPDATE "user"
+        await sql`UPDATE "user"
       SET "email_verified" = COALESCE("email_verified", "emailVerified", false),
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt")`;
 
-    console.log('Auth schema compatibility patch applied successfully.');
-  } catch (error) {
-    console.error('Failed to apply auth schema compatibility patch');
-    console.error(error);
-    process.exitCode = 1;
-  } finally {
-    await sql.end();
-  }
+        console.log('Auth schema compatibility patch applied successfully.');
+    } catch (error) {
+        console.error('Failed to apply auth schema compatibility patch');
+        console.error(error);
+        process.exitCode = 1;
+    } finally {
+        await sql.end();
+    }
 })();
