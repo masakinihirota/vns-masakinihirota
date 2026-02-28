@@ -323,7 +323,32 @@ DATABASE_URL='postgresql://neondb_owner:npg_Nqr2lFXLva3m@ep-spring-resonance-a1k
 
 #
 
+## 📋 Vercel 環境変数セットアップガイド
 
+Vercel Dashboard（https://vercel.com/dashboard）で以下の手順を実行してください：
+
+1. **プロジェクト選択**: `vns-masakinihirota`
+2. **Settings → Environment Variables** を開く
+3. **本番環境（Production）に以下を追加**:
+
+| キー | 値 | 説明 |
+|------|-----|------|
+| `BETTER_AUTH_URL` | `https://vns-masakinihirota.vercel.app` | Better Auth ベース URL |
+| `NEXT_PUBLIC_APP_URL` | `https://vns-masakinihirota.vercel.app` | フロントエンド URL |
+| `NEXT_PUBLIC_BETTER_AUTH_URL` | `https://vns-masakinihirota.vercel.app` | 公開 Better Auth URL |
+| `DATABASE_URL` | *.env.production の値* | Neon PostgreSQL 接続文字列 |
+| `GOOGLE_CLIENT_ID` | *Google Console の値* | Google OAuth Client ID |
+| `GOOGLE_CLIENT_SECRET` | *Google Console の値* | Google OAuth Client Secret |
+| `GITHUB_CLIENT_ID` | *GitHub App の値* | GitHub OAuth Client ID |
+| `GITHUB_CLIENT_SECRET` | *GitHub App の値* | GitHub OAuth Client Secret |
+
+4. **Save** をクリック
+5. **Deployments → Latest → Redeploy** をクリック（または自動再デプロイを待つ）
+6. ステータスが **Ready** になったら、本番環境テストを実行
+
+環境変数をセットアップしたら、ここで報告してください。その後、Vercel 本番環境でのテストを実行します！🚀
+
+Made changes.
 
 
 

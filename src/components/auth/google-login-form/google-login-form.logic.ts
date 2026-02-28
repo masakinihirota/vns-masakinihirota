@@ -20,7 +20,7 @@ export const useGoogleLoginLogic = () => {
     try {
       const result = await signIn.social({
         provider: "google",
-        callbackURL: "/",
+        callbackURL: "/home",
       });
 
       if (result.error) {
