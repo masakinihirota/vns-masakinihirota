@@ -6,7 +6,7 @@
 
 本番環境は以下の構成です：
 - **ホスティング**: Vercel
-- **データベース**: Neon Serverless PostgreSQL  
+- **データベース**: Neon Serverless PostgreSQL
 - **認証**: Better Auth + Google/GitHub OAuth
 
 ## 環境変数の設定

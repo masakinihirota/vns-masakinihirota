@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import Link from "next/link";
+import { LogoutButton } from "./logout-button";
 
 /**
  * 認証済みユーザー用ホームページ
@@ -13,13 +14,18 @@ export default async function HomePage() {
         <div className="min-h-screen bg-linear-to-b from-gray-50 to-gray-100">
             <div className="max-w-4xl mx-auto px-4 py-12">
                 {/* ヘッダー */}
-                <div className="bg-white rounded-lg shadow-sm p-8 mb-6">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-2">
-                        ようこそ、{session?.user?.name || "ゲスト"}さん
-                    </h1>
-                    <p className="text-gray-600">
-                        認証済みユーザー専用のホームページです
-                    </p>
+                <div className="bg-white rounded-lg shadow-sm p-8 mb-6 flex justify-between items-start">
+                    <div className="flex-1">
+                        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                            ようこそ、{session?.user?.name || "ゲスト"}さん
+                        </h1>
+                        <p className="text-gray-600">
+                            認証済みユーザー専用のホームページです
+                        </p>
+                    </div>
+                    <div className="ml-4 shrink-0">
+                        <LogoutButton />
+                    </div>
                 </div>
 
                 {/* ユーザー情報カード */}
