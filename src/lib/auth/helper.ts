@@ -25,7 +25,8 @@ import { withAuth } from "./with-auth";
  * DB へのアクセスは1度のみになります。
  *
  * **開発時ダミー機能:**
- * NEXT_PUBLIC_USE_REAL_AUTH=false の場合、ダミー認証を使用します。
+ * USE_REAL_AUTH=false の場合、ダミー認証を使用します。
+ * （後方互換として NEXT_PUBLIC_USE_REAL_AUTH も読み取ります）
  *
  *
  * **優先順位ルール:**
@@ -72,57 +73,21 @@ async function getPrimaryAuthProvider(userId: string): Promise<string> {
  */
 export const getSession = cache(async () => {
   try {
+    const useRealAuth = process.env.USE_REAL_AUTH ?? process.env.NEXT_PUBLIC_USE_REAL_AUTH;
+
     // 開発時ダミー認証機能
-    if (process.env.NEXT_PUBLIC_USE_REAL_AUTH !== "true" && process.env.NODE_ENV === "development") {
+    if (useRealAuth !== "true" && process.env.NODE_ENV === "development") {
       const dummySession = createDummySession("USER1");
-      console.log("[getSession] MOCK AUTH - Using dummy user:", dummySession.user.email);
+      console.log("[getSession] MOCK AUTH enabled"); // ✅ メールアドレスはログに出力しない
       return dummySession;
     }
 
     const headersList = await headers();
-    const cookieHeader = headersList.get("cookie");
-
-    // Extract token from cookie
-    const tokenMatch = cookieHeader?.match(/better-auth\.session_token=([^;]+)/);
-    const tokenFromCookie = tokenMatch?.[1];
 
     // Try Better Auth first
     let betterAuthResult = await serverAuth.api.getSession({
       headers: headersList,
     });
-
-    // If Better Auth fails but we have a token, try direct DB lookup
-    if (!betterAuthResult && tokenFromCookie) {
-      const session = await database.query.sessions.findFirst({
-        where: (sessions, { eq: eqDrizzle }) => eqDrizzle(sessions.token, tokenFromCookie),
-      });
-
-      if (session) {
-        // Check expiration
-        if (new Date(session.expiresAt) < new Date()) {
-          return null;
-        }
-
-        // Development環境: 24時間以上前のセッションは除外
-        if (process.env.NODE_ENV === "development") {
-          const createdAtTime = new Date(session.createdAt).getTime();
-          const nowTime = new Date().getTime();
-          const ageInHours = (nowTime - createdAtTime) / (1000 * 60 * 60);
-          if (ageInHours > 24) {
-            return null;
-          }
-        }
-
-        // If session is valid, fetch the user
-        const user = await database.query.users.findFirst({
-          where: (users, { eq: eqDrizzle }) => eqDrizzle(users.id, session.userId),
-        });
-
-        if (user) {
-          betterAuthResult = { user: user as any, session };
-        }
-      }
-    }
 
     // Add auth provider info
     if (betterAuthResult?.user) {

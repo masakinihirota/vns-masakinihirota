@@ -3,6 +3,7 @@
 import { createGroup } from "@/lib/db/group-queries";
 import { getSession } from "@/lib/auth/helper";
 import { checkInteractionAllowed } from "@/lib/auth/rbac-helper";
+import { createGroupSchema, type CreateGroupInput } from "@/lib/validation/schemas";
 
 /**
  * Group作成 Server Action
@@ -17,11 +18,6 @@ import { checkInteractionAllowed } from "@/lib/auth/rbac-helper";
  * - SQL インジェクション対策: Drizzle ORM 使用
  * - 入力長チェック: name (3-100), description (0-500)
  */
-
-export interface CreateGroupInput {
-  name: string;
-  description?: string;
-}
 
 export interface CreateGroupResponse {
   success: boolean;
@@ -52,10 +48,30 @@ export async function createGroupAction(
       };
     }
 
+    // ============================================================================
+    // 2. 入力バリデーション（Zod）
+    // ============================================================================
+    if (!input.name || input.name.trim().length === 0) {
+      return {
+        success: false,
+        error: "Group name is required",
+      };
+    }
+
+    const validated = createGroupSchema.safeParse(input);
+
+    if (!validated.success) {
+      const firstError = validated.error.issues[0];
+      return {
+        success: false,
+        error: firstError?.message || "Validation failed",
+      };
+    }
+
     const userId = session.user.id;
 
     // ============================================================================
-    // 2. 幽霊モード制限（VNS 設計思想）
+    // 3. 幽霊モード制限（VNS 設計思想）
     // ============================================================================
     const canInteract = await checkInteractionAllowed(session);
 
@@ -67,43 +83,13 @@ export async function createGroupAction(
     }
 
     // ============================================================================
-    // 3. 入力バリデーション
+    // 4. グループ作成
     // ============================================================================
-
-    // グループ名のバリデーション
-    if (!input.name || input.name.trim().length === 0) {
-      return {
-        success: false,
-        error: "Group name is required",
-      };
-    }
-
-    if (input.name.length < 3) {
-      return {
-        success: false,
-        error: "Group name must be at least 3 characters",
-      };
-    }
-
-    if (input.name.length > 100) {
-      return {
-        success: false,
-        error: "Group name must be at most 100 characters",
-      };
-    }
-
-    // 説明のバリデーション
-    if (input.description && input.description.length > 500) {
-      return {
-        success: false,
-        error: "Description must be at most 500 characters",
-      };
-    }
-
-    // ============================================================================
-    // 3. グループ作成
-    // ============================================================================
-    const group = await createGroup(userId, input.name, input.description);
+    const group = await createGroup(
+      userId,
+      validated.data.name,
+      validated.data.description,
+    );
 
     return {
       success: true,

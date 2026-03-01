@@ -803,7 +803,7 @@ export const nationCitizens = pgTable(
     }),
     check(
       "nation_citizens_role_check",
-      sql`role = ANY (ARRAY['official'::text, 'citizen'::text])`
+      sql`role = ANY (ARRAY['official'::text, 'citizen'::text, 'governor'::text])`
     ),
   ]
 );

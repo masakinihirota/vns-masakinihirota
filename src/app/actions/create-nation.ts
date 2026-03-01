@@ -52,22 +52,8 @@ export async function createNationAction(
       };
     }
 
-    const userId = session.user.id;
-
     // ============================================================================
-    // 2. 幽霊モード制限（VNS 設計思想）
-    // ============================================================================
-    const canInteract = await checkInteractionAllowed(session);
-
-    if (!canInteract) {
-      return {
-        success: false,
-        error: "GHOST_MASK_INTERACTION_DENIED",
-      };
-    }
-
-    // ============================================================================
-    // 3. 入力バリデーション（Zod）
+    // 2. 入力バリデーション（Zod）
     // ============================================================================
     const validated = createNationSchema.safeParse(input);
 
@@ -79,8 +65,10 @@ export async function createNationAction(
       };
     }
 
+    const userId = session.user.id;
+
     // ============================================================================
-    // 4. 権限チェック：group_leader（Deny-by-default）
+    // 3. 権限チェック：group_leader（Deny-by-default）
     // ============================================================================
     const authSession = {
       user: {
@@ -90,8 +78,10 @@ export async function createNationAction(
         role: session.user.role ?? null,
       },
       session: {
-        id: session.session.id,
-        expiresAt: new Date(session.session.expiresAt),
+        id: session.session?.id ?? "server-action-session",
+        expiresAt: new Date(
+          session.session?.expiresAt ?? Date.now() + 60 * 60 * 1000,
+        ),
       },
     };
 
@@ -104,7 +94,19 @@ export async function createNationAction(
     if (!isGroupLeader) {
       return {
         success: false,
-        error: "Forbidden: Only group leaders can create nations",
+        error: "Unauthorized: Only group leaders can create nations",
+      };
+    }
+
+    // ============================================================================
+    // 4. 幽霊モード制限（VNS 設計思想）
+    // ============================================================================
+    const canInteract = await checkInteractionAllowed(session);
+
+    if (!canInteract) {
+      return {
+        success: false,
+        error: "GHOST_MASK_INTERACTION_DENIED",
       };
     }
 

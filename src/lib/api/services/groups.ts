@@ -62,7 +62,7 @@ export async function getGroupById(id: string): Promise<Group | null> {
     const result = await db
       .select({
         group: groupTable,
-        memberCount: sql<number>`COUNT(DISTINCT ${groupMembers.id})`.as('member_count'),
+        memberCount: sql<number>`COUNT(DISTINCT ${groupMembers.userProfileId})`.as('member_count'),
       })
       .from(groupTable)
       .leftJoin(groupMembers, eq(groupTable.id, groupMembers.groupId))
@@ -154,17 +154,10 @@ export async function listGroups(params: {
     const query = db
       .select({
         group: groupTable,
-        memberCount: sql<number>`COUNT(DISTINCT ${groupMembers.id})`.as('member_count'),
+        memberCount: sql<number>`COUNT(DISTINCT ${groupMembers.userProfileId})`.as('member_count'),
       })
       .from(groupTable)
       .leftJoin(groupMembers, eq(groupTable.id, groupMembers.groupId));
-
-    if (params.userId) {
-      query.leftJoin(
-        groupMembers,
-        eq(groupTable.id, groupMembers.groupId)
-      );
-    }
 
     if (whereClause) {
       query.where(whereClause);
@@ -175,8 +168,8 @@ export async function listGroups(params: {
     // Apply sorting
     if (sort === 'memberCount') {
       const sortedQuery = order === 'asc'
-        ? query.orderBy(sql`COUNT(DISTINCT ${groupMembers.id})`)
-        : query.orderBy(desc(sql`COUNT(DISTINCT ${groupMembers.id})`));
+        ? query.orderBy(sql`COUNT(DISTINCT ${groupMembers.userProfileId})`)
+        : query.orderBy(desc(sql`COUNT(DISTINCT ${groupMembers.userProfileId})`));
 
       const results = await sortedQuery.limit(limit).offset(offset);
 

@@ -14,12 +14,23 @@ import { zValidator } from '@hono/zod-validator';
 import { requirePlatformAdmin } from '../middleware/rbac';
 import { adminRateLimit, rateLimit } from '../middleware/rate-limit';
 import { errorHandler } from '../middleware/error-handler';
+import { validateCsrfToken } from '../middleware/csrf';
 import {
   createUserRequestSchema,
   updateUserRequestSchema,
   listUsersQuerySchema,
   userIdParamSchema,
   UserResponse,
+  createGroupRequestSchema,
+  updateGroupRequestSchema,
+  listGroupsQuerySchema,
+  groupIdParamSchema,
+  GroupResponse,
+  createNationRequestSchema,
+  updateNationRequestSchema,
+  listNationsQuerySchema,
+  nationIdParamSchema,
+  NationResponse,
 } from '../schemas/admin';
 import {
   UserAlreadyExistsError,
@@ -28,6 +39,16 @@ import {
   isHttpError,
 } from '../errors';
 import * as userService from '../services/users';
+import * as groupService from '../services/groups';
+import * as nationService from '../services/nations';
+import {
+  GroupNotFoundError,
+  GroupAlreadyExistsError,
+} from '../services/groups';
+import {
+  NationNotFoundError,
+  NationAlreadyExistsError,
+} from '../services/nations';
 import type { ApiSuccessResponse, ApiErrorResponse } from '../types/response';
 import type { SessionContext } from '../middleware/auth';
 
@@ -35,6 +56,9 @@ const admin = new Hono<{ Variables: SessionContext }>();
 
 // Apply rate limiting to all admin routes (30 requests per minute)
 admin.use('/*', adminRateLimit());
+
+// ✅ CSRF Protection: POST/PATCH/DELETE リクエストを保護
+admin.use('/*', validateCsrfToken);
 
 // ============================================================================
 // RATE LIMIT CONFIGS
@@ -93,7 +117,7 @@ admin.post(
       // Log internal errors but don't expose details to client
       console.error('[AdminAPI] User creation failed:', {
         error: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined,
+        stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined,
       });
 
       throw new HTTPException(500, {
@@ -147,7 +171,7 @@ admin.get(
       // Log internal errors but don't expose details to client
       console.error('[AdminAPI] User list fetch failed:', {
         error: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined,
+        stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined,
       });
 
       throw new HTTPException(500, {
@@ -267,7 +291,7 @@ admin.patch(
       // Log internal errors but don't expose details to client
       console.error('[AdminAPI] User update failed:', {
         error: error instanceof Error ? error.message : String(error),
-        stack: error instanceof Error ? error.stack : undefined,
+        stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined,
       });
 
       throw new HTTPException(500, {
@@ -336,6 +360,533 @@ admin.delete(
 
       throw new HTTPException(500, {
         message: 'Failed to delete user. Please contact support.',
+      });
+    }
+  }
+);
+
+// ============================================================================
+// GROUP MANAGEMENT
+// ============================================================================
+
+/**
+ * POST /api/admin/groups
+ *
+ * @description
+ * - 新規グループ作成（管理者のみ）
+ * - Zod バリデーション付き
+ * - 作成者が自動的にリーダーとして登録される
+ *
+ * @param body CreateGroupRequest (name, description, isPublic, settings)
+ * @returns - 201: { success: true, data: Group }
+ * @throws - 400: Validation Error
+ * @throws - 403: Admin role required
+ * @throws - 409: Group name already exists
+ * @throws - 500: Internal server error
+ */
+admin.post(
+  '/groups',
+  requirePlatformAdmin,
+  zValidator('json', createGroupRequestSchema),
+  async (c) => {
+    try {
+      const body = c.req.valid('json');
+      const authSession = c.get('authSession');
+
+      // TODO: userProfileId を取得（現在は暫定的に users.id を使用）
+      const creatorId = authSession.user.id;
+
+      const group = await groupService.createGroup(body, creatorId);
+
+      const response: ApiSuccessResponse<GroupResponse> = {
+        success: true,
+        data: group,
+      };
+
+      return c.json(response, 201);
+    } catch (error) {
+      if (error instanceof GroupAlreadyExistsError) {
+        throw new HTTPException(409, { message: 'Group name already exists' });
+      }
+
+      console.error('[AdminAPI] Group creation failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to create group. Please contact support.',
+      });
+    }
+  }
+);
+
+/**
+ * GET /api/admin/groups
+ *
+ * @description
+ * - グループ一覧取得（管理者のみ）
+ * - ページネーション・フィルター対応
+ *
+ * @query limit, offset, sort, order, search, userId, isPublic
+ * @returns - 200: { success: true, data: { items: Group[], total: number } }
+ * @throws - 400: Validation Error
+ * @throws - 500: Internal server error
+ */
+admin.get(
+  '/groups',
+  requirePlatformAdmin,
+  zValidator('query', listGroupsQuerySchema),
+  async (c) => {
+    try {
+      const { limit, offset, sort, order, search, userId, isPublic } =
+        c.req.valid('query');
+
+      const { items, total } = await groupService.listGroups({
+        limit,
+        offset,
+        sort,
+        order,
+        search,
+        userId,
+        isPublic,
+      });
+
+      const response: ApiSuccessResponse<{
+        items: GroupResponse[];
+        total: number;
+      }> = {
+        success: true,
+        data: {
+          items,
+          total,
+        },
+      };
+
+      return c.json(response);
+    } catch (error) {
+      console.error('[AdminAPI] Group list fetch failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to fetch groups. Please contact support.',
+      });
+    }
+  }
+);
+
+/**
+ * GET /api/admin/groups/:id
+ *
+ * @description
+ * - 特定グループの詳細情報を取得
+ *
+ * @param id - グループID (UUID)
+ * @returns - 200: { success: true, data: Group }
+ * @throws - 400: Invalid ID format
+ * @throws - 403: Admin role required
+ * @throws - 404: Group not found
+ * @throws - 500: Internal server error
+ */
+admin.get(
+  '/groups/:id',
+  requirePlatformAdmin,
+  zValidator('param', groupIdParamSchema),
+  async (c) => {
+    try {
+      const { id } = c.req.valid('param');
+
+      const group = await groupService.getGroupById(id);
+
+      if (!group) {
+        throw new GroupNotFoundError(`Group with ID ${id} not found`);
+      }
+
+      const response: ApiSuccessResponse<GroupResponse> = {
+        success: true,
+        data: group,
+      };
+
+      return c.json(response);
+    } catch (error) {
+      if (error instanceof GroupNotFoundError) {
+        throw new HTTPException(404, { message: 'Group not found' });
+      }
+
+      console.error('[AdminAPI] Group fetch failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to fetch group. Please contact support.',
+      });
+    }
+  }
+);
+
+/**
+ * PATCH /api/admin/groups/:id
+ *
+ * @description
+ * - グループ情報を更新（管理者のみ）
+ *
+ * @param id - グループID (UUID)
+ * @param body UpdateGroupRequest
+ * @returns - 200: { success: true, data: Group }
+ * @throws - 400: Invalid ID format or validation error
+ * @throws - 403: Admin role required
+ * @throws - 404: Group not found
+ * @throws - 409: Group name already used
+ * @throws - 500: Internal server error
+ */
+admin.patch(
+  '/groups/:id',
+  requirePlatformAdmin,
+  zValidator('param', groupIdParamSchema),
+  zValidator('json', updateGroupRequestSchema),
+  async (c) => {
+    try {
+      const { id } = c.req.valid('param');
+      const body = c.req.valid('json');
+
+      const group = await groupService.updateGroup(id, body);
+
+      const response: ApiSuccessResponse<GroupResponse> = {
+        success: true,
+        data: group,
+      };
+
+      return c.json(response);
+    } catch (error) {
+      if (error instanceof GroupNotFoundError) {
+        throw new HTTPException(404, { message: 'Group not found' });
+      }
+      if (error instanceof GroupAlreadyExistsError) {
+        throw new HTTPException(409, { message: 'Group name already in use' });
+      }
+
+      console.error('[AdminAPI] Group update failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to update group. Please contact support.',
+      });
+    }
+  }
+);
+
+/**
+ * DELETE /api/admin/groups/:id
+ *
+ * @description
+ * - グループを削除（管理者のみ）
+ * - DELETE専用の厳しいレート制限: 1分に3回のみ
+ *
+ * @param id - グループID (UUID)
+ * @returns - 200: { success: true, data: { message: 'Group deleted successfully' } }
+ * @throws - 400: Invalid ID format
+ * @throws - 403: Admin role required
+ * @throws - 404: Group not found
+ * @throws - 429: Too many requests (rate limited)
+ * @throws - 500: Internal server error
+ */
+admin.delete(
+  '/groups/:id',
+  requirePlatformAdmin,
+  deleteRateLimit,
+  zValidator('param', groupIdParamSchema),
+  async (c) => {
+    try {
+      const { id } = c.req.valid('param');
+
+      await groupService.deleteGroup(id);
+
+      const response: ApiSuccessResponse<{ message: string }> = {
+        success: true,
+        data: { message: 'Group deleted successfully' },
+      };
+
+      return c.json(response);
+    } catch (error) {
+      if (error instanceof GroupNotFoundError) {
+        throw new HTTPException(404, { message: 'Group not found' });
+      }
+
+      console.error('[AdminAPI] Group deletion failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to delete group. Please contact support.',
+      });
+    }
+  }
+);
+
+// ============================================================================
+// NATION MANAGEMENT
+// ============================================================================
+
+/**
+ * POST /api/admin/nations
+ *
+ * @description
+ * - 新規ネーション作成（管理者のみ）
+ * - Zod バリデーション付き
+ * - 作成者が自動的にガバナーとして登録される
+ *
+ * @param body CreateNationRequest (name, description, governorId?, settings)
+ * @returns - 201: { success: true, data: Nation }
+ * @throws - 400: Validation Error
+ * @throws - 403: Admin role required
+ * @throws - 409: Nation name already exists
+ * @throws - 500: Internal server error
+ */
+admin.post(
+  '/nations',
+  requirePlatformAdmin,
+  zValidator('json', createNationRequestSchema),
+  async (c) => {
+    try {
+      const body = c.req.valid('json');
+      const authSession = c.get('authSession');
+
+      // TODO: userProfileId を取得（現在は暫定的に users.id を使用）
+      const creatorId = authSession.user.id;
+
+      const nation = await nationService.createNation(body, creatorId);
+
+      const response: ApiSuccessResponse<NationResponse> = {
+        success: true,
+        data: nation,
+      };
+
+      return c.json(response, 201);
+    } catch (error) {
+      if (error instanceof NationAlreadyExistsError) {
+        throw new HTTPException(409, { message: 'Nation name already exists' });
+      }
+
+      console.error('[AdminAPI] Nation creation failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to create nation. Please contact support.',
+      });
+    }
+  }
+);
+
+/**
+ * GET /api/admin/nations
+ *
+ * @description
+ * - ネーション一覧取得（管理者のみ）
+ * - ページネーション・フィルター対応
+ *
+ * @query limit, offset, sort, order, search, userId
+ * @returns - 200: { success: true, data: { items: Nation[], total: number } }
+ * @throws - 400: Validation Error
+ * @throws - 500: Internal server error
+ */
+admin.get(
+  '/nations',
+  requirePlatformAdmin,
+  zValidator('query', listNationsQuerySchema),
+  async (c) => {
+    try {
+      const { limit, offset, sort, order, search, userId } =
+        c.req.valid('query');
+
+      const { items, total } = await nationService.listNations({
+        limit,
+        offset,
+        sort,
+        order,
+        search,
+        userId,
+      });
+
+      const response: ApiSuccessResponse<{
+        items: NationResponse[];
+        total: number;
+      }> = {
+        success: true,
+        data: {
+          items,
+          total,
+        },
+      };
+
+      return c.json(response);
+    } catch (error) {
+      console.error('[AdminAPI] Nation list fetch failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to fetch nations. Please contact support.',
+      });
+    }
+  }
+);
+
+/**
+ * GET /api/admin/nations/:id
+ *
+ * @description
+ * - 特定ネーションの詳細情報を取得
+ *
+ * @param id - ネーションID (UUID)
+ * @returns - 200: { success: true, data: Nation }
+ * @throws - 400: Invalid ID format
+ * @throws - 403: Admin role required
+ * @throws - 404: Nation not found
+ * @throws - 500: Internal server error
+ */
+admin.get(
+  '/nations/:id',
+  requirePlatformAdmin,
+  zValidator('param', nationIdParamSchema),
+  async (c) => {
+    try {
+      const { id } = c.req.valid('param');
+
+      const nation = await nationService.getNationById(id);
+
+      if (!nation) {
+        throw new NationNotFoundError(`Nation with ID ${id} not found`);
+      }
+
+      const response: ApiSuccessResponse<NationResponse> = {
+        success: true,
+        data: nation,
+      };
+
+      return c.json(response);
+    } catch (error) {
+      if (error instanceof NationNotFoundError) {
+        throw new HTTPException(404, { message: 'Nation not found' });
+      }
+
+      console.error('[AdminAPI] Nation fetch failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to fetch nation. Please contact support.',
+      });
+    }
+  }
+);
+
+/**
+ * PATCH /api/admin/nations/:id
+ *
+ * @description
+ * - ネーション情報を更新（管理者のみ）
+ *
+ * @param id - ネーションID (UUID)
+ * @param body UpdateNationRequest
+ * @returns - 200: { success: true, data: Nation }
+ * @throws - 400: Invalid ID format or validation error
+ * @throws - 403: Admin role required
+ * @throws - 404: Nation not found
+ * @throws - 409: Nation name already used
+ * @throws - 500: Internal server error
+ */
+admin.patch(
+  '/nations/:id',
+  requirePlatformAdmin,
+  zValidator('param', nationIdParamSchema),
+  zValidator('json', updateNationRequestSchema),
+  async (c) => {
+    try {
+      const { id } = c.req.valid('param');
+      const body = c.req.valid('json');
+
+      const nation = await nationService.updateNation(id, body);
+
+      const response: ApiSuccessResponse<NationResponse> = {
+        success: true,
+        data: nation,
+      };
+
+      return c.json(response);
+    } catch (error) {
+      if (error instanceof NationNotFoundError) {
+        throw new HTTPException(404, { message: 'Nation not found' });
+      }
+      if (error instanceof NationAlreadyExistsError) {
+        throw new HTTPException(409, { message: 'Nation name already in use' });
+      }
+
+      console.error('[AdminAPI] Nation update failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to update nation. Please contact support.',
+      });
+    }
+  }
+);
+
+/**
+ * DELETE /api/admin/nations/:id
+ *
+ * @description
+ * - ネーションを削除（管理者のみ）
+ * - DELETE専用の厳しいレート制限: 1分に3回のみ
+ *
+ * @param id - ネーションID (UUID)
+ * @returns - 200: { success: true, data: { message: 'Nation deleted successfully' } }
+ * @throws - 400: Invalid ID format
+ * @throws - 403: Admin role required
+ * @throws - 404: Nation not found
+ * @throws - 429: Too many requests (rate limited)
+ * @throws - 500: Internal server error
+ */
+admin.delete(
+  '/nations/:id',
+  requirePlatformAdmin,
+  deleteRateLimit,
+  zValidator('param', nationIdParamSchema),
+  async (c) => {
+    try {
+      const { id } = c.req.valid('param');
+
+      await nationService.deleteNation(id);
+
+      const response: ApiSuccessResponse<{ message: string }> = {
+        success: true,
+        data: { message: 'Nation deleted successfully' },
+      };
+
+      return c.json(response);
+    } catch (error) {
+      if (error instanceof NationNotFoundError) {
+        throw new HTTPException(404, { message: 'Nation not found' });
+      }
+
+      console.error('[AdminAPI] Nation deletion failed:', {
+        error: error instanceof Error ? error.message : String(error),
+        stack: error instanceof Error ? error.stack : undefined,
+      });
+
+      throw new HTTPException(500, {
+        message: 'Failed to delete nation. Please contact support.',
       });
     }
   }

@@ -29,6 +29,13 @@
       "when": 1772310113617,
       "tag": "0003_whole_hemingway",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1772314000000,
+      "tag": "0004_nation_citizens_governor_role",
+      "breakpoints": true
     }
   ]
 }
