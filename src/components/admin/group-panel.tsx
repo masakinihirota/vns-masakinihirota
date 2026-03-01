@@ -55,15 +55,19 @@ export function AdminGroupPanel({ initialGroups }: AdminGroupPanelProps) {
                 method: "DELETE",
             });
 
-            if (response.ok) {
+            const data = await response.json();
+
+            if (data.success) {
                 setGroups((prev) => prev.filter((g) => g.id !== groupId));
                 showToast.success("グループを削除しました");
             } else {
-                showToast.error("グループの削除に失敗しました");
+                showToast.error(
+                    data.error?.message || "グループの削除に失敗しました"
+                );
             }
         } catch (error) {
             showToast.error("エラーが発生しました");
-            console.error(error);
+            console.error("Delete group error:", error);
         } finally {
             setIsLoading(false);
         }

@@ -13,7 +13,18 @@ export function ApiTestClientComponent() {
         setResponse(null);
 
         try {
-            const res = await fetch(endpoint);
+            let res;
+            switch (endpoint) {
+                case 'health':
+                    res = await fetch('/api/health');
+                    break;
+                case 'poc/hello':
+                    res = await fetch('/api/poc/hello');
+                    break;
+                default:
+                    throw new Error(`Unknown endpoint: ${endpoint}`);
+            }
+
             if (!res.ok) {
                 throw new Error(`HTTP ${res.status}`);
             }
@@ -30,14 +41,14 @@ export function ApiTestClientComponent() {
         <div className="space-y-4">
             <div className="flex gap-3 flex-wrap">
                 <button
-                    onClick={() => callApi('/api/health')}
+                    onClick={() => callApi('health')}
                     disabled={loading}
                     className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded disabled:bg-gray-500"
                 >
                     {loading ? '⏳' : '🔗'} GET /api/health
                 </button>
                 <button
-                    onClick={() => callApi('/api/poc/hello')}
+                    onClick={() => callApi('poc/hello')}
                     disabled={loading}
                     className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded disabled:bg-gray-500"
                 >

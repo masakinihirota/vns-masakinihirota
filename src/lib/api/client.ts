@@ -3,50 +3,43 @@
  *
  * @description
  * - サーバー側の型定義から完全な型推論を提供
- * - ゼロ設定で型安全な API クライアント
- * - VSCode での自動補完サポート
+ * - クライアント側でType-Safe なAPI呼び出しを実現
+ * - VSCode での自動補完サポート（将来の実装適用時）
  *
- * @example
+ * @note
+ * Next.js 16 client/server 境界の型推論問題により、
+ * 現在は実装待ちの状態です。
+ * UI コンポーネントは fetch() を使用し、API routes はすべて正常に動作しています。
+ * RPC Client の完全統合は以下で対応予定：
+ * - 型定義の共有フォルダ構成の最適化
+ * - Next.js TypeScript コンパイラ設定の調整
+ *
+ * @example_future
  * ```typescript
  * import { client } from '@/lib/api/client';
  *
  * // GET /api/health
  * const res = await client.health.$get();
- * const data = await res.json(); // { success: true, data: { status: 'ok', ... } }
  *
- * // GET /api/users/:id
- * const res = await client.users[':id'].$get({ param: { id: '123' } });
- * const data = await res.json(); // { success: true, data: { id: string, name: string } }
- *
- * // POST /api/users
- * const res = await client.users.$post({ json: { name: 'John' } });
- * const data = await res.json(); // { success: true, data: User }
- *
- * // Error handling
- * if (!data.success) {
- *   console.error(data.error.code, data.error.message);
- *   if (data.error.code === 'UNAUTHORIZED') {
- *     router.push('/signin');
- *   }
- * }
+ * // GET /api/admin/users/:id
+ * const res = await client.admin.users[':id'].$get({ param: { id: '123' } });
  * ```
  */
 
-import { hc, type InferRequestType, type InferResponseType } from 'hono/client';
-import type { AppType } from './types';
+import { hc } from 'hono/client';
+import type { AppType } from '@/app/api/[[...route]]/route';
 
 /**
- * API Client インスタンス
+ * API Client インスタンス（開発中）
  *
  * @description
- * - AppType から型を自動推論
- * - サーバー側の定義が変更されると、クライアント側の型も自動更新
+ * - AppType から型を自動推論予定
+ * - サーバー側の定義が変更されると、クライアント側の型も自動更新予定
  */
-export const client = hc<AppType>(
-  process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
-);
+export const client = hc<AppType>('/api');
 
 /**
  * 型推論のヘルパー型
  */
-export type { AppType, InferRequestType, InferResponseType };
+export type { AppType };
+export type { InferRequestType, InferResponseType } from 'hono/client';

@@ -18,6 +18,9 @@ import { errorHandler } from '@/lib/api/middleware/error-handler';
 import { betterAuthSessionMiddleware } from '@/lib/api/middleware/auth-session';
 import health from '@/lib/api/routes/health';
 import users from '@/lib/api/routes/users';
+import groups from '@/lib/api/routes/groups';
+import nations from '@/lib/api/routes/nations';
+import notifications from '@/lib/api/routes/notifications';
 import admin from '@/lib/api/routes/admin';
 import poc from '@/lib/api/routes/poc';
 
@@ -53,26 +56,21 @@ app.route('/health', health);
 // Users
 app.route('/users', users);
 
+// Groups
+app.route('/groups', groups);
+
+// Nations
+app.route('/nations', nations);
+
+// Notifications
+app.route('/notifications', notifications);
+
 // Admin (User/Group/Nation Management)
 app.route('/admin', admin);
 
 // PoC (Proof of Concept) - RPC Client テスト用
 app.route('/poc', poc);
 
-// Admin API (Phase 2 で実装)
-// app.route('/admin', adminRouter);
-
-// User API (Phase 3 で実装)
-// app.route('/users', userRouter);
-
-// Group API (Phase 3 で実装)
-// app.route('/groups', groupRouter);
-
-// Nation API (Phase 3 で実装)
-// app.route('/nations', nationRouter);
-
-// Notification API (Phase 4 で実装)
-// app.route('/notifications', notificationRouter);
 
 // ============================================================================
 // Next.js App Router Export

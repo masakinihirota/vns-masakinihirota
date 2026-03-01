@@ -65,6 +65,27 @@ export const getUnreadNotifications = async (userId: string) => {
   return result.map(mapToNotificationDomain);
 };
 
+export const getNotifications = async (
+  userId: string,
+  limit: number = 20,
+  offset: number = 0
+) => {
+  const result = await database.query.notifications.findMany({
+    where: eq(notifications.userProfileId, userId),
+    orderBy: [desc(notifications.createdAt)],
+    limit,
+    offset,
+  });
+  return result.map(mapToNotificationDomain);
+};
+
+export const getNotificationById = async (notificationId: string) => {
+  const result = await database.query.notifications.findFirst({
+    where: eq(notifications.id, notificationId),
+  });
+  return result ? mapToNotificationDomain(result) : undefined;
+};
+
 export const markNotificationAsRead = async (notificationId: string) => {
   const [updated] = await database
     .update(notifications)
@@ -72,4 +93,12 @@ export const markNotificationAsRead = async (notificationId: string) => {
     .where(eq(notifications.id, notificationId))
     .returning();
   return mapToNotificationDomain(updated);
+};
+
+export const deleteNotification = async (notificationId: string) => {
+  const [deleted] = await database
+    .delete(notifications)
+    .where(eq(notifications.id, notificationId))
+    .returning();
+  return deleted ? mapToNotificationDomain(deleted) : undefined;
 };
