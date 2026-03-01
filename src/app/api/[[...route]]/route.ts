@@ -27,6 +27,9 @@ import poc from '@/lib/api/routes/poc';
 
 const app = new Hono().basePath('/api');
 
+// Type helper to ensure proper type inference
+type AppInstance = typeof app;
+
 // ============================================================================
 // Global Error Handler
 // ============================================================================

@@ -10,6 +10,7 @@ vi.mock('@/lib/db/client');
 describe('Auth Helper Functions', () => {
   beforeEach(() => {
     // 環境変数をリセット
+    delete process.env.USE_REAL_AUTH;
     delete process.env.NEXT_PUBLIC_USE_REAL_AUTH;
   });
 
@@ -33,26 +34,26 @@ describe('Auth Helper Functions', () => {
       expect(true).toBe(true);
     });
 
-    it('should respect NEXT_PUBLIC_USE_REAL_AUTH environment variable', async () => {
-      process.env.NEXT_PUBLIC_USE_REAL_AUTH = 'false';
+    it('should respect USE_REAL_AUTH environment variable', async () => {
+      process.env.USE_REAL_AUTH = 'false';
       process.env.NODE_ENV = 'development';
 
       const session = await getSession();
 
       // ダミーセッションが返される
-      expect(session?.user?.id).toBe(DUMMY_USERS.USER.id);
-      expect(session?.user?.email).toBe(DUMMY_USERS.USER.email);
+      expect(session?.user?.id).toBe(DUMMY_USERS.USER1.id);
+      expect(session?.user?.email).toBe(DUMMY_USERS.USER1.email);
     });
 
     it('should return normal user in development mode', async () => {
-      process.env.NEXT_PUBLIC_USE_REAL_AUTH = 'false';
+      process.env.USE_REAL_AUTH = 'false';
       process.env.NODE_ENV = 'development';
 
       const session = await getSession();
 
       // 開発モードでは常に通常ユーザー
       expect(session?.user?.role).toBe('user');
-      expect(session?.user?.id).toBe(DUMMY_USERS.USER.id);
+      expect(session?.user?.id).toBe(DUMMY_USERS.USER1.id);
     });
   });
 

@@ -1,8 +1,9 @@
 "use server";
 
 import { createNation } from "@/lib/db/nation-queries";
-import { checkGroupRole } from "@/lib/auth/rbac-helper";
+import { checkGroupRole, checkInteractionAllowed } from "@/lib/auth/rbac-helper";
 import { getSession } from "@/lib/auth/helper";
+import { createNationSchema, type CreateNationInput } from "@/lib/validation/schemas";
 
 /**
  * Nation作成 Server Action
@@ -10,7 +11,7 @@ import { getSession } from "@/lib/auth/helper";
  * @design
  * - group_leader ロールのみ実行可能（Deny-by-default）
  * - 国リーダーとして自動付与
- * - 入力値の厳密なバリデーション
+ * - Zod によるバリデーション
  * - グループ所有権検証を含む
  *
  * @security
@@ -18,14 +19,8 @@ import { getSession } from "@/lib/auth/helper";
  * - group_leader ロール検証 必須
  * - グループ所有権検証（対象リソースがユーザーの組織に属すること）
  * - SQL インジェクション対策: Drizzle ORM 使用
- * - 入力長チェック: name (3-100), description (0-500)
+ * - Zod バリデーション: name (3-100), description (0-500)
  */
-
-export interface CreateNationInput {
-  groupId: string;
-  name: string;
-  description?: string;
-}
 
 export interface CreateNationResponse {
   success: boolean;
@@ -57,49 +52,20 @@ export async function createNationAction(
       };
     }
 
+    // ============================================================================
+    // 2. 入力バリデーション（Zod）
+    // ============================================================================
+    const validated = createNationSchema.safeParse(input);
+
+    if (!validated.success) {
+      const firstError = validated.error.issues[0];
+      return {
+        success: false,
+        error: firstError?.message || "Validation failed",
+      };
+    }
+
     const userId = session.user.id;
-
-    // ============================================================================
-    // 2. 入力バリデーション
-    // ============================================================================
-
-    // グループ ID のバリデーション
-    if (!input.groupId || input.groupId.trim().length === 0) {
-      return {
-        success: false,
-        error: "Group ID is required",
-      };
-    }
-
-    // 国名のバリデーション
-    if (!input.name || input.name.trim().length === 0) {
-      return {
-        success: false,
-        error: "Nation name is required",
-      };
-    }
-
-    if (input.name.length < 3) {
-      return {
-        success: false,
-        error: "Nation name must be at least 3 characters",
-      };
-    }
-
-    if (input.name.length > 100) {
-      return {
-        success: false,
-        error: "Nation name must be at most 100 characters",
-      };
-    }
-
-    // 説明のバリデーション
-    if (input.description && input.description.length > 500) {
-      return {
-        success: false,
-        error: "Description must be at most 500 characters",
-      };
-    }
 
     // ============================================================================
     // 3. 権限チェック：group_leader（Deny-by-default）
@@ -112,28 +78,46 @@ export async function createNationAction(
         role: session.user.role ?? null,
       },
       session: {
-        id: session.session.id,
-        expiresAt: new Date(session.session.expiresAt),
+        id: session.session?.id ?? "server-action-session",
+        expiresAt: new Date(
+          session.session?.expiresAt ?? Date.now() + 60 * 60 * 1000,
+        ),
       },
     };
 
     const isGroupLeader = await checkGroupRole(
       authSession,
-      input.groupId,
+      validated.data.groupId,
       "leader",
     );
 
     if (!isGroupLeader) {
       return {
         success: false,
-        error: "Forbidden: Only group leaders can create nations",
+        error: "Unauthorized: Only group leaders can create nations",
       };
     }
 
     // ============================================================================
-    // 4. 国作成
+    // 4. 幽霊モード制限（VNS 設計思想）
     // ============================================================================
-    const nation = await createNation(userId, input.name, input.description);
+    const canInteract = await checkInteractionAllowed(session);
+
+    if (!canInteract) {
+      return {
+        success: false,
+        error: "GHOST_MASK_INTERACTION_DENIED",
+      };
+    }
+
+    // ============================================================================
+    // 5. 国作成
+    // ============================================================================
+    const nation = await createNation(
+      userId,
+      validated.data.name,
+      validated.data.description,
+    );
 
     return {
       success: true,

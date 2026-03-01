@@ -89,23 +89,31 @@ export async function upsertBusinessCard(
   profileId: string,
   data: UpsertBusinessCardData
 ) {
-  const drizzleInput: Record<string, unknown> = {
+  const insertValues: Record<string, unknown> = {
+    userProfileId: profileId,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   } as any;
 
+  const updateValues: Record<string, unknown> = {
+    updatedAt: new Date().toISOString(),
+  };
+
   if (data.is_published !== undefined)
-    drizzleInput.isPublished = data.is_published;
+    insertValues.isPublished = updateValues.isPublished = data.is_published;
   if (data.display_config !== undefined)
-    drizzleInput.displayConfig = data.display_config;
-  if (data.content !== undefined) drizzleInput.content = data.content;
+    insertValues.displayConfig = updateValues.displayConfig = data.display_config;
+  if (data.content !== undefined) {
+    insertValues.content = data.content;
+    updateValues.content = data.content;
+  }
 
   const [result] = await database
     .insert(businessCards)
-    .values(drizzleInput as any)
+    .values(insertValues as any)
     .onConflictDoUpdate({
       target: businessCards.userProfileId,
-      set: drizzleInput,
+      set: updateValues,
     })
     .returning();
 

@@ -70,20 +70,11 @@ describe('proxy (Next.js 16 Middleware)', () => {
     expect(response.headers.get('location')).toContain('/');
   });
 
-  it('should block non-admin users from /admin paths', async () => {
-    const request = new NextRequest(new URL('http://localhost:3000/admin'));
-    (getHeaders as any).mockResolvedValue({});
-    (auth.api.getSession as any).mockResolvedValue({
-      user: { id: '1', email: 'user@example.com', role: 'user' },
-    });
+  // RBAC tests removed - authorization is now handled in Server Actions, not in proxy
+  // Proxy only handles authentication (session validity)
+  // See: src/proxy.ts - "認可ロジック（ロール based アクセス制御）は Server Action で実施"
 
-    const response = await proxy(request);
-
-    expect(response.status).toBe(307);
-    expect(response.headers.get('location')).toContain('/');
-  });
-
-  it('should allow admin users to access /admin', async () => {
+  it('should allow authenticated admin users to access /admin (RBAC check in Server Action)', async () => {
     const request = new NextRequest(new URL('http://localhost:3000/admin'));
     (getHeaders as any).mockResolvedValue({});
     (auth.api.getSession as any).mockResolvedValue({
@@ -95,20 +86,10 @@ describe('proxy (Next.js 16 Middleware)', () => {
     expect(response.status).toBe(200);
   });
 
-  it('should block non-group_leader users from /nation/create', async () => {
-    const request = new NextRequest(new URL('http://localhost:3000/nation/create'));
-    (getHeaders as any).mockResolvedValue({});
-    (auth.api.getSession as any).mockResolvedValue({
-      user: { id: '1', email: 'member@example.com', role: 'member' },
-    });
+  // RBAC check for /nation/create removed - handled in Server Action
+  // Proxy only verifies authentication, not authorization
 
-    const response = await proxy(request);
-
-    expect(response.status).toBe(307);
-    expect(response.headers.get('location')).toContain('/');
-  });
-
-  it('should allow group_leader users to access /nation/create', async () => {
+  it('should allow authenticated group_leader users to access /nation/create (RBAC check in Server Action)', async () => {
     const request = new NextRequest(new URL('http://localhost:3000/nation/create'));
     (getHeaders as any).mockResolvedValue({});
     (auth.api.getSession as any).mockResolvedValue({

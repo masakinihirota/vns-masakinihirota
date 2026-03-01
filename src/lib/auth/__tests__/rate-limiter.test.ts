@@ -48,8 +48,8 @@ describe("Rate Limiter - Core Functions", () => {
       expect(result).toBe(false);
     });
 
-    it("should reset after window expires", (context) => {
-      context.task.skip(); // 時間経過テストは手動でのみ実行
+    it.skip("should reset after window expires", () => {
+      // TODO: 時間経過テストは vitest.useFakeTimers() を使用して実装
       // 実装: vitest.useFakeTimers() を使用した時間操作テスト
     });
   });

@@ -60,8 +60,6 @@ export async function setupRootAccount(userId: string): Promise<{
       .insert(rootAccounts)
       .values({
         authUserId: userId,
-        points: 3000, // デフォルトポイント
-        level: 1, // デフォルトレベル
         trustDays: 0,
       })
       .returning({ id: rootAccounts.id });
@@ -85,10 +83,13 @@ export async function setupRootAccount(userId: string): Promise<{
         roleType: "guest",
         isActive: true,
         maskCategory: "ghost", // 幽霊（観測者）ロール
+        isDefault: true, // システム生成の幽霊マスク
         profileFormat: "profile",
         role: "guest",
         purposes: [],
         profileType: "system",
+        points: 0, // 幽霊は初期ポイント0
+        level: 1, // 初期レベル
       })
       .returning({ id: userProfiles.id });
 

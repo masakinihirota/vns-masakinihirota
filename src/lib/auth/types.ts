@@ -41,7 +41,8 @@ export interface AuthSession {
     id: string;
     email: string | null;
     name: string | null;
-    role: string | null; // 'platform_admin' | 'user' | null
+    role?: string | null | undefined; // 'platform_admin' | 'user' | null | undefined (Better Auth compatibility - optional)
+    activeProfileId?: string | null; // 現在被っている仮面のID (VNS multi-mask system)
   };
   session: {
     id: string;
