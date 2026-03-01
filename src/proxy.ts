@@ -6,7 +6,7 @@ import { createDummySession } from "@/lib/dev-auth";
 
 // 環境変数で制御
 const DEBUG_LOGGING = process.env.PROXY_DEBUG === 'true';
-const USE_REAL_AUTH = (process.env.USE_REAL_AUTH ?? process.env.NEXT_PUBLIC_USE_REAL_AUTH) === 'true'; // 後方互換性のため両方をサポート
+const USE_REAL_AUTH = process.env.USE_REAL_AUTH === 'true'; // クライアント露出不要な内部変数に統一
 
 /**
  * 本番環境でのセキュリティ検証
@@ -16,7 +16,7 @@ const USE_REAL_AUTH = (process.env.USE_REAL_AUTH ?? process.env.NEXT_PUBLIC_USE_
  * これにより、意図しない認証無効化を防止します。
  *
  * @security
- * - 環境変数：USE_REAL_AUTH または NEXT_PUBLIC_USE_REAL_AUTH（後方互換）
+ * - 環境変数：USE_REAL_AUTH
  * - BETTER_AUTH_SECRET が必ず設定されていることを確認
  * - NODE_ENV=production で自動検証
  */
@@ -89,7 +89,7 @@ function log(level: 'info' | 'warn' | 'error', message: string, data?: Record<st
  * @description
  * 開発モード: USE_REAL_AUTH=false でダミー認証を使用
  * 本番モード: USE_REAL_AUTH=true で OAuth認証を使用（必須）
- * （後方互換として NEXT_PUBLIC_USE_REAL_AUTH も読み取ります）
+ * （古い環境変数は既に廃止されています）
  *
  * @security
  * - 本番環境では USE_REAL_AUTH=true が必須

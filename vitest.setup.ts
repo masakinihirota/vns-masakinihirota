@@ -10,7 +10,6 @@ afterEach(() => {
 
 // Mock environment variables
 process.env.USE_REAL_AUTH = 'false';
-process.env.NEXT_PUBLIC_USE_REAL_AUTH = 'false';
 
 // ✅ テスト環境用のダミー DATABASE_URL を設定
 // 実際のDBに接続しないため、モックDBまたはインメモリDBを使用することを推奨

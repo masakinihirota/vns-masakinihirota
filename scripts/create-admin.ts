@@ -92,7 +92,7 @@ async function createAdminUser() {
     console.log('2. DB で以下のコマンドを実行:');
     console.log(`   UPDATE users SET role = 'admin' WHERE email = '${adminEmail}';\n`);
     console.log('または開発環境で .env.local を以下のように設定:');
-    console.log('   NEXT_PUBLIC_USE_REAL_AUTH=false\n');
+    console.log('   USE_REAL_AUTH=false\n');
 
   } catch (error) {
     console.error('❌ エラーが発生しました:', error);

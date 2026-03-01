@@ -9,11 +9,9 @@ vi.mock('@/lib/db/client');
 
 describe('Auth Helper Functions', () => {
   beforeEach(() => {
-    // 環境変数をリセット
-    delete process.env.USE_REAL_AUTH;
-    delete process.env.NEXT_PUBLIC_USE_REAL_AUTH;
-  });
-
+      // 環境変数をリセット
+      delete process.env.USE_REAL_AUTH;
+    });
   describe('getSession() with cache()', () => {
     it('should return null when no session exists', async () => {
       // TODO: セッションクッキーなしでリクエスト

@@ -96,7 +96,7 @@ if (process.env.NODE_ENV === 'production' && !USE_REAL_AUTH) {
 リスク：
 - **環境変数の設定順序によって無効化される可能性**
 - Node.js コンテナが起動時にエラーを出力後、意図せず起動成功することがある
-- `NEXT_PUBLIC_USE_REAL_AUTH=false` と `NEXT_PUBLIC_`で始まる変数は**クライアント側に漏洩**
+- `USE_REAL_AUTH=false` のようにサーバー専用設定を利用し、クライアントには公開しない
 
 **修復方法**:
 ```typescript

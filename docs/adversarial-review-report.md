@@ -28,10 +28,9 @@
 | ファイル | `src/lib/auth/helper.ts` L76, `src/proxy.ts` |
 | カテゴリ | セキュリティ |
 
-`helper.ts` は `NEXT_PUBLIC_USE_REAL_AUTH` を参照し、`proxy.ts` は `USE_REAL_AUTH` を参照。
-片方だけ設定された場合、proxy は認証済みと判断するが、helper はダミーユーザーを返す、または逆のケースが発生し、**認証状態の不整合**が起きます。
+`helper.ts` と `proxy.ts` が異なる変数名を参照していたが、すでに両方とも `USE_REAL_AUTH` に統一され、**不整合リスクは解消済み**。
 
-**修正方針**: 環境変数名を統一し、`NEXT_PUBLIC_` プレフィックスはクライアントサイドでの使用が不要であれば `USE_REAL_AUTH` に統一。
+**修正済み**: 変数名を `USE_REAL_AUTH` に統一
 
 ---
 

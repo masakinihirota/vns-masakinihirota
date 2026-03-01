@@ -30,7 +30,7 @@ React Server Components (RSC)、Postgres、およびNext.jsアーキテクチャ
 
 ## 4. Development Environment (開発環境)
 
-- **認証バイパス**: 開発効率向上のため、ローカルでは `src/app/(protected)/layout.tsx` 等での認証チェックを `NEXT_PUBLIC_USE_REAL_AUTH=false` 等でスキップ可能にする。
+- **認証バイパス**: 開発効率向上のため、ローカルでは `src/app/(protected)/layout.tsx` 等での認証チェックを `USE_REAL_AUTH=false` 等でスキップ可能にする。
 - **コミット注意**: バイパスコードが本番環境で有効にならないよう、必ず環境変数で制御し、ハードコードしないこと。
 - **コミット注意**: バイパスコードが本番環境で有効にならないよう、必ず環境変数で制御し、ハードコードしないこと。
 

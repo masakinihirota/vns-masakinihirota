@@ -218,6 +218,10 @@ DELETE /api/admin/nations/:id    # ネーション削除
 - ネーション API（GET /api/nations、GET /api/nations/:id、PATCH /api/nations/:id）
 - 既存 Server Actions テストの移行・改修（+0.5h）
 
+**実装ガイド:**
+- 📘 `.agent/skills/hono-api-implementation/SKILL.md` を参照
+- 参考実装: `src/lib/api/routes/admin.ts` (906行)
+
 ---
 
 ### フェーズ 4: 通知 API（計 1.5h）
@@ -227,6 +231,10 @@ DELETE /api/admin/nations/:id    # ネーション削除
 - 既読マーク機能
 - 通知削除機能
 - Integration test 実装（+0.5h）
+
+**実装ガイド:**
+- 📘 `.agent/skills/hono-api-implementation/SKILL.md` を参照
+- DBスキーマ: `src/lib/db/schema.postgres.ts` (notifications)
 
 ---
 
@@ -238,6 +246,10 @@ DELETE /api/admin/nations/:id    # ネーション削除
   - **Option A（推奨）**: Server Actions を残す（Better Auth との一貫性維持）
   - **Option B**: Hono API へ完全移行（追加 2～3h、リスク中）
 - 全体統合テスト（+1～2h）
+
+**実装ガイド:**
+- 📘 `.agent/skills/hono-api-implementation/SKILL.md` の「RPC Client型エクスポート」セクション参照
+- クライアント側: `src/lib/api/client.ts`
 
 ---
 
@@ -574,13 +586,16 @@ git revert <commit-hash>  # UI 更新のコミット
 
 ## �📁 関連ドキュメント一覧
 
+### スキル（.agent/skills/）
+- ✅ `hono-api-implementation/` - Hono API実装の強制ルールとベストプラクティス（2026-03-02作成）
+
 ### 決定事項（.agent/decisions/）
 - ✅ `node-runtime.md` - Runtime 決定
 - ✅ `better-auth-pattern.md` - Better Auth 共存方法
 - ✅ `rpc-client-pattern.md` - RPC Client 決定
-- ⏳ `rbac-middleware-strategy.md` - RBAC Middleware 戦略（未作成）
-- ⏳ `test-strategy.md` - テスト戦略（未作成）
-- ⏳ `error-response-spec.md` - エラーレスポンス仕様（未作成）
+- ✅ `rbac-middleware-strategy.md` - RBAC Middleware 戦略
+- ✅ `test-strategy.md` - テスト戦略
+- ✅ `error-response-spec.md` - エラーレスポンス仕様
 
 ### 参考資料（schedule_todo_list/reference/）
 - `2026-03-01_BETTER_AUTH_HONO_OPTIONS.md` - Better Auth 共存選択肢の詳細分析
@@ -596,33 +611,35 @@ git revert <commit-hash>  # UI 更新のコミット
 
 ## 🎯 実装チェックリスト
 
+**重要:** すべての実装は `.agent/skills/hono-api-implementation/SKILL.md` のルールに従ってください。
+
 ### フェーズ 0: 事前検証（3.5～4.5h）
-- [ ] エラーレスポンス仕様決定（0.5h）
-- [ ] `.agent/decisions/error-response-spec.md` 作成
-- [ ] RPC Client PoC（タスク1: 基本的な型推論） 20分
-- [ ] RPC Client PoC（タスク2: パラメータ型推論） 15分
-- [ ] RPC Client PoC（タスク3: エラーハンドリング） 15分
-- [ ] RPC Client PoC（タスク4: Next.js 統合） 10分
-- [ ] RBAC Middleware 互換性確認・実装（1.5～2h）
-- [ ] `.agent/decisions/rbac-middleware-strategy.md` 作成
-- [ ] テスト戦略決定（0.5h）
-- [ ] `.agent/decisions/test-strategy.md` 作成
-- [ ] すべての決定事項が記録されていることを確認
-- [ ] `pnpm build` 成功確認
+- [x] エラーレスポンス仕様決定（0.5h）
+- [x] `.agent/decisions/error-response-spec.md` 作成
+- [x] RPC Client PoC（タスク1: 基本的な型推論） 20分
+- [x] RPC Client PoC（タスク2: パラメータ型推論） 15分
+- [x] RPC Client PoC（タスク3: エラーハンドリング） 15分
+- [x] RPC Client PoC（タスク4: Next.js 統合） 10分
+- [x] RBAC Middleware 互換性確認・実装（1.5～2h）
+- [x] `.agent/decisions/rbac-middleware-strategy.md` 作成
+- [x] テスト戦略決定（0.5h）
+- [x] `.agent/decisions/test-strategy.md` 作成
+- [x] すべての決定事項が記録されていることを確認
+- [x] `pnpm build` 成功確認
 
 ### フェーズ 1: セットアップ
-- [ ] `pnpm add hono` 実行
-- [ ] `src/app/api/[[...route]]/route.ts` 作成
-- [ ] middleware フレームワーク実装
-- [ ] health endpoint 実装・テスト
-- [ ] RPC client setup
-- [ ] `pnpm build` 成功確認
+- [x] `pnpm add hono` 実行
+- [x] `src/app/api/[[...route]]/route.ts` 作成
+- [x] middleware フレームワーク実装
+- [x] health endpoint 実装・テスト
+- [x] RPC client setup
+- [x] `pnpm build` 成功確認
 
 ### フェーズ 2: Admin API
-- [ ] User Admin endpoints 実装
-- [ ] Group / Nation Admin endpoints 実装
-- [ ] Integration test 実装
-- [ ] `pnpm test` 全テスト成功
+- [x] User Admin endpoints 実装
+- [x] Group / Nation Admin endpoints 実装
+- [x] Integration test 実装
+- [x] `pnpm test` 全テスト成功
 
 ### フェーズ 3: User API
 - [ ] ユーザー情報 API 実装

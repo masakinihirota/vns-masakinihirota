@@ -3,7 +3,6 @@
  *
  * @description
  * USE_REAL_AUTH=false の場合、このダミーデータを使用します。
- * （後方互換として NEXT_PUBLIC_USE_REAL_AUTH でも動作）
  * 本番環境では使用されません。
  */
 

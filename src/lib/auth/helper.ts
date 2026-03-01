@@ -1,4 +1,4 @@
- 
+
 
 import { headers } from "next/headers";
 import { cache } from "react";
@@ -26,8 +26,6 @@ import { withAuth } from "./with-auth";
  *
  * **開発時ダミー機能:**
  * USE_REAL_AUTH=false の場合、ダミー認証を使用します。
- * （後方互換として NEXT_PUBLIC_USE_REAL_AUTH も読み取ります）
- *
  *
  * **優先順位ルール:**
  * 1. OAuth (Google/GitHub) > 匿名
@@ -73,7 +71,7 @@ async function getPrimaryAuthProvider(userId: string): Promise<string> {
  */
 export const getSession = cache(async () => {
   try {
-    const useRealAuth = process.env.USE_REAL_AUTH ?? process.env.NEXT_PUBLIC_USE_REAL_AUTH;
+    const useRealAuth = process.env.USE_REAL_AUTH;
 
     // 開発時ダミー認証機能
     if (useRealAuth !== "true" && process.env.NODE_ENV === "development") {
