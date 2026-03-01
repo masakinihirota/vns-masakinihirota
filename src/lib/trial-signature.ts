@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+ 
 
 import { createHmac, createHash } from "crypto";
 import { VNSTrialData } from "./trial-storage";

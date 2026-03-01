@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+ 
 
 import { headers } from "next/headers";
 import { cache } from "react";
@@ -85,7 +85,7 @@ export const getSession = cache(async () => {
     const headersList = await headers();
 
     // Try Better Auth first
-    let betterAuthResult = await serverAuth.api.getSession({
+    const betterAuthResult = await serverAuth.api.getSession({
       headers: headersList,
     });
 

@@ -5,9 +5,9 @@
  * Flow: Cookie/ヘッダー → Better Auth セッション解析 → Hono コンテキストに注入
  */
 
-import { Hono, type Context, type Next } from 'hono';
-import type { User, Session } from 'better-auth';
 import { auth } from '@/lib/auth';
+import type { Session, User } from 'better-auth';
+import { type Context, type Next } from 'hono';
 
 /**
  * Hono コンテキストに Better Auth情報を追加
@@ -68,22 +68,22 @@ export const betterAuthSessionMiddleware = () => {
  */
 export const requireAuth =
   () =>
-  async (c: Context, next: Next): Promise<void | Response> => {
-    const session = c.get('session');
-    if (!session?.user) {
-      return c.json(
-        {
-          success: false,
-          error: {
-            code: 'UNAUTHORIZED',
-            message: 'You must be logged in to access this resource',
+    async (c: Context, next: Next): Promise<void | Response> => {
+      const session = c.get('session');
+      if (!session?.user) {
+        return c.json(
+          {
+            success: false,
+            error: {
+              code: 'UNAUTHORIZED',
+              message: 'You must be logged in to access this resource',
+            },
           },
-        },
-        401
-      );
-    }
-    await next();
-  };
+          401
+        );
+      }
+      await next();
+    };
 
 /**
  * 特定のロールが必須のミドルウェア
@@ -103,7 +103,7 @@ export const requireRole = (requiredRole: string) => async (c: Context, next: Ne
     );
   }
 
-  if ((session.user as any).role !== requiredRole) {
+  if ((session.user as { role?: string }).role !== requiredRole) {
     return c.json(
       {
         success: false,

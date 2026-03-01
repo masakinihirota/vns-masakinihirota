@@ -40,7 +40,7 @@ export interface ApiErrorResponse {
     code: ErrorCode;
     message: string;
     status?: number;
-    details?: Record<string, any>;
+    details?: Record<string, unknown>;
   };
 }
 

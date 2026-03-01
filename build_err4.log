@@ -1,0 +1,24 @@
+
+> vns-masakinihirota@0.1.0 build U:\2026src\vns-masakinihirota
+> next build
+
+笆ｲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env.production, .env
+
+  Creating an optimized production build ...
+笨・Compiled successfully in 9.5s
+  Running TypeScript ...
+Failed to compile.
+
+./src/lib/api/routes/users.ts:28:21
+Type error: Property 'session' does not exist on type 'Context<any, any, {}>'.
+
+  26 | users.get('/me', (c: Context) => {
+  27 |   // betterAuthSessionMiddleware 縺ｧ session 縺梧ｳｨ蜈･縺輔ｌ縺ｦ縺・ｋ
+> 28 |   const session = c.session;
+     |                     ^
+  29 |
+  30 |   if (!session?.user) {
+  31 |     const response: ApiErrorResponse = {
+Next.js build worker exited with code: 1 and signal: null
+窶右LIFECYCLE窶・Command failed with exit code 1.

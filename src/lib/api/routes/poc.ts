@@ -8,8 +8,8 @@
 
 import { Hono } from 'hono';
 import { requireAuth } from '../middleware';
-import type { ApiSuccessResponse, ApiErrorResponse } from '../types/response';
 import { createApiError } from '../middleware/error-handler';
+import type { ApiSuccessResponse } from '../types/response';
 
 const poc = new Hono();
 
@@ -165,7 +165,7 @@ poc.post('/echo', async (c) => {
   const body = await c.req.json();
 
   const response: ApiSuccessResponse<{
-    received: any;
+    received: unknown;
     timestamp: number;
   }> = {
     success: true,

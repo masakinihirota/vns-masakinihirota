@@ -1,6 +1,6 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
-import { cn } from "@/lib/utils";
 
 export const Avatar: React.FC<
   React.PropsWithChildren<React.HTMLAttributes<HTMLDivElement>>
@@ -13,12 +13,13 @@ export const Avatar: React.FC<
 export const AvatarImage: React.FC<
   React.ImgHTMLAttributes<HTMLImageElement>
 > = ({ className, alt, ...props }) => (
-  // eslint-disable-next-line @next/next/no-img-element
+
   <Image
     className={cn("aspect-square h-full w-full object-cover", className)}
     alt={alt || "Avatar"}
     fill
     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     {...(props as any)}
     data-testid="avatar-image"
   />

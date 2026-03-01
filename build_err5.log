@@ -1,0 +1,25 @@
+
+> vns-masakinihirota@0.1.0 build U:\2026src\vns-masakinihirota
+> next build
+
+笆ｲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env.production, .env
+
+  Creating an optimized production build ...
+笨・Compiled successfully in 11.2s
+  Running TypeScript ...
+Failed to compile.
+
+./src/lib/db/business-cards.ts:113:13
+Type error: Conversion of type 'Record<string, unknown>' to type 'PgTable<TableConfig>' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+  Type 'Record<string, unknown>' is missing the following properties from type 'PgTable<TableConfig>': _, $inferSelect, $inferInsert, getSQL
+
+  111 |   const [result] = await database
+  112 |     .insert(businessCards)
+> 113 |     .values(insertValues as Parameters<typeof database.insert>[0])
+      |             ^
+  114 |     .onConflictDoUpdate({
+  115 |       target: businessCards.userProfileId,
+  116 |       set: updateValues,
+Next.js build worker exited with code: 1 and signal: null
+窶右LIFECYCLE窶・Command failed with exit code 1.
