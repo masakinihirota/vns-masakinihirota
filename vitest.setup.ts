@@ -1,7 +1,10 @@
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
-import { afterEach } from 'vitest';
+import { afterEach, expect } from 'vitest';
 import 'vitest-axe/extend-expect';
+import * as axeMatchers from 'vitest-axe/matchers';
+
+expect.extend(axeMatchers);
 
 // React Testing Library cleanup after each test
 afterEach(() => {
