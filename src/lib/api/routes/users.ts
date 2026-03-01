@@ -7,7 +7,7 @@
  */
 
 import { Hono } from 'hono';
-import type { ApiSuccessResponse, ApiErrorResponse } from '../types';
+import type { ApiSuccessResponse, ApiErrorResponse } from '../types/response';
 
 const users = new Hono();
 

@@ -20,11 +20,11 @@ import {
   checkNationRole,
   checkRelationship,
   checkMultiple,
-  withAuth,
   type AuthSession,
   type AuthCheck,
   type AuthCheckResult,
 } from "../rbac-helper";
+import { withAuth } from "../with-auth";
 
 // ============================================================================
 // Mock Data

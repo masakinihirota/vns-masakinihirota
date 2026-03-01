@@ -63,7 +63,7 @@ export function checkRateLimit(
   // 新規キー または ウィンドウ期限切れ
   if (!entry || now > entry.resetTime) {
     rateLimitStore.set(key, {
-      count: 0,
+      count: 1, // 最初の試行をカウント
       resetTime: now + windowMs,
     });
     return true; // 許可

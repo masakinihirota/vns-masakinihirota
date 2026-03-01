@@ -1,7 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const insertMock = vi.fn();
-const selectMock = vi.fn();
+// ✅ vi.hoisted() を使用してモック変数をホイスト
+const { insertMock, selectMock } = vi.hoisted(() => ({
+  insertMock: vi.fn(),
+  selectMock: vi.fn(),
+}));
 
 vi.mock("../client", () => ({
   db: {

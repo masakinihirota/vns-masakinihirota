@@ -32,8 +32,8 @@
  * ```
  */
 
-import { hc } from 'hono/client';
-import type { AppType } from '@/app/api/[[...route]]/route';
+import { hc, type InferRequestType, type InferResponseType } from 'hono/client';
+import type { AppType } from './types';
 
 /**
  * API Client インスタンス
@@ -49,4 +49,4 @@ export const client = hc<AppType>(
 /**
  * 型推論のヘルパー型
  */
-export type { AppType };
+export type { AppType, InferRequestType, InferResponseType };

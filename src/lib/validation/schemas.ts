@@ -21,9 +21,7 @@ export const createGroupSchema = z.object({
   description: z
     .string()
     .max(500, "Description must be at most 500 characters")
-    .optional()
-    .nullable()
-    .transform((val) => val || undefined),
+    .optional(),
 });
 
 export type CreateGroupInput = z.infer<typeof createGroupSchema>;
@@ -44,9 +42,7 @@ export const createNationSchema = z.object({
   description: z
     .string()
     .max(500, "Description must be at most 500 characters")
-    .optional()
-    .nullable()
-    .transform((val) => val || undefined),
+    .optional(),
 });
 
 export type CreateNationInput = z.infer<typeof createNationSchema>;

@@ -3,34 +3,19 @@ require('dotenv').config({ path: envPath });
 const postgres = require('postgres');
 
 (async () => {
-    if (!process.env.DATABASE_URL) {
-        console.error(`[DB_FIX] DATABASE_URL is missing in ${envPath}`);
-        process.exit(1);
-    }
+  if (!process.env.DATABASE_URL) {
+    console.error(`[DB_FIX] DATABASE_URL is missing in ${envPath}`);
+    process.exit(1);
+  }
 
-    const sql = postgres(process.env.DATABASE_URL, { prepare: false });
+  const sql = postgres(process.env.DATABASE_URL, { prepare: false });
 
-    try {
-        // Step 1: Add snake_case columns to verification
-        await sql`ALTER TABLE "verification"
-      ADD COLUMN IF NOT EXISTS "expires_at" timestamp,
-      ADD COLUMN IF NOT EXISTS "created_at" timestamp,
-      ADD COLUMN IF NOT EXISTS "updated_at" timestamp`;
+  try {
+    // Skip verification table - already using snake_case only
+    console.log('[DB_FIX] Skipping verification table (already snake_case)');
 
-        // Step 2: Backfill snake_case from camelCase
-        await sql`UPDATE "verification"
-      SET "expires_at" = COALESCE("expires_at", "expiresAt"),
-          "created_at" = COALESCE("created_at", "createdAt"),
-          "updated_at" = COALESCE("updated_at", "updatedAt")`;
-
-        // Step 3: Drop NOT NULL constraints from old camelCase columns
-        await sql.unsafe(`ALTER TABLE "verification"
-      ALTER COLUMN "expiresAt" DROP NOT NULL,
-      ALTER COLUMN "createdAt" DROP NOT NULL,
-      ALTER COLUMN "updatedAt" DROP NOT NULL`);
-
-        // Session table
-        await sql`ALTER TABLE "session"
+    // Session table
+    await sql`ALTER TABLE "session"
       ADD COLUMN IF NOT EXISTS "expires_at" timestamp,
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
       ADD COLUMN IF NOT EXISTS "updated_at" timestamp,
@@ -39,7 +24,7 @@ const postgres = require('postgres');
       ADD COLUMN IF NOT EXISTS "user_id" text,
       ADD COLUMN IF NOT EXISTS "impersonated_by" text`;
 
-        await sql`UPDATE "session"
+    await sql`UPDATE "session"
       SET "expires_at" = COALESCE("expires_at", "expiresAt"),
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt"),
@@ -47,7 +32,7 @@ const postgres = require('postgres');
           "user_agent" = COALESCE("user_agent", "userAgent"),
           "user_id" = COALESCE("user_id", "userId")`;
 
-        await sql.unsafe(`ALTER TABLE "session"
+    await sql.unsafe(`ALTER TABLE "session"
       ALTER COLUMN "expiresAt" DROP NOT NULL,
       ALTER COLUMN "createdAt" DROP NOT NULL,
       ALTER COLUMN "updatedAt" DROP NOT NULL,
@@ -55,8 +40,8 @@ const postgres = require('postgres');
       ALTER COLUMN "userAgent" DROP NOT NULL,
       ALTER COLUMN "userId" DROP NOT NULL`);
 
-        // Account table
-        await sql`ALTER TABLE "account"
+    // Account table
+    await sql`ALTER TABLE "account"
       ADD COLUMN IF NOT EXISTS "account_id" text,
       ADD COLUMN IF NOT EXISTS "provider_id" text,
       ADD COLUMN IF NOT EXISTS "user_id" text,
@@ -68,7 +53,7 @@ const postgres = require('postgres');
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
       ADD COLUMN IF NOT EXISTS "updated_at" timestamp`;
 
-        await sql`UPDATE "account"
+    await sql`UPDATE "account"
       SET "account_id" = COALESCE("account_id", "accountId"),
           "provider_id" = COALESCE("provider_id", "providerId"),
           "user_id" = COALESCE("user_id", "userId"),
@@ -80,7 +65,7 @@ const postgres = require('postgres');
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt")`;
 
-        await sql.unsafe(`ALTER TABLE "account"
+    await sql.unsafe(`ALTER TABLE "account"
       ALTER COLUMN "accountId" DROP NOT NULL,
       ALTER COLUMN "providerId" DROP NOT NULL,
       ALTER COLUMN "userId" DROP NOT NULL,
@@ -92,8 +77,8 @@ const postgres = require('postgres');
       ALTER COLUMN "createdAt" DROP NOT NULL,
       ALTER COLUMN "updatedAt" DROP NOT NULL`);
 
-        // User table
-        await sql`ALTER TABLE "user"
+    // User table
+    await sql`ALTER TABLE "user"
       ADD COLUMN IF NOT EXISTS "email_verified" boolean DEFAULT false,
       ADD COLUMN IF NOT EXISTS "created_at" timestamp,
       ADD COLUMN IF NOT EXISTS "updated_at" timestamp,
@@ -101,22 +86,50 @@ const postgres = require('postgres');
       ADD COLUMN IF NOT EXISTS "ban_reason" text,
       ADD COLUMN IF NOT EXISTS "ban_expires" timestamp`;
 
-        await sql`UPDATE "user"
+    await sql`UPDATE "user"
       SET "email_verified" = COALESCE("email_verified", "emailVerified", false),
           "created_at" = COALESCE("created_at", "createdAt"),
           "updated_at" = COALESCE("updated_at", "updatedAt")`;
 
-        await sql.unsafe(`ALTER TABLE "user"
+    await sql.unsafe(`ALTER TABLE "user"
       ALTER COLUMN "emailVerified" DROP NOT NULL,
       ALTER COLUMN "createdAt" DROP NOT NULL,
       ALTER COLUMN "updatedAt" DROP NOT NULL`);
 
-        console.log(`[DB_FIX] Auth schema compatibility patch applied successfully (env: ${envPath}).`);
-    } catch (error) {
-        console.error(`[DB_FIX] Failed to apply auth schema compatibility patch (env: ${envPath})`);
-        console.error(error);
-        process.exitCode = 1;
-    } finally {
-        await sql.end();
-    }
+    // Step 4: Drop legacy camelCase columns
+    console.log('[DB_FIX] Dropping legacy camelCase columns...');
+
+    await sql.unsafe(`ALTER TABLE "session"
+      DROP COLUMN IF EXISTS "expiresAt",
+      DROP COLUMN IF EXISTS "createdAt",
+      DROP COLUMN IF EXISTS "updatedAt",
+      DROP COLUMN IF EXISTS "ipAddress",
+      DROP COLUMN IF EXISTS "userAgent",
+      DROP COLUMN IF EXISTS "userId"`);
+
+    await sql.unsafe(`ALTER TABLE "account"
+      DROP COLUMN IF EXISTS "accountId",
+      DROP COLUMN IF EXISTS "providerId",
+      DROP COLUMN IF EXISTS "userId",
+      DROP COLUMN IF EXISTS "accessToken",
+      DROP COLUMN IF EXISTS "refreshToken",
+      DROP COLUMN IF EXISTS "idToken",
+      DROP COLUMN IF EXISTS "accessTokenExpiresAt",
+      DROP COLUMN IF EXISTS "refreshTokenExpiresAt",
+      DROP COLUMN IF EXISTS "createdAt",
+      DROP COLUMN IF EXISTS "updatedAt"`);
+
+    await sql.unsafe(`ALTER TABLE "user"
+      DROP COLUMN IF EXISTS "emailVerified",
+      DROP COLUMN IF EXISTS "createdAt",
+      DROP COLUMN IF EXISTS "updatedAt"`);
+
+    console.log(`[DB_FIX] Auth schema compatibility patch applied successfully (env: ${envPath}).`);
+  } catch (error) {
+    console.error(`[DB_FIX] Failed to apply auth schema compatibility patch (env: ${envPath})`);
+    console.error(error);
+    process.exitCode = 1;
+  } finally {
+    await sql.end();
+  }
 })();

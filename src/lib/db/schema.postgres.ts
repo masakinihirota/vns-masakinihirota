@@ -28,6 +28,7 @@ export const users = pgTable("user", {
   banReason: text("ban_reason"),
   banExpires: timestamp("ban_expires"),
   isAnonymous: boolean("is_anonymous").default(false),
+
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at")
     .defaultNow()
@@ -140,8 +141,7 @@ export const rootAccounts = pgTable(
   {
     id: uuid().defaultRandom().primaryKey().notNull(),
     authUserId: text("auth_user_id").notNull(), // References user.id
-    points: integer().default(3000).notNull(),
-    level: integer().default(1).notNull(),
+    activeProfileId: uuid("active_profile_id"), // References user_profiles.id (現在アクティブな仮面)
     trustDays: integer("trust_days").default(0).notNull(),
     dataRetentionDays: integer("data_retention_days").default(30),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "string" })
@@ -158,8 +158,6 @@ export const rootAccounts = pgTable(
       name: "root_accounts_auth_user_id_fkey",
     }).onDelete("cascade"),
     unique("root_accounts_auth_user_id_key").on(table.authUserId),
-    check("root_accounts_points_check", sql`points >= 0`),
-    check("root_accounts_level_check", sql`level >= 1`),
     check("root_accounts_trust_days_check", sql`trust_days >= 0`),
   ]
 );
@@ -177,6 +175,7 @@ export const userProfiles = pgTable(
     roleType: text("role_type").default("member").notNull(),
     isActive: boolean("is_active").default(true).notNull(),
     maskCategory: maskCategory("mask_category").default("persona").notNull(),
+    isDefault: boolean("is_default").default(false).notNull(), // システム生成の幽霊かどうか
     lastInteractedRecordId: uuid("last_interacted_record_id"),
     // Added columns to match usage
     profileFormat: text("profile_format").default("profile"),
@@ -185,6 +184,9 @@ export const userProfiles = pgTable(
     profileType: text("profile_type").default("self"),
     avatarUrl: text("avatar_url"),
     externalLinks: jsonb("external_links"),
+    // ゲーミフィケーション (仮面ごとに独立したポイント・レベル)
+    points: integer().default(0).notNull(),
+    level: integer().default(1).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "string" })
       .defaultNow()
       .notNull(),
@@ -206,6 +208,8 @@ export const userProfiles = pgTable(
       "role_type_check",
       sql`role_type = ANY (ARRAY['leader'::text, 'member'::text, 'admin'::text, 'mediator'::text])`
     ),
+    check("user_profiles_points_check", sql`points >= 0`),
+    check("user_profiles_level_check", sql`level >= 1`),
   ]
 );
 
@@ -799,7 +803,7 @@ export const nationCitizens = pgTable(
     }),
     check(
       "nation_citizens_role_check",
-      sql`role = ANY (ARRAY['official'::text, 'citizen'::text])`
+      sql`role = ANY (ARRAY['official'::text, 'citizen'::text, 'governor'::text])`
     ),
   ]
 );
@@ -919,7 +923,7 @@ export const pointTransactions = pgTable(
   "point_transactions",
   {
     id: uuid().defaultRandom().primaryKey().notNull(),
-    rootAccountId: uuid("root_account_id").notNull(),
+    userProfileId: uuid("user_profile_id").notNull(), // ポイントは仮面ごとに独立
     amount: integer().notNull(),
     type: text().notNull(), // 'daily_login', 'content_creation', 'connection', 'system_adjustment'
     description: text(),
@@ -928,14 +932,14 @@ export const pointTransactions = pgTable(
       .notNull(),
   },
   (table) => [
-    index("idx_point_transactions_root_account").using(
+    index("idx_point_transactions_user_profile").using(
       "btree",
-      table.rootAccountId.asc().nullsLast().op("uuid_ops")
+      table.userProfileId.asc().nullsLast().op("uuid_ops")
     ),
     foreignKey({
-      columns: [table.rootAccountId],
-      foreignColumns: [rootAccounts.id],
-      name: "point_transactions_root_account_id_fkey",
+      columns: [table.userProfileId],
+      foreignColumns: [userProfiles.id],
+      name: "point_transactions_user_profile_id_fkey",
     }).onDelete("cascade"),
   ]
 );
@@ -959,7 +963,6 @@ export const rootAccountsRelations = relations(
       references: [users.id],
     }),
     userProfiles: many(userProfiles),
-    pointTransactions: many(pointTransactions),
   })
 );
 
@@ -1004,6 +1007,7 @@ export const userProfilesRelations = relations(
     relationships_targetProfile: many(relationships, {
       relationName: "relationships_targetProfile",
     }),
+    pointTransactions: many(pointTransactions), // ポイント履歴（仮面ごと）
   })
 );
 
@@ -1017,9 +1021,9 @@ export const businessCardsRelations = relations(businessCards, ({ one }) => ({
 export const pointTransactionsRelations = relations(
   pointTransactions,
   ({ one }) => ({
-    rootAccount: one(rootAccounts, {
-      fields: [pointTransactions.rootAccountId],
-      references: [rootAccounts.id],
+    userProfile: one(userProfiles, {
+      fields: [pointTransactions.userProfileId],
+      references: [userProfiles.id],
     }),
   })
 );

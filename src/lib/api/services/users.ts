@@ -64,7 +64,8 @@ export async function getUserByEmail(email: string): Promise<User | null> {
     return mapUserRow(result[0]);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.error('[getUserByEmail] Database error:', { email, error: errorMessage, stack: (error as Error)?.stack });
+    // ✅ セキュリティ: メールアドレス等のPIIはログに出力しない（GDPR/CCPA準拠）
+    console.error('[getUserByEmail] Database error', { error: errorMessage });
     throw new Error(`Failed to fetch user by email: ${errorMessage}`, { cause: error });
   }
 }

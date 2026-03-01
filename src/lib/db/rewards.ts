@@ -1,58 +1,64 @@
 import { type InferSelectModel, desc, eq, sql } from "drizzle-orm";
 
 import { db as database } from "./client";
-import { pointTransactions, rootAccounts } from "./schema.postgres";
+import { pointTransactions, userProfiles } from "./schema.postgres";
 
 export type PointTransaction = InferSelectModel<typeof pointTransactions>;
 
+/**
+ * ポイント付与（仮面ごと）
+ * @param userProfileId 対象の仮面プロフィールID
+ * @param amount 付与ポイント数
+ * @param type トランザクションタイプ
+ * @param description 説明（オプショナル）
+ */
 export const grantPoints = async (
-  userId: string, // Auth User ID
+  userProfileId: string, // User Profile ID (仮面単位)
   amount: number,
   type: string,
   description?: string
 ) => {
   // Drizzle Implementation
   return await database.transaction(async (tx) => {
-    // 1. Get Root Account
-    const rootAccount = await tx.query.rootAccounts.findFirst({
-      where: eq(rootAccounts.authUserId, userId),
+    // 1. Get User Profile
+    const userProfile = await tx.query.userProfiles.findFirst({
+      where: eq(userProfiles.id, userProfileId),
     });
 
-    if (!rootAccount) throw new Error("Root account not found");
+    if (!userProfile) throw new Error("User profile not found");
 
     // 2. Insert Transaction
     await tx.insert(pointTransactions).values({
-      rootAccountId: rootAccount.id,
+      userProfileId,
       amount,
       type,
       description,
     });
 
-    // 3. Update Root Account Points
+    // 3. Update User Profile Points
     await tx
-      .update(rootAccounts)
+      .update(userProfiles)
       .set({
-        points: sql`${rootAccounts.points} + ${amount}`,
+        points: sql`${userProfiles.points} + ${amount}`,
         updatedAt: new Date().toISOString(),
       })
-      .where(eq(rootAccounts.id, rootAccount.id));
+      .where(eq(userProfiles.id, userProfileId));
 
-    return { success: true, newBalance: rootAccount.points + amount };
+    return { success: true, newBalance: userProfile.points + amount };
   });
 };
 
+/**
+ * ポイント履歴取得（仮面ごと）
+ * @param userProfileId 対象の仮面プロフィールID
+ * @param limit 取得件数（デフォルト20）
+ */
 export const getPointHistory = async (
-  userId: string,
+  userProfileId: string,
   limit = 20
 ): Promise<PointTransaction[]> => {
-  const rootAccount = await database.query.rootAccounts.findFirst({
-    where: eq(rootAccounts.authUserId, userId),
-  });
-
-  if (!rootAccount) return [];
-
   return await database.query.pointTransactions.findMany({
-    where: eq(pointTransactions.rootAccountId, rootAccount.id),
+    where: eq(pointTransactions.userProfileId, userProfileId),
     orderBy: [desc(pointTransactions.createdAt)],
     limit,
   });
