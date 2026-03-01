@@ -11,13 +11,12 @@
 import type { ErrorHandler } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import {
-  UserAlreadyExistsError,
-  UserNotFoundError,
   GroupNotFoundError,
   NationNotFoundError,
-  ValidationError,
   PermissionDeniedError,
-  isHttpError,
+  UserAlreadyExistsError,
+  UserNotFoundError,
+  ValidationError
 } from '../errors';
 import type { ApiErrorResponse, ErrorCode } from '../types/response';
 
@@ -105,14 +104,14 @@ export const errorHandler: ErrorHandler = (err, c) => {
 
   // Zod バリデーションエラー
   if (err.name === 'ZodError') {
-    const zodError = err as any;
+    const zodError = err as { flatten?: () => unknown };
     const details = zodError.flatten?.() || { fieldErrors: {}, formErrors: [] };
     const response: ApiErrorResponse = {
       success: false,
       error: {
         code: 'VALIDATION_ERROR',
         message: 'Invalid request data',
-        details: details,
+        details: details as Record<string, unknown>,
       },
     };
     return c.json(response, 400);
@@ -140,7 +139,7 @@ export const errorHandler: ErrorHandler = (err, c) => {
         details: customError.details,
       },
     };
-    const status = (statusMap[errorCode] || 500) as any;
+    const status = (statusMap[errorCode] || 500) as Parameters<typeof c.json>[1];
     return c.json(response, status);
   }
 
@@ -167,11 +166,11 @@ export const errorHandler: ErrorHandler = (err, c) => {
 export function createApiError(
   code: ErrorCode,
   message: string,
-  details?: Record<string, any>
-): Error & { code: ErrorCode; details?: Record<string, any> } {
+  details?: Record<string, unknown>
+): Error & { code: ErrorCode; details?: Record<string, unknown> } {
   const error = new Error(message) as Error & {
     code: ErrorCode;
-    details?: Record<string, any>;
+    details?: Record<string, unknown>;
   };
   error.code = code;
   error.details = details;

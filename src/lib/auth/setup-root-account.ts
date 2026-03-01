@@ -125,10 +125,8 @@ export async function ensureRootAccountAndRedirect() {
   try {
     // 現在のセッションを取得
     const session = await auth.api.getSession({
-      headers: {
-        cookie: "",
-      },
-    } as any);
+      headers: new Headers({ cookie: "" }),
+    });
 
     if (!session?.user) {
       return { success: false, message: "No session found" };

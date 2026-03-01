@@ -9,9 +9,9 @@
  * app.use('/api/*', rateLimit({ maxRequests: 100, windowMs: 60000 }))
  */
 
-import { MiddlewareHandler } from 'hono';
-import { HTTPException } from 'hono/http-exception';
 import { checkRateLimit, RATE_LIMIT_CONFIG } from '@/lib/auth/rate-limiter';
+import { MiddlewareHandler, type Context } from 'hono';
+import { HTTPException } from 'hono/http-exception';
 
 export interface RateLimitOptions {
   /**
@@ -31,21 +31,21 @@ export interface RateLimitOptions {
    * @param c - Hono Context
    * @returns Unique identifier for rate limiting
    */
-  keyGenerator?: (c: any) => string;
+  keyGenerator?: (c: Context) => string;
 
   /**
    * Skip rate limiting based on condition
    * @param c - Hono Context
    * @returns true to skip rate limiting
    */
-  skip?: (c: any) => boolean;
+  skip?: (c: Context) => boolean;
 }
 
 /**
  * Get client IP address from request
  * Supports various proxy headers (X-Forwarded-For, X-Real-IP, etc.)
  */
-function getClientIp(c: any): string {
+function getClientIp(c: Context): string {
   // Check various proxy headers
   const forwarded = c.req.header('x-forwarded-for');
   if (forwarded) {

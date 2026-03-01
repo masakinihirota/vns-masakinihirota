@@ -1,64 +1,64 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/auth/helper", () => ({
-    getSession: vi.fn(),
+  getSession: vi.fn(),
 }));
 
 vi.mock("next/navigation", () => ({
-    redirect: vi.fn(),
+  redirect: vi.fn(),
 }));
 
+import { RequireRole } from "@/lib/auth-guard";
 import { getSession } from "@/lib/auth/helper";
 import { redirect } from "next/navigation";
-import { RequireRole } from "@/lib/auth-guard";
 
 describe("auth-guard RequireRole", () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it("platform_admin は許可される", async () => {
+    vi.mocked(getSession).mockResolvedValue({
+      user: {
+        id: "u1",
+        email: "admin@example.com",
+        name: "admin",
+        role: "platform_admin",
+      },
+      session: {
+        id: "s1",
+        expiresAt: new Date().toISOString(),
+      },
+    } as unknown as ReturnType<typeof getSession>);
+
+    const result = await RequireRole({
+      role: "platform_admin",
+      children: <div>ok</div>,
     });
 
-    it("platform_admin は許可される", async () => {
-        vi.mocked(getSession).mockResolvedValue({
-            user: {
-                id: "u1",
-                email: "admin@example.com",
-                name: "admin",
-                role: "platform_admin",
-            },
-            session: {
-                id: "s1",
-                expiresAt: new Date().toISOString(),
-            },
-        } as any);
+    expect(redirect).not.toHaveBeenCalled();
+    expect(result).toBeTruthy();
+  });
 
-        const result = await RequireRole({
-            role: "platform_admin",
-            children: <div>ok</div>,
-        });
+  it("非 platform_admin は拒否される", async () => {
+    vi.mocked(getSession).mockResolvedValue({
+      user: {
+        id: "u2",
+        email: "user@example.com",
+        name: "user",
+        role: "member",
+      },
+      session: {
+        id: "s2",
+        expiresAt: new Date().toISOString(),
+      },
+    } as unknown as ReturnType<typeof getSession>);
 
-        expect(redirect).not.toHaveBeenCalled();
-        expect(result).toBeTruthy();
+    await RequireRole({
+      role: "platform_admin",
+      children: <div>ng</div>,
     });
 
-    it("非 platform_admin は拒否される", async () => {
-        vi.mocked(getSession).mockResolvedValue({
-            user: {
-                id: "u2",
-                email: "user@example.com",
-                name: "user",
-                role: "member",
-            },
-            session: {
-                id: "s2",
-                expiresAt: new Date().toISOString(),
-            },
-        } as any);
-
-        await RequireRole({
-            role: "platform_admin",
-            children: <div>ng</div>,
-        });
-
-        expect(redirect).toHaveBeenCalled();
-    });
+    expect(redirect).toHaveBeenCalled();
+  });
 });

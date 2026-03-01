@@ -89,10 +89,10 @@ export const createEvent = async (eventData: Partial<NationEvent>) => {
     sponsors: eventData.sponsors,
     type: eventData.type,
     isPublished: true, // Auto-publish for now
-  } as any;
+  } as Record<string, unknown>;
   const [newEvent] = await database
     .insert(nationEvents)
-    .values(drizzleInput as any)
+    .values(drizzleInput as typeof nationEvents.$inferInsert)
     .returning();
   return mapToEventDomain(newEvent);
 };

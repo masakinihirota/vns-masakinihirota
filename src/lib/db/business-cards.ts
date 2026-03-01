@@ -93,7 +93,7 @@ export async function upsertBusinessCard(
     userProfileId: profileId,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
-  } as any;
+  } as Record<string, unknown>;
 
   const updateValues: Record<string, unknown> = {
     updatedAt: new Date().toISOString(),
@@ -110,7 +110,7 @@ export async function upsertBusinessCard(
 
   const [result] = await database
     .insert(businessCards)
-    .values(insertValues as any)
+    .values(insertValues as typeof businessCards.$inferInsert)
     .onConflictDoUpdate({
       target: businessCards.userProfileId,
       set: updateValues,

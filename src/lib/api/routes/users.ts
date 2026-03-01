@@ -6,8 +6,8 @@
  * - 認証情報の取得・管理
  */
 
-import { Hono } from 'hono';
-import type { ApiSuccessResponse, ApiErrorResponse } from '../types/response';
+import { Hono, type Context } from 'hono';
+import type { ApiErrorResponse, ApiSuccessResponse } from '../types/response';
 
 const users = new Hono();
 
@@ -23,9 +23,13 @@ const users = new Hono();
  * - 200: { success: true, data: { id, email, name, role } }
  * - 401: { success: false, error: { code: 'UNAUTHORIZED' } }
  */
-users.get('/me', (c: any) => {
+users.get('/me', (c: Context) => {
   // betterAuthSessionMiddleware で session が注入されている
-  const session = c.session;
+  const session = (
+    c as unknown as {
+      session?: { user?: { id: string; email: string; name: string; role: string } };
+    }
+  ).session;
 
   if (!session?.user) {
     const response: ApiErrorResponse = {
