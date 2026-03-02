@@ -1,20 +1,12 @@
 import { PUBLIC_PATHS, ROUTES, STATIC_PATHS } from "@/config/routes";
 import { auth } from "@/lib/auth";
 import { createDummySession } from "@/lib/dev-auth";
-import createIntlMiddleware from 'next-intl/middleware';
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 // 環境変数で制御
 const DEBUG_LOGGING = process.env.PROXY_DEBUG === 'true';
 const USE_REAL_AUTH = process.env.USE_REAL_AUTH === 'true';
-
-// 国際化（next-intl）の設定
-const intlMiddleware = createIntlMiddleware({
-  locales: ['ja', 'en'],
-  defaultLocale: 'ja',
-  localePrefix: 'as-needed' // 非表示設定（/ja を省略可能にする）
-});
 
 /**
  * 本番環境でのセキュリティ検証
@@ -65,12 +57,9 @@ function log(level: 'info' | 'warn' | 'error', message: string, data?: Record<st
 
 /**
  * Next.js 16 Proxy (旧 Middleware)
- * ルーティング、認証チェック、および国際化（i18n）を統合管理
+ * ルーティングと認証チェックを統合管理
  */
 export async function proxy(request: NextRequest) {
-  // 1. 国際化ルーティングの適用 (next-intl)
-  const response = intlMiddleware(request);
-
   const { pathname } = request.nextUrl;
 
   const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
@@ -104,12 +93,12 @@ export async function proxy(request: NextRequest) {
 
   // ケース1: ランディングページへのアクセス
   if (isLandingPath) {
-    return response;
+    return NextResponse.next();
   }
 
   // ケース1.5: 静的ページへのアクセス（認証不要）
   if (isStaticPath && !isLandingPath) {
-    return response;
+    return NextResponse.next();
   }
 
   // ケース2：ログイン済み ＋ ログイン・登録系ページにアクセス（逆流防止）
@@ -124,12 +113,11 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
   }
 
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
-    '/(ja|en)/:path*',
   ],
 };

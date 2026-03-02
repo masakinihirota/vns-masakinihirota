@@ -1,49 +1,28 @@
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { usePathname, useRouter } from "@/lib/i18n-navigation"; // 独自定義のナビゲーション（仮定）
-import { Languages } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+'use client';
+
+import { Button } from '@/components/ui/button';
+import { useLocale } from '@/context/locale-context';
+import { Globe } from 'lucide-react';
 
 export function LanguageToggle() {
-  const locale = useLocale();
-  const t = useTranslations("Header");
-  const router = useRouter();
-  const pathname = usePathname();
+  const { locale, changeLocale } = useLocale();
 
-  const handleLocaleChange = (newLocale: "ja" | "en") => {
-    router.replace(pathname, { locale: newLocale });
+  const toggleLocale = () => {
+    const newLocale = locale === 'ja' ? 'en' : 'ja';
+    changeLocale(newLocale);
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-9 w-9"
-          aria-label={t("switchLanguage")}
-        >
-          <Languages className="h-4 w-4" />
-          <span className="sr-only">{t("currentLanguage", { locale })}</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>{t("selectLanguage")}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => handleLocaleChange("ja")}>
-          日本語 {locale === "ja" && "✓"}
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleLocaleChange("en")}>
-          English {locale === "en" && "✓"}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={toggleLocale}
+      aria-label={locale === 'ja' ? '言語を英語に変更' : 'Change language to Japanese'}
+      title={locale === 'ja' ? '英語に変更' : 'Change to Japanese'}
+      className="shrink-0"
+    >
+      <Globe className="h-5 w-5" />
+      <span className="sr-only">{locale.toUpperCase()}</span>
+    </Button>
   );
 }

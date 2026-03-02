@@ -5,11 +5,13 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useAppAuth } from "@/hooks/use-app-auth";
 import { ShieldAlert } from "lucide-react";
+import { useLocale } from "@/context/locale-context";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function AdsToggle() {
   const { isAuthenticated } = useAppAuth();
+  const { t } = useLocale();
   const [enabled, setEnabled] = useState(true);
   const [isPending, startTransition] = useTransition();
 
@@ -30,16 +32,16 @@ export function AdsToggle() {
       startTransition(async () => {
         const result = await updateUserPreferences({ adsEnabled: checked });
         if (result.success) {
-          toast.success(checked ? "広告を有効化しました" : "広告を無効化しました", {
-            description: "設定を同期しました",
+          toast.success(checked ? t('header.adsToggleLabel') : '広告を無効化しました', {
+            description: '設定を同期しました',
           });
         } else {
-          toast.error("設定の同期に失敗しました");
+          toast.error('設定の同期に失敗しました');
         }
       });
     } else {
-      toast.success(checked ? "広告を有効化しました" : "広告を無効化しました", {
-        description: "設定をローカルに保存しました",
+      toast.success(checked ? t('header.adsToggleLabel') : '広告を無効化しました', {
+        description: 'ブラウザに保存されました',
       });
     }
   };

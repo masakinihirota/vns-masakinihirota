@@ -20,8 +20,7 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:auth:check": "node scripts/check-auth-db-state.js",
-    "db:auth:fix-compat": "node scripts/fix-auth-schema-compat.js",
-    "postinstall": "node scripts/fix-next-intl-turbopack.js"
+    "db:auth:fix-compat": "node scripts/fix-auth-schema-compat.js"
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.6",

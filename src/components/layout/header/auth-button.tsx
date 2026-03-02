@@ -1,6 +1,7 @@
 "use client";
 
 import { useAppAuth } from "@/hooks/use-app-auth";
+import { useLocale } from "@/context/locale-context";
 import { Loader2, User } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -8,12 +9,13 @@ import { TrialButton } from "./trial-button";
 
 export function AuthButton() {
   const { isAuthenticated, isTrialMode, isPending, userName } = useAppAuth();
+  const { t } = useLocale();
 
   if (isPending) {
     return (
-      <Button variant="outline" disabled aria-label="認証状態を確認中">
+      <Button variant="outline" disabled aria-label={t('header.checkingAuth')}>
         <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-        読み込み中
+        {t('header.loading')}
       </Button>
     );
   }
@@ -21,9 +23,9 @@ export function AuthButton() {
   if (isTrialMode) {
     return (
       <Button variant="ghost" className="relative group" asChild>
-        <Link href="/dashboard" aria-label="お試し環境のダッシュボードへ移動">
+        <Link href="/dashboard" aria-label={t('header.gotoTrialDashboard')}>
           <User className="mr-2 h-4 w-4 text-orange-500" />
-          <span>お試し中</span>
+          <span>{t('header.inTrialMode')}</span>
         </Link>
       </Button>
     );
@@ -32,9 +34,9 @@ export function AuthButton() {
   if (isAuthenticated) {
     return (
       <Button variant="ghost" asChild>
-        <Link href="/dashboard" aria-label="ダッシュボードへ移動">
+        <Link href="/dashboard" aria-label={t('header.gotoDashboard')}>
           <User className="mr-2 h-4 w-4" />
-          <span>アカウント</span>
+          <span>{t('header.account')}</span>
         </Link>
       </Button>
     );
@@ -45,8 +47,8 @@ export function AuthButton() {
     <div className="flex items-center gap-2">
       <TrialButton />
       <Button variant="default" asChild>
-        <Link href="/sign-in" aria-label="ログイン画面へ移動">
-          ログイン
+        <Link href="/sign-in" aria-label={t('header.gotoSignIn')}>
+          {t('header.signIn')}
         </Link>
       </Button>
     </div>
