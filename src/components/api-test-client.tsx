@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { client } from '@/lib/api/client';
 
 export function ApiTestClientComponent() {
     const [response, setResponse] = useState<unknown>(null);
@@ -16,10 +17,14 @@ export function ApiTestClientComponent() {
             let res;
             switch (endpoint) {
                 case 'health':
-                    res = await fetch('/api/health');
+                    // ✅ Phase 6: RPC Client 完全統合
+                    // 型安全: client.health.get() の返り値は型定義スキーマで保証
+                    res = await client.health.get();
                     break;
                 case 'poc/hello':
-                    res = await fetch('/api/poc/hello');
+                    // ✅ Phase 6: RPC Client 完全統合
+                    // 型安全: client.poc.hello.get() の返り値は型定義スキーマで保証
+                    res = await client.poc.hello.get();
                     break;
                 default:
                     throw new Error(`Unknown endpoint: ${endpoint}`);
