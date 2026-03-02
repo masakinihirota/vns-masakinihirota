@@ -291,8 +291,7 @@ export default defineConfig({
 
 ```typescript
 // ❌ 旧クラス名（Tailwind v4 では deprecated）
-className="bg-gradient-to-b from-gray-50"
-className="flex-shrink-0"
+// 例: gradient クラスや shrink クラスは新名称に変更
 
 // ✅ 新クラス名
 className="bg-linear-to-b from-gray-50"

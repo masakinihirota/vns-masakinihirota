@@ -55,7 +55,7 @@ describe("RBAC: Deny-by-Default Principle", () => {
 
     it("active_profile_id が null の場合、checkGroupRole() は false を返す", async () => {
       const session = createTestSession("user-without-active-profile", "user");
-      const groupId = "group-test-1";
+      const groupId = "12345678-1234-4234-8234-123456789012";
 
       // Group role チェックは失敗すべき
       const result = await checkGroupRole(session, groupId, "member");
@@ -64,7 +64,7 @@ describe("RBAC: Deny-by-Default Principle", () => {
 
     it("active_profile_id が null の場合、checkNationRole() は false を返す", async () => {
       const session = createTestSession("user-without-active-profile", "user");
-      const nationId = "nation-test-1";
+      const nationId = "23456789-1234-4234-8234-123456789012";
 
       // Nation role チェックは失敗すべき
       const result = await checkNationRole(session, nationId, "member");
@@ -73,7 +73,7 @@ describe("RBAC: Deny-by-Default Principle", () => {
 
     it("active_profile_id が null でも platform_admin は操作可能", async () => {
       const session = createTestSession("admin-without-active-profile", "platform_admin");
-      const groupId = "group-test-1";
+      const groupId = "34567890-1234-4234-8234-123456789012";
 
       // platform_admin は active_profile_id がなくても操作可能
       const result = await checkGroupRole(session, groupId, "member");
