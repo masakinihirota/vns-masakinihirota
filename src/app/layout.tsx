@@ -5,6 +5,9 @@ import { Header } from "@/components/layout/header/header";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
 
+// Dynamic rendering: Avoid prerendering errors during build
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: "VNS masakinihirota",
   description: "VNS masakinihirotaは、価値観サイトです。価値観を共有し、グループを作り、一緒に何かをします。",

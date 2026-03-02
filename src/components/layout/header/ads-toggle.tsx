@@ -5,13 +5,11 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useAppAuth } from "@/hooks/use-app-auth";
 import { ShieldAlert } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 
 export function AdsToggle() {
   const { isAuthenticated } = useAppAuth();
-  const t = useTranslations("Header");
   const [enabled, setEnabled] = useState(true);
   const [isPending, startTransition] = useTransition();
 
@@ -32,16 +30,16 @@ export function AdsToggle() {
       startTransition(async () => {
         const result = await updateUserPreferences({ adsEnabled: checked });
         if (result.success) {
-          toast.success(checked ? t("adsEnabled") : t("adsDisabled"), {
-            description: t("settingsSynced"),
+          toast.success(checked ? "広告を有効化しました" : "広告を無効化しました", {
+            description: "設定を同期しました",
           });
         } else {
-          toast.error(t("syncFailed"));
+          toast.error("設定の同期に失敗しました");
         }
       });
     } else {
-      toast.success(checked ? t("adsEnabled") : t("adsDisabled"), {
-        description: t("settingsSavedLocally"),
+      toast.success(checked ? "広告を有効化しました" : "広告を無効化しました", {
+        description: "設定をローカルに保存しました",
       });
     }
   };
@@ -52,7 +50,7 @@ export function AdsToggle() {
         checked={enabled}
         onCheckedChange={handleToggle}
         disabled={isPending}
-        aria-label={t("ads")}
+        aria-label="広告表示"
         aria-pressed={enabled}
         className="shrink-0"
       />
@@ -60,7 +58,7 @@ export function AdsToggle() {
         htmlFor="ads-mode-toggle"
         className="text-sm font-medium cursor-pointer select-none hidden sm:inline-block"
       >
-        {t("ads")}
+        広告
       </Label>
       {!enabled && (
         <ShieldAlert

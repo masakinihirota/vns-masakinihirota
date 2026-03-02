@@ -256,3 +256,27 @@ export const TrialStorage = {
     return TrialStorage.load();
   },
 };
+
+/**
+ * ランダムな匿名表示名を生成
+ * 形式: adjective-noun-4digits (例: Silent-Fox-4821)
+ * @returns ランダム生成された表示名
+ */
+export function generateRandomAnonymousName(): string {
+  const adjectives = [
+    'Silent', 'Swift', 'Bright', 'Calm', 'Deep', 'Quick', 'Soft', 'Wild',
+    'Gentle', 'Strong', 'Vast', 'Warm', 'Cool', 'Keen', 'Bold', 'Wise',
+    'Noble', 'Proud', 'Kind', 'Fair', 'True', 'Pure', 'Serene', 'Timid'
+  ];
+  const nouns = [
+    'Fox', 'Wolf', 'Eagle', 'Bear', 'Hawk', 'Lion', 'Tiger', 'Panda',
+    'Owl', 'Raven', 'Swan', 'Phoenix', 'Dragon', 'Butterfly', 'Dolphin', 'Horse',
+    'Deer', 'Lynx', 'Penguin', 'Whale', 'Otter', 'Koala', 'Rabbit', 'Cheetah'
+  ];
+  
+  const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
+  const randomDigits = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+  
+  return `${randomAdjective}-${randomNoun}-${randomDigits}`;
+}

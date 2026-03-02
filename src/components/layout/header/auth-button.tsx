@@ -1,9 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useAppAuth } from "@/hooks/use-app-auth";
 import { Loader2, User } from "lucide-react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { TrialButton } from "./trial-button";
 
 export function AuthButton() {
   const { isAuthenticated, isTrialMode, isPending, userName } = useAppAuth();
@@ -39,11 +40,15 @@ export function AuthButton() {
     );
   }
 
+  // 未認証時: ログインボタン or お試し開始ボタン
   return (
-    <Button variant="default" asChild>
-      <Link href="/sign-in" aria-label="ログイン画面へ移動">
-        ログイン
-      </Link>
-    </Button>
+    <div className="flex items-center gap-2">
+      <TrialButton />
+      <Button variant="default" asChild>
+        <Link href="/sign-in" aria-label="ログイン画面へ移動">
+          ログイン
+        </Link>
+      </Button>
+    </div>
   );
 }

@@ -2,6 +2,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RequireRole } from "@/lib/auth-guard";
 import { getAdminDashboardStats } from "@/lib/db/admin-queries";
 
+// Dynamic rendering: Do not prerender, server-render on demand
+export const dynamic = 'force-dynamic';
+
 /**
  * 管理者ページ
  *
