@@ -3,6 +3,7 @@
 import { signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { logger } from "@/lib/logger";
 
 export function LogoutButton() {
     const router = useRouter();
@@ -15,7 +16,7 @@ export function LogoutButton() {
             // ログアウト成功後、ランディングページにリダイレクト
             router.push("/");
         } catch (error) {
-            console.error("ログアウトエラー:", error);
+            logger.error("ログアウトエラー:", error);
             setIsLoading(false);
         }
     };

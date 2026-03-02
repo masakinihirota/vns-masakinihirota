@@ -20,6 +20,7 @@ import {
   updateGroup,
   getGroupMembers,
 } from '@/lib/db/groups';
+import { logger } from '@/lib/logger';
 import type { ApiErrorResponse, ApiSuccessResponse } from '../types/response';
 import type { SessionContext } from '../middleware/auth';
 
@@ -89,7 +90,7 @@ groups.get('/', requireAuth, zValidator('query', listGroupsQuerySchema), async (
 
     return c.json(response);
   } catch (error) {
-    console.error('[GroupsAPI] List groups failed:', error);
+    logger.error('[GroupsAPI] List groups failed:', error);
     throw error;
   }
 });
@@ -131,7 +132,7 @@ groups.get('/:id', requireAuth, zValidator('param', groupIdParamSchema), async (
 
     return c.json(response);
   } catch (error) {
-    console.error('[GroupsAPI] Get group failed:', error);
+    logger.error('[GroupsAPI] Get group failed:', error);
     throw error;
   }
 });
@@ -185,7 +186,7 @@ groups.patch(
 
       return c.json(response);
     } catch (error) {
-      console.error('[GroupsAPI] Update group failed:', error);
+      logger.error('[GroupsAPI] Update group failed:', error);
       throw error;
     }
   }
@@ -230,7 +231,7 @@ groups.get('/:id/members', requireAuth, zValidator('param', groupIdParamSchema),
 
     return c.json(response);
   } catch (error) {
-    console.error('[GroupsAPI] Get members failed:', error);
+    logger.error('[GroupsAPI] Get members failed:', error);
     throw error;
   }
 });

@@ -20,6 +20,7 @@ import {
   updateNation,
 } from '@/lib/db/nations';
 import type { ApiErrorResponse, ApiSuccessResponse } from '../types/response';
+import { logger } from '@/lib/logger';
 import type { SessionContext } from '../middleware/auth';
 
 const nations = new Hono<{ Variables: SessionContext }>();
@@ -90,7 +91,7 @@ nations.get('/', requireAuth, zValidator('query', listNationsQuerySchema), async
 
     return c.json(response);
   } catch (error) {
-    console.error('[NationsAPI] List nations failed:', error);
+    logger.error('[NationsAPI] List nations failed:', error);
     throw error;
   }
 });
@@ -132,7 +133,7 @@ nations.get('/:id', requireAuth, zValidator('param', nationIdParamSchema), async
 
     return c.json(response);
   } catch (error) {
-    console.error('[NationsAPI] Get nation failed:', error);
+    logger.error('[NationsAPI] Get nation failed:', error);
     throw error;
   }
 });
@@ -186,7 +187,7 @@ nations.patch(
 
       return c.json(response);
     } catch (error) {
-      console.error('[NationsAPI] Update nation failed:', error);
+      logger.error('[NationsAPI] Update nation failed:', error);
       throw error;
     }
   }

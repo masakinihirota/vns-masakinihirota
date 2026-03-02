@@ -16,6 +16,7 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { logger } from "@/lib/logger";
 import { Button } from "@/components/ui/button";
 import { Users, Trash2, ChevronRight, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -73,7 +74,7 @@ export function AdminGroupPanel({ initialGroups }: AdminGroupPanelProps) {
             }
         } catch (error) {
             showToast.error("エラーが発生しました");
-            console.error("Delete group error:", error);
+            logger.error("Delete group error:", error);
         } finally {
             setIsLoading(false);
         }

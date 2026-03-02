@@ -10,6 +10,7 @@
  */
 
 import { performance } from "perf_hooks";
+import { logger } from "@/lib/logger";
 
 /**
  * Query execution log entry
@@ -88,7 +89,7 @@ class QueryLogger {
 
     // Log slow queries in development
     if (process.env.NODE_ENV === "development" && duration > this.slowQueryThreshold) {
-      console.warn(
+      logger.warn(
         `[SLOW_QUERY] ${query.substring(0, 80)}... (${duration.toFixed(2)}ms)`
       );
     }
@@ -238,34 +239,34 @@ class QueryLogger {
   public printReport(): void {
     const metrics = this.getMetrics();
 
-    console.log("\n📊 === DATABASE PERFORMANCE REPORT === 📊");
-    console.log(`  Total Queries: ${metrics.totalQueries}`);
-    console.log(`  Total Duration: ${metrics.totalDuration.toFixed(2)}ms`);
-    console.log(`  Average Duration: ${metrics.averageDuration.toFixed(2)}ms`);
+    logger.info("\n📊 === DATABASE PERFORMANCE REPORT === 📊");
+    logger.info(`  Total Queries: ${metrics.totalQueries}`);
+    logger.info(`  Total Duration: ${metrics.totalDuration.toFixed(2)}ms`);
+    logger.info(`  Average Duration: ${metrics.averageDuration.toFixed(2)}ms`);
 
-    console.log("\n📈 Queries by Type:");
+    logger.info("\n📈 Queries by Type:");
     Object.entries(metrics.queryByType).forEach(([type, count]) => {
-      console.log(`  ${type.padEnd(12)}: ${count}`);
+      logger.info(`  ${type.padEnd(12)}: ${count}`);
     });
 
     if (metrics.slowQueries.length > 0) {
-      console.log("\n🐌 Top Slow Queries:");
+      logger.info("\n🐌 Top Slow Queries:");
       metrics.slowestQueries.slice(0, 5).forEach((q) => {
-        console.log(`  ${q.duration.toFixed(2)}ms (${q.count}x) ${q.query}`);
+        logger.info(`  ${q.duration.toFixed(2)}ms (${q.count}x) ${q.query}`);
       });
     }
 
     if (metrics.n1Patterns.length > 0) {
-      console.log("\n⚠️  N+1 Query Patterns Detected:");
+      logger.info("\n⚠️  N+1 Query Patterns Detected:");
       metrics.n1Patterns.forEach((pattern) => {
-        console.log(
+        logger.info(
           `  ${pattern.count}x "${pattern.query.substring(0, 60)}..." (${pattern.totalDuration.toFixed(2)}ms)`
         );
       });
     } else {
-      console.log("\n✅ No N+1 patterns detected!");
+      logger.info("\n✅ No N+1 patterns detected!");
     }
-    console.log("\n");
+    logger.info("\n");
   }
 
   /**

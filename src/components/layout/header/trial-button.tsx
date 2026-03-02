@@ -6,6 +6,7 @@ import { useLocale } from '@/context/locale-context';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { generateRandomAnonymousName, TrialStorage } from '@/lib/trial-storage';
+import { logger } from '@/lib/logger';
 
 export function TrialButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +60,7 @@ export function TrialButton() {
       toast.error(t('header.trialStartFailed'), {
         description: t('header.checkStorageSettings'),
       });
-      console.error('Trial initialization error:', e);
+      logger.error('Trial initialization error:', e);
       setIsLoading(false);
     }
   };

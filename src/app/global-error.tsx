@@ -32,7 +32,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
 
         // 開発環境でのみコンソールに詳細を表示
         if (process.env.NODE_ENV === "development") {
-            console.error("[Global Error Boundary]", {
+            logger.debug("[Global Error Boundary]", {
                 message: error.message,
                 stack: error.stack,
                 digest: error.digest,

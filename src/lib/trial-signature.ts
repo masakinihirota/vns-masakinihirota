@@ -2,6 +2,7 @@
 
 import { createHmac, createHash } from "crypto";
 import { VNSTrialData } from "./trial-storage";
+import { logger } from "@/lib/logger";
 
 /**
  * 匿名データの署名・検証ユーティリティ
@@ -39,7 +40,7 @@ export function signTrialData(data: VNSTrialData): {
   }
 
   if (!SIGNATURE_SECRET) {
-    console.warn("[TrialSignature] BETTER_AUTH_SECRET が設定されていません");
+    logger.warn("[TrialSignature] BETTER_AUTH_SECRET が設定されていません");
     return { signature: "", hash: "" };
   }
 
@@ -66,7 +67,7 @@ export function verifyTrialData(
   }
 
   if (!SIGNATURE_SECRET) {
-    console.warn("[TrialSignature] BETTER_AUTH_SECRET が設定されていません");
+    logger.warn("[TrialSignature] BETTER_AUTH_SECRET が設定されていません");
     return false;
   }
 
@@ -74,7 +75,7 @@ export function verifyTrialData(
   const isValid = signature === expectedSignature;
 
   if (!isValid) {
-    console.error("[TrialSignature] 署名が一致しません(改ざん検知)");
+    logger.error("[TrialSignature] 署名が一致しません(改ざん検知)");
   }
 
   return isValid;
@@ -98,14 +99,14 @@ export function isTimestampValid(
 
     const isValid = diffDays <= validationDays;
     if (!isValid) {
-      console.warn(
+      logger.warn(
         `[TrialSignature] データが期限切れです(${Math.floor(diffDays)}日前)`
       );
     }
 
     return isValid;
   } catch (error) {
-    console.error("[TrialSignature] タイムスタンプ検証エラー:", error);
+    logger.error("[TrialSignature] タイムスタンプ検証エラー:", error);
     return false;
   }
 }

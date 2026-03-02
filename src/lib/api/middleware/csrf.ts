@@ -13,6 +13,7 @@
 
 import type { MiddlewareHandler } from 'hono';
 import { createApiError } from './error-handler';
+import { logger } from '@/lib/logger';
 
 /**
  * 信頼できるオリジンのリストを取得
@@ -60,7 +61,7 @@ export const validateCsrfToken: MiddlewareHandler = async (c, next) => {
 
   if (!requestOrigin) {
     // Origin も Referer もない場合は拒否
-    console.warn('[CSRF] Request blocked: No origin or referer header', {
+    logger.warn('[CSRF] Request blocked: No origin or referer header', {
       method,
       path: c.req.path,
     });
@@ -71,7 +72,7 @@ export const validateCsrfToken: MiddlewareHandler = async (c, next) => {
   const isTrusted = trustedOrigins.some(trusted => requestOrigin.startsWith(trusted));
 
   if (!isTrusted) {
-    console.warn('[CSRF] Request blocked: Untrusted origin', {
+    logger.warn('[CSRF] Request blocked: Untrusted origin', {
       method,
       path: c.req.path,
       requestOrigin,

@@ -50,6 +50,7 @@ import {
   NationAlreadyExistsError,
 } from '../services/nations';
 import type { ApiSuccessResponse, ApiErrorResponse } from '../types/response';
+import { logger } from '@/lib/logger';
 import type { SessionContext } from '../middleware/auth';
 
 const admin = new Hono<{ Variables: SessionContext }>();
@@ -115,7 +116,7 @@ admin.post(
       }
 
       // Log internal errors but don't expose details to client
-      console.error('[AdminAPI] User creation failed:', {
+      logger.error('[AdminAPI] User creation failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined,
       });
@@ -169,7 +170,7 @@ admin.get(
       return c.json(response);
     } catch (error) {
       // Log internal errors but don't expose details to client
-      console.error('[AdminAPI] User list fetch failed:', {
+      logger.error('[AdminAPI] User list fetch failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined,
       });
@@ -221,7 +222,7 @@ admin.get(
       }
 
       // Log internal errors but don't expose details to client
-      console.error('[AdminAPI] User fetch failed:', {
+      logger.error('[AdminAPI] User fetch failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -289,7 +290,7 @@ admin.patch(
       }
 
       // Log internal errors but don't expose details to client
-      console.error('[AdminAPI] User update failed:', {
+      logger.error('[AdminAPI] User update failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: process.env.NODE_ENV === 'development' ? (error instanceof Error ? error.stack : undefined) : undefined,
       });
@@ -353,7 +354,7 @@ admin.delete(
       }
 
       // Log internal errors but don't expose details to client
-      console.error('[AdminAPI] User deletion failed:', {
+      logger.error('[AdminAPI] User deletion failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -409,7 +410,7 @@ admin.post(
         throw new HTTPException(409, { message: 'Group name already exists' });
       }
 
-      console.error('[AdminAPI] Group creation failed:', {
+      logger.error('[AdminAPI] Group creation failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -465,7 +466,7 @@ admin.get(
 
       return c.json(response);
     } catch (error) {
-      console.error('[AdminAPI] Group list fetch failed:', {
+      logger.error('[AdminAPI] Group list fetch failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -515,7 +516,7 @@ admin.get(
         throw new HTTPException(404, { message: 'Group not found' });
       }
 
-      console.error('[AdminAPI] Group fetch failed:', {
+      logger.error('[AdminAPI] Group fetch failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -568,7 +569,7 @@ admin.patch(
         throw new HTTPException(409, { message: 'Group name already in use' });
       }
 
-      console.error('[AdminAPI] Group update failed:', {
+      logger.error('[AdminAPI] Group update failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -617,7 +618,7 @@ admin.delete(
         throw new HTTPException(404, { message: 'Group not found' });
       }
 
-      console.error('[AdminAPI] Group deletion failed:', {
+      logger.error('[AdminAPI] Group deletion failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -673,7 +674,7 @@ admin.post(
         throw new HTTPException(409, { message: 'Nation name already exists' });
       }
 
-      console.error('[AdminAPI] Nation creation failed:', {
+      logger.error('[AdminAPI] Nation creation failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -728,7 +729,7 @@ admin.get(
 
       return c.json(response);
     } catch (error) {
-      console.error('[AdminAPI] Nation list fetch failed:', {
+      logger.error('[AdminAPI] Nation list fetch failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -778,7 +779,7 @@ admin.get(
         throw new HTTPException(404, { message: 'Nation not found' });
       }
 
-      console.error('[AdminAPI] Nation fetch failed:', {
+      logger.error('[AdminAPI] Nation fetch failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -831,7 +832,7 @@ admin.patch(
         throw new HTTPException(409, { message: 'Nation name already in use' });
       }
 
-      console.error('[AdminAPI] Nation update failed:', {
+      logger.error('[AdminAPI] Nation update failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });
@@ -880,7 +881,7 @@ admin.delete(
         throw new HTTPException(404, { message: 'Nation not found' });
       }
 
-      console.error('[AdminAPI] Nation deletion failed:', {
+      logger.error('[AdminAPI] Nation deletion failed:', {
         error: error instanceof Error ? error.message : String(error),
         stack: error instanceof Error ? error.stack : undefined,
       });

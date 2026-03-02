@@ -222,7 +222,7 @@ export const TrialStorage = {
         Math.pow(2, data.points.consecutiveFastActions),
         10
       );
-      console.warn(`Rapid access detected! Point consumption x${multiplier}`);
+      logger.warn(`Rapid access detected! Point consumption x${multiplier}`);
     } else {
       // Reset penalty if action is normal speed
       data.points.consecutiveFastActions = 0;
