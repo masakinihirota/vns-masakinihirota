@@ -1,6 +1,4 @@
 import Link from "next/link";
-import { AdsToggle } from "./ads-toggle";
-import { AuthButton } from "./auth-button";
 import { LanguageToggle } from "./language-toggle";
 import { ThemeToggle } from "./theme-toggle";
 import { TrialButton } from "./trial-button";
@@ -26,14 +24,13 @@ export function Header() {
 
         {/* ライト/アクション */}
         <div className="flex flex-1 items-center justify-end space-x-2 sm:space-x-4">
-          <AdsToggle />
           <LanguageToggle />
           <ThemeToggle />
 
           {/* お試し・ログインエリア（重要アクション） */}
           <div className="flex items-center space-x-2 border-l pl-2 sm:pl-4 ml-2 sm:ml-4">
             <TrialButton />
-            <AuthButton />
+            {/* <AuthButton /> */}
           </div>
         </div>
       </div>

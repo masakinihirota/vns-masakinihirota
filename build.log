@@ -1,0 +1,38 @@
+
+> vns-masakinihirota@0.2.0 build U:\2026src\vns-masakinihirota.worktrees\anti
+> next build
+
+笆ｲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env
+
+  Creating an optimized production build ...
+
+> Build error occurred
+Error: Turbopack build failed with 1 errors:
+./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/production/config.js:5:12
+Module not found: Can't resolve '../../../../../../../src/i18n/request'
+  3 |   Object.defineProperty(exports, "__esModule", { value: true });
+  4 |   exports.default = function() {
+> 5 |     return require('../../../../../../../src/i18n/request').default;
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  6 |   };
+  7 |
+
+
+
+Import trace:
+  Server Component:
+    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/production/config.js
+    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/config.js
+    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/esm/server/react-server/getConfig.js
+    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/esm/react-server/useConfig.js
+    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/esm/react-server/useTranslations.js
+    ./src/components/layout/header/language-toggle.tsx
+    ./src/components/layout/header/header.tsx
+    ./src/app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+窶右LIFECYCLE窶・Command failed with exit code 1.
