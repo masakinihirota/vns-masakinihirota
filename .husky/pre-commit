@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# Run lint-staged for page compliance checks
+pnpm lint-staged

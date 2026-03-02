@@ -8,13 +8,13 @@ import Link from "next/link";
  */
 export default function NotFound() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-gray-50 to-gray-100 px-4">
+        <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 px-4">
             <div className="max-w-md w-full text-center">
                 {/* 404アイコン */}
                 <div className="mb-8">
-                    <div className="inline-flex items-center justify-center w-24 h-24 bg-red-100 rounded-full mb-4">
+                    <div className="inline-flex items-center justify-center w-24 h-24 bg-red-100 dark:bg-red-900/30 rounded-full mb-4">
                         <svg
-                            className="w-12 h-12 text-red-600"
+                            className="w-12 h-12 text-red-600 dark:text-red-400"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -29,16 +29,16 @@ export default function NotFound() {
                             />
                         </svg>
                     </div>
-                    <h1 className="text-6xl font-bold text-gray-900 mb-2" aria-label="エラーコード 404">
+                    <h1 className="text-6xl font-bold text-gray-900 dark:text-white mb-2" aria-label="エラーコード 404">
                         404
                     </h1>
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                    <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">
                         ページが見つかりません
                     </h2>
                 </div>
 
                 {/* 説明文 */}
-                <p className="text-gray-600 mb-8">
+                <p className="text-gray-600 dark:text-gray-400 mb-8">
                     お探しのページは存在しないか、移動または削除された可能性があります。
                 </p>
 
@@ -53,7 +53,7 @@ export default function NotFound() {
                     </Link>
                     <button
                         onClick={() => window.history.back()}
-                        className="block w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+                        className="block w-full bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium py-3 px-6 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500 focus:ring-offset-2"
                         aria-label="前のページに戻る"
                     >
                         前のページに戻る
@@ -61,8 +61,8 @@ export default function NotFound() {
                 </div>
 
                 {/* 追加情報 */}
-                <div className="mt-8 pt-8 border-t border-gray-200">
-                    <p className="text-sm text-gray-500">
+                <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
                         問題が解決しない場合は、
                         <Link
                             href="/login"
