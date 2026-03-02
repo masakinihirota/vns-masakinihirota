@@ -64,7 +64,7 @@ function mapToMemberDomain(m: GroupMembersRow & { userProfile?: DatabaseUserProf
   };
 }
 
-export const getGroups = async (limit = 20) => {
+export const getGroups = async (limit = 20): Promise<Group[]> => {
   const result = await database.query.groups.findMany({
     limit: limit,
     orderBy: [desc(groups.createdAt)],
@@ -75,7 +75,7 @@ export const getGroups = async (limit = 20) => {
   return result.map(mapToGroupDomain);
 };
 
-export const createGroup = async (groupData: Partial<Group>) => {
+export const createGroup = async (groupData: Partial<Group>): Promise<Group> => {
   const drizzleInput = {
     name: groupData.name!,
     description: groupData.description,
@@ -108,7 +108,7 @@ export const createGroup = async (groupData: Partial<Group>) => {
 export const updateGroup = async (
   groupId: string,
   updateData: Partial<Group>
-) => {
+): Promise<Group> => {
   const drizzleUpdate: Record<string, unknown> = {};
   if (updateData.name !== undefined) drizzleUpdate.name = updateData.name;
   if (updateData.description !== undefined)
@@ -126,12 +126,12 @@ export const updateGroup = async (
   return mapToGroupDomain(updated);
 };
 
-export const deleteGroup = async (groupId: string) => {
+export const deleteGroup = async (groupId: string): Promise<void> => {
   await database.delete(groups).where(eq(groups.id, groupId));
 };
 
 
-export const getGroupById = async (groupId: string) => {
+export const getGroupById = async (groupId: string): Promise<Group | null> => {
   if (!isValidUUID(groupId)) {
     return null;
   }
@@ -145,7 +145,7 @@ export const getGroupById = async (groupId: string) => {
   return group ? mapToGroupDomain(group) : null;
 };
 
-export const joinGroup = async (groupId: string, userId: string) => {
+export const joinGroup = async (groupId: string, userId: string): Promise<GroupMember> => {
   const [member] = await database
     .insert(groupMembers)
     .values({
@@ -163,7 +163,7 @@ export const joinGroup = async (groupId: string, userId: string) => {
   };
 };
 
-export const leaveGroup = async (groupId: string, userId: string) => {
+export const leaveGroup = async (groupId: string, userId: string): Promise<void> => {
   await database
     .delete(groupMembers)
     .where(
@@ -174,7 +174,7 @@ export const leaveGroup = async (groupId: string, userId: string) => {
     );
 };
 
-export const getGroupMembers = async (groupId: string) => {
+export const getGroupMembers = async (groupId: string): Promise<GroupMember[]> => {
   const members = await database.query.groupMembers.findMany({
     where: eq(groupMembers.groupId, groupId),
     with: {

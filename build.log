@@ -1,38 +1,68 @@
 
-> vns-masakinihirota@0.2.0 build U:\2026src\vns-masakinihirota.worktrees\anti
+> vns-masakinihirota@0.2.0 build U:\2026src\vns-masakinihirota
 > next build
 
 笆ｲ Next.js 16.1.6 (Turbopack)
 - Environments: .env.local, .env
 
   Creating an optimized production build ...
-
-> Build error occurred
-Error: Turbopack build failed with 1 errors:
-./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/production/config.js:5:12
-Module not found: Can't resolve '../../../../../../../src/i18n/request'
-  3 |   Object.defineProperty(exports, "__esModule", { value: true });
-  4 |   exports.default = function() {
-> 5 |     return require('../../../../../../../src/i18n/request').default;
-    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  6 |   };
-  7 |
-
+Turbopack build encountered 1 warnings:
+./src/lib/logger/transports.ts:22:22
+Module not found: Can't resolve '@sentry/nextjs'
+  20 |   if (typeof window === "undefined" && process.env.NODE_ENV === "production") {
+  21 |     try {
+> 22 |       sentryModule = require("@sentry/nextjs");
+     |                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  23 |     } catch (error) {
+  24 |       // Sentry 縺後う繝ｳ繧ｹ繝医・繝ｫ縺輔ｌ縺ｦ縺・↑縺・ｴ蜷医・ gracefully skip
+  25 |       console.warn("Sentry not available, continuing without error tracking");
 
 
-Import trace:
+
+Import traces:
+  App Route:
+    ./src/lib/logger/transports.ts
+    ./src/lib/logger/index.ts
+    ./src/app/api/health/route.ts
+
+  Middleware:
+    ./src/lib/logger/transports.ts
+    ./src/lib/logger/index.ts
+    ./src/proxy.ts
+
   Server Component:
-    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/production/config.js
-    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/config.js
-    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/esm/server/react-server/getConfig.js
-    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/esm/react-server/useConfig.js
-    ./node_modules/.pnpm/next-intl@3.26.5_next@16.1._69d96e805145b6476781a3cce56bb395/node_modules/next-intl/dist/esm/react-server/useTranslations.js
-    ./src/components/layout/header/language-toggle.tsx
-    ./src/components/layout/header/header.tsx
-    ./src/app/layout.tsx
+    ./src/lib/logger/transports.ts
+    ./src/lib/logger/index.ts
+    ./src/app/actions/update-user-preferences.ts
+
+  Client Component Browser:
+    ./src/lib/logger/transports.ts [Client Component Browser]
+    ./src/lib/logger/index.ts [Client Component Browser]
+    ./src/app/global-error.tsx [Client Component Browser]
+    ./src/app/global-error.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/lib/logger/transports.ts [Client Component SSR]
+    ./src/lib/logger/index.ts [Client Component SSR]
+    ./src/app/global-error.tsx [Client Component SSR]
+    ./src/app/global-error.tsx [Server Component]
 
 https://nextjs.org/docs/messages/module-not-found
 
 
-    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+笨・Compiled successfully in 8.4s
+  Running TypeScript ...
+Failed to compile.
+
+./src/lib/trial-storage.ts:127:9
+Type error: Expected 1-2 arguments, but got 3.
+
+  125 |         "Failed to load trial data from localStorage",
+  126 |         error instanceof Error ? error : new Error(errorMessage),
+> 127 |         {
+      |         ^
+  128 |           operation: "TrialStorage.load",
+  129 |           storageKey: STORAGE_KEY,
+  130 |           errorType,
+Next.js build worker exited with code: 1 and signal: null
 窶右LIFECYCLE窶・Command failed with exit code 1.

@@ -35,15 +35,29 @@ export async function proxy(request: NextRequest) {
       if (process.env.NODE_ENV === "production") {
         if (!USE_REAL_AUTH) {
           logger.fatal(
-            "[CRITICAL] Production environment must use real authentication",
-            new Error("USE_REAL_AUTH not set in production")
+            "Production environment must use real authentication",
+            new Error("USE_REAL_AUTH not set in production"),
+            {
+              event: "CRITICAL_CONFIG_MISSING",
+              component: "proxy",
+              severity: "critical",
+              requiredConfig: "USE_REAL_AUTH",
+              timestamp: new Date().toISOString(),
+            }
           );
           throw new Error("Invalid server configuration");
         }
         if (!process.env.BETTER_AUTH_SECRET) {
           logger.fatal(
-            "[CRITICAL] BETTER_AUTH_SECRET is required in production",
-            new Error("BETTER_AUTH_SECRET not set")
+            "BETTER_AUTH_SECRET is required in production",
+            new Error("BETTER_AUTH_SECRET not set"),
+            {
+              event: "CRITICAL_CONFIG_MISSING",
+              component: "proxy",
+              severity: "critical",
+              requiredConfig: "BETTER_AUTH_SECRET",
+              timestamp: new Date().toISOString(),
+            }
           );
           throw new Error("Invalid server configuration");
         }
@@ -74,6 +88,8 @@ export async function proxy(request: NextRequest) {
         logger.warn("Using mock authentication (development only)", {
           dummyUserType,
           userEmail: session.user.email,
+          event: "DEV_MODE_AUTH",
+          severity: "low",
         });
       } else {
         // 本番モード: Better Auth で認証
@@ -87,6 +103,7 @@ export async function proxy(request: NextRequest) {
               userId: session.user.id,
               userEmail: session.user.email,
               role: (session.user as any).role,
+              event: "AUTH_SUCCESS",
             });
           }
         } catch (error) {
@@ -100,10 +117,10 @@ export async function proxy(request: NextRequest) {
           );
 
           logger.error(
-            "[SECURITY_EVENT] Authentication retrieval error",
+            "Authentication retrieval failed",
             authError,
             {
-              event: "auth_retrieval_error",
+              event: "AUTH_RETRIEVAL_ERROR",
               pathname,
               severity: "high",
               ip: request.headers.get("x-forwarded-for"),
@@ -115,9 +132,9 @@ export async function proxy(request: NextRequest) {
           // 保護されたパスへのアクセス時はランディングへリダイレクト
           if (!isPublicPath && !isLandingPath) {
             logger.warn(
-              "[SECURITY_EVENT] Unauthenticated access to protected path",
+              "Unauthenticated access attempt to protected path",
               {
-                event: "unauthenticated_access",
+                event: "UNAUTHENTICATED_ACCESS",
                 pathname,
                 severity: "medium",
                 ip: request.headers.get("x-forwarded-for"),
@@ -131,13 +148,16 @@ export async function proxy(request: NextRequest) {
 
       // ケース1: ランディングページへのアクセス
       if (isLandingPath) {
-        logger.debug("Landing page access");
+        logger.debug("Landing page access", { event: "LANDING_ACCESS" });
         return NextResponse.next();
       }
 
       // ケース1.5: 静的ページへのアクセス（認証不要）
       if (isStaticPath && !isLandingPath) {
-        logger.debug("Static page access", { pathname });
+        logger.debug("Static page access", {
+          pathname,
+          event: "STATIC_ACCESS",
+        });
         return NextResponse.next();
       }
 
@@ -146,16 +166,19 @@ export async function proxy(request: NextRequest) {
         logger.info("Authenticated user accessing public path, redirecting to /home", {
           pathname,
           userId: session.user.id,
+          event: "REDIRECT_AUTHENTICATED_USER",
+          timestamp: new Date().toISOString(),
         });
         return NextResponse.redirect(new URL(ROUTES.HOME, request.url));
       }
 
       // ケース3：未ログイン ＋ 保護されたパスにアクセス
       if (!session && !isPublicPath) {
-        logger.warn("[SECURITY_EVENT] Unauthenticated access to protected path", {
-          event: "unauthenticated_access",
+        logger.warn("Unauthenticated access to protected path", {
+          event: "UNAUTHENTICATED_ACCESS",
           pathname,
           severity: "medium",
+          timestamp: new Date().toISOString(),
         });
         return NextResponse.redirect(new URL(ROUTES.LANDING, request.url));
       }

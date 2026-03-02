@@ -184,8 +184,16 @@ export async function withAuth<T>(
     }
 
     // 認証・認可が通ったのでアクションを実行
+    const sessionForAction = {
+      user: {
+        id: session.user.id,
+        email: session.user.email,
+        role: session.user.role || undefined,
+      },
+    };
+
     return await withErrorHandling(
-      async () => await action(session),
+      async () => await action(sessionForAction),
       options
     );
   } catch (error) {
@@ -256,8 +264,9 @@ export async function withValidation<TSchema, T>(
       validated = schema.parse(input);
     } catch (validationError) {
       // バリデーション失敗をログ
-      logger.warn("Validation failed", validationError instanceof Error ? validationError : new Error(String(validationError)), {
+      logger.warn("Validation failed", {
         errorType: "VALIDATION_ERROR",
+        originalError: validationError instanceof Error ? validationError.message : String(validationError),
         context: options?.context,
         timestamp: new Date().toISOString(),
       });

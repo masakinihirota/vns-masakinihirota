@@ -96,33 +96,7 @@ const postgres = require('postgres');
       ALTER COLUMN "createdAt" DROP NOT NULL,
       ALTER COLUMN "updatedAt" DROP NOT NULL`);
 
-    // Step 4: Drop legacy camelCase columns
-    console.log('[DB_FIX] Dropping legacy camelCase columns...');
-
-    await sql.unsafe(`ALTER TABLE "session"
-      DROP COLUMN IF EXISTS "expiresAt",
-      DROP COLUMN IF EXISTS "createdAt",
-      DROP COLUMN IF EXISTS "updatedAt",
-      DROP COLUMN IF EXISTS "ipAddress",
-      DROP COLUMN IF EXISTS "userAgent",
-      DROP COLUMN IF EXISTS "userId"`);
-
-    await sql.unsafe(`ALTER TABLE "account"
-      DROP COLUMN IF EXISTS "accountId",
-      DROP COLUMN IF EXISTS "providerId",
-      DROP COLUMN IF EXISTS "userId",
-      DROP COLUMN IF EXISTS "accessToken",
-      DROP COLUMN IF EXISTS "refreshToken",
-      DROP COLUMN IF EXISTS "idToken",
-      DROP COLUMN IF EXISTS "accessTokenExpiresAt",
-      DROP COLUMN IF EXISTS "refreshTokenExpiresAt",
-      DROP COLUMN IF EXISTS "createdAt",
-      DROP COLUMN IF EXISTS "updatedAt"`);
-
-    await sql.unsafe(`ALTER TABLE "user"
-      DROP COLUMN IF EXISTS "emailVerified",
-      DROP COLUMN IF EXISTS "createdAt",
-      DROP COLUMN IF EXISTS "updatedAt"`);
+    console.log('[DB_FIX] Legacy camelCase columns are preserved for compatibility.');
 
     console.log(`[DB_FIX] Auth schema compatibility patch applied successfully (env: ${envPath}).`);
   } catch (error) {

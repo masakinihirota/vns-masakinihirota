@@ -18,10 +18,17 @@
     "test:eq:watch": "vitest src/__tests__/api/rbac-equivalence.test.ts",
     "admin:create": "tsx scripts/create-admin.ts",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
+    "db:migrate": "node scripts/migrate-db.js",
+    "db:migrate:drizzle": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:apply-security": "node scripts/apply-db-security-migrations.js",
+    "db:check-migration-files": "node scripts/check-migration-files.js",
+    "db:check-schema": "node scripts/check-db-schema.js",
+    "db:studio": "drizzle-kit studio",
     "db:auth:check": "node scripts/check-auth-db-state.js",
     "db:auth:fix-compat": "node scripts/fix-auth-schema-compat.js",
     "check:pages": "node scripts/check-page-compliance.js",
+    "lint:console": "node scripts/check-console-logs.js",
     "prepare": "husky || true"
   },
   "dependencies": {

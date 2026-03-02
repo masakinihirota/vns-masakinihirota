@@ -59,6 +59,7 @@
   - Server Actionは一部のみ実行可能（読み取り専用操作のみ）
   - 組織/国の作成・参加は不可
   - 保存データはLocalStorageのみ
+  - 書き込み系APIは `try-catch` で拒否を捕捉し `403` を返却（詳細: `docs/database/trial-db-isolation.md`）
 - **移行**: `/home` で「本登録へ移行」ダイアログを表示
 
 #### 3. 認証済みユーザー（`member`, `leader`）

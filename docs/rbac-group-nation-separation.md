@@ -314,7 +314,7 @@ pnpm db:auth:fix-compat
 # Drizzle migration を生成（スキーマ作成後）
 pnpm db:generate
 
-# マイグレーション実行
+# マイグレーション実行（既存DBは安全ラッパー経由）
 pnpm db:migrate
 ```
 
@@ -344,7 +344,7 @@ pnpm db:migrate
 ### ステップ3: マイグレーション実行
 
 - [ ] `pnpm db:generate` でマイグレーションファイル生成
-- [ ] `pnpm db:migrate` でマイグレーション実行
+- [ ] `pnpm db:migrate`（既存DBは安全ラッパー）でマイグレーション実行
 - [ ] `pnpm db:auth:check` でBetter Authスキーマ整合性確認
 
 ### ステップ4: クエリ関数作成

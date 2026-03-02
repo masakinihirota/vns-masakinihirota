@@ -123,11 +123,11 @@ export const TrialStorage = {
 
       logger.warn(
         "Failed to load trial data from localStorage",
-        error instanceof Error ? error : new Error(errorMessage),
         {
           operation: "TrialStorage.load",
           storageKey: STORAGE_KEY,
           errorType,
+          originalError: errorMessage,
           timestamp: new Date().toISOString(),
           suggestion: "localStorage may be disabled or corrupted. Trial mode will continue with default data.",
         }
