@@ -1,5 +1,7 @@
 "use server";
 
+console.log("DEBUG: rbac-helper.ts is being loaded");
+
 /**
  * RBAC Server Action権限チェックヘルパー関数
  *
@@ -18,7 +20,6 @@
  * - コンテキスト検証: groupId / nationId の入力値を必ず検証
  */
 
-import { cache } from "react";
 import { db } from "@/lib/db/client";
 import {
   groupMembers,
@@ -27,27 +28,27 @@ import {
   rootAccounts,
   userProfiles,
 } from "@/lib/db/schema.postgres";
-import { eq, and } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
+import { cache } from "react";
+import {
+  applyTimingAttackProtection,
+  logAccessGranted,
+  logAuthenticationFailed,
+  logGhostModeRestriction,
+  logInsufficientPermission,
+} from "./audit-logger";
 import { RBAC_HIERARCHY } from "./rbac-constants";
+import {
+  RBACValidationError,
+  validateAuthUserId,
+  validateUUID
+} from "./rbac-validation";
 import type {
+  AuthSession,
   GroupRole,
   NationRole,
   RelationshipType,
-  AuthSession,
 } from "./types";
-import {
-  logAuthenticationFailed,
-  logInsufficientPermission,
-  logGhostModeRestriction,
-  logAccessGranted,
-  applyTimingAttackProtection,
-} from "./audit-logger";
-import {
-  validateAuthUserId,
-  validateUUID,
-  validateSession,
-  RBACValidationError,
-} from "./rbac-validation";
 
 /**
  * RBACエラークラス

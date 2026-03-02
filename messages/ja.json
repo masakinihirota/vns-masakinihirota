@@ -1,0 +1,18 @@
+{
+  "Header": {
+    "title": "VNS Antigravity",
+    "login": "ログイン",
+    "account": "アカウント",
+    "trial": "お試し中",
+    "ads": "広告表示",
+    "language": "言語設定",
+    "switchLanguage": "言語の切り替え",
+    "selectLanguage": "言語を選択",
+    "currentLanguage": "現在の言語: {locale}",
+    "adsEnabled": "広告表示を有効にしました",
+    "adsDisabled": "広告表示を無効にしました",
+    "settingsSynced": "設定は同期されました",
+    "syncFailed": "設定の同期に失敗しました",
+    "settingsSavedLocally": "設定はブラウザに保存されました"
+  }
+}

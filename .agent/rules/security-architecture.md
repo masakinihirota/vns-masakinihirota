@@ -85,5 +85,3 @@ export const { useSession, signIn, signUp, signOut } = authClient;
 - **[Coding Standards](./coding-standards.md)**: 基本的なコーディング標準
 
 - **[Test Workflow](..skills/test-workflow/SKILL.md)**: テスト駆動開発ガイド
-
-
