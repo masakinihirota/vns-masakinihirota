@@ -1,8 +1,9 @@
-import "./globals.css";
 import type { Metadata } from "next";
+import "./globals.css";
 
-import { ThemeProvider } from "next-themes";
+import { Header } from "@/components/layout/header";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "VNS masakinihirota",
@@ -42,7 +43,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <Header />
+          <main className="flex-1">
+            {children}
+          </main>
         </ThemeProvider>
         {/* Webアプリのどこからでも通知が可能 */}
         <Toaster />

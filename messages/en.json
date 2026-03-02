@@ -1,0 +1,18 @@
+{
+  "Header": {
+    "title": "VNS Antigravity",
+    "login": "Login",
+    "account": "Account",
+    "trial": "Trial Mode",
+    "ads": "Ads",
+    "language": "Language",
+    "switchLanguage": "Switch Language",
+    "selectLanguage": "Select Language",
+    "currentLanguage": "Current language: {locale}",
+    "adsEnabled": "Ads display enabled",
+    "adsDisabled": "Ads display disabled",
+    "settingsSynced": "Settings synced with account",
+    "syncFailed": "Failed to sync settings",
+    "settingsSavedLocally": "Settings saved to browser"
+  }
+}

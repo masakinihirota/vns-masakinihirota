@@ -84,6 +84,23 @@ export const verifications = pgTable("verification", {
     .notNull(),
 });
 
+// --- User Preferences (広告・言語・テーマ) ---
+export const userPreferences = pgTable("user_preferences", {
+  userId: text("user_id")
+    .primaryKey()
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  adsEnabled: boolean("ads_enabled").default(true).notNull(),
+  locale: text("locale").default("ja").notNull(),
+  theme: text("theme").default("system").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+});
+
+
 // --- User Auth Methods (複数認証記録) ---
 export const userAuthMethods = pgTable(
   "user_auth_methods",
@@ -946,7 +963,11 @@ export const pointTransactions = pgTable(
 
 // --- Relations ---
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
+  preference: one(userPreferences, {
+    fields: [users.id],
+    references: [userPreferences.userId],
+  }),
   accounts: many(accounts),
   sessions: many(sessions),
   rootAccounts: many(rootAccounts),
@@ -1354,6 +1375,16 @@ export const adminDashboardCache = pgTable(
 );
 
 // --- Relations ---
+
+
+
+export const userPreferencesRelations = relations(userPreferences, ({ one }) => ({
+  user: one(users, {
+    fields: [userPreferences.userId],
+    references: [users.id],
+  }),
+}));
+
 
 export const penaltiesRelations = relations(penalties, ({ one }) => ({
   targetProfile: one(userProfiles, {
