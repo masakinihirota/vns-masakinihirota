@@ -1,4 +1,4 @@
- 
+
 
 import { createHmac, createHash } from "crypto";
 import { VNSTrialData } from "./trial-storage";
