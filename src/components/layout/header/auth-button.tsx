@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { useAppAuth } from "@/hooks/use-app-auth";
 import { Loader2, User } from "lucide-react";

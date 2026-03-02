@@ -1,4 +1,6 @@
-import { useSession as useBetterAuthSession } from "better-auth/react";
+"use client";
+
+import { useSession as useBetterAuthSession } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
 
 /**

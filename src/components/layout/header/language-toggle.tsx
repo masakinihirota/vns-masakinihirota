@@ -17,7 +17,7 @@ export function LanguageToggle() {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleLocaleChange = (newLocale: string) => {
+  const handleLocaleChange = (newLocale: "ja" | "en") => {
     router.replace(pathname, { locale: newLocale });
   };
 
