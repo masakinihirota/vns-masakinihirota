@@ -22,7 +22,7 @@
 
 "use client";
 
-import { globalToastStore } from "@/lib/toast-store";
+import { logger } from "@/lib/logger";
 import { AlertCircle, Home, RefreshCw } from "lucide-react";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -34,18 +34,11 @@ interface ErrorBoundaryProps {
 
 export function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
   useEffect(() => {
-    // エラーログ出力（本番環境では外部サービスに送信）
-    console.error("[Error Boundary]", {
-      message: error.message,
-      stack: error.stack,
+    // エラーログを構造化ロガーで記録
+    logger.error("Error boundary caught an error", error, {
       digest: error.digest,
-      timestamp: new Date().toISOString(),
+      errorName: error.name,
     });
-
-    // 開発環境: コンソール出力
-    if (process.env.NODE_ENV === "development") {
-      globalToastStore.error("エラーが発生しました。詳細はコンソールを確認してください");
-    }
   }, [error]);
 
   return (
@@ -70,23 +63,29 @@ export function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
 
         {/* 詳細情報（開発環境のみ） */}
         {process.env.NODE_ENV === "development" && (
-          <details className="mb-6 rounded bg-slate-100 p-4">
-            <summary className="cursor-pointer font-mono text-sm font-medium text-slate-700">
-              詳細情報
+          <details className="mb-6 rounded bg-red-50 p-4">
+            <summary className="cursor-pointer font-mono text-sm font-medium text-red-800">
+              開発者向け詳細情報
             </summary>
-            <div className="mt-3 font-mono text-xs text-slate-600">
-              <p className="mb-2">
+            <div className="mt-3 space-y-2 font-mono text-xs text-red-700">
+              <div>
+                <strong>エラー名:</strong> {error.name}
+              </div>
+              <div>
                 <strong>メッセージ:</strong> {error.message}
-              </p>
+              </div>
               {error.digest && (
-                <p className="mb-2">
-                  <strong>ID:</strong> {error.digest}
-                </p>
+                <div>
+                  <strong>Digest:</strong> {error.digest}
+                </div>
               )}
               {error.stack && (
-                <pre className="max-h-60 overflow-auto whitespace-pre-wrap break-words text-red-600">
-                  {error.stack}
-                </pre>
+                <div className="mt-2">
+                  <strong>スタックトレース:</strong>
+                  <pre className="mt-1 max-h-60 overflow-auto whitespace-pre-wrap break-words rounded bg-red-100 p-2 text-red-900">
+                    {error.stack}
+                  </pre>
+                </div>
               )}
             </div>
           </details>
@@ -96,7 +95,7 @@ export function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
         <div className="flex flex-col gap-3">
           <button
             onClick={reset}
-            className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 font-medium text-white transition-colors hover:bg-blue-700"
+            className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
           >
             <RefreshCw className="h-4 w-4" />
             もう一度試す
@@ -104,7 +103,7 @@ export function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
 
           <Link
             href="/"
-            className="flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-4 py-2 font-medium text-slate-700 transition-colors hover:bg-slate-50"
+            className="flex items-center justify-center gap-2 rounded-lg border border-slate-300 px-4 py-3 font-medium text-slate-700 transition-colors hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-500 focus:ring-offset-2"
           >
             <Home className="h-4 w-4" />
             ホームに戻る
@@ -112,16 +111,18 @@ export function ErrorBoundary({ error, reset }: ErrorBoundaryProps) {
         </div>
 
         {/* サポート情報 */}
-        <p className="mt-8 border-t border-slate-200 pt-6 text-center text-sm text-slate-500">
-          問題が解決しない場合は、
-          <a
-            href="mailto:support@example.com"
-            className="ml-1 font-medium text-blue-600 hover:underline"
-          >
-            サポートにお問い合わせ
-          </a>
-          ください。
-        </p>
+        <div className="mt-8 border-t border-slate-200 pt-6">
+          <p className="text-center text-sm text-slate-600">
+            問題が解決しない場合は、お手数ですが
+            <br />
+            サポートまでお問い合わせください
+          </p>
+          {error.digest && (
+            <p className="mt-3 text-center font-mono text-xs text-slate-500">
+              エラーID: {error.digest}
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

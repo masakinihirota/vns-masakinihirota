@@ -1,0 +1,1863 @@
+
+> vns-masakinihirota@0.2.0 test U:\2026src\vns-masakinihirota
+> vitest "--" "messages.test.ts" "--run" "--reporter=verbose"
+
+The CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.
+
+[7m[1m[34m DEV [39m[22m[27m [34mv1.6.1[39m [90mU:/2026src/vns-masakinihirota[39m
+
+ [32m笨・[39m src/__tests__/api/rbac-equivalence.test.ts [2m ([22m[2m12 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+ [32m笨・[39m src/__tests__/api/groups.test.ts [2m ([22m[2m8 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+ [32m笨・[39m src/__tests__/api/notifications.test.ts [2m ([22m[2m9 tests[22m[2m)[22m[90m 42[2mms[22m[39m
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > isGhostMask() > should return true for ghost mask category
+[RBAC] Failed to get mask category {
+  userId: 'user-ghost-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-ghost-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > isGhostMask() > should return false for persona mask category
+[RBAC] Failed to get mask category {
+  userId: 'user-persona-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-persona-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > isGhostMask() > should handle database errors gracefully by throwing
+[RBAC] Failed to get mask category {
+  userId: 'user-ghost-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-ghost-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > isGhostMask() > should return false when user profile not found
+[RBAC] Failed to get mask category {
+  userId: 'user-persona-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-persona-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > checkInteractionAllowed() > should deny interaction for ghost mask
+[RBAC] Failed to get mask category {
+  userId: 'user-ghost-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-ghost-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > checkInteractionAllowed() > should allow interaction for persona mask
+[RBAC] Failed to get mask category {
+  userId: 'user-persona-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-persona-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > checkInteractionAllowed() > should deny interaction for null session
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "interaction",
+  "resourceId": null,
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.497Z"
+}
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > checkInteractionAllowed() > should deny interaction for session without user id
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "interaction",
+  "resourceId": null,
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.500Z"
+}
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > checkInteractionAllowed() > should handle database errors gracefully by throwing
+[RBAC] Failed to get mask category {
+  userId: 'user-ghost-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-ghost-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > VNS Design Philosophy Validation > 蟷ｽ髴・(Ghost) 縺ｯ隕ｳ貂ｬ閠・→縺励※陦悟虚縺励∽ｸ也阜縺ｫ蟷ｲ貂峨〒縺阪↑縺・[22m
+[RBAC] Failed to get mask category {
+  userId: 'user-ghost-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-ghost-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > VNS Design Philosophy Validation > 繝壹Ν繧ｽ繝・(Persona) 縺ｯ莉ｮ髱｢繧定｢ｫ縺｣縺ｦ荳也阜縺ｨ逶ｸ莠剃ｽ懃畑縺ｧ縺阪ｋ
+[RBAC] Failed to get mask category {
+  userId: 'user-persona-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-persona-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > VNS Design Philosophy Validation > 繝励Λ繝・ヨ繝輔か繝ｼ繝邂｡逅・・・繝槭せ繧ｯ縺ｫ髢｢菫ゅ↑縺上☆縺ｹ縺ｦ險ｱ蜿ｯ縺輔ｌ繧・[22m
+[RBAC] Failed to get mask category {
+  userId: 'user-admin-ghost-1',
+  errorType: 'TypeError',
+  errorMessage: '__vite_ssr_import_0__.db.select(...).from(...).innerJoin(...).where is not a function'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION {
+  userId: 'user-admin-ghost-1',
+  error: 'Failed to verify account type.'
+}
+
+ [33m笶ｯ[39m src/lib/auth/__tests__/ghost-mode.test.ts [2m ([22m[2m15 tests[22m [2m|[22m [31m8 failed[39m[2m)[22m[90m 44[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/ghost-mode.test.ts[2m > [22mGhost Mode Functionality[2m > [22misGhostMask()[2m > [22mshould return true for ghost mask category[39m
+[31m     竊・Failed to verify account type.[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/ghost-mode.test.ts[2m > [22mGhost Mode Functionality[2m > [22misGhostMask()[2m > [22mshould return false for persona mask category[39m
+[31m     竊・Failed to verify account type.[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/ghost-mode.test.ts[2m > [22mGhost Mode Functionality[2m > [22misGhostMask()[2m > [22mshould return false when user profile not found[39m
+[31m     竊・Failed to verify account type.[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/ghost-mode.test.ts[2m > [22mGhost Mode Functionality[2m > [22mcheckInteractionAllowed()[2m > [22mshould deny interaction for ghost mask[39m
+[31m     竊・Failed to verify account type.[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/ghost-mode.test.ts[2m > [22mGhost Mode Functionality[2m > [22mcheckInteractionAllowed()[2m > [22mshould allow interaction for persona mask[39m
+[31m     竊・Failed to verify account type.[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/ghost-mode.test.ts[2m > [22mGhost Mode Functionality[2m > [22mVNS Design Philosophy Validation[2m > [22m蟷ｽ髴・(Ghost) 縺ｯ隕ｳ貂ｬ閠・→縺励※陦悟虚縺励∽ｸ也阜縺ｫ蟷ｲ貂峨〒縺阪↑縺・[39m
+[31m     竊・Failed to verify account type.[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/ghost-mode.test.ts[2m > [22mGhost Mode Functionality[2m > [22mVNS Design Philosophy Validation[2m > [22m繝壹Ν繧ｽ繝・(Persona) 縺ｯ莉ｮ髱｢繧定｢ｫ縺｣縺ｦ荳也阜縺ｨ逶ｸ莠剃ｽ懃畑縺ｧ縺阪ｋ[39m
+[31m     竊・Failed to verify account type.[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/ghost-mode.test.ts[2m > [22mGhost Mode Functionality[2m > [22mVNS Design Philosophy Validation[2m > [22m繝励Λ繝・ヨ繝輔か繝ｼ繝邂｡逅・・・繝槭せ繧ｯ縺ｫ髢｢菫ゅ↑縺上☆縺ｹ縺ｦ險ｱ蜿ｯ縺輔ｌ繧・[39m
+[31m     竊・Failed to verify account type.[39m
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > isGhostMask() > should return true when user has ghost mask profile
+[RBAC] Failed to get mask category {
+  userId: 'user-1',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-1', error: 'Failed to verify account type.' }
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > checkInteractionAllowed() > should return false for null session
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "interaction",
+  "resourceId": null,
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.580Z"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > checkInteractionAllowed() > should return false for session without user.id
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "interaction",
+  "resourceId": null,
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.580Z"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > checkInteractionAllowed() > should check ghost mask status for regular user
+[RBAC] Failed to get mask category {
+  userId: 'user-1',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-1', error: 'Failed to verify account type.' }
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > getUserProfileId() > should query database for valid user ID
+[RBAC] Failed to get user profile {
+  userId: 'user-12345',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > getUserProfileId() > should handle database errors gracefully
+[RBAC] Failed to get user profile {
+  userId: 'user-error',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > checkGroupRole() > should return true for platform_admin
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-123",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Invalid input: groupId must be a valid UUID v4",
+  "timestamp": "2026-03-02T21:21:51.586Z"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > checkGroupRole() > should return false for null session
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-123",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.594Z"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > checkGroupRole() > should return false when user.id is missing
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-123",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.595Z"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > checkGroupRole() > should check group membership for regular user
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-123",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Invalid input: groupId must be a valid UUID v4",
+  "timestamp": "2026-03-02T21:21:51.595Z"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > checkGroupRole() > should handle hierarchy: leader >= sub_leader
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-123",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Invalid input: groupId must be a valid UUID v4",
+  "timestamp": "2026-03-02T21:21:51.596Z"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Integration Scenarios > Scenario: Ghost Mask Interaction Blocking > null session should be rejected
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "interaction",
+  "resourceId": null,
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.596Z"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Integration Scenarios > Scenario: Group Role Hierarchy > platform_admin bypasses group role checks
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-1",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Invalid input: groupId must be a valid UUID v4",
+  "timestamp": "2026-03-02T21:21:51.597Z"
+}
+
+stderr | src/__tests__/rbac-authorization.test.ts > RBAC Integration Scenarios > Scenario: Group Role Hierarchy > invalid session returns false
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-1",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.598Z"
+}
+
+ [33m笶ｯ[39m src/__tests__/rbac-authorization.test.ts [2m ([22m[2m24 tests[22m [2m|[22m [31m2 failed[39m[2m)[22m[90m 29[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/__tests__/rbac-authorization.test.ts[2m > [22mRBAC Authorization Checks[2m > [22mcheckGroupRole()[2m > [22mshould return true for platform_admin[39m
+[31m     竊・expected false to be true // Object.is equality[39m
+[31m   [33m笶ｯ[31m src/__tests__/rbac-authorization.test.ts[2m > [22mRBAC Integration Scenarios[2m > [22mScenario: Group Role Hierarchy[2m > [22mplatform_admin bypasses group role checks[39m
+[31m     竊・expected false to be true // Object.is equality[39m
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkGroupRole > should return true for platform admin (regardless of actual group role)
+[RBAC] Failed to get user profile {
+  userId: 'user-admin-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "root_accounts" inner join "user_profiles" on ("root_accounts"."active_profile_id" = "user_profiles"."id" and "user_profiles"."root_account_id" = "root_accounts"."id") where "root_accounts"."auth_user_id" = $1 limit $2\n' +
+    'params: user-admin-1,1'
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkGroupRole > should return false for regular user without group role
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "root_accounts" inner join "user_profiles" on ("root_accounts"."active_profile_id" = "user_profiles"."id" and "user_profiles"."root_account_id" = "root_accounts"."id") where "root_accounts"."auth_user_id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC] Failed to check group role {
+  userId: 'user-regular-1',
+  groupId: '12345678-1234-4234-8234-123456789012',
+  role: 'leader',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Group role check error {
+  userId: 'user-regular-1',
+  groupId: '12345678-1234-4234-8234-123456789012',
+  role: 'leader'
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkGroupRole > should return false for regular user without group role
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "root_accounts" inner join "user_profiles" on ("root_accounts"."active_profile_id" = "user_profiles"."id" and "user_profiles"."root_account_id" = "root_accounts"."id") where "root_accounts"."auth_user_id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC_ACCESS_DENIED] {
+  "userId": "user-regular-1",
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "12345678-1234-4234-8234-123456789012",
+  "requiredPermission": "leader",
+  "reason": "Insufficient permission: Group role check failed",
+  "context": {
+    "error": "Failed to verify group permission."
+  },
+  "timestamp": "2026-03-02T21:21:51.716Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkGroupRole > should return false for null session
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "12345678-1234-4234-8234-123456789012",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.717Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkGroupRole > should return false for session without user id
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "12345678-1234-4234-8234-123456789012",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.718Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkNationRole > should return true for platform admin
+[RBAC] Failed to get user profile {
+  userId: 'user-admin-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "root_accounts" inner join "user_profiles" on ("root_accounts"."active_profile_id" = "user_profiles"."id" and "user_profiles"."root_account_id" = "root_accounts"."id") where "root_accounts"."auth_user_id" = $1 limit $2\n' +
+    'params: user-admin-1,1'
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkNationRole > should return false for regular user without nation role
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "root_accounts" inner join "user_profiles" on ("root_accounts"."active_profile_id" = "user_profiles"."id" and "user_profiles"."root_account_id" = "root_accounts"."id") where "root_accounts"."auth_user_id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC] Failed to check nation role {
+  userId: 'user-regular-1',
+  nationId: '23456789-1234-4234-8234-123456789012',
+  role: 'leader',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Nation role check error {
+  userId: 'user-regular-1',
+  nationId: '23456789-1234-4234-8234-123456789012',
+  role: 'leader'
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkNationRole > should return false for regular user without nation role
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "root_accounts" inner join "user_profiles" on ("root_accounts"."active_profile_id" = "user_profiles"."id" and "user_profiles"."root_account_id" = "root_accounts"."id") where "root_accounts"."auth_user_id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC_ACCESS_DENIED] {
+  "userId": "user-regular-1",
+  "userProfileId": null,
+  "resourceType": "nation",
+  "resourceId": "23456789-1234-4234-8234-123456789012",
+  "requiredPermission": "leader",
+  "reason": "Insufficient permission: Nation role check failed",
+  "context": {
+    "error": "Failed to verify nation permission."
+  },
+  "timestamp": "2026-03-02T21:21:51.972Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkNationRole > should return false for null session
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "nation",
+  "resourceId": "23456789-1234-4234-8234-123456789012",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Session not found",
+  "timestamp": "2026-03-02T21:21:51.972Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkRelationship > should return false for regular user without relationship
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "root_accounts" inner join "user_profiles" on ("root_accounts"."active_profile_id" = "user_profiles"."id" and "user_profiles"."root_account_id" = "root_accounts"."id") where "root_accounts"."auth_user_id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC] Failed to check relationship {
+  userId: 'user-regular-1',
+  targetUserId: 'user-target-1',
+  relationship: 'friend',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Relationship check error {
+  userId: 'user-regular-1',
+  targetUserId: 'user-target-1',
+  relationship: 'friend'
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkMultiple > should return all=false when any check fails
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-1",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Invalid input: groupId must be a valid UUID v4",
+  "timestamp": "2026-03-02T21:21:52.033Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkMultiple > should return descriptive index in passed array
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-1",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Invalid input: groupId must be a valid UUID v4",
+  "timestamp": "2026-03-02T21:21:52.033Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > Edge Cases > should handle database connection errors gracefully
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "invalid-group-id",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Invalid input: groupId must be a valid UUID v4",
+  "timestamp": "2026-03-02T21:21:52.035Z"
+}
+
+ [32m笨・[39m src/lib/auth/__tests__/rbac-helper.test.ts [2m ([22m[2m30 tests[22m[2m)[22m[33m 538[2mms[22m[39m
+ [32m笨・[39m src/lib/auth/__tests__/rbac-validation.test.ts [2m ([22m[2m25 tests[22m[2m)[22m[90m 25[2mms[22m[39m
+ [32m笨・[39m src/__tests__/api/nations.test.ts [2m ([22m[2m7 tests[22m[2m)[22m[90m 54[2mms[22m[39m
+ [32m笨・[39m src/lib/auth/__tests__/rate-limiter.test.ts [2m ([22m[2m17 tests[22m [2m|[22m [33m1 skipped[39m[2m)[22m[90m 13[2mms[22m[39m
+stderr | src/lib/db/admin-queries.test.ts > Admin Dashboard Queries
+Setup error: DrizzleQueryError: Failed query: insert into "user" ("id", "name", "email", "email_verified", "image", "role", "banned", "ban_reason", "ban_expires", "is_anonymous", "created_at", "updated_at") values ($1, $2, $3, $4, default, $5, default, default, default, $6, $7, $8)
+params: 443a43fd-89c4-43be-94dc-70e6e45cc63d,Test Admin,admin-443a43fd-89c4-43be-94dc-70e6e45cc63d@test.local,true,admin,false,2026-03-02T21:21:52.953Z,2026-03-02T21:21:52.953Z
+    at PostgresJsPreparedQuery.queryWithCache (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at U:\2026src\vns-masakinihirota\src\lib\db\admin-queries.test.ts:23:7
+    at async Promise.all (index 0)
+    at callSuiteHook (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:700:23)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:892:27)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/vitest@1.6.1_@types+node@20_f9fd341a1ef9dd8ef35700ea632852cb/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7 {
+  query: 'insert into "user" ("id", "name", "email", "email_verified", "image", "role", "banned", "ban_reason", "ban_expires", "is_anonymous", "created_at", "updated_at") values ($1, $2, $3, $4, default, $5, default, default, default, $6, $7, $8)',
+  params: [
+    '443a43fd-89c4-43be-94dc-70e6e45cc63d',
+    'Test Admin',
+    'admin-443a43fd-89c4-43be-94dc-70e6e45cc63d@test.local',
+    true,
+    'admin',
+    false,
+    '2026-03-02T21:21:52.953Z',
+    '2026-03-02T21:21:52.953Z'
+  ],
+  cause: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+      at ErrorResponse (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22)
+      at handle (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6)
+      at Socket.data (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9)
+      at Socket.emit (node:events:508:28)
+      at addChunk (node:internal/streams/readable:559:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+      at Socket.Readable.push (node:internal/streams/readable:390:5)
+      at TCP.onStreamRead (node:internal/stream_base_commons:189:23) {
+    severity_local: 'FATAL',
+    severity: 'FATAL',
+    code: '28P01',
+    file: 'auth.c',
+    line: '332',
+    routine: 'auth_failed'
+  }
+}
+
+stderr | src/lib/db/admin-queries.test.ts > Admin Dashboard Queries
+Cleanup error: DrizzleQueryError: Failed query: delete from "user" where "user"."id" = $1
+params: 443a43fd-89c4-43be-94dc-70e6e45cc63d
+    at PostgresJsPreparedQuery.queryWithCache (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at U:\2026src\vns-masakinihirota\src\lib\db\admin-queries.test.ts:95:9
+    at async Promise.all (index 0)
+    at callSuiteHook (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:700:23)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:917:7)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/vitest@1.6.1_@types+node@20_f9fd341a1ef9dd8ef35700ea632852cb/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7 {
+  query: 'delete from "user" where "user"."id" = $1',
+  params: [ '443a43fd-89c4-43be-94dc-70e6e45cc63d' ],
+ [33m笶ｯ[39m src/lib/db/admin-queries.test.ts [2m ([22m[2m11 tests[22m[2m)[22m[90m 163[2mms[22m[39m
+  cause: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+      at ErrorResponse (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22)
+      at handle (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6)
+      at Socket.data (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9)
+      at Socket.emit (node:events:508:28)
+      at addChunk (node:internal/streams/readable:559:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+      at Socket.Readable.push (node:internal/streams/readable:390:5)
+      at TCP.onStreamRead (node:internal/stream_base_commons:189:23) {
+    severity_local: 'FATAL',
+    severity: 'FATAL',
+    code: '28P01',
+    file: 'auth.c',
+    line: '332',
+    routine: 'auth_failed'
+  }
+}
+
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+[90mstdout[2m | src\lib\auth\__tests__\rbac-boundary-cases.test.ts:1:9[22m[39m
+DEBUG: STARTING rbac-boundary-cases.test.ts
+
+[90mstdout[2m | src\lib\auth\__tests__\rbac-boundary-cases.test.ts:18:9[22m[39m
+DEBUG: rbac-boundary-cases.test.ts is being loaded
+
+[90mstdout[2m | src/lib/auth/__tests__/rbac-boundary-cases.test.ts[2m > [22m[2mRBAC Boundary Cases[2m > [22m[2mGhost vs Persona Mode[2m > [22m[2mGhost 繝｢繝ｼ繝峨・繝ｦ繝ｼ繧ｶ繝ｼ縺ｯ繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧貞宛髯舌＆繧後ｋ[22m[39m
+DEBUG: db.select mock for GHOST called
+
+stderr | src/lib/auth/__tests__/rbac-boundary-cases.test.ts > RBAC Boundary Cases > Ghost vs Persona Mode > Ghost 繝｢繝ｼ繝峨・繝ｦ繝ｼ繧ｶ繝ｼ縺ｯ繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧貞宛髯舌＆繧後ｋ
+[RBAC_ACCESS_DENIED] {
+  "userId": "user-1",
+  "userProfileId": "550e8400-e29b-41d4-a716-446655440001",
+  "resourceType": "interaction",
+  "resourceId": null,
+  "requiredPermission": "persona_mode",
+  "reason": "Ghost mode restriction: cannot interact interaction",
+  "context": {
+    "maskCategory": "ghost",
+    "operation": "interact"
+  },
+  "timestamp": "2026-03-02T21:21:53.216Z"
+}
+
+[90mstdout[2m | src/lib/auth/__tests__/rbac-boundary-cases.test.ts[2m > [22m[2mRBAC Boundary Cases[2m > [22m[2mGhost vs Persona Mode[2m > [22m[2mPersona 繝｢繝ｼ繝峨・繝ｦ繝ｼ繧ｶ繝ｼ縺ｯ繧､繝ｳ繧ｿ繝ｩ繧ｯ繧ｷ繝ｧ繝ｳ繧定ｨｱ蜿ｯ縺輔ｌ繧・[22m[39m
+DEBUG: db.select mock for PERSONA called
+
+stderr | src/lib/auth/__tests__/rbac-boundary-cases.test.ts > RBAC Boundary Cases > Role Hierarchy Boundaries > sub_leader 縺ｯ mediator 讓ｩ髯舌ｒ蠢・ｦ√→縺吶ｋ謫堺ｽ懊ｒ繝代せ縺吶ｋ
+[RBAC_ACCESS_DENIED] {
+  "userId": "user-1",
+  "userProfileId": "550e8400-e29b-41d4-a716-446655440001",
+  "resourceType": "group",
+  "resourceId": "550e8400-e29b-41d4-a716-446655440002",
+  "requiredPermission": "mediator",
+  "reason": "Insufficient permission: Insufficient group role",
+  "context": {
+    "requiredRole": "mediator"
+  },
+  "timestamp": "2026-03-02T21:21:53.220Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-boundary-cases.test.ts > RBAC Boundary Cases > Role Hierarchy Boundaries > member 縺ｯ sub_leader 讓ｩ髯舌ｒ蠢・ｦ√→縺吶ｋ謫堺ｽ懊ｒ諡貞凄縺輔ｌ繧・[22m
+[RBAC_ACCESS_DENIED] {
+  "userId": "user-1",
+  "userProfileId": "550e8400-e29b-41d4-a716-446655440001",
+  "resourceType": "group",
+  "resourceId": "550e8400-e29b-41d4-a716-446655440002",
+  "requiredPermission": "sub_leader",
+  "reason": "Insufficient permission: Insufficient group role",
+  "context": {
+    "requiredRole": "sub_leader"
+  },
+  "timestamp": "2026-03-02T21:21:53.230Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-boundary-cases.test.ts > RBAC Boundary Cases > Edge Cases > 繝ｦ繝ｼ繧ｶ繝ｼ縺瑚ｦ九▽縺九ｉ縺ｪ縺・ｴ蜷医・讓ｩ髯舌↑縺暦ｼ・alse・峨ｒ霑斐☆
+[RBAC] User profile not found for userId: user-1
+[RBAC] User profile not found for userId: user-1
+[RBAC_ACCESS_DENIED] {
+  "userId": "user-1",
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "550e8400-e29b-41d4-a716-446655440002",
+  "requiredPermission": "member",
+  "reason": "Insufficient permission: Insufficient group role",
+  "context": {
+    "requiredRole": "member"
+  },
+  "timestamp": "2026-03-02T21:21:53.232Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-boundary-cases.test.ts > RBAC Boundary Cases > Edge Cases > 荳肴ｭ｣縺ｪUUID蠖｢蠑上・ID縺ｯ繝舌Μ繝・・繧ｷ繝ｧ繝ｳ縺ｧ蠑ｾ縺九ｌ繧・[22m
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "invalid-uuid",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Invalid input: groupId must be a valid UUID v4",
+  "timestamp": "2026-03-02T21:21:53.233Z"
+}
+
+ [33m笶ｯ[39m src/lib/auth/__tests__/rbac-boundary-cases.test.ts [2m ([22m[2m8 tests[22m [2m|[22m [31m2 failed[39m[2m)[22m[90m 33[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/rbac-boundary-cases.test.ts[2m > [22mRBAC Boundary Cases[2m > [22mRole Hierarchy Boundaries[2m > [22msub_leader 縺ｯ mediator 讓ｩ髯舌ｒ蠢・ｦ√→縺吶ｋ謫堺ｽ懊ｒ繝代せ縺吶ｋ[39m
+[31m     竊・expected false to be true // Object.is equality[39m
+[31m   [33m笶ｯ[31m src/lib/auth/__tests__/rbac-boundary-cases.test.ts[2m > [22mRBAC Boundary Cases[2m > [22mEdge Cases[2m > [22m荳肴ｭ｣縺ｪUUID蠖｢蠑上・ID縺ｯ繝舌Μ繝・・繧ｷ繝ｧ繝ｳ縺ｧ蠑ｾ縺九ｌ繧・[39m
+[31m     竊・promise resolved "false" instead of rejecting[39m
+ [32m笨・[39m src/lib/auth/__tests__/rbac-hierarchy.test.ts [2m ([22m[2m11 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [32m笨・[39m src/__tests__/api/users.test.ts [2m ([22m[2m5 tests[22m[2m)[22m[90m 35[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/__tests__/auth-schema.test.ts [2m ([22m[2m0 test[22m[2m)[22m
+ [2m[90m竊・[39m[22m src/__tests__/api/admin.test.ts [2m ([22m[2m10 tests[22m [2m|[22m [33m10 skipped[39m[2m)[22m
+ [33m笶ｯ[39m src/lib/errors/__tests__/messages.test.ts [2m ([22m[2m139 tests[22m [2m|[22m [31m16 failed[39m[2m)[22m[90m 46[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 0 should end with proper punctuation[39m
+[31m     竊・expected '繧・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 1 should end with proper punctuation[39m
+[31m     竊・expected '縺・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 3 should end with proper punctuation[39m
+[31m     竊・expected '縺・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 4 should end with proper punctuation[39m
+[31m     竊・expected '繧・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 5 should end with proper punctuation[39m
+[31m     竊・expected '繧・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 6 should end with proper punctuation[39m
+[31m     竊・expected '繧・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 10 should end with proper punctuation[39m
+[31m     竊・expected '繧・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 11 should end with proper punctuation[39m
+[31m     竊・expected '繧・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 13 should end with proper punctuation[39m
+[31m     竊・expected '縺・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 16 should end with proper punctuation[39m
+[31m     竊・expected '縺・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 17 should end with proper punctuation[39m
+[31m     竊・expected '縺・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 18 should end with proper punctuation[39m
+[31m     竊・expected '縺・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 20 should end with proper punctuation[39m
+[31m     竊・expected '繧・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 21 should end with proper punctuation[39m
+[31m     竊・expected '縺・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage Quality[2m > [22mmessage 23 should end with proper punctuation[39m
+[31m     竊・expected '縺・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/[39m
+[31m   [33m笶ｯ[31m src/lib/errors/__tests__/messages.test.ts[2m > [22mError Messages Completeness[2m > [22mMessage consistency[2m > [22mauthorization errors should be consistent[39m
+[31m     竊・expected '邂｡逅・・・縺ｿ縺悟茜逕ｨ縺ｧ縺阪ｋ讖溯・縺ｧ縺・ to match /讓ｩ髯酢險ｱ蜿ｯ|蠖ｹ蜑ｲ|繧｢繧ｯ繧ｻ繧ｹ/[39m
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+stderr | src/lib/auth/__tests__/rbac-deny-by-default.test.ts > RBAC: Deny-by-Default Principle > active_profile_id = null Safety (譛驥崎ｦ√そ繧ｭ繝･繝ｪ繝・ぅ繝・せ繝・ > active_profile_id 縺・null 縺ｮ蝣ｴ蜷医“etUserProfileId() 縺ｯ null 繧定ｿ斐☆
+[RBAC] Failed to get user profile {
+  userId: 'user-without-active-profile',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+
+stderr | src/lib/auth/__tests__/rbac-deny-by-default.test.ts > RBAC: Deny-by-Default Principle > active_profile_id = null Safety (譛驥崎ｦ√そ繧ｭ繝･繝ｪ繝・ぅ繝・せ繝・ > active_profile_id 縺・null 縺ｮ蝣ｴ蜷医…heckGroupRole() 縺ｯ false 繧定ｿ斐☆
+[RBAC] Failed to get user profile {
+  userId: 'user-without-active-profile',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+[RBAC] Failed to check group role {
+  userId: 'user-without-active-profile',
+  groupId: '12345678-1234-4234-8234-123456789012',
+  role: 'member',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Group role check error {
+  userId: 'user-without-active-profile',
+  groupId: '12345678-1234-4234-8234-123456789012',
+  role: 'member'
+}
+[RBAC] Failed to get user profile {
+  userId: 'user-without-active-profile',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+[RBAC_ACCESS_DENIED] {
+  "userId": "user-without-active-profile",
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "12345678-1234-4234-8234-123456789012",
+  "requiredPermission": "member",
+  "reason": "Insufficient permission: Group role check failed",
+  "context": {
+    "error": "Failed to verify group permission."
+  },
+  "timestamp": "2026-03-02T21:21:55.179Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-deny-by-default.test.ts > RBAC: Deny-by-Default Principle > active_profile_id = null Safety (譛驥崎ｦ√そ繧ｭ繝･繝ｪ繝・ぅ繝・せ繝・ > active_profile_id 縺・null 縺ｮ蝣ｴ蜷医…heckNationRole() 縺ｯ false 繧定ｿ斐☆
+[RBAC] Failed to get user profile {
+  userId: 'user-without-active-profile',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+[RBAC] Failed to check nation role {
+  userId: 'user-without-active-profile',
+  nationId: '23456789-1234-4234-8234-123456789012',
+  role: 'member',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Nation role check error {
+  userId: 'user-without-active-profile',
+  nationId: '23456789-1234-4234-8234-123456789012',
+  role: 'member'
+}
+[RBAC] Failed to get user profile {
+  userId: 'user-without-active-profile',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+[RBAC_ACCESS_DENIED] {
+  "userId": "user-without-active-profile",
+  "userProfileId": null,
+  "resourceType": "nation",
+  "resourceId": "23456789-1234-4234-8234-123456789012",
+  "requiredPermission": "member",
+  "reason": "Insufficient permission: Nation role check failed",
+  "context": {
+    "error": "Failed to verify nation permission."
+  },
+  "timestamp": "2026-03-02T21:21:55.182Z"
+}
+
+stderr | src/lib/auth/__tests__/rbac-deny-by-default.test.ts > RBAC: Deny-by-Default Principle > active_profile_id = null Safety (譛驥崎ｦ√そ繧ｭ繝･繝ｪ繝・ぅ繝・せ繝・ > active_profile_id 縺・null 縺ｧ繧・platform_admin 縺ｯ謫堺ｽ懷庄閭ｽ
+[RBAC] Failed to get user profile {
+  userId: 'admin-without-active-profile',
+  errorType: 'TypeError',
+  errorMessage: "Cannot read properties of undefined (reading 'from')"
+}
+
+ [32m笨・[39m src/lib/auth/__tests__/rbac-deny-by-default.test.ts [2m ([22m[2m14 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+ [33m笶ｯ[39m src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts [2m ([22m[2m5 tests[22m [2m|[22m [31m5 failed[39m[2m)[22m[90m 14[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts[2m > [22museAnonymousLoginLogic[2m > [22m豁｣蟶ｸ縺ｫ蛹ｿ蜷崎ｪ崎ｨｼ繧貞ｮ溯｡後〒縺阪ｋ[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts[2m > [22museAnonymousLoginLogic[2m > [22mAPI繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts[2m > [22museAnonymousLoginLogic[2m > [22m繝阪ャ繝医Ρ繝ｼ繧ｯ繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts[2m > [22museAnonymousLoginLogic[2m > [22msuccess=false縺ｮ蝣ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts[2m > [22museAnonymousLoginLogic[2m > [22mfeatures縺梧ｭ｣縺励￥蜿門ｾ励＆繧後ｋ[39m
+[31m     竊・document is not defined[39m
+stderr | src/app/actions/__tests__/server-actions.test.ts > Server Actions - Authorization & Validation > createNationAction > should fail when user role is not group_leader or platform_admin
+[RBAC_ACCESS_DENIED] {
+  "userId": null,
+  "userProfileId": null,
+  "resourceType": "group",
+  "resourceId": "group-1",
+  "requiredPermission": "authenticated",
+  "reason": "Authentication failed: Invalid input: groupId must be a valid UUID v4",
+  "timestamp": "2026-03-02T21:21:55.458Z"
+}
+
+ [32m笨・[39m src/app/actions/__tests__/server-actions.test.ts [2m ([22m[2m9 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/market.integration.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 87[2mms[22m[39m
+ [32m笨・[39m src/__tests__/proxy.test.ts [2m ([22m[2m6 tests[22m[2m)[22m[90m 75[2mms[22m[39m
+[90mstdout[2m | src/__tests__/proxy.test.ts[2m > [22m[2mproxy (Next.js 16 Middleware)[2m > [22m[2mshould allow access to landing page for unauthenticated users[22m[39m
+[36m[DEBUG][0m 2026/03/03 06:21:55.700 Proxy request
+  Context: {
+  requestId: [32m'req-1772486515700-2gfdv99mi'[39m,
+  path: [32m'/'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  pathname: [32m'/'[39m,
+  isPublicPath: [33mfalse[39m,
+  isStaticPath: [33mtrue[39m,
+  isLandingPath: [33mtrue[39m
+}
+[36m[DEBUG][0m 2026/03/03 06:21:55.732 Landing page access
+  Context: {
+  requestId: [32m'req-1772486515700-2gfdv99mi'[39m,
+  path: [32m'/'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+
+[90mstdout[2m | src/__tests__/proxy.test.ts[2m > [22m[2mproxy (Next.js 16 Middleware)[2m > [22m[2mshould redirect authenticated users from /login to /home[22m[39m
+[36m[DEBUG][0m 2026/03/03 06:21:55.737 Proxy request
+  Context: {
+  requestId: [32m'req-1772486515737-m5j64rim6'[39m,
+  path: [32m'/login'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  pathname: [32m'/login'[39m,
+  isPublicPath: [33mtrue[39m,
+  isStaticPath: [33mfalse[39m,
+  isLandingPath: [33mfalse[39m
+}
+[36m[DEBUG][0m 2026/03/03 06:21:55.738 Session retrieved successfully
+  Context: {
+  requestId: [32m'req-1772486515737-m5j64rim6'[39m,
+  path: [32m'/login'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: { userId: [32m'1'[39m, userEmail: [32m'test@example.com'[39m, role: [32m'user'[39m }
+[32m[INFO][0m 2026/03/03 06:21:55.739 Authenticated user accessing public path, redirecting to /home
+  Context: {
+  requestId: [32m'req-1772486515737-m5j64rim6'[39m,
+  path: [32m'/login'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: { pathname: [32m'/login'[39m, userId: [32m'1'[39m }
+
+[90mstdout[2m | src/__tests__/proxy.test.ts[2m > [22m[2mproxy (Next.js 16 Middleware)[2m > [22m[2mshould redirect unauthenticated users from protected pages to /[22m[39m
+[36m[DEBUG][0m 2026/03/03 06:21:55.742 Proxy request
+  Context: {
+  requestId: [32m'req-1772486515742-s4u3jmfxh'[39m,
+  path: [32m'/protected'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  pathname: [32m'/protected'[39m,
+  isPublicPath: [33mfalse[39m,
+  isStaticPath: [33mfalse[39m,
+  isLandingPath: [33mfalse[39m
+}
+[33m[WARN][0m 2026/03/03 06:21:55.743 [SECURITY_EVENT] Unauthenticated access to protected path
+  Context: {
+  requestId: [32m'req-1772486515742-s4u3jmfxh'[39m,
+  path: [32m'/protected'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  event: [32m'unauthenticated_access'[39m,
+  pathname: [32m'/protected'[39m,
+  severity: [32m'medium'[39m
+}
+
+[90mstdout[2m | src/__tests__/proxy.test.ts[2m > [22m[2mproxy (Next.js 16 Middleware)[2m > [22m[2mshould allow authenticated admin users to access /admin (RBAC check in Server Action)[22m[39m
+[36m[DEBUG][0m 2026/03/03 06:21:55.746 Proxy request
+  Context: {
+  requestId: [32m'req-1772486515746-d4new5rgu'[39m,
+  path: [32m'/admin'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  pathname: [32m'/admin'[39m,
+  isPublicPath: [33mfalse[39m,
+  isStaticPath: [33mfalse[39m,
+  isLandingPath: [33mfalse[39m
+}
+[36m[DEBUG][0m 2026/03/03 06:21:55.747 Session retrieved successfully
+  Context: {
+  requestId: [32m'req-1772486515746-d4new5rgu'[39m,
+  path: [32m'/admin'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: { userId: [32m'1'[39m, userEmail: [32m'admin@example.com'[39m, role: [32m'platform_admin'[39m }
+[36m[DEBUG][0m 2026/03/03 06:21:55.748 Request authorized
+  Context: {
+  requestId: [32m'req-1772486515746-d4new5rgu'[39m,
+  path: [32m'/admin'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: { authenticated: [33mtrue[39m, userId: [32m'1'[39m }
+
+[90mstdout[2m | src/__tests__/proxy.test.ts[2m > [22m[2mproxy (Next.js 16 Middleware)[2m > [22m[2mshould allow authenticated group_leader users to access /nation/create (RBAC check in Server Action)[22m[39m
+[36m[DEBUG][0m 2026/03/03 06:21:55.750 Proxy request
+  Context: {
+  requestId: [32m'req-1772486515750-xzpo7qrpu'[39m,
+  path: [32m'/nation/create'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  pathname: [32m'/nation/create'[39m,
+  isPublicPath: [33mfalse[39m,
+  isStaticPath: [33mfalse[39m,
+  isLandingPath: [33mfalse[39m
+}
+[36m[DEBUG][0m 2026/03/03 06:21:55.751 Session retrieved successfully
+  Context: {
+  requestId: [32m'req-1772486515750-xzpo7qrpu'[39m,
+  path: [32m'/nation/create'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: { userId: [32m'1'[39m, userEmail: [32m'leader@example.com'[39m, role: [32m'group_leader'[39m }
+[36m[DEBUG][0m 2026/03/03 06:21:55.752 Request authorized
+  Context: {
+  requestId: [32m'req-1772486515750-xzpo7qrpu'[39m,
+  path: [32m'/nation/create'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: { authenticated: [33mtrue[39m, userId: [32m'1'[39m }
+
+[90mstdout[2m | src/__tests__/proxy.test.ts[2m > [22m[2mproxy (Next.js 16 Middleware)[2m > [22m[2mshould handle session retrieval errors gracefully[22m[39m
+[36m[DEBUG][0m 2026/03/03 06:21:55.754 Proxy request
+  Context: {
+  requestId: [32m'req-1772486515754-0a7c1v2ah'[39m,
+  path: [32m'/protected'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  pathname: [32m'/protected'[39m,
+  isPublicPath: [33mfalse[39m,
+  isStaticPath: [33mfalse[39m,
+  isLandingPath: [33mfalse[39m
+}
+[33m[WARN][0m 2026/03/03 06:21:55.755 Session retrieval failed
+  Context: {
+  requestId: [32m'req-1772486515754-0a7c1v2ah'[39m,
+  path: [32m'/protected'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  errorCode: [32m'UNKNOWN'[39m,
+  statusCode: [33m401[39m,
+  isOperational: [33mtrue[39m,
+  originalError: [32m'Network error'[39m
+}
+[33m[WARN][0m 2026/03/03 06:21:55.756 [SECURITY_EVENT] Authentication failed
+  Context: {
+  requestId: [32m'req-1772486515754-0a7c1v2ah'[39m,
+  path: [32m'/protected'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  event: [32m'authentication_failed'[39m,
+  code: [32m'AUTH_1001'[39m,
+  originalError: [32m'Network error'[39m,
+  errorCode: [32m'UNKNOWN'[39m
+}
+[31m[ERROR][0m 2026/03/03 06:21:55.757 [SECURITY_EVENT] Authentication retrieval error
+  Context: {
+  requestId: [32m'req-1772486515754-0a7c1v2ah'[39m,
+  path: [32m'/protected'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  event: [32m'auth_retrieval_error'[39m,
+  pathname: [32m'/protected'[39m,
+  severity: [32m'high'[39m,
+  ip: [1mnull[22m,
+  userAgent: [1mnull[22m,
+  timestamp: [32m'2026-03-02T21:21:55.757Z'[39m
+}
+[33m[WARN][0m 2026/03/03 06:21:55.766 [SECURITY_EVENT] Unauthenticated access to protected path
+  Context: {
+  requestId: [32m'req-1772486515754-0a7c1v2ah'[39m,
+  path: [32m'/protected'[39m,
+  method: [32m'GET'[39m,
+  userAgent: [90mundefined[39m,
+  ipAddress: [90mundefined[39m
+}
+  Metadata: {
+  event: [32m'unauthenticated_access'[39m,
+  pathname: [32m'/protected'[39m,
+  severity: [32m'medium'[39m,
+  ip: [1mnull[22m,
+  timestamp: [32m'2026-03-02T21:21:55.766Z'[39m
+}
+
+stderr | src/__tests__/proxy.test.ts > proxy (Next.js 16 Middleware) > should handle session retrieval errors gracefully
+  Error: {
+  name: 'AuthenticationError',
+  message: 'Session retrieval failed',
+  code: 'AUTH_1001',
+  digest: undefined
+}
+  Stack: AuthenticationError: Session retrieval failed
+    at U:\2026src\vns-masakinihirota\src\proxy.ts:93:29
+    at Module.proxy (U:\2026src\vns-masakinihirota\src\proxy.ts:25:10)
+    at U:\2026src\vns-masakinihirota\src\__tests__\proxy.test.ts:109:22
+    at runTest (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:781:11)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/vitest@1.6.1_@types+node@20_f9fd341a1ef9dd8ef35700ea632852cb/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7
+    at withEnv (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/vitest@1.6.1_@types+node@20_f9fd341a1ef9dd8ef35700ea632852cb/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:83:5)
+
+ [33m笶ｯ[39m src/components/auth/github-login-form/github-login-form.logic.test.ts [2m ([22m[2m4 tests[22m [2m|[22m [31m4 failed[39m[2m)[22m[90m 12[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/components/auth/github-login-form/github-login-form.logic.test.ts[2m > [22museGitHubLoginLogic[2m > [22m豁｣蟶ｸ縺ｫGitHub隱崎ｨｼ繧貞ｮ溯｡後〒縺阪ｋ[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/github-login-form/github-login-form.logic.test.ts[2m > [22museGitHubLoginLogic[2m > [22m繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/github-login-form/github-login-form.logic.test.ts[2m > [22museGitHubLoginLogic[2m > [22m萓句､悶′逋ｺ逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/github-login-form/github-login-form.logic.test.ts[2m > [22museGitHubLoginLogic[2m > [22mfeatures縺梧ｭ｣縺励￥蜿門ｾ励＆繧後ｋ[39m
+[31m     竊・document is not defined[39m
+ [33m笶ｯ[39m src/components/auth/google-login-form/google-login-form.logic.test.ts [2m ([22m[2m4 tests[22m [2m|[22m [31m4 failed[39m[2m)[22m[90m 13[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/components/auth/google-login-form/google-login-form.logic.test.ts[2m > [22museGoogleLoginLogic[2m > [22m豁｣蟶ｸ縺ｫGoogle隱崎ｨｼ繧貞ｮ溯｡後〒縺阪ｋ[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/google-login-form/google-login-form.logic.test.ts[2m > [22museGoogleLoginLogic[2m > [22m繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/google-login-form/google-login-form.logic.test.ts[2m > [22museGoogleLoginLogic[2m > [22m萓句､悶′逋ｺ逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/components/auth/google-login-form/google-login-form.logic.test.ts[2m > [22museGoogleLoginLogic[2m > [22mfeatures縺梧ｭ｣縺励￥蜿門ｾ励＆繧後ｋ[39m
+[31m     竊・document is not defined[39m
+ [33m笶ｯ[39m src/lib/db/groups.integration.test.ts [2m ([22m[2m5 tests[22m[2m)[22m[90m 85[2mms[22m[39m
+ [32m笨・[39m src/lib/auth/setup-root-account.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+[90mstdout[2m | src/lib/__tests__/helper.test.ts[2m > [22m[2mAuth Helper Functions[2m > [22m[2mgetSession() with cache()[2m > [22m[2mshould respect USE_REAL_AUTH environment variable[22m[39m
+[getSession] MOCK AUTH enabled
+
+[90mstdout[2m | src/lib/__tests__/helper.test.ts[2m > [22m[2mAuth Helper Functions[2m > [22m[2mgetSession() with cache()[2m > [22m[2mshould return normal user in development mode[22m[39m
+[getSession] MOCK AUTH enabled
+
+ [32m笨・[39m src/lib/__tests__/helper.test.ts [2m ([22m[2m14 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/events.integration.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 207[2mms[22m[39m
+ [32m笨・[39m src/__tests__/api/error-handler.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+stderr | src/__tests__/api/error-handler.test.ts > [Unit] Error Handler Middleware > should return 404 with NOT_FOUND error
+[API Error] { message: 'Resource not found', name: 'Error', stack: undefined }
+
+stderr | src/__tests__/api/error-handler.test.ts > [Unit] Error Handler Middleware > should return 400 with VALIDATION_ERROR
+[API Error] { message: 'Invalid data', name: 'Error', stack: undefined }
+
+stderr | src/__tests__/api/error-handler.test.ts > [Unit] Error Handler Middleware > should return 500 for unexpected errors
+[API Error] { message: 'Unexpected error', name: 'Error', stack: undefined }
+
+ [32m笨・[39m src/lib/auth/root-account-guard.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+ [32m笨・[39m src/lib/db/__tests__/nation-queries.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 10[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/misc.integration.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 85[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/trial-storage.test.ts [2m ([22m[2m5 tests[22m [2m|[22m [31m5 failed[39m[2m)[22m[90m 12[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/lib/trial-storage.test.ts[2m > [22mTrialStorage[2m > [22mshould initialize with default points[39m
+[31m     竊・localStorage is not defined[39m
+[31m   [33m笶ｯ[31m src/lib/trial-storage.test.ts[2m > [22mTrialStorage[2m > [22mshould consume points normally[39m
+[31m     竊・localStorage is not defined[39m
+[31m   [33m笶ｯ[31m src/lib/trial-storage.test.ts[2m > [22mTrialStorage[2m > [22mshould not allow consumption if points are insufficient[39m
+[31m     竊・localStorage is not defined[39m
+[31m   [33m笶ｯ[31m src/lib/trial-storage.test.ts[2m > [22mTrialStorage[2m > [22mshould apply penalty for rapid actions[39m
+[31m     竊・localStorage is not defined[39m
+[31m   [33m笶ｯ[31m src/lib/trial-storage.test.ts[2m > [22mTrialStorage[2m > [22mshould reset penalty after detailed time passed[39m
+[31m     竊・localStorage is not defined[39m
+ [33m笶ｯ[39m src/lib/db/user-profiles.integration.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 98[2mms[22m[39m
+ [2m[90m竊・[39m[22m src/__tests__/integration/auth-flow.integration.test.ts [2m ([22m[2m8 tests[22m [2m|[22m [33m8 skipped[39m[2m)[22m
+ [32m笨・[39m src/lib/db/__tests__/group-queries.test.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 6[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/nations.integration.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 98[2mms[22m[39m
+ [32m笨・[39m src/lib/db/business-cards.test.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+ [33m笶ｯ[39m src/app/(protected)/(admin)/admin/page.test.tsx [2m ([22m[2m2 tests[22m [2m|[22m [31m2 failed[39m[2m)[22m[90m 12[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/app/(protected)/(admin)/admin/page.test.tsx[2m > [22madmin page[2m > [22mplatform_admin 繧ｬ繝ｼ繝峨〒繝ｬ繝ｳ繝繝ｪ繝ｳ繧ｰ縺輔ｌ繧・[39m
+[31m     竊・document is not defined[39m
+[31m   [33m笶ｯ[31m src/app/(protected)/(admin)/admin/page.test.tsx[2m > [22madmin page[2m > [22m邨ｱ險亥叙蠕励′螟ｱ謨励＠縺ｦ繧ゅ・繝ｼ繧ｸ陦ｨ遉ｺ縺ｯ邯咏ｶ壹〒縺阪ｋ[39m
+[31m     竊・document is not defined[39m
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+ [32m笨・[39m src/lib/auth-guard.test.tsx [2m ([22m[2m2 tests[22m[2m)[22m[90m 7[2mms[22m[39m
+ [32m笨・[39m src/lib/auth/__tests__/internal-import.test.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 3[2mms[22m[39m
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+ [32m笨・[39m src/lib/auth/__tests__/simple-import-mock.test.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 3[2mms[22m[39m
+ [32m笨・[39m src/lib/auth/__tests__/dependency-import.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+[90mstdout[2m | src\lib\auth\rbac-helper.ts:3:9[22m[39m
+DEBUG: rbac-helper.ts is being loaded
+
+ [32m笨・[39m src/lib/auth/__tests__/simple-import.test.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 4[2mms[22m[39m
+ [32m笨・[39m src/lib/auth/__tests__/schema-import.test.ts [2m ([22m[2m1 test[22m[2m)[22m[90m 4[2mms[22m[39m
+ [33m笶ｯ[39m src/components/auth/anonymous-login-form/anonymous-login-form.test.tsx [2m ([22m[2m1 test[22m [2m|[22m [31m1 failed[39m[2m)[22m[90m 10[2mms[22m[39m
+[31m   [33m笶ｯ[31m src/components/auth/anonymous-login-form/anonymous-login-form.test.tsx[2m > [22mAnonymousLoginForm Accessibility[2m > [22mshould have no accessibility violations[39m
+[31m     竊・document is not defined[39m
+ [33m笶ｯ[39m src/components/layout/header/auth-button.test.tsx [2m ([22m[2m0 test[22m[2m)[22m
+ [33m笶ｯ[39m src/components/layout/header/trial-button.test.tsx [2m ([22m[2m0 test[22m[2m)[22m
+ [33m笶ｯ[39m src/components/layout/header/language-toggle.test.tsx [2m ([22m[2m0 test[22m[2m)[22m
+ [33m笶ｯ[39m src/components/layout/header/ads-toggle.test.tsx [2m ([22m[2m0 test[22m[2m)[22m
+ [33m笶ｯ[39m src/components/layout/header/theme-toggle.test.tsx [2m ([22m[2m0 test[22m[2m)[22m
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Suites 13 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+
+ FAIL  src/lib/db/admin-queries.test.ts > Admin Dashboard Queries
+Error: Failed query: insert into "user" ("id", "name", "email", "email_verified", "image", "role", "banned", "ban_reason", "ban_expires", "is_anonymous", "created_at", "updated_at") values ($1, $2, $3, $4, default, $5, default, default, default, $6, $7, $8)
+params: 443a43fd-89c4-43be-94dc-70e6e45cc63d,Test Admin,admin-443a43fd-89c4-43be-94dc-70e6e45cc63d@test.local,true,admin,false,2026-03-02T21:21:52.953Z,2026-03-02T21:21:52.953Z
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ src/lib/db/admin-queries.test.ts:23:7
+     21|       // 繝・せ繝育畑縺ｮ繝ｦ繝ｼ繧ｶ繝ｼ繧剃ｽ懈・・・etter Auth 讓呎ｺ厄ｼ・[39m
+     22|       testUserId = uuidv4();
+     23|       await database.insert(users).values({
+       |       ^
+     24|         id: testUserId,
+     25|         name: 'Test Admin',
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'insert into "user" ("id", "name", "email", "email_verified", "image", "role", "banned", "ban_reason", "ban_expires", "is_anonymous", "created_at", "updated_at") values ($1, $2, $3, $4, default, $5, default, default, default, $6, $7, $8)', params: [ '443a43fd-89c4-43be-94dc-70e6e45cc63d', 'Test Admin', 'admin-443a43fd-89c4-43be-94dc-70e6e45cc63d@test.local', true, 'admin', false, '2026-03-02T21:21:52.953Z', '2026-03-02T21:21:52.953Z' ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ '443a43fd-89c4-43be-94dc-70e6e45cc63d', 'Test Admin', 'admin-443a43fd-89c4-43be-94dc-70e6e45cc63d@test.local', true, 'admin', false, '2026-03-02T21:21:52.953Z', '2026-03-02T21:21:52.953Z' ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/62]竡ｯ
+
+ FAIL  src/lib/db/events.integration.test.ts > Events Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/events.integration.test.ts:20:21
+     18|   beforeAll(async () => {
+     19|     // Find a user
+     20|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     21|     if (!profile) {
+     22|       throw new Error(
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[2/62]竡ｯ
+
+ FAIL  src/lib/db/groups.integration.test.ts > Groups Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/groups.integration.test.ts:35:21
+     33|     // Db schema has userProfiles.
+     34| 
+     35|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     36|     if (!profile) {
+     37|       console.warn("No user profile found. Tests might fail.");
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[3/62]竡ｯ
+
+ FAIL  src/lib/db/market.integration.test.ts > Market Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/market.integration.test.ts:25:21
+     23|   beforeAll(async () => {
+     24|     // Setup: Get Root Account
+     25|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     26|     if (!profile)
+     27|       throw new Error("Need at least one profile to find root account"窶ｦ
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[4/62]竡ｯ
+
+ FAIL  src/lib/db/misc.integration.test.ts > Misc Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/misc.integration.test.ts:20:21
+     18| 
+     19|   beforeAll(async () => {
+     20|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     21|     if (!profile) throw new Error("Need a profile");
+     22|     testProfileId = profile.id;
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[5/62]竡ｯ
+
+ FAIL  src/lib/db/nations.integration.test.ts > Nations Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/nations.integration.test.ts:14:21
+     12|   beforeAll(async () => {
+     13|     // Find a user to be the owner
+     14|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     15|     if (!profile) {
+     16|       throw new Error(
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[6/62]竡ｯ
+
+ FAIL  src/lib/db/user-profiles.integration.test.ts > User Profiles Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/user-profiles.integration.test.ts:19:21
+     17|     // Find a root account.
+     18|     // We can find a user profile and get its rootAccountId.
+     19|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     20|     if (!profile) {
+     21|       throw new Error(
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[7/62]竡ｯ
+
+ FAIL  src/components/layout/header/ads-toggle.test.tsx [ src/components/layout/header/ads-toggle.test.tsx ]
+ FAIL  src/components/layout/header/auth-button.test.tsx [ src/components/layout/header/auth-button.test.tsx ]
+ FAIL  src/components/layout/header/language-toggle.test.tsx [ src/components/layout/header/language-toggle.test.tsx ]
+ FAIL  src/components/layout/header/theme-toggle.test.tsx [ src/components/layout/header/theme-toggle.test.tsx ]
+ FAIL  src/components/layout/header/trial-button.test.tsx [ src/components/layout/header/trial-button.test.tsx ]
+TypeError: Cannot set property isConnected of [object Object] which has only a getter
+ 笶ｯ new Node node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/src/nodes/node/Node.ts:57:29
+ 笶ｯ new Element node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/lib/nodes/element/Element.js:25:9
+ 笶ｯ new HTMLElement node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/lib/nodes/html-element/HTMLElement.js:17:9
+ 笶ｯ new HTMLUnknownElement node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/lib/nodes/html-unknown-element/HTMLUnknownElement.js:13:9
+ 笶ｯ HTMLDocument.createElementNS node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/src/nodes/document/Document.ts:834:19
+ 笶ｯ HTMLDocument.createElement node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/src/nodes/document/Document.ts:803:15
+ 笶ｯ node_modules/.pnpm/axe-core@4.11.1/node_modules/axe-core/axe.js:19425:32
+ 笶ｯ _pollyfillElementsFromPoint node_modules/.pnpm/axe-core@4.11.1/node_modules/axe-core/axe.js:19428:8
+ 笶ｯ node_modules/.pnpm/axe-core@4.11.1/node_modules/axe-core/axe.js:19458:36
+ 笶ｯ axeFunction node_modules/.pnpm/axe-core@4.11.1/node_modules/axe-core/axe.js:29512:5
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[8/62]竡ｯ
+
+ FAIL  src/lib/db/__tests__/auth-schema.test.ts [ src/lib/db/__tests__/auth-schema.test.ts ]
+TypeError: Cannot read properties of undefined (reading 'columns')
+ 笶ｯ src/lib/db/__tests__/auth-schema.test.ts:53:53
+     51| 
+     52|   describe("Users Table Columns", () => {
+     53|     const tableColumns = Object.keys(schema.users._.columns);
+       |                                                     ^
+     54| 
+     55|     REQUIRED_TABLES.users.forEach((col) => {
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[9/62]竡ｯ
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Tests 49 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+
+ FAIL  src/lib/trial-storage.test.ts > TrialStorage > should initialize with default points
+ FAIL  src/lib/trial-storage.test.ts > TrialStorage > should consume points normally
+ FAIL  src/lib/trial-storage.test.ts > TrialStorage > should not allow consumption if points are insufficient
+ FAIL  src/lib/trial-storage.test.ts > TrialStorage > should apply penalty for rapid actions
+ FAIL  src/lib/trial-storage.test.ts > TrialStorage > should reset penalty after detailed time passed
+ReferenceError: localStorage is not defined
+ 笶ｯ src/lib/trial-storage.test.ts:7:5
+      5| describe("TrialStorage", () => {
+      6|   beforeEach(() => {
+      7|     localStorage.clear();
+       |     ^
+      8|     vi.useFakeTimers();
+      9|   });
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[10/62]竡ｯ
+
+ FAIL  src/__tests__/rbac-authorization.test.ts > RBAC Authorization Checks > checkGroupRole() > should return true for platform_admin
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ 笶ｯ src/__tests__/rbac-authorization.test.ts:206:22
+    204|       const session = createTestSession('user-1', 'platform_admin');
+    205|       const result = await checkGroupRole(session, 'group-123', 'membe窶ｦ
+    206|       expect(result).toBe(true);
+       |                      ^
+    207|     });
+    208| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[11/62]竡ｯ
+
+ FAIL  src/__tests__/rbac-authorization.test.ts > RBAC Integration Scenarios > Scenario: Group Role Hierarchy > platform_admin bypasses group role checks
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ 笶ｯ src/__tests__/rbac-authorization.test.ts:277:22
+    275|     it('platform_admin bypasses group role checks', async () => {
+    276|       const result = await checkGroupRole(adminSession, 'group-1', 'me窶ｦ
+    277|       expect(result).toBe(true);
+       |                      ^
+    278|     });
+    279| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[12/62]竡ｯ
+
+ FAIL  src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts > useAnonymousLoginLogic > 豁｣蟶ｸ縺ｫ蛹ｿ蜷崎ｪ崎ｨｼ繧貞ｮ溯｡後〒縺阪ｋ
+ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts:47:24
+     45|     } as Response);
+     46| 
+     47|     const { result } = renderHook(() => useAnonymousLoginLogic());
+       |                        ^
+     48| 
+     49|     expect(result.current.isLoading).toBe(false);
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[13/62]竡ｯ
+
+ FAIL  src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts > useAnonymousLoginLogic > API繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts:82:24
+     80|     } as Response);
+     81| 
+     82|     const { result } = renderHook(() => useAnonymousLoginLogic());
+       |                        ^
+     83| 
+     84|     const mockEvent = {
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[14/62]竡ｯ
+
+ FAIL  src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts > useAnonymousLoginLogic > 繝阪ャ繝医Ρ繝ｼ繧ｯ繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts:104:24
+    102|     mockFetch.mockRejectedValue(new Error("Network error"));
+    103| 
+    104|     const { result } = renderHook(() => useAnonymousLoginLogic());
+       |                        ^
+    105| 
+    106|     const mockEvent = {
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[15/62]竡ｯ
+
+ FAIL  src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts > useAnonymousLoginLogic > success=false縺ｮ蝣ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts:128:24
+    126|     } as Response);
+    127| 
+    128|     const { result } = renderHook(() => useAnonymousLoginLogic());
+       |                        ^
+    129| 
+    130|     const mockEvent = {
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[16/62]竡ｯ
+
+ FAIL  src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts > useAnonymousLoginLogic > features縺梧ｭ｣縺励￥蜿門ｾ励＆繧後ｋ
+ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts:146:24
+    144| 
+    145|   it("features縺梧ｭ｣縺励￥蜿門ｾ励＆繧後ｋ", () => {
+    146|     const { result } = renderHook(() => useAnonymousLoginLogic());
+       |                        ^
+    147| 
+    148|     expect(result.current.features).toHaveLength(1);
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[17/62]竡ｯ
+
+ FAIL  src/components/auth/anonymous-login-form/anonymous-login-form.test.tsx > AnonymousLoginForm Accessibility > should have no accessibility violations
+ReferenceError: document is not defined
+ 笶ｯ Proxy.render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ src/components/auth/anonymous-login-form/anonymous-login-form.test.tsx:20:27
+     18| describe("AnonymousLoginForm Accessibility", () => {
+     19|   it("should have no accessibility violations", async () => {
+     20|     const { container } = render(<AnonymousLoginForm />);
+       |                           ^
+     21|     const results = await axe(container);
+     22|     expect(results).toHaveNoViolations();
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[18/62]竡ｯ
+
+ FAIL  src/components/auth/github-login-form/github-login-form.logic.test.ts > useGitHubLoginLogic > 豁｣蟶ｸ縺ｫGitHub隱崎ｨｼ繧貞ｮ溯｡後〒縺阪ｋ
+ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/github-login-form/github-login-form.logic.test.ts:40:24
+     38|     mockSignIn.mockResolvedValue({ error: null } as any);
+     39| 
+     40|     const { result } = renderHook(() => useGitHubLoginLogic());
+       |                        ^
+     41| 
+     42|     expect(result.current.isLoading).toBe(false);
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[19/62]竡ｯ
+
+ FAIL  src/components/auth/github-login-form/github-login-form.logic.test.ts > useGitHubLoginLogic > 繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/github-login-form/github-login-form.logic.test.ts:65:24
+     63|     mockSignIn.mockResolvedValue({ error: mockError } as any);
+     64| 
+     65|     const { result } = renderHook(() => useGitHubLoginLogic());
+       |                        ^
+     66| 
+     67|     const mockEvent = {
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[20/62]竡ｯ
+
+ FAIL  src/components/auth/github-login-form/github-login-form.logic.test.ts > useGitHubLoginLogic > 萓句､悶′逋ｺ逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/github-login-form/github-login-form.logic.test.ts:88:24
+     86|     mockSignIn.mockRejectedValue(mockError);
+     87| 
+     88|     const { result } = renderHook(() => useGitHubLoginLogic());
+       |                        ^
+     89| 
+     90|     const mockEvent = {
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[21/62]竡ｯ
+
+ FAIL  src/components/auth/github-login-form/github-login-form.logic.test.ts > useGitHubLoginLogic > features縺梧ｭ｣縺励￥蜿門ｾ励＆繧後ｋ
+ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/github-login-form/github-login-form.logic.test.ts:106:24
+    104| 
+    105|   it("features縺梧ｭ｣縺励￥蜿門ｾ励＆繧後ｋ", () => {
+    106|     const { result } = renderHook(() => useGitHubLoginLogic());
+       |                        ^
+    107| 
+    108|     expect(result.current.features).toHaveLength(1);
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[22/62]竡ｯ
+
+ FAIL  src/components/auth/google-login-form/google-login-form.logic.test.ts > useGoogleLoginLogic > 豁｣蟶ｸ縺ｫGoogle隱崎ｨｼ繧貞ｮ溯｡後〒縺阪ｋ
+ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/google-login-form/google-login-form.logic.test.ts:40:24
+     38|     mockSignIn.mockResolvedValue({ error: null } as any);
+     39| 
+     40|     const { result } = renderHook(() => useGoogleLoginLogic());
+       |                        ^
+     41| 
+     42|     expect(result.current.isLoading).toBe(false);
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[23/62]竡ｯ
+
+ FAIL  src/components/auth/google-login-form/google-login-form.logic.test.ts > useGoogleLoginLogic > 繧ｨ繝ｩ繝ｼ縺檎匱逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/google-login-form/google-login-form.logic.test.ts:65:24
+     63|     mockSignIn.mockResolvedValue({ error: mockError } as any);
+     64| 
+     65|     const { result } = renderHook(() => useGoogleLoginLogic());
+       |                        ^
+     66| 
+     67|     const mockEvent = {
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[24/62]竡ｯ
+
+ FAIL  src/components/auth/google-login-form/google-login-form.logic.test.ts > useGoogleLoginLogic > 萓句､悶′逋ｺ逕溘＠縺溷ｴ蜷医√お繝ｩ繝ｼ諠・ｱ繧定ｨｭ螳壹☆繧・ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/google-login-form/google-login-form.logic.test.ts:88:24
+     86|     mockSignIn.mockRejectedValue(mockError);
+     87| 
+     88|     const { result } = renderHook(() => useGoogleLoginLogic());
+       |                        ^
+     89| 
+     90|     const mockEvent = {
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[25/62]竡ｯ
+
+ FAIL  src/components/auth/google-login-form/google-login-form.logic.test.ts > useGoogleLoginLogic > features縺梧ｭ｣縺励￥蜿門ｾ励＆繧後ｋ
+ReferenceError: document is not defined
+ 笶ｯ render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ Proxy.renderHook node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:318:7
+ 笶ｯ src/components/auth/google-login-form/google-login-form.logic.test.ts:106:24
+    104| 
+    105|   it("features縺梧ｭ｣縺励￥蜿門ｾ励＆繧後ｋ", () => {
+    106|     const { result } = renderHook(() => useGoogleLoginLogic());
+       |                        ^
+    107| 
+    108|     expect(result.current.features).toHaveLength(1);
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[26/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > isGhostMask() > should return true for ghost mask category
+RBACError: Failed to verify account type.
+ 笶ｯ src/lib/auth/rbac-helper.ts:212:11
+    210|     });
+    211| 
+    212|     throw new RBACError(
+       |           ^
+    213|       'Failed to verify account type.',
+    214|       'MASK_LOOKUP_FAILED',
+ 笶ｯ node_modules/.pnpm/react@19.2.3/node_modules/react/cjs/react.development.js:919:19
+ 笶ｯ Module.isGhostMask src/lib/auth/rbac-helper.ts:244:32
+ 笶ｯ src/lib/auth/__tests__/ghost-mode.test.ts:131:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { code: 'MASK_LOOKUP_FAILED', context: { userId: 'user-ghost-1' } }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[27/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > isGhostMask() > should return false for persona mask category
+RBACError: Failed to verify account type.
+ 笶ｯ src/lib/auth/rbac-helper.ts:212:11
+    210|     });
+    211| 
+    212|     throw new RBACError(
+       |           ^
+    213|       'Failed to verify account type.',
+    214|       'MASK_LOOKUP_FAILED',
+ 笶ｯ node_modules/.pnpm/react@19.2.3/node_modules/react/cjs/react.development.js:919:19
+ 笶ｯ Module.isGhostMask src/lib/auth/rbac-helper.ts:244:32
+ 笶ｯ src/lib/auth/__tests__/ghost-mode.test.ts:155:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { code: 'MASK_LOOKUP_FAILED', context: { userId: 'user-persona-1' } }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[28/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > isGhostMask() > should return false when user profile not found
+RBACError: Failed to verify account type.
+ 笶ｯ src/lib/auth/rbac-helper.ts:212:11
+    210|     });
+    211| 
+    212|     throw new RBACError(
+       |           ^
+    213|       'Failed to verify account type.',
+    214|       'MASK_LOOKUP_FAILED',
+ 笶ｯ node_modules/.pnpm/react@19.2.3/node_modules/react/cjs/react.development.js:919:19
+ 笶ｯ Module.isGhostMask src/lib/auth/rbac-helper.ts:244:32
+ 笶ｯ src/lib/auth/__tests__/ghost-mode.test.ts:213:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { code: 'MASK_LOOKUP_FAILED', context: { userId: 'user-persona-1' } }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[29/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > checkInteractionAllowed() > should deny interaction for ghost mask
+RBACError: Failed to verify account type.
+ 笶ｯ src/lib/auth/rbac-helper.ts:212:11
+    210|     });
+    211| 
+    212|     throw new RBACError(
+       |           ^
+    213|       'Failed to verify account type.',
+    214|       'MASK_LOOKUP_FAILED',
+ 笶ｯ node_modules/.pnpm/react@19.2.3/node_modules/react/cjs/react.development.js:919:19
+ 笶ｯ isGhostMask src/lib/auth/rbac-helper.ts:244:32
+ 笶ｯ Module.checkInteractionAllowed src/lib/auth/rbac-helper.ts:302:29
+ 笶ｯ src/lib/auth/__tests__/ghost-mode.test.ts:239:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { code: 'MASK_LOOKUP_FAILED', context: { userId: 'user-ghost-1' } }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[30/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > checkInteractionAllowed() > should allow interaction for persona mask
+RBACError: Failed to verify account type.
+ 笶ｯ src/lib/auth/rbac-helper.ts:212:11
+    210|     });
+    211| 
+    212|     throw new RBACError(
+       |           ^
+    213|       'Failed to verify account type.',
+    214|       'MASK_LOOKUP_FAILED',
+ 笶ｯ node_modules/.pnpm/react@19.2.3/node_modules/react/cjs/react.development.js:919:19
+ 笶ｯ isGhostMask src/lib/auth/rbac-helper.ts:244:32
+ 笶ｯ Module.checkInteractionAllowed src/lib/auth/rbac-helper.ts:302:29
+ 笶ｯ src/lib/auth/__tests__/ghost-mode.test.ts:263:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { code: 'MASK_LOOKUP_FAILED', context: { userId: 'user-persona-1' } }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[31/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > VNS Design Philosophy Validation > 蟷ｽ髴・(Ghost) 縺ｯ隕ｳ貂ｬ閠・→縺励※陦悟虚縺励∽ｸ也阜縺ｫ蟷ｲ貂峨〒縺阪↑縺・RBACError: Failed to verify account type.
+ 笶ｯ src/lib/auth/rbac-helper.ts:212:11
+    210|     });
+    211| 
+    212|     throw new RBACError(
+       |           ^
+    213|       'Failed to verify account type.',
+    214|       'MASK_LOOKUP_FAILED',
+ 笶ｯ node_modules/.pnpm/react@19.2.3/node_modules/react/cjs/react.development.js:919:19
+ 笶ｯ Module.isGhostMask src/lib/auth/rbac-helper.ts:244:32
+ 笶ｯ src/lib/auth/__tests__/ghost-mode.test.ts:347:29
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { code: 'MASK_LOOKUP_FAILED', context: { userId: 'user-ghost-1' } }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[32/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > VNS Design Philosophy Validation > 繝壹Ν繧ｽ繝・(Persona) 縺ｯ莉ｮ髱｢繧定｢ｫ縺｣縺ｦ荳也阜縺ｨ逶ｸ莠剃ｽ懃畑縺ｧ縺阪ｋ
+RBACError: Failed to verify account type.
+ 笶ｯ src/lib/auth/rbac-helper.ts:212:11
+    210|     });
+    211| 
+    212|     throw new RBACError(
+       |           ^
+    213|       'Failed to verify account type.',
+    214|       'MASK_LOOKUP_FAILED',
+ 笶ｯ node_modules/.pnpm/react@19.2.3/node_modules/react/cjs/react.development.js:919:19
+ 笶ｯ Module.isGhostMask src/lib/auth/rbac-helper.ts:244:32
+ 笶ｯ src/lib/auth/__tests__/ghost-mode.test.ts:392:29
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { code: 'MASK_LOOKUP_FAILED', context: { userId: 'user-persona-1' } }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[33/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > VNS Design Philosophy Validation > 繝励Λ繝・ヨ繝輔か繝ｼ繝邂｡逅・・・繝槭せ繧ｯ縺ｫ髢｢菫ゅ↑縺上☆縺ｹ縺ｦ險ｱ蜿ｯ縺輔ｌ繧・RBACError: Failed to verify account type.
+ 笶ｯ src/lib/auth/rbac-helper.ts:212:11
+    210|     });
+    211| 
+    212|     throw new RBACError(
+       |           ^
+    213|       'Failed to verify account type.',
+    214|       'MASK_LOOKUP_FAILED',
+ 笶ｯ node_modules/.pnpm/react@19.2.3/node_modules/react/cjs/react.development.js:919:19
+ 笶ｯ Module.isGhostMask src/lib/auth/rbac-helper.ts:244:32
+ 笶ｯ src/lib/auth/__tests__/ghost-mode.test.ts:419:29
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { code: 'MASK_LOOKUP_FAILED', context: { userId: 'user-admin-ghost-1' } }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[34/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/rbac-boundary-cases.test.ts > RBAC Boundary Cases > Role Hierarchy Boundaries > sub_leader 縺ｯ mediator 讓ｩ髯舌ｒ蠢・ｦ√→縺吶ｋ謫堺ｽ懊ｒ繝代せ縺吶ｋ
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ 笶ｯ src/lib/auth/__tests__/rbac-boundary-cases.test.ts:167:22
+    165| 
+    166|       const result = await checkGroupRole(personaSession, "550e8400-e2窶ｦ
+    167|       expect(result).toBe(true);
+       |                      ^
+    168|     });
+    169| 
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[35/62]竡ｯ
+
+ FAIL  src/lib/auth/__tests__/rbac-boundary-cases.test.ts > RBAC Boundary Cases > Edge Cases > 荳肴ｭ｣縺ｪUUID蠖｢蠑上・ID縺ｯ繝舌Μ繝・・繧ｷ繝ｧ繝ｳ縺ｧ蠑ｾ縺九ｌ繧・AssertionError: promise resolved "false" instead of rejecting
+
+- Expected: 
+[Error: rejected promise]
+
++ Received: 
+false
+
+ 笶ｯ src/lib/auth/__tests__/rbac-boundary-cases.test.ts:191:76
+    189|     it("荳肴ｭ｣縺ｪUUID蠖｢蠑上・ID縺ｯ繝舌Μ繝・・繧ｷ繝ｧ繝ｳ縺ｧ蠑ｾ縺九ｌ繧・, async () => {
+    190|       // 螳滄圀縺ｫ縺ｯ checkGroupRole 縺ｮ蜀帝ｭ縺ｧ validateUUID 縺悟他縺ｰ繧後ｋ
+    191|       await expect(checkGroupRole(personaSession, "invalid-uuid", "mem窶ｦ
+       |                                                                            ^
+    192|         .rejects.toThrow();
+    193|     });
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[36/62]竡ｯ
+
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 0 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 4 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 5 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 6 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 10 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 11 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 20 should end with proper punctuation
+AssertionError: expected '繧・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/
+
+- Expected: 
+/[縲ゅ・ｼ峨阪〒縺吶▲\n]/
+
++ Received: 
+"繧・
+
+ 笶ｯ src/lib/errors/__tests__/messages.test.ts:58:26
+     56|         // Japan text particles or punctuation
+     57|         const validEndings = /[縲ゅ・ｼ峨阪〒縺吶▲\n]/;
+     58|         expect(lastChar).toMatch(validEndings);
+       |                          ^
+     59|       });
+     60|     });
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[37/62]竡ｯ
+
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 1 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 3 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 13 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 16 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 17 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 18 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 21 should end with proper punctuation
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message Quality > message 23 should end with proper punctuation
+AssertionError: expected '縺・ to match /[縲ゅ・ｼ峨阪〒縺吶▲\n]/
+
+- Expected: 
+/[縲ゅ・ｼ峨阪〒縺吶▲\n]/
+
++ Received: 
+"縺・
+
+ 笶ｯ src/lib/errors/__tests__/messages.test.ts:58:26
+     56|         // Japan text particles or punctuation
+     57|         const validEndings = /[縲ゅ・ｼ峨阪〒縺吶▲\n]/;
+     58|         expect(lastChar).toMatch(validEndings);
+       |                          ^
+     59|       });
+     60|     });
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[38/62]竡ｯ
+
+ FAIL  src/lib/errors/__tests__/messages.test.ts > Error Messages Completeness > Message consistency > authorization errors should be consistent
+AssertionError: expected '邂｡逅・・・縺ｿ縺悟茜逕ｨ縺ｧ縺阪ｋ讖溯・縺ｧ縺・ to match /讓ｩ髯酢險ｱ蜿ｯ|蠖ｹ蜑ｲ|繧｢繧ｯ繧ｻ繧ｹ/
+
+- Expected: 
+/讓ｩ髯酢險ｱ蜿ｯ|蠖ｹ蜑ｲ|繧｢繧ｯ繧ｻ繧ｹ/
+
++ Received: 
+"邂｡逅・・・縺ｿ縺悟茜逕ｨ縺ｧ縺阪ｋ讖溯・縺ｧ縺・
+
+ 笶ｯ src/lib/errors/__tests__/messages.test.ts:115:33
+    113|         const msg = ERROR_MESSAGES[code as keyof typeof ERROR_MESSAGES窶ｦ
+    114|         // Should mention permission or role related words
+    115|         expect(msg.userMessage).toMatch(/讓ｩ髯酢險ｱ蜿ｯ|蠖ｹ蜑ｲ|繧｢繧ｯ繧ｻ繧ｹ/);
+       |                                 ^
+    116|       });
+    117|     });
+ 笶ｯ src/lib/errors/__tests__/messages.test.ts:112:18
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[39/62]竡ｯ
+
+ FAIL  src/app/(protected)/(admin)/admin/page.test.tsx > admin page > platform_admin 繧ｬ繝ｼ繝峨〒繝ｬ繝ｳ繝繝ｪ繝ｳ繧ｰ縺輔ｌ繧・ReferenceError: document is not defined
+ 笶ｯ Proxy.render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ src/app/(protected)/(admin)/admin/page.test.tsx:39:27
+     37|     });
+     38| 
+     39|     const { container } = render(ui);
+       |                           ^
+     40| 
+     41|     const results = await axe(container);
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[40/62]竡ｯ
+
+ FAIL  src/app/(protected)/(admin)/admin/page.test.tsx > admin page > 邨ｱ險亥叙蠕励′螟ｱ謨励＠縺ｦ繧ゅ・繝ｼ繧ｸ陦ｨ遉ｺ縺ｯ邯咏ｶ壹〒縺阪ｋ
+ReferenceError: document is not defined
+ 笶ｯ Proxy.render node_modules/.pnpm/@testing-library+react@15.0_ea2a1205d6f4dd33c6695af8fddc3839/node_modules/@testing-library/react/dist/pure.js:239:5
+ 笶ｯ src/app/(protected)/(admin)/admin/page.test.tsx:63:27
+     61|     });
+     62| 
+     63|     const { container } = render(ui);
+       |                           ^
+     64| 
+     65|     const results = await axe(container);
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[41/62]竡ｯ
+
+[2m Test Files [22m [1m[31m23 failed[39m[22m[2m | [22m[1m[32m25 passed[39m[22m[2m | [22m[33m2 skipped[39m[90m (50)[39m
+[2m      Tests [22m [1m[31m49 failed[39m[22m[2m | [22m[1m[32m347 passed[39m[22m[2m | [22m[33m19 skipped[39m[90m (453)[39m
+[2m   Start at [22m 06:21:48
+[2m   Duration [22m 16.57s[2m (transform 1.68s, setup 35.25s, collect 23.77s, tests 2.01s, environment 2.35s, prepare 14.42s)[22m
+
+
+[1m[7m[31m FAIL [39m[27m[22m[31m Tests failed. Watching for file changes...[39m
+       [2mpress [22m[1mh[22m[2m to show help[22m[2m, [22m[2mpress [22m[1mq[22m[2m to quit[22m
+[31mCancelling test run. Press CTRL+c again to exit forcefully.
+[39m
+窶右LIFECYCLE窶・Test failed. See above for more details.
