@@ -133,7 +133,7 @@
 - BETTER_AUTH_SECRET（32文字以上のランダム文字列）
 - BETTER_AUTH_URL（アプリケーションURL）
 - Google/GitHub OAuth認証情報
-- NEXT_PUBLIC_USE_REAL_AUTH（ダミー認証/OAuth切り替え）
+- USE_REAL_AUTH（ダミー認証/OAuth切り替え）
 - デバッグ設定（PROXY_DEBUG）
 
 **意義**: 開発環境のセットアップを簡素化し、セキュリティベストプラクティスを明示

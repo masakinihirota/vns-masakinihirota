@@ -14,6 +14,8 @@
     "test:api": "vitest --config vitest.api.config.ts.backup",
     "test:api:watch": "vitest --config vitest.api.config.ts.backup --watch",
     "test:components": "vitest --exclude src/__tests__/api",
+    "test:eq": "vitest src/__tests__/api/rbac-equivalence.test.ts --run",
+    "test:eq:watch": "vitest src/__tests__/api/rbac-equivalence.test.ts",
     "admin:create": "tsx scripts/create-admin.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

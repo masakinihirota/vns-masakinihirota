@@ -22,7 +22,7 @@ BETTER_AUTH_URL="http://localhost:3000"
 
 # 本物認証を使用するか（開発時のみ）
 # ⚠️ 本番環境では必ず true に設定してください
-NEXT_PUBLIC_USE_REAL_AUTH=false  # false: ダミー認証（開発）、 true: OAuth認証（本番）
+USE_REAL_AUTH=false  # false: ダミー認証（開発）、 true: OAuth認証（本番）
 
 # ダミーデータ設定
 NEXT_PUBLIC_MOCK_DATA=true      # ダミーデータを使用するか
@@ -65,9 +65,9 @@ pnpm admin:create
 
 ```bash
 # 認証スキップ有効（開発時推奨）
-NEXT_PUBLIC_USE_REAL_AUTH=false pnpm dev
+USE_REAL_AUTH=false pnpm dev
 
-# または .env.local で NEXT_PUBLIC_USE_REAL_AUTH=false に設定してから
+# または .env.local で USE_REAL_AUTH=false に設定してから
 pnpm dev
 
 # デバッグ情報（proxy.ts ログ）を表示する場合
@@ -77,7 +77,7 @@ PROXY_DEBUG=true pnpm dev
 ### 6. ブラウザでアクセス
 
 - http://localhost:3000 → ランディングページ
-- http://localhost:3000/home → ユーザーダッシュボード（NEXT_PUBLIC_USE_REAL_AUTH=false 時）
+- http://localhost:3000/home → ユーザーダッシュボード（USE_REAL_AUTH=false 時）
 - http://localhost:3000/admin → 管理者ページ
 
 ---
@@ -86,7 +86,7 @@ PROXY_DEBUG=true pnpm dev
 
 | 環境変数 | 値 | 用途 | 本番 |
 |----------|---|------|------|
-| `NEXT_PUBLIC_USE_REAL_AUTH` | `true` \| `false` | OAuth認証使用よう粗OAuth／ダミー | `true` |
+| `USE_REAL_AUTH` | `true` \| `false` | OAuth認証使用よう粗OAuth／ダミー | `true` |
 | `NEXT_PUBLIC_MOCK_DATA` | `true` \| `false` | ダミーデータを使用するか | `false` |
 | `NEXT_PUBLIC_USE_MOCK_ARTWORKS` | `true` \| `false` | 作品リストのダミーデータを使用するか | `false` |
 | `PROXY_DEBUG` | `true` \| `false` | proxy.ts のログを有効化 | ⚠️ `false` |
@@ -95,21 +95,21 @@ PROXY_DEBUG=true pnpm dev
 
 ### ⚠️ セキュリティ警告
 
-- **`NEXT_PUBLIC_USE_REAL_AUTH=false` は開発環境でのみ使用してください**。本番環境では必ず `true` に設定
+- **`USE_REAL_AUTH=false` は開発環境でのみ使用してください**。本番環境では必ず `true` に設定
 - `.env.local` は `.gitignore` に登録済み（Git にコミットされない）
 - OAuth 認証情報（CLIENT_ID/SECRET）と `BETTER_AUTH_SECRET` は絶対に Git にコミットしない
-- 本番環境では `NEXT_PUBLIC_USE_REAL_AUTH=true`、`NEXT_PUBLIC_MOCK_DATA=false`
+- 本番環境では `USE_REAL_AUTH=true`、`NEXT_PUBLIC_MOCK_DATA=false`
 
 ---
 
 ## 開発時の認証フロー
 
-### NEXT_PUBLIC_USE_REAL_AUTH=false の場合（推奨）
+### USE_REAL_AUTH=false の場合（推奨）
 
 ```
 ユーザーがアクセス
   ↓
-proxy.ts で NEXT_PUBLIC_USE_REAL_AUTH をチェック
+proxy.ts で USE_REAL_AUTH をチェック
   ↓
 createDummySession() でダミーユーザーを作成
   ↓
@@ -122,7 +122,7 @@ createDummySession() でダミーユーザーを作成
 - 高速な開発・テスト
 - 全機能を即座に検証可能
 
-### NEXT_PUBLIC_USE_REAL_AUTH=true の場合（本番環境と同じ）
+### USE_REAL_AUTH=true の場合（本番環境と同じ）
 
 ```
 ユーザーがアクセス
@@ -143,7 +143,7 @@ OAuth (Google/GitHub) ログインが必要
 
 ## ダミーユーザー情報
 
-**NEXT_PUBLIC_USE_REAL_AUTH=false の場合:**
+**USE_REAL_AUTH=false の場合:**
 
 | ユーザータイプ | ID | メール | ロール |
 |--------------|-----|--------|--------|
@@ -156,14 +156,14 @@ OAuth (Google/GitHub) ログインが必要
 
 ## よくある問題と解決策
 
-### 1. `NEXT_PUBLIC_USE_REAL_AUTH=false` でセットアップしたが、ログイン画面が表示される
+### 1. `USE_REAL_AUTH=false` でセットアップしたが、ログイン画面が表示される
 
 **原因:** 環境変数が正しく読み込まれていない
 
 **解決:**
 ```bash
 # .env.local に設定を追加
-echo "NEXT_PUBLIC_USE_REAL_AUTH=false" >> .env.local
+echo "USE_REAL_AUTH=false" >> .env.local
 
 # サーバーを再起動
 pnpm dev

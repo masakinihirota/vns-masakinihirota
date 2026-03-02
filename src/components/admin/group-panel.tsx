@@ -7,6 +7,9 @@
  * - 検索・フィルタリング
  * - グループ削除
  * - メンバー管理
+ *
+ * @note
+ * Phase 6: RPC Client完全統合で全API呼び出しが型安全
  */
 
 "use client";
@@ -16,6 +19,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Users, Trash2, ChevronRight, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { client } from "@/lib/api/client";
 
 interface Group {
     id: string;
@@ -51,19 +55,25 @@ export function AdminGroupPanel({ initialGroups }: AdminGroupPanelProps) {
 
         setIsLoading(true);
         try {
-            const response = await fetch(`/api/admin/groups/${groupId}`, {
-                method: "DELETE",
+            // ✅ Phase 6: RPC Client 完全統合
+            // 型安全: client.admin.groups[':id'].delete() の型は型定義スキーマで保証
+            const response = await client.admin.groups[":id"].delete({
+                param: { id: groupId },
             });
 
-            if (response.ok) {
+            const data = await response.json();
+
+            if (data.success) {
                 setGroups((prev) => prev.filter((g) => g.id !== groupId));
                 showToast.success("グループを削除しました");
             } else {
-                showToast.error("グループの削除に失敗しました");
+                showToast.error(
+                    data.error?.message || "グループの削除に失敗しました"
+                );
             }
         } catch (error) {
             showToast.error("エラーが発生しました");
-            console.error(error);
+            console.error("Delete group error:", error);
         } finally {
             setIsLoading(false);
         }

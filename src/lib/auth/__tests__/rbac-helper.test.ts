@@ -101,7 +101,7 @@ describe("RBAC Helper Functions", () => {
   });
 
   describe("checkGroupRole", () => {
-    const groupId = "group-test-1";
+    const groupId = "12345678-1234-4234-8234-123456789012";
 
     it("should return true for platform admin (regardless of actual group role)", async () => {
       const result = await checkGroupRole(
@@ -145,7 +145,7 @@ describe("RBAC Helper Functions", () => {
   });
 
   describe("checkNationRole", () => {
-    const nationId = "nation-test-1";
+    const nationId = "23456789-1234-4234-8234-123456789012";
 
     it("should return true for platform admin", async () => {
       const result = await checkNationRole(

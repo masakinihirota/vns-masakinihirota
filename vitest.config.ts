@@ -26,9 +26,15 @@ export default defineConfig({
         '**/*.d.ts',
       ],
     },
-    // テスト除外設定: API テストは別に実行
-    exclude: ['node_modules/', 'dist/', 'src/__tests__/api/**'],
-    include: ['src/**/*.test.ts', '**/*.test.ts'],
+    // テスト除外設定
+    exclude: [
+      'node_modules/**',
+      '**/node_modules/**',
+      'dist/**',
+      '.next/**',
+      // 'src/__tests__/api/**' // 一時的にコメントアウト
+    ],
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
   },
   resolve: {
     alias: {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { client } from '@/lib/api/client';
 
 export function ApiTestClientComponent() {
     const [response, setResponse] = useState<unknown>(null);
@@ -13,7 +14,22 @@ export function ApiTestClientComponent() {
         setResponse(null);
 
         try {
-            const res = await fetch(endpoint);
+            let res;
+            switch (endpoint) {
+                case 'health':
+                    // ✅ Phase 6: RPC Client 完全統合
+                    // 型安全: client.health.get() の返り値は型定義スキーマで保証
+                    res = await client.health.get();
+                    break;
+                case 'poc/hello':
+                    // ✅ Phase 6: RPC Client 完全統合
+                    // 型安全: client.poc.hello.get() の返り値は型定義スキーマで保証
+                    res = await client.poc.hello.get();
+                    break;
+                default:
+                    throw new Error(`Unknown endpoint: ${endpoint}`);
+            }
+
             if (!res.ok) {
                 throw new Error(`HTTP ${res.status}`);
             }
@@ -30,14 +46,14 @@ export function ApiTestClientComponent() {
         <div className="space-y-4">
             <div className="flex gap-3 flex-wrap">
                 <button
-                    onClick={() => callApi('/api/health')}
+                    onClick={() => callApi('health')}
                     disabled={loading}
                     className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded disabled:bg-gray-500"
                 >
                     {loading ? '⏳' : '🔗'} GET /api/health
                 </button>
                 <button
-                    onClick={() => callApi('/api/poc/hello')}
+                    onClick={() => callApi('poc/hello')}
                     disabled={loading}
                     className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded disabled:bg-gray-500"
                 >

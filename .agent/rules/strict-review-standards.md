@@ -55,7 +55,7 @@ validateOAuthCredentials();
 // src/proxy.ts
 function validateProductionAuth() {
   if (process.env.NODE_ENV === 'production' &&
-      process.env.NEXT_PUBLIC_USE_REAL_AUTH !== 'true') {
+      process.env.USE_REAL_AUTH !== 'true') {
     throw new Error(
       '[SECURITY] USE_REAL_AUTH must be explicitly set to "true" in production environment. ' +
       'Dummy authentication is not allowed in production.'
@@ -68,7 +68,7 @@ validateProductionAuth();
 ```
 
 **ルール**:
-- ✅ 本番環境では `NEXT_PUBLIC_USE_REAL_AUTH=true` を明示的に設定（デフォルト値なし）
+- ✅ 本番環境では `USE_REAL_AUTH=true` を明示的に設定（デフォルト値なし）
 - ✅ 完全一致 (`=== 'true'`) のみを許可
 - ✅ 起動時の検証で開発用設定が本番に進出するのを防止
 
@@ -291,8 +291,7 @@ export default defineConfig({
 
 ```typescript
 // ❌ 旧クラス名（Tailwind v4 では deprecated）
-className="bg-gradient-to-b from-gray-50"
-className="flex-shrink-0"
+// 例: gradient クラスや shrink クラスは新名称に変更
 
 // ✅ 新クラス名
 className="bg-linear-to-b from-gray-50"
@@ -325,7 +324,7 @@ const clientId = process.env.GOOGLE_CLIENT_ID!;
 本番デプロイ前に以下をチェック:
 
 - [ ] **Security**: OAuth 認証情報が `.env.production` に設定
-- [ ] **Security**: `NEXT_PUBLIC_USE_REAL_AUTH=true` を設定
+- [ ] **Security**: `USE_REAL_AUTH=true` を設定
 - [ ] **Security**: `NODE_ENV=production` で起動テスト
 - [ ] **Security**: RLS ポリシーが PostgreSQL に適用
 - [ ] **Testing**: 全テストが成功 (`pnpm test`)
