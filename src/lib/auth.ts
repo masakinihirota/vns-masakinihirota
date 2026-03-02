@@ -1,11 +1,11 @@
-import { betterAuth } from "better-auth";
-import { drizzleAdapter } from "better-auth/adapters/drizzle";
+import { startRateLimitCleanup } from "@/lib/auth/rate-limiter";
 import { db } from "@/lib/db/client";
 import * as schema from "@/lib/db/schema.postgres";
-import { eq } from "drizzle-orm";
-import { admin } from "better-auth/plugins/admin";
+import { betterAuth } from "better-auth";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
-import { startRateLimitCleanup } from "@/lib/auth/rate-limiter";
+import { admin } from "better-auth/plugins/admin";
+import { eq } from "drizzle-orm";
 
 /**
  * データベース接続文字列の検証
@@ -114,7 +114,12 @@ validateOAuthCredentials();
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
     provider: "pg",
-    schema: schema,
+    schema: {
+      user: schema.users,
+      session: schema.sessions,
+      account: schema.accounts,
+      verification: schema.verifications,
+    },
   }),
 
   // ❌ メール/パスワード認証は無効化（OAuth-only）

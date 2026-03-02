@@ -52,7 +52,7 @@ export interface AuthSession {
  * - handler 内で追加的な権限チェックを実施
  * -  例：セッション検証 + グループロール + 追加のビジネスロジックチェック
  */
-export const withAuth = <T extends (...args: any[]) => Promise<any>>(
+export const withAuth = <T extends (...args: unknown[]) => Promise<unknown>>(
   handler: (session: AuthSession, ...args: Parameters<T>) => ReturnType<T>,
 ) => {
   return async (session: AuthSession | null, ...args: Parameters<T>) => {

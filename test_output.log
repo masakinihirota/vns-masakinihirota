@@ -1,0 +1,471 @@
+
+> vns-masakinihirota@0.1.0 test U:\2026src\vns-masakinihirota
+> vitest "run"
+
+The CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.
+
+[7m[1m[36m RUN [39m[22m[27m [36mv1.6.1[39m [90mU:/2026src/vns-masakinihirota[39m
+
+ [2m[90m竊・[39m[22m src/__tests__/api/admin.test.ts [2m ([22m[2m10 tests[22m [2m|[22m [33m10 skipped[39m[2m)[22m
+ [32m笨・[39m src/lib/auth/__tests__/rate-limiter.test.ts [2m ([22m[2m17 tests[22m [2m|[22m [33m1 skipped[39m[2m)[22m[90m 24[2mms[22m[39m
+ [32m笨・[39m src/lib/auth/__tests__/rbac-hierarchy.test.ts [2m ([22m[2m11 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+[90mstdout[2m | src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts[2m > [22m[2museAnonymousLoginLogic[2m > [22m[2m豁｣蟶ｸ縺ｫ蛹ｿ蜷崎ｪ崎ｨｼ繧貞ｮ溯｡後〒縺阪ｋ[22m[39m
+[AnonymousLogin] Success, redirecting to: /
+
+ [32m笨・[39m src/components/auth/anonymous-login-form/anonymous-login-form.logic.test.ts [2m ([22m[2m5 tests[22m[2m)[22m[90m 108[2mms[22m[39m
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > isGhostMask() > should handle database errors gracefully by throwing
+[RBAC] Failed to get mask category {
+  userId: 'user-ghost-1',
+  errorType: 'Error',
+  errorMessage: 'Database connection error'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-ghost-1', error: 'Failed to verify account type.' }
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > isGhostMask() > should return false when user profile not found
+[RBAC] Mask category not found for userId: user-persona-1
+
+stderr | src/lib/auth/__tests__/ghost-mode.test.ts > Ghost Mode Functionality > checkInteractionAllowed() > should handle database errors gracefully by throwing
+[RBAC] Failed to get mask category {
+  userId: 'user-ghost-1',
+  errorType: 'Error',
+  errorMessage: 'Database connection error'
+}
+[RBAC] Ghost mask check failed - BLOCKING INTERACTION { userId: 'user-ghost-1', error: 'Failed to verify account type.' }
+
+ [32m笨・[39m src/lib/auth/__tests__/ghost-mode.test.ts [2m ([22m[2m15 tests[22m[2m)[22m[90m 25[2mms[22m[39m
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkGroupRole > should return false for regular user without group role
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "user" inner join "root_accounts" on "user"."id" = "root_accounts"."auth_user_id" inner join "user_profiles" on "root_accounts"."id" = "user_profiles"."root_account_id" where "user"."id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC] Failed to check group role {
+  userId: 'user-regular-1',
+  groupId: 'group-test-1',
+  role: 'leader',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Group role check error { userId: 'user-regular-1', groupId: 'group-test-1', role: 'leader' }
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkNationRole > should return false for regular user without nation role
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "user" inner join "root_accounts" on "user"."id" = "root_accounts"."auth_user_id" inner join "user_profiles" on "root_accounts"."id" = "user_profiles"."root_account_id" where "user"."id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC] Failed to check nation role {
+  userId: 'user-regular-1',
+  nationId: 'nation-test-1',
+  role: 'leader',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Nation role check error { userId: 'user-regular-1', nationId: 'nation-test-1', role: 'leader' }
+
+ [33m笶ｯ[39m src/__tests__/rbac-authorization.test.ts [2m ([22m[2m0 test[22m[2m)[22m
+stderr | src/lib/db/admin-queries.test.ts > Admin Dashboard Queries
+Setup error: DrizzleQueryError: Failed query: insert into "user" ("id", "name", "email", "email_verified", "image", "role", "banned", "ban_reason", "ban_expires", "is_anonymous", "created_at", "updated_at") values ($1, $2, $3, $4, default, $5, default, default, default, $6, $7, $8)
+params: 84159757-594c-4744-b815-1010491dccaa,Test Admin,admin-84159757-594c-4744-b815-1010491dccaa@test.local,true,admin,false,2026-03-01T10:00:50.862Z,2026-03-01T10:00:50.862Z
+    at PostgresJsPreparedQuery.queryWithCache (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at U:\2026src\vns-masakinihirota\src\lib\db\admin-queries.test.ts:23:7
+    at async Promise.all (index 0)
+    at callSuiteHook (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:700:23)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:892:27)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/vitest@1.6.1_@types+node@20_f9fd341a1ef9dd8ef35700ea632852cb/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7 {
+  query: 'insert into "user" ("id", "name", "email", "email_verified", "image", "role", "banned", "ban_reason", "ban_expires", "is_anonymous", "created_at", "updated_at") values ($1, $2, $3, $4, default, $5, default, default, default, $6, $7, $8)',
+  params: [
+    '84159757-594c-4744-b815-1010491dccaa',
+    'Test Admin',
+    'admin-84159757-594c-4744-b815-1010491dccaa@test.local',
+    true,
+    'admin',
+    false,
+    '2026-03-01T10:00:50.862Z',
+    '2026-03-01T10:00:50.862Z'
+  ],
+  cause: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+      at ErrorResponse (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22)
+      at handle (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6)
+      at Socket.data (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9)
+      at Socket.emit (node:events:508:28)
+      at addChunk (node:internal/streams/readable:559:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+      at Socket.Readable.push (node:internal/streams/readable:390:5)
+      at TCP.onStreamRead (node:internal/stream_base_commons:189:23) {
+    severity_local: 'FATAL',
+    severity: 'FATAL',
+    code: '28P01',
+    file: 'auth.c',
+    line: '332',
+    routine: 'auth_failed'
+  }
+}
+
+stderr | src/app/actions/__tests__/server-actions.test.ts > Server Actions - Authorization & Validation > createNationAction > should fail when user role is not group_leader or platform_admin
+[RBAC] Failed to get user profile {
+  userId: 'user-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "user" inner join "root_accounts" on "user"."id" = "root_accounts"."auth_user_id" inner join "user_profiles" on "root_accounts"."id" = "user_profiles"."root_account_id" where "user"."id" = $1 limit $2\n' +
+    'params: user-1,1'
+}
+[RBAC] Failed to check group role {
+  userId: 'user-1',
+  groupId: 'group-1',
+  role: 'leader',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Group role check error { userId: 'user-1', groupId: 'group-1', role: 'leader' }
+
+ [32m笨・[39m src/app/actions/__tests__/server-actions.test.ts [2m ([22m[2m9 tests[22m[2m)[22m[90m 129[2mms[22m[39m
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkRelationship > should return false for regular user without relationship
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "user" inner join "root_accounts" on "user"."id" = "root_accounts"."auth_user_id" inner join "user_profiles" on "root_accounts"."id" = "user_profiles"."root_account_id" where "user"."id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC] Failed to check relationship {
+  userId: 'user-regular-1',
+  targetUserId: 'user-target-1',
+  relationship: 'friend',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Relationship check error {
+  userId: 'user-regular-1',
+  targetUserId: 'user-target-1',
+  relationship: 'friend'
+}
+
+stderr | src/lib/db/admin-queries.test.ts > Admin Dashboard Queries
+Cleanup error: DrizzleQueryError: Failed query: delete from "user" where "user"."id" = $1
+params: 84159757-594c-4744-b815-1010491dccaa
+    at PostgresJsPreparedQuery.queryWithCache (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11)
+    at processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at U:\2026src\vns-masakinihirota\src\lib\db\admin-queries.test.ts:95:9
+    at async Promise.all (index 0)
+    at callSuiteHook (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:700:23)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:917:7)
+    at runSuite (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:909:15)
+    at runFiles (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:958:5)
+    at startTests (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/@vitest+runner@1.6.1/node_modules/@vitest/runner/dist/index.js:967:3)
+    at file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/vitest@1.6.1_@types+node@20_f9fd341a1ef9dd8ef35700ea632852cb/node_modules/vitest/dist/chunks/runtime-runBaseTests.oAvMKtQC.js:116:7 {
+  query: 'delete from "user" where "user"."id" = $1',
+  params: [ '84159757-594c-4744-b815-1010491dccaa' ],
+  cause: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+      at ErrorResponse (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22)
+      at handle (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6)
+      at Socket.data (file:///U:/2026src/vns-masakinihirota/node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9)
+      at Socket.emit (node:events:508:28)
+      at addChunk (node:internal/streams/readable:559:12)
+      at readableAddChunkPushByteMode (node:internal/streams/readable:510:3)
+      at Socket.Readable.push (node:internal/streams/readable:390:5)
+      at TCP.onStreamRead (node:internal/stream_base_commons:189:23) {
+    severity_local: 'FATAL',
+    severity: 'FATAL',
+    code: '28P01',
+    file: 'auth.c',
+    line: '332',
+    routine: 'auth_failed'
+  }
+}
+
+ [33m笶ｯ[39m src/lib/db/admin-queries.test.ts [2m ([22m[2m11 tests[22m[2m)[22m[90m 237[2mms[22m[39m
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > checkMultiple > should return all=false when any check fails
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "user" inner join "root_accounts" on "user"."id" = "root_accounts"."auth_user_id" inner join "user_profiles" on "root_accounts"."id" = "user_profiles"."root_account_id" where "user"."id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC] Failed to check group role {
+  userId: 'user-regular-1',
+  groupId: 'group-1',
+  role: 'leader',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Group role check error { userId: 'user-regular-1', groupId: 'group-1', role: 'leader' }
+
+stderr | src/lib/auth/__tests__/rbac-helper.test.ts > RBAC Helper Functions > Edge Cases > should handle database connection errors gracefully
+[RBAC] Failed to get user profile {
+  userId: 'user-regular-1',
+  errorType: 'Error',
+  errorMessage: 'Failed query: select "user_profiles"."id" from "user" inner join "root_accounts" on "user"."id" = "root_accounts"."auth_user_id" inner join "user_profiles" on "root_accounts"."id" = "user_profiles"."root_account_id" where "user"."id" = $1 limit $2\n' +
+    'params: user-regular-1,1'
+}
+[RBAC] Failed to check group role {
+  userId: 'user-regular-1',
+  groupId: 'invalid-group-id',
+  role: 'leader',
+  errorType: 'RBACError',
+  errorMessage: 'Failed to verify user profile. Please try again.'
+}
+[RBAC] Group role check error {
+  userId: 'user-regular-1',
+  groupId: 'invalid-group-id',
+  role: 'leader'
+}
+
+ [32m笨・[39m src/lib/auth/__tests__/rbac-helper.test.ts [2m ([22m[2m30 tests[22m[2m)[22m[33m 492[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/market.integration.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 152[2mms[22m[39m
+ [32m笨・[39m src/components/auth/github-login-form/github-login-form.logic.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 69[2mms[22m[39m
+ [32m笨・[39m src/__tests__/proxy.test.ts [2m ([22m[2m6 tests[22m[2m)[22m[90m 38[2mms[22m[39m
+stderr | src/__tests__/proxy.test.ts > proxy (Next.js 16 Middleware) > should handle session retrieval errors gracefully
+[Proxy][2026-03-01T10:00:52.022Z] [AUTH_ERROR] Session retrieval failed: Network error
+
+ [32m笨・[39m src/lib/__tests__/helper.test.ts [2m ([22m[2m14 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+[90mstdout[2m | src/lib/__tests__/helper.test.ts[2m > [22m[2mAuth Helper Functions[2m > [22m[2mgetSession() with cache()[2m > [22m[2mshould respect USE_REAL_AUTH environment variable[22m[39m
+[getSession] MOCK AUTH enabled
+
+[90mstdout[2m | src/lib/__tests__/helper.test.ts[2m > [22m[2mAuth Helper Functions[2m > [22m[2mgetSession() with cache()[2m > [22m[2mshould return normal user in development mode[22m[39m
+[getSession] MOCK AUTH enabled
+
+ [32m笨・[39m src/components/auth/google-login-form/google-login-form.logic.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 116[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/groups.integration.test.ts [2m ([22m[2m5 tests[22m[2m)[22m[90m 169[2mms[22m[39m
+ [32m笨・[39m src/lib/auth/__tests__/rbac-deny-by-default.test.ts [2m ([22m[2m10 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+stderr | src/__tests__/api/error-handler.test.ts > [Unit] Error Handler Middleware > should return 404 with NOT_FOUND error
+[API Error] { message: 'Resource not found', name: 'Error', stack: undefined }
+
+ [32m笨・[39m src/__tests__/api/error-handler.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 30[2mms[22m[39m
+stderr | src/__tests__/api/error-handler.test.ts > [Unit] Error Handler Middleware > should return 400 with VALIDATION_ERROR
+[API Error] { message: 'Invalid data', name: 'Error', stack: undefined }
+
+stderr | src/__tests__/api/error-handler.test.ts > [Unit] Error Handler Middleware > should return 500 for unexpected errors
+[API Error] { message: 'Unexpected error', name: 'Error', stack: undefined }
+
+ [32m笨・[39m src/lib/db/__tests__/nation-queries.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 13[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/misc.integration.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 142[2mms[22m[39m
+ [32m笨・[39m src/lib/trial-storage.test.ts [2m ([22m[2m5 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+stderr | src/lib/trial-storage.test.ts > TrialStorage > should apply penalty for rapid actions
+Rapid access detected! Point consumption x2
+
+ [33m笶ｯ[39m src/lib/db/events.integration.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 245[2mms[22m[39m
+ [32m笨・[39m src/lib/auth/root-account-guard.test.ts [2m ([22m[2m4 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/user-profiles.integration.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 110[2mms[22m[39m
+ [32m笨・[39m src/lib/db/__tests__/group-queries.test.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [33m笶ｯ[39m src/lib/db/nations.integration.test.ts [2m ([22m[2m3 tests[22m[2m)[22m[90m 110[2mms[22m[39m
+ [2m[90m竊・[39m[22m src/__tests__/integration/auth-flow.integration.test.ts [2m ([22m[2m8 tests[22m [2m|[22m [33m8 skipped[39m[2m)[22m
+ [33m笶ｯ[39m src/app/(protected)/(admin)/admin/page.test.tsx [2m ([22m[2m0 test[22m[2m)[22m
+ [32m笨・[39m src/lib/db/business-cards.test.ts [2m ([22m[2m2 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+ [32m笨・[39m src/lib/auth-guard.test.tsx [2m ([22m[2m2 tests[22m[2m)[22m[90m 5[2mms[22m[39m
+ [33m笶ｯ[39m src/components/__tests__/error-boundary.test.tsx [2m ([22m[2m0 test[22m[2m)[22m
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ Failed Suites 10 竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+
+ FAIL  src/__tests__/rbac-authorization.test.ts [ src/__tests__/rbac-authorization.test.ts ]
+ReferenceError: createTestSession is not defined
+ 笶ｯ src/__tests__/rbac-authorization.test.ts:263:24
+    261| 
+    262| describe('RBAC Integration Scenarios', () => {
+    263|   const ghostSession = createTestSession('user-ghost', 'user');
+       |                        ^
+    264|   const personaSession = createTestSession('user-persona', 'user');
+    265|   const adminSession = createTestSession('user-admin', 'platform_admin窶ｦ
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[1/10]竡ｯ
+
+ FAIL  src/components/__tests__/error-boundary.test.tsx [ src/components/__tests__/error-boundary.test.tsx ]
+ FAIL  src/app/(protected)/(admin)/admin/page.test.tsx [ src/app/(protected)/(admin)/admin/page.test.tsx ]
+TypeError: Cannot set property isConnected of [object Object] which has only a getter
+ 笶ｯ new Node node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/src/nodes/node/Node.ts:57:29
+ 笶ｯ new Element node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/lib/nodes/element/Element.js:25:9
+ 笶ｯ new HTMLElement node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/lib/nodes/html-element/HTMLElement.js:17:9
+ 笶ｯ new HTMLUnknownElement node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/lib/nodes/html-unknown-element/HTMLUnknownElement.js:13:9
+ 笶ｯ HTMLDocument.createElementNS node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/src/nodes/document/Document.ts:834:19
+ 笶ｯ HTMLDocument.createElement node_modules/.pnpm/happy-dom@12.10.3/node_modules/happy-dom/src/nodes/document/Document.ts:803:15
+ 笶ｯ node_modules/.pnpm/axe-core@4.11.1/node_modules/axe-core/axe.js:19425:32
+ 笶ｯ _pollyfillElementsFromPoint node_modules/.pnpm/axe-core@4.11.1/node_modules/axe-core/axe.js:19428:8
+ 笶ｯ node_modules/.pnpm/axe-core@4.11.1/node_modules/axe-core/axe.js:19458:36
+ 笶ｯ axeFunction node_modules/.pnpm/axe-core@4.11.1/node_modules/axe-core/axe.js:29512:5
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[2/10]竡ｯ
+
+ FAIL  src/lib/db/admin-queries.test.ts > Admin Dashboard Queries
+Error: Failed query: insert into "user" ("id", "name", "email", "email_verified", "image", "role", "banned", "ban_reason", "ban_expires", "is_anonymous", "created_at", "updated_at") values ($1, $2, $3, $4, default, $5, default, default, default, $6, $7, $8)
+params: 84159757-594c-4744-b815-1010491dccaa,Test Admin,admin-84159757-594c-4744-b815-1010491dccaa@test.local,true,admin,false,2026-03-01T10:00:50.862Z,2026-03-01T10:00:50.862Z
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ src/lib/db/admin-queries.test.ts:23:7
+     21|       // 繝・せ繝育畑縺ｮ繝ｦ繝ｼ繧ｶ繝ｼ繧剃ｽ懈・・・etter Auth 讓呎ｺ厄ｼ・[39m
+     22|       testUserId = uuidv4();
+     23|       await database.insert(users).values({
+       |       ^
+     24|         id: testUserId,
+     25|         name: 'Test Admin',
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'insert into "user" ("id", "name", "email", "email_verified", "image", "role", "banned", "ban_reason", "ban_expires", "is_anonymous", "created_at", "updated_at") values ($1, $2, $3, $4, default, $5, default, default, default, $6, $7, $8)', params: [ '84159757-594c-4744-b815-1010491dccaa', 'Test Admin', 'admin-84159757-594c-4744-b815-1010491dccaa@test.local', true, 'admin', false, '2026-03-01T10:00:50.862Z', '2026-03-01T10:00:50.862Z' ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ '84159757-594c-4744-b815-1010491dccaa', 'Test Admin', 'admin-84159757-594c-4744-b815-1010491dccaa@test.local', true, 'admin', false, '2026-03-01T10:00:50.862Z', '2026-03-01T10:00:50.862Z' ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[3/10]竡ｯ
+
+ FAIL  src/lib/db/events.integration.test.ts > Events Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/events.integration.test.ts:20:21
+     18|   beforeAll(async () => {
+     19|     // Find a user
+     20|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     21|     if (!profile) {
+     22|       throw new Error(
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[4/10]竡ｯ
+
+ FAIL  src/lib/db/groups.integration.test.ts > Groups Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/groups.integration.test.ts:35:21
+     33|     // Db schema has userProfiles.
+     34| 
+     35|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     36|     if (!profile) {
+     37|       console.warn("No user profile found. Tests might fail.");
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[5/10]竡ｯ
+
+ FAIL  src/lib/db/market.integration.test.ts > Market Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/market.integration.test.ts:25:21
+     23|   beforeAll(async () => {
+     24|     // Setup: Get Root Account
+     25|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     26|     if (!profile)
+     27|       throw new Error("Need at least one profile to find root account"窶ｦ
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[6/10]竡ｯ
+
+ FAIL  src/lib/db/misc.integration.test.ts > Misc Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/misc.integration.test.ts:20:21
+     18| 
+     19|   beforeAll(async () => {
+     20|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     21|     if (!profile) throw new Error("Need a profile");
+     22|     testProfileId = profile.id;
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[7/10]竡ｯ
+
+ FAIL  src/lib/db/nations.integration.test.ts > Nations Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/nations.integration.test.ts:14:21
+     12|   beforeAll(async () => {
+     13|     // Find a user to be the owner
+     14|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     15|     if (!profile) {
+     16|       throw new Error(
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[8/10]竡ｯ
+
+ FAIL  src/lib/db/user-profiles.integration.test.ts > User Profiles Integration (Drizzle)
+Error: Failed query: select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1
+params: 1
+ 笶ｯ PostgresJsPreparedQuery.queryWithCache node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/pg-core/session.ts:73:11
+ 笶ｯ node_modules/.pnpm/drizzle-orm@0.45.1_@types+p_1ce249f5845dd04d7006697b503e1977/node_modules/src/postgres-js/session.ts:58:17
+ 笶ｯ src/lib/db/user-profiles.integration.test.ts:19:21
+     17|     // Find a root account.
+     18|     // We can find a user profile and get its rootAccountId.
+     19|     const profile = await database.query.userProfiles.findFirst();
+       |                     ^
+     20|     if (!profile) {
+     21|       throw new Error(
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { query: 'select "id", "root_account_id", "display_name", "purpose", "role_type", "is_active", "mask_category", "is_default", "last_interacted_record_id", "profile_format", "role", "purposes", "profile_type", "avatar_url", "external_links", "points", "level", "created_at", "updated_at" from "user_profiles" "userProfiles" limit $1', params: [ 1 ] }
+Caused by: PostgresError: ・ｽ・ｽ・ｽ[・ｽU・ｽ["test"・ｽﾌパ・ｽX・ｽ・ｽ・ｽ[・ｽh・ｽF・ｽﾘに趣ｿｽ・ｽs・ｽ・ｽ・ｽﾜゑｿｽ・ｽ・ｽ
+ 笶ｯ ErrorResponse node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:817:22
+ 笶ｯ handle node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:489:6
+ 笶ｯ Socket.data node_modules/.pnpm/postgres@3.4.8/node_modules/postgres/src/connection.js:324:9
+ 笶ｯ Socket.emit node:events:508:28
+
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ
+Serialized Error: { severity_local: 'FATAL', severity: 'FATAL', code: '28P01', file: 'auth.c', line: '332', routine: 'auth_failed', query: undefined, parameters: undefined, args: [ 1 ], types: null }
+竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ竡ｯ[9/10]竡ｯ
+
+[2m Test Files [22m [1m[31m10 failed[39m[22m[2m | [22m[1m[32m18 passed[39m[22m[2m | [22m[33m2 skipped[39m[90m (30)[39m
+[2m      Tests [22m [1m[32m141 passed[39m[22m[2m | [22m[33m19 skipped[39m[90m (198)[39m
+[2m   Start at [22m 19:00:46
+[2m   Duration [22m 11.74s[2m (transform 2.50s, setup 28.80s, collect 23.00s, tests 2.32s, environment 22.58s, prepare 19.39s)[22m
+
+窶右LIFECYCLE窶・Test failed. See above for more details.

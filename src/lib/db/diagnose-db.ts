@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+ 
 
 import { config } from "dotenv";
 import postgres from "postgres";

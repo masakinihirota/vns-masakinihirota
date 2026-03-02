@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
 import { afterEach, expect } from 'vitest';
+import 'vitest-axe/extend-expect';
 import * as axeMatchers from 'vitest-axe/matchers';
 
 expect.extend(axeMatchers);
@@ -12,7 +13,6 @@ afterEach(() => {
 
 // Mock environment variables
 process.env.USE_REAL_AUTH = 'false';
-process.env.NEXT_PUBLIC_USE_REAL_AUTH = 'false';
 
 // ✅ テスト環境用のダミー DATABASE_URL を設定
 // 実際のDBに接続しないため、モックDBまたはインメモリDBを使用することを推奨

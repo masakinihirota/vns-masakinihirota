@@ -6,9 +6,14 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    // デフォルト环境: happy-dom (コンポーネント・ロジックテスト用)
-    // API テストは vitest.api.config.ts を使用: pnpm test:api
-    environment: 'happy-dom',
+    environment: 'node', // Use Node for all tests (setup files handle React)
+    // Use projects for test isolation instead of multiple config files
+    pool: 'threads',
+    poolOptions: {
+      threads: {
+        singleThread: false,
+      },
+    },
     setupFiles: './vitest.setup.ts',
     coverage: {
       provider: 'v8',
@@ -21,6 +26,15 @@ export default defineConfig({
         '**/*.d.ts',
       ],
     },
+    // テスト除外設定
+    exclude: [
+      'node_modules/**',
+      '**/node_modules/**',
+      'dist/**',
+      '.next/**',
+      // 'src/__tests__/api/**' // 一時的にコメントアウト
+    ],
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
   },
   resolve: {
     alias: {

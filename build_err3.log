@@ -1,0 +1,25 @@
+
+> vns-masakinihirota@0.1.0 build U:\2026src\vns-masakinihirota
+> next build
+
+笆ｲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env.production, .env
+
+  Creating an optimized production build ...
+笨・Compiled successfully in 8.9s
+  Running TypeScript ...
+Failed to compile.
+
+./src/lib/api/middleware/error-handler.ts:114:9
+Type error: Type '{}' is not assignable to type 'Record<string, unknown>'.
+  Index signature for type 'string' is missing in type '{}'.
+
+  112 |         code: 'VALIDATION_ERROR',
+  113 |         message: 'Invalid request data',
+> 114 |         details: details,
+      |         ^
+  115 |       },
+  116 |     };
+  117 |     return c.json(response, 400);
+Next.js build worker exited with code: 1 and signal: null
+窶右LIFECYCLE窶・Command failed with exit code 1.

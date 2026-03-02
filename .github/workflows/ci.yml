@@ -37,6 +37,9 @@ jobs:
       - name: Run unit tests
         run: pnpm test
 
+      - name: Run RBAC Equivalence Tests
+        run: pnpm test:eq
+
       - name: Dependency audit
         run: pnpm audit --audit-level=moderate
 

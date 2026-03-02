@@ -6,11 +6,15 @@
  * - Manages API calls and local state
  * - Can be upgraded to TanStack Query v5 later
  * - URL query parameters ready for nuqs integration
+ *
+ * @note
+ * Phase 6: RPC Client完全統合で全API呼び出しが型安全
  */
 
 'use client';
 
 import { useState, useCallback } from 'react';
+import { client } from '@/lib/api/client';
 import type { UserResponse, CreateUserRequest, UpdateUserRequest } from '@/lib/api/schemas/admin';
 
 interface ListUsersOptions {
@@ -66,17 +70,16 @@ export function useAdminUsers(initialPageSize = 20) {
           search = '',
         } = options;
 
-        const params = new URLSearchParams({
-          limit: limit.toString(),
-          offset: offset.toString(),
-          sort,
-          order,
-          ...(search && { search }),
-        });
-
-        const response = await fetch(`/api/admin/users?${params}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
+        // ✅ Phase 6: RPC Client 完全統合
+        // 型安全: client.admin.users.get() の型は型定義スキーマで保証
+        const response = await client.admin.users.get({
+          query: {
+            limit: limit.toString(),
+            offset: offset.toString(),
+            sort,
+            order,
+            ...(search && { search }),
+          },
         });
 
         if (!response.ok) {
@@ -116,11 +119,9 @@ export function useAdminUsers(initialPageSize = 20) {
   const createUser = useCallback(
     async (data: CreateUserRequest) => {
       try {
-        const response = await fetch('/api/admin/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
-        });
+        // ✅ Phase 6: RPC Client 完全統合
+        // 型安全: client.admin.users.post() の型は型定義スキーマで保証
+        const response = await client.admin.users.post(data);
 
         if (!response.ok) {
           throw new Error(`Failed to create user: ${response.statusText}`);
@@ -147,10 +148,11 @@ export function useAdminUsers(initialPageSize = 20) {
   const updateUser = useCallback(
     async (id: string, data: UpdateUserRequest) => {
       try {
-        const response = await fetch(`/api/admin/users/${id}`, {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data),
+        // ✅ Phase 6: RPC Client 完全統合
+        // 型安全: client.admin.users[':id'].patch() の型は型定義スキーマで保証
+        const response = await client.admin.users[":id"].patch({
+          param: { id },
+          json: data,
         });
 
         if (!response.ok) {
@@ -178,8 +180,10 @@ export function useAdminUsers(initialPageSize = 20) {
   const deleteUser = useCallback(
     async (id: string) => {
       try {
-        const response = await fetch(`/api/admin/users/${id}`, {
-          method: 'DELETE',
+        // ✅ Phase 6: RPC Client 完全統合
+        // 型安全: client.admin.users[':id'].delete() の型は型定義スキーマで保証
+        const response = await client.admin.users[":id"].delete({
+          param: { id },
         });
 
         if (!response.ok) {

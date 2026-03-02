@@ -1,0 +1,24 @@
+
+> vns-masakinihirota@0.1.0 build U:\2026src\vns-masakinihirota
+> next build
+
+笆ｲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local, .env.production, .env
+
+  Creating an optimized production build ...
+笨・Compiled successfully in 9.9s
+  Running TypeScript ...
+Failed to compile.
+
+./src/components/ui/avatar.tsx:19:5
+Type error: 'alt' is specified more than once, so this usage will be overwritten.
+
+  17 |   <Image
+  18 |     className={cn("aspect-square h-full w-full object-cover", className)}
+> 19 |     alt={alt || "Avatar"}
+     |     ^
+  20 |     fill
+  21 |     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+  22 |     {...(props as unknown as React.ComponentProps<typeof Image>)}
+Next.js build worker exited with code: 1 and signal: null
+窶右LIFECYCLE窶・Command failed with exit code 1.

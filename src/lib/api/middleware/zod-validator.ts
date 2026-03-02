@@ -1,6 +1,6 @@
 import { Context, MiddlewareHandler } from 'hono';
-import { z } from 'zod';
 import { HTTPException } from 'hono/http-exception';
+import { z } from 'zod';
 
 /**
  * Custom Zod validator middleware for Hono
@@ -33,14 +33,20 @@ export function zodValidator<T extends z.ZodSchema>(
 
       // Attach validated data to context
       // Store validated data in a map by target type
-      if (!(c.req as any)._validatedData) {
-        (c.req as any)._validatedData = new Map();
+      type ReqWithValidation = {
+        _validatedData?: Map<string, unknown>;
+        valid: (t: string) => unknown;
+      };
+      const req = c.req as unknown as ReqWithValidation;
+
+      if (!req._validatedData) {
+        req._validatedData = new Map();
       }
-      (c.req as any)._validatedData.set(target, validated);
+      req._validatedData.set(target, validated);
 
       // Define the valid function to retrieve validated data
-      (c.req as any).valid = (t: string) => {
-        return (c.req as any)._validatedData?.get(t);
+      req.valid = (t: string) => {
+        return req._validatedData?.get(t);
       };
 
       await next();
@@ -83,7 +89,7 @@ export function zodValidator<T extends z.ZodSchema>(
 declare global {
   namespace Hono {
     interface HonoRequest {
-      valid(target: string): any;
+      valid(target: string): unknown;
     }
   }
 }

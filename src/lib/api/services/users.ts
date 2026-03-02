@@ -8,15 +8,15 @@
  * - Custom error classes for type-safe error handling
  */
 
-import { eq, desc, sql, or, ilike } from 'drizzle-orm';
-import { createId } from '@paralleldrive/cuid2';
-import { db } from '@/lib/db/client';
-import { users as userTable } from '@/lib/db/schema.postgres';
 import {
   UserAlreadyExistsError,
   UserNotFoundError,
 } from '@/lib/api/errors';
 import type { CreateUserRequest, UpdateUserRequest, UserResponse as User } from '@/lib/api/schemas/admin';
+import { db } from '@/lib/db/client';
+import { users as userTable } from '@/lib/db/schema.postgres';
+import { createId } from '@paralleldrive/cuid2';
+import { desc, eq, ilike, or, sql } from 'drizzle-orm';
 
 // Constants
 const DEFAULT_PAGE_SIZE = 20;
@@ -91,9 +91,9 @@ export async function listUsers(params: {
     // Build where clause for search using ilike (SQL Injection safe)
     const whereConditions = search
       ? or(
-          ilike(userTable.email, `%${search}%`),
-          ilike(userTable.name, `%${search}%`)
-        )
+        ilike(userTable.email, `%${search}%`),
+        ilike(userTable.name, `%${search}%`)
+      )
       : undefined;
 
     // Get total count
@@ -112,8 +112,8 @@ export async function listUsers(params: {
 
     // Apply sorting
     const sortColumn = sort === 'name' ? userTable.name :
-                     sort === 'email' ? userTable.email :
-                     userTable.createdAt;
+      sort === 'email' ? userTable.email :
+        userTable.createdAt;
 
     const sortedQuery = order === 'asc'
       ? query.orderBy(sortColumn)
@@ -307,14 +307,14 @@ export async function deleteUser(id: string): Promise<void> {
 /**
  * Helper: Convert database row to User type
  */
-function mapUserRow(row: any): User {
+function mapUserRow(row: Record<string, unknown>): User {
   return {
-    id: row.id,
-    email: row.email,
-    name: row.name || '',
-    role: row.role || 'user',
-    createdAt: row.createdAt,
-    updatedAt: row.updatedAt,
+    id: String(row.id),
+    email: String(row.email),
+    name: row.name ? String(row.name) : '',
+    role: (row.role ? String(row.role) : 'user') as "user" | "platform_admin",
+    createdAt: row.createdAt as Date,
+    updatedAt: (row.updatedAt as Date) || null,
     metadata: undefined,
   };
 }
