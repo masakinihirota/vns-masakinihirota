@@ -24,7 +24,6 @@ import {
   groupMembers,
   nationGroups,
   relationships,
-  users,
   rootAccounts,
   userProfiles,
 } from "@/lib/db/schema.postgres";
@@ -36,6 +35,11 @@ import type {
   RelationshipType,
   AuthSession,
 } from "./types";
+import {
+  logAuthenticationFailed,
+  logInsufficientPermission,
+  logGhostModeRestriction,
+} from "./audit-logger";
 
 /**
  * RBACエラークラス
@@ -86,21 +90,25 @@ class RBACError extends Error {
  */
 const _getUserProfileIdInternal = cache(async (userId: string): Promise<string | null> => {
   try {
-    // users.id → rootAccounts.authUserId → rootAccounts.id → userProfiles.rootAccountId → userProfiles.id
+    if (!userId) {
+      return null;
+    }
+
+    // users.id(text) → root_accounts.auth_user_id → active_profile_id(uuid) を優先利用
+    // active_profile_id が null の場合は deny-by-default で null を返す
     const result = await db
       .select({
         userProfileId: userProfiles.id,
       })
-      .from(users)
-      .innerJoin(
-        rootAccounts,
-        eq(users.id, rootAccounts.authUserId)
-      )
+      .from(rootAccounts)
       .innerJoin(
         userProfiles,
-        eq(rootAccounts.id, userProfiles.rootAccountId)
+        and(
+          eq(rootAccounts.activeProfileId, userProfiles.id),
+          eq(userProfiles.rootAccountId, rootAccounts.id)
+        )
       )
-      .where(eq(users.id, userId))
+      .where(eq(rootAccounts.authUserId, userId))
       .limit(1)
       .then((rows) => rows[0] || null);
 
@@ -147,20 +155,23 @@ export async function getUserProfileId(userId: string): Promise<string | null> {
  */
 const _getMaskCategoryInternal = cache(async (userId: string): Promise<string | null> => {
   try {
+    if (!userId) {
+      return null;
+    }
+
     const result = await db
       .select({
         maskCategory: userProfiles.maskCategory,
       })
-      .from(users)
-      .innerJoin(
-        rootAccounts,
-        eq(users.id, rootAccounts.authUserId)
-      )
+      .from(rootAccounts)
       .innerJoin(
         userProfiles,
-        eq(rootAccounts.id, userProfiles.rootAccountId)
+        and(
+          eq(rootAccounts.activeProfileId, userProfiles.id),
+          eq(userProfiles.rootAccountId, rootAccounts.id)
+        )
       )
-      .where(eq(users.id, userId))
+      .where(eq(rootAccounts.authUserId, userId))
       .limit(1)
       .then((rows) => rows[0] || null);
 
@@ -243,7 +254,11 @@ export async function isGhostMask(session: AuthSession | null): Promise<boolean>
  * }
  */
 export async function checkInteractionAllowed(session: AuthSession | null): Promise<boolean> {
-  if (!session?.user?.id) return false;
+  if (!session?.user?.id) {
+    // 認証失敗の監査ログ
+    logAuthenticationFailed('interaction', null, 'Session not found');
+    return false;
+  }
 
   // platform_admin は全操作が可能
   if (session.user.role === "platform_admin") return true;
@@ -251,6 +266,16 @@ export async function checkInteractionAllowed(session: AuthSession | null): Prom
   try {
     // 幽霊の仮面はインタラクション不可
     const ghostMask = await isGhostMask(session);
+    if (ghostMask) {
+      // Ghost モード制限の監査ログ
+      const userProfileId = await getUserProfileId(session.user.id);
+      logGhostModeRestriction(
+        session.user.id,
+        userProfileId,
+        'interaction',
+        'interact'
+      );
+    }
     return !ghostMask;
   } catch (error) {
     // エラー時は安全側に倒す（拒否）
@@ -393,18 +418,48 @@ export async function checkGroupRole(
   groupId: string,
   role: GroupRole,
 ): Promise<boolean> {
-  if (!session?.user?.id) return false;
+  if (!session?.user?.id) {
+    // 認証失敗の監査ログ
+    logAuthenticationFailed('group', groupId, 'Session not found');
+    return false;
+  }
 
   // platform_admin は全リソースへの操作が可能
   if (session.user.role === "platform_admin") return true;
 
   try {
     // ロール権限チェック
-    return await _checkGroupRoleInternal(session.user.id, groupId, role);
+    const hasRole = await _checkGroupRoleInternal(session.user.id, groupId, role);
+
+    if (!hasRole) {
+      // 権限不足の監査ログ
+      const userProfileId = await getUserProfileId(session.user.id);
+      logInsufficientPermission(
+        session.user.id,
+        userProfileId,
+        'group',
+        groupId,
+        role,
+        'Insufficient group role',
+        { requiredRole: role }
+      );
+    }
+
+    return hasRole;
   } catch (error) {
     // エラーが発生した場合は安全側に倒す（拒否）
     if (error instanceof RBACError) {
       console.error('[RBAC] Group role check error', error.context);
+      const userProfileId = await getUserProfileId(session.user.id).catch(() => null);
+      logInsufficientPermission(
+        session.user.id,
+        userProfileId,
+        'group',
+        groupId,
+        role,
+        'Group role check failed',
+        { error: error.message }
+      );
       return false;  // デフォルト: 権限なし
     }
     throw error;
@@ -508,18 +563,48 @@ export async function checkNationRole(
   nationId: string,
   role: NationRole,
 ): Promise<boolean> {
-  if (!session?.user?.id) return false;
+  if (!session?.user?.id) {
+    // 認証失敗の監査ログ
+    logAuthenticationFailed('nation', nationId, 'Session not found');
+    return false;
+  }
 
   // platform_admin は全リソースへの操作が可能
   if (session.user.role === "platform_admin") return true;
 
   try {
     // ロール権限チェック
-    return await _checkNationRoleInternal(session.user.id, nationId, role);
+    const hasRole = await _checkNationRoleInternal(session.user.id, nationId, role);
+
+    if (!hasRole) {
+      // 権限不足の監査ログ
+      const userProfileId = await getUserProfileId(session.user.id);
+      logInsufficientPermission(
+        session.user.id,
+        userProfileId,
+        'nation',
+        nationId,
+        role,
+        'Insufficient nation role',
+        { requiredRole: role }
+      );
+    }
+
+    return hasRole;
   } catch (error) {
     // エラーが発生した場合は安全側に倒す（拒否）
     if (error instanceof RBACError) {
       console.error('[RBAC] Nation role check error', error.context);
+      const userProfileId = await getUserProfileId(session.user.id).catch(() => null);
+      logInsufficientPermission(
+        session.user.id,
+        userProfileId,
+        'nation',
+        nationId,
+        role,
+        'Nation role check failed',
+        { error: error.message }
+      );
       return false;  // デフォルト: 権限なし
     }
     throw error;

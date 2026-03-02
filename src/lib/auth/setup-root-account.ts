@@ -41,6 +41,13 @@ export async function setupRootAccount(userId: string): Promise<{
   message?: string;
 }> {
   try {
+    if (!userId) {
+      return {
+        success: false,
+        message: "userId is required",
+      };
+    }
+
     // 既に rootAccount が存在するか確認
     const existing = await db
       .select({ id: rootAccounts.id })
@@ -55,55 +62,61 @@ export async function setupRootAccount(userId: string): Promise<{
       };
     }
 
-    // rootAccount を作成
-    const newRootAccount = await db
-      .insert(rootAccounts)
-      .values({
-        authUserId: userId,
-        trustDays: 0,
-      })
-      .returning({ id: rootAccounts.id });
+    const created = await db.transaction(async (tx) => {
+      const newRootAccount = await tx
+        .insert(rootAccounts)
+        .values({
+          authUserId: userId,
+          trustDays: 0,
+        })
+        .returning({ id: rootAccounts.id });
 
-    if (!newRootAccount[0]) {
+      if (!newRootAccount[0]) {
+        throw new Error("Failed to create root account");
+      }
+
+      const rootAccountId = newRootAccount[0].id;
+
+      const ghostMaskProfile = await tx
+        .insert(userProfiles)
+        .values({
+          rootAccountId,
+          displayName: "幽霊の仮面",
+          purpose: "観測者プロフィール",
+          roleType: "member",
+          isActive: true,
+          maskCategory: "ghost",
+          isDefault: true,
+          profileFormat: "profile",
+          role: "guest",
+          purposes: [],
+          profileType: "system",
+          points: 0,
+          level: 1,
+        })
+        .returning({ id: userProfiles.id });
+
+      if (!ghostMaskProfile[0]) {
+        throw new Error("Failed to create ghost mask profile");
+      }
+
+      await tx
+        .update(rootAccounts)
+        .set({
+          activeProfileId: ghostMaskProfile[0].id,
+        })
+        .where(eq(rootAccounts.id, rootAccountId));
+
       return {
-        success: false,
-        message: "Failed to create root account",
+        rootAccountId,
+        ghostMaskProfileId: ghostMaskProfile[0].id,
       };
-    }
-
-    const rootAccountId = newRootAccount[0].id;
-
-    // 幽霊の仮面プロフィール を自動作成
-    const ghostMaskProfile = await db
-      .insert(userProfiles)
-      .values({
-        rootAccountId: rootAccountId,
-        displayName: "幽霊の仮面",
-        purpose: "観測者プロフィール",
-        roleType: "guest",
-        isActive: true,
-        maskCategory: "ghost", // 幽霊（観測者）ロール
-        isDefault: true, // システム生成の幽霊マスク
-        profileFormat: "profile",
-        role: "guest",
-        purposes: [],
-        profileType: "system",
-        points: 0, // 幽霊は初期ポイント0
-        level: 1, // 初期レベル
-      })
-      .returning({ id: userProfiles.id });
-
-    if (!ghostMaskProfile[0]) {
-      return {
-        success: false,
-        message: "Failed to create ghost mask profile",
-      };
-    }
+    });
 
     return {
       success: true,
-      rootAccountId,
-      ghostMaskProfileId: ghostMaskProfile[0].id,
+      rootAccountId: created.rootAccountId,
+      ghostMaskProfileId: created.ghostMaskProfileId,
     };
   } catch (error) {
     console.error("setupRootAccount error:", error);

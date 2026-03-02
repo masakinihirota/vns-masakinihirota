@@ -30,23 +30,24 @@ vi.mock('react', async () => {
   };
 });
 
-describe('RBAC Authorization Checks', () => {
-  // テストセッションファクトリー
-  const createTestSession = (userId: string, role: 'user' | 'platform_admin' = 'user'): AuthSession | null => {
-    if (!userId) return null;
-    return {
-      user: {
-        id: userId,
-        email: `user-${userId}@test.example.com`,
-        name: `Test User ${userId}`,
-        role,
-      },
-      session: {
-        id: `session-${userId}`,
-        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7日後
-      },
-    };
+// テストセッションファクトリー
+const createTestSession = (userId: string, role: 'user' | 'platform_admin' = 'user'): AuthSession | null => {
+  if (!userId) return null;
+  return {
+    user: {
+      id: userId,
+      email: `user-${userId}@test.example.com`,
+      name: `Test User ${userId}`,
+      role,
+    },
+    session: {
+      id: `session-${userId}`,
+      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7日後
+    },
   };
+};
+
+describe('RBAC Authorization Checks', () => {
 
   // ============================================================================
   // checkPlatformAdmin() Tests
@@ -189,14 +190,8 @@ describe('RBAC Authorization Checks', () => {
     it('should handle database errors gracefully', async () => {
       const userId = 'user-error';
 
-      try {
-        const result = await getUserProfileId(userId);
-        // Should not throw, returns null on error
-        expect(result === null || typeof result === 'string').toBe(true);
-      } catch (error) {
-        // Function should not throw
-        throw new Error('getUserProfileId should not throw');
-      }
+      // getUserProfileId throws RBACError on database errors
+      await expect(getUserProfileId(userId)).rejects.toThrow('Failed to verify user profile');
     });
   });
 

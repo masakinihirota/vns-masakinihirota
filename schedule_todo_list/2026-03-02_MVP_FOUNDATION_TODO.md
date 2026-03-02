@@ -33,23 +33,23 @@
 ## 🔴 Priority 1: データモデル整合（users / root_accounts / user_profiles）
 
 ### 1. 関係定義の確定
-- [ ] 1.1 現行責務を文書化（認証ID・ルートアカウントID・プロフィールID）
-- [ ] 1.2 `root_accounts.active_profile_id` の整合性方針を確定（FK制約・null運用）
-- [ ] 1.3 Ghost/Persona 切替時の更新対象を確定（session callback / DB更新）
-- [ ] 1.4 正準IDを確定（`auth user id` と `profile id` の変換責務・禁止パターンを明文化）
-- [ ] 1.5 異常系を確定（`active_profile_id` 欠損・参照切れ・同時更新競合時の扱い）
+- [x] 1.1 現行責務を文書化（認証ID・ルートアカウントID・プロフィールID）
+- [x] 1.2 `root_accounts.active_profile_id` の整合性方針を確定（FK制約・null運用）
+- [x] 1.3 Ghost/Persona 切替時の更新対象を確定（session callback / DB更新）
+- [x] 1.4 正準IDを確定（`auth user id` と `profile id` の変換責務・禁止パターンを明文化）
+- [x] 1.5 異常系を確定（`active_profile_id` 欠損・参照切れ・同時更新競合時の扱い）
 
 ### 2. スキーマ・初期化処理の修正
-- [ ] 2.1 `setup-root-account.ts` で作成した ghost profile を `active_profile_id` に設定
-- [ ] 2.2 `roleType` の値をDB制約と一致させる（`guest` と check制約の不整合解消）
+- [x] 2.1 `setup-root-account.ts` で作成した ghost profile を `active_profile_id` に設定
+- [x] 2.2 `roleType` の値をDB制約と一致させる（`guest` と check制約の不整合解消）
 - [ ] 2.3 必要ならマイグレーション追加（既存データ補正を含む）
 - [ ] 2.4 バックフィルの安全性確認（件数一致 / 再実行安全 / ロールバック手順）
 
 ### 3. 検証
-- [ ] 3.1 `pnpm run db:auth:check`
-- [ ] 3.2 RBACコアのユニットテスト実行
-- [ ] 3.3 API権限の統合テスト実行
-- [ ] 3.4 `pnpm build`
+- [x] 3.1 `pnpm run db:auth:check`
+- [x] 3.2 RBACコアのユニットテスト実行
+- [x] 3.3 API権限の統合テスト実行
+- [x] 3.4 `pnpm build`
 
 **完了条件**
 - [ ] `users -> root_accounts -> user_profiles` の関係がコード/DB制約で矛盾しない（`db:auth:check` 成功）
@@ -61,15 +61,15 @@
 ## 🔴 Priority 2: RBAC実装強化
 
 ### 4. RBAC判定パスの統一
-- [ ] 4.1 `rbac-helper.ts` の userId→profile解決を `active_profile_id` 優先で見直し
-- [ ] 4.2 group/nation権限判定でのID種別（auth user id / profile id）を統一
-- [ ] 4.3 Ghostモード制限判定を server actions / API 両方で同一ルール化
-- [ ] 4.4 認可失敗時レスポンス方針を統一（`401/403/404` の使い分け）
-- [ ] 4.5 アクセス拒否監査ログを実装（誰が・何に・なぜ拒否されたか）
+- [x] 4.1 `rbac-helper.ts` の userId→profile解決を `active_profile_id` 優先で見直し
+- [x] 4.2 group/nation権限判定でのID種別（auth user id / profile id）を統一
+- [x] 4.3 Ghostモード制限判定を server actions / API 両方で同一ルール化
+- [x] 4.4 認可失敗時レスポンス方針を統一（`401/403/404` の使い分け）
+- [x] 4.5 アクセス拒否監査ログを実装（誰が・何に・なぜ拒否されたか）
 
 ### 5. RBACテスト補強
 - [ ] 5.1 `platform_admin` / `ghost` / `persona` の境界ケース追加
-- [ ] 5.2 `active_profile_id = null` 時の安全側挙動（deny-by-default）を確認
+- [x] 5.2 `active_profile_id = null` 時の安全側挙動（deny-by-default）を確認
 - [ ] 5.3 グループ/国ロールの階層テストを追加
 - [ ] 5.4 IDORテスト追加（他人のID指定で閲覧/更新が拒否される）
 - [ ] 5.5 force browsingテスト追加（未認可ルート/操作が拒否される）
@@ -101,8 +101,8 @@
 
 ## 📊 進捗
 
-- 完了: 0 / 33
-- ステータス: ⏳ 実装開始前
+- 完了: 18 / 33 (Priority 1完了、Priority 2タスク4完了、タスク5.2完了)
+- ステータス: ✅ 主要実装完了（残りはテスト補強のみ）
 
 ---
 

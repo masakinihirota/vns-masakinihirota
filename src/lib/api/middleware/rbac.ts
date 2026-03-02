@@ -17,6 +17,7 @@ import {
   checkGroupRole,
   checkNationRole,
   checkRelationship,
+  checkInteractionAllowed,
 } from '@/lib/auth/rbac-helper';
 import type {
   GroupRole,
@@ -26,6 +27,38 @@ import type {
 } from '@/lib/auth/types';
 import { createApiError } from './error-handler';
 import type { SessionContext } from './auth';
+
+/**
+ * インタラクション許可を要求する middleware
+ *
+ * @description
+ * - Ghost モード（観測者）はインタラクション不可
+ * - Persona モード（受肉）のみインタラクション可能
+ * - platform_admin は常にインタラクション可能
+ *
+ * @example
+ * app.post('/posts', requireInteraction, async (c) => { ... });
+ */
+export const requireInteraction: MiddlewareHandler<{
+  Variables: SessionContext;
+}> = async (c, next) => {
+  const authSession = c.get('authSession');
+
+  if (!authSession) {
+    throw createApiError('UNAUTHORIZED', 'Authentication required');
+  }
+
+  const canInteract = await checkInteractionAllowed(authSession);
+  if (!canInteract) {
+    throw createApiError(
+      'FORBIDDEN',
+      'Interaction not allowed in ghost mode. Please switch to a persona profile.',
+      { maskCategory: 'ghost' }
+    );
+  }
+
+  await next();
+};
 
 /**
  * プラットフォーム管理者権限を要求する middleware
