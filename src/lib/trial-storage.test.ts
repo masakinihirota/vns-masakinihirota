@@ -1,3 +1,4 @@
+/** @vitest-environment happy-dom */
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { INITIAL_POINTS, TrialStorage } from "./trial-storage";
@@ -11,6 +12,22 @@ describe("TrialStorage", () => {
   it("should initialize with default points", () => {
     const data = TrialStorage.init();
     expect(data.points.current).toBe(INITIAL_POINTS);
+  });
+
+  it("enableMode/disableMode should toggle the trial flag in localStorage", () => {
+    expect(localStorage.getItem('vns_trial_mode')).toBeNull();
+    TrialStorage.enableMode();
+    expect(localStorage.getItem('vns_trial_mode')).toBe('true');
+    TrialStorage.disableMode();
+    expect(localStorage.getItem('vns_trial_mode')).toBeNull();
+  });
+
+  it("clear should remove both data and mode flag", () => {
+    localStorage.setItem('vns_trial_data', '{"foo":1}');
+    localStorage.setItem('vns_trial_mode', 'true');
+    TrialStorage.clear();
+    expect(localStorage.getItem('vns_trial_data')).toBeNull();
+    expect(localStorage.getItem('vns_trial_mode')).toBeNull();
   });
 
   it("should consume points normally", () => {

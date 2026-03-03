@@ -77,6 +77,40 @@ export const MAX_POINTS = 1_000_000;
 // const RECOVER_LIMIT = 2000;
 
 export const TrialStorage = {
+  // Helpers for trial mode flag (localStorage + Cookie)
+  enableMode: () => {
+    if (globalThis.window === undefined) return;
+    try {
+      localStorage.setItem("vns_trial_mode", "true");
+      // Cookie にも保存（サーバーサイドでチェック可能にする）
+      document.cookie = "vns_trial_mode=true; path=/; max-age=86400; SameSite=Lax";
+      // カスタムイベントを発火して同一タブ内で即座に反映
+      window.dispatchEvent(new Event("trialModeChanged"));
+    } catch {}
+  },
+  disableMode: () => {
+    if (globalThis.window === undefined) return;
+    try {
+      localStorage.removeItem("vns_trial_mode");
+      // Cookie も削除
+      document.cookie = "vns_trial_mode=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      // カスタムイベントを発火して同一タブ内で即座に反映
+      window.dispatchEvent(new Event("trialModeChanged"));
+    } catch {}
+  },
+  // Clear all data (stop recording trial)
+  clear: () => {
+    if (globalThis.window === undefined) return;
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem("vns_trial_mode");
+      // Cookie も削除
+      document.cookie = "vns_trial_mode=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+      // カスタムイベントを発火して同一タブ内で即座に反映
+      window.dispatchEvent(new Event("trialModeChanged"));
+    } catch {}
+  },
+
   // Save entire data
   save: (data: VNSTrialData): boolean => {
     if (globalThis.window === undefined) return false;
@@ -192,18 +226,11 @@ export const TrialStorage = {
       createdAt: new Date().toISOString(),
     };
     TrialStorage.save(initial);
+    // ensure mode flag is set when we create initial data
+    TrialStorage.enableMode();
     return initial;
   },
 
-  // --- Actions ---
-
-  setRootAccount: (account: TrialRootAccount) => {
-    const data = TrialStorage.init();
-    data.rootAccount = account;
-    TrialStorage.save(data);
-  },
-
-  // Point Consumption Logic with Progressive Penalty
   consumePoints: (baseAmount: number): boolean => {
     const data = TrialStorage.init();
     const now = Date.now();
@@ -283,11 +310,6 @@ export const TrialStorage = {
     return { success: true };
   },
 
-  clear: () => {
-    if (globalThis.window === undefined) return;
-    localStorage.removeItem(STORAGE_KEY);
-  },
-
   // For Migration
   exportTrialData: (): VNSTrialData | undefined => {
     return TrialStorage.load();
@@ -295,25 +317,34 @@ export const TrialStorage = {
 };
 
 /**
- * ランダムな匿名表示名を生成
- * 形式: adjective-noun-4digits (例: Silent-Fox-4821)
- * @returns ランダム生成された表示名
+ * 星座匿名（コンステレーション・アノニマス）を生成
+ * 形式: 色+マテリアル+の+星座 (例: 緑の光速の魚座)
+ * @param userConstellation ユーザーの星座（省略時はランダム）
+ * @returns ランダム生成された星座匿名
  */
-export function generateRandomAnonymousName(): string {
-  const adjectives = [
-    'Silent', 'Swift', 'Bright', 'Calm', 'Deep', 'Quick', 'Soft', 'Wild',
-    'Gentle', 'Strong', 'Vast', 'Warm', 'Cool', 'Keen', 'Bold', 'Wise',
-    'Noble', 'Proud', 'Kind', 'Fair', 'True', 'Pure', 'Serene', 'Timid'
-  ];
-  const nouns = [
-    'Fox', 'Wolf', 'Eagle', 'Bear', 'Hawk', 'Lion', 'Tiger', 'Panda',
-    'Owl', 'Raven', 'Swan', 'Phoenix', 'Dragon', 'Butterfly', 'Dolphin', 'Horse',
-    'Deer', 'Lynx', 'Penguin', 'Whale', 'Otter', 'Koala', 'Rabbit', 'Cheetah'
+export function generateRandomAnonymousName(userConstellation?: string): string {
+  const colors = [
+    "赤い", "青い", "黄色い", "緑の", "紫の", "橙色の",
+    "ピンクの", "茶色の", "灰色の", "黒い", "白い", "銀色の",
+    "金色の", "虹色の", "透明な", "輝く"
   ];
 
-  const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-  const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
-  const randomDigits = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+  const materials = [
+    "マテリアル", "光", "幻想", "氷", "炎", "輝き",
+    "熱狂", "闇", "風", "水", "土", "雷",
+    "音", "光速", "宇宙", "時間", "魂", "夢",
+    "記憶", "希望", "絆", "運命"
+  ];
 
-  return `${randomAdjective}-${randomNoun}-${randomDigits}`;
+  const constellations = [
+    "牡羊座", "牡牛座", "双子座", "蟹座", "獅子座", "乙女座",
+    "天秤座", "蠍座", "射手座", "山羊座", "水瓶座", "魚座"
+  ];
+
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
+  const randomMaterial = materials[Math.floor(Math.random() * materials.length)];
+  const constellation = userConstellation || constellations[Math.floor(Math.random() * constellations.length)];
+
+  return `${randomColor}${randomMaterial}の${constellation}`;
 }
+

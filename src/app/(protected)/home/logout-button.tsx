@@ -4,6 +4,7 @@ import { signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { logger } from "@/lib/logger";
+import { TrialStorage } from "@/lib/trial-storage";
 
 export function LogoutButton() {
     const router = useRouter();
@@ -12,6 +13,8 @@ export function LogoutButton() {
     const handleLogout = async () => {
         setIsLoading(true);
         try {
+            // stop trial before signing out
+            TrialStorage.clear();
             await signOut();
             // ログアウト成功後、ランディングページにリダイレクト
             router.push("/");

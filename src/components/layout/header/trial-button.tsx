@@ -23,6 +23,8 @@ export function TrialButton() {
 
       // お試しデータを初期化・保存
       const trialData = TrialStorage.init();
+      // mark browser as trial mode
+      TrialStorage.enableMode();
       trialData.rootAccount = {
         display_id: anonymousName,
         display_name: anonymousName,
@@ -53,8 +55,8 @@ export function TrialButton() {
         description: '※このモード中のデータはブラウザのみに保存され、サーバーには送信されません',
       });
 
-      // ダッシュボードへ遷移
-      router.push('/home');
+      // お試し専用ページへ遷移
+      router.push('/home-trial');
       router.refresh();
     } catch (e) {
       toast.error(t('header.trialStartFailed'), {
