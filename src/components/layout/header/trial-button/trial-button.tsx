@@ -1,12 +1,12 @@
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { useRouter } from 'next/navigation';
 import { useLocale } from '@/context/locale-context';
+import { logger } from '@/lib/logger';
+import { generateRandomAnonymousName, TrialStorage } from '@/lib/trial-storage';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { generateRandomAnonymousName, TrialStorage } from '@/lib/trial-storage';
-import { logger } from '@/lib/logger';
 
 export function TrialButton() {
   const [isLoading, setIsLoading] = useState(false);
@@ -62,7 +62,7 @@ export function TrialButton() {
       toast.error(t('header.trialStartFailed'), {
         description: t('header.checkStorageSettings'),
       });
-      logger.error('Trial initialization error:', e);
+      logger.error('Trial initialization error:', e instanceof Error ? e : new Error(String(e)));
       setIsLoading(false);
     }
   };
