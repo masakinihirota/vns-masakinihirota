@@ -24,7 +24,7 @@
 
 #### 実装順序
 ```
-Week 1: 
+Week 1:
   └─ Migration テスト（本番DB前にStaging完全検証）
   └─ メトリクス測定（migration後の性能baseline確立）
   └─ APM設定（継続監視体制整備）
@@ -42,14 +42,14 @@ Week 5+:
 ```
 
 #### メリット
-✅ **リスク低減**: 各段階で検証ゲート  
-✅ **品質保証**: baseline メトリクスで劣化検出  
-✅ **ロールバック容易**: 各stepが独立  
-✅ **チーム習熟**: 段階的学習で運用skill向上  
+✅ **リスク低減**: 各段階で検証ゲート
+✅ **品質保証**: baseline メトリクスで劣化検出
+✅ **ロールバック容易**: 各stepが独立
+✅ **チーム習熟**: 段階的学習で運用skill向上
 
 #### デメリット
-❌ **時間コスト**: 4-5週間必要  
-❌ **リソース**: 継続的な検証作業  
+❌ **時間コスト**: 4-5週間必要
+❌ **リソース**: 継続的な検証作業
 
 #### 推奨対象
 - 本番DBが既に顧客データを保有している
@@ -81,14 +81,14 @@ Week 3+:
 ```
 
 #### メリット
-✅ **時間効率**: 2週間でPhase完了  
-✅ **モメンタム**: プロジェクト推進感  
-✅ **リソース集約**: チームが集中できる  
+✅ **時間効率**: 2週間でPhase完了
+✅ **モメンタム**: プロジェクト推進感
+✅ **リソース集約**: チームが集中できる
 
 #### デメリット
-❌ **リスク増大**: バッファが少ない  
-❌ **QA負荷**: 並行テストで漏れリスク  
-❌ **運用負担**: 本番適用時の緊張感  
+❌ **リスク増大**: バッファが少ない
+❌ **QA負荷**: 並行テストで漏れリスク
+❌ **運用負担**: 本番適用時の緊張感
 
 #### 推奨対象
 - Staging環境が完全に独立している
@@ -118,14 +118,14 @@ Week 2-3:
 ```
 
 #### メリット
-✅ **投資最小化**: Audit logging のみで大幅改善  
-✅ **柔軟性**: 後から戦略変更可  
-✅ **効果測定**: ログで削除パターン分析後に判断  
+✅ **投資最小化**: Audit logging のみで大幅改善
+✅ **柔軟性**: 後から戦略変更可
+✅ **効果測定**: ログで削除パターン分析後に判断
 
 #### デメリット
-❌ **部分的対応**: Soft delete 延期でリスク残存  
-❌ **ポリシー不明**: 削除後の復旧仕様が不明確  
-❌ **テクニカルデット**: 後で実装コスト増大  
+❌ **部分的対応**: Soft delete 延期でリスク残存
+❌ **ポリシー不明**: 削除後の復旧仕様が不明確
+❌ **テクニカルデット**: 後で実装コスト増大
 
 #### 推奨対象
 - リソース限定的
@@ -153,7 +153,7 @@ Week 2-3:
   - Migration rollback 可能性確認
 ```
 
-**実装目安: 2-3日**  
+**実装目安: 2-3日**
 **推奨チーム**: Backend engineer 1 + QA 1
 
 ---
@@ -183,7 +183,7 @@ Week 2-3:
 □ Custom logger: query count + duration
 ```
 
-**実装目安: 1-2日**  
+**実装目安: 1-2日**
 **推奨チーム**: DevOps engineer 1 + Backend engineer 1
 
 ---
@@ -201,14 +201,14 @@ DD_DBM_ENABLED: true         # Database monitoring
 - Sequential queries alert:
     condition: query_count > 10 in 1sec to same table
     threshold: P90 > 100ms
-    
+
 - N+1 detection:
     condition: same query executed N times
     threshold: N > 5
     action: Log warning + notify team
 ```
 
-**実装目安: 3-5日**  
+**実装目安: 3-5日**
 **推奨チーム**: DevOps engineer 1
 
 ---
@@ -244,7 +244,7 @@ export const auditLogs = pgTable(
   - Rollback link（7日以内）
 ```
 
-**実装目安: 5-7日**  
+**実装目安: 5-7日**
 **推奨チーム**: Backend engineer 1-2
 
 ---
@@ -262,12 +262,12 @@ CREATE POLICY user_profiles_select_public ON user_profiles
 CREATE POLICY user_profiles_select_public_v2 ON user_profiles
   FOR SELECT TO authenticated, anon
   USING (
-    is_active = true 
+    is_active = true
     AND deleted_at IS NULL  -- ← soft delete対応
   );
 ```
 
-**実装目安: 5-7日**  
+**実装目安: 5-7日**
 **推奨チーム**: Backend engineer 1 + DB architect
 
 ---
@@ -302,7 +302,7 @@ CREATE POLICY users_update_self ON "user"
 - [ ] userProfiles テーブル
 - [ ] rootAccounts テーブル
 
-**実装目安: 10-14日**  
+**実装目安: 10-14日**
 **推奨チーム**: Backend engineer 2 + QA 1
 
 ---
@@ -319,9 +319,9 @@ export async function restoreUserAccount(userId: string) {
       sql`extract(epoch from (now() - ${users.deletedAt})) < 30*86400` // 30days
     ),
   });
-  
+
   if (!account) throw new Error('Account not recoverable');
-  
+
   // restore
   await db.update(users)
     .set({
@@ -329,13 +329,13 @@ export async function restoreUserAccount(userId: string) {
       deletedAt: null,
     })
     .where(eq(users.id, userId));
-  
+
   // send email notification
   await sendRestoreConfirmationEmail(account.email);
 }
 ```
 
-**実装目安: 5-7日**  
+**実装目安: 5-7日**
 **推奨チーム**: Backend engineer 1
 
 ---
