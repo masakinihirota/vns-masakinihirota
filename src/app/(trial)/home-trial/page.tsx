@@ -2,7 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { TrialStorage, generateRandomAnonymousName } from "@/lib/trial-storage";
+import { TrialStorage } from "@/lib/trial-storage";
+import { ConstellationSelection } from "./constellation-selection";
+import { AnonymousNameCandidates } from "./anonymous-name-candidates";
+
+type PagePhase = "loading" | "constellation_selection" | "name_selection" | "dashboard";
 
 /**
  * お試しモード専用ホームページ
@@ -11,7 +15,8 @@ import { TrialStorage, generateRandomAnonymousName } from "@/lib/trial-storage";
 export default function HomeTrialPage() {
     const router = useRouter();
     const [trialData, setTrialData] = useState<any>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [phase, setPhase] = useState<PagePhase>("loading");
+    const [selectedConstellation, setSelectedConstellation] = useState<string>("");
 
     useEffect(() => {
         // お試しモードフラグを確認
@@ -26,21 +31,24 @@ export default function HomeTrialPage() {
         // お試しデータを読み込み
         const data = TrialStorage.load();
         setTrialData(data);
-        setIsLoading(false);
+
+        // 既に匿名名が決まっているか確認
+        if (data && data.rootAccount && data.rootAccount.display_name) {
+            setPhase("dashboard");
+        } else {
+            setPhase("constellation_selection");
+        }
     }, [router]);
 
-    // 星座の一覧（12星座）
-    const CONSTELLATIONS = [
-        "牡羊座", "牡牛座", "双子座", "蟹座", "獅子座", "乙女座",
-        "天秤座", "蠍座", "射手座", "山羊座", "水瓶座", "魚座"
-    ];
+    const handleConstellationSelect = (constellation: string) => {
+        setSelectedConstellation(constellation);
+        setPhase("name_selection");
+    };
 
-    const handleConstellationSelect = (sign: string) => {
+    const handleNameSelect = (name: string) => {
+        console.log("handleNameSelect called with:", name);
         if (!trialData) return;
-        // 既に名前がある場合は無視
-        if (trialData.rootAccount && trialData.rootAccount.display_name) return;
 
-        const name = generateRandomAnonymousName(sign);
         const updated = { ...trialData };
         updated.rootAccount = {
             display_id: name,
@@ -53,7 +61,7 @@ export default function HomeTrialPage() {
             uses_ai_translation: false,
             nativeLanguages: ['ja'],
             agreed_oasis: true,
-            zodiac_sign: '水瓶座',
+            zodiac_sign: selectedConstellation,
             birth_generation: '平成',
             week_schedule: {
                 mon: 'work',
@@ -66,11 +74,19 @@ export default function HomeTrialPage() {
             },
             created_at: new Date().toISOString(),
         };
+        console.log("Saving trial data:", updated);
         TrialStorage.save(updated);
         setTrialData(updated);
+        console.log("Setting phase to dashboard");
+        setPhase("dashboard");
     };
 
-    if (isLoading) {
+    const handleRestartConstellationSelection = () => {
+        setSelectedConstellation("");
+        setPhase("constellation_selection");
+    };
+
+    if (phase === "loading") {
         return (
             <div className="min-h-screen flex items-center justify-center">
                 <div className="text-center">
@@ -81,31 +97,23 @@ export default function HomeTrialPage() {
         );
     }
 
-    // 星座選択が未完了の場合
-    if (trialData && !(trialData.rootAccount && trialData.rootAccount.display_name)) {
+    // 星座選択画面
+    if (phase === "constellation_selection") {
+        return <ConstellationSelection onConstellationSelect={handleConstellationSelect} />;
+    }
+
+    // 匿名名選択画面
+    if (phase === "name_selection") {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-linear-to-b from-orange-50 to-orange-100 dark:from-gray-900 dark:to-gray-800">
-                <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
-                    <h2 className="text-2xl font-bold mb-4">あなたの星座は？</h2>
-                    <div className="grid grid-cols-3 gap-3">
-                        {CONSTELLATIONS.map(sign => (
-                            <button
-                                key={sign}
-                                onClick={() => handleConstellationSelect(sign)}
-                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                            >
-                                {sign}
-                            </button>
-                        ))}
-                    </div>
-                    <p className="text-sm text-gray-500 mt-4">
-                        選択すると星座匿名が生成されます。
-                    </p>
-                </div>
-            </div>
+            <AnonymousNameCandidates
+                constellation={selectedConstellation}
+                onNameSelect={handleNameSelect}
+                onRestartConstellationSelection={handleRestartConstellationSelection}
+            />
         );
     }
 
+    // ダッシュボード画面（匿名名が決まったら表示される）
     return (
         <div className="min-h-screen bg-linear-to-b from-orange-50 to-orange-100 dark:from-gray-900 dark:to-gray-800">
             <div className="max-w-4xl mx-auto px-4 py-12">
