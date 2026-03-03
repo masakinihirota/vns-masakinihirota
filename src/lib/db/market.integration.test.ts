@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { logger } from "@/lib/logger";
 
 import { db as database } from "./client";
 import {
@@ -52,9 +53,9 @@ describe("Market Integration (Drizzle)", () => {
         buyerId = buyer.id;
       } catch (error) {
         // If limit reached, reuse seller as buyer (self-trade)
-        console.warn(
+        logger.warn(
           "Could not create buyer profile, using seller checking self-trade",
-          error
+          { error }
         );
         buyerId = sellerId;
       }

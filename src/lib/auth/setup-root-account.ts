@@ -2,6 +2,7 @@
 
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/db/client";
+import { logger } from "@/lib/logger";
 import { rootAccounts, userProfiles } from "@/lib/db/schema.postgres";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
@@ -119,7 +120,7 @@ export async function setupRootAccount(userId: string): Promise<{
       ghostMaskProfileId: created.ghostMaskProfileId,
     };
   } catch (error) {
-    console.error("setupRootAccount error:", error);
+    logger.error("setupRootAccount error:", undefined, { error });
     return {
       success: false,
       message: `Setup failed: ${error instanceof Error ? error.message : "Unknown error"}`,
@@ -161,7 +162,7 @@ export async function ensureRootAccountAndRedirect() {
     // /home へリダイレクト
     redirect("/home");
   } catch (error) {
-    console.error("ensureRootAccountAndRedirect error:", error);
+    logger.error("ensureRootAccountAndRedirect error:", undefined, { error });
     return {
       success: false,
       message: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,

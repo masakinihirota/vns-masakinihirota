@@ -2,11 +2,13 @@
  * Admin Dashboard Database Queries Tests
  * TDD: テスト駆動開発
  */
- 
+
 
 import { eq, and, or, ilike, isNull, count, desc } from 'drizzle-orm';
 import { v4 as uuidv4 } from 'uuid';
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { logger } from '@/lib/logger';
+
 
 import { db as database } from './client';
 import { userProfiles, rootAccounts, users } from './schema.postgres';
@@ -71,7 +73,7 @@ describe('Admin Dashboard Queries', () => {
         testProfileIds.push(profile.id);
       }
     } catch (error) {
-      console.error('Setup error:', error);
+      logger.error('Setup error:', { error });
       throw error;
     }
   });
@@ -95,7 +97,7 @@ describe('Admin Dashboard Queries', () => {
         await database.delete(users).where(eq(users.id, testUserId));
       }
     } catch (error) {
-      console.error('Cleanup error:', error);
+      logger.error('Cleanup error:', { error });
     }
   });
 

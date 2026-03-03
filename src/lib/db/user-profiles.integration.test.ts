@@ -1,5 +1,7 @@
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { logger } from "@/lib/logger";
+
 
 import { db as database } from "./client";
 import { userProfiles } from "./schema.postgres";
@@ -23,7 +25,7 @@ describe("User Profiles Integration (Drizzle)", () => {
       );
     }
     testRootAccountId = profile.rootAccountId;
-    console.info("Using Test Root Account ID:", testRootAccountId);
+    logger.info("Using Test Root Account ID:", { testRootAccountId });
   });
 
   afterAll(async () => {
@@ -33,7 +35,7 @@ describe("User Profiles Integration (Drizzle)", () => {
           .delete(userProfiles)
           .where(eq(userProfiles.id, createdProfileId));
       } catch {
-        console.info("Cleanup failed or profile already deleted");
+        logger.warn("Cleanup failed or profile already deleted");
       }
     }
   });
@@ -49,7 +51,7 @@ describe("User Profiles Integration (Drizzle)", () => {
     // Check limit first
     const current = await getUserProfiles(testRootAccountId);
     if (current.length >= 10) {
-      console.warn("Skipping create test due to limit reached");
+      logger.warn("Skipping create test due to limit reached");
       return;
     }
 

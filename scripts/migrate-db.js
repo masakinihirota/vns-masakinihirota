@@ -1,6 +1,14 @@
 const { spawnSync } = require('child_process');
 const postgres = require('postgres');
 
+// simple logger
+const logger = {
+    info: console.log.bind(console),
+    debug: console.debug ? console.debug.bind(console) : console.log.bind(console),
+    warn: console.warn.bind(console),
+    error: console.error.bind(console),
+};
+
 const envPath = process.env.ENV_FILE || '.env.local';
 require('dotenv').config({ path: envPath });
 
@@ -55,19 +63,19 @@ async function inspectDbState(sql) {
 }
 
 function runDrizzleMigrate() {
-    console.log('[DB_MIGRATE] Running drizzle-kit migrate ...');
+    logger.info('[DB_MIGRATE] Running drizzle-kit migrate ...');
     return runCommand('pnpm', ['exec', 'drizzle-kit', 'migrate']);
 }
 
 function runApplySecurity() {
-    console.log('[DB_MIGRATE] Running security/idempotent migration layer ...');
+    logger.info('[DB_MIGRATE] Running security/idempotent migration layer ...');
     return runCommand('node', ['scripts/apply-db-security-migrations.js']);
 }
 
 async function main() {
     const databaseUrl = process.env.DATABASE_URL;
     if (!databaseUrl) {
-        console.error(`[DB_MIGRATE] DATABASE_URL is missing in ${envPath}`);
+        logger.error(`[DB_MIGRATE] DATABASE_URL is missing in ${envPath}`);
         process.exit(1);
     }
 
@@ -77,16 +85,16 @@ async function main() {
         const state = await inspectDbState(sql);
 
         if (!state.hasBaselineTables) {
-            console.log('[DB_MIGRATE] Fresh DB detected. Applying full drizzle migration history.');
+            logger.info('[DB_MIGRATE] Fresh DB detected. Applying full drizzle migration history.');
             const status = runDrizzleMigrate();
             if (status !== 0) {
                 process.exit(status);
             }
         } else if (state.migrationCount === 0) {
-            console.warn('[DB_MIGRATE] Existing baseline tables detected with empty drizzle migration history.');
-            console.warn('[DB_MIGRATE] Skipping full replay to avoid "relation already exists" and applying idempotent layer.');
+            logger.warn('[DB_MIGRATE] Existing baseline tables detected with empty drizzle migration history.');
+            logger.warn('[DB_MIGRATE] Skipping full replay to avoid "relation already exists" and applying idempotent layer.');
         } else {
-            console.log('[DB_MIGRATE] Existing migration history detected. Applying pending drizzle migrations.');
+            logger.info('[DB_MIGRATE] Existing migration history detected. Applying pending drizzle migrations.');
             const status = runDrizzleMigrate();
             if (status !== 0) {
                 process.exit(status);
@@ -98,10 +106,9 @@ async function main() {
             process.exit(securityStatus);
         }
 
-        console.log(`[DB_MIGRATE] PASSED (env: ${envPath})`);
+        logger.info(`[DB_MIGRATE] PASSED (env: ${envPath})`);
     } catch (error) {
-        console.error(`[DB_MIGRATE] FAILED (env: ${envPath})`);
-        console.error(error);
+        logger.error(`[DB_MIGRATE] FAILED (env: ${envPath})`, { error });
         process.exit(1);
     } finally {
         await sql.end();

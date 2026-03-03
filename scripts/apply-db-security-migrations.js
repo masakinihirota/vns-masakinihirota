@@ -2,50 +2,57 @@ const fs = require('fs');
 const path = require('path');
 const postgres = require('postgres');
 
+// simple logger wrapper (avoid requiring TS compile)
+const logger = {
+  info: console.log.bind(console),
+  debug: console.debug ? console.debug.bind(console) : console.log.bind(console),
+  warn: console.warn.bind(console),
+  error: console.error.bind(console),
+};
+
 const envPath = process.env.ENV_FILE || '.env.local';
 require('dotenv').config({ path: envPath });
 
 function readFile(relativePath) {
-    return fs.readFileSync(path.resolve(process.cwd(), relativePath), 'utf8');
+  return fs.readFileSync(path.resolve(process.cwd(), relativePath), 'utf8');
 }
 
 function splitByStatementBreakpoint(sqlText) {
-    return sqlText
-        .split(/-->\s*statement-breakpoint/g)
-        .map((chunk) => chunk.trim())
-        .filter(Boolean);
+  return sqlText
+    .split(/-->\s*statement-breakpoint/g)
+    .map((chunk) => chunk.trim())
+    .filter(Boolean);
 }
 
 async function executeChunks(sql, chunks, label) {
-    for (let index = 0; index < chunks.length; index += 1) {
-        const chunk = chunks[index];
-        try {
-            await sql.unsafe(chunk);
-            console.log(`[DB_APPLY] ${label} chunk ${index + 1}/${chunks.length}: OK`);
-        } catch (error) {
-            console.error(`[DB_APPLY] ${label} chunk ${index + 1}/${chunks.length}: FAILED`);
-            console.error(error);
-            throw error;
-        }
+  for (let index = 0; index < chunks.length; index += 1) {
+    const chunk = chunks[index];
+    try {
+      await sql.unsafe(chunk);
+      logger.info(`[DB_APPLY] ${label} chunk ${index + 1}/${chunks.length}: OK`);
+    } catch (error) {
+      logger.error(`[DB_APPLY] ${label} chunk ${index + 1}/${chunks.length}: FAILED`, { error });
+      throw error;
     }
+  }
 }
 
 async function main() {
-    const databaseUrl = process.env.DATABASE_URL;
-    if (!databaseUrl) {
-        console.error(`[DB_APPLY] DATABASE_URL is missing in ${envPath}`);
-        process.exit(1);
-    }
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) {
+    logger.error(`[DB_APPLY] DATABASE_URL is missing in ${envPath}`);
+    process.exit(1);
+  }
 
-    const sql = postgres(databaseUrl, { prepare: false });
+  const sql = postgres(databaseUrl, { prepare: false });
 
-    try {
-        const migration0006 = readFile('drizzle/0006_database_security_foundation.sql');
+  try {
+    const migration0006 = readFile('drizzle/0006_database_security_foundation.sql');
 
-        console.log('[DB_APPLY] Applying 0006_database_security_foundation.sql ...');
-        await executeChunks(sql, splitByStatementBreakpoint(migration0006), '0006');
+    logger.info('[DB_APPLY] Applying 0006_database_security_foundation.sql ...');
+    await executeChunks(sql, splitByStatementBreakpoint(migration0006), '0006');
 
-        const rlsCoreSql = `
+    const rlsCoreSql = `
       CREATE SCHEMA IF NOT EXISTS app;
 
       CREATE OR REPLACE FUNCTION app.current_auth_user_id()
@@ -125,17 +132,17 @@ async function main() {
         WITH CHECK (app.is_platform_admin());
     `;
 
-        console.log('[DB_APPLY] Applying core RLS policies ...');
-        await sql.unsafe(rlsCoreSql);
+    console.log('[DB_APPLY] Applying core RLS policies ...');
+    await sql.unsafe(rlsCoreSql);
 
-        console.log(`[DB_APPLY] PASSED (env: ${envPath})`);
-    } catch (error) {
-        console.error(`[DB_APPLY] FAILED (env: ${envPath})`);
-        console.error(error);
-        process.exit(1);
-    } finally {
-        await sql.end();
-    }
+    console.log(`[DB_APPLY] PASSED (env: ${envPath})`);
+  } catch (error) {
+    console.error(`[DB_APPLY] FAILED (env: ${envPath})`);
+    console.error(error);
+    process.exit(1);
+  } finally {
+    await sql.end();
+  }
 }
 
 main();

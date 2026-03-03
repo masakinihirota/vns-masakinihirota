@@ -1,4 +1,6 @@
-console.log("DEBUG: STARTING rbac-boundary-cases.test.ts");
+import { logger } from "@/lib/logger";
+
+logger.debug("STARTING rbac-boundary-cases.test.ts");
 /**
  * RBAC Boundary Cases Test Suite
  *
@@ -15,7 +17,7 @@ console.log("DEBUG: STARTING rbac-boundary-cases.test.ts");
  * $ pnpm test src/lib/auth/__tests__/rbac-boundary-cases.test.ts
  */
 
-console.log("DEBUG: rbac-boundary-cases.test.ts is being loaded");
+logger.debug("rbac-boundary-cases.test.ts is being loaded");
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 // ============================================================================
@@ -131,7 +133,7 @@ describe("RBAC Boundary Cases", () => {
     it("Ghost モードのユーザーはインタラクションを制限される", async () => {
       // isGhostMask の判定ロジックをモック
       vi.mocked(db.select).mockImplementationOnce(() => {
-        console.log("DEBUG: db.select mock for GHOST called");
+        logger.debug("db.select mock for GHOST called");
         return mockDrizzleChain([{ maskCategory: "ghost", userProfileId: "profile-1" }]) as any;
       });
 
@@ -139,7 +141,7 @@ describe("RBAC Boundary Cases", () => {
         const result = await checkInteractionAllowed(personaSession);
         expect(result).toBe(false);
       } catch (e) {
-        console.error("DEBUG: TEST ERROR", e);
+        logger.error("TEST ERROR", undefined, { error: e });
         throw e;
       }
     });
@@ -147,7 +149,7 @@ describe("RBAC Boundary Cases", () => {
     it("Persona モードのユーザーはインタラクションを許可される", async () => {
       // 1. isGhostMask -> false
       vi.mocked(db.select).mockImplementationOnce(() => {
-        console.log("DEBUG: db.select mock for PERSONA called");
+        logger.debug("db.select mock for PERSONA called");
         return mockDrizzleChain([{ maskCategory: "persona", userProfileId: "profile-1" }]) as any;
       });
 
