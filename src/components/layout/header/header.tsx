@@ -24,7 +24,7 @@ export function Header() {
         </div>
 
         {/* アクションエリア: 右配置 */}
-        <div className="flex items-center gap-4">
+        <nav aria-label="ページコントロール" className="flex items-center gap-4">
           {/* 設定系コントロール */}
           <AdsToggle />
           <LanguageToggle />
@@ -35,7 +35,7 @@ export function Header() {
 
           {/* 認証アクション: ログイン/アカウント/お試しボタン等 */}
           <AuthButton />
-        </div>
+        </nav>
       </div>
     </header>
   );

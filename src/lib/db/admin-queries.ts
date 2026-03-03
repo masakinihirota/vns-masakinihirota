@@ -33,6 +33,83 @@ export interface AdminDashboardStats {
   adminLogCount24h: number;
 }
 
+type UserProfileRow = typeof userProfiles.$inferSelect;
+type PenaltyRow = typeof penalties.$inferSelect;
+type ApprovalRow = typeof approvals.$inferSelect;
+type AuditLogRow = typeof auditLogs.$inferSelect;
+
+export interface SearchUsersResult {
+  users: UserProfileRow[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export interface UserDetailResult extends UserProfileRow {}
+
+export interface PenaltyListItem {
+  id: string;
+  targetProfileId: string;
+  targetName: string | null;
+  type: PenaltyRow["type"];
+  reason: string;
+  issuedAt: string;
+  issuerId: string | null;
+  activateUntil: string | null;
+}
+
+export interface GetPenaltiesResult {
+  penalties: PenaltyListItem[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export interface ApprovalQueueItem {
+  id: string;
+  workId: string;
+  title: string;
+  creatorId: string;
+  creatorName: string | null;
+  status: ApprovalRow["status"];
+  createdAt: string;
+  waitDays: number | string;
+}
+
+export interface GetApprovalQueueResult {
+  approvals: ApprovalQueueItem[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export interface DashboardKPI {
+  activeUsers: number;
+  totalUsers: number;
+  suspendPending: number;
+  approvalQueue: number;
+  todayPenalties: number;
+  penaltyDistribution: Array<{ type: PenaltyRow["type"]; count: number }>;
+}
+
+export interface SearchAuditLogItem {
+  id: string;
+  adminId: string;
+  adminName: string | null;
+  action: AuditLogRow["action"];
+  targetType: AuditLogRow["targetType"];
+  result: AuditLogRow["result"];
+  riskLevel: AuditLogRow["riskLevel"];
+  timestamp: string;
+}
+
+export interface SearchAuditLogsResult {
+  logs: SearchAuditLogItem[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
 export async function getAdminDashboardStats(): Promise<AdminDashboardStats> {
   try {
     const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
@@ -85,7 +162,7 @@ export async function searchUsers(
   role: 'all' | 'member' | 'admin' | 'leader' | 'mediator' = 'all',
   page: number = 1,
   limit: number = 20
-) {
+): Promise<SearchUsersResult> {
   const offset = (page - 1) * limit;
 
   // ステータスフィルタの構築
@@ -139,7 +216,7 @@ export async function searchUsers(
  * @param userId - ユーザープロフィールID
  * @returns ユーザー詳細情報
  */
-export async function getUserDetail(userId: string) {
+export async function getUserDetail(userId: string): Promise<UserDetailResult | undefined> {
   const user = await database
     .select()
     .from(userProfiles)
@@ -161,7 +238,7 @@ export async function getUserDetail(userId: string) {
  *
  * 優先度順: another_dimension > leave > card > warning > notice
  */
-export async function getPenalties(page: number = 1, limit: number = 20) {
+export async function getPenalties(page: number = 1, limit: number = 20): Promise<GetPenaltiesResult> {
   const offset = (page - 1) * limit;
 
   const penaltyTypeOrder = (type: string) => {
@@ -235,7 +312,7 @@ export async function issuePenalty(
   type: 'notice' | 'warning' | 'card' | 'leave' | 'another_dimension',
   reason: string,
   issuerId?: string
-) {
+): Promise<PenaltyRow | undefined> {
   const newPenalty = await database.insert(penalties).values({
     targetProfileId,
     type,
@@ -271,7 +348,7 @@ export async function issuePenalty(
  * @param limit - 1ページあたりの件数
  * @returns 待機中の作品配列
  */
-export async function getApprovalQueue(page: number = 1, limit: number = 20) {
+export async function getApprovalQueue(page: number = 1, limit: number = 20): Promise<GetApprovalQueueResult> {
   const offset = (page - 1) * limit;
 
   const approvalsData = await database
@@ -320,7 +397,7 @@ export async function reviewApproval(
   approved: boolean,
   reviewerId: string,
   reviewNote?: string
-) {
+): Promise<ApprovalRow | undefined> {
   const result = await database
     .update(approvals)
     .set({
@@ -357,9 +434,9 @@ export async function reviewApproval(
  * @returns KPI オブジェクト
  * @example
  * const kpi = await getDashboardKPI();
- * console.log(kpi.activeUsers); // 892
+ * logger.info('Active users:', kpi.activeUsers); // 892
  */
-export async function getDashboardKPI() {
+export async function getDashboardKPI(): Promise<DashboardKPI> {
   // 1. アクティブユーザー数
   const activeUsersResult = await database
     .select({ count: count() })
@@ -430,7 +507,7 @@ export async function searchAuditLogs(
   endDate?: Date,
   page: number = 1,
   limit: number = 50
-) {
+): Promise<SearchAuditLogsResult> {
   const offset = (page - 1) * limit;
 
   const conditions = (
@@ -494,7 +571,7 @@ export async function updateUserRole(
   userId: string,
   newRole: 'member' | 'admin' | 'leader' | 'mediator',
   adminId: string
-) {
+): Promise<UserProfileRow | undefined> {
   const result = await database
     .update(userProfiles)
     .set({
@@ -529,7 +606,7 @@ export async function updateUserStatus(
   userId: string,
   isActive: boolean,
   adminId: string
-) {
+): Promise<UserProfileRow | undefined> {
   const result = await database
     .update(userProfiles)
     .set({
@@ -553,8 +630,3 @@ export async function updateUserStatus(
   return result[0];
 }
 
-export type SearchUsersResult = Awaited<ReturnType<typeof searchUsers>>;
-export type GetPenaltiesResult = Awaited<ReturnType<typeof getPenalties>>;
-export type GetApprovalQueueResult = Awaited<ReturnType<typeof getApprovalQueue>>;
-export type DashboardKPI = Awaited<ReturnType<typeof getDashboardKPI>>;
-export type SearchAuditLogsResult = Awaited<ReturnType<typeof searchAuditLogs>>;

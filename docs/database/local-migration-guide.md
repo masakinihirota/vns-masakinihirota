@@ -73,6 +73,22 @@ psql -U postgres -c "CREATE DATABASE masakinihirota;"
 
 ## 通常のマイグレーション実行フロー
 
+### 安全ラッパーの原則（必読）
+
+本プロジェクトでは、ローカル適用は必ず `pnpm db:migrate` を使用します。
+
+- `pnpm db:migrate` → `scripts/migrate-db.js` を実行し、DB 状態を判定して安全な経路を選択
+- `pnpm db:migrate:drizzle`（=`drizzle-kit migrate` 直実行）→ **通常開発では非推奨**
+
+`pnpm db:migrate` が行う安全処理：
+
+1. baseline テーブルと `drizzle.__drizzle_migrations` の状態検査
+2. Fresh DB の場合のみフル履歴適用
+3. 既存 baseline + 空 migration 履歴の場合はフル再生をスキップ（`relation already exists` 回避）
+4. 最後に `scripts/apply-db-security-migrations.js` を実行して RLS/セキュリティ系を冪等適用
+
+> 例外的に `pnpm db:migrate:drizzle` を使うのは、マイグレーションエンジン単体の動作検証を行うときだけに限定してください。
+
 ### パターン A: スキーマを変更してマイグレーション生成
 
 **想定シナリオ**: 新規テーブル追加、カラム追加、インデックス追加など、`schema.postgres.ts` を更新した場合
@@ -264,8 +280,8 @@ psql "$DATABASE_URL" -f drizzle/rollback_0008.sql
 ## Drizzle Studio での対話的スキーマ確認
 
 ```bash
-# Studio を起動（ブラウザで http://localhost:5555 が開きます）
-pnpm drizzle-kit studio
+# Studio を起動（ブラウザで https://local.drizzle.studio が開きます）
+pnpm db:studio
 
 # 機能:
 # - テーブル・カラムの確認・編集
@@ -393,7 +409,7 @@ EOF
 
 - [ ] `drizzle/meta/_journal.json` に含めるか確認（自動？手動？）
 - [ ] マイグレーション内に十分なコメント記載
-- [ ] Drizzle Studio で適用後の状態を確認
+- [ ] `pnpm db:studio` で適用後の状態を確認
 - [ ] RLS ポリシー適用確認
 - [ ] 関連テスト実行
 

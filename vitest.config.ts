@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   test: {
     globals: true,
-    environment: 'node', // Use Node for all tests (setup files handle React)
+    environment: 'jsdom', // JSX/React テスト用に jsdom に変更
     // Use projects for test isolation instead of multiple config files
     pool: 'threads',
     poolOptions: {
@@ -14,7 +14,7 @@ export default defineConfig({
         singleThread: false,
       },
     },
-    setupFiles: './vitest.setup.ts',
+    setupFiles: ['./vitest.setup.ts', './src/__tests__/accessibility/setup.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

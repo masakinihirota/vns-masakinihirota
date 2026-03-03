@@ -1,6 +1,7 @@
 import { startRateLimitCleanup } from "@/lib/auth/rate-limiter";
 import { db } from "@/lib/db/client";
 import * as schema from "@/lib/db/schema.postgres";
+import { env } from "@/lib/env";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
@@ -16,14 +17,7 @@ import { logger } from "@/lib/logger";
  * 設定がない場合は、明示的にエラーを投げます。
  */
 function validateDatabaseUrl() {
-  const databaseUrl = process.env.DATABASE_URL;
-
-  if (!databaseUrl) {
-    throw new Error(
-      '[DATABASE] DATABASE_URL is not set. Please configure it in your .env.local or production environment.\n' +
-      'Example: postgresql://user:password@localhost:5432/vns_app'
-    );
-  }
+  const databaseUrl = env.DATABASE_URL;
 
   // 基本的な URL フォーマット検証
   if (!databaseUrl.startsWith('postgresql://') && !databaseUrl.startsWith('postgres://')) {
@@ -41,21 +35,20 @@ function validateDatabaseUrl() {
  * 設定がない場合は、明示的にエラーを投げて Silent Failure を防止します。
  */
 function validateOAuthCredentials() {
+  if (!env.useRealAuth && env.NODE_ENV !== 'production') {
+    return;
+  }
+
   const providers = [
-    { name: 'Google', idVar: 'GOOGLE_CLIENT_ID', secretVar: 'GOOGLE_CLIENT_SECRET' },
-    { name: 'GitHub', idVar: 'GITHUB_CLIENT_ID', secretVar: 'GITHUB_CLIENT_SECRET' },
+    { name: 'Google', clientId: env.GOOGLE_CLIENT_ID, clientSecret: env.GOOGLE_CLIENT_SECRET },
+    { name: 'GitHub', clientId: env.GITHUB_CLIENT_ID, clientSecret: env.GITHUB_CLIENT_SECRET },
   ];
 
   const errors: string[] = [];
 
   for (const provider of providers) {
-    const clientId = process.env[provider.idVar];
-    const clientSecret = process.env[provider.secretVar];
-
-    if (!clientId || !clientSecret) {
-      errors.push(
-        `${provider.name}: ${provider.idVar} and ${provider.secretVar} are required`
-      );
+    if (!provider.clientId || !provider.clientSecret) {
+      errors.push(`${provider.name}: credentials are required`);
     }
   }
 
@@ -71,24 +64,12 @@ function validateOAuthCredentials() {
  * Better Auth コア環境変数の検証
  */
 function validateBetterAuthCoreEnv() {
-  const secret = process.env.BETTER_AUTH_SECRET;
-  const authUrl = process.env.BETTER_AUTH_URL;
-
-  if (!secret) {
-    throw new Error(
-      '[AUTH] BETTER_AUTH_SECRET is not set. Please configure it in your .env.local or production environment.'
-    );
-  }
+  const secret = env.BETTER_AUTH_SECRET;
+  const authUrl = env.BETTER_AUTH_URL;
 
   if (secret.length < 32) {
     throw new Error(
       '[AUTH] BETTER_AUTH_SECRET must be at least 32 characters for production-safe security.'
-    );
-  }
-
-  if (!authUrl) {
-    throw new Error(
-      '[AUTH] BETTER_AUTH_URL is not set. Please configure it in your .env.local or production environment.'
     );
   }
 
@@ -184,12 +165,12 @@ export const auth = betterAuth({
   // OAuth プロバイダー設定
   socialProviders: {
     google: {
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: env.GOOGLE_CLIENT_ID ?? 'dev-google-client-id',
+      clientSecret: env.GOOGLE_CLIENT_SECRET ?? 'dev-google-client-secret',
     },
     github: {
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+      clientId: env.GITHUB_CLIENT_ID ?? 'dev-github-client-id',
+      clientSecret: env.GITHUB_CLIENT_SECRET ?? 'dev-github-client-secret',
     },
     // 将来の拡張例:
     // facebook: {

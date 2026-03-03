@@ -20,10 +20,11 @@ const srcDir = path.resolve(process.cwd(), 'src');
 // Files where console.log is allowed (test files, dev tools, etc)
 const ALLOWED_PATHS = [
     /\/__tests__\//,
-    /\/scripts\//,
+    /[\\/]scripts[\\/]/,  // Windows/Unix path separator
     /dev-dashboard/,
     /\.test\.(ts|tsx)$/,
     /\.spec\.(ts|tsx)$/,
+    /apply_migration_\d+\.js$/,  // Migration scripts in root
 ];
 
 // Patterns to detect

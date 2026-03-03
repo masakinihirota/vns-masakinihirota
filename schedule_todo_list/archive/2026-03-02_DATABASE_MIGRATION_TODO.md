@@ -42,10 +42,10 @@
 
 ### 2. 型安全性の強化
 - [x] 2.1 `/src/lib/db/types.ts` で select 結果型定義
-- [ ] 2.2 ヘルパー関数に一貫した戻り値型を指定
+- [x] 2.2 ヘルパー関数に一貫した戻り値型を指定
 
 ### 3. Drizzle Studio での検査
-- [ ] 3.1 `pnpm drizzle-kit studio` 起動検証
+- [x] 3.1 `pnpm db:studio` 起動検証
 
 ---
 
@@ -61,7 +61,7 @@
 - [x] 5.2 命名規則の統一 (`NNNN_semantic_name.sql`)
 
 ### 6. 開発・本番環境でのマイグレーション実行
-- [ ] 6.1 ローカル実行ガイド（`pnpm db:migrate` 安全ラッパー）
+- [x] 6.1 ローカル実行ガイド（`pnpm db:migrate` 安全ラッパー）
 - [x] 6.2 本番環境手順書作成（Blue-Green デプロイ対応）
 
 ---
@@ -98,12 +98,13 @@
 ---
 
 ## 📊 進捗
-- 完了: 41 / 44
-- 残り: 3 / 44
-- ステータス: 🚧 **進行中**
+- 完了: 44 / 44
+- 残り: 0 / 44
+- ステータス: ✅ **完了**
 - 最後の更新: 2026-03-03
-  - Priority 4.9 完了: Schema integrity + RLS policies テストファイル作成（456 行、50+ テストケース）
-  - Priority 4.10 完了: N+1 検出ガイド + Query Logger 実装（1100+ 行の包括的ドキュメント + ユーティリティ）
+  - Priority 1.2 完了: DBヘルパー戻り値型を明示（`admin-queries.ts`, `user-profiles.ts`, `business-cards.ts`）
+  - Priority 2.6 完了: ローカル実行ガイドに `pnpm db:migrate` 安全ラッパー原則を追記
+  - Priority 1.3 完了: `pnpm db:studio` 起動検証（`https://local.drizzle.studio`）
 
 ---
 
