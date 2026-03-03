@@ -42,3 +42,11 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI-generated temporary files
+*.log
+*_output*.txt
+test-output.txt
+test_report.json
+analyze_tests.js
+*.backup

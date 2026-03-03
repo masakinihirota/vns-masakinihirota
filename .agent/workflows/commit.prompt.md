@@ -16,7 +16,18 @@ git branch -vv
 
 ✅ 現在 `anti` ブランチにいて、uncommitted changes がないことを確認します。
 
-### 2. 品質チェック（lint + typecheck + test）
+### 2. AI一時ファイルのクリーンアップ
+
+`.agent/hooks/cleanup-temp-files.md` に従い、ルートディレクトリのAI生成一時ファイル（`*.log`, `*_output*.txt`, `*.backup` 等）を削除してください。
+
+// turbo
+```powershell
+Get-ChildItem -Path . -Depth 0 -File | Where-Object { $_.Name -match '\.(log|backup)$' -or $_.Name -match '_output.*\.(txt|log)$' -or $_.Name -match '^(test-output\.txt|test_report\.json|analyze_tests\.js)$' } | Remove-Item -Force
+```
+
+✅ 削除対象がある場合はファイル名を報告してください。
+
+### 3. 品質チェック（lint + typecheck + test）
 
 ```bash
 pnpm ci
@@ -30,7 +41,7 @@ pnpm ci
 
 ✅ すべてのチェックが pass することを確認してください。
 
-### 3. anti ブランチを push
+### 4. anti ブランチを push
 
 ```bash
 git push origin anti
@@ -38,7 +49,7 @@ git push origin anti
 
 ⚠️ **重要**: 現在のブランチは `origin/anti` より ahead の状態です。必ずここで push してください。
 
-### 4. 上流（main）の取り込み
+### 5. 上流（main）の取り込み
 
 ```bash
 git fetch origin main
@@ -48,7 +59,7 @@ git merge origin/main
 ✅ コンフリクトがないことを確認してください。
 ※ コンフリクトが発生した場合は、手動で解消し、解消後に `git add .` → `git commit -m "chore: resolve merge conflict"` を実行してください。
 
-### 5. マージ後の品質チェック（ビルド確認）
+### 6. マージ後の品質チェック（ビルド確認）
 
 ```bash
 pnpm build
@@ -56,7 +67,7 @@ pnpm build
 
 ✅ ビルドが成功することを確認してください。
 
-### 6. main ブランチへの切り替えと最新化
+### 7. main ブランチへの切り替えと最新化
 
 ```bash
 git checkout main
@@ -65,7 +76,7 @@ git pull origin main
 
 ✅ `main` ブランチが最新の状態になったことを確認してください。
 
-### 7. anti ブランチを main にマージ
+### 8. anti ブランチを main にマージ
 
 ```bash
 git merge anti
@@ -73,7 +84,7 @@ git merge anti
 
 ✅ マージが成功することを確認してください。
 
-### 8. バージョンアップとタグ付け
+### 9. バージョンアップとタグ付け
 
 ```bash
 pnpm version minor
@@ -86,7 +97,7 @@ pnpm version minor
 
 ✅ バージョンが正しく更新されたことを確認してください。
 
-### 9. タグ付きコミットをリモートに push
+### 10. タグ付きコミットをリモートに push
 
 ```bash
 git push origin main --tags
@@ -94,7 +105,7 @@ git push origin main --tags
 
 ✅ main ブランチとタグがリモートに push されたことを確認してください。
 
-### 10. anti ブランチに復帰
+### 11. anti ブランチに復帰
 
 ```bash
 git checkout anti
@@ -102,7 +113,7 @@ git checkout anti
 
 ✅ 作業ブランチに戻ったことを確認してください。
 
-### 11. anti ブランチをリモートに push（今後の作業用）
+### 12. anti ブランチをリモートに push（今後の作業用）
 
 ```bash
 git push origin anti
