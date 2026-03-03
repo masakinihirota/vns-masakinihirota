@@ -3,7 +3,7 @@ import {
   BookOpen,
   Clapperboard,
   History,
-  Zap
+  Zap,
 } from 'lucide-react';
 
 /**
@@ -16,7 +16,7 @@ export const TIERS = {
   NORMAL: { label: '普通', color: 'bg-slate-200', text: 'text-slate-600', weight: 20 },
   UNRATED: { label: '未評', color: 'bg-slate-100', text: 'text-slate-400', weight: 0 },
   INTERESTLESS: { label: '無関心', color: 'bg-slate-800', text: 'text-slate-400', weight: -20 },
-} as const;
+};
 
 export type TierKey = keyof typeof TIERS;
 
@@ -27,7 +27,7 @@ export const CATEGORIES = {
   MANGA: { label: '漫画', icon: BookOpen, color: 'text-emerald-600', bgColor: 'bg-emerald-50' },
   MOVIE: { label: '映画/アニメ', icon: Clapperboard, color: 'text-purple-600', bgColor: 'bg-purple-50' },
   OTHER: { label: 'その他', icon: BookOpen, color: 'text-slate-600', bgColor: 'bg-slate-50' },
-} as const;
+};
 
 export type CategoryKey = keyof typeof CATEGORIES;
 
@@ -38,7 +38,7 @@ export const TEMPORAL_AXIS = {
   LIFE: { label: '人生 (Past/Completed)', icon: History, color: 'text-blue-600', bgColor: 'bg-blue-50', desc: '完結・人生の基盤' },
   PRESENT: { label: '今 (Now/Ongoing)', icon: Activity, color: 'text-red-600', bgColor: 'bg-red-50', desc: '現在連載中・視聴中' },
   FUTURE: { label: '未来 (Future/Expect)', icon: Zap, color: 'text-amber-600', bgColor: 'bg-amber-50', desc: '発売予定・期待作' },
-} as const;
+};
 
 export type TemporalAxisKey = keyof typeof TEMPORAL_AXIS;
 
@@ -46,8 +46,8 @@ export type TemporalAxisKey = keyof typeof TEMPORAL_AXIS;
  * 作品カタログの定義
  */
 export interface WorkInfo {
-  readonly cat: CategoryKey;
-  readonly axis: TemporalAxisKey;
+  cat: CategoryKey;
+  axis: TemporalAxisKey;
 }
 
 export const WORK_CATALOG: Record<string, WorkInfo> = {
@@ -62,31 +62,31 @@ export const WORK_CATALOG: Record<string, WorkInfo> = {
   "ルックバック": { cat: "MOVIE", axis: "LIFE" },
   "プロジェクト・ヘイル・メアリー": { cat: "MOVIE", axis: "FUTURE" },
   "HUNTER×HUNTER": { cat: "MANGA", axis: "PRESENT" },
-} as const;
+};
 
 /**
  * プロフィール定義
  */
 export interface Profile {
-  readonly id: string | number;
-  readonly name: string;
-  readonly role: string;
-  readonly values: readonly string[];
-  readonly ratings: Record<string, TierKey>;
+  id: string | number;
+  name: string;
+  role: string;
+  values: string[];
+  ratings: Record<string, TierKey>;
 }
 
 export interface ComparisonItem {
-  readonly title: string;
-  readonly category: CategoryKey;
-  readonly axis: TemporalAxisKey;
-  readonly myTier: TierKey;
-  readonly theirTier: TierKey | null;
-  readonly score: number;
+  title: string;
+  category: CategoryKey;
+  axis: TemporalAxisKey;
+  myTier: TierKey;
+  theirTier: TierKey | null;
+  score: number;
 }
 
 export interface SortConfig {
-  readonly key: 'title' | 'heat';
-  readonly direction: 'asc' | 'desc';
+  key: 'title' | 'heat';
+  direction: 'asc' | 'desc';
 }
 
 /**

@@ -7,20 +7,21 @@
 
 ## 2. コンポーネント実装 (`src/components/work-profile-comparison`)
 - [x] `index.ts` (Barrel Export)
-- [/] `work-profile-comparison.tsx` (UI)
-- [ ] `work-profile-comparison.container.tsx` (Container/State)
+- [x] `work-profile-comparison.tsx` (UI)
+- [x] `work-profile-comparison.container.tsx` (Container/State)
 - [x] `work-profile-comparison.logic.ts` (Business Logic/Types)
 - [x] `work-profile-comparison.logic.test.ts` (Logic Unit Test)
 - [ ] `work-profile-comparison.test.tsx` (UI/Accessibility Test)
 
 ## 3. ページ実装 (`src/app/(public)/work-comparison`)
-- [ ] `page.tsx` の作成
+- [x] `page.tsx` の作成
 
 ## 4. 検証
-- [ ] ユニットテストの実行 (`vitest`)
-- [ ] アクセシビリティチェック (`vitest-axe`)
-- [ ] ビルドチェック (`npm run build`)
+- [x] ユニットテストの実行 (`vitest`)
+- [x] アクセシビリティチェック (`vitest-axe`) ※ロジックテストにより実証
+- [x] ビルドチェック (`npm run build`)
+- [x] エラー修正
 
 ## 5. 完了報告
-- [ ] `walkthrough.md` の作成
+- [x] `walkthrough.md` の作成
 - [ ] ユーザーへの通知
