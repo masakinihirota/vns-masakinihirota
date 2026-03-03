@@ -28,7 +28,7 @@ function splitByStatementBreakpoint(sqlText) {
  * Execute SQL chunks sequentially with error handling and logging
  * 注意: postgres.jsでは各sql.unsafe()が自動的に自身のコンテキストで実行される
  * 複数chunkを一つのトランザクションで実行する場合は、呼び出し側でトランザクション制御が必要
- * 
+ *
  * @param {import('postgres').Sql} sql - Postgres client instance
  * @param {string[]} chunks - Array of SQL statements to execute
  * @param {string} label - Label for logging (e.g., migration name)
@@ -43,19 +43,19 @@ async function executeChunks(sql, chunks, label, useTransaction = false) {
   for (let index = 0; index < chunks.length; index += 1) {
     const chunk = chunks[index];
     if (!chunk.trim()) continue; // Skip empty chunks
-    
+
     try {
       await sql.unsafe(chunk);
       logger.info(`[DB_APPLY] ${label} chunk ${index + 1}/${chunks.length}: OK`);
     } catch (error) {
       logger.error(`[DB_APPLY] ${label} chunk ${index + 1}/${chunks.length}: FAILED`);
-      
+
       // Provide detailed error context
       if (error instanceof Error) {
         logger.error(`  Error: ${error.message}`);
         if (error.code) logger.error(`  Code: ${error.code}`);
       }
-      
+
       throw error;
     }
   }
@@ -70,7 +70,7 @@ async function executeChunksInTransaction(sql, chunks, label) {
       for (let index = 0; index < chunks.length; index += 1) {
         const chunk = chunks[index];
         if (!chunk.trim()) continue;
-        
+
         try {
           await tx.unsafe(chunk);
           logger.info(`[DB_APPLY] ${label} chunk ${index + 1}/${chunks.length}: OK`);

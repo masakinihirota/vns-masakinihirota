@@ -57,6 +57,13 @@
       "when": 1772490188612,
       "tag": "0007_blue_doctor_spectrum",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1772545990970,
+      "tag": "0008_wakeful_ender_wiggin",
+      "breakpoints": true
     }
   ]
 }

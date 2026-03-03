@@ -417,7 +417,6 @@ export const userProfiles = pgTable(
       foreignColumns: [rootAccounts.id],
       name: "user_profiles_root_account_id_fkey",
     }).onDelete("cascade"),
-    unique("user_profiles_root_account_id_key").on(table.rootAccountId), // 1 root_account = 1 active profile
     check(
       "role_type_check",
       sql`role_type = ANY (ARRAY['leader'::text, 'member'::text, 'admin'::text, 'mediator'::text])`
@@ -575,11 +574,15 @@ export const groups = pgTable(
       .notNull(),
   },
   (table) => [
+    index("idx_groups_leader_id").using(
+      "btree",
+      table.leaderId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.leaderId],
       foreignColumns: [userProfiles.id],
       name: "groups_leader_id_fkey",
-    }),
+    }).onDelete("set null"),
   ]
 );
 
@@ -649,6 +652,18 @@ export const marketItems = pgTable(
       .notNull(),
   },
   (table) => [
+    index("idx_market_items_nation_id").using(
+      "btree",
+      table.nationId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_market_items_seller_id").using(
+      "btree",
+      table.sellerId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_market_items_seller_group_id").using(
+      "btree",
+      table.sellerGroupId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.nationId],
       foreignColumns: [nations.id],
@@ -697,6 +712,18 @@ export const marketTransactions = pgTable(
     }),
   },
   (table) => [
+    index("idx_market_transactions_item_id").using(
+      "btree",
+      table.itemId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_market_transactions_buyer_id").using(
+      "btree",
+      table.buyerId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_market_transactions_seller_id").using(
+      "btree",
+      table.sellerId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.itemId],
       foreignColumns: [marketItems.id],
@@ -754,6 +781,14 @@ export const nationEvents = pgTable(
       .notNull(),
   },
   (table) => [
+    index("idx_nation_events_nation_id").using(
+      "btree",
+      table.nationId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_nation_events_organizer_id").using(
+      "btree",
+      table.organizerId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.nationId],
       foreignColumns: [nations.id],
@@ -1546,6 +1581,12 @@ export const approvals = pgTable(
   (table) => [
     index("idx_approvals_status").using("btree", table.status.asc()),
     index("idx_approvals_created_at").using("btree", table.createdAt.desc()),
+    index("idx_approvals_work_id").using("btree", table.workId.asc()),
+    foreignKey({
+      columns: [table.workId],
+      foreignColumns: [works.id],
+      name: "approvals_work_id_fkey",
+    }).onDelete("cascade"),
     foreignKey({
       columns: [table.creatorId],
       foreignColumns: [userProfiles.id],

@@ -32,8 +32,8 @@ function runCommand(command, args) {
 }
 
 async function inspectDbState(sql) {
-  // Check if migration metadata table exists
-  const migrationMetaTableResult = await sql`
+    // Check if migration metadata table exists
+    const migrationMetaTableResult = await sql`
     SELECT EXISTS (
       SELECT 1
       FROM information_schema.tables
@@ -41,31 +41,31 @@ async function inspectDbState(sql) {
         AND table_name = '__drizzle_migrations'
     ) as "exists"
   `;
-  
-  const hasMigrationTable = migrationMetaTableResult[0]?.exists ?? false;
 
-  // Check for raw baseline tables (user, session, account, verification)
-  const existingTables = await sql`
+    const hasMigrationTable = migrationMetaTableResult[0]?.exists ?? false;
+
+    // Check for raw baseline tables (user, session, account, verification)
+    const existingTables = await sql`
     SELECT tablename
     FROM pg_tables
     WHERE schemaname = 'public'
   `;
 
-  const tableSet = new Set(existingTables.map((row) => row.tablename));
-  const hasBaselineTables = BASELINE_TABLES.every((table) => tableSet.has(table));
+    const tableSet = new Set(existingTables.map((row) => row.tablename));
+    const hasBaselineTables = BASELINE_TABLES.every((table) => tableSet.has(table));
 
-  // Check migration history
-  let migrationCount = 0;
-  if (hasMigrationTable) {
-    const countRows = await sql`
+    // Check migration history
+    let migrationCount = 0;
+    if (hasMigrationTable) {
+        const countRows = await sql`
       SELECT count(*)::int as "count" FROM drizzle.__drizzle_migrations
     `;
-    migrationCount = countRows[0]?.count ?? 0;
-  }
+        migrationCount = countRows[0]?.count ?? 0;
+    }
 
-  return {
-    hasMigrationTable,    // ✅ Better indicator of full Drizzle setup
-    hasBaselineTables,    // May exist without full Drizzle (manual creation)
+    return {
+        hasMigrationTable,    // ✅ Better indicator of full Drizzle setup
+        hasBaselineTables,    // May exist without full Drizzle (manual creation)
     };
 }
 
@@ -91,53 +91,53 @@ async function main() {
     try {
         const state = await inspectDbState(sql);
 
-    // Priority 1: Check for Drizzle migration metadata table
-    if (!state.hasMigrationTable) {
-      // Completely fresh database, or existing tables created without Drizzle
-      if (state.hasBaselineTables) {
-        logger.warn('[DB_MIGRATE] ⚠️ CAREFUL: Baseline tables exist but NO Drizzle migration history detected!');
-        logger.warn('[DB_MIGRATE] This may indicate:');
-        logger.warn('[DB_MIGRATE]   - Tables were created manually (not via Drizzle)');
-        logger.warn('[DB_MIGRATE]   - Previous migration attempt failed partway');
-        logger.warn('[DB_MIGRATE]   - Database was restored from backup');
-        logger.warn('[DB_MIGRATE] → Skipping full replay to avoid "relation already exists" errors');
-        logger.warn('[DB_MIGRATE] → Applying only idempotent security layer...');
-      } else {
-        logger.info('[DB_MIGRATE] Fresh database detected. Applying full Drizzle migration history.');
-        const status = runDrizzleMigrate();
-        if (status !== 0) {
-          process.exit(status);
+        // Priority 1: Check for Drizzle migration metadata table
+        if (!state.hasMigrationTable) {
+            // Completely fresh database, or existing tables created without Drizzle
+            if (state.hasBaselineTables) {
+                logger.warn('[DB_MIGRATE] ⚠️ CAREFUL: Baseline tables exist but NO Drizzle migration history detected!');
+                logger.warn('[DB_MIGRATE] This may indicate:');
+                logger.warn('[DB_MIGRATE]   - Tables were created manually (not via Drizzle)');
+                logger.warn('[DB_MIGRATE]   - Previous migration attempt failed partway');
+                logger.warn('[DB_MIGRATE]   - Database was restored from backup');
+                logger.warn('[DB_MIGRATE] → Skipping full replay to avoid "relation already exists" errors');
+                logger.warn('[DB_MIGRATE] → Applying only idempotent security layer...');
+            } else {
+                logger.info('[DB_MIGRATE] Fresh database detected. Applying full Drizzle migration history.');
+                const status = runDrizzleMigrate();
+                if (status !== 0) {
+                    process.exit(status);
+                }
+            }
+        } else if (state.migrationCount === 0) {
+            // Migration table exists but is empty - unusual state
+            logger.warn('[DB_MIGRATE] ⚠️ Drizzle migration table exists but is empty.');
+            logger.warn('[DB_MIGRATE] This indicates previous migration setup was incomplete.');
+            logger.warn('[DB_MIGRATE] Applying full migration history...');
+            const status = runDrizzleMigrate();
+            if (status !== 0) {
+                process.exit(status);
+            }
+        } else {
+            // Normal case: migration history exists
+            logger.info(
+                `[DB_MIGRATE] Existing migration history detected (${state.migrationCount} applied). ` +
+                'Applying pending Drizzle migrations...'
+            );
+            const status = runDrizzleMigrate();
+            if (status !== 0) {
+                process.exit(status);
+            }
         }
-      }
-    } else if (state.migrationCount === 0) {
-      // Migration table exists but is empty - unusual state
-      logger.warn('[DB_MIGRATE] ⚠️ Drizzle migration table exists but is empty.');
-      logger.warn('[DB_MIGRATE] This indicates previous migration setup was incomplete.');
-      logger.warn('[DB_MIGRATE] Applying full migration history...');
-      const status = runDrizzleMigrate();
-      if (status !== 0) {
-        process.exit(status);
-      }
-    } else {
-      // Normal case: migration history exists
-      logger.info(
-        `[DB_MIGRATE] Existing migration history detected (${state.migrationCount} applied). ` +
-        'Applying pending Drizzle migrations...'
-      );
-      const status = runDrizzleMigrate();
-      if (status !== 0) {
-        process.exit(status);
-      }
-    }
 
-    const securityStatus = runApplySecurity();
-    if (securityStatus !== 0) {
-      process.exit(securityStatus);
-    }
+        const securityStatus = runApplySecurity();
+        if (securityStatus !== 0) {
+            process.exit(securityStatus);
+        }
 
-    logger.info(`[DB_MIGRATE] ✅ PASSED (env: ${envPath})`);
-  } catch (error) {
-    logger.error(`[DB_MIGRATE] ❌ FAILED (env: ${envPath})`);
-    if (error instanceof Error) {
-      logger.error(`  Error: ${error.message}`);
-    }
+        logger.info(`[DB_MIGRATE] ✅ PASSED (env: ${envPath})`);
+    } catch (error) {
+        logger.error(`[DB_MIGRATE] ❌ FAILED (env: ${envPath})`);
+        if (error instanceof Error) {
+            logger.error(`  Error: ${error.message}`);
+        }
