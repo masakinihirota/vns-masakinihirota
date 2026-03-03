@@ -3,6 +3,7 @@
 import { headers } from "next/headers";
 import { cache } from "react";
 import { eq } from "drizzle-orm";
+import { logger } from "@/lib/logger";
 
 import { auth as serverAuth } from "@/lib/auth";
 import { db as database } from "@/lib/db/client";
@@ -58,7 +59,7 @@ async function getPrimaryAuthProvider(userId: string): Promise<string> {
     // OAuth がない場合
     return "email";
   } catch (error) {
-    console.warn("[getPrimaryAuthProvider] Error:", error instanceof Error ? error.message : String(error));
+    logger.warn("[getPrimaryAuthProvider] Error:", { error: error instanceof Error ? error.message : String(error) });
     return "email";
   }
 }
@@ -76,7 +77,7 @@ export const getSession = cache(async () => {
     // 開発時ダミー認証機能
     if (useRealAuth !== "true" && process.env.NODE_ENV === "development") {
       const dummySession = createDummySession("USER1");
-      console.log("[getSession] MOCK AUTH enabled"); // ✅ メールアドレスはログに出力しない
+      logger.info("[getSession] MOCK AUTH enabled"); // ✅ メールアドレスはログに出力しない
       return dummySession;
     }
 
@@ -99,9 +100,10 @@ export const getSession = cache(async () => {
 
     return betterAuthResult;
   } catch (error) {
-    console.error(
+    logger.error(
       "[getSession] Error:",
-      error instanceof Error ? error.message : String(error)
+      undefined,
+      { error: error instanceof Error ? error.message : String(error) }
     );
     return null;
   }

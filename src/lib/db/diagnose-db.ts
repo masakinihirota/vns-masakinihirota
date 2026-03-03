@@ -1,7 +1,9 @@
- 
+
 
 import { config } from "dotenv";
 import postgres from "postgres";
+import { logger } from "@/lib/logger";
+
 config({ path: ".env.local" });
 
 const connectionString =
@@ -12,7 +14,7 @@ const connectionString =
  *
  */
 async function diagnose() {
-  console.log("🔍 Connection String:", connectionString);
+  logger.info("🔍 Connection String:", { connectionString });
   const sql = postgres(connectionString);
 
   try {
@@ -21,19 +23,19 @@ async function diagnose() {
       FROM information_schema.tables
       WHERE table_schema = 'public'
     `;
-    console.log("Tables in public schema:", tables.map(t => t.table_name));
+    logger.info("Tables in public schema:", { tables: tables.map(t => t.table_name) });
 
     const sessionExists = tables.some(t => t.table_name === 'session');
     if (sessionExists) {
-      console.log("Details for 'session' table:");
+      logger.info("Details for 'session' table:");
       const columns = await sql`
         SELECT column_name, data_type
         FROM information_schema.columns
         WHERE table_name = 'session'
       `;
-      console.log(columns);
+      logger.debug("Session table columns:", { columns });
     } else {
-      console.log("Table 'session' DOES NOT EXIST in public schema.");
+      logger.warn("Table 'session' DOES NOT EXIST in public schema.");
     }
 
     const authSchemaTables = await sql`
@@ -42,12 +44,11 @@ async function diagnose() {
       WHERE table_schema = 'auth'
     `;
     if (authSchemaTables.length > 0) {
-      console.log("Tables in auth schema:", authSchemaTables.map(t => t.table_name));
+      logger.info("Tables in auth schema:", { tables: authSchemaTables.map(t => t.table_name) });
     }
 
   } catch (error) {
-    console.error("❌ Database connection failed:");
-    console.error(error);
+    logger.error("❌ Database connection failed", undefined, { error });
   } finally {
     await sql.end();
   }

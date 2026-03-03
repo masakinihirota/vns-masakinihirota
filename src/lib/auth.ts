@@ -6,6 +6,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { admin } from "better-auth/plugins/admin";
 import { eq } from "drizzle-orm";
+import { logger } from "@/lib/logger";
 
 /**
  * データベース接続文字列の検証
@@ -159,7 +160,7 @@ export const auth = betterAuth({
       } catch (error) {
         // ✅ FIXED: エラー時はデフォルトで ghost を設定
         // activeProfileId がない場合、ghost mask として扱う（conservative approach）
-        console.error('[AUTH] Failed to get activeProfileId - defaulting to ghost', {
+        logger.error('[AUTH] Failed to get activeProfileId - defaulting to ghost', undefined, {
           userId: user.id,
           error: error instanceof Error ? error.message : String(error),
         });

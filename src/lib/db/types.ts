@@ -72,3 +72,18 @@ export type NewAuditLog = InferInsertModel<typeof schema.auditLogs>;
 
 export type AdminDashboardCache = InferSelectModel<typeof schema.adminDashboardCache>;
 export type NewAdminDashboardCache = InferInsertModel<typeof schema.adminDashboardCache>;
+
+export type UserPreference = InferSelectModel<typeof schema.userPreferences>;
+export type NewUserPreference = InferInsertModel<typeof schema.userPreferences>;
+
+export type SessionToken = InferSelectModel<typeof schema.sessionTokens>;
+export type NewSessionToken = InferInsertModel<typeof schema.sessionTokens>;
+
+export type TwoFactorSecret = InferSelectModel<typeof schema.twoFactorSecrets>;
+export type NewTwoFactorSecret = InferInsertModel<typeof schema.twoFactorSecrets>;
+
+export type RateLimitKey = InferSelectModel<typeof schema.rateLimitKeys>;
+export type NewRateLimitKey = InferInsertModel<typeof schema.rateLimitKeys>;
+
+export type FeatureFlag = InferSelectModel<typeof schema.featureFlags>;
+export type NewFeatureFlag = InferInsertModel<typeof schema.featureFlags>;

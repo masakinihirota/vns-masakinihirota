@@ -1,5 +1,6 @@
- 
 
+
+import { logger } from "@/lib/logger";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 
@@ -77,12 +78,32 @@ export const MAX_POINTS = 1_000_000;
 
 export const TrialStorage = {
   // Save entire data
-  save: (data: VNSTrialData): void => {
-    if (globalThis.window === undefined) return;
+  save: (data: VNSTrialData): boolean => {
+    if (globalThis.window === undefined) return false;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      return true;
     } catch (error) {
-      console.error("Failed to save trial data:", error);
+      // localStorage が満杯またはブラウザ設定で無効化されている場合の詳細ログ
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorType = error instanceof Error ? error.constructor.name : "Unknown";
+
+      // 構造化ログで記録
+      logger.error(
+        "Failed to save trial data to localStorage",
+        error instanceof Error ? error : new Error(errorMessage),
+        {
+          operation: "TrialStorage.save",
+          storageKey: STORAGE_KEY,
+          errorType,
+          dataSize: JSON.stringify(data).length,
+          timestamp: new Date().toISOString(),
+        }
+      );
+
+      // Graceful Degradation: 一応動作は続行（メモリ内のデータは保持）
+      // ただし、ユーザーには警告を示す方法をページコンポーネント側で実装すべき
+      return false;
     }
   },
 
@@ -96,7 +117,23 @@ export const TrialStorage = {
       // We assume the shape is correct if it exists. Re-validating every UI render might be heavy.
       return JSON.parse(data) as VNSTrialData;
     } catch (error) {
-      console.error("Failed to load trial data:", error);
+      // localStorage が破損している、またはアクセス不可の場合的詳細ログ
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorType = error instanceof Error ? error.constructor.name : "Unknown";
+
+      logger.warn(
+        "Failed to load trial data from localStorage",
+        {
+          operation: "TrialStorage.load",
+          storageKey: STORAGE_KEY,
+          errorType,
+          originalError: errorMessage,
+          timestamp: new Date().toISOString(),
+          suggestion: "localStorage may be disabled or corrupted. Trial mode will continue with default data.",
+        }
+      );
+
+      // Graceful Degradation: undefined を返して、呼び出し側が init() で新規データを作成
       return undefined;
     }
   },
@@ -185,7 +222,7 @@ export const TrialStorage = {
         Math.pow(2, data.points.consecutiveFastActions),
         10
       );
-      console.warn(`Rapid access detected! Point consumption x${multiplier}`);
+      logger.warn(`Rapid access detected! Point consumption x${multiplier}`);
     } else {
       // Reset penalty if action is normal speed
       data.points.consecutiveFastActions = 0;
@@ -273,10 +310,10 @@ export function generateRandomAnonymousName(): string {
     'Owl', 'Raven', 'Swan', 'Phoenix', 'Dragon', 'Butterfly', 'Dolphin', 'Horse',
     'Deer', 'Lynx', 'Penguin', 'Whale', 'Otter', 'Koala', 'Rabbit', 'Cheetah'
   ];
-  
+
   const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
   const randomNoun = nouns[Math.floor(Math.random() * nouns.length)];
   const randomDigits = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
-  
+
   return `${randomAdjective}-${randomNoun}-${randomDigits}`;
 }

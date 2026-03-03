@@ -1,15 +1,23 @@
 import { getRequestConfig } from 'next-intl/server';
-import { notFound } from 'next/navigation';
 
 // サポートするロケール
 export const locales = ['ja', 'en'] as const;
 export type Locale = (typeof locales)[number];
 
+// メッセージをインライン定義して patch エラーを回避
+import jaMessages from '../../messages/ja.json';
+import enMessages from '../../messages/en.json';
+
+const messages: Record<string, any> = {
+  ja: jaMessages,
+  en: enMessages,
+};
+
 export default getRequestConfig(async ({ locale }) => {
-  // locale が有効かバリデーション
-  if (!locales.includes(locale as Locale)) notFound();
+  // デフォルトを 'ja' に
+  const currentLocale = (locales.includes(locale as Locale) ? locale : 'ja') as Locale;
 
   return {
-    messages: (await import(`../../messages/${locale}.json`)).default
+    messages: messages[currentLocale],
   };
 });

@@ -2,13 +2,16 @@
 
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
+import { useLocale } from '@/context/locale-context';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { generateRandomAnonymousName, TrialStorage } from '@/lib/trial-storage';
+import { logger } from '@/lib/logger';
 
 export function TrialButton() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { t } = useLocale();
 
   const handleStartTrial = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -17,7 +20,7 @@ export function TrialButton() {
     try {
       // ランダム名を生成
       const anonymousName = generateRandomAnonymousName();
-      
+
       // お試しデータを初期化・保存
       const trialData = TrialStorage.init();
       trialData.rootAccount = {
@@ -46,7 +49,7 @@ export function TrialButton() {
       };
       TrialStorage.save(trialData);
 
-      toast.success(`${anonymousName} としてお試し開始`, {
+      toast.success(`${anonymousName} ${t('header.startedTrial')}`, {
         description: '※このモード中のデータはブラウザのみに保存され、サーバーには送信されません',
       });
 
@@ -54,10 +57,10 @@ export function TrialButton() {
       router.push('/home');
       router.refresh();
     } catch (e) {
-      toast.error('お試し開始に失敗しました', {
-        description: 'ブラウザのストレージ設定をご確認ください。',
+      toast.error(t('header.trialStartFailed'), {
+        description: t('header.checkStorageSettings'),
       });
-      console.error('Trial initialization error:', e);
+      logger.error('Trial initialization error:', e);
       setIsLoading(false);
     }
   };

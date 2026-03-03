@@ -14,6 +14,7 @@
 import type { MiddlewareHandler } from 'hono';
 import { auth } from '@/lib/auth';
 import { createApiError } from './error-handler';
+import { logger } from '@/lib/logger';
 import type { AuthSession } from '@/lib/auth/types';
 
 /**
@@ -112,7 +113,7 @@ export const optionalAuth: MiddlewareHandler<{
     await next();
   } catch (error) {
     // セッション取得エラーは無視してそのまま次へ
-    console.warn('[optionalAuth] Session retrieval failed:', error);
+    logger.warn('[optionalAuth] Session retrieval failed:', error);
     await next();
   }
 };

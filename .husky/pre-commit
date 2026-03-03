@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# Fast static checks only
+pnpm db:check-migration-files
+
+# Detect console.log and debugger statements
+pnpm lint:console
+
+# Run lint-staged for page compliance checks
+pnpm lint-staged

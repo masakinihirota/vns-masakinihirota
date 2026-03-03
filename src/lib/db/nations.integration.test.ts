@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { logger } from "@/lib/logger";
 
 import { db as database } from "./client";
 import { createNation, getNationById, getNations } from "./nations";
@@ -18,7 +19,7 @@ describe("Nations Integration (Drizzle)", () => {
       );
     }
     testUserId = profile.id;
-    console.info("Using Test User ID:", testUserId);
+    logger.info("Using Test User ID:", { testUserId });
   });
 
   afterAll(async () => {
@@ -26,8 +27,7 @@ describe("Nations Integration (Drizzle)", () => {
       try {
         await database.delete(nations).where(eq(nations.id, createdNationId));
       } catch {
-        console.info("Cleanup failed or nation already deleted");
-      }
+        logger.warn("Cleanup failed or nation already deleted");      }
     }
   });
 

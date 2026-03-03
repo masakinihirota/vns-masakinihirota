@@ -18,6 +18,7 @@ import {
   UserNotFoundError,
   ValidationError
 } from '../errors';
+import { logger } from '@/lib/logger';
 import type { ApiErrorResponse, ErrorCode } from '../types/response';
 
 /**
@@ -34,7 +35,7 @@ import type { ApiErrorResponse, ErrorCode } from '../types/response';
  * - 本番環境では汎用的なエラーメッセージのみ表示
  */
 export const errorHandler: ErrorHandler = (err, c) => {
-  console.error('[API Error]', {
+  logger.error('[API Error]', {
     message: err.message,
     name: err.name,
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,

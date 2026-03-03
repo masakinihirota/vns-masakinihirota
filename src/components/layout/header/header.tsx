@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { AuthButton } from "./auth-button";
 import { AdsToggle } from "./ads-toggle";
-// import { LanguageToggle } from "./language-toggle";
+import { LanguageToggle } from "./language-toggle";
 import { ThemeToggle } from "./theme-toggle";
 import { TrialButton } from "./trial-button";
 
@@ -28,7 +28,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           {/* 設定系コントロール */}
           <AdsToggle />
-          {/* <LanguageToggle /> */}
+          <LanguageToggle />
           <ThemeToggle />
 
           {/* 区切り線 */}

@@ -1,5 +1,6 @@
 import { eq } from "drizzle-orm";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { logger } from "@/lib/logger";
 
 import { db as database } from "./client";
 import {
@@ -31,8 +32,8 @@ describe("Events Integration (Drizzle)", () => {
       throw new Error("Integration test requires at least one Nation in DB.");
     }
     testNationId = nation.id;
-    console.info("Using Test User ID:", testUserId);
-    console.info("Using Test Nation ID:", testNationId);
+    logger.info("Using Test User ID:", { testUserId });
+    logger.info("Using Test Nation ID:", { testNationId });
   });
 
   afterAll(async () => {
@@ -42,8 +43,7 @@ describe("Events Integration (Drizzle)", () => {
           .delete(nationEvents)
           .where(eq(nationEvents.id, createdEventId));
       } catch {
-        console.info("Cleanup failed or event already deleted");
-      }
+        logger.warn("Cleanup failed or event already deleted");      }
     }
   });
 

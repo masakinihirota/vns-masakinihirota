@@ -1,0 +1,15 @@
+#!/usr/bin/env sh
+
+# Optional DB guard on push
+# Enable only when needed:
+#   ENABLE_PRE_PUSH_DB_CHECK=1 git push
+# Skip by default to keep team push speed.
+if [ "$ENABLE_PRE_PUSH_DB_CHECK" != "1" ]; then
+  echo "[pre-push] Skipped optional DB checks (set ENABLE_PRE_PUSH_DB_CHECK=1 to enable)."
+  exit 0
+fi
+
+echo "[pre-push] Running optional DB guard checks..."
+pnpm db:check-migration-files
+pnpm db:migrate
+pnpm db:check-schema

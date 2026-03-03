@@ -16,6 +16,8 @@ import {
   or,
   sql
 } from 'drizzle-orm';
+import { logger } from "@/lib/logger";
+
 
 import { db as database } from './client';
 import {
@@ -52,7 +54,7 @@ export async function getAdminDashboardStats(): Promise<AdminDashboardStats> {
       adminLogCount24h: Number(adminLogResult[0]?.count ?? 0),
     };
   } catch (error) {
-    console.error('[getAdminDashboardStats] failed:', error);
+    logger.error('[getAdminDashboardStats] failed:', { error });
 
     return {
       unresolvedReports: 0,

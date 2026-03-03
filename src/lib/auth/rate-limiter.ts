@@ -11,6 +11,8 @@
  * - リセット: 1分経過で自動リセット
  */
 
+import { logger } from "@/lib/logger";
+
 interface RateLimitEntry {
   count: number;
   resetTime: number;
@@ -123,9 +125,7 @@ export function startRateLimitCleanup(): void {
     }
 
     if (cleaned > 0) {
-      console.log(
-        `[Rate Limit Cleanup] Removed ${cleaned} expired entries from store`
-      );
+      logger.info(`[Rate Limit Cleanup] Removed ${cleaned} expired entries from store`);
     }
   }, RATE_LIMIT_CONFIG.CLEANUP_INTERVAL_MS);
 }

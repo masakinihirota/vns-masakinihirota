@@ -1,309 +1,438 @@
-/**
- * RLS (Row Level Security) Policies
- *
- * @description
- * Better Auth が生成するテーブルに対する行レベルセキュリティポリシーを定義します。
- * これにより、ユーザーは自分のデータのみにアクセス可能となります。
- *
- * @installation
- * このファイルのポリシーは、初期セットアップ時に以下のコマンドで適用します：
- *   psql -d <DATABASE_URL> -f drizzle/rls-policies.sql
- *
- * @security
- * - すべての認証関連テーブルで RLS を有効化
- * - JWT トークンが含まれる account テーブルの保護を強化
- * - セッション情報の厳密な行ベースアクセス制御
- */
+-- RLS policy baseline for VNS
+--
+-- 前提:
+-- - 接続ごとに `set_config('app.auth_user_id', '<user-id>', true)` を設定する
+-- - 設定されない場合、policy 式は false となり default deny になる
 
--- ============================================================================
--- Step 1: Enable RLS on all auth tables
--- ============================================================================
+CREATE SCHEMA IF NOT EXISTS app;
 
-ALTER TABLE "user" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "session" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "account" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "verification" ENABLE ROW LEVEL SECURITY;
+CREATE OR REPLACE FUNCTION app.current_auth_user_id()
+RETURNS text
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT NULLIF(current_setting('app.auth_user_id', true), '');
+$$;
 
--- ============================================================================
--- Step 2: Create auth role (for service-to-service authentication)
--- ============================================================================
-
--- 注記: PostgreSQL の security definer を活用する場合は、ここで custom role を定義
--- 本番環境では、アプリケーションサーバーが使用する DB ユーザーと区別してください
-
--- ============================================================================
--- Step 3: DROP existing policies (idempotent)
--- ============================================================================
-
--- User table policies
-DROP POLICY IF EXISTS "user_read_own" ON "user";
-DROP POLICY IF EXISTS "user_admin_read_all" ON "user";
-
--- Session table policies
-DROP POLICY IF EXISTS "session_read_own" ON "session";
-DROP POLICY IF EXISTS "session_admin_read_all" ON "session";
-
--- Account table policies
-DROP POLICY IF EXISTS "account_read_own" ON "account";
-DROP POLICY IF EXISTS "account_admin_read_all" ON "account";
-
--- Verification table policies
-DROP POLICY IF EXISTS "verification_read_own_identifier" ON "verification";
-
--- ============================================================================
--- Step 4: User Table Policies
--- ============================================================================
-
--- ユーザーは自分のプロフィール情報を読み取れる
--- 注記: auth.uid() を使用する場合は、PostgreSQL の built-in auth を設定する必要があります
--- 現在のセットアップではアプリケーションが user_id を管理するため、コメント化しています
--- CREATE POLICY "user_read_own" ON "user"
---   FOR SELECT
---   USING (id = auth.uid());
-
--- 管理者ユーザーはすべてのユーザー情報を読み取れる
--- CREATE POLICY "user_admin_read_all" ON "user"
---   FOR SELECT
---   USING (
---     EXISTS (
---       SELECT 1 FROM "user" WHERE id = auth.uid() AND role = 'admin'
---     )
---   );
-
--- ============================================================================
--- Step 5: Session Table Policies
--- ============================================================================
-
--- 注記: Better Auth がセッショントークンを直接管理するため、RLS の代わりに
---      データベースレベルのトークン検証を推奨します
--- セッションは token に基づいて検証され、userId は参照用のみ
-
--- 管理者はすべてのセッションを読み取れる
--- CREATE POLICY "session_admin_read_all" ON "session"
---   FOR SELECT
---   USING (
---     EXISTS (
---       SELECT 1 FROM "user" WHERE id = auth.uid() AND role = 'admin'
---     )
---   );
-
--- ============================================================================
--- Step 6: Account Table Policies
--- ============================================================================
-
--- 注記: account テーブルは OAuth トークンを含むため、最も厳格に保護する必要があります
--- ユーザーは自分の OAuth アカウント情報のみにアクセス可能
--- CREATE POLICY "account_read_own" ON "account"
---   FOR SELECT
---   USING (user_id = auth.uid());
-
--- 管理者はすべてのアカウント情報を読み取れる（監査・デバッグ目的）
--- CREATE POLICY "account_admin_read_all" ON "account"
---   FOR SELECT
---   USING (
---     EXISTS (
---       SELECT 1 FROM "user" WHERE id = auth.uid() AND role = 'admin'
---     )
---   );
-
--- ============================================================================
--- Step 7: Verification Table Policies
--- ============================================================================
-
--- メール検証トークンは identifier ベースで個別管理
--- CREATE POLICY "verification_read_own_identifier" ON "verification"
---   FOR SELECT
---   USING (true);  -- メール検証は一般的に public (token を知っている人のみアクセス可能)
-
--- ============================================================================
--- Step 8: Application-Level Alternative
--- ============================================================================
-
-/*
- * 代替案: アプリケーションレベルでのアクセス制御
- *
- * PostgreSQL の RLS policy は複雑で、JWT ベースの認証では使いづらい場合があります。
- * Better Auth を使用している場合、以下のアプローチを推奨します：
- *
- * 1. Better Auth のセッショントークンを検証して user_id を取得
- * 2. クエリに WHERE userId = ? を追加
- * 3. ORM (Drizzle ORM) で自動的に条件を付与するミドルウェアを実装
- *
- * このアプローチは以下が可能です：
- * - 複雑なアクセス制御ロジックをアプリケーション層で管理
- * - より詳細なエラーメッセージを提供
- * - 監査ログを記録しやすい
- */
-
--- ============================================================================
--- Step 9: Indexes for Performance (RLS with WHERE clauses)
--- ============================================================================
-
--- RLS ポリシーで user_id をチェックする場合、以下のインデックスが必須
-CREATE INDEX IF NOT EXISTS "idx_session_userId" ON "session" ("user_id");
-CREATE INDEX IF NOT EXISTS "idx_account_userId" ON "account" ("user_id");
-
--- ============================================================================
--- Step 10: RBAC Tables (groups / nations) Policies
--- ============================================================================
-
-ALTER TABLE "groups" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "group_members" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "nations" ENABLE ROW LEVEL SECURITY;
-ALTER TABLE "nation_groups" ENABLE ROW LEVEL SECURITY;
-
-DROP POLICY IF EXISTS "groups_member_read" ON "groups";
-DROP POLICY IF EXISTS "groups_admin_read_all" ON "groups";
-DROP POLICY IF EXISTS "group_members_member_read" ON "group_members";
-DROP POLICY IF EXISTS "group_members_admin_read_all" ON "group_members";
-DROP POLICY IF EXISTS "nations_member_read" ON "nations";
-DROP POLICY IF EXISTS "nations_admin_read_all" ON "nations";
-DROP POLICY IF EXISTS "nation_groups_member_read" ON "nation_groups";
-DROP POLICY IF EXISTS "nation_groups_admin_read_all" ON "nation_groups";
-
-CREATE POLICY "groups_member_read" ON "groups"
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM "group_members" gm
-      JOIN "user_profiles" up ON up.id = gm.user_profile_id
-      JOIN "root_accounts" ra ON ra.id = up.root_account_id
-      WHERE gm.group_id = groups.id
-        AND ra.auth_user_id = current_setting('app.auth_user_id', true)
-    )
+CREATE OR REPLACE FUNCTION app.is_platform_admin()
+RETURNS boolean
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM "user" u
+    WHERE u.id = app.current_auth_user_id()
+      AND u.role = 'platform_admin'
   );
+$$;
 
-CREATE POLICY "groups_admin_read_all" ON "groups"
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM "user" u
-      WHERE u.id = current_setting('app.auth_user_id', true)
-        AND u.role = 'platform_admin'
-    )
+CREATE OR REPLACE FUNCTION app.owns_root_account(root_account_uuid uuid)
+RETURNS boolean
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM root_accounts ra
+    WHERE ra.id = root_account_uuid
+      AND ra.auth_user_id = app.current_auth_user_id()
   );
+$$;
 
-CREATE POLICY "group_members_member_read" ON "group_members"
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM "group_members" gm2
-      JOIN "user_profiles" up ON up.id = gm2.user_profile_id
-      JOIN "root_accounts" ra ON ra.id = up.root_account_id
-      WHERE gm2.group_id = group_members.group_id
-        AND ra.auth_user_id = current_setting('app.auth_user_id', true)
-    )
+CREATE OR REPLACE FUNCTION app.owns_profile(profile_uuid uuid)
+RETURNS boolean
+LANGUAGE sql
+STABLE
+AS $$
+  SELECT EXISTS (
+    SELECT 1
+    FROM user_profiles up
+    JOIN root_accounts ra ON ra.id = up.root_account_id
+    WHERE up.id = profile_uuid
+      AND ra.auth_user_id = app.current_auth_user_id()
   );
+$$;
 
-CREATE POLICY "group_members_admin_read_all" ON "group_members"
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM "user" u
-      WHERE u.id = current_setting('app.auth_user_id', true)
-        AND u.role = 'platform_admin'
-    )
-  );
-
-CREATE POLICY "nations_member_read" ON "nations"
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM "nation_groups" ng
-      JOIN "group_members" gm ON gm.group_id = ng.group_id
-      JOIN "user_profiles" up ON up.id = gm.user_profile_id
-      JOIN "root_accounts" ra ON ra.id = up.root_account_id
-      WHERE ng.nation_id = nations.id
-        AND ra.auth_user_id = current_setting('app.auth_user_id', true)
-    )
-  );
-
-CREATE POLICY "nations_admin_read_all" ON "nations"
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM "user" u
-      WHERE u.id = current_setting('app.auth_user_id', true)
-        AND u.role = 'platform_admin'
-    )
-  );
-
-CREATE POLICY "nation_groups_member_read" ON "nation_groups"
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM "group_members" gm
-      JOIN "user_profiles" up ON up.id = gm.user_profile_id
-      JOIN "root_accounts" ra ON ra.id = up.root_account_id
-      WHERE gm.group_id = nation_groups.group_id
-        AND ra.auth_user_id = current_setting('app.auth_user_id', true)
-    )
-  );
-
-CREATE POLICY "nation_groups_admin_read_all" ON "nation_groups"
-  FOR SELECT
-  USING (
-    EXISTS (
-      SELECT 1
-      FROM "user" u
-      WHERE u.id = current_setting('app.auth_user_id', true)
-        AND u.role = 'platform_admin'
-    )
-  );
-
--- ============================================================================
--- Status Check
--- ============================================================================
-
--- RLS が有効化されているか確認
--- SELECT tablename, (SELECT count(*) FROM pg_policies WHERE pg_policies.tablename = pg_tables.tablename) as policy_count
--- FROM pg_tables WHERE schemaname = 'public' AND tablename IN ('user', 'session', 'account', 'verification', 'groups', 'group_members', 'nations', 'nation_groups');
-
--- ============================================================================
--- Session Expiration Cleanup
--- ============================================================================
-
-/**
- * cleanup_expired_sessions() - 期限切れセッションを削除
- *
- * @description
- * この関数は、expires_at が過去になったセッションを削除します。
- * PostgreSQL の cron job (pg_cron) で定期的に実行されます。
- *
- * @installation
- * 1. pg_cron extension をインストール:
- *    CREATE EXTENSION IF NOT EXISTS pg_cron;
- *
- * 2. この関数を定義:
- *    psql -d <DATABASE_URL> -f drizzle/rls-policies.sql
- *
- * 3. Cron job をスケジュール:
- *    SELECT cron.schedule('cleanup-expired-sessions', '0 3 * * *', 'SELECT cleanup_expired_sessions()');
- */
-
-CREATE OR REPLACE FUNCTION cleanup_expired_sessions()
-RETURNS TABLE(deleted_count BIGINT) AS $$
-DECLARE
-  deleted_rows BIGINT;
+DO $$
+DECLARE table_name text;
 BEGIN
-  -- 期限切れセッションの数をカウント
-  SELECT COUNT(*)
-  INTO deleted_rows
-  FROM "session"
-  WHERE "expires_at" < NOW();
+  FOREACH table_name IN ARRAY ARRAY[
+    'user','session','account','verification',
+    'user_preferences','session_tokens','two_factor_secrets','rate_limit_keys','feature_flags',
+    'root_accounts','user_profiles','business_cards','alliances','works',
+    'groups','group_members','nations','nation_groups','nation_citizens',
+    'nation_events','nation_event_participants','notifications','nation_posts',
+    'follows','relationships','user_work_ratings','user_work_entries',
+    'point_transactions','market_items','market_transactions',
+    'penalties','approvals','audit_logs','admin_dashboard_cache'
+  ]
+  LOOP
+    EXECUTE format('ALTER TABLE %I ENABLE ROW LEVEL SECURITY', table_name);
+  END LOOP;
+END $$;
 
-  -- 期限切れセッションを削除
-  DELETE FROM "session"
-  WHERE "expires_at" < NOW();
+-- auth tables
+DROP POLICY IF EXISTS user_owner_or_admin ON "user";
+CREATE POLICY user_owner_or_admin ON "user"
+  FOR ALL
+  USING (id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (id = app.current_auth_user_id() OR app.is_platform_admin());
 
-  -- 削除された行数を返す
-  RETURN QUERY SELECT deleted_rows;
-END;
-$$ LANGUAGE plpgsql;
+DROP POLICY IF EXISTS session_owner_or_admin ON "session";
+CREATE POLICY session_owner_or_admin ON "session"
+  FOR ALL
+  USING (user_id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (user_id = app.current_auth_user_id() OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS account_owner_or_admin ON "account";
+CREATE POLICY account_owner_or_admin ON "account"
+  FOR ALL
+  USING (user_id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (user_id = app.current_auth_user_id() OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS verification_admin_only ON "verification";
+CREATE POLICY verification_admin_only ON "verification"
+  FOR ALL
+  USING (app.is_platform_admin())
+  WITH CHECK (app.is_platform_admin());
+
+DROP POLICY IF EXISTS user_preferences_owner_or_admin ON user_preferences;
+CREATE POLICY user_preferences_owner_or_admin ON user_preferences
+  FOR ALL
+  USING (user_id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (user_id = app.current_auth_user_id() OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS session_tokens_owner_or_admin ON session_tokens;
+CREATE POLICY session_tokens_owner_or_admin ON session_tokens
+  FOR ALL
+  USING (user_id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (user_id = app.current_auth_user_id() OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS two_factor_secrets_owner_or_admin ON two_factor_secrets;
+CREATE POLICY two_factor_secrets_owner_or_admin ON two_factor_secrets
+  FOR ALL
+  USING (user_id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (user_id = app.current_auth_user_id() OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS rate_limit_keys_admin_only ON rate_limit_keys;
+CREATE POLICY rate_limit_keys_admin_only ON rate_limit_keys
+  FOR ALL
+  USING (app.is_platform_admin())
+  WITH CHECK (app.is_platform_admin());
+
+DROP POLICY IF EXISTS feature_flags_admin_read_public ON feature_flags;
+CREATE POLICY feature_flags_admin_read_public ON feature_flags
+  FOR SELECT
+  USING (enabled = true OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS feature_flags_admin_write ON feature_flags;
+CREATE POLICY feature_flags_admin_write ON feature_flags
+  FOR ALL
+  USING (app.is_platform_admin())
+  WITH CHECK (app.is_platform_admin());
+
+-- root/profile tables
+DROP POLICY IF EXISTS root_accounts_owner_or_admin ON root_accounts;
+CREATE POLICY root_accounts_owner_or_admin ON root_accounts
+  FOR ALL
+  USING (auth_user_id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (auth_user_id = app.current_auth_user_id() OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS user_profiles_owner_or_admin ON user_profiles;
+CREATE POLICY user_profiles_owner_or_admin ON user_profiles
+  FOR ALL
+  USING (app.owns_root_account(root_account_id) OR app.is_platform_admin())
+  WITH CHECK (app.owns_root_account(root_account_id) OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS business_cards_owner_or_admin ON business_cards;
+CREATE POLICY business_cards_owner_or_admin ON business_cards
+  FOR ALL
+  USING (app.owns_profile(user_profile_id) OR app.is_platform_admin())
+  WITH CHECK (app.owns_profile(user_profile_id) OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS point_transactions_owner_or_admin ON point_transactions;
+CREATE POLICY point_transactions_owner_or_admin ON point_transactions
+  FOR ALL
+  USING (app.owns_profile(user_profile_id) OR app.is_platform_admin())
+  WITH CHECK (app.owns_profile(user_profile_id) OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS follows_owner_or_admin ON follows;
+CREATE POLICY follows_owner_or_admin ON follows
+  FOR ALL
+  USING (
+    app.owns_profile(follower_profile_id)
+    OR app.owns_profile(followed_profile_id)
+    OR app.is_platform_admin()
+  )
+  WITH CHECK (
+    app.owns_profile(follower_profile_id)
+    OR app.is_platform_admin()
+  );
+
+DROP POLICY IF EXISTS relationships_owner_or_admin ON relationships;
+CREATE POLICY relationships_owner_or_admin ON relationships
+  FOR ALL
+  USING (
+    app.owns_profile(user_profile_id)
+    OR app.owns_profile(target_profile_id)
+    OR app.is_platform_admin()
+  )
+  WITH CHECK (
+    app.owns_profile(user_profile_id)
+    OR app.is_platform_admin()
+  );
+
+-- group / nation tables
+DROP POLICY IF EXISTS groups_member_or_admin ON groups;
+CREATE POLICY groups_member_or_admin ON groups
+  FOR ALL
+  USING (
+    app.is_platform_admin()
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm
+      WHERE gm.group_id = groups.id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  )
+  WITH CHECK (
+    app.is_platform_admin()
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm
+      WHERE gm.group_id = groups.id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  );
+
+DROP POLICY IF EXISTS group_members_member_or_admin ON group_members;
+CREATE POLICY group_members_member_or_admin ON group_members
+  FOR ALL
+  USING (
+    app.is_platform_admin()
+    OR app.owns_profile(user_profile_id)
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm2
+      WHERE gm2.group_id = group_members.group_id
+        AND app.owns_profile(gm2.user_profile_id)
+        AND gm2.role = 'leader'
+    )
+  )
+  WITH CHECK (
+    app.is_platform_admin()
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm2
+      WHERE gm2.group_id = group_members.group_id
+        AND app.owns_profile(gm2.user_profile_id)
+        AND gm2.role = 'leader'
+    )
+  );
+
+DROP POLICY IF EXISTS nations_member_or_admin ON nations;
+CREATE POLICY nations_member_or_admin ON nations
+  FOR ALL
+  USING (
+    app.is_platform_admin()
+    OR EXISTS (
+      SELECT 1
+      FROM nation_groups ng
+      JOIN group_members gm ON gm.group_id = ng.group_id
+      WHERE ng.nation_id = nations.id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  )
+  WITH CHECK (
+    app.is_platform_admin()
+    OR EXISTS (
+      SELECT 1
+      FROM nation_groups ng
+      JOIN group_members gm ON gm.group_id = ng.group_id
+      WHERE ng.nation_id = nations.id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  );
+
+DROP POLICY IF EXISTS nation_groups_member_or_admin ON nation_groups;
+CREATE POLICY nation_groups_member_or_admin ON nation_groups
+  FOR ALL
+  USING (
+    app.is_platform_admin()
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm
+      WHERE gm.group_id = nation_groups.group_id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  )
+  WITH CHECK (
+    app.is_platform_admin()
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm
+      WHERE gm.group_id = nation_groups.group_id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  );
+
+DROP POLICY IF EXISTS nation_citizens_member_or_admin ON nation_citizens;
+CREATE POLICY nation_citizens_member_or_admin ON nation_citizens
+  FOR ALL
+  USING (app.owns_profile(user_profile_id) OR app.is_platform_admin())
+  WITH CHECK (app.owns_profile(user_profile_id) OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS nation_events_member_or_admin ON nation_events;
+CREATE POLICY nation_events_member_or_admin ON nation_events
+  FOR ALL
+  USING (
+    app.is_platform_admin()
+    OR app.owns_profile(organizer_id)
+    OR EXISTS (
+      SELECT 1
+      FROM nation_groups ng
+      JOIN group_members gm ON gm.group_id = ng.group_id
+      WHERE ng.nation_id = nation_events.nation_id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  )
+  WITH CHECK (
+    app.is_platform_admin()
+    OR app.owns_profile(organizer_id)
+  );
+
+DROP POLICY IF EXISTS nation_event_participants_member_or_admin ON nation_event_participants;
+CREATE POLICY nation_event_participants_member_or_admin ON nation_event_participants
+  FOR ALL
+  USING (app.owns_profile(user_profile_id) OR app.is_platform_admin())
+  WITH CHECK (app.owns_profile(user_profile_id) OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS nation_posts_member_or_admin ON nation_posts;
+CREATE POLICY nation_posts_member_or_admin ON nation_posts
+  FOR ALL
+  USING (
+    app.is_platform_admin()
+    OR app.owns_profile(author_id)
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm
+      WHERE gm.group_id = nation_posts.author_group_id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  )
+  WITH CHECK (
+    app.is_platform_admin()
+    OR app.owns_profile(author_id)
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm
+      WHERE gm.group_id = nation_posts.author_group_id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  );
+
+-- work tables
+DROP POLICY IF EXISTS works_owner_or_public_or_admin ON works;
+CREATE POLICY works_owner_or_public_or_admin ON works
+  FOR SELECT
+  USING (
+    status = 'public'
+    OR owner_user_id = app.current_auth_user_id()
+    OR app.is_platform_admin()
+  );
+
+DROP POLICY IF EXISTS works_owner_or_admin_write ON works;
+CREATE POLICY works_owner_or_admin_write ON works
+  FOR ALL
+  USING (owner_user_id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (owner_user_id = app.current_auth_user_id() OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS user_work_entries_owner_or_admin ON user_work_entries;
+CREATE POLICY user_work_entries_owner_or_admin ON user_work_entries
+  FOR ALL
+  USING (user_id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (user_id = app.current_auth_user_id() OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS user_work_ratings_owner_or_admin ON user_work_ratings;
+CREATE POLICY user_work_ratings_owner_or_admin ON user_work_ratings
+  FOR ALL
+  USING (user_id = app.current_auth_user_id() OR app.is_platform_admin())
+  WITH CHECK (user_id = app.current_auth_user_id() OR app.is_platform_admin());
+
+-- market tables
+DROP POLICY IF EXISTS market_items_member_or_admin ON market_items;
+CREATE POLICY market_items_member_or_admin ON market_items
+  FOR ALL
+  USING (
+    app.is_platform_admin()
+    OR app.owns_profile(seller_id)
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm
+      WHERE gm.group_id = market_items.seller_group_id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  )
+  WITH CHECK (
+    app.is_platform_admin()
+    OR app.owns_profile(seller_id)
+    OR EXISTS (
+      SELECT 1
+      FROM group_members gm
+      WHERE gm.group_id = market_items.seller_group_id
+        AND app.owns_profile(gm.user_profile_id)
+    )
+  );
+
+DROP POLICY IF EXISTS market_transactions_member_or_admin ON market_transactions;
+CREATE POLICY market_transactions_member_or_admin ON market_transactions
+  FOR ALL
+  USING (
+    app.is_platform_admin()
+    OR app.owns_profile(buyer_id)
+    OR app.owns_profile(seller_id)
+  )
+  WITH CHECK (
+    app.is_platform_admin()
+    OR app.owns_profile(buyer_id)
+    OR app.owns_profile(seller_id)
+  );
+
+-- alliance / notification
+DROP POLICY IF EXISTS alliances_member_or_admin ON alliances;
+CREATE POLICY alliances_member_or_admin ON alliances
+  FOR ALL
+  USING (app.owns_profile(profile_a_id) OR app.owns_profile(profile_b_id) OR app.is_platform_admin())
+  WITH CHECK (app.owns_profile(profile_a_id) OR app.owns_profile(profile_b_id) OR app.is_platform_admin());
+
+DROP POLICY IF EXISTS notifications_owner_or_admin ON notifications;
+CREATE POLICY notifications_owner_or_admin ON notifications
+  FOR ALL
+  USING (app.owns_profile(user_profile_id) OR app.is_platform_admin())
+  WITH CHECK (app.owns_profile(user_profile_id) OR app.is_platform_admin());
+
+-- admin only
+DROP POLICY IF EXISTS penalties_admin_only ON penalties;
+CREATE POLICY penalties_admin_only ON penalties
+  FOR ALL
+  USING (app.is_platform_admin())
+  WITH CHECK (app.is_platform_admin());
+
+DROP POLICY IF EXISTS approvals_admin_only ON approvals;
+CREATE POLICY approvals_admin_only ON approvals
+  FOR ALL
+  USING (app.is_platform_admin())
+  WITH CHECK (app.is_platform_admin());
+
+DROP POLICY IF EXISTS audit_logs_admin_only ON audit_logs;
+CREATE POLICY audit_logs_admin_only ON audit_logs
+  FOR ALL
+  USING (app.is_platform_admin())
+  WITH CHECK (app.is_platform_admin());
+
+DROP POLICY IF EXISTS admin_dashboard_cache_admin_only ON admin_dashboard_cache;
+CREATE POLICY admin_dashboard_cache_admin_only ON admin_dashboard_cache
+  FOR ALL
+  USING (app.is_platform_admin())
+  WITH CHECK (app.is_platform_admin());
