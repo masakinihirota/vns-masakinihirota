@@ -10,8 +10,8 @@
 
 import { db } from "@/lib/db/client";
 import { logger } from "@/lib/logger";
-import { NextResponse } from "next/server";
 import { sql } from "drizzle-orm";
+import { NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
@@ -60,7 +60,7 @@ async function checkDatabase(): Promise<CheckResult> {
     };
   } catch (error) {
     const duration = performance.now() - startTime;
-    logger.error("Database health check failed", error instanceof Error ? error : undefined);
+    logger.error("Database health check failed", error instanceof Error ? error : new Error(String(error)));
 
     return {
       status: "fail",
@@ -177,7 +177,7 @@ export async function GET() {
 
     // unhealthyの場合はログに記録
     if (status === "unhealthy") {
-      logger.error("Health check failed", undefined, { health });
+      logger.error("Health check failed", new Error("System is unhealthy"), { health });
     } else if (status === "degraded") {
       logger.warn("Health check degraded", { health });
     }
@@ -187,7 +187,7 @@ export async function GET() {
 
     return NextResponse.json(health, { status: statusCode });
   } catch (error) {
-    logger.error("Health check error", error instanceof Error ? error : undefined);
+    logger.error("Health check error", error instanceof Error ? error : new Error(String(error)));
 
     return NextResponse.json(
       {

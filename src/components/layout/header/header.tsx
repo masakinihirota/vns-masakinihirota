@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { AuthButton } from "./auth-button";
 import { AdsToggle } from "./ads-toggle";
+import { AuthButton } from "./auth-button";
 import { LanguageToggle } from "./language-toggle";
 import { ThemeToggle } from "./theme-toggle";
-import { TrialButton } from "./trial-button";
 
 export function Header() {
   return (
@@ -34,7 +33,7 @@ export function Header() {
           {/* 区切り線 */}
           <div className="h-6 w-px bg-border" />
 
-          {/* 認証アクション: AuthButton（ログイン/アカウント）か TrialButton（お試し） */}
+          {/* 認証アクション: ログイン/アカウント/お試しボタン等 */}
           <AuthButton />
         </div>
       </div>

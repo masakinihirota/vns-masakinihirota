@@ -1,16 +1,16 @@
 "use client";
 
-import { useAppAuth } from "@/hooks/use-app-auth";
-import { useLocale } from "@/context/locale-context";
-import { Loader2, LogOut, User } from "lucide-react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { TrialButton } from "./trial-button";
-import { useRouter } from "next/navigation";
-import { TrialStorage } from "@/lib/trial-storage";
+import { useLocale } from "@/context/locale-context";
+import { useAppAuth } from "@/hooks/use-app-auth";
 import { signOut } from "@/lib/auth-client";
 import { logger } from "@/lib/logger";
-import { useState, useEffect } from "react";
+import { TrialStorage } from "@/lib/trial-storage";
+import { Loader2, LogOut, User } from "lucide-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { TrialButton } from "../trial-button";
 
 export function AuthButton() {
   const { isAuthenticated, isTrialMode, isPending, userName } = useAppAuth();
