@@ -160,19 +160,36 @@ describe("RBAC Boundary Cases", () => {
 
   describe("Role Hierarchy Boundaries", () => {
     it("sub_leader は mediator 権限を必要とする操作をパスする", async () => {
-      // group_members から sub_leader が返るようにモック
-      vi.mocked(db.select).mockImplementationOnce(() =>
-        mockDrizzleChain([{ role: "sub_leader" }]) as any
-      );
+      // db.select は2回呼ばれる: 1回目=getUserProfileId, 2回目=checkGroupRoleInternal
+      let callCount = 0;
+      vi.mocked(db.select).mockImplementation(() => {
+        callCount++;
+        if (callCount === 1) {
+          // 1回目: getUserProfileId 用
+          return mockDrizzleChain([{ userProfileId: "550e8400-e29b-41d4-a716-446655440001", maskCategory: "persona" }]) as any;
+        } else {
+          // 2回目以降: checkGroupRoleInternal 用
+          return mockDrizzleChain([{ role: "sub_leader" }]) as any;
+        }
+      });
 
       const result = await checkGroupRole(personaSession, "550e8400-e29b-41d4-a716-446655440002", "mediator");
       expect(result).toBe(true);
     });
 
     it("member は sub_leader 権限を必要とする操作を拒否される", async () => {
-      vi.mocked(db.select).mockImplementationOnce(() =>
-        mockDrizzleChain([{ role: "member" }]) as any
-      );
+      // db.select は2回呼ばれる: 1回目=getUserProfileId, 2回目=checkGroupRoleInternal
+      let callCount = 0;
+      vi.mocked(db.select).mockImplementation(() => {
+        callCount++;
+        if (callCount === 1) {
+          // 1回目: getUserProfileId 用
+          return mockDrizzleChain([{ userProfileId: "550e8400-e29b-41d4-a716-446655440001", maskCategory: "persona" }]) as any;
+        } else {
+          // 2回目以降: checkGroupRoleInternal 用
+          return mockDrizzleChain([{ role: "member" }]) as any;
+        }
+      });
 
       const result = await checkGroupRole(personaSession, "550e8400-e29b-41d4-a716-446655440002", "sub_leader");
       expect(result).toBe(false);
@@ -188,10 +205,10 @@ describe("RBAC Boundary Cases", () => {
       expect(result).toBe(false);
     });
 
-    it("不正なUUID形式のIDはバリデーションで弾かれる", async () => {
-      // 実際には checkGroupRole の冒頭で validateUUID が呼ばれる
-      await expect(checkGroupRole(personaSession, "invalid-uuid", "member"))
-        .rejects.toThrow();
+    it("不正なUUID形式のIDはバリデーションで弾かれfalseを返す", async () => {
+      // checkGroupRole は validateUUID でエラーをキャッチして false を返す設計
+      const result = await checkGroupRole(personaSession, "invalid-uuid", "member");
+      expect(result).toBe(false);
     });
   });
 });

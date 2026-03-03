@@ -1,4 +1,3 @@
-/** @vitest-environment happy-dom */
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'next-themes';
 import { describe, expect, it } from 'vitest';
@@ -22,7 +21,7 @@ describe('ThemeToggle', () => {
         <ThemeToggle />
       </ThemeProvider>
     );
-    const button = screen.getByRole('button', { name: 'テーマの切り替え' });
+    const button = screen.getByRole('button', { name: 'テーマを切り替える' });
     expect(button).toBeInTheDocument();
   });
 
@@ -32,7 +31,7 @@ describe('ThemeToggle', () => {
         <ThemeToggle />
       </ThemeProvider>
     );
-    const button = screen.getByRole('button', { name: 'テーマの切り替え' });
+    const button = screen.getByRole('button', { name: 'テーマを切り替える' });
 
     // next-themes の内部状態までは追わないが、ボタンがクリック可能であることを確認
     fireEvent.click(button);

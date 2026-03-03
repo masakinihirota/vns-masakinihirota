@@ -6,6 +6,7 @@
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
 
+import { env } from '@/lib/env';
 import * as schema from './schema.postgres';
 
 /**
@@ -13,14 +14,7 @@ import * as schema from './schema.postgres';
  * PostgreSQL connection
  */
 
-const databaseUrl = process.env.DATABASE_URL;
-
-if (!databaseUrl) {
-  throw new Error(
-    'DATABASE_URL environment variable is required. ' +
-    'Set it in your .env.local file or deployment environment.'
-  );
-}
+const databaseUrl = env.DATABASE_URL;
 
 /**
  * コネクションプーリング設定

@@ -1,4 +1,3 @@
-/** @vitest-environment happy-dom */
 import { useSession, signOut } from '@/lib/auth-client';
 import { useAppAuth } from '@/hooks/use-app-auth';
 import { useRouter } from 'next/navigation';
@@ -6,15 +5,6 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 // import { axe } from 'vitest-axe';  // TODO: happy-dom互換性問題により一時的に無効化
 import { AuthButton } from './auth-button';
-import { LocaleProvider } from '@/context/locale-context';
-import React from 'react';
-
-// Test helper: AuthButtonをLocaleProviderでラップ
-const TestAuthButton = () => (
-  <LocaleProvider>
-    <AuthButton />
-  </LocaleProvider>
-);
 
 // mock router for stop trial test
 vi.mock('next/navigation', () => ({
@@ -59,7 +49,7 @@ describe('AuthButton', () => {
       userName: '',
     } as any);
 
-    render(<TestAuthButton />);
+    render(<AuthButton />);
     const button = screen.getByRole('button');
 
     expect(button).toBeDisabled();
@@ -78,7 +68,7 @@ describe('AuthButton', () => {
       userName: '',
     } as any);
 
-    render(<TestAuthButton />);
+    render(<AuthButton />);
     const link = screen.getByRole('link', { name: 'ログイン' });
 
     expect(link).toBeInTheDocument();
@@ -107,7 +97,7 @@ describe('AuthButton', () => {
       userName: 'Test User',
     } as any);
 
-    render(<TestAuthButton />);
+    render(<AuthButton />);
     const link = screen.getByRole('link', { name: 'ダッシュボードへ移動' });
     const logoutButton = screen.getByRole('button', { name: 'ログアウト' });
 
@@ -134,7 +124,7 @@ describe('AuthButton', () => {
       userName: 'お試しユーザー',
     } as any);
 
-    render(<TestAuthButton />);
+    render(<AuthButton />);
 
     const trialLabel = screen.getByText('お試し中');
     expect(trialLabel).toBeInTheDocument();
@@ -172,7 +162,7 @@ describe('AuthButton', () => {
       userName: 'Test User',
     } as any);
 
-    render(<TestAuthButton />);
+    render(<AuthButton />);
 
     const logoutButton = screen.getByRole('button', { name: 'ログアウト' });
     expect(logoutButton).toBeInTheDocument();
@@ -202,7 +192,7 @@ describe('AuthButton', () => {
       userName: 'Test User',
     } as any);
 
-    const { rerender } = render(<TestAuthButton />);
+    const { rerender } = render(<AuthButton />);
 
     // 2. ログアウトボタンを見つけてクリック
     const logoutButton1 = screen.getAllByRole('button').find(btn => btn.textContent?.includes('ログアウト'));
@@ -222,7 +212,7 @@ describe('AuthButton', () => {
       isPending: false,
       userName: '',
     } as any);
-    rerender(<TestAuthButton />);
+    rerender(<AuthButton />);
 
     // 5. お試しボタンとログインリンクが表示される
     const trialButton = screen.getByRole('button', { name: 'お試し版を開始' });
@@ -235,7 +225,7 @@ describe('AuthButton', () => {
       isPending: false,
       userName: 'Test User',
     } as any);
-    rerender(<TestAuthButton />);
+    rerender(<AuthButton />);
 
     // 7. 重要: 「ログアウト中...」ではなく「ログアウト」が表示される
     const logoutButton2 = screen.getAllByRole('button').find(btn =>

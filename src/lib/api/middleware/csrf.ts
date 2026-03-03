@@ -13,6 +13,7 @@
 
 import type { MiddlewareHandler } from 'hono';
 import { createApiError } from './error-handler';
+import { env } from '@/lib/env';
 import { logger } from '@/lib/logger';
 
 /**
@@ -21,15 +22,7 @@ import { logger } from '@/lib/logger';
  * @returns 環境変数 TRUSTED_ORIGINS から取得したオリジンのリスト
  */
 function getTrustedOrigins(): string[] {
-  const origins = process.env.TRUSTED_ORIGINS?.split(',').map(o => o.trim()) || [];
-
-  // デフォルトとして localhost を追加（開発環境用）
-  if (process.env.NODE_ENV === 'development') {
-    origins.push('http://localhost:3000');
-    origins.push('http://127.0.0.1:3000');
-  }
-
-  return origins;
+  return env.trustedOrigins;
 }
 
 /**
@@ -76,7 +69,7 @@ export const validateCsrfToken: MiddlewareHandler = async (c, next) => {
       method,
       path: c.req.path,
       requestOrigin,
-      trustedOrigins: process.env.NODE_ENV === 'development' ? trustedOrigins : '[REDACTED]',
+      trustedOrigins: env.NODE_ENV === 'development' ? trustedOrigins : '[REDACTED]',
     });
     throw createApiError('FORBIDDEN', 'CSRF validation failed: Untrusted origin');
   }

@@ -1,5 +1,8 @@
 'use client';
 
+import { hc } from 'hono/client';
+import type { AppType } from '@/app/api/[[...route]]/route';
+
 /**
  * Hono API Client - Phase 6: Pragmatic Implementation
  *
@@ -25,12 +28,16 @@
  * Type-safe API client wrapper
  * fetch() API with explicit schema typing
  */
+export const rpcClient = hc<AppType>('/api', {
+  init: {
+    credentials: 'include',
+  },
+});
 
 // Health endpoint
 export const health = {
   async get() {
-    const res = await fetch('/api/health');
-    return res;
+    return rpcClient.health.$get();
   },
 };
 
