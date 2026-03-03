@@ -4,12 +4,15 @@ import { Button } from "@/components/ui/button";
 import { Loader2, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { TrialStorage } from "@/lib/trial-storage";
 
 export function LogoutButton() {
     const [isLoading, setLoading] = useState(false);
     const router = useRouter();
     const handleLogout = async () => {
         setLoading(true);
+        // stop any trial recording so logout acts as stop-trial
+        TrialStorage.clear();
         await signOut();
         router.push("/login");
         setLoading(false);

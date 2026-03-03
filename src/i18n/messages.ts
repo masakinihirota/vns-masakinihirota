@@ -22,6 +22,7 @@ export const messages = {
       startedTrial: 'としてお試し開始',
       trialStartFailed: 'お試し開始に失敗しました',
       checkStorageSettings: 'ブラウザのストレージ設定をご確認ください。',
+      stopTrial: '体験をやめる',
     },
     auth: {
       loading: '読み込み中...',
@@ -59,6 +60,7 @@ export const messages = {
       startedTrial: 'started trial',
       trialStartFailed: 'Failed to start trial',
       checkStorageSettings: 'Check your browser storage settings.',
+      stopTrial: 'Stop Trial',
       privacy: 'Privacy Policy',
       terms: 'Terms of Service',
     },

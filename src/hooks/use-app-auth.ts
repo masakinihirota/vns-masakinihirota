@@ -14,8 +14,25 @@ export function useAppAuth() {
   useEffect(() => {
     // クライアントサイドでのみ実行
     if (typeof window !== "undefined") {
-      const trialMode = localStorage.getItem("vns_trial_mode") === "true";
-      setIsTrialMode(trialMode);
+      const checkTrialMode = () => {
+        const trialMode = localStorage.getItem("vns_trial_mode") === "true";
+        setIsTrialMode(trialMode);
+      };
+
+      // 初回チェック
+      checkTrialMode();
+
+      // storage イベントをリスンして他のタブでの変更を検知
+      window.addEventListener("storage", checkTrialMode);
+
+      // カスタムイベントで同一タブ内での変更も検知
+      const handleTrialModeChange = () => checkTrialMode();
+      window.addEventListener("trialModeChanged", handleTrialModeChange);
+
+      return () => {
+        window.removeEventListener("storage", checkTrialMode);
+        window.removeEventListener("trialModeChanged", handleTrialModeChange);
+      };
     }
   }, []);
 

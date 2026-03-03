@@ -40,7 +40,7 @@ describe('TrialButton Logic', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('ボタンをクリックするとランダム匿名名が生成されて localStorage に保存されること', async () => {
+  it('ボタンをクリックするとランダム匿名名が生成されて localStorage に保存され、trial mode フラグが立つこと', async () => {
     render(<TrialButton />);
     const button = screen.getByRole('button', { name: 'お試し体験' });
 
@@ -50,8 +50,9 @@ describe('TrialButton Logic', () => {
       const trialData = JSON.parse(localStorage.getItem('vns_trial_data') || '{}');
       expect(trialData.rootAccount).toBeDefined();
       expect(trialData.rootAccount.display_name).toBeDefined();
-      // ランダム名は "Word-Word-XXXX" フォーマット
-      expect(trialData.rootAccount.display_name).toMatch(/^[A-Z][a-z]+-[A-Z][a-z]+-\d{4}$/);
+      // 星座匿名フォーマット: "色+マテリアル+の+星座" (例: 緑の光速の魚座)
+      expect(trialData.rootAccount.display_name).toMatch(/^.+の.+座$/);
+      expect(localStorage.getItem('vns_trial_mode')).toBe('true');
       expect(toast.success).toHaveBeenCalled();
     });
   });
