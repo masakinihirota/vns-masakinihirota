@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { useLocale } from '@/context/locale-context';
 import { logger } from '@/lib/logger';
-import { generateRandomAnonymousName, TrialStorage } from '@/lib/trial-storage';
+import { TrialStorage } from '@/lib/trial-storage';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -18,45 +18,15 @@ export function TrialButton() {
     setIsLoading(true);
 
     try {
-      // ランダム名を生成
-      const anonymousName = generateRandomAnonymousName();
-
-      // お試しデータを初期化・保存
-      const trialData = TrialStorage.init();
-      // mark browser as trial mode
+      // お試しモードを有効化
       TrialStorage.enableMode();
-      trialData.rootAccount = {
-        display_id: anonymousName,
-        display_name: anonymousName,
-        activity_area_id: null,
-        core_activity_start: '09:00',
-        core_activity_end: '18:00',
-        holidayActivityStart: '10:00',
-        holidayActivityEnd: '19:00',
-        uses_ai_translation: false,
-        nativeLanguages: ['ja'],
-        agreed_oasis: true,
-        zodiac_sign: '水瓶座',
-        birth_generation: '平成',
-        week_schedule: {
-          mon: 'work',
-          tue: 'work',
-          wed: 'work',
-          thu: 'work',
-          fri: 'work',
-          sat: 'leisure',
-          sun: 'leisure',
-        },
-        created_at: new Date().toISOString(),
-      };
-      TrialStorage.save(trialData);
 
-      toast.success(`${anonymousName} ${t('header.startedTrial')}`, {
-        description: '※このモード中のデータはブラウザのみに保存され、サーバーには送信されません',
+      toast.info(t('header.redirectingToTrial'), {
+        description: 'あなたの星座匿名を作成しましょう',
       });
 
-      // お試し専用ページへ遷移
-      router.push('/home-trial');
+      // お試しオンボーディングページへ遷移
+      router.push('/trial');
       router.refresh();
     } catch (e) {
       toast.error(t('header.trialStartFailed'), {
