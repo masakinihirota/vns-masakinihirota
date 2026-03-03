@@ -1,0 +1,20 @@
+CREATE INDEX "idx_approvals_creator_id" ON "approvals" USING btree ("creator_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_approvals_reviewer_id" ON "approvals" USING btree ("reviewer_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_group_members_group_id" ON "group_members" USING btree ("group_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_group_members_user_profile_id" ON "group_members" USING btree ("user_profile_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nation_citizens_nation_id" ON "nation_citizens" USING btree ("nation_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nation_citizens_user_profile_id" ON "nation_citizens" USING btree ("user_profile_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nation_event_participants_event_id" ON "nation_event_participants" USING btree ("event_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nation_event_participants_user_profile_id" ON "nation_event_participants" USING btree ("user_profile_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nation_groups_nation_id" ON "nation_groups" USING btree ("nation_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nation_groups_group_id" ON "nation_groups" USING btree ("group_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nation_posts_nation_id" ON "nation_posts" USING btree ("nation_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nation_posts_author_id" ON "nation_posts" USING btree ("author_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nation_posts_author_group_id" ON "nation_posts" USING btree ("author_group_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nations_owner_user_id" ON "nations" USING btree ("owner_user_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_nations_owner_group_id" ON "nations" USING btree ("owner_group_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_penalties_issuer_id" ON "penalties" USING btree ("issuer_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_root_accounts_auth_user_id" ON "root_accounts" USING btree ("auth_user_id" text_ops);--> statement-breakpoint
+CREATE INDEX "idx_user_auth_methods_session_id" ON "user_auth_methods" USING btree ("session_id" text_ops);--> statement-breakpoint
+CREATE INDEX "idx_user_work_entries_work_id" ON "user_work_entries" USING btree ("work_id" uuid_ops);--> statement-breakpoint
+CREATE INDEX "idx_user_work_ratings_work_id" ON "user_work_ratings" USING btree ("work_id" uuid_ops);

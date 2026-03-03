@@ -290,6 +290,10 @@ export const userAuthMethods = pgTable(
       "btree",
       table.userId.asc().nullsLast().op("text_ops")
     ),
+    index("idx_user_auth_methods_session_id").using(
+      "btree",
+      table.sessionId.asc().nullsLast().op("text_ops")
+    ),
     index("idx_user_auth_methods_created_at").using(
       "btree",
       table.createdAt.desc().nullsLast()
@@ -341,6 +345,10 @@ export const rootAccounts = pgTable(
       foreignColumns: [users.id],
       name: "root_accounts_auth_user_id_fkey",
     }).onDelete("cascade"),
+    index("idx_root_accounts_auth_user_id").using(
+      "btree",
+      table.authUserId.asc().nullsLast().op("text_ops")
+    ),
     index("idx_root_accounts_active_profile_id").using(
       "btree",
       table.activeProfileId.asc().nullsLast().op("uuid_ops")
@@ -618,6 +626,14 @@ export const nations = pgTable(
       .notNull(),
   },
   (table) => [
+    index("idx_nations_owner_user_id").using(
+      "btree",
+      table.ownerUserId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_nations_owner_group_id").using(
+      "btree",
+      table.ownerGroupId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.ownerUserId],
       foreignColumns: [userProfiles.id],
@@ -743,6 +759,22 @@ export const marketTransactions = pgTable(
       "market_transactions_status_check",
       sql`status = ANY (ARRAY['pending'::text, 'completed'::text, 'cancelled'::text])`
     ),
+    check(
+      "market_transactions_price_check",
+      sql`price >= 0`
+    ),
+    check(
+      "market_transactions_fee_amount_check",
+      sql`fee_amount >= 0`
+    ),
+    check(
+      "market_transactions_seller_revenue_check",
+      sql`seller_revenue >= 0`
+    ),
+    check(
+      "market_transactions_revenue_integrity_check",
+      sql`price = seller_revenue + fee_amount`
+    ),
   ]
 );
 
@@ -855,6 +887,18 @@ export const nationPosts = pgTable(
       .notNull(),
   },
   (table) => [
+    index("idx_nation_posts_nation_id").using(
+      "btree",
+      table.nationId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_nation_posts_author_id").using(
+      "btree",
+      table.authorId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_nation_posts_author_group_id").using(
+      "btree",
+      table.authorGroupId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.nationId],
       foreignColumns: [nations.id],
@@ -994,6 +1038,14 @@ export const groupMembers = pgTable(
       .notNull(),
   },
   (table) => [
+    index("idx_group_members_group_id").using(
+      "btree",
+      table.groupId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_group_members_user_profile_id").using(
+      "btree",
+      table.userProfileId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.groupId],
       foreignColumns: [groups.id],
@@ -1026,6 +1078,14 @@ export const nationGroups = pgTable(
       .notNull(),
   },
   (table) => [
+    index("idx_nation_groups_nation_id").using(
+      "btree",
+      table.nationId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_nation_groups_group_id").using(
+      "btree",
+      table.groupId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.nationId],
       foreignColumns: [nations.id],
@@ -1058,6 +1118,14 @@ export const nationCitizens = pgTable(
       .notNull(),
   },
   (table) => [
+    index("idx_nation_citizens_nation_id").using(
+      "btree",
+      table.nationId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_nation_citizens_user_profile_id").using(
+      "btree",
+      table.userProfileId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.nationId],
       foreignColumns: [nations.id],
@@ -1090,6 +1158,14 @@ export const nationEventParticipants = pgTable(
       .notNull(),
   },
   (table) => [
+    index("idx_nation_event_participants_event_id").using(
+      "btree",
+      table.eventId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_nation_event_participants_user_profile_id").using(
+      "btree",
+      table.userProfileId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.eventId],
       foreignColumns: [nationEvents.id],
@@ -1131,6 +1207,10 @@ export const userWorkRatings = pgTable(
       table.userId.asc().nullsLast().op("text_ops"),
       table.workId.asc().nullsLast().op("uuid_ops")
     ),
+    index("idx_user_work_ratings_work_id").using(
+      "btree",
+      table.workId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.userId],
       foreignColumns: [users.id],
@@ -1167,6 +1247,10 @@ export const userWorkEntries = pgTable(
     index("idx_user_work_entries_user_work").using(
       "btree",
       table.userId.asc().nullsLast().op("text_ops"),
+      table.workId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_user_work_entries_work_id").using(
+      "btree",
       table.workId.asc().nullsLast().op("uuid_ops")
     ),
     foreignKey({
@@ -1549,6 +1633,10 @@ export const penalties = pgTable(
   },
   (table) => [
     index("idx_penalties_target_profile_id").using("btree", table.targetProfileId.asc()),
+    index("idx_penalties_issuer_id").using(
+      "btree",
+      table.issuerId.asc().nullsLast().op("uuid_ops")
+    ),
     index("idx_penalties_issued_at").using("btree", table.issuedAt.desc()),
     foreignKey({
       columns: [table.targetProfileId],
@@ -1582,6 +1670,14 @@ export const approvals = pgTable(
     index("idx_approvals_status").using("btree", table.status.asc()),
     index("idx_approvals_created_at").using("btree", table.createdAt.desc()),
     index("idx_approvals_work_id").using("btree", table.workId.asc()),
+    index("idx_approvals_creator_id").using(
+      "btree",
+      table.creatorId.asc().nullsLast().op("uuid_ops")
+    ),
+    index("idx_approvals_reviewer_id").using(
+      "btree",
+      table.reviewerId.asc().nullsLast().op("uuid_ops")
+    ),
     foreignKey({
       columns: [table.workId],
       foreignColumns: [works.id],

@@ -64,6 +64,20 @@
       "when": 1772545990970,
       "tag": "0008_wakeful_ender_wiggin",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1772546370696,
+      "tag": "0009_organic_yellowjacket",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1772546618722,
+      "tag": "0010_stormy_earthquake",
+      "breakpoints": true
     }
   ]
 }

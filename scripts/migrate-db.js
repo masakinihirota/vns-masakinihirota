@@ -140,4 +140,6 @@ async function main() {
         logger.error(`[DB_MIGRATE] ❌ FAILED (env: ${envPath})`);
         if (error instanceof Error) {
             logger.error(`  Error: ${error.message}`);
-        }
+        }        process.exit(1);
+    }
+})();
