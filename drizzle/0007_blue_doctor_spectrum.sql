@@ -1,61 +1,11 @@
-CREATE TABLE "feature_flags" (
-	"key" text PRIMARY KEY NOT NULL,
-	"description" text,
-	"enabled" boolean DEFAULT false NOT NULL,
-	"rollout_percentage" integer DEFAULT 0 NOT NULL,
-	"metadata" jsonb DEFAULT '{}'::jsonb NOT NULL,
-	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
-	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
-	CONSTRAINT "feature_flags_rollout_percentage_check" CHECK (rollout_percentage >= 0 AND rollout_percentage <= 100)
-);
---> statement-breakpoint
-CREATE TABLE "rate_limit_keys" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"scope" text NOT NULL,
-	"key" text NOT NULL,
-	"hit_count" integer DEFAULT 0 NOT NULL,
-	"window_start" timestamp with time zone NOT NULL,
-	"window_end" timestamp with time zone NOT NULL,
-	"blocked_until" timestamp with time zone,
-	"metadata" jsonb DEFAULT '{}'::jsonb NOT NULL,
-	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
-	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
-	CONSTRAINT "rate_limit_keys_scope_key_window_start_key" UNIQUE("scope","key","window_start"),
-	CONSTRAINT "rate_limit_keys_hit_count_check" CHECK (hit_count >= 0)
-);
---> statement-breakpoint
-CREATE TABLE "session_tokens" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"user_id" text NOT NULL,
-	"session_id" text,
-	"token_hash" text NOT NULL,
-	"issued_at" timestamp with time zone DEFAULT now() NOT NULL,
-	"expires_at" timestamp with time zone NOT NULL,
-	"revoked_at" timestamp with time zone,
-	"metadata" jsonb DEFAULT '{}'::jsonb NOT NULL,
-	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
-	"updated_at" timestamp with time zone DEFAULT now() NOT NULL,
-	CONSTRAINT "session_tokens_token_hash_key" UNIQUE("token_hash")
-);
---> statement-breakpoint
-CREATE TABLE "two_factor_secrets" (
-	"user_id" text PRIMARY KEY NOT NULL,
-	"secret_ciphertext" text NOT NULL,
-	"backup_codes_hash" jsonb DEFAULT '[]'::jsonb NOT NULL,
-	"enabled" boolean DEFAULT false NOT NULL,
-	"verified_at" timestamp with time zone,
-	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
-	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
-);
---> statement-breakpoint
-CREATE TABLE "user_preferences" (
-	"user_id" text PRIMARY KEY NOT NULL,
-	"ads_enabled" boolean DEFAULT true NOT NULL,
-	"locale" text DEFAULT 'ja' NOT NULL,
-	"theme" text DEFAULT 'system' NOT NULL,
-	"created_at" timestamp with time zone DEFAULT now() NOT NULL,
-	"updated_at" timestamp with time zone DEFAULT now() NOT NULL
-);
+-- NOTE: Table definitions moved to 0006_database_security_foundation.sql (IF NOT EXISTS)
+-- These were duplicated in this migration, causing "relation already exists" errors
+-- Removed:
+--   - CREATE TABLE "feature_flags"
+--   - CREATE TABLE "rate_limit_keys"
+--   - CREATE TABLE "session_tokens"
+--   - CREATE TABLE "two_factor_secrets"
+--   - CREATE TABLE "user_preferences"
 --> statement-breakpoint
 ALTER TABLE "account" ALTER COLUMN "access_token_expires_at" SET DATA TYPE timestamp with time zone;--> statement-breakpoint
 ALTER TABLE "account" ALTER COLUMN "refresh_token_expires_at" SET DATA TYPE timestamp with time zone;--> statement-breakpoint
