@@ -8,6 +8,7 @@ import { rootAccounts, userProfiles } from "./schema.postgres";
 
 export type DbUserProfile = typeof userProfiles.$inferSelect;
 export type InsertUserProfile = typeof userProfiles.$inferInsert;
+export type DbRootAccount = typeof rootAccounts.$inferSelect;
 
 
 
@@ -43,7 +44,7 @@ export function mapToUserProfileDomain(p: DbUserProfile): UserProfile {
  *
  * @param authUserId
  */
-export async function getUserProfilesByAuthUserId(authUserId: string) {
+export async function getUserProfilesByAuthUserId(authUserId: string): Promise<UserProfile[]> {
   const rootAccount = await database.query.rootAccounts.findFirst({
     where: eq(rootAccounts.authUserId, authUserId),
     with: {
@@ -60,7 +61,7 @@ export async function getUserProfilesByAuthUserId(authUserId: string) {
  *
  * @param rootAccountId
  */
-export async function getUserProfiles(rootAccountId: string) {
+export async function getUserProfiles(rootAccountId: string): Promise<UserProfile[]> {
   const result = await database.query.userProfiles.findMany({
     where: eq(userProfiles.rootAccountId, rootAccountId),
     orderBy: [asc(userProfiles.createdAt)],
@@ -76,7 +77,7 @@ export async function getUserProfiles(rootAccountId: string) {
 export async function createUserProfile(
   rootAccountId: string,
   data: CreateProfileData
-) {
+): Promise<UserProfile> {
   return await database.transaction(async (tx) => {
     // Count profiles within transaction to prevent race condition
     // Multiple concurrent requests will be serialized at DB level
@@ -115,7 +116,7 @@ export async function createUserProfile(
  *
  * @param id
  */
-export async function getUserProfileById(id: string) {
+export async function getUserProfileById(id: string): Promise<UserProfile | undefined> {
   if (!isValidUUID(id)) {
     return;
   }
@@ -130,7 +131,7 @@ export async function getUserProfileById(id: string) {
  *
  * @param ids
  */
-export async function getProfilesByIds(ids: string[]) {
+export async function getProfilesByIds(ids: string[]): Promise<UserProfile[]> {
   if (!ids || ids.length === 0) return [];
 
   const validIds = ids.filter(isValidUUID);
@@ -150,7 +151,7 @@ export async function getProfilesByIds(ids: string[]) {
 export async function updateUserProfile(
   id: string,
   data: Partial<CreateProfileData>
-) {
+): Promise<UserProfile | undefined> {
   if (!isValidUUID(id)) {
     throw new Error("Invalid UUID");
   }
@@ -185,7 +186,7 @@ export async function updateUserProfile(
  *
  * @param authUserId
  */
-export async function getRootAccountByAuthUserId(authUserId: string) {
+export async function getRootAccountByAuthUserId(authUserId: string): Promise<DbRootAccount | undefined> {
   return database.query.rootAccounts.findFirst({
     where: eq(rootAccounts.authUserId, authUserId),
   });

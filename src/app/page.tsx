@@ -39,6 +39,9 @@ export default function LandingPage() {
 
         {/* Features */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 max-w-6xl">
+          <h2 className="col-span-full text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">
+            主な機能
+          </h2>
           <div className="bg-white dark:bg-gray-800 dark:bg-opacity-50 p-6 rounded-lg backdrop-blur-sm border border-gray-200 dark:border-gray-700">
             <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">価値観の共有</h3>
             <p className="text-gray-600 dark:text-gray-400">あなたの価値観を発信し、共感する人と繋がる</p>

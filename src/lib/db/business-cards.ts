@@ -73,7 +73,7 @@ function mapToCardDomain(bc: unknown): BusinessCard {
  * Get the business card for a specific profile.
  * @param profileId
  */
-export async function getBusinessCardByProfileId(profileId: string) {
+export async function getBusinessCardByProfileId(profileId: string): Promise<BusinessCard | null> {
   const card = await database.query.businessCards.findFirst({
     where: eq(businessCards.userProfileId, profileId),
   });
@@ -88,7 +88,7 @@ export async function getBusinessCardByProfileId(profileId: string) {
 export async function upsertBusinessCard(
   profileId: string,
   data: UpsertBusinessCardData
-) {
+): Promise<BusinessCard> {
   const insertValues: Record<string, unknown> = {
     userProfileId: profileId,
     createdAt: new Date().toISOString(),

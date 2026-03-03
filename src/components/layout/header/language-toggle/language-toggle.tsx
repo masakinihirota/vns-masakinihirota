@@ -18,6 +18,7 @@ export function LanguageToggle() {
       size="icon"
       onClick={toggleLocale}
       aria-label={locale === 'ja' ? '言語を英語に変更' : 'Change language to Japanese'}
+      aria-pressed={locale === 'ja'}
       title={locale === 'ja' ? '英語に変更' : 'Change to Japanese'}
       className="shrink-0"
     >

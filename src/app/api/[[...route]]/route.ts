@@ -13,9 +13,12 @@
  */
 
 import { Hono } from 'hono';
+import { cors } from 'hono/cors';
+import { secureHeaders } from 'hono/secure-headers';
 import { handle } from 'hono/vercel';
 import { errorHandler } from '@/lib/api/middleware/error-handler';
 import { betterAuthSessionMiddleware } from '@/lib/api/middleware/auth-session';
+import { env } from '@/lib/env';
 import health from '@/lib/api/routes/health';
 import users from '@/lib/api/routes/users';
 import groups from '@/lib/api/routes/groups';
@@ -42,6 +45,27 @@ app.onError(errorHandler);
 // ============================================================================
 // Global Middleware
 // ============================================================================
+
+// セキュリティヘッダー
+app.use('*', secureHeaders());
+
+// CORS
+app.use(
+  '*',
+  cors({
+    origin: (origin) => {
+      if (!origin) {
+        return env.corsAllowedOrigins[0] ?? 'http://localhost:3000';
+      }
+      return env.corsAllowedOrigins.includes(origin)
+        ? origin
+        : env.corsAllowedOrigins[0] ?? 'http://localhost:3000';
+    },
+    allowMethods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
+    credentials: true,
+  })
+);
 
 // Better Auth セッション取得ミドルウェア - すべてのルートで実行
 app.use('*', betterAuthSessionMiddleware());
