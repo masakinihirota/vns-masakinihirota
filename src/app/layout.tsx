@@ -1,8 +1,15 @@
-import "./globals.css";
 import type { Metadata } from "next";
+import "./globals.css";
 
-import { ThemeProvider } from "next-themes";
+import { Header } from "@/components/layout/header/header";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "next-themes";
+import { LocaleProvider } from "@/context/locale-context";
+import { getDefaultLocale } from "@/i18n/get-messages";
+import type { Locale } from "@/i18n/messages";
+
+// Dynamic rendering: Avoid prerendering errors during build
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "VNS masakinihirota",
@@ -14,6 +21,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale: Locale = getDefaultLocale();
   return (
     <html lang="ja" suppressHydrationWarning>
       <head>
@@ -36,14 +44,19 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-        </ThemeProvider>
+        <LocaleProvider initialLocale={locale}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            <main className="flex-1">
+              {children}
+            </main>
+          </ThemeProvider>
+        </LocaleProvider>
         {/* Webアプリのどこからでも通知が可能 */}
         <Toaster />
       </body>

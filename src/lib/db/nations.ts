@@ -29,7 +29,7 @@ function mapToNationDomain(n: DatabaseNation): Nation {
   };
 }
 
-export const getNations = async (limit = 20) => {
+export const getNations = async (limit = 20): Promise<Nation[]> => {
   const result = await database.query.nations.findMany({
     limit: limit,
     orderBy: [desc(nations.createdAt)],
@@ -37,7 +37,7 @@ export const getNations = async (limit = 20) => {
   return result.map(mapToNationDomain);
 };
 
-export const createNation = async (nationData: NewNation) => {
+export const createNation = async (nationData: NewNation): Promise<Nation> => {
   const [newNation] = await database
     .insert(nations)
     .values(nationData)
@@ -45,7 +45,7 @@ export const createNation = async (nationData: NewNation) => {
   return mapToNationDomain(newNation);
 };
 
-export const getNationById = async (nationId: string) => {
+export const getNationById = async (nationId: string): Promise<Nation | undefined> => {
   const nation = await database.query.nations.findFirst({
     where: eq(nations.id, nationId),
   });

@@ -43,6 +43,20 @@
       "when": 1772424359213,
       "tag": "0005_superb_george_stacy",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1772487600000,
+      "tag": "0006_database_security_foundation",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1772490188612,
+      "tag": "0007_blue_doctor_spectrum",
+      "breakpoints": true
     }
   ]
 }

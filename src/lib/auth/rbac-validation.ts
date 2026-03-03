@@ -130,6 +130,8 @@ export function validateSession(session: unknown): asserts session is {
   session: { id: string; expiresAt: Date };
 } {
   if (!session || typeof session !== 'object') {
+    const error = new Error('Session is required');
+    console.error('DEBUG: validateSession stack trace:', error.stack);
     throw new RBACValidationError(
       'Session is required',
       'session',
@@ -242,7 +244,7 @@ export function validateUUIDs(ids: unknown[], fieldName: string): string[] {
     );
   }
 
-  return ids.map((id, index) => 
+  return ids.map((id, index) =>
     validateUUID(id, `${fieldName}[${index}]`)
   );
 }

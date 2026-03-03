@@ -1,5 +1,9 @@
 "use server";
 
+import { logger } from "@/lib/logger";
+
+logger.debug("rbac-helper.ts is being loaded");
+
 /**
  * RBAC Server Action権限チェックヘルパー関数
  *
@@ -18,7 +22,6 @@
  * - コンテキスト検証: groupId / nationId の入力値を必ず検証
  */
 
-import { cache } from "react";
 import { db } from "@/lib/db/client";
 import {
   groupMembers,
@@ -27,27 +30,27 @@ import {
   rootAccounts,
   userProfiles,
 } from "@/lib/db/schema.postgres";
-import { eq, and } from "drizzle-orm";
+import { and, eq } from "drizzle-orm";
+import { cache } from "react";
+import {
+  applyTimingAttackProtection,
+  logAccessGranted,
+  logAuthenticationFailed,
+  logGhostModeRestriction,
+  logInsufficientPermission,
+} from "./audit-logger";
 import { RBAC_HIERARCHY } from "./rbac-constants";
+import {
+  RBACValidationError,
+  validateAuthUserId,
+  validateUUID
+} from "./rbac-validation";
 import type {
+  AuthSession,
   GroupRole,
   NationRole,
   RelationshipType,
-  AuthSession,
 } from "./types";
-import {
-  logAuthenticationFailed,
-  logInsufficientPermission,
-  logGhostModeRestriction,
-  logAccessGranted,
-  applyTimingAttackProtection,
-} from "./audit-logger";
-import {
-  validateAuthUserId,
-  validateUUID,
-  validateSession,
-  RBACValidationError,
-} from "./rbac-validation";
 
 /**
  * RBACエラークラス
@@ -134,7 +137,7 @@ const _getUserProfileIdInternal = cache(async (userId: string): Promise<string |
 
     if (!result) {
       // ユーザーが見つからない場合は構成エラー
-      console.warn(`[RBAC] User profile not found for userId: ${userId}`);
+      logger.warn(`[RBAC] User profile not found for userId: ${userId}`);
       return null;
     }
 
@@ -196,7 +199,7 @@ const _getMaskCategoryInternal = cache(async (userId: string): Promise<string | 
       .then((rows) => rows[0] || null);
 
     if (!result) {
-      console.warn(`[RBAC] Mask category not found for userId: ${userId}`);
+      logger.warn(`[RBAC] Mask category not found for userId: ${userId}`);
       return null;
     }
 

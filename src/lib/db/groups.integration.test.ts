@@ -1,4 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { logger } from "@/lib/logger";
 
 import { db as database } from "./client";
 import {
@@ -34,7 +35,7 @@ describe("Groups Integration (Drizzle)", () => {
 
     const profile = await database.query.userProfiles.findFirst();
     if (!profile) {
-      console.warn("No user profile found. Tests might fail.");
+      logger.warn("No user profile found. Tests might fail.");
       // We could create one if needed, but that requires cascade with RootAccount and Auth User.
       // Skipping test if no user? Or throwing.
       // Let's throw.
@@ -43,7 +44,7 @@ describe("Groups Integration (Drizzle)", () => {
       );
     }
     testUserId = profile.id;
-    console.info("Using Test User ID:", testUserId);
+    logger.info("Using Test User ID:", { testUserId });
   });
 
   afterAll(async () => {
@@ -52,8 +53,7 @@ describe("Groups Integration (Drizzle)", () => {
       try {
         await deleteGroup(createdGroupId);
       } catch {
-        console.info("Cleanup failed or group already deleted");
-      }
+        logger.warn("Cleanup failed or group already deleted");      }
     }
   });
 

@@ -6,6 +6,8 @@
  * 構造化ログにより、誰が・何に・なぜアクセスを拒否されたかを追跡可能にする
  */
 
+import { logger } from "@/lib/logger";
+
 export interface RBACAccessDeniedLog {
   timestamp: string;
   userId: string | null;
@@ -67,7 +69,7 @@ export function logAccessDenied(log: Omit<RBACAccessDeniedLog, 'timestamp'>): vo
   };
 
   // 構造化ログとして出力
-  console.warn('[RBAC_ACCESS_DENIED]', JSON.stringify(fullLog, null, 2));
+  logger.warn('[RBAC_ACCESS_DENIED]', { log: fullLog });
 
   // 本番環境では、ログ収集サービス（Datadog, Sentry, CloudWatch）に送信
   // if (process.env.NODE_ENV === 'production') {

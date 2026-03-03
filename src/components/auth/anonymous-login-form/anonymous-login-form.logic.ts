@@ -3,6 +3,7 @@ import { useState } from "react";
 import { getAuthFeatures } from "@/lib/auth/auth-features";
 import { getAnonymousErrorInfo, type AuthErrorInfo } from "@/lib/auth/auth-errors";
 import { TrialStorage } from "@/lib/trial-storage";
+import { logger } from "@/lib/logger";
 
 /**
  * 匿名ログインのカスタムフック
@@ -51,7 +52,7 @@ export const useAnonymousLoginLogic = () => {
 
       if (data.success) {
         // Cookie がセットされたので、指定されたページへリダイレクト
-        console.log("[AnonymousLogin] Success, redirecting to:", data.redirectURL);
+        logger.info("[AnonymousLogin] Success, redirecting to:", data.redirectURL);
         // Note: router.push はノンブロッキングなため、ここで router.push の完了を待つことはできない
         // ローディング状態は UI 上で見える間に自動的に消える（リダイレクトにより）
         router.refresh(); // Force refresh to pick up cookie

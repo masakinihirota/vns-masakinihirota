@@ -25,6 +25,9 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "next-intl/config": [
+        "./src/i18n/request.ts"
       ]
     }
   },

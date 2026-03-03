@@ -7,7 +7,6 @@
  * @usage
  * "use client";
  * import { useToast } from "@/hooks/use-toast";
- *
  * export function MyComponent() {
  *   const { showToast } = useToast();
  *
@@ -26,19 +25,32 @@
 
 "use client";
 
-import { globalToastStore } from "@/lib/toast-store";
+import { useMemo } from "react";
+import { globalToastStore, type ToastAction } from "@/lib/toast-store";
 
 export function useToast() {
-  return {
+  return useMemo(
+    () => ({
     showToast: {
       success: (message: string, duration?: number) =>
-        globalToastStore.success(message, duration),
-      error: (message: string, duration?: number) =>
-        globalToastStore.error(message, duration),
+        globalToastStore.success(message, { duration }),
+      error: (
+        message: string,
+        options?: {
+          duration?: number;
+          action?: ToastAction;
+          persistent?: boolean;
+        }
+      ) =>
+        globalToastStore.error(message, options),
       warning: (message: string, duration?: number) =>
-        globalToastStore.warning(message, duration),
+        globalToastStore.warning(message, { duration }),
       info: (message: string, duration?: number) =>
-        globalToastStore.info(message, duration),
+        globalToastStore.info(message, { duration }),
+      trialError: (feature?: string, reason?: string, action?: ToastAction) =>
+        globalToastStore.trialError(feature, reason, action),
     },
-  };
+    }),
+    []
+  );
 }

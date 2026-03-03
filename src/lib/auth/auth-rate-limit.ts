@@ -21,6 +21,7 @@ import {
   getRateLimitStatus,
   RATE_LIMIT_CONFIG,
 } from "@/lib/auth/rate-limiter";
+import { logger } from "@/lib/logger";
 
 /**
  * 認証レート制限エラー
@@ -122,7 +123,7 @@ export async function logAuthAttempt(
 
   // ローカル環境: コンソール出力
   if (process.env.NODE_ENV === "development") {
-    console.log("[Auth Log]", JSON.stringify(logEntry, null, 2));
+    logger.debug("[Auth Log]", logEntry);
   }
 
   // 本番環境: 外部ログシステムに送信

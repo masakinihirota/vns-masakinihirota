@@ -1,3 +1,29 @@
+/**
+ * VNS Masakinihirota PostgreSQL Schema Definition (Drizzle ORM)
+ *
+ * @description
+ * This file defines the complete PostgreSQL schema for the VNS Masakinihirota application.
+ * All tables include Row Level Security (RLS) policies for data protection.
+ *
+ * Table Structure:
+ * 1. Auth Tables (Better Auth Standard): users, sessions, accounts, verifications
+ * 2. User Preferences & Features: userPreferences, sessionTokens, twoFactorSecrets
+ * 3. Security & Rate Limiting: rateLimitKeys, featureFlags
+ * 4. User Data: user_profiles, user_auth_methods, root_accounts
+ * 5. Domain Models: groups, group_members, nations
+ * 6. Enums & Relations: Custom enum types and table relationships
+ *
+ * @note
+ * - All timestamps use `{ withTimezone: true }` to ensure UTC consistency
+ * - All tables have RLS enabled (see migrations for policy definitions)
+ * - Cascade delete is used for dependent relationships
+ * - Snake_case naming convention for database columns (camelCase in TypeScript)
+ *
+ * @see docs/database/data-dictionary.md - Detailed column definitions & RLS policies
+ * @see docs/database/er-diagram.md - Visual relationship diagram
+ * @see drizzle/0006_database_security_foundation.sql - RLS policy implementation
+ */
+
 import { relations, sql } from "drizzle-orm";
 import {
   boolean,
@@ -15,7 +41,12 @@ import {
   unique,
   uuid,
 } from "drizzle-orm/pg-core";
-// --- Auth Schema (Better-Auth Standard) ---
+
+// ============================================================================
+// Auth Schema (Better Auth Standard)
+// ============================================================================
+// These tables are automatically managed by Better Auth.
+// Direct updates to these tables should be avoided; use Better Auth APIs instead.
 
 export const users = pgTable("user", {
   id: text("id").primaryKey(),
@@ -84,6 +115,155 @@ export const verifications = pgTable("verification", {
     .notNull(),
 });
 
+// --- User Preferences (広告・言語・テーマ) ---
+export const userPreferences = pgTable("user_preferences", {
+  userId: text("user_id")
+    .primaryKey()
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  adsEnabled: boolean("ads_enabled").default(true).notNull(),
+  locale: text("locale").default("ja").notNull(),
+  theme: text("theme").default("system").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
+});
+
+export const sessionTokens = pgTable(
+  "session_tokens",
+  {
+    id: uuid().defaultRandom().primaryKey().notNull(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    sessionId: text("session_id").references(() => sessions.id, {
+      onDelete: "cascade",
+    }),
+    tokenHash: text("token_hash").notNull(),
+    issuedAt: timestamp("issued_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    metadata: jsonb("metadata").default({}).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("idx_session_tokens_user_id_expires_at").using(
+      "btree",
+      table.userId.asc().nullsLast().op("text_ops"),
+      table.expiresAt.desc().nullsLast()
+    ),
+    index("idx_session_tokens_session_id").using(
+      "btree",
+      table.sessionId.asc().nullsLast().op("text_ops")
+    ),
+    unique("session_tokens_token_hash_key").on(table.tokenHash),
+  ]
+);
+
+export const twoFactorSecrets = pgTable(
+  "two_factor_secrets",
+  {
+    userId: text("user_id")
+      .primaryKey()
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    secretCiphertext: text("secret_ciphertext").notNull(),
+    backupCodesHash: jsonb("backup_codes_hash").default([]).notNull(),
+    enabled: boolean("enabled").default(false).notNull(),
+    verifiedAt: timestamp("verified_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("idx_two_factor_secrets_enabled").using(
+      "btree",
+      table.enabled.asc().nullsLast().op("bool_ops")
+    ),
+  ]
+);
+
+export const rateLimitKeys = pgTable(
+  "rate_limit_keys",
+  {
+    id: uuid().defaultRandom().primaryKey().notNull(),
+    scope: text("scope").notNull(),
+    key: text("key").notNull(),
+    hitCount: integer("hit_count").default(0).notNull(),
+    windowStart: timestamp("window_start", { withTimezone: true }).notNull(),
+    windowEnd: timestamp("window_end", { withTimezone: true }).notNull(),
+    blockedUntil: timestamp("blocked_until", { withTimezone: true }),
+    metadata: jsonb("metadata").default({}).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("idx_rate_limit_keys_scope_key").using(
+      "btree",
+      table.scope.asc().nullsLast().op("text_ops"),
+      table.key.asc().nullsLast().op("text_ops")
+    ),
+    index("idx_rate_limit_keys_window_end").using(
+      "btree",
+      table.windowEnd.asc().nullsLast()
+    ),
+    unique("rate_limit_keys_scope_key_window_start_key").on(
+      table.scope,
+      table.key,
+      table.windowStart
+    ),
+    check("rate_limit_keys_hit_count_check", sql`hit_count >= 0`),
+  ]
+);
+
+export const featureFlags = pgTable(
+  "feature_flags",
+  {
+    key: text("key").primaryKey(),
+    description: text("description"),
+    enabled: boolean("enabled").default(false).notNull(),
+    rolloutPercentage: integer("rollout_percentage").default(0).notNull(),
+    metadata: jsonb("metadata").default({}).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .defaultNow()
+      .$onUpdate(() => new Date())
+      .notNull(),
+  },
+  (table) => [
+    index("idx_feature_flags_enabled").using(
+      "btree",
+      table.enabled.asc().nullsLast().op("bool_ops")
+    ),
+    check(
+      "feature_flags_rollout_percentage_check",
+      sql`rollout_percentage >= 0 AND rollout_percentage <= 100`
+    ),
+  ]
+);
+
+
 // --- User Auth Methods (複数認証記録) ---
 export const userAuthMethods = pgTable(
   "user_auth_methods",
@@ -126,16 +306,20 @@ export const userAuthMethods = pgTable(
   ]
 );
 
-// --- Enums ---
-export const allianceStatus = pgEnum("alliance_status", [
-  "requested",
-  "pre_partner",
-  "partner",
-]);
-export const followStatus = pgEnum("follow_status", ["watch", "follow"]);
+// ============================================================================
+// Core Domain Tables (VNS Masakinihirota Business Logic)
+// ============================================================================
 
-// --- Tables ---
-
+/**
+ * Root Accounts: Core user entity linking Better Auth users to application profiles
+ *
+ * Each `user` (Better Auth) maps to one `root_account` which can have multiple `user_profiles`.
+ * This separation allows users to manage different personas while maintaining a single auth identity.
+ *
+ * @table root_accounts
+ * @see user_profiles - Related profiles for this account
+ * @rls SELECT: self only
+ */
 export const rootAccounts = pgTable(
   "root_accounts",
   {
@@ -157,6 +341,10 @@ export const rootAccounts = pgTable(
       foreignColumns: [users.id],
       name: "root_accounts_auth_user_id_fkey",
     }).onDelete("cascade"),
+    index("idx_root_accounts_active_profile_id").using(
+      "btree",
+      table.activeProfileId.asc().nullsLast().op("uuid_ops")
+    ),
     unique("root_accounts_auth_user_id_key").on(table.authUserId),
     check("root_accounts_trust_days_check", sql`trust_days >= 0`),
   ]
@@ -165,6 +353,31 @@ export const rootAccounts = pgTable(
 // Mask Category Enum: 幽霊（観測者）vs ペルソナ（受肉）
 export const maskCategory = pgEnum("mask_category", ["ghost", "persona"]);
 
+// Alliance Status Enum: Partnership status between profiles
+export const allianceStatus = pgEnum("alliance_status", [
+  "requested",
+  "pre_partner",
+  "partner",
+]);
+
+// Follow Status Enum: Interaction status between profiles
+export const followStatus = pgEnum("follow_status", ["watch", "follow"]);
+
+/**
+ * User Profiles: Applications-level user personas / personas for each root account
+ *
+ * A single `root_account` can have multiple profiles, allowing users to represent different
+ * personas (業理, persona) or roles. The `maskCategory` distinguishes between:
+ * - "ghost": Observation-only or generated by the system
+ * - "persona": User-created persona for active participation
+ *
+ * Gamification (points, level) is tracked per-profile for fairness.
+ *
+ * @table user_profiles
+ * @see root_accounts - Parent account
+ * @see business_cards - Public profile card
+ * @rls SELECT: public (is_active=true), UPDATE: self only, DELETE: self only
+ */
 export const userProfiles = pgTable(
   "user_profiles",
   {
@@ -204,6 +417,7 @@ export const userProfiles = pgTable(
       foreignColumns: [rootAccounts.id],
       name: "user_profiles_root_account_id_fkey",
     }).onDelete("cascade"),
+    unique("user_profiles_root_account_id_key").on(table.rootAccountId), // 1 root_account = 1 active profile
     check(
       "role_type_check",
       sql`role_type = ANY (ARRAY['leader'::text, 'member'::text, 'admin'::text, 'mediator'::text])`
@@ -332,6 +546,17 @@ export const works = pgTable(
   ]
 );
 
+/**
+ * Groups: Communities within nations, managed by a leader / group of admins
+ *
+ * Groups provide a way for profiles to organize around shared interests or goals.
+ * Each group has a leader profile who manages membership.
+ *
+ * @table groups
+ * @see user_profiles - Leader of the group
+ * @see group_members - Membership records
+ * @rls SELECT: public groups visible to all, private groups visible to members only
+ */
 export const groups = pgTable(
   "groups",
   {
@@ -358,6 +583,17 @@ export const groups = pgTable(
   ]
 );
 
+/**
+ * Nations: Top-level organizational units that can host groups and events
+ *
+ * Nations represent geographical or thematic regions where users and groups can organize.
+ * Each nation is managed by an owner (user profile or group) and may charge transaction fees.
+ *
+ * @table nations
+ * @see user_profiles - Optional owner profile
+ * @see groups - Groups can belong to a nation
+ * @rls SELECT: public nations visible to all, UPDATE/DELETE: owner only
+ */
 export const nations = pgTable(
   "nations",
   {
@@ -946,7 +1182,16 @@ export const pointTransactions = pgTable(
 
 // --- Relations ---
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(users, ({ one, many }) => ({
+  preference: one(userPreferences, {
+    fields: [users.id],
+    references: [userPreferences.userId],
+  }),
+  sessionTokens: many(sessionTokens),
+  twoFactorSecret: one(twoFactorSecrets, {
+    fields: [users.id],
+    references: [twoFactorSecrets.userId],
+  }),
   accounts: many(accounts),
   sessions: many(sessions),
   rootAccounts: many(rootAccounts),
@@ -1355,6 +1600,34 @@ export const adminDashboardCache = pgTable(
 
 // --- Relations ---
 
+
+
+export const userPreferencesRelations = relations(userPreferences, ({ one }) => ({
+  user: one(users, {
+    fields: [userPreferences.userId],
+    references: [users.id],
+  }),
+}));
+
+export const sessionTokensRelations = relations(sessionTokens, ({ one }) => ({
+  user: one(users, {
+    fields: [sessionTokens.userId],
+    references: [users.id],
+  }),
+  session: one(sessions, {
+    fields: [sessionTokens.sessionId],
+    references: [sessions.id],
+  }),
+}));
+
+export const twoFactorSecretsRelations = relations(twoFactorSecrets, ({ one }) => ({
+  user: one(users, {
+    fields: [twoFactorSecrets.userId],
+    references: [users.id],
+  }),
+}));
+
+
 export const penaltiesRelations = relations(penalties, ({ one }) => ({
   targetProfile: one(userProfiles, {
     fields: [penalties.targetProfileId],
@@ -1367,6 +1640,33 @@ export const penaltiesRelations = relations(penalties, ({ one }) => ({
     relationName: "penalties_issuer",
   }),
 }));
+
+// ============================================================================
+// Schema Documentation & Relationship Map
+// ============================================================================
+//
+// Authentication Flow:
+//   user (Better Auth) → sessions, accounts, verifications
+//       ↓
+//   root_accounts (application-level user record)
+//       ↓
+//   user_profiles (personas - may have multiple per root_account)
+//
+// Domain Organization:
+//   user_profiles → groups (leadership) → nations (membership)
+//   user_profiles → alliances (partnership between profiles)
+//   user_profiles → business_cards (public profile representation)
+//
+// Security:
+//   - All tables use Row Level Security (RLS) policies (see drizzle migrations)
+//   - Timestamps use UTC (withTimezone: true) for consistency
+//   - Snake_case for database columns, camelCase in TypeScript types
+//   - Cascade delete on dependent relationships ensures referential integrity
+//
+// For detailed column definitions, RLS policies, and indexing strategy,
+// refer to docs/database/data-dictionary.md
+//
+// ============================================================================;
 
 export const approvalsRelations = relations(approvals, ({ one }) => ({
   creator: one(userProfiles, {
