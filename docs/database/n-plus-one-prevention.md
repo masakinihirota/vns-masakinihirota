@@ -342,7 +342,7 @@ import DataLoader from 'dataloader';
 const rootAccountLoader = new DataLoader(async (accountIds) => {
   const results = await db.select().from(rootAccounts)
     .where(inArray(rootAccounts.id, accountIds));
-  return accountIds.map(id => 
+  return accountIds.map(id =>
     results.find(r => r.id === id)
   );
 });

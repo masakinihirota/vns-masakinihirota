@@ -8,7 +8,7 @@
 
 **直接カスケード依存：**
 ```
-users.id → rootAccounts.authUserId 
+users.id → rootAccounts.authUserId
          → userProfiles.rootAccountId
          → userPreferences (via users.id)
          → userAuthMethods (via users.id)
@@ -160,14 +160,14 @@ export const users = pgTable("user", {
 
 ```sql
 -- 復旧可能なデータを取得
-SELECT * FROM audit_logs 
-WHERE action = 'DELETE' 
+SELECT * FROM audit_logs
+WHERE action = 'DELETE'
   AND timestamp >= NOW() - INTERVAL '30 days'
   AND targetType = 'user_profile';
 
 -- ソフト削除データを復旧
-UPDATE user_profiles 
-SET deletedAt = NULL, is_deleted = false 
+UPDATE user_profiles
+SET deletedAt = NULL, is_deleted = false
 WHERE id = 'xxx' AND deletedAt IS NOT NULL;
 ```
 
