@@ -10,13 +10,20 @@ import { useRouter } from "next/navigation";
 import { TrialStorage } from "@/lib/trial-storage";
 import { signOut } from "@/lib/auth-client";
 import { logger } from "@/lib/logger";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function AuthButton() {
   const { isAuthenticated, isTrialMode, isPending, userName } = useAppAuth();
   const { t } = useLocale();
   const router = useRouter();
   const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  // 認証状態が変わったらログアウト中状態をリセット
+  useEffect(() => {
+    if (isAuthenticated) {
+      setIsLoggingOut(false);
+    }
+  }, [isAuthenticated]);
 
   if (isPending) {
     return (
@@ -37,12 +44,11 @@ export function AuthButton() {
 
     return (
       <div className="flex items-center gap-2">
-        <Button variant="ghost" className="relative group" asChild>
-          <Link href="/home" aria-label={t('header.gotoTrialDashboard')}>
-            <User className="mr-2 h-4 w-4 text-orange-500" />
-            <span>{t('header.inTrialMode')}</span>
-          </Link>
-        </Button>
+        {/* お試し中はクリック不可の表示のみ */}
+        <div className="flex items-center px-3 py-2 text-sm font-medium text-orange-600 dark:text-orange-400">
+          <User className="mr-2 h-4 w-4" />
+          <span>{t('header.inTrialMode')}</span>
+        </div>
         <Button variant="destructive" onClick={handleStopTrial} aria-label={t('header.stopTrial')}>
           {t('header.stopTrial')}
         </Button>
@@ -56,11 +62,13 @@ export function AuthButton() {
       try {
         // clear trial data before signing out
         TrialStorage.clear();
+
+        // 通常のログアウト処理
         await signOut();
         router.push("/");
         router.refresh();
       } catch (error) {
-        logger.error("ログアウトエラー:", error);
+        logger.error("ログアウトエラー:", error instanceof Error ? error : undefined);
         setIsLoggingOut(false);
       }
     };
@@ -73,9 +81,9 @@ export function AuthButton() {
             <span>{t('header.account')}</span>
           </Link>
         </Button>
-        <Button 
-          variant="destructive" 
-          onClick={handleLogout} 
+        <Button
+          variant="destructive"
+          onClick={handleLogout}
           disabled={isLoggingOut}
           aria-label="ログアウト"
         >

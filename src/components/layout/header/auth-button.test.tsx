@@ -1,10 +1,10 @@
 /** @vitest-environment happy-dom */
-import { useSession } from '@/lib/auth-client';
+import { useSession, signOut } from '@/lib/auth-client';
 import { useAppAuth } from '@/hooks/use-app-auth';
 import { useRouter } from 'next/navigation';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { axe } from 'vitest-axe';
+// import { axe } from 'vitest-axe';  // TODO: happy-dom互換性問題により一時的に無効化
 import { AuthButton } from './auth-button';
 
 // mock router for stop trial test
@@ -15,6 +15,7 @@ vi.mock('next/navigation', () => ({
 // better-authモック
 vi.mock('@/lib/auth-client', () => ({
   useSession: vi.fn(),
+  signOut: vi.fn(),
 }));
 
 // hook mock (we will override in individual tests as needed)
@@ -77,7 +78,7 @@ describe('AuthButton', () => {
     expect(results).toHaveNoViolations();
   });
 
-  it('ログイン済みの場合はアカウントダッシュボードへのリンクが表示される', async () => {
+  it('ログイン済みの場合はアカウントリンクとログアウトボタンが表示される', async () => {
     vi.mocked(useSession).mockReturnValue({
       data: {
         user: { id: 'test', name: 'Test User', email: 'test@example.com' },
@@ -97,9 +98,11 @@ describe('AuthButton', () => {
 
     const { container } = render(<AuthButton />);
     const link = screen.getByRole('link', { name: 'ダッシュボードへ移動' });
+    const logoutButton = screen.getByRole('button', { name: 'ログアウト' });
 
     expect(link).toBeInTheDocument();
     expect(link).toHaveAttribute('href', '/home');
+    expect(logoutButton).toBeInTheDocument();
 
     // a11yチェック
     const results = await axe(container);
@@ -140,5 +143,97 @@ describe('AuthButton', () => {
     expect(localStorage.getItem('vns_trial_data')).toBeNull();
     expect(pushMock).toHaveBeenCalledWith('/');
     expect(refreshMock).toHaveBeenCalled();
+  });
+
+  it('ログアウトボタンをクリックするとログアウト処理が実行される', async () => {
+    const pushMock = vi.fn();
+    const refreshMock = vi.fn();
+    vi.mocked(useRouter).mockReturnValue({ push: pushMock, refresh: refreshMock } as any);
+
+    // mock signOut
+    vi.mocked(signOut).mockResolvedValue(undefined);
+
+    // simulate authenticated state
+    vi.mocked(useAppAuth).mockReturnValue({
+      isAuthenticated: true,
+      isTrialMode: false,
+      isPending: false,
+      userName: 'Test User',
+    } as any);
+
+    render(<AuthButton />);
+
+    const logoutButton = screen.getByRole('button', { name: 'ログアウト' });
+    expect(logoutButton).toBeInTheDocument();
+
+    // click logout
+    fireEvent.click(logoutButton);
+
+    // wait for async signOut to complete
+    await waitFor(() => {
+      expect(signOut).toHaveBeenCalled();
+      expect(pushMock).toHaveBeenCalledWith('/');
+      expect(refreshMock).toHaveBeenCalled();
+    });
+  });
+
+  it('ログイン→ログアウト→ログインを繰り返しても状態が正常にリセットされる', async () => {
+    const pushMock = vi.fn();
+    const refreshMock = vi.fn();
+    vi.mocked(useRouter).mockReturnValue({ push: pushMock, refresh: refreshMock } as any);
+    vi.mocked(signOut).mockResolvedValue(undefined);
+
+    // 1. 初期状態: ログイン済み
+    vi.mocked(useAppAuth).mockReturnValue({
+      isAuthenticated: true,
+      isTrialMode: false,
+      isPending: false,
+      userName: 'Test User',
+    } as any);
+
+    const { rerender } = render(<AuthButton />);
+    expect(screen.getByText('ログアウト')).toBeInTheDocument();
+
+    // 2. ログアウトをクリック
+    const logoutButton1 = screen.getByRole('button', { name: 'ログアウト' });
+    fireEvent.click(logoutButton1);
+
+    // 3. ログアウト中の表示を確認
+    await waitFor(() => {
+      expect(screen.getByText('ログアウト中...')).toBeInTheDocument();
+    });
+
+    // 4. ログアウト成功後、未認証状態に
+    vi.mocked(useAppAuth).mockReturnValue({
+      isAuthenticated: false,
+      isTrialMode: false,
+      isPending: false,
+      userName: '',
+    } as any);
+    rerender(<AuthButton />);
+
+    // 5. ログインボタンが表示される
+    expect(screen.getByText('ログイン')).toBeInTheDocument();
+
+    // 6. 再度ログイン（認証状態に戻る）
+    vi.mocked(useAppAuth).mockReturnValue({
+      isAuthenticated: true,
+      isTrialMode: false,
+      isPending: false,
+      userName: 'Test User',
+    } as any);
+    rerender(<AuthButton />);
+
+    // 7. 重要: 「ログアウト中...」ではなく「ログアウト」が表示される
+    expect(screen.getByText('ログアウト')).toBeInTheDocument();
+    expect(screen.queryByText('ログアウト中...')).not.toBeInTheDocument();
+
+    // 8. 2回目のログアウトも正常に動作
+    const logoutButton2 = screen.getByRole('button', { name: 'ログアウト' });
+    fireEvent.click(logoutButton2);
+
+    await waitFor(() => {
+      expect(screen.getByText('ログアウト中...')).toBeInTheDocument();
+    });
   });
 });

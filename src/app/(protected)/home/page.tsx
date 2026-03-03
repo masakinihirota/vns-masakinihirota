@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { headers, cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { LogoutButton } from "./logout-button";
 
@@ -8,6 +9,15 @@ import { LogoutButton } from "./logout-button";
  * proxy.tsで認証チェック済み
  */
 export default async function HomePage() {
+    // お試しモードのチェック（Cookie経由）
+    const cookieStore = await cookies();
+    const isTrialMode = cookieStore.get("vns_trial_mode")?.value === "true";
+
+    // お試しモード時は /home-trial にリダイレクト
+    if (isTrialMode) {
+        redirect("/home-trial");
+    }
+
     const session = await auth.api.getSession({ headers: await headers() });
 
     return (

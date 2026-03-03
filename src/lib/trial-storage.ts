@@ -77,11 +77,13 @@ export const MAX_POINTS = 1_000_000;
 // const RECOVER_LIMIT = 2000;
 
 export const TrialStorage = {
-  // Helpers for trial mode flag (localStorage key)
+  // Helpers for trial mode flag (localStorage + Cookie)
   enableMode: () => {
     if (globalThis.window === undefined) return;
     try {
       localStorage.setItem("vns_trial_mode", "true");
+      // Cookie にも保存（サーバーサイドでチェック可能にする）
+      document.cookie = "vns_trial_mode=true; path=/; max-age=86400; SameSite=Lax";
       // カスタムイベントを発火して同一タブ内で即座に反映
       window.dispatchEvent(new Event("trialModeChanged"));
     } catch {}
@@ -90,6 +92,8 @@ export const TrialStorage = {
     if (globalThis.window === undefined) return;
     try {
       localStorage.removeItem("vns_trial_mode");
+      // Cookie も削除
+      document.cookie = "vns_trial_mode=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       // カスタムイベントを発火して同一タブ内で即座に反映
       window.dispatchEvent(new Event("trialModeChanged"));
     } catch {}
@@ -100,6 +104,8 @@ export const TrialStorage = {
     try {
       localStorage.removeItem(STORAGE_KEY);
       localStorage.removeItem("vns_trial_mode");
+      // Cookie も削除
+      document.cookie = "vns_trial_mode=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       // カスタムイベントを発火して同一タブ内で即座に反映
       window.dispatchEvent(new Event("trialModeChanged"));
     } catch {}
