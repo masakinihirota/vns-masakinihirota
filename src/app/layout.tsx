@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 import { Header } from "@/components/layout/header/header";
@@ -14,6 +14,14 @@ export const dynamic = 'force-dynamic';
 export const metadata: Metadata = {
   title: "VNS masakinihirota",
   description: "VNS masakinihirotaは、価値観サイトです。価値観を共有し、グループを作り、一緒に何かをします。",
+};
+
+// Accessibility: Allow users to zoom up to 200% (WCAG 2.1 AA)
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
 };
 
 export default function RootLayout({

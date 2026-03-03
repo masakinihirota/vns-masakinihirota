@@ -49,15 +49,16 @@ export function AdsToggle() {
   return (
     <div className="flex items-center space-x-2">
       <Switch
+        id="ads-toggle"
         checked={enabled}
         onCheckedChange={handleToggle}
         disabled={isPending}
         aria-label="広告表示"
-        aria-pressed={enabled}
+        aria-checked={enabled}
         className="shrink-0"
       />
       <Label
-        htmlFor="ads-mode-toggle"
+        htmlFor="ads-toggle"
         className="text-sm font-medium cursor-pointer select-none hidden sm:inline-block"
       >
         広告
