@@ -1,0 +1,9 @@
+https://code.visualstudio.com/docs/copilot/customization/overview
+https://code.visualstudio.com/docs/copilot/customization/custom-instructions
+https://code.visualstudio.com/docs/copilot/customization/prompt-files
+https://code.visualstudio.com/docs/copilot/customization/custom-agents
+https://code.visualstudio.com/docs/copilot/customization/agent-skills
+https://code.visualstudio.com/docs/copilot/customization/language-models
+https://code.visualstudio.com/docs/copilot/customization/hooks
+https://code.visualstudio.com/docs/copilot/customization/agent-plugins
+https://code.visualstudio.com/docs/copilot/customization/mcp-servers
