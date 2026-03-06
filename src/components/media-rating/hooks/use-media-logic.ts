@@ -29,8 +29,10 @@ export function useMediaLogic(
     // 3. ソート
     if (sortConfig.key) {
       result.sort((a, b) => {
-        let aVal: string | number | boolean = a[sortConfig.key as keyof Work];
-        let bVal: string | number | boolean = b[sortConfig.key as keyof Work];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let aVal: any = a[sortConfig.key as keyof Work];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let bVal: any = b[sortConfig.key as keyof Work];
 
         if (sortConfig.key === 'userRating') {
           aVal = RATINGS[a.userRating]?.weight ?? 0;

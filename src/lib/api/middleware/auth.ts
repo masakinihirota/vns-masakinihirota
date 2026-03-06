@@ -11,11 +11,11 @@
  * - セッションが存在する場合は userId, userRole を Context に設定
  */
 
-import type { MiddlewareHandler } from 'hono';
 import { auth } from '@/lib/auth';
-import { createApiError } from './error-handler';
-import { logger } from '@/lib/logger';
 import type { AuthSession } from '@/lib/auth/types';
+import { logger } from '@/lib/logger';
+import type { MiddlewareHandler } from 'hono';
+import { createApiError } from './error-handler';
 
 /**
  * Hono Context に保存するセッション情報の型
@@ -113,7 +113,7 @@ export const optionalAuth: MiddlewareHandler<{
     await next();
   } catch (error) {
     // セッション取得エラーは無視してそのまま次へ
-    logger.warn('[optionalAuth] Session retrieval failed:', error);
+    logger.warn('[optionalAuth] Session retrieval failed:', { error: String(error) });
     await next();
   }
 };
