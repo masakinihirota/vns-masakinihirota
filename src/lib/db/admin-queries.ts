@@ -434,7 +434,7 @@ export async function reviewApproval(
  * @returns KPI オブジェクト
  * @example
  * const kpi = await getDashboardKPI();
- * console.log(kpi.activeUsers); // 892
+ * logger.info('Active users:', kpi.activeUsers); // 892
  */
 export async function getDashboardKPI(): Promise<DashboardKPI> {
   // 1. アクティブユーザー数

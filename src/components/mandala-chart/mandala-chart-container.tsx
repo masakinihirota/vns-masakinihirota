@@ -2,6 +2,7 @@
 
 import { Download, Maximize2, Minimize2, Redo2, Save, Undo2 } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+import { logger } from "@/lib/logger";
 import { MandalaChart } from "./mandala-chart";
 import {
   HistoryState,
@@ -33,7 +34,7 @@ export const MandalaChartContainer = () => {
             return { past: [], present: parsed, future: [] };
           }
         } catch (e) {
-          console.error("Failed to parse saved data", e);
+          logger.error("Failed to parse saved data", { error: e });
         }
       }
     }
