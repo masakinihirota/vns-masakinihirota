@@ -26,13 +26,13 @@ export function TrialButton() {
       });
 
       // お試しオンボーディングページへ遷移
-      router.push('/trial');
+      router.push('/trial/identity');
       router.refresh();
-    } catch (e) {
+    } catch (err) {
       toast.error(t('header.trialStartFailed'), {
         description: t('header.checkStorageSettings'),
       });
-      logger.error('Trial initialization error:', e instanceof Error ? e : new Error(String(e)));
+      logger.error('Trial initialization error:', err instanceof Error ? err : new Error(String(err)));
       setIsLoading(false);
     }
   };

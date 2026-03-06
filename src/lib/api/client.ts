@@ -1,7 +1,7 @@
 'use client';
 
-import { hc } from 'hono/client';
 import type { AppType } from '@/app/api/[[...route]]/route';
+import { hc } from 'hono/client';
 
 /**
  * Hono API Client - Phase 6: Pragmatic Implementation
@@ -37,7 +37,7 @@ export const rpcClient = hc<AppType>('/api', {
 // Health endpoint
 export const health = {
   async get() {
-    return rpcClient.health.$get();
+    return fetch('/api/health');
   },
 };
 

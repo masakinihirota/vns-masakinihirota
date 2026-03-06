@@ -21,6 +21,13 @@ export const TrialRootAccountSchema = z.object({
   birth_generation: z.string(),
   week_schedule: z.record(z.string(), z.string()),
   created_at: z.string(),
+  color: z.object({
+    name: z.string(),
+    text: z.string(),
+    bg: z.string(),
+    border: z.string(),
+    solid: z.string(),
+  }).nullable().optional(),
 });
 
 export type TrialRootAccount = z.infer<typeof TrialRootAccountSchema>;
@@ -86,7 +93,7 @@ export const TrialStorage = {
       document.cookie = "vns_trial_mode=true; path=/; max-age=86400; SameSite=Lax";
       // カスタムイベントを発火して同一タブ内で即座に反映
       window.dispatchEvent(new Event("trialModeChanged"));
-    } catch {}
+    } catch { }
   },
   disableMode: () => {
     if (globalThis.window === undefined) return;
@@ -96,7 +103,7 @@ export const TrialStorage = {
       document.cookie = "vns_trial_mode=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       // カスタムイベントを発火して同一タブ内で即座に反映
       window.dispatchEvent(new Event("trialModeChanged"));
-    } catch {}
+    } catch { }
   },
   // Clear all data (stop recording trial)
   clear: () => {
@@ -108,7 +115,7 @@ export const TrialStorage = {
       document.cookie = "vns_trial_mode=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
       // カスタムイベントを発火して同一タブ内で即座に反映
       window.dispatchEvent(new Event("trialModeChanged"));
-    } catch {}
+    } catch { }
   },
 
   // Save entire data
@@ -313,6 +320,13 @@ export const TrialStorage = {
   // For Migration
   exportTrialData: (): VNSTrialData | undefined => {
     return TrialStorage.load();
+  },
+
+  // Set Root Account
+  setRootAccount: (account: TrialRootAccount) => {
+    const data = TrialStorage.init();
+    data.rootAccount = account;
+    TrialStorage.save(data);
   },
 };
 
