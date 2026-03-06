@@ -77,3 +77,26 @@ description: Comprehensive code review skill including security, database, UI st
 - **Problem**: Fetching profiles inside a loop.
 - **Fix**: Use `.in()` filter to fetch all profiles in one query.
 ```
+
+### 修正案の提示方法（Multiple Options Protocol）
+
+エージェントやAIアシスタントが修正案を提示する場合は、必ず以下の形式で複数の選択肢（最低3つ）を提示し、ユーザーに選ばせる対話的なループを実行します。
+
+```markdown
+**【修正案 A】セキュリティ・品質優先版** ⭐⭐⭐ (推奨度)
+**重点項目**: SQL インジェクション対策、XSS 防止
+**実装内容**:
+1. Drizzle ORM を使用したパラメータクエリ化
+2. 入力バリデーション強化（Zod）
+
+**メリット**:
+- ✅ セキュリティリスク完全排除
+- ✅ 本番環境対応
+
+**デメリット**:
+- ⏱️ コード行数がやや増加
+
+**実装時間**: 約 15 分
+```
+
+必ず「A: セキュリティ/品質優先（推奨）」「B: パフォーマンス/バランス型」「C: 可読性優先/軽量版」の3パターン以上を含めてください。

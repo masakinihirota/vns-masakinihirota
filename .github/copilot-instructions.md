@@ -56,6 +56,24 @@ applyTo: "**"
 
 詳細は `.agent/rules/coding-standards.md` の「Next.js 16 Specific Rules」を参照
 
+## ルール参照（.agent/rules/）
+
+AIは処理を開始する前に、必ず以下のルールファイルを参照し、遵守してください。
+
+- [コーディング規約](../.agent/rules/coding-standards.md): コード品質、型安全性（anyの原則禁止など）、ビルド安定性の基準
+- [TDDガイドライン](../.agent/rules/tdd-guidelines.md): Vitest + React Testing Libraryを用いたRGRサイクルの実行手順
+- [UI/UXガイドライン](../.agent/rules/ui-ux-guidelines.md): Glassmorphism/Elegantテーマの適用とアクセシビリティ基準
+- [セキュリティ・アーキテクチャ](../.agent/rules/security-architecture.md): RSC制限、Zod検証、プロキシ活用、DB（RLSなど）のセキュリティ指針
+- [Gitワークフロー](../.agent/rules/git-workflow.md): Conventional Commitsに基づくブランチ・コミット命名規則とPR基準
+
+## スキル参照（.agent/skills/）
+
+特定のタスクでは以下のスキルを参照して実行してください。
+
+- [コードレビュー](../.agent/skills/code-review/SKILL.md): セキュリティ、DB、UI、アンチパターンを含む包括的なコードレビュー
+- [テスト・ワークフロー](../.agent/skills/test-workflow/SKILL.md): TDDサイクル、テスト戦略、シナリオ生成の包括ガイド
+- [Vercel React ベストプラクティス](../.agent/skills/vercel-react-best-practices/SKILL.md): React/Next.js のパフォーマンス最適化ガイドライン
+
 # Better Auth / Drizzle 運用の必須ルール
 
 - `auth.ts` が参照する Better Auth スキーマと、`drizzle.config.ts` の `schema` 参照先で、
