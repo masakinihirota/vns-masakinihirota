@@ -130,7 +130,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                         src={currentProfile.img}
                                         alt={currentProfile.name}
                                         fill
-                                        className={`h-full w-full object-cover object-[center_20%] transition-transform duration-1000 ${isGhost ? "scale-85" : "scale-100"
+                                        className={`h-full w-full object-cover transition-transform duration-1000 ${isGhost ? "scale-85" : "scale-100"
                                             }`}
                                     />
                                 </div>
@@ -184,7 +184,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                         src={IDENTITY_CONFIG.ghost.img}
                                         alt="Ghost state"
                                         fill
-                                        className="h-full w-full object-cover object-[center_20%]"
+                                        className="h-full w-full object-cover"
                                     />
                                 </div>
                                 <div className="flex-1 text-left">
@@ -214,8 +214,9 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                 千の仮面 (Available Identities)
                             </h2>
 
-                            {masks.map((mask) => {
+                            {masks.map((mask, index) => {
                                 const isActive = activeProfile === mask.id;
+                                const isFirstMask = index === 0;
                                 return (
                                     <div key={mask.id} className="relative">
                                         <div className="absolute -left-10 top-1/2 h-px w-10 bg-slate-200 dark:bg-slate-800/60" />
@@ -252,7 +253,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                                     src={mask.img}
                                                     alt={mask.name}
                                                     fill
-                                                    className="h-full w-full object-cover object-[center_20%]"
+                                                    className={`h-full w-full object-cover ${isFirstMask ? "object-[center_60%]" : ""}`}
                                                 />
                                             </div>
                                             <div className="min-w-0 flex-1 text-left">
