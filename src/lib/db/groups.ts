@@ -28,7 +28,7 @@ export type GroupMember = {
   user_profile_id: string;
   role: string;
   joined_at: string;
-  user_profiles: ReturnType<typeof mapToUserProfileDomain> | null;
+  user_profiles?: ReturnType<typeof mapToUserProfileDomain> | null;
 };
 
 // Mapper Helpers
@@ -158,7 +158,7 @@ export const joinGroup = async (groupId: string, userId: string): Promise<GroupM
   return {
     group_id: member.groupId,
     user_profile_id: member.userProfileId,
-    role: member.role,
+    role: member.role ?? 'member',
     joined_at: member.joinedAt,
   };
 };

@@ -42,7 +42,10 @@ export async function getLocalUserProfiles(
     // ※現状はブラウザ単位なので全件返しても良いが、形式を合わせる
     return profiles.filter((p) => p.root_account_id === deviceId);
   } catch (error) {
-    logger.error("Failed to parse local profiles", { error });
+    logger.error(
+      "Failed to parse local profiles",
+      error instanceof Error ? error : new Error(String(error))
+    );
     return [];
   }
 }

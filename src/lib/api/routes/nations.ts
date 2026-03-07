@@ -91,7 +91,10 @@ nations.get('/', requireAuth, zValidator('query', listNationsQuerySchema), async
 
     return c.json(response);
   } catch (error) {
-    logger.error('[NationsAPI] List nations failed:', error);
+    logger.error(
+      '[NationsAPI] List nations failed:',
+      error instanceof Error ? error : new Error(String(error))
+    );
     throw error;
   }
 });
@@ -133,7 +136,10 @@ nations.get('/:id', requireAuth, zValidator('param', nationIdParamSchema), async
 
     return c.json(response);
   } catch (error) {
-    logger.error('[NationsAPI] Get nation failed:', error);
+    logger.error(
+      '[NationsAPI] Get nation failed:',
+      error instanceof Error ? error : new Error(String(error))
+    );
     throw error;
   }
 });
@@ -187,7 +193,10 @@ nations.patch(
 
       return c.json(response);
     } catch (error) {
-      logger.error('[NationsAPI] Update nation failed:', error);
+      logger.error(
+        '[NationsAPI] Update nation failed:',
+        error instanceof Error ? error : new Error(String(error))
+      );
       throw error;
     }
   }

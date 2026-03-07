@@ -1,0 +1,9 @@
+export { HeroSection } from "./hero-section";
+export { ConceptSection } from "./concept-section";
+export { DeclarationsSection } from "./declarations-section";
+export { FinalGoalSection } from "./final-goal-section";
+export { Footer } from "./footer";
+export { IdentitySection } from "./identity-section";
+export { InspirationSection } from "./inspiration-section";
+export { PurposeSection } from "./purpose-section";
+export { SiteMissionSection } from "./site-mission-section";

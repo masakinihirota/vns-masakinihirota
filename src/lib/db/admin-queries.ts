@@ -131,7 +131,10 @@ export async function getAdminDashboardStats(): Promise<AdminDashboardStats> {
       adminLogCount24h: Number(adminLogResult[0]?.count ?? 0),
     };
   } catch (error) {
-    logger.error('[getAdminDashboardStats] failed:', { error });
+    logger.error(
+      '[getAdminDashboardStats] failed:',
+      error instanceof Error ? error : new Error(String(error))
+    );
 
     return {
       unresolvedReports: 0,
@@ -360,7 +363,7 @@ export async function getApprovalQueue(page: number = 1, limit: number = 20): Pr
       creatorName: userProfiles.displayName,
       status: approvals.status,
       createdAt: approvals.createdAt,
-      waitDays: sql`EXTRACT(DAY FROM NOW() - ${approvals.createdAt})`,
+      waitDays: sql<string>`EXTRACT(DAY FROM NOW() - ${approvals.createdAt})`,
     })
     .from(approvals)
     .leftJoin(

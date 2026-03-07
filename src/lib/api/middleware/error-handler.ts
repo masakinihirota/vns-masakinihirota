@@ -35,11 +35,10 @@ import type { ApiErrorResponse, ErrorCode } from '../types/response';
  * - 本番環境では汎用的なエラーメッセージのみ表示
  */
 export const errorHandler: ErrorHandler = (err, c) => {
-  logger.error('[API Error]', {
-    message: err.message,
-    name: err.name,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
-  });
+  logger.error(
+    '[API Error]',
+    err instanceof Error ? err : new Error(String(err))
+  );
 
   // HTTPException (from Hono validation, etc.)
   if (err instanceof HTTPException) {

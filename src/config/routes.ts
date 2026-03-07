@@ -46,6 +46,9 @@ export const ROUTES = {
   /** ヘルプ（静的ページ） */
   HELP: '/help',
 
+  /** Tales Claire LP（静的ページ） */
+  TALES_CLAIRE: '/tales-claire',
+
   /** 組織作成（認証済みユーザー） */
   ORGANIZATION_CREATE: '/organization/create',
 
@@ -86,6 +89,7 @@ export const STATIC_PATHS = [
   ROUTES.LANDING,
   ROUTES.FAQ,
   ROUTES.HELP,
+  ROUTES.TALES_CLAIRE,
 ] as const;
 
 /**

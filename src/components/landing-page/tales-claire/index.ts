@@ -1,0 +1,11 @@
+export { TalesClaireLP } from "./tales-claire-lp";
+export { BackgroundCanvas } from "./components/background-canvas";
+export { ConceptSection } from "./sections/concept-section";
+export { DeclarationsSection } from "./sections/declarations-section";
+export { FinalGoalSection } from "./sections/final-goal-section";
+export { Footer } from "./sections/footer";
+export { HeroSection } from "./sections/hero-section";
+export { IdentitySection } from "./sections/identity-section";
+export { InspirationSection } from "./sections/inspiration-section";
+export { PurposeSection } from "./sections/purpose-section";
+export { SiteMissionSection } from "./sections/site-mission-section";

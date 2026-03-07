@@ -1,0 +1,76 @@
+export type ProfileId = string;
+
+export interface Profile {
+  readonly id: ProfileId;
+  readonly name: string;
+  readonly label: string;
+  readonly color?: string;
+  readonly img: string;
+}
+
+export interface Account {
+  readonly name: string;
+  readonly label: string;
+  readonly img: string;
+}
+
+export const IDENTITY_CONFIG = {
+  account: {
+    name: "M君",
+    label: "ユーザー本体",
+    img: "/images/characters/identity/m-kun.png",
+  },
+  ghost: {
+    id: "ghost",
+    name: "シュレディンガーちゃん",
+    label: "基本（幽霊）",
+    img: "/images/characters/identity/schrodinger.png",
+  },
+  masks: [
+    {
+      id: "mask-ai-chan",
+      name: "AIちゃん",
+      label: "仮面A",
+      color: "#ec4899",
+      img: "/images/characters/identity/ai-chan.png",
+    },
+    {
+      id: "mask-ai-kun",
+      name: "AI君",
+      label: "仮面B",
+      color: "#3b82f6",
+      img: "/images/characters/identity/ai-kun.png",
+    },
+    {
+      id: "mask-ao-chan",
+      name: "AOちゃん",
+      label: "仮面C",
+      color: "#8b5cf6",
+      img: "/images/characters/identity/ao-chan.png",
+    },
+    {
+      id: "mask-ao-kun",
+      name: "AO君",
+      label: "仮面D",
+      color: "#10b981",
+      img: "/images/characters/identity/ao-kun.png",
+    },
+  ],
+} as const;
+
+export const getProfileById = (id: ProfileId): Profile => {
+  if (id === "ghost") return IDENTITY_CONFIG.ghost;
+  const mask = IDENTITY_CONFIG.masks.find((m) => m.id === id);
+  return mask ?? IDENTITY_CONFIG.ghost;
+};
+
+export const calculateBezierPath = (
+  x1: number,
+  y1: number,
+  x2: number,
+  y2: number
+): string => {
+  const cp1x = x1 + (x2 - x1) * 0.5;
+  const cp2x = x1 + (x2 - x1) * 0.5;
+  return `M ${x1} ${y1} C ${cp1x} ${y1} ${cp2x} ${y2} ${x2} ${y2}`;
+};

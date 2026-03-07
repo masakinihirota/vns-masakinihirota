@@ -90,7 +90,10 @@ groups.get('/', requireAuth, zValidator('query', listGroupsQuerySchema), async (
 
     return c.json(response);
   } catch (error) {
-    logger.error('[GroupsAPI] List groups failed:', error);
+    logger.error(
+      '[GroupsAPI] List groups failed:',
+      error instanceof Error ? error : new Error(String(error))
+    );
     throw error;
   }
 });
@@ -132,7 +135,10 @@ groups.get('/:id', requireAuth, zValidator('param', groupIdParamSchema), async (
 
     return c.json(response);
   } catch (error) {
-    logger.error('[GroupsAPI] Get group failed:', error);
+    logger.error(
+      '[GroupsAPI] Get group failed:',
+      error instanceof Error ? error : new Error(String(error))
+    );
     throw error;
   }
 });
@@ -186,7 +192,10 @@ groups.patch(
 
       return c.json(response);
     } catch (error) {
-      logger.error('[GroupsAPI] Update group failed:', error);
+      logger.error(
+        '[GroupsAPI] Update group failed:',
+        error instanceof Error ? error : new Error(String(error))
+      );
       throw error;
     }
   }
@@ -231,7 +240,10 @@ groups.get('/:id/members', requireAuth, zValidator('param', groupIdParamSchema),
 
     return c.json(response);
   } catch (error) {
-    logger.error('[GroupsAPI] Get members failed:', error);
+    logger.error(
+      '[GroupsAPI] Get members failed:',
+      error instanceof Error ? error : new Error(String(error))
+    );
     throw error;
   }
 });

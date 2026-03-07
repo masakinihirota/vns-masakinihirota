@@ -106,7 +106,10 @@ export function isTimestampValid(
 
     return isValid;
   } catch (error) {
-    logger.error("[TrialSignature] タイムスタンプ検証エラー:", error);
+    logger.error(
+      "[TrialSignature] タイムスタンプ検証エラー:",
+      error instanceof Error ? error : new Error(String(error))
+    );
     return false;
   }
 }
