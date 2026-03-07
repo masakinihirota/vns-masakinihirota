@@ -5,4 +5,5 @@ export { Header } from "./header";
 export { LanguageToggle } from "./language-toggle";
 export { ThemeToggle } from "./theme-toggle";
 export { TrialButton } from "./trial-button";
+export { TrialModeBadge } from "./trial-mode-badge/trial-mode-badge";
 

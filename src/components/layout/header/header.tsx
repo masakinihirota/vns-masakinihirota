@@ -3,6 +3,7 @@ import { AdsToggle } from "./ads-toggle";
 import { AuthButton } from "./auth-button";
 import { LanguageToggle } from "./language-toggle";
 import { ThemeToggle } from "./theme-toggle";
+import { TrialModeBadge } from "./trial-mode-badge/trial-mode-badge";
 
 export function Header() {
   return (
@@ -32,6 +33,9 @@ export function Header() {
 
           {/* 区切り線 */}
           <div className="h-6 w-px bg-border" />
+
+          {/* お試しモードバッジ (/home-trial のみ表示) */}
+          <TrialModeBadge />
 
           {/* 認証アクション: ログイン/アカウント/お試しボタン等 */}
           <AuthButton />
