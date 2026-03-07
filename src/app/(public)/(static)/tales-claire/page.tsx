@@ -1,5 +1,5 @@
-import { TalesClaireLP } from "@/components/landing-page";
+import { LandingPage } from "@/components/landing-page";
 
-export default function TalesClairePage() {
-    return <TalesClaireLP />;
+export default function LandingPageByTalesClaireRoute() {
+    return <LandingPage />;
 }

@@ -27,7 +27,7 @@ const InspirationSection = dynamic(
     }
 );
 
-export function TalesClaireLP() {
+export function LandingPage() {
     return (
         <main className="relative min-h-screen overflow-hidden">
             <BackgroundCanvas />
@@ -51,3 +51,6 @@ export function TalesClaireLP() {
         </main>
     );
 }
+
+// Backward compatibility for existing imports.
+export const TalesClaireLP = LandingPage;

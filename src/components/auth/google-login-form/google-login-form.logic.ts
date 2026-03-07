@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { signIn } from "@/lib/auth-client";
+import { ROUTES } from "@/config/routes";
 import { getAuthFeatures } from "@/lib/auth/auth-features";
 import { getOAuthErrorInfo, type AuthErrorInfo } from "@/lib/auth/auth-errors";
 
@@ -20,7 +21,7 @@ export const useGoogleLoginLogic = () => {
     try {
       const result = await signIn.social({
         provider: "google",
-        callbackURL: "/home",
+        callbackURL: ROUTES.HOME,
       });
 
       if (result.error) {

@@ -1,4 +1,4 @@
-export { TalesClaireLP } from "./tales-claire-lp";
+export { LandingPage, TalesClaireLP } from "./tales-claire-lp";
 export { BackgroundCanvas } from "./components/background-canvas";
 export { ConceptSection } from "./sections/concept-section";
 export { DeclarationsSection } from "./sections/declarations-section";

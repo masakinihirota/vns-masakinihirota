@@ -22,10 +22,11 @@ vi.mock('@/config/routes', () => ({
     SIGNUP: '/signup',
     HOME: '/home',
     ADMIN: '/admin',
+    TALES_CLAIRE: '/tales-claire',
     NATION_CREATE: '/nation/create',
   },
   PUBLIC_PATHS: ['/login', '/signup'],
-  STATIC_PATHS: ['/', '/faq', '/help'],
+  STATIC_PATHS: ['/', '/faq', '/help', '/tales-claire'],
 }));
 
 import { auth } from '@/lib/auth';
@@ -61,6 +62,27 @@ describe('proxy (Next.js 16 Middleware)', () => {
 
   it('should redirect unauthenticated users from protected pages to /', async () => {
     const request = new NextRequest(new URL('http://localhost:3000/protected'));
+    (getHeaders as any).mockResolvedValue({});
+    (auth.api.getSession as any).mockResolvedValue(null);
+
+    const response = await proxy(request);
+
+    expect(response.status).toBe(307);
+    expect(response.headers.get('location')).toContain('/');
+  });
+
+  it('should allow access to /tales-claire for unauthenticated users', async () => {
+    const request = new NextRequest(new URL('http://localhost:3000/tales-claire'));
+    (getHeaders as any).mockResolvedValue({});
+    (auth.api.getSession as any).mockResolvedValue(null);
+
+    const response = await proxy(request);
+
+    expect(response.status).toBe(200);
+  });
+
+  it('should not treat /login-help as a public path', async () => {
+    const request = new NextRequest(new URL('http://localhost:3000/login-help'));
     (getHeaders as any).mockResolvedValue({});
     (auth.api.getSession as any).mockResolvedValue(null);
 

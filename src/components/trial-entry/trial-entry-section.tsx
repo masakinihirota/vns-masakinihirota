@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, UserCircle2 } from "lucide-react";
+import { ROUTES } from "@/config/routes";
 import Link from "next/link";
 
 export function TrialEntrySection() {
@@ -32,7 +33,7 @@ export function TrialEntrySection() {
                             </div>
 
                             <Link
-                                href="/login"
+                                href={ROUTES.LOGIN}
                                 className="group/btn relative z-10 flex w-full items-center justify-center gap-2 rounded-2xl bg-indigo-600 py-4 font-bold text-white shadow-xl shadow-indigo-500/20 transition-all hover:bg-indigo-700"
                             >
                                 メンバー登録 / ログイン

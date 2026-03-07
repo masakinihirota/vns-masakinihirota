@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { axe } from 'vitest-axe';
 
-import { TalesClaireLP } from './tales-claire-lp';
+import { LandingPage } from './tales-claire-lp';
 
 vi.mock('@/components/trial-entry', () => ({
     TrialEntrySection: () => <section aria-label="trial-entry">Mock Trial Entry</section>,
@@ -16,9 +16,9 @@ vi.mock('./sections/identity-section', () => ({
     IdentitySection: () => <section aria-label="identity">Mock Identity</section>,
 }));
 
-describe('TalesClaireLP', () => {
+describe('LandingPage', () => {
     it('主要セクションが描画されること', async () => {
-        render(<TalesClaireLP />);
+        render(<LandingPage />);
 
         expect(screen.getByText('Value Network Service')).toBeInTheDocument();
         expect(
@@ -32,7 +32,7 @@ describe('TalesClaireLP', () => {
     });
 
     it('アクセシビリティ違反がないこと', async () => {
-        const { container } = render(<TalesClaireLP />);
+        const { container } = render(<LandingPage />);
         const results = await axe(container);
         expect(results.violations).toHaveLength(0);
     });

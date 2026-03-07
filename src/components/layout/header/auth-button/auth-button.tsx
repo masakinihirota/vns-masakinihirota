@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLocale } from "@/context/locale-context";
 import { useAppAuth } from "@/hooks/use-app-auth";
 import { signOut } from "@/lib/auth-client";
+import { ROUTES } from "@/config/routes";
 import { logger } from "@/lib/logger";
 import { TrialStorage } from "@/lib/trial-storage";
 import { Loader2, LogOut, User } from "lucide-react";
@@ -38,7 +39,7 @@ export function AuthButton() {
     const handleStopTrial = () => {
       // clear all trial data and flag then refresh
       TrialStorage.clear();
-      router.push('/');
+      router.push(ROUTES.LANDING);
       router.refresh();
     };
 
@@ -65,7 +66,7 @@ export function AuthButton() {
 
         // 通常のログアウト処理
         await signOut();
-        router.push("/");
+        router.push(ROUTES.LANDING);
         router.refresh();
       } catch (error) {
         logger.error("ログアウトエラー:", error instanceof Error ? error : undefined);
@@ -76,7 +77,7 @@ export function AuthButton() {
     return (
       <div className="flex items-center gap-2">
         <Button variant="ghost" asChild>
-          <Link href="/home" aria-label={t('header.gotoDashboard')}>
+          <Link href={ROUTES.HOME} aria-label={t('header.gotoDashboard')}>
             <User className="mr-2 h-4 w-4" />
             <span>{t('header.account')}</span>
           </Link>
@@ -108,7 +109,7 @@ export function AuthButton() {
     <div className="flex items-center gap-2">
       <TrialButton />
       <Button variant="default" asChild>
-        <Link href="/login" aria-label={t('header.gotoSignIn')}>
+        <Link href={ROUTES.LOGIN} aria-label={t('header.gotoSignIn')}>
           {t('header.signIn')}
         </Link>
       </Button>

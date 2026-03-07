@@ -8,6 +8,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 const USE_REAL_AUTH = process.env.USE_REAL_AUTH === "true";
 
+const matchesRoute = (pathname: string, route: string) => {
+  return pathname === route || pathname.startsWith(`${route}/`);
+};
+
 /**
  * Next.js 16 Proxy
  * ルーティングと認証チェックを統合管理（旧 Middleware）
@@ -63,10 +67,8 @@ export async function proxy(request: NextRequest) {
         }
       }
 
-      const isPublicPath = PUBLIC_PATHS.some((path) => pathname.startsWith(path));
-      const isStaticPath = STATIC_PATHS.some(
-        (path) => pathname === path || pathname.startsWith(`${path}/`)
-      );
+      const isPublicPath = PUBLIC_PATHS.some((path) => matchesRoute(pathname, path));
+      const isStaticPath = STATIC_PATHS.some((path) => matchesRoute(pathname, path));
       const isLandingPath = pathname === ROUTES.LANDING;
 
       logger.debug("Proxy request", {
