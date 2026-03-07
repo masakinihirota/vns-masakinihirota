@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 
 import { BackgroundCanvas } from "./components/background-canvas";
 import { DeferredSection } from "./components/deferred-section";
+import { ConceptContainer } from "@/components/landing-page/concept";
 import { ConceptSection } from "./sections/concept-section";
 import { DeclarationsSection } from "./sections/declarations-section";
 import { FinalGoalSection } from "./sections/final-goal-section";
@@ -32,6 +33,7 @@ export function TalesClaireLP() {
             <BackgroundCanvas />
             <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-16 px-6 pb-20 pt-24">
                 <HeroSection />
+                <ConceptContainer />
                 <ConceptSection />
                 <DeclarationsSection />
                 <TrialEntrySection />

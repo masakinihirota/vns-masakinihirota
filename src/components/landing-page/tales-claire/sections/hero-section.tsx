@@ -2,8 +2,6 @@
 
 import { memo } from "react";
 
-import { ConceptExplanationContainer } from "@/components/concept-explanation";
-
 export const HeroSection = memo(function HeroSection() {
     return (
         <header className="flex flex-col items-center space-y-8 py-12 text-center">
@@ -19,10 +17,6 @@ export const HeroSection = memo(function HeroSection() {
             </div>
 
             <div className="h-px w-24 bg-linear-to-r from-transparent via-slate-300 to-transparent dark:via-neutral-400" />
-
-            <div className="w-full">
-                <ConceptExplanationContainer />
-            </div>
 
             <h2 className="max-w-3xl bg-linear-to-br from-indigo-900 to-blue-700 bg-clip-text font-serif text-2xl font-light leading-relaxed text-transparent drop-shadow-sm dark:from-white dark:to-indigo-200 md:text-4xl">
                 「昨日僕が感動した作品を、
