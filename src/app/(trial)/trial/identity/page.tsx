@@ -1,4 +1,4 @@
-import { OnboardingIdentityContainer } from "@/components/trial/onboarding-flow";
+import { TrialIdentityEntry } from "./trial-identity-entry";
 
 export const metadata = {
   title: "匿名IDの選択 - お試し体験",
@@ -6,5 +6,5 @@ export const metadata = {
 };
 
 export default function TrialIdentityPage() {
-  return <OnboardingIdentityContainer />;
+  return <TrialIdentityEntry />;
 }
