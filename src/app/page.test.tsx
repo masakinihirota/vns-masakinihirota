@@ -4,12 +4,12 @@ import { describe, expect, it, vi } from "vitest";
 import RootLandingPage from "./page";
 
 vi.mock("@/components/landing-page", () => ({
-  LandingPage: () => <main aria-label="landing-page">Mock LandingPage</main>,
+    LandingPage: () => <main aria-label="landing-page">Mock LandingPage</main>,
 }));
 
 describe("RootLandingPage", () => {
-  it("/ で LandingPage を表示すること", () => {
-    render(<RootLandingPage />);
-    expect(screen.getByLabelText("landing-page")).toBeInTheDocument();
-  });
+    it("/ で LandingPage を表示すること", () => {
+        render(<RootLandingPage />);
+        expect(screen.getByLabelText("landing-page")).toBeInTheDocument();
+    });
 });

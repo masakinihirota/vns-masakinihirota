@@ -4,7 +4,6 @@ import { updateUserPreferences } from "@/app/actions/update-user-preferences";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { useAppAuth } from "@/hooks/use-app-auth";
-import { ShieldAlert } from "lucide-react";
 import { useLocale } from "@/context/locale-context";
 import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
@@ -63,12 +62,6 @@ export function AdsToggle() {
       >
         広告
       </Label>
-      {!enabled && (
-        <ShieldAlert
-          className="w-4 h-4 text-green-500 hidden sm:inline-block animate-in fade-in zoom-in"
-          aria-hidden="true"
-        />
-      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { Ghost, Plus, User, X } from "lucide-react";
+import { X } from "lucide-react";
 import Image from "next/image";
 import type React from "react";
 
@@ -286,10 +286,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                 onClick={onCreateMask}
                                 className="mt-2 flex items-center gap-3 p-4 text-lg font-black uppercase tracking-widest text-slate-400 transition-all duration-300 hover:translate-x-1 hover:text-indigo-500 dark:text-slate-600 dark:hover:text-indigo-400"
                             >
-                                <div className="flex h-10 w-10 items-center justify-center rounded-xl border-2 border-dashed border-slate-200 dark:border-slate-800">
-                                    <Plus size={20} strokeWidth={3} />
-                                </div>
-                                仮面を新規作成
+
                             </button>
                         </div>
                     </div>
@@ -319,38 +316,6 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                 </div>
             </main>
 
-            <footer className="mt-10 grid grid-cols-1 items-end gap-8 opacity-80 transition-opacity hover:opacity-100 md:grid-cols-3">
-                <div className="space-y-2">
-                    <h2 className="flex items-center gap-2 text-lg font-black uppercase tracking-tighter text-slate-600 dark:text-slate-300">
-                        <User size={14} className="text-indigo-600 dark:text-indigo-500" /> Root
-                        Authentication
-                    </h2>
-                    <p className="text-lg font-medium leading-relaxed text-slate-500 dark:text-slate-500">
-                        {account.name}{" "}
-                        は不変の存在です。状況に応じて異なる属性の仮面を投影することで、多層的な存在を確立します。
-                    </p>
-                </div>
-                <div className="space-y-2">
-                    <h2 className="flex items-center gap-2 text-lg font-black uppercase tracking-tighter text-slate-600 dark:text-slate-300">
-                        <Ghost size={14} className="text-slate-500 dark:text-slate-400" /> Ground
-                        State
-                    </h2>
-                    <p className="text-lg font-medium leading-relaxed text-slate-500 dark:text-slate-500">
-                        {IDENTITY_CONFIG.ghost.name}{" "}
-                        は、すべての属性が未定義である状態。観測されるまで何者でもない自分自身。
-                    </p>
-                </div>
-                <div className="pb-1 text-right">
-                    <p className="flex items-center justify-end gap-2 text-lg font-bold tracking-tight text-slate-400 dark:text-slate-600">
-                        SYSTEM_VER 2.1{" "}
-                        <span className="text-slate-200 dark:text-slate-800">{"//"}</span>
-                        VNS_PROTOCOL_V4
-                    </p>
-                    <p className="mt-1 text-lg font-black uppercase tracking-widest text-slate-300 dark:text-slate-700">
-                        © 2026 Value Network Service
-                    </p>
-                </div>
-            </footer>
         </div>
     );
 };

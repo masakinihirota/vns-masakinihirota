@@ -10,7 +10,7 @@ export function IdentitySection() {
                     あなたの「千の仮面」を視覚化する
                 </h2>
                 <p className="mx-auto max-w-2xl text-lg leading-relaxed text-slate-600 dark:text-indigo-200/80">
-                    幽霊状態のあなた（Root）から、さまざまな価値観に基づいた仮面（プロフィール）が生まれる仕組みを体験してください。
+                    幽霊状態のあなたから、さまざまな価値観に基づいた仮面（＝プロフィール）が生まれる仕組みを体験してください。
                 </p>
             </div>
 

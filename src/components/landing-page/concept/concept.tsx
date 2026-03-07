@@ -41,11 +41,14 @@ export const Concept: React.FC<ConceptProps> = ({
       </section>
 
       <section className="mt-8 border-t border-[var(--border-color)] pt-8">
-        <h2 className="text-xl font-bold mb-6">例</h2>
+        <h2 className="text-xl font-bold mb-6">作成例</h2>
 
         <div className="flex flex-col gap-6">
           <div className="p-6 rounded-2xl bg-white/5 border border-white/20 backdrop-blur-lg shadow-inner">
-            <h3 className="text-lg font-medium mb-4 opacity-80">プロフィール(仮面)</h3>
+            <h3 className="text-lg font-medium mb-4 opacity-80">仮面(＝プロフィール)</h3>
+            <h2 className="text-lg font-medium mb-4 opacity-80">
+              好きな作品、自分の価値観、持っているスキルなどで作成します。
+            </h2>
 
             <div className="p-6 rounded-xl bg-blue-500/5 border border-blue-500/10 backdrop-blur-sm space-y-6">
               <div className="space-y-2">

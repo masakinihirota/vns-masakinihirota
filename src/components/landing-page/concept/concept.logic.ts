@@ -79,4 +79,4 @@ export const WORK_CHAINS: readonly WorkChain[] = [
  */
 export const CONCEPT_NOTE = "※自分が好きな作品とその評価(Tier1)、そして「チェーン」はより強いつながりを感じる誰かが作った作品。 こんな作品を誰かが作ったと布教して広めたい作品" as const;
 
-export const CONCEPT_GHOST_TEXT = "価値観サイトは基本匿名サイト(＝幽霊)" as const;
+export const CONCEPT_GHOST_TEXT = "このサイトは価値観に基づく友人探索サイトです。幽霊(＝匿名)に複数の仮面（＝目的別プロフィール）をつけて活動します。オアシス宣言で安心・安全なサイトを目指します。" as const;
