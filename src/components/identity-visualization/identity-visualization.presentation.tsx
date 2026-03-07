@@ -130,7 +130,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                         src={currentProfile.img}
                                         alt={currentProfile.name}
                                         fill
-                                        className={`h-full w-full object-cover transition-transform duration-1000 ${isGhost ? "scale-85" : "scale-100"
+                                        className={`h-full w-full object-cover object-[center_20%] transition-transform duration-1000 ${isGhost ? "scale-85" : "scale-100"
                                             }`}
                                     />
                                 </div>
@@ -184,7 +184,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                         src={IDENTITY_CONFIG.ghost.img}
                                         alt="Ghost state"
                                         fill
-                                        className="h-full w-full object-cover"
+                                        className="h-full w-full object-cover object-[center_20%]"
                                     />
                                 </div>
                                 <div className="flex-1 text-left">
@@ -252,7 +252,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                                     src={mask.img}
                                                     alt={mask.name}
                                                     fill
-                                                    className="h-full w-full object-cover"
+                                                    className="h-full w-full object-cover object-[center_20%]"
                                                 />
                                             </div>
                                             <div className="min-w-0 flex-1 text-left">

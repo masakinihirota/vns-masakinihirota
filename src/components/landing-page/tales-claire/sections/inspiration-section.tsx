@@ -72,6 +72,8 @@ export function InspirationSection() {
                                 heading="『断頭台の演説』より"
                                 subheading="Tales of Rebirth (2004)"
                                 videoUrl="https://www.youtube.com/embed/q8_9ckoVV5M"
+                                characterImage="/images/characters/identity/m-kun.png"
+                                characterName="M君"
                                 summary="VNSの思想に通じる、魂の演説"
                                 actionHref="/legendary-speech"
                                 actionLabel="書き起こしを読む"
@@ -83,6 +85,8 @@ export function InspirationSection() {
                                 heading="「サニボナニ」：会話を取引のように扱うとき、何を失うのか"
                                 subheading="Khaya Dlanga | TED"
                                 videoUrl="https://www.youtube.com/embed/HtzG2AoahAo"
+                                characterImage="/images/characters/identity/ao-chan.png"
+                                characterName="AOちゃん"
                                 summary="会話の本質と人間性を説く挨拶"
                                 actionHref="/sanibonani"
                                 actionLabel="書き起こしを読む"
@@ -94,6 +98,8 @@ export function InspirationSection() {
                                 heading="良い人生を送るための最も重要な美徳"
                                 subheading="Meghan Sullivan | TED"
                                 videoUrl="https://www.youtube.com/embed/g83Xl4-mvF8"
+                                characterImage="/images/characters/identity/ai-chan.png"
+                                characterName="AIちゃん"
                                 summary="愛のリスクと『弱さ』を共有することの重要性"
                                 actionHref="/good-life"
                                 actionLabel="雑談を読む"
@@ -110,6 +116,8 @@ type VideoPanelProperties = {
     heading: string;
     subheading: string;
     videoUrl: string;
+    characterImage: string;
+    characterName: string;
     summary: string;
     actionHref: string;
     actionLabel: string;
@@ -119,6 +127,8 @@ function VideoPanel({
     heading,
     subheading,
     videoUrl,
+    characterImage,
+    characterName,
     summary,
     actionHref,
     actionLabel,
@@ -143,11 +153,19 @@ function VideoPanel({
                 </div>
 
                 <div className="flex flex-col justify-center space-y-6 bg-white/50 p-8 dark:bg-white/2">
-                    <div>
-                        <h4 className="mb-2 text-2xl font-bold text-slate-800 dark:text-white">{heading}</h4>
-                        <p className="text-lg uppercase tracking-wider text-slate-500 dark:text-neutral-400">
-                            {subheading}
-                        </p>
+                    <div className="flex gap-4 items-start">
+                        <img
+                            src={characterImage}
+                            alt={characterName}
+                            className="w-24 h-24 rounded-full object-cover shadow-md flex-shrink-0"
+                        />
+                        <div>
+                            <h4 className="mb-1 text-lg font-bold text-slate-800 dark:text-white">{characterName}</h4>
+                            <h3 className="text-xl font-bold text-slate-800 dark:text-white">{heading}</h3>
+                            <p className="text-sm uppercase tracking-wider text-slate-500 dark:text-neutral-400 mt-1">
+                                {subheading}
+                            </p>
+                        </div>
                     </div>
                     <div className="pt-2">
                         <Button
