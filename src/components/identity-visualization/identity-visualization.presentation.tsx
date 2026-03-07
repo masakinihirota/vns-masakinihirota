@@ -163,7 +163,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                     }
                                 }}
                                 onClick={() => onProfileSelect("ghost")}
-                                className={`group flex w-full items-center gap-5 rounded-[2rem] border-2 p-4 shadow-xl transition-all duration-500 ${isGhost
+                                className={`group flex w-full cursor-pointer items-center gap-5 rounded-[2rem] border-2 p-4 shadow-xl transition-all duration-500 ${isGhost
                                     ? "scale-105 border-indigo-400 bg-indigo-600 text-white"
                                     : "border-white/20 bg-white/40 backdrop-blur-md hover:border-indigo-300 hover:bg-white/60 dark:border-white/5 dark:bg-white/5 dark:hover:border-indigo-500/50 dark:hover:bg-white/10"
                                     }`}
@@ -177,14 +177,14 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                 <div
                                     className={`flex h-16 w-16 items-center justify-center overflow-hidden rounded-full transition-all duration-500 ${isGhost
                                         ? "ring-4 ring-indigo-500/20"
-                                        : "opacity-40 grayscale group-hover:grayscale-0"
+                                        : "opacity-40 grayscale group-hover:scale-105 group-hover:grayscale-0"
                                         }`}
                                 >
                                     <Image
                                         src={IDENTITY_CONFIG.ghost.img}
                                         alt="Ghost state"
                                         fill
-                                        className="h-full w-full object-cover"
+                                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                                     />
                                 </div>
                                 <div className="flex-1 text-left">
@@ -229,7 +229,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                                 }
                                             }}
                                             onClick={() => onProfileSelect(isActive ? "ghost" : mask.id)}
-                                            className={`group flex w-full items-center gap-5 rounded-2xl border-2 p-3.5 shadow-lg backdrop-blur-md transition-all duration-500 ${isActive
+                                            className={`group flex w-full cursor-pointer items-center gap-5 rounded-2xl border-2 p-3.5 shadow-lg backdrop-blur-md transition-all duration-500 ${isActive
                                                 ? "z-20 scale-105 border-white bg-white dark:border-white/20 dark:bg-white/10"
                                                 : "border-white/10 bg-white/10 hover:border-white/30 hover:bg-white/30 dark:border-white/5 dark:bg-white/5 dark:hover:bg-white/10"
                                                 }`}
@@ -243,7 +243,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                             <div
                                                 className={`h-14 w-14 overflow-hidden rounded-xl shadow-inner transition-all duration-500 ${isActive
                                                     ? "ring-4 ring-indigo-400/20"
-                                                    : "opacity-60 group-hover:opacity-100"
+                                                    : "opacity-60 group-hover:scale-105 group-hover:opacity-100"
                                                     }`}
                                                 style={{
                                                     backgroundColor: isActive ? mask.color : "transparent",
@@ -253,7 +253,7 @@ export const IdentityVisualization: React.FC<IdentityVisualizationProperties> = 
                                                     src={mask.img}
                                                     alt={mask.name}
                                                     fill
-                                                    className={`h-full w-full object-cover ${isFirstMask ? "object-[center_60%]" : ""}`}
+                                                    className={`h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 ${isFirstMask ? "object-[center_60%]" : ""}`}
                                                 />
                                             </div>
                                             <div className="min-w-0 flex-1 text-left">
