@@ -11,6 +11,11 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
+import { AdsToggle } from "@/components/layout/header/ads-toggle";
+import { AuthButton } from "@/components/layout/header/auth-button";
+import { LanguageToggle } from "@/components/layout/header/language-toggle";
+import { ThemeToggle } from "@/components/layout/header/theme-toggle";
+import { TrialModeBadge } from "@/components/layout/header/trial-mode-badge/trial-mode-badge";
 
 /**
  * 認証済みユーザー用ホームページ
@@ -34,16 +39,27 @@ export default async function HomePage() {
       <AppHomeSidebar />
       <SidebarInset>
         {/* ページヘッダー */}
-        <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b bg-white dark:bg-gray-950 px-4">
-          <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="mr-2 h-4" />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbPage>ホーム</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
+        <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center justify-between border-b bg-white dark:bg-gray-950 px-4">
+          <div className="flex items-center gap-2">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="mr-2 h-4" />
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbPage>ホーム</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+
+          <nav aria-label="ページコントロール" className="flex items-center gap-3">
+            <AdsToggle />
+            <LanguageToggle />
+            <ThemeToggle />
+            <div className="h-6 w-px bg-border" />
+            <TrialModeBadge />
+            <AuthButton />
+          </nav>
         </header>
 
         {/* メインコンテンツ */}

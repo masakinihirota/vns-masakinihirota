@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
-import { Header } from "@/components/layout/header/header";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "next-themes";
 import { LocaleProvider } from "@/context/locale-context";
@@ -59,10 +58,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <Header />
-            <main className="flex-1">
-              {children}
-            </main>
+            {children}
           </ThemeProvider>
         </LocaleProvider>
         {/* Webアプリのどこからでも通知が可能 */}
