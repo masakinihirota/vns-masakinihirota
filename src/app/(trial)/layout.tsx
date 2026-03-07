@@ -1,14 +1,14 @@
 import { Header } from "@/components/layout/header/header";
 
 export default function TrialLayout({
-  children,
+    children,
 }: Readonly<{
-  children: React.ReactNode;
+    children: React.ReactNode;
 }>) {
-  return (
-    <>
-      <Header />
-      <main className="flex-1">{children}</main>
-    </>
-  );
+    return (
+        <>
+            <Header />
+            <main className="flex-1">{children}</main>
+        </>
+    );
 }
